@@ -1,3 +1,8 @@
+/*
+	Savage Worlds Web Tools by Jeffrey Gordon is licensed under a
+	Creative Commons Attribution 4.0 International License.
+*/
+
 var starting_funds = Array (
 	250,
 	500,
@@ -5,6 +10,14 @@ var starting_funds = Array (
 	1000
 );
 
+var dice_int_value = Array(
+	0, 			// 0
+	4,			// 1
+	6,			// 2
+	8,			// 3
+	10,			// 4
+	12			// 5
+)
 var attribute_labels = Array(
 	"no value", 	// 0
 	"d4",			// 1

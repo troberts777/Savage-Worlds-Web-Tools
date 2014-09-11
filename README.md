@@ -1,9 +1,9 @@
 #Savage Worlds Web Tools
 
-###GitHub Hosted Application Page
+##GitHub Hosted Application Page
 [http://jdgwf.github.io/savage-worlds-web-tools/](http://jdgwf.github.io/savage-worlds-web-tools/)
 
-###Overview
+##Overview
 This is a collection of javascript web applications for the Savage Worlds pen and paper role playing system owned by Pinnacle Entertainment Group. 
 
 A few may question why I chose HTML/JS for this app instead of traditional compile and distrubute. The primary reason was accessiblity. I can use the same code on an iPad, a Mac Pro, a Windows XP machine, Linux and even my daughter's Kindle. I'm not afraid of closing my source up so the the accessabiliy of javascript (although the distributed code is minified) was a bonus to me not a burden. 
@@ -21,7 +21,7 @@ Fully Functional Tools Include:
 * Vehicle Creator
 * Walker Creator
 * Power Armor Creator
-* Character Creator (Novice is fully functional)
+* Character Creator (Novice and basic advancements are fully functional)
 	* TODO:
 		* Data Entry still needed 
 			* Equipment 
@@ -43,13 +43,12 @@ Fully Functional Tools Include:
 			* Sci-Fi Companion - has no entries
 			* Super Powers Companion - has no entries
 
-####The roadmap for these tools include:
+###The roadmap for these tools include:
 
-* Character Creator ( rewrite in progress since Aug 9th, novice creation complete, adding of advancements is next on list )
+* Character Creator ( rewrite in progress since Aug 9th 2014, basic code completion on Sept 4th 2014 )
 	* TODO
-		* Ability to adorn armor and affect derived stats, optional derived stats (e.g. Sanity from Horror Companion )
+		* Ability to adorn armor and affect derived stats  (done with Equip/Unequip option in Gear Manager), optional derived stats (e.g. Sanity from Horror Companion )
 		* Data entry for Horror and SFC Companions
-		* Advancement
 
 * Robot Creator (planned)
 * World Creator (planned)
@@ -57,5 +56,10 @@ Fully Functional Tools Include:
 You should be able to double-click on the HTML file in any web modern web browser to use the tools. Or visit the GitHub application page linked above.
 
 
-###Disclaimer
+##Disclaimer
 This tool references the Savage Worlds game system, available from Pinnacle Entertainment Group at [www.peginc.com](http://www.peginc.com "Pinnacle Entertainment Group"). Savage Worlds and all associated logos and trademarks are copyrights of Pinnacle Entertainment Group. Used with permission. Pinnacle makes no representation or warranty as to the quality, viability, or suitability for purpose of this product.
+
+##License
+This work is licensed under the Creative Commons Attribution 4.0 International License. To view a copy of this license, visit [http://creativecommons.org/licenses/by-nc/4.0/](http://creativecommons.org/licenses/by-nc/4.0/).
+
+*IMPORTANT* - Data entry from [Pinnacle Entertainment](http://www.peginc.com "Pinnacle Entertainment Group") Source books are NOT covered by the Creative Commons License, only the raw Javascript Logic and HTML5 Look and Feel of the App

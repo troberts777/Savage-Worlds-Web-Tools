@@ -1,3 +1,13 @@
+/*
+
+Data here is NOT Licensed under the Creative Commons and is owned by Pinnacle Entertainment Group.
+
+This product references the Savage Worlds game system, available from Pinnacle Entertainment Group at www.peginc.com.
+Savage Worlds and all associated logos and trademarks are copyrights of Pinnacle Entertainment Group. Used with permission.
+Pinnacle makes no representation or warranty as to the quality, viability, or suitability for purpose of this product.
+
+The entries in this file are from Savage Worlds: Deluxe and are owned by Pinnacle Entertainment Group.
+*/
 var chargen_perks = Array(
 	{
 		name: "Raise an Attribute",
@@ -146,6 +156,9 @@ chargen_hindrances = chargen_hindrances.concat(Array(
 		incompatible: {},
 		major: 1,
 		minor: 0,
+		char_effects: function( character_object ) {
+			character_object.edges_available++;
+		},
 		page: "p28"
 	},
 	{
@@ -485,9 +498,17 @@ chargen_hindrances = chargen_hindrances.concat(Array(
 			),
 		book: books_list[0],
 		prereqs: {},
-		incompatible: {},
+		incompatible: {
+			edges: Array(
+				"brawny"
+			)
+		},
 		major: 0,
 		minor: 1,
+		char_effects: function(character_object) {
+			character_object.derived.toughness++;
+			character_object.derived.pace--;
+		},
 		page: "p30"
 	},
 	{

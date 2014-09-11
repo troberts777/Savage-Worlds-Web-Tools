@@ -1,3 +1,7 @@
+/*
+	Savage Worlds Web Tools by Jeffrey Gordon is licensed under a
+	Creative Commons Attribution 4.0 International License.
+*/
 function do_success_calc() {
 	roll = $("input[name='roll']").val();
 	roll = roll / 1;

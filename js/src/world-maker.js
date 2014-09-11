@@ -1,4 +1,8 @@
-// world-maker.js
+/*
+	Savage Worlds Web Tools by Jeffrey Gordon is licensed under a
+	Creative Commons Attribution 4.0 International License.
+*/
+
 var table_defs = Array();
 
 table_defs[0] = {

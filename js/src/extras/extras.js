@@ -1,3 +1,8 @@
+/*
+	Savage Worlds Web Tools by Jeffrey Gordon is licensed under a
+	Creative Commons Attribution 4.0 International License.
+*/
+
 if(!localStorage.extras_search_term)
 	localStorage.extras_search_term = "";
 
@@ -115,21 +120,21 @@ function displayExtra(extra, indexNumber, no_buttons) {
 		extraHTML += "<div class=\"extra-stats\">";
 		if(typeof(extra.blurb) == "string") {
 			if(extra.blurb)
-				extraHTML += "<p class=\"no-print\">" + extra.blurb + "</p>";
+				extraHTML += "<p>" + extra.blurb + "</p>";
 
 			if(extra.blurb_extra)
-				extraHTML += "<p class=\"no-print\">" + extra.blurb_extra + "</p>";
+				extraHTML += "<p>" + extra.blurb_extra + "</p>";
 
 			if(extra.blurb_extra2)
-				extraHTML += "<p class=\"no-print\">" + extra.blurb_extra2 + "</p>";
+				extraHTML += "<p>" + extra.blurb_extra2 + "</p>";
 
 			if(extra.blurb_extra3)
-				extraHTML += "<p class=\"no-print\">" + extra.blurb_extra3 + "</p>";
+				extraHTML += "<p>" + extra.blurb_extra3 + "</p>";
 		}
 
 		if(typeof(extra.blurb) == "object" || typeof(extra.blurb) == "Array" ) {
 			for(blurbCount = 0; blurbCount < extra.blurb.length; blurbCount++)
-				extraHTML += "<p class=\"no-print\">" + extra.blurb[blurbCount] + "</p>";
+				extraHTML += "<p>" + extra.blurb[blurbCount] + "</p>";
 		}
 
 		// Attributes
@@ -201,7 +206,7 @@ function displayExtra(extra, indexNumber, no_buttons) {
 		extraHTML += "<strong>Abilities: </strong><br />";
 		abilitiesHTML = "";
 		$.map(extra.abilities, function(ability, abilityName){
-			abilitiesHTML += "<li><strong>" + ability.name + "</strong><span class=\"no-print\">: " + ability.description + "</span></li>";
+			abilitiesHTML += "<li><strong>" + ability.name + "</strong><span>: " + ability.description + "</span></li>";
 		});
 		if(abilitiesHTML == "")
 //			abilitiesHTML = abilitiesHTML.substring(0, abilitiesHTML.length -2);

@@ -1,4 +1,13 @@
-/* Edges List */
+/*
+
+Data here is NOT Licensed under the Creative Commons and is owned by Pinnacle Entertainment Group.
+
+This product references the Savage Worlds game system, available from Pinnacle Entertainment Group at www.peginc.com.
+Savage Worlds and all associated logos and trademarks are copyrights of Pinnacle Entertainment Group. Used with permission.
+Pinnacle makes no representation or warranty as to the quality, viability, or suitability for purpose of this product.
+
+The entries in this file are from Savage Worlds: Deluxe and are owned by Pinnacle Entertainment Group.
+*/
 if(!chargen_edges)
 	var chargen_edges = Array();
 
@@ -176,9 +185,14 @@ chargen_edges = chargen_edges.concat(Array(
 			}
 		},
 		char_effects: function( character_object ) {
-
+			character_object.derived.toughness++;
+			character_object.encumbrance_multiplier = 8;
 		},
-		incompatible: {},
+		incompatible: {
+			hindrances: Array(
+				"obese"
+			)
+		},
 		page: "p36"
 	},
 	{

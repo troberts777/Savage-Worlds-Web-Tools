@@ -1,4 +1,7 @@
-// Creator Functions
+/*
+	Savage Worlds Web Tools by Jeffrey Gordon is licensed under a
+	Creative Commons Attribution 4.0 International License.
+*/
 
 function propogate_add_mods(selected_modification_list) {
 	modifications_html = "<table>";
@@ -209,11 +212,10 @@ function propogate_load_list() {
 	$(".js-load-list").html( html );
 
 	$(".js-delete-data").click( function() {
+		var selectedItemIndex = $(this).attr("ref");
 		bootbox.confirm("Are you sure you want to delete this item?", function(ok_clicked) {
 			if(ok_clicked) {
-				selectedItemIndex = $(this).attr("ref");
 				delete_item_from_localstorage(selectedItemIndex);
-
 				propogate_load_list();
 			}
 		});

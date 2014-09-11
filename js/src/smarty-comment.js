@@ -1,4 +1,8 @@
-// smarty-comment.js
+/*
+	Savage Worlds Web Tools by Jeffrey Gordon is licensed under a
+	Creative Commons Attribution 4.0 International License.
+*/
+
 var smarty_comments = {
 	index: Array(
 		"This web app is a collection of tools to help make your preperation and gameplay in Savage Worlds pen and paper role playing game run much more smoothly. I'm doing my best to make sure that all tools look good from phone-sized screens to full desktop boxes, but I'm targeting iPad sized screens as an optimum."

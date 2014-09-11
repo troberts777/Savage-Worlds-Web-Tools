@@ -1,3 +1,7 @@
+/*
+	Savage Worlds Web Tools by Jeffrey Gordon is licensed under a
+	Creative Commons Attribution 4.0 International License.
+*/
 var character_class = function() {};
 character_class.prototype = {
 
@@ -130,10 +134,15 @@ character_class.prototype = {
 
 		this.edges_available = 0;
 
+		this.encumbrance_multiplier = 5;
+
 		this.racial_edges = Array();
 		this.racial_hindrances = Array();
 
 		this.derived.toughness = 0;
+
+		// Calculate secondary Attributes
+		this.derived.pace = 6;
 
 		// Add Racial Edges
 		if(this.race.edges_included) {
@@ -203,24 +212,10 @@ character_class.prototype = {
 		this.attributes.strength += this.race.attributes.strength;
 		this.attributes.vigor += this.race.attributes.vigor;
 
-
-
-
-		// Calculate secondary Attributes
-		this.derived.pace = 6;
-
-		if(this.attributes.vigor == 1) // d4
-			this.derived.toughness += 4;
-		if(this.attributes.vigor == 2) // d6
-			this.derived.toughness += 5;
-		if(this.attributes.vigor == 3) // d8
-			this.derived.toughness += 6;
-		if(this.attributes.vigor == 4) // d10
-			this.derived.toughness += 7;
-		if(this.attributes.vigor == 5) // d12
-			this.derived.toughness += 8;
 		if(this.attributes.vigor > 5) // d12
 			this.derived.toughness += 8 + this.attributes.vigor - 5;
+		else
+			this.derived.toughness = (dice_int_value[this.attributes.vigor] / 2) + 2;
 
 		this.racial_edges.sort();
 		this.racial_hindrances.sort();
@@ -302,7 +297,7 @@ character_class.prototype = {
 		if(this.has_skill("Fighting")) {
 			fighting_skill = this.get_skill("Fighting");
 			if(fighting_skill.value == 1) // d4
-				this.derived.parry = 3;
+				this.derived.parry = 4;
 			if(fighting_skill.value == 2) // d6
 				this.derived.parry = 5;
 			if(fighting_skill.value == 3) // d8
@@ -1145,26 +1140,36 @@ character_class.prototype = {
 				if( edge_object.prereqs.attributes.agility ) {
 					if( this.attributes.agility >= edge_object.prereqs.attributes.agility)
 						return_value = true;
+					else
+						return_value = false;
 				}
 
 				if( edge_object.prereqs.attributes.smarts ) {
 					if( this.attributes.smarts >= edge_object.prereqs.attributes.smarts)
 						return_value = true;
+					else
+						return_value = false;
 				}
 
 				if( edge_object.prereqs.attributes.spirit ) {
 					if( this.attributes.spirit >= edge_object.prereqs.attributes.spirit)
 						return_value = true;
+					else
+						return_value = false;
 				}
 
 				if( edge_object.prereqs.attributes.strength ) {
 					if( this.attributes.strength >= edge_object.prereqs.attributes.strength)
 						return_value = true;
+					else
+						return_value = false;
 				}
 
 				if( edge_object.prereqs.attributes.vigor ) {
 					if( this.attributes.vigor >= edge_object.prereqs.attributes.vigor)
 						return_value = true;
+					else
+						return_value = false;
 				}
 
 				if(return_value == false)

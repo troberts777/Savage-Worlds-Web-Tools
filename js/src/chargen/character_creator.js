@@ -1,3 +1,7 @@
+/*
+	Savage Worlds Web Tools by Jeffrey Gordon is licensed under a
+	Creative Commons Attribution 4.0 International License.
+*/
 var current_gear_book = "";
 var current_gear_general = "";
 var current_gear_class = "";
@@ -177,7 +181,7 @@ function propagate_arcane_background_options() {
 		propagate_trapping_base_options();
 		propagate_power_options();
 	} else {
-		html += "You must select the Arcane Backrgound edge to have powers."
+		html += "You must select the Arcane Background edge to have powers."
 	}
 
 
@@ -957,11 +961,23 @@ function propagate_hindrances_section() {
 				bookoptgroup = chargen_hindrances[hind_counter].book.name;
 			}
 
+			if(!chargen_hindrances[hind_counter].specify_field)
+				chargen_hindrances[hind_counter].specify_field = 0;
+
 			disabled = "";
 			if(
-				current_character.has_edge( chargen_hindrances[hind_counter].name ) == true
+				(
+					current_character.has_edge( chargen_hindrances[hind_counter].name ) == true
+						||
+					current_character.is_incompatible_with( chargen_hindrances[hind_counter] ) == true
+				)
 					||
-				current_character.is_incompatible_with( chargen_hindrances[hind_counter] ) == true
+				(
+					chargen_hindrances[hind_counter].specify_field == 0
+						&&
+					current_character.has_hindrance( chargen_hindrances[hind_counter].name ) == true
+				)
+
 
 			) {
 				disabled = " disabled=\"disabled\"";
@@ -1724,10 +1740,11 @@ function propagate_perks_section() {
 
 	$(".js-delete-perk-button").unbind("click");
 	$(".js-delete-perk-button").click( function() {
+		var relindex = $(this).attr("relindex");
 		bootbox.confirm("Are you sure you want to remove this perk?", function(ok_clicked) {
 			if(ok_clicked) {
 
-				current_character.remove_perk( $(this).attr("relindex") );
+				current_character.remove_perk( relindex );
 				refresh_chargen_page();
 			}
 		});

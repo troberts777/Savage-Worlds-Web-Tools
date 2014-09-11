@@ -1,3 +1,13 @@
+/*
+
+Data here is NOT Licensed under the Creative Commons and is owned by Pinnacle Entertainment Group.
+
+This product references the Savage Worlds game system, available from Pinnacle Entertainment Group at www.peginc.com.
+Savage Worlds and all associated logos and trademarks are copyrights of Pinnacle Entertainment Group. Used with permission.
+Pinnacle makes no representation or warranty as to the quality, viability, or suitability for purpose of this product.
+
+The entries in this file are from Savage Worlds: Deluxe and are owned by Pinnacle Entertainment Group.
+*/
 if(!chargen_skills)
 	var chargen_skills = Array();
 
@@ -213,33 +223,3 @@ chargen_skills = chargen_skills.concat(Array(
 
 ));
 
-/*
-chargen_skills.sort(
-	function(a, b)
-	{
-		var attributeA = a.attribute.toLowerCase();
-		var attributeB = b.attribute.toLowerCase();
-
-		var nameA = a.name.toLowerCase();
-		var nameB = b.name.toLowerCase();
-
-		// sort by attribute
-		if (attributeA < attributeB) {
-			return -1;
-		} else {
-			if(attributeA > attributeB) {
-				return 1;
-			} else {
-				// sort by name in attribute
-				if (nameA < nameB) {
-					return -1;
-				} else if(nameA > nameB) {
-					return 1;
-				} else {
-					return 0;
-				}
-			}
-		}
-	}
-);
-*/

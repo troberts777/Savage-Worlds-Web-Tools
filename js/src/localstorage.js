@@ -1,3 +1,8 @@
+/*
+	Savage Worlds Web Tools by Jeffrey Gordon is licensed under a
+	Creative Commons Attribution 4.0 International License.
+*/
+
 if(!localStorage.vehicles)
 	localStorage.vehicles = "";
 
