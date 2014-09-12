@@ -443,17 +443,19 @@ function propagate_skills_sections() {
 				value_label = attribute_images[current_sub_skill.total];
 				if(current_sub_skill.total == 0)
 					value_label = " - ";
+				if(current_sub_skill.name) {
 				current_sub_name = current_sub_skill.name + ": " + current_sub_skill.specify_text;
 
-				html += "<div class=\"skill-container\">";
-				html += current_sub_skill.specify_text + ": " + value_label;
-				if( !current_character.is_complete() ) {
-					html += "<div class=\"pull-right\">";
-					html += "<button class=\"js-lower-skill-level btn btn-xs btn-primary\" skillname=\"" + current_sub_name + "\" skillval=\"" + current_sub_skill.value + "\">-</button>";
-					html += "<button class=\"js-add-skill-level btn btn-xs btn-primary\" skillname=\"" + current_sub_name + "\" skillval=\"" + current_sub_skill.value + "\">+</button>";
+					html += "<div class=\"skill-container\">";
+					html += current_sub_skill.specify_text + ": " + value_label;
+					if( !current_character.is_complete() ) {
+						html += "<div class=\"pull-right\">";
+						html += "<button class=\"js-lower-skill-level btn btn-xs btn-primary\" skillname=\"" + current_sub_name + "\" skillval=\"" + current_sub_skill.value + "\">-</button>";
+						html += "<button class=\"js-add-skill-level btn btn-xs btn-primary\" skillname=\"" + current_sub_name + "\" skillval=\"" + current_sub_skill.value + "\">+</button>";
+						html += "</div>";
+					}
 					html += "</div>";
 				}
-				html += "</div>";
 			}
 			html += "</div>";
 
@@ -1804,7 +1806,7 @@ function propagate_derived_stats_section() {
 	html += "<label>Pace: " + current_character.derived.pace + "</label>";
 	html += "<label>Parry: " + current_character.derived.parry + "</label>";
 	html += "<label>Toughness: " + current_character.derived.toughness_formatted + "</label>";
-	html += "<label>Current Load: " + current_character.derived.encumbrance + "</label>";
+	html += "<label>Current Load: " + current_character.derived.current_load + "</label>";
 
 	$(".derived-stats-data").html( html );
 }

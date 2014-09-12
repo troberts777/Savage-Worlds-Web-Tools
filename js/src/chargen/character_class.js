@@ -121,7 +121,8 @@ character_class.prototype = {
 			parry : 2,
 			armor: 0,
 			encumbrance : 0,
-			size: 1
+			size: 1,
+			current_load: 0
 		};
 
 		this.race.attributes = {
@@ -433,6 +434,21 @@ character_class.prototype = {
 		} else {
 			this.derived.toughness_formatted = this.derived.toughness;
 		}
+
+		//this.derived.encumbrance
+		load_level = this.derived.encumbrance / (this.encumbrance_multiplier * dice_int_value[this.attributes.strength] ) ;
+		if(load_level < 1) {
+			this.derived.current_load = "Unloaded @ " + this.derived.encumbrance + " lbs";
+		} else if(load_level >= 1 && load_level < 2) {
+			this.derived.current_load = "Loaded (-1) @ " + this.derived.encumbrance + " lbs";
+		}  else if(load_level >= 2 && load_level < 3) {
+			this.derived.current_load = "Very Loaded (-2) @ " + this.derived.encumbrance + " lbs";
+		}  else if(load_level >= 3 && load_level < 4) {
+			this.derived.current_load = "Extremely Loaded (-3) @ " + this.derived.encumbrance + " lbs";
+		} else {
+			this.derived.current_load = "load_level=" + load_level;
+		}
+
 
 	},
 
@@ -1683,6 +1699,7 @@ character_class.prototype = {
 
 		if(this.derived.charisma > 0)
 			html_return += ", <strong>Charisma</strong>: " + this.derived.charisma;
+
 		if(this.derived.encumbrance > 0)
 			html_return += ", <strong>Load</strong>: " + this.derived.encumbrance;
 
@@ -1801,6 +1818,8 @@ character_class.prototype = {
 
 
 			}
+			html_return += "<br />";
+			html_return += "<b>Current Load:</b> " + this.derived.current_load;
 			html_return += "<br />";
 		}
 
