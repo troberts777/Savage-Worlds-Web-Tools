@@ -67,8 +67,8 @@ function print_cart_items_html() {
 		url = $(this).attr("href");
 		if($(this).hasClass("btn-danger"))
 			alert("This function is still under development and will not work as expected");
-	    window.location.assign(url);
-	    return false;
+		window.location.assign(url);
+		return false;
 	});
 }
 

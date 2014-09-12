@@ -328,11 +328,11 @@ creator_base.prototype = {
 
 		keyList.sort();
 
-    	var newList = {};
+		var newList = {};
 
 		for (var keyCount = 0; keyCount < keyList.length; keyCount++) {
 			keyName = keyList[keyCount];
-		    newList[keyName] = this.selected_modifications_list[keyName];
+			newList[keyName] = this.selected_modifications_list[keyName];
 		}
 		this.selected_modifications_list = newList;
 	},
@@ -342,11 +342,11 @@ creator_base.prototype = {
 
 		keyList.sort();
 
-    	var newList = {};
+		var newList = {};
 
 		for (var keyCount = 0; keyCount < keyList.length; keyCount++) {
 			keyName = keyList[keyCount];
-		    newList[keyName] = this.selected_weapons_list[keyName];
+			newList[keyName] = this.selected_weapons_list[keyName];
 		}
 		this.selected_weapons_list = newList;
 	},

@@ -72,21 +72,21 @@ function format_pace_realworld(pace_value) {
 function stripslashes (str) {
 
   return (str + '').replace(/\\(.?)/g, function (s, n1) {
-    switch (n1) {
-    case '\\':
-      return '\\';
-    case '0':
-      return '\u0000';
-    case '':
-      return '';
-    default:
-      return n1;
-    }
+	switch (n1) {
+	case '\\':
+	  return '\\';
+	case '0':
+	  return '\u0000';
+	case '':
+	  return '';
+	default:
+	  return n1;
+	}
   });
 }
 
 
 String.prototype.endsWith = function(suffix) {
-    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+	return this.indexOf(suffix, this.length - suffix.length) !== -1;
 };
 

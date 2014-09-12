@@ -29,8 +29,8 @@ $(".ios_app_click").click( function(event) {
 	url = $(this).attr("href");
 	if($(this).hasClass("btn-danger"))
 		alert("This function is still under development and will not work as expected");
-    window.location.assign(url);
-    return false;
+	window.location.assign(url);
+	return false;
 });
 
 $("input.numeric-only").keypress(function(event) {
@@ -96,26 +96,29 @@ function clone_object(originalObject) {
 
 function uc_words(str)
 {
-    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+	return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
 Number.prototype.padLeft = function(base,chr){
-    var  len = (String(base || 10).length - String(this).length)+1;
-    return len > 0? new Array(len).join(chr || '0')+this : this;
+	var  len = (String(base || 10).length - String(this).length)+1;
+	return len > 0? new Array(len).join(chr || '0')+this : this;
 }
 
 // Check if a new cache is available on page load.
 window.addEventListener('load', function(e) {
 
-  window.applicationCache.addEventListener('updateready', function(e) {
-    if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
-      // Browser downloaded a new app cache.
-      // Swap it in and reload the page to get the new hotness.
-      window.applicationCache.swapCache();
-      if (confirm('A new version of this web app is available. Load it?')) {
-        window.location.reload();
-      }
-    }
-  }, false);
+	window.applicationCache.addEventListener('updateready', function(e) {
+		if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+		// Browser downloaded a new app cache.
+		// Swap it in and reload the page to get the new hotness.
+			window.applicationCache.swapCache();
+			bootbox.confirm("A new version of this web app is available. Load it?", function(ok_clicked) {
+				if(ok_clicked) {
+					window.location.reload();
+				}
+			});
+
+		}
+	}, false);
 
 }, false);
