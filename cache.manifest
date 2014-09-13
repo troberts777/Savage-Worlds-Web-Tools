@@ -1,11 +1,10 @@
 CACHE MANIFEST
 
-# Version 2014-09-12-04
-# September 12, 2014 revision 4
-# Minor Null Check
+# Version 2014-09-12-05
+# September 12, 2014 revision 5
+# Removal of extras_view from cache manifest
 
 CACHE:
-http://jdgwf.github.io/savage-worlds-web-tools/extras_view.html
 http://jdgwf.github.io/savage-worlds-web-tools/vehicle_creator.html
 http://jdgwf.github.io/savage-worlds-web-tools/extras.html
 http://jdgwf.github.io/savage-worlds-web-tools/space_travel_time.html
