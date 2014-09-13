@@ -75,6 +75,8 @@ character_class.prototype = {
 		this.current_funds = 0;
 		this.selected_gear = Array();
 
+		this.power_armor = null;
+
 		this.is_valid = true;
 		this.validity_messages = Array();
 	},
@@ -428,6 +430,15 @@ character_class.prototype = {
 				this.current_funds -= this.selected_gear[eq_count].cost * this.selected_gear[eq_count].count;
 		}
 
+		if( this.power_armor ) {
+			this.derived.armor = this.power_armor.armor;
+			if(this.power_armor.strength_bonus)
+				this.attributes.strength += this.power_armor.strength_bonus;
+			if(this.power_armor.pace)
+				this.derived.pace = this.power_armor.pace;
+		}
+
+
 		if( this.derived.armor > 0 ) {
 			this.derived.toughness += this.derived.armor;
 			this.derived.toughness_formatted = this.derived.toughness + " (" + this.derived.armor + ")";
@@ -450,8 +461,35 @@ character_class.prototype = {
 		}
 
 
+
 	},
 
+	load_power_armor: function( selected_item ) {
+		console.log("load_power_armor: " + selected_item );
+		if(selected_item != "") {
+
+			sw_power_armor.prototype = new creator_base();
+			function sw_power_armor() {
+				creator_base.apply( this, arguments );
+			}
+			this.power_armor = new sw_power_armor();
+			this.power_armor.init("power_armor", "Power Armor", power_armor_sizes, power_armor_modifications);
+			this.power_armor.import_json( selected_item );
+
+		} else {
+			this.power_armor = null;
+		}
+	},
+
+	don_power_armor: function ( power_armor_index ) {
+
+		selected_item = get_data_from_localstorage(power_armor_index);
+		this.load_power_armor( selected_item );
+	},
+
+	remove_power_armor: function ( power_armor_index ) {
+		this.power_armor = null;
+	},
 
 	clear_advancement: function( advancement_index ) {
 //		console.log( "clear_advancement: " + advancement_index);
@@ -1416,6 +1454,12 @@ character_class.prototype = {
 			}
 		}
 
+		if( this.power_armor ) {
+			export_object.power_armor = this.power_armor.export_json();
+		} else {
+			export_object.power_armor = "";
+		}
+
 		if(this.creation_completed == true)
 			export_object.complete = 1;
 
@@ -1832,7 +1876,7 @@ character_class.prototype = {
 
 	import_json: function( import_string ) {
 		try {
-			import_string = stripslashes(import_string);
+		//	import_string = stripslashes(import_string);
 			imported_object = JSON.parse(import_string);
 		}
 		catch(e) {
@@ -1840,7 +1884,7 @@ character_class.prototype = {
 			return false;
 		}
 
-		if(typeof imported_object =='object') {
+		if(typeof imported_object == 'object') {
 			this.reset();
 
 			this.set_name( imported_object.name );
@@ -1879,6 +1923,11 @@ character_class.prototype = {
 			if( imported_object.perks ) {
 				for( import_perk_counter = 0; import_perk_counter < imported_object.perks.length; import_perk_counter++)
 					this.add_perk( imported_object.perks[import_perk_counter] );
+			}
+
+			if( imported_object.power_armor ) {
+				console.log("!");
+				this.load_power_armor( imported_object.power_armor );
 			}
 
 			if( imported_object.hindrances ) {

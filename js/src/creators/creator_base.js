@@ -316,7 +316,6 @@ creator_base.prototype = {
 
 			}
 			this.calculate();
-			refresh_creator_page();
 			return true;
 		}
 		// Wasn't an object (or was empty)
@@ -409,7 +408,7 @@ creator_base.prototype = {
 				if( this.selected_modifications[calcModCount].is_available ) {
 					if(this.selected_modifications[calcModCount].is_available(this) == false) {
 						this.remove_mod(this.selected_modifications[calcModCount].name);
-						refresh_creator_page();
+						this.calculate();
 						// stop all processing as the page is recalcuating anyways
 						return;
 					}
@@ -444,7 +443,7 @@ creator_base.prototype = {
 				if( this.selected_weapons[calcModCount].is_available ) {
 					if(this.selected_weapons[calcModCount].is_available(this) == false) {
 						this.remove_weapon(calcModCount);
-						refresh_creator_page();
+						this.calculate();
 						// stop all processing as the page is recalcuating anyways
 						return;
 					}

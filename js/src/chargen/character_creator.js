@@ -19,9 +19,18 @@ function propagate_attribute_options(current_value, current_attribute) {
 	min_count = 1;
 	max_count = 6;
 
+	subtract_modifier = 0;
 	if(current_character.race.attributes[current_attribute]) {
 		min_count += current_character.race.attributes[current_attribute];
 		max_count += current_character.race.attributes[current_attribute];
+		subtract_modifier += current_character.race.attributes[current_attribute];
+	}
+
+
+	if( current_character.power_armor.strength_bonus && current_attribute == "strength" ) {
+		min_count += current_character.power_armor.strength_bonus ;
+		max_count += current_character.power_armor.strength_bonus ;
+		subtract_modifier += current_character.power_armor.strength_bonus ;
 	}
 
 	html = "";
@@ -40,9 +49,9 @@ function propagate_attribute_options(current_value, current_attribute) {
 				current_class = "d12";
 
 			if(current_value == attribute_counter)
-				html += "<option class=\"die-select " + current_class + "\" selected=\"selected\" value=\"" + (attribute_counter - current_character.race.attributes[current_attribute])+ "\">" + attribute_labels[attribute_counter] + "</option>";
+				html += "<option class=\"die-select " + current_class + "\" selected=\"selected\" value=\"" + (attribute_counter - subtract_modifier)+ "\">" + attribute_labels[attribute_counter] + "</option>";
 			else
-				html += "<option class=\"die-select " + current_class + "\" value=\"" + (attribute_counter - current_character.race.attributes[current_attribute]) + "\">" + attribute_labels[attribute_counter] + "</option>";
+				html += "<option class=\"die-select " + current_class + "\" value=\"" + (attribute_counter - subtract_modifier) + "\">" + attribute_labels[attribute_counter] + "</option>";
 		}
 	}
 	$(select_selector).html(html);
@@ -1257,7 +1266,11 @@ function propagate_gear_section() {
 		}
 	}
 
-	html = "<h5>Available Gear</h5>";
+
+	html = "";
+
+
+	html += "<h5>Available Gear</h5>";
 	html += "<label>Book: <select class=\"js-set-gear-filter js-gear-book\">";
 	html += "<option value=\"\"> - Select a Book -</option>";
 	for(bc = 0; bc < gear_book_dd.length; bc++) {
@@ -1379,11 +1392,46 @@ function propagate_gear_section() {
 	html += "</tbody>";
 	html += "</table>";
 
+	html += "<fieldset><legend>Power Armor</legend>";
+	if( current_character.power_armor) {
+		html += current_character.power_armor.export_html();
+		html += "<button class=\"btn btn-danger js-remove-power-armor\">Remove</button>";
+	} else {
+		html += "<label>Select a Power Armor: ";
+		html += "<select class=\"js-select-power-armor\">";
+		html += "<option value=\"-1\">- Select a Power Armor -</option>";
+		current_load_data = localstorage_parse_data();
+		for(lsCounter = 0; lsCounter < current_load_data.length; lsCounter++) {
+			if(current_load_data[lsCounter].type == "power_armor") {
+				saved_date = new Date(current_load_data[lsCounter].saved);
+				saved_date_formatted = (saved_date.getMonth() + 1).padLeft() + '/' + saved_date.getDate().padLeft() + '/' +  saved_date.getFullYear().padLeft() + " at " + saved_date.getHours().padLeft() + ":" + saved_date.getMinutes().padLeft();
+				html += "<option value=\"" + lsCounter + "\">";
+				html += current_load_data[lsCounter].name + " (Size " + current_load_data[lsCounter].size + ") - saved on " + saved_date_formatted;
+				html += "</option>";
+			}
+		}
+		html += "</select>";
+		html += "<td><button class=\"js-select-power-armor-load btn btn-xs btn-green\">Equip</button></td>";
+	}
+	html += "</fieldset>";
+
 	$(".js-gear-selected").html( html );
 
 	$(".js-remove-gear").unbind("click");
 	$(".js-remove-gear").click( function() {
 		current_character.remove_gear( $(this).attr("ref") / 1 );
+		refresh_chargen_page();
+	});
+
+	$(".js-select-power-armor-load").unbind("click");
+	$(".js-select-power-armor-load").click( function() {
+		current_character.don_power_armor( $(".js-select-power-armor").val() / 1 );
+		refresh_chargen_page();
+	});
+
+	$(".js-remove-power-armor").unbind("click");
+	$(".js-remove-power-armor").click( function() {
+		current_character.remove_power_armor( );
 		refresh_chargen_page();
 	});
 
