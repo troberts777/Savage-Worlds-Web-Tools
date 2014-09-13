@@ -1,8 +1,8 @@
 CACHE MANIFEST
 
-# Version 2014-09-12-03
-# September 12, 2014 revision 3
-# CharGen - Fixes #28
+# Version 2014-09-12-04
+# September 12, 2014 revision 4
+# Minor Null Check
 
 CACHE:
 http://jdgwf.github.io/savage-worlds-web-tools/extras_view.html

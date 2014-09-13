@@ -27,7 +27,7 @@ function propagate_attribute_options(current_value, current_attribute) {
 	}
 
 
-	if( current_character.power_armor.strength_bonus && current_attribute == "strength" ) {
+	if( current_character.power_armor && current_character.power_armor.strength_bonus && current_attribute == "strength" ) {
 		min_count += current_character.power_armor.strength_bonus ;
 		max_count += current_character.power_armor.strength_bonus ;
 		subtract_modifier += current_character.power_armor.strength_bonus ;
