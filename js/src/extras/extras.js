@@ -96,7 +96,7 @@ function displayExtra(extra, indexNumber, no_buttons) {
 		// Name
 		extraHTML += "<div class=\"extra-card\">";
 		if(no_buttons == 0)
-			extraHTML += "<button ref=\"" + indexNumber + "\" type=\"button\" class=\"js-add-local btn btn-primary btn-sm pull-right\">Add To Print Cart</button>";
+			extraHTML += "<button ref=\"" + indexNumber + "\" type=\"button\" class=\"js-add-local btn btn-primary btn-sm pull-right\"><span class=\"glyphicon glyphicon-print\"></span> Add To Print Cart</button>";
 		if(extra.wildcard > 0)
 			extraHTML += "<h3 title=\"These " + extra.name.toLowerCase() + " critters are Wildcards\">* " + extra.name + "";
 		else
@@ -225,7 +225,7 @@ function displayExtra(extra, indexNumber, no_buttons) {
 			extraHTML += extra.page;
 
 		if( extra.book.buyme )
-			extraHTML += " <a class=\"btn btn-success btn-sm\" href=\"" + extra.book.buyme + "\" target=\"buyme\" title=\"Click here to buy this book\">Buy This Book</a>";
+			extraHTML += " <a class=\"btn btn-success btn-sm\" href=\"" + extra.book.buyme + "\" target=\"buyme\" title=\"Click here to buy this book\"><span class=\"glyphicon glyphicon-heart-empty\"></span>  Buy This Book</a>";
 		extraHTML += "<br />";
 		extraHTML += "&copy; " + extra.book.copyright + "</fieldset>";
 		extraHTML += "</div>";

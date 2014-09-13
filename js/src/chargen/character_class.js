@@ -1731,7 +1731,10 @@ character_class.prototype = {
 		html_return += "Agility " + attribute_labels[this.attributes.agility];
 		html_return += ", Smarts " + attribute_labels[this.attributes.smarts];
 		html_return += ", Spirit " + attribute_labels[this.attributes.spirit];
-		html_return += ", Strength " + attribute_labels[this.attributes.strength];
+		if(this.power_armor)
+			html_return += ", Strength " + attribute_labels[this.attributes.strength - this.power_armor.strength_bonus] + " (" + attribute_labels[this.attributes.strength] + ")";
+		else
+			html_return += ", Strength " + attribute_labels[this.attributes.strength];
 		html_return += ", Vigor " + attribute_labels[this.attributes.vigor];
 		html_return += "<br />";
 
@@ -1864,6 +1867,11 @@ character_class.prototype = {
 			}
 			html_return += "<br />";
 			html_return += "<b>Current Load:</b> " + this.derived.current_load;
+			html_return += "<br />";
+		}
+
+		if(this.power_armor) {
+			html_return += "<br />" + this.power_armor.export_html();
 			html_return += "<br />";
 		}
 

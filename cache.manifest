@@ -1,8 +1,8 @@
 CACHE MANIFEST
 
-# Version 2014-09-12-05
-# September 12, 2014 revision 5
-# Removal of extras_view from cache manifest
+# Version 2014-09-13-01
+# September 13, 2014 revision 1
+# Added some icons to buttons, added power armor to character generation printing, minor bugfix to load with strength over 12
 
 CACHE:
 http://jdgwf.github.io/savage-worlds-web-tools/vehicle_creator.html

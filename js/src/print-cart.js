@@ -87,19 +87,19 @@ function create_print_view() {
 	current_items = get_print_cart_items();
 	html = "";
 	if(current_items.length > 0) {
-		html += "<div class=\"no-print text-left\" style=\"margin-top: 20px;\"><p>To print scroll down and click the <button class=\"btn btn-primary btn-xs\" onclick=\"window.print();\">Print These Items</button> button, or just print via your Web Browser's File menu (or Control/Command-P). The print result should (hopefully) be styled for easy reading.</p><p><strong>Also Note</strong> that items in cart may not be reflective of the items you have stored if you've modified them since adding them to your cart. You may have to delete and readd the items.</p> <hr /></div>";
+		html += "<div class=\"no-print text-left\" style=\"margin-top: 20px;\"><p>To print scroll down and click the <button class=\"btn btn-primary btn-xs\" onclick=\"window.print();\"><span class=\"glyphicon glyphicon-print\"></span> Print These Items</button> button, or just print via your Web Browser's File menu (or Control/Command-P). The print result should (hopefully) be styled for easy reading.</p><p><strong>Also Note</strong> that items in cart may not be reflective of the items you have stored if you've modified them since adding them to your cart. You may have to delete and readd the items.</p> <hr /></div>";
 		for(pcart_c = 0; pcart_c < current_items.length; pcart_c++) {
 			html += "<article>";
 			html += "<div class=\"pull-right text-right\">";
 			if(pcart_c > 0)
-				html += " <a ref=\"" + pcart_c + "\" class=\"btn btn-primary btn-sm js-move-up-print-cart-item\">Move Up</a>";
+				html += " <a ref=\"" + pcart_c + "\" class=\"btn btn-primary btn-sm js-move-up-print-cart-item\"><span class=\"glyphicon glyphicon-arrow-up\"></span> Move Up</a>";
 			if(pcart_c < current_items.length - 1)
-				html += " <a ref=\"" + pcart_c + "\" class=\"btn btn-primary btn-sm js-move-down-print-cart-item\">Move Down</a>";
-			html += " <a ref=\"" + pcart_c + "\" class=\"btn btn-danger btn-sm js-delete-print-cart-item\">Delete</a>";
+				html += " <a ref=\"" + pcart_c + "\" class=\"btn btn-primary btn-sm js-move-down-print-cart-item\"><span class=\"glyphicon glyphicon-arrow-down\"></span> Move Down</a>";
+			html += " <a ref=\"" + pcart_c + "\" class=\"btn btn-danger btn-sm js-delete-print-cart-item\"><span class=\"glyphicon glyphicon-trash\"></span> Delete</a>";
 			html += "</div>";
 			html += current_items[pcart_c] + "</article><hr class=\"no-print\" />";
 		}
-		html += "<div class=\"no-print text-left\"><button class=\"btn btn-primary\" onclick=\"window.print();\">Print These Items</button></div>";
+		html += "<div class=\"no-print text-left\"><button class=\"btn btn-primary\" onclick=\"window.print();\"><span class=\"glyphicon glyphicon-print\"></span> Print These Items</button></div>";
 	} else {
 		html += "<h3>You have no items in your print cart.</h3>";
 	}
