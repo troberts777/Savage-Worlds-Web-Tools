@@ -51,7 +51,8 @@ books_list[4] = {
 	name: "Sci-Fi Companion",
 	publisher: "Pinnacle Entertainment Group",
 	year: "2014",
-	copyright: "2014 Pinnacle Entertainment Group"
+	copyright: "2014 Pinnacle Entertainment Group",
+	buyme: "https://www.peginc.com/store/science-fiction-companion-le-bundle/"
 }
 
 books_list[5] = {
@@ -59,7 +60,8 @@ books_list[5] = {
 	name: "Super Powers Companion",
 	publisher: "Pinnacle Entertainment Group",
 	year: "2014",
-	copyright: "2014 Pinnacle Entertainment Group"
+	copyright: "2014 Pinnacle Entertainment Group",
+	buyme: "https://www.peginc.com/store/super-powers-companion-second-edition-le/"
 }
 
 
@@ -72,11 +74,3 @@ books_list[6] = {
 	copyright: "Butch Curry, Open?"
 }
 
-books_list[7] = {
-	id: 8,
-	name: "The Chronicles of Sol",
-	publisher: "Jeffrey D. Gordon",
-	year: "2014",
-	buyme: "http://thechroniclesofsol.com",
-	copyright: "Jeffrey D. Gordon"
-}
