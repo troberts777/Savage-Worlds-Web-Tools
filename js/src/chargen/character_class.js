@@ -41,6 +41,8 @@ character_class.prototype = {
 		this.selected_advancements = Array();
 		this.available_advancements = 0;
 
+		this.max_strain = 0;
+
 		// Attributes..
 		this.attributes = {
 			agility : 1,
@@ -219,6 +221,13 @@ character_class.prototype = {
 			this.derived.toughness += 8 + this.attributes.vigor - 5;
 		else
 			this.derived.toughness = (dice_int_value[this.attributes.vigor] / 2) + 2;
+
+
+		this.max_strain = 0;
+		if( this.attributes.vigor > this.attributes.spirit)
+			this.max_strain = dice_int_value[this.attributes.spirit];
+		else
+			this.max_strain = dice_int_value[this.attributes.vigor];
 
 		this.racial_edges.sort();
 		this.racial_hindrances.sort();
@@ -445,6 +454,9 @@ character_class.prototype = {
 		} else {
 			this.derived.toughness_formatted = this.derived.toughness;
 		}
+
+		if(this.derived.race_armor)
+			this.derived.armor += this.derived.race_armor;
 
 		//this.derived.encumbrance
 		load_level = this.derived.encumbrance / (this.encumbrance_multiplier * dice_int_value[this.attributes.strength] ) ;

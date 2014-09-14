@@ -474,7 +474,7 @@ function propagate_skills_sections() {
 		skills_html[chargen_skills[skills_counter].attribute] += html;
 	}
 
-	if( current_character.arcane_background_selected ) {
+	if( current_character.arcane_background_selected && current_character.arcane_background_selected.skill) {
 
 		html = "<div class=\"skill-container\">";
 		current_skill = current_character.get_skill( current_character.arcane_background_selected.skill.name );
