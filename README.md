@@ -4,9 +4,9 @@
 [http://jdgwf.github.io/savage-worlds-web-tools/](http://jdgwf.github.io/savage-worlds-web-tools/)
 
 ##Overview
-This is a collection of javascript web applications for the Savage Worlds pen and paper role playing system owned by Pinnacle Entertainment Group. 
+This is a collection of javascript web applications for the Savage Worlds pen and paper role playing system owned by Pinnacle Entertainment Group.
 
-A few may question why I chose HTML/JS for this app instead of traditional compile and distrubute. The primary reason was accessiblity. I can use the same code on an iPad, a Mac Pro, a Windows XP machine, Linux and even my daughter's Kindle. I'm not afraid of closing my source up so the the accessabiliy of javascript (although the distributed code is minified) was a bonus to me not a burden. 
+A few may question why I chose HTML/JS for this app instead of traditional compile and distrubute. The primary reason was accessiblity. I can use the same code on an iPad, a Mac Pro, a Windows XP machine, Linux and even my daughter's Kindle. I'm not afraid of closing my source up so the the accessabiliy of javascript (although the distributed code is minified) was a bonus to me not a burden.
 
 **This is a encapsulated app that can be used completly offline once it's on your device.**
 
@@ -25,8 +25,8 @@ Fully Functional Tools Include:
 * Power Armor Creator
 * Character Creator (Novice and basic advancements are fully functional)
 	* TODO:
-		* Data Entry still needed 
-			* Equipment 
+		* Data Entry still needed
+			* Equipment
 				* COMPLETE - SWD Personal Equipment
 				* COMPLETE - Fantasy Companion Equipment
 				* Horror Companion Equipment
@@ -40,7 +40,7 @@ Fully Functional Tools Include:
 	* TODO:
 		* Data Entry still needed
 			* Savage Worlds Deluxe - Complete
-			* Fantasy Companion - mostly complete 99/ of approx 150 entries
+			* Fantasy Companion - Complete
 			* Horror Companion - has only a test entry (1) / of approx 130 entries
 			* Savage Free Bestiary - has 7 entries
 			* Sci-Fi Companion - has no entries

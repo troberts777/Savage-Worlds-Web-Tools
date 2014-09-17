@@ -6655,9 +6655,9 @@ extraDatabase = extraDatabase.concat(Array(
 	},
 	{
 		name: "Skeleton",
-		tags: "undead",
+		tags: "undead,",
 		wildcard: 0,
-		image: "",
+		image: "http://img2.wikia.nocookie.net/__cb20130516203624/warriorsofmyth/images/4/4a/640x747_16373_Skeleton_2d_fantasy_creature_dark_darkness_skeleton_warrior_picture_image_digital_art.jpg",
 		blurb: Array(
 			"The skin has already rotted from these risen dead, leaving them slightly quicker than their flesh-laden zombie counterparts."
 		),
@@ -7453,7 +7453,7 @@ extraDatabase = extraDatabase.concat(Array(
 		name: "Tyrannosaurus Rex",
 		tags: "dinosaur,",
 		wildcard: 0,
-		image: "",
+		image: "http://www.rareresource.com/photos/dinosaur-gallery/tyrannosaurus-rex.jpg",
 		blurb: Array(
 			"King of the dinosaurs, the T-rex is a deadly predator, capable of taking on prey much larger than itself. T-rex are poorly suited for mountainous and dense forest terrain, and can most often be found in hilly areas or on plains, where they hunt large herbivores."
 		),
@@ -7566,7 +7566,7 @@ extraDatabase = extraDatabase.concat(Array(
 		name: "Velociraptor",
 		tags: "dinosaur,",
 		wildcard: 0,
-		image: "",
+		image: "http://velociraptorinmycloset.webstarts.com/uploads/43245373-velociraptors.jpg",
 		blurb: Array(
 			"These smart, bipedal dinosaurs are pack hunters, and use remarkably well-developed tactics. True velociraptors were the size of turkeys—the larger variety made famous in the movies are actually dinonychus, a related species."
 		),
