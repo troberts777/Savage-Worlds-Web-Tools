@@ -626,7 +626,7 @@ extraDatabase = extraDatabase.concat(Array(
 				description: "Str+d4"
 			},
 			{
-				name: "Whirlwind:",
+				name: "Whirlwind",
 				description: "As long as the elemental does not move that turn it may attempt to pick up a foe. Make an opposed Strength check. If the sand elemental wins, its foe is pulled into the swirling maelstrom of its sandy body. While trapped, the target is at –2 on all rolls (including damage, to hit, and Strength rolls to free himself), and suffers 2d6 damage per round. The elemental cannot move as long as it wants to keep foes trapped inside its form."
 			}
 
@@ -852,7 +852,7 @@ extraDatabase = extraDatabase.concat(Array(
 				description: "Centaurs roll a d8 when running, instead of a d6."
 			},
 			{
-				name: "Hooves:",
+				name: "Hooves",
 				description: "Str."
 			},
 			{
@@ -1145,7 +1145,7 @@ extraDatabase = extraDatabase.concat(Array(
 		name: "Black Knight",
 		tags: "demon,devil,",
 		wildcard: 0,
-		image: "",
+		image: "http://www.pixel77.com/wp-content/uploads/2010/03/dark_knight_by_zeo_x.jpg",
 		blurb: Array (
 				"Clad in jet-black plate armor and armed with weapons swathed in balefire, black knights are the elite troops of the demon lords. Beneath their armor is a mummified corpse with burning green eyes.",
 				"They most often serve as unit commanders in demonic armies, but can sometimes be found as bodyguards for powerful, evil wizards and priests. Many ride nightmares."
@@ -2211,7 +2211,7 @@ extraDatabase = extraDatabase.concat(Array(
 				description: "Air Elementals fly at a rate of 6” with a Climb of 3. They may not run."
 			},
 			{
-				name: "Invulnerability:",
+				name: "Invulnerability",
 				description: " Immune to all non-magical attacks except fire."
 			},
 			{
@@ -2258,7 +2258,7 @@ extraDatabase = extraDatabase.concat(Array(
 		armor: "0",
 		abilities: Array(
 			{
-				name: "Armor +2:",
+				name: "Armor +2",
 				description: "Thick Hide"
 			},
 			{
@@ -2531,7 +2531,7 @@ extraDatabase = extraDatabase.concat(Array(
 				description: "Str+d6."
 			},
 			{
-				name: "Camouflage:",
+				name: "Camouflage",
 				description: "Natural gargoyles receive +2 to Stealth rolls in rocky terrain due to their skin color."
 			},
 			{
@@ -2589,7 +2589,7 @@ extraDatabase = extraDatabase.concat(Array(
 				description: "Str+d6."
 			},
 			{
-				name: "Camouflage:",
+				name: "Camouflage",
 				description: "Stone gargoyles receive +2 to Stealth rolls to blend in with normal, decorative gargoyles on buildings."
 			},
 			{
@@ -3530,7 +3530,7 @@ extraDatabase = extraDatabase.concat(Array(
 				description: "+2 Armor against damage-causing arcane powers and +2 on trait rolls to resist opposed powers."
 			},
 			{
-				name: "Claws:",
+				name: "Claws",
 				description: "Str+d6"
 			},
 			{
@@ -6482,5 +6482,1617 @@ extraDatabase = extraDatabase.concat(Array(
 		book: currentBook,
 
 		page: "p145"
+	},
+	{
+		name: "Scorpion Man",
+		tags: "",
+		wildcard: 0,
+		image: "",
+		blurb: Array(
+			"Scorpion men have the upper bodies of humans and the lower bodies of scorpions. They prefer hot, dusty environments, but can survive in temperate conditions. They guard their lairs with deadly force."
+		),
+		attributes: {
+			agility: "d8",
+			smarts: "d6",
+			spirit: "d6",
+			strength: "d10",
+			vigor: "d8"
+		},
+		skills: {
+			'Climbing' : "d6",
+			'Fighting' : "d8",
+			'Intimidation' : "d8",
+			'Shooting' : "d10",
+			'Stealth' : "d6"
+		},
+		charisma: "",
+		pace: "8",
+		parry: "6",
+		toughness: "8",
+		treasure: "Meager, per 3 scorpion men",
+		armor: "2",
+		gear: "",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+			{
+				name: "Armor +2",
+				description: " Chitinous skin."
+			},
+			{
+				name: "Fleet Footed",
+				description: "Scorpion Men roll a d8 for their running die, instead of a d6."
+			},
+			{
+				name: "Marksman",
+				description: "Scorpion men are expert archers. If they do not move in a turn, they may fire as if they took the aim maneuver."
+			},
+			{
+				name: "Poison",
+				description: "Anyone wounded or Shaken by a stinger attack must make a Vigor roll or become Incapacitated. Death follows in 2d6 minutes. A Healing roll at –2 prevents death"
+			},
+			{
+				name: "Stinger",
+				description: "Str+d6."
+			}
+		),
+		book: currentBook,
+
+		page: "p146"
+	},
+	{
+		name: "Sea Serpent",
+		tags: "",
+		wildcard: 0,
+		image: "",
+		blurb: Array(
+			"Sea serpents are monstrous beasts, capable of crushing ships into kindling. Even ship- mounted artillery can do little to hurt these nightmarish beasts."
+		),
+		attributes: {
+			agility: "d8",
+			smarts: "d4(A)",
+			spirit: "d8",
+			strength: "d12+8",
+			vigor: "d10"
+		},
+		skills: {
+			'Fighting' : "d8",
+			'Intimidation' : "d10",
+			'Notice' : "d6",
+			'Swimming' : "d8"
+		},
+		charisma: "",
+		pace: "-",
+		parry: "6",
+		toughness: "19",
+		treasure: "None",
+		armor: "0",
+		gear: "",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+			{
+				name: "Aquatic",
+				description: "Pace 12"
+			},
+			{
+				name: "Bite",
+				description: "Str+d6, Reach 2, Heavy Weapon."
+			},
+			{
+				name: "Crush",
+				description: "A sea serpent may wrap itsserpentine body around a ship (or large sea creature) as a grapple. Victims suffer damage each round the grapple is maintained. A sea serpent may crush and bite in the same round without incurring a multi-action penalty."
+			},
+			{
+				name: "Gargantuan",
+				description: "Heavy Armor. Creatures add +4 when attacking the body of a sea serpent due to its great size. Add Size to damage when crushing but subtract Size of victim. This attack ignores any Armor value of a ship."
+			},
+			{
+				name: "Long Neck",
+				description: "A sea serpent’s long neck gives it a Reach of 2."
+			},
+			{
+				name: "Quick",
+				description: "Sea serpents possess fast reflexes, able to turn in an instant and whip their long necks to attack passing prey. They redraw action cards of 5 or lower."
+			},
+			{
+				name: "Size +12",
+				description: "Sea serpents measure over 150’ long."
+			}
+		),
+		book: currentBook,
+
+		page: "p146"
+	},
+	{
+		name: "Siren Bush",
+		tags: "",
+		wildcard: 0,
+		image: "",
+		blurb: Array(
+			"Siren bushes are carnivorous plants. When they detect living prey, they emit a hypnotic hum which lures the victim into the web of roots. Once close enough, the thorny roots rip into the target’s flesh, saturating the surrounding ground in blood, which the roots then absorb."
+		),
+		attributes: {
+			agility: "d6",
+			smarts: "d4(A)",
+			spirit: "d6",
+			strength: "d6",
+			vigor: "d6"
+		},
+		skills: {
+			'Fighting' : "d6",
+			'Notice' : "d6"
+		},
+		charisma: "",
+		pace: "-",
+		parry: "5",
+		toughness: "5",
+		treasure: "Meager, around base",
+		armor: "0",
+		gear: "",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+			{
+				name: "Plant",
+				description: "Plants are not subject to Fear and Tests of Will."
+			},
+			{
+				name: "Roots",
+				description: "Str. Extending from the siren bush to a range of 3” is a tangle of surface roots, each covered in sharp thorns. The roots are mobile and can attack everything within range with no multi-action penalty."
+			},
+			{
+				name: "Siren Song",
+				description: "Siren bushes emit a low, hypnotic hum when a living creatures approaches within 12”. All creatures in range must make an opposed Spirit roll. Those who fail are subject to the puppet power. Normally the tree uses the power to draw its prey close enough for its roots to attach themselves, though if the need arises it can order them to defend it from attackers."
+			}
+		),
+		book: currentBook,
+
+		page: "p146"
+	},
+	{
+		name: "Skeleton",
+		tags: "undead",
+		wildcard: 0,
+		image: "",
+		blurb: Array(
+			"The skin has already rotted from these risen dead, leaving them slightly quicker than their flesh-laden zombie counterparts."
+		),
+		attributes: {
+			agility: "d8",
+			smarts: "d4",
+			spirit: "d4",
+			strength: "d6",
+			vigor: "d6"
+		},
+		skills: {
+			'Fighting' : "d6",
+			'Intimidation' : "d6",
+			'Notice' : "d4",
+			'Shooting' : "d6"
+		},
+		charisma: "",
+		pace: "7",
+		parry: "5",
+		toughness: "7",
+		treasure: "none",
+		armor: "0",
+		gear: "Varies",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+			{
+				name: "Bony Claws",
+				description: "Str+d4"
+			},
+			{
+				name: "Fearless",
+				description: "Skeletons are immune to Fear and Intimidation."
+			},
+			{
+				name: "Undead",
+				description: "+2 Toughness; +2 to recover from being Shaken; No additional damage from Called Shots; Immune to disease and poison."
+			}
+		),
+		book: currentBook,
+
+		page: "p147"
+	},
+	{
+		name: "Sphinx",
+		tags: "",
+		wildcard: 0,
+		image: "",
+		blurb: Array(
+			"An sphinx has the body of a lion, the head of a human (often female), and feathered wings. They are extremely clever, enjoy riddles, and savor the taste of human flesh."
+		),
+		attributes: {
+			agility: "d8",
+			smarts: "d12+1",
+			spirit: "d10",
+			strength: "d10",
+			vigor: "d8"
+		},
+		skills: {
+			'Fighting' : "d8",
+			'Intimidation' : "d8",
+			'Notice' : "d6",
+			'Persuasion' : "d10",
+			'Stealth' : "d8",
+			'Taunt' : "d12"
+		},
+		charisma: "",
+		pace: "8",
+		parry: "7",
+		toughness: "8",
+		treasure: "Rich, in lair",
+		armor: "0",
+		gear: "",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+			{
+				name: "Bite/Claw",
+				description: "Str+d6"
+			},
+			{
+				name: "Flight",
+				description: "Sphinxes have a Flying pace of 12” and a Climb of 6”."
+			},
+			{
+				name: "Riddles",
+				description: "Rather than immediately attack sentient prey, sphinxes prefer to enter into riddle contests. If the prey loses, it gets eaten. Riddle contests are conducted as an opposed Smarts roll."
+			},
+			{
+				name: "Size+2",
+				description: "Sphinxes are the same size as lions."
+			},
+			{
+				name: "Strong Willed",
+				description: "As masters of trickery, sphinxes gets a +2 bonus on Tests of Will."
+			},
+			{
+				name: "Wise",
+				description: "Sphinxes are renowned for their wisdom. They get +2 to all Common Knowledge rolls and roll a d8 for all Knowledge skills."
+			}
+		),
+		book: currentBook,
+
+		page: "p147"
+	},
+	{
+		name: "Thief",
+		tags: "",
+		wildcard: 0,
+		image: "",
+		blurb: Array(
+			"Thieves earn a living from stealing from others. Some may be allies of the characters, other are antagonists. In a city or town, thieves often assemble into a guild. Despite being tricky customers, thieves’ guilds are often excellent sources of information—if you can find them."
+		),
+		attributes: {
+			agility: "d10",
+			smarts: "d6",
+			spirit: "d6",
+			strength: "d6",
+			vigor: "d6"
+		},
+		skills: {
+			'Climbing' : "d8",
+			'Fighting' : "d6",
+			'Lockpicking' : "d8",
+			'Notice' : "d8",
+			'Stealth' : "d8",
+			'Streetwise' : "d6",
+			'Taunt' : "d6",
+			'Throwing' : "d8"
+		},
+		charisma: "",
+		pace: "6",
+		parry: "5",
+		toughness: "6",
+		treasure: "Meager, Worthwhile in lair",
+		armor: "1",
+		gear: "Leather armor (+1), short sword (Str+d6), throwing knives (Range: 3/6/12, Damage: Str+d4)",
+		hindrances: "Various",
+		edges: "Thief",
+
+		abilities: Array(
+
+		),
+		book: currentBook,
+
+		page: "p147"
+	},
+	{
+		name: "Master Thief",
+		tags: "",
+		wildcard: 0,
+		image: "",
+		blurb: Array(
+			"Thieves earn a living from stealing from others. Some may be allies of the characters, other are antagonists. In a city or town, thieves often assemble into a guild. Despite being tricky customers, thieves’ guilds are often excellent sources of information—if you can find them."
+		),
+		attributes: {
+			agility: "d12",
+			smarts: "d8",
+			spirit: "d8",
+			strength: "d6",
+			vigor: "d6"
+		},
+		skills: {
+			'Climbing' : "d8",
+			'Fighting' : "d6",
+			'Lockpicking' : "d12",
+			'Notice' : "d10",
+			'Stealth' : "d12",
+			'Streetwise' : "d8",
+			'Taunt' : "d8",
+			'Throwing' : "d8"
+		},
+		charisma: "",
+		pace: "6",
+		parry: "5",
+		toughness: "6",
+		treasure: "Worthwhile, Rich in lair",
+		armor: "1",
+		gear: "Leather armor (+1), short sword (Str+d6), throwing knives (Range: 3/6/12, Damage: Str+d4)",
+		hindrances: "Various",
+		edges: "Acrobat, Dodge, Level Headed, Thief",
+
+		abilities: Array(
+
+		),
+		book: currentBook,
+
+		page: "p147"
+	},
+	{
+		name: "Toad, Giant",
+		tags: "",
+		wildcard: 0,
+		image: "",
+		blurb: Array(
+			"Giant toads are monstrous, bloated amphibians, capable of swallowing a riding horse in one gulp."
+		),
+		attributes: {
+			agility: "d8",
+			smarts: "d4(A)",
+			spirit: "d6",
+			strength: "d10",
+			vigor: "d8"
+		},
+		skills: {
+			'Fighting' : "d6",
+			'Notice' : "d10",
+			'Stealth' : "d8"
+		},
+		charisma: "",
+		pace: "6",
+		parry: "5",
+		toughness: "10",
+		treasure: "Meager, in lair",
+		armor: "0",
+		gear: "",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+			{
+				name: "Bite",
+				description: "Str+d6"
+			},
+			{
+				name: "Engulf",
+				description: "Giant toads can swallow prey as large as Size +2 whole. While engulfed, the target is grappled as per the core rulebook with a –4 penalty to Strength rolls to escape and suffers 2d6 damage per round from digestive juices. Armor offers no protection"
+			},
+			{
+				name: "Large",
+				description: "Attackers are +2 to attack rolls against the toad due to its size."
+			},
+			{
+				name: "Size+4",
+				description: "Giant toads weigh over 4000 pounds."
+			},
+			{
+				name: "Tongue",
+				description: "Reach 3. The tongue is coated in sticky saliva. If the toad scores a success on its Fighting roll, it has grappled its prey. Unless the foe can escape, it Engulfs him on its next action. On a raise, the victim is grappled and Engulfed in the same action."
+			}
+		),
+		book: currentBook,
+
+		page: "p148"
+	},
+	{
+		name: "Watch",
+		tags: "guard,police,guards,soldier,soldiers,",
+		wildcard: 0,
+		image: "http://www.oocities.org/televisioncity/4766/film/hg/frenchsn.jpg",
+		blurb: Array(
+			"The watch are charged with maintaining law and order within the settlement and defending it in time of attack. Depending on the settlement, the watch may be a full-time professional body led by officers or local farmers."
+		),
+		attributes: {
+			agility: "d6",
+			smarts: "d6",
+			spirit: "d6",
+			strength: "d6",
+			vigor: "d6"
+		},
+		skills: {
+			'Fighting' : "d8",
+			'Intimidation' : "d8",
+			'Notice' : "d6",
+			'Shooting' : "d6",
+			'Stealth' : "d6"
+		},
+		charisma: "",
+		pace: "6",
+		parry: "7",
+		toughness: "7",
+		treasure: "Meager for every 3 soldiers",
+		armor: "2",
+		gear: "Chain mail (+2), long sword (Str+d8), open helm (+3), medium shield (+1 Parry), some are equipped with crossbows (Range: 15/30/60, Damage 2d6)",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+
+		),
+		book: currentBook,
+
+		page: "p148"
+	},
+	{
+		name: "Veteran Watch",
+		tags: "guard,police,guards,soldier,soldiers,",
+		wildcard: 0,
+		image: "http://blogs-images.forbes.com/erikkain/files/2012/05/holy-grail-guard.jpg",
+		blurb: Array(
+			"These fellows are well-trained, well- equipped, and well-led. They are veterans of many scrapes and know how to handle themselves."
+		),
+		attributes: {
+			agility: "d8",
+			smarts: "d6",
+			spirit: "d8",
+			strength: "d8",
+			vigor: "d8"
+		},
+		skills: {
+			'Fighting' : "d10",
+			'Intimidation' : "d8",
+			'Notice' : "d8",
+			'Shooting' : "d8",
+			'Stealth' : "d6"
+		},
+		charisma: "",
+		pace: "6",
+		parry: "8",
+		toughness: "9",
+		treasure: "Meager",
+		armor: "3",
+		gear: "Corselet (+3), chain arms and legs (+2), open helm (+3), long sword (Str+d8), dagger (Str+d4), medium shield (+1 Parry), some are equipped with crossbows (Range: 15/30/60, Damage 2d6)",
+		hindrances: "",
+		edges: "Combat Reflexes",
+
+		abilities: Array(
+
+		),
+		book: currentBook,
+
+		page: "p148"
+	},
+	{
+		name: "Watch Captain",
+		tags: "guard,police,guards,soldier,soldiers,",
+		wildcard: 1,
+		image: "http://img114.imageshack.us/img114/2449/hamsterwm3.png",
+		blurb: Array(
+			"Captains command a squad of town or city guards and answer only to the ruling authority."
+		),
+		attributes: {
+			agility: "d8",
+			smarts: "d8",
+			spirit: "d8",
+			strength: "d10",
+			vigor: "d8"
+		},
+		skills: {
+			'Fighting' : "d10",
+			'Intimidation' : "d10",
+			'Notice' : "d8",
+			'Riding' : "d8",
+			'Shooting' : "d8",
+			'Stealth' : "d6"
+		},
+		charisma: "",
+		pace: "6",
+		parry: "9",
+		toughness: "9",
+		treasure: "Worthwhile",
+		armor: "3",
+		gear: "Corselet (+3), plate arms and legs (+3), open helm (+3), long sword (Str+d8), dagger (Str+d4), medium shield (+1 Parry)",
+		hindrances: "",
+		edges: "Block, Combat Reflexes, Command",
+
+		abilities: Array(
+
+		),
+		book: currentBook,
+
+		page: "p149"
+	},
+	{
+		name: "Town/Village Militia",
+		tags: "guard,police,guards,soldier,soldiers,",
+		wildcard: 0,
+		image: "http://wiki.totalwar.com/images/e/e5/Ven_pike_militia_info.png",
+		blurb: Array(
+			"Militia are employed in smaller towns and in large villages. Though they are tasked with defending the area in case of emergency, it isn’t their primary job, and they are not particularly skilled."
+		),
+		attributes: {
+			agility: "d6",
+			smarts: "d6",
+			spirit: "d6",
+			strength: "d6",
+			vigor: "d6"
+		},
+		skills: {
+			'Fighting' : "d6",
+			'Intimidation' : "d4",
+			'Notice' : "d4",
+			'Shooting' : "d6",
+			'Stealth' : "d6"
+		},
+		charisma: "",
+		pace: "6",
+		parry: "5",
+		toughness: "6",
+		treasure: "Meager for every 5 soldiers",
+		armor: "1",
+		gear: "Leather (+1), short sword (Str+d6), dagger (Str+d4), some use slings (Range: 4/8/12, Damage: Str+d4)",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+
+		),
+		book: currentBook,
+
+		page: "p149"
+	},
+	{
+		name: "Tree Man Sapling",
+		tags: "",
+		wildcard: 0,
+		image: "http://digital-art-gallery.com/oid/10/3390x2712_3453_Tree_Man_2d_fantasy_tree_forest_god_picture_image_digital_art.jpg",
+		blurb: Array(
+			"According to the elves, tree men were present at the beginning of time. They are a sentient species, dedicated to guarding their forests against all forms of attack. They can resemble any form of regular tree, but are always of a type native to the forests in which they live."
+		),
+		attributes: {
+			agility: "d6",
+			smarts: "d6",
+			spirit: "d8",
+			strength: "d12+3",
+			vigor: "d10"
+		},
+		skills: {
+			'Fighting' : "d8",
+			'Stealth' : "d8"
+		},
+		charisma: "",
+		pace: "10",
+		parry: "6",
+		toughness: "15",
+		treasure: "None",
+		armor: "2",
+		gear: "",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+			{
+				name: "Armor +2",
+				description: "Thick Bark"
+			},
+			{
+				name: "Camouflage",
+				description: "When a tree man isn’t moving or attacking it looks just like a normal tree. It adds +4 to Stealth rolls."
+			},
+			{
+				name: "Lashing Branches",
+				description: "Str+d10, Reach 3."
+			},
+			{
+				name: "Huge",
+				description: "Characters add +4 when attacking a tree man because of its great size."
+			},
+			{
+				name: "Improved Sweep",
+				description: "May attack all adjacent foes."
+			},
+			{
+				name: "Powers",
+				description: "Tree men are lords of the forest. They have 10 Power Points and know beast friend and entangle."
+			},
+			{
+				name: "Size +6",
+				description: "Tree men are over 50’ tall"
+			},
+			{
+				name: "Weakness (Fire)",
+				description: "Fire-based attacks do +2 damage and the chance of catching alight is 5–6 on a d6."
+			}
+		),
+		book: currentBook,
+
+		page: "p149"
+	},
+	{
+		name: "Mature Tree Man",
+		tags: "",
+		wildcard: 0,
+		image: "http://digital-art-gallery.com/oid/10/3390x2712_3453_Tree_Man_2d_fantasy_tree_forest_god_picture_image_digital_art.jpg",
+		blurb: Array(
+			"According to the elves, tree men were present at the beginning of time. They are a sentient species, dedicated to guarding their forests against all forms of attack. They can resemble any form of regular tree, but are always of a type native to the forests in which they live."
+		),
+		attributes: {
+			agility: "d4",
+			smarts: "d6",
+			spirit: "d8",
+			strength: "d12+6",
+			vigor: "d12+1"
+		},
+		skills: {
+			'Fighting' : "d10",
+			'Stealth' : "d6"
+		},
+		charisma: "",
+		pace: "10",
+		parry: "7",
+		toughness: "21",
+		treasure: "None",
+		armor: "2",
+		gear: "",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+			{
+				name: "Armor +2",
+				description: "Thick Bark"
+			},
+			{
+				name: "Camouflage",
+				description: "When a tree man isn’t moving or attacking it looks just like a normal tree. It adds +4 to Stealth rolls."
+			},
+			{
+				name: "Lashing Branches",
+				description: "Str+d10, Reach 6."
+			},
+			{
+				name: "Gargantuan",
+				description: "Heavy Armor. Ranged attacks against tree men by man-size creatures are made at +4. His attacks are Heavy Weapons. Add Size to Damage when stomping."
+			},
+			{
+				name: "Huge",
+				description: "Characters add +4 when attacking a tree man because of its great size."
+			},
+			{
+				name: "Improved Sweep",
+				description: "May attack all adjacent foes."
+			},
+			{
+				name: "Powers",
+				description: "Tree men are lords of the forest. They have 25 Power Points and know beast friend and entangle."
+			},
+			{
+				name: "Size +11",
+				description: "Tree men are over 100’ tall."
+			},
+			{
+				name: "Weakness (Fire)",
+				description: "Fire-based attacks do +2 damage and the chance of catching alight is 5–6 on a d6."
+			}
+		),
+		book: currentBook,
+
+		page: "p149"
+	},
+	{
+		name: "Troll",
+		tags: "",
+		wildcard: 0,
+		image: "",
+		blurb: Array(
+			"Trolls in myths and legends were horrid, flesh-eating creatures who lived in deep woods, beneath bridges, or in hidden mountain caves. In modern games and fiction, the ability to regenerate damage and a weakness to fire have been added. These statistics reflect both backgrounds."
+		),
+		attributes: {
+			agility: "d6",
+			smarts: "d4",
+			spirit: "d6",
+			strength: "d12+2",
+			vigor: "d10"
+		},
+		skills: {
+			'Fighting' : "d8",
+			'Intimidation' : "d10",
+			'Notice' : "d6",
+			'Swim' : "d6",
+			'Throwing' : "d6"
+		},
+		charisma: "",
+		pace: "7",
+		parry: "6",
+		toughness: "10",
+		treasure: "Worthwhile, in lair",
+		armor: "1",
+		gear: "Spiked clubs (Str+d8)",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+			{
+				name: "Armor +1",
+				description: "Rubbery hide"
+			},
+			{
+				name: "Claws",
+				description: "Str+d4"
+			},
+			{
+				name: "Infravision",
+				description: "Trolls halve penalties for bad lighting when attacking living targets (round down)."
+			},
+			{
+				name: "Regeneration (Fast)",
+				description: "Trolls roll to regenerate each round. Fire stops their regeneration, as does cutting off their heads."
+			},
+			{
+				name: "Size +2",
+				description: "Trolls are tall, lanky creatures over 8’ tall."
+			}
+		),
+		book: currentBook,
+
+		page: "p150"
+	},
+	{
+		name: "Marsh Troll",
+		tags: "swamp troll,swamp,",
+		wildcard: 0,
+		image: "",
+		blurb: Array(
+			"Also known as swamp trolls, bog trolls, and marsh fiends, these foul creatures haunt dank marshes. Their skin is black and slimy, matching the murky waters of their home, and they stink like rotting vegetation."
+		),
+		attributes: {
+			agility: "d8",
+			smarts: "d4",
+			spirit: "d6",
+			strength: "d12+1",
+			vigor: "d10"
+		},
+		skills: {
+			'Fighting' : "d8",
+			'Notice' : "d6",
+			'Stealth' : "d8",
+			'Swimming' : "d6"
+		},
+		charisma: "",
+		pace: "7",
+		parry: "6",
+		toughness: "9",
+		treasure: "Worthwhile, in lair",
+		armor: "1",
+		gear: "Spiked clubs (Str+d8)",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+			{
+				name: "Armor +1",
+				description: "Rubbery hide"
+			},
+			{
+				name: "Claws",
+				description: "Str+d4"
+			},
+			{
+				name: "Immunity",
+				description: "Immune to poison and disease."
+			},
+			{
+				name: "Infection",
+				description: "The claws of a marsh troll are caked in filth. Any creature Shaken or wounded by a claw must make a Vigor roll. On a failure, the wound becomes infected. The victim has a cumulative –1 penalty to trait rolls until the wound is cleaned. This requires a successful Healing roll for each wound."
+			},
+			{
+				name: "Infravision",
+				description: "Trolls halve penalties for bad lighting when attacking living targets (round down)."
+			},
+			{
+				name: "Regeneration (Fast)",
+				description: "Trolls roll to regenerate each round. Fire stops their regeneration, as does cutting off their heads."
+			},
+			{
+				name: "Size +1",
+				description: "Marsh trolls are smaller than regular trolls, being only 7’ tall."
+			},
+			{
+				name: "Stench",
+				description: "Any creature adjacent to a marsh troll must make a Vigor roll or become Shaken with nausea."
+			}
+		),
+		book: currentBook,
+
+		page: "p150"
+	},
+	{
+		name: "Sea Troll",
+		tags: "skrag,skrags,mane,manes,",
+		wildcard: 0,
+		image: "",
+		blurb: Array(
+			"Called sea trolls by some, skrags and manes by others, these flesh-eating fiends haunt areas of rocks and seaweed.",
+			"They dress in numerous soft kelps, seashells, and other natural materials that add +2 to their Stealth when they sit quietly in small pools or piles of detritus from the sea."
+		),
+		attributes: {
+			agility: "d6",
+			smarts: "d4",
+			spirit: "d4",
+			strength: "d8",
+			vigor: "d8"
+		},
+		skills: {
+			'Fighting' : "d8",
+			'Notice' : "d6",
+			'Stealth' : "d6",
+			'Swimming' : "d10"
+		},
+		charisma: "",
+		pace: "5",
+		parry: "7",
+		toughness: "7",
+		treasure: "Worthwhile, in lair",
+		armor: "1",
+		gear: "Coral-tipped spear (Str+d6, Parry +1, Reach 1)",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+			{
+				name: "Aquatic",
+				description: "Sea trolls have a Pace of 10 underwater."
+			},
+			{
+				name: "Armor +1",
+				description: "Leathery hide"
+			},
+			{
+				name: "Claws",
+				description: "Str+d4"
+			},
+			{
+				name: "Infravision",
+				description: "Trolls halve penalties for bad lighting when attacking living targets (round down)."
+			},
+			{
+				name: "Regeneration (Fast)",
+				description: "Trolls roll to regenerate each round. Fire stops their regeneration, as does cutting off their heads."
+			},
+			{
+				name: "Sea Suit",
+				description: "+2 Stealth when hiding."
+			}
+		),
+		book: currentBook,
+
+		page: "p150"
+	},
+	{
+		name: "Sand Troll",
+		tags: "",
+		wildcard: 0,
+		image: "",
+		blurb: Array(
+			"Sand trolls primarily inhabit deserts, though they can sometimes be found on beaches. Their favorite tactic is to burrow just below the surface, then leap out to attack passing prey."
+		),
+		attributes: {
+			agility: "d8",
+			smarts: "d4",
+			spirit: "d6",
+			strength: "d12+1",
+			vigor: "d10"
+		},
+		skills: {
+			'Fighting' : "d8",
+			'Notice' : "d6",
+			'Stealth' : "d8"
+		},
+		charisma: "",
+		pace: "7",
+		parry: "6",
+		toughness: "11",
+		treasure: "Worthwhile, in lair",
+		armor: "1",
+		gear: "",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+			{
+				name: "Armor +1",
+				description: "Thick hide"
+			},
+			{
+				name: "Burrow",
+				description: "Pace 4"
+			},
+			{
+				name: "Claws",
+				description: "Str+d4"
+			},
+			{
+				name: "Infravision",
+				description: "Trolls halve penalties for bad lighting when attacking living targets (round down)."
+			},
+			{
+				name: "Regeneration (Fast)",
+				description: "Trolls roll to regenerate each round. Fire stops their regeneration, as does cutting off their heads."
+			},
+			{
+				name: "Size +3",
+				description: "Sand trolls are over 8’ tall."
+			}
+		),
+		book: currentBook,
+
+		page: "p151"
+	},
+	{
+		name: "Tyrannosaurus Rex",
+		tags: "dinosaur,",
+		wildcard: 0,
+		image: "",
+		blurb: Array(
+			"King of the dinosaurs, the T-rex is a deadly predator, capable of taking on prey much larger than itself. T-rex are poorly suited for mountainous and dense forest terrain, and can most often be found in hilly areas or on plains, where they hunt large herbivores."
+		),
+		attributes: {
+			agility: "d6",
+			smarts: "d4 (A)",
+			spirit: "d8",
+			strength: "d12+4",
+			vigor: "d8"
+		},
+		skills: {
+			'Fighting' : "d8",
+			'Notice' : "d8",
+			'Stealth' : "d6"
+		},
+		charisma: "",
+		pace: "8",
+		parry: "6",
+		toughness: "15",
+		treasure: "Worthwhile, in lair",
+		armor: "2",
+		gear: "",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+			{
+				name: "Armor +2",
+				description: "Thick hide"
+			},
+			{
+				name: "Bite",
+				description: "Str+d8; AP 2."
+			},
+			{
+				name: "Large",
+				description: "Creatures add +2 when attacking a T-rex due to their great size."
+			},
+			{
+				name: "Roar",
+				description: "As an action a T-rex can emit a terrifying roar. All those who hear the roar—typically anyone within a mile— must make a Spirit roll or be Shaken."
+			},
+			{
+				name: "Size +7",
+				description: "These fearsome creatures stand 30’ tall and weigh over 20,000 pounds."
+			}
+		),
+		book: currentBook,
+
+		page: "p151"
+	},
+	{
+		name: "Unicorn",
+		tags: "scotland,scottish,",
+		wildcard: 0,
+		image: "",
+		blurb: Array(
+			"Often seen as the embodiment of good and purity, unicorns are white horses with a horn growing from their forehead. The horn is said to possess magical properties, which makes them a target for unscrupulous hunters. A unicorn that loses its horn while still alive instantly dies."
+		),
+		attributes: {
+			agility: "d8",
+			smarts: "d8 (A)",
+			spirit: "d10",
+			strength: "d12+2",
+			vigor: "d10"
+		},
+		skills: {
+			'Fighting' : "d6",
+			'Notice' : "d8",
+			'Spellcasting' : "d12",
+			'Stealth' : "d8"
+		},
+		charisma: "",
+		pace: "10",
+		parry: "5",
+		toughness: "9",
+		treasure: "None",
+		armor: "0",
+		gear: "",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+			{
+				name: "Fleet Footed",
+				description: "Unicorns roll a d10 for their running die, rather than a d6."
+			},
+			{
+				name: "Force of Good",
+				description: "Unicorns add +2 to damage when attacking supernatural evil foes, and have +2 Toughness when suffering damage from such creatures."
+			},
+			{
+				name: "Healing",
+				description: "A unicorn can cast healing and greater healing by touching its horn to a target. It has 40 Power Points. A horn cut from a living unicorn retains these powers. Anyone performing such a foul deed is cursed by the gods of good. The victim’s skin becomes covered in boils and blisters which no magic can heal. He suffers –4 Charisma."
+			},
+			{
+				name: "Kick",
+				description: "Str+d6"
+			},
+			{
+				name: "Size +2",
+				description: "Unicorns weigh between 600 and 800 pounds."
+			}
+		),
+		book: currentBook,
+
+		page: "p151"
+	},
+	{
+		name: "Velociraptor",
+		tags: "dinosaur,",
+		wildcard: 0,
+		image: "",
+		blurb: Array(
+			"These smart, bipedal dinosaurs are pack hunters, and use remarkably well-developed tactics. True velociraptors were the size of turkeys—the larger variety made famous in the movies are actually dinonychus, a related species."
+		),
+		attributes: {
+			agility: "d8",
+			smarts: "d8 (A)",
+			spirit: "d6",
+			strength: "d10",
+			vigor: "d8"
+		},
+		skills: {
+			'Climbing' : "d6",
+			'Fighting' : "d8",
+			'Notice' : "d8",
+			'Stealth' : "d6",
+			'Swim' : "d6"
+		},
+		charisma: "",
+		pace: "8",
+		parry: "6",
+		toughness: "9",
+		treasure: "Meager, in lair",
+		armor: "2",
+		gear: "",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+			{
+				name: "Armor +2",
+				description: "Velociraptors have thick scaly hides."
+			},
+			{
+				name: "Bite or Rake",
+				description: "Str+d8"
+			},
+			{
+				name: "Size +1",
+				description: "Velociraptors are about 7’ tall."
+			}
+		),
+		book: currentBook,
+
+		page: "p152"
+	},
+	{
+		name: "War tree",
+		tags: "",
+		wildcard: 0,
+		image: "",
+		blurb: Array(
+			"War trees are regular trees animated through dryad or special elven magic. They are not sentient, but possess animal-like intelligence."
+		),
+		attributes: {
+			agility: "d4",
+			smarts: "d4 (A)",
+			spirit: "d10",
+			strength: "d12+6",
+			vigor: "d10"
+		},
+		skills: {
+
+			'Fighting' : "d8",
+			'Notice' : "d6"
+		},
+		charisma: "",
+		pace: "6",
+		parry: "6",
+		toughness: "19",
+		treasure: "None",
+		armor: "4",
+		gear: "",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+			{
+				name: "Armor +4",
+				description: "Thick bark."
+			},
+			{
+				name: "Branch Swipe",
+				description: "Str+d6, Reach 1."
+			},
+			{
+				name: "Huge",
+				description: "Attackers are +4 to attack rolls against a war tree due to its siz"
+			},
+			{
+				name: "Plant",
+				description: "Plants are not subject to Fear and Tests of Will."
+			},
+			{
+				name: "Size +8",
+				description: "An average war tree is over 40’ tall."
+			},
+			{
+				name: "Stomp",
+				description: "Str+d10. The creature is naturally adept at using its full weight to smash its foes. Nonrigid armor (leather, chain mail) offers no protection against the stomp."
+			},
+			{
+				name: "Sweep",
+				description: "A war tree can attack all adjacent opponents at no penalty."
+			},
+			{
+				name: "Weakness (Fire)",
+				description: "Fire attacks cause +4 damage."
+			}
+		),
+		book: currentBook,
+
+		page: "p152"
+	},
+	{
+		name: "Werebear",
+		tags: "",
+		wildcard: 0,
+		image: "",
+		blurb: Array(
+			"Whereas werewolves take delight in using their powers to kill, werebears are generally more refrained. Even in human form, werebears prefer to stay far from civilization. Good werebears, and they do exist, often help elves and rangers patrol the wilderness. Those of evil nature revel in their dark powers, however."
+		),
+		attributes: {
+			agility: "d8",
+			smarts: "d6",
+			spirit: "d8",
+			strength: "d12+6",
+			vigor: "d12+2"
+		},
+		skills: {
+			'Climb' : "d8",
+			'Fighting' : "d12+2",
+			'Intimidation' : "d10",
+			'Notice' : "d12",
+			'Swimming' : "d6",
+			'Stealth' : "d8",
+			'Tracking' : "d8"
+
+		},
+		charisma: "",
+		pace: "8",
+		parry: "9",
+		toughness: "11",
+		treasure: "Meager, in lair",
+		armor: "0",
+		gear: "",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+			{
+				name: "Bear Hug",
+				description: "A werebear that hits with a raise has pinned his foe and attacks at +2 until the foe is freed. The opponent may only attempt to escape the hug on his action, which requires a raise on an opposed Strength roll."
+			},
+			{
+				name: "Bite/Claws",
+				description: "Str+d8"
+			},
+			{
+				name: "Infection",
+				description: "Anyone slain by a has a 50% chance of rising as a werebear themselves. The character involuntarily transforms every full moon. He gains control of his lycanthropy only after 1d6 years as a wearbear."
+			},
+			{
+				name: "Immunity",
+				description: "Werecreatures cannot be wounded by weapons that are not silver, only Shaken"
+			},
+			{
+				name: "Low Light Vision",
+				description: "Werebears ignore penalties for Dim and Dark lighting."
+			},
+			{
+				name: "Size +2",
+				description: "These creatures stand up to 8’ tall and weigh over 1000 pounds each."
+			},
+			{
+				name: "Weakness (Silver)",
+				description: "Wearbears suffer normal damage from silver weapons."
+			}
+		),
+		book: currentBook,
+
+		page: "p153"
+	},
+	{
+		name: "Wight",
+		tags: "undead,",
+		wildcard: 0,
+		image: "",
+		blurb: Array(
+			"Wights are restless dead, most often noble lords whose greed and earthly desires cause their spirits to remain behind to guard their treasures."
+		),
+		attributes: {
+			agility: "d8",
+			smarts: "d8",
+			spirit: "d10",
+			strength: "d8",
+			vigor: "d8"
+		},
+		skills: {
+			'Fighting' : "d8",
+			'Intimidation' : "d10",
+			'Notice' : "d6",
+			'Stealth' : "d10"
+
+		},
+		charisma: "",
+		pace: "6",
+		parry: "6",
+		toughness: "11",
+		treasure: "Rich, in lair",
+		armor: "4",
+		gear: "Ancient bronze breastplate (+3), bronze long sword (Str+d8)",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+			{
+				name: "Armor +1",
+				description: "Leathery Skin"
+			},
+			{
+				name: "Bony Claws",
+				description: "Str+d4"
+			},
+			{
+				name: "Fear -1",
+				description: "Anyone who sees a wight must make a Fear check at –1."
+			},
+			{
+				name: "Fearless",
+				description: "Wights are immune to Fear and Intimidation."
+			},
+			{
+				name: "Poison",
+				description: "Wights’ claws deliver a powerful neurotoxin. A character clawed by a wight must make a Vigor roll at –2. With success, the character gets the “shakes,” suffering –1 to all trait rolls for 24 hours. On a failure, the victim becomes immediately Incapacitated and dies in 2d6 rounds unless treated. A successful Healing roll at –2 prevents this."
+			},
+			{
+				name: "Quick",
+				description: "Wights redraw action cards less than 5."
+			},
+			{
+				name: "Undead",
+				description: " +2 Toughness; +2 to recover from being Shaken; Immune to poison and disease; No additional damage from called shots."
+			}
+		),
+		book: currentBook,
+
+		page: "p153"
+	},
+	{
+		name: "Will-o-the-Wisp",
+		tags: "willowisp,will-o-wisp,marsh,phantom,",
+		wildcard: 0,
+		image: "",
+		blurb: Array(
+			"Also known as marsh phantoms and ghost lanterns, wisps are malicious spirits resembling glowing balls of light. They captivate victims with their lights, then lead them into quicksand or the lairs of dangerous beasts. They have no combat capabilities and so try to remain a safe distance from their prey."
+		),
+		attributes: {
+			agility: "d10",
+			smarts: "d6",
+			spirit: "d8",
+			strength: "d4",
+			vigor: "d6"
+		},
+		skills: {
+			'Notice' : "d10"
+
+		},
+		charisma: "",
+		pace: "8",
+		parry: "2",
+		toughness: "3",
+		treasure: "None",
+		armor: "0",
+		gear: "",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+			{
+				name: "Charm",
+				description: "By swaying from side to side and pulsating, wisps can charm prey into following them. This requires a Spirit roll opposed by the victim’s Smarts. If the victim ever loses sight of the wisp, the charm is broken."
+			},
+			{
+				name: "Size -2",
+				description: "Wisps measure 1’ in diameter."
+			},
+			{
+				name: "Small",
+				description: "Attackers are –2 to attack wisps because of their size."
+			}
+		),
+		book: currentBook,
+
+		page: "p153"
+	},
+	{
+		name: "Wyvern",
+		tags: "",
+		wildcard: 0,
+		image: "",
+		blurb: Array(
+			"Wyverns resemble small, two-legged dragons. They have no fiery breath, but possess long necks, sharp teeth, and a poisonous sting in their tail. Some wyverns have wings (Flight: 6”; Climb 3”)."
+		),
+		attributes: {
+			agility: "d8",
+			smarts: "d6 (A)",
+			spirit: "d8",
+			strength: "d12+2",
+			vigor: "d10"
+		},
+		skills: {
+			'Climbing' : "d6",
+			'Fighting' : "d8",
+			'Intimidation' : "d8",
+			'Notice' : "d8",
+
+		},
+		charisma: "",
+		pace: "6",
+		parry: "6",
+		toughness: "12",
+		treasure: "Worthwhile, in lair",
+		armor: "2",
+		gear: "",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+			{
+				name: "Armor +2",
+				description: "Thick Scales"
+			},
+			{
+				name: "Bite/Sting",
+				description: "Str+d6, Reach 1"
+			},
+			{
+				name: "Improved Frenzy",
+				description: "Wyverns may make a bite and sting attack in the same round at no penalty."
+			},
+			{
+				name: "Poison",
+				description: "Anyone Shaken or wounded by a sting attack must make a Vigor roll at –2 or be paralyzed for 1d6 rounds."
+			},
+			{
+				name: "Quick",
+				description: "Wyverns move with exceptional speed. They redraw action cards of 5 or lower."
+			},
+			{
+				name: "Size +3",
+				description: "Wyverns weigh around 1500 points"
+			}
+		),
+		book: currentBook,
+
+		page: "p153"
+	},
+	{
+		name: "Zombie",
+		tags: "undead,",
+		wildcard: 0,
+		image: "",
+		blurb: Array(
+			"These walking dead are typical groaning fiends looking for fresh meat."
+		),
+		attributes: {
+			agility: "d6",
+			smarts: "d4",
+			spirit: "d4",
+			strength: "d6",
+			vigor: "d6"
+		},
+		skills: {
+			'Fighting' : "d6",
+			'Intimidation' : "d6",
+			'Notice' : "d4",
+			'Shooting' : "d6"
+
+		},
+		charisma: "",
+		pace: "4",
+		parry: "5",
+		toughness: "7",
+		treasure: "None",
+		armor: "0",
+		gear: "",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+			{
+				name: "Claws",
+				description: "Str+d4"
+			},
+			{
+				name: "Fearless",
+				description: "Zombies are immune to Fear and Intimidation."
+			},
+			{
+				name: "Undead",
+				description: " +2 Toughness; +2 to recover from being Shaken; Immune to poison and disease; No additional damage from called shots."
+			},
+			{
+				name: "Weakness (Head)",
+				description: "Shots to a zombie’s head are +2 damage."
+			}
+		),
+		book: currentBook,
+
+		page: "p154"
+	},
+	{
+		name: "Zombie Bear",
+		tags: "undead,",
+		wildcard: 0,
+		image: "",
+		blurb: Array(
+			"Obviously zombie animals are much more dangerous than regular zombies. You may wish to increase the Power Point cost to raise zombie animals to reflect this. Increasing the cost by 1 Power Point per level of Size is a good place to start, but you could just as easily use the shape change chart as a guideline."
+		),
+		attributes: {
+			agility: "d6",
+			smarts: "d6(A)",
+			spirit: "d8",
+			strength: "d12+4",
+			vigor: "d12"
+		},
+		skills: {
+			'Fighting' : "d8",
+			'Notice' : "d8",
+			'Swim' : "d6"
+
+		},
+		charisma: "",
+		pace: "6",
+		parry: "6",
+		toughness: "12",
+		treasure: "None",
+		armor: "0",
+		gear: "",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+			{
+				name: "Bear Hug",
+				description: "Bears don’t actually “hug” their victims, but they do attempt to use their weight to pin their prey and rend it with their claws and teeth. A bear that hits with a raise has pinned his foe and attacks at +2 until the foe is freed. The opponent may only attempt to escape the “hug” on his action, which requires a raise on an opposed Strength roll."
+			},
+			{
+				name: "Claws",
+				description: "Str+d6"
+			},
+			{
+				name: "Size+2",
+				description: "These creatures stand up to 8’ tall and weigh over 1000 pounds each."
+			},
+			{
+				name: "Undead",
+				description: " +2 Toughness; +2 to recover from being Shaken; Immune to poison and disease; No additional damage from called shots."
+			},
+			{
+				name: "Weakness (Head)",
+				description: "Shots to a zombie’s head are +2 damage."
+			}
+		),
+		book: currentBook,
+
+		page: "p154"
+	},
+	{
+		name: "Zombie Giant Spider",
+		tags: "undead,",
+		wildcard: 0,
+		image: "",
+		blurb: Array(
+			"Obviously zombie animals are much more dangerous than regular zombies. You may wish to increase the Power Point cost to raise zombie animals to reflect this. Increasing the cost by 1 Power Point per level of Size is a good place to start, but you could just as easily use the shape change chart as a guideline."
+		),
+		attributes: {
+			agility: "d10",
+			smarts: "d4(A)",
+			spirit: "d6",
+			strength: "d10",
+			vigor: "d6"
+		},
+		skills: {
+			'Climbing' : "d12+2",
+			'Fighting' : "d8",
+			'Intimidation' : "d10",
+			'Notice' : "d8",
+			'Shooting' : "d10",
+			'Stealth' : "d10"
+
+		},
+		charisma: "",
+		pace: "6",
+		parry: "6",
+		toughness: "7",
+		treasure: "None",
+		armor: "0",
+		gear: "",
+		hindrances: "",
+		edges: "",
+
+		abilities: Array(
+			{
+				name: "Bite",
+				description: "Str+d4"
+			},
+			{
+				name: "Poison(-4)",
+				description: "The bite of the spider causes instant paralysis for those who fail their Vigor roll. It lasts for 1d6 rounds."
+			},
+			{
+				name: "Webbing",
+				description: "Spiders can cast webs from their thorax that are the size of Small Burst Templates. This is a Shooting roll with a range of 3/6/12. Anything in the web must cut or break their way free (Toughness 7). Webbed characters can still fight, but all physical actions are at –4."
+			},
+			{
+				name: "Undead",
+				description: " +2 Toughness; +2 to recover from being Shaken; Immune to poison and disease; No additional damage from called shots."
+			},
+			{
+				name: "Weakness (Head)",
+				description: "Shots to a zombie’s head are +2 damage."
+			}
+		),
+		book: currentBook,
+
+		page: "p154"
 	}
 ));
