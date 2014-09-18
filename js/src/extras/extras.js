@@ -3,8 +3,8 @@
 	Creative Commons Attribution 4.0 International License.
 */
 
-if(!localStorage.extras_search_term)
-	localStorage.extras_search_term = "";
+if(!localStorage["com.jdg.swwt.tmp.extras_search_term"])
+	localStorage["com.jdg.swwt.tmp.extras_search_term"] = "";
 
 function exportToSQL() {
 	sql = "truncate table `extras`;\n\n";
@@ -364,11 +364,11 @@ $(document).ready( function() {
 		availableBookChecks()
 	);
 
-	if( localStorage.extras_search_term != "") {
-		$("#search-box").val(localStorage.extras_search_term);
+	if( localStorage["com.jdg.swwt.tmp.extras_search_term"] != "") {
+		$("#search-box").val(localStorage["com.jdg.swwt.tmp.extras_search_term"]);
 
-		if(localStorage.extras_search_term != "")
-			$("#search-results").html( filterExtras( localStorage.extras_search_term ) );
+		if(localStorage["com.jdg.swwt.tmp.extras_search_term"] != "")
+			$("#search-results").html( filterExtras( localStorage["com.jdg.swwt.tmp.extras_search_term"] ) );
 		else
 			$("#search-results").html( defaultSearchMessage() );
 
@@ -385,7 +385,7 @@ $(document).ready( function() {
 		else
 			$("#search-results").html( defaultSearchMessage() );
 		updateLocalStats();
-		localStorage.extras_search_term = $("#search-box").val().toLowerCase().trim();
+		localStorage["com.jdg.swwt.tmp.extras_search_term"] = $("#search-box").val().toLowerCase().trim();
 	});
 
 	$("#book-checks label input[type=checkbox]").change( function() {
@@ -395,7 +395,7 @@ $(document).ready( function() {
 		else
 			$("#search-results").html( defaultSearchMessage() );
 		updateLocalStats();
-		localStorage.extras_search_term = $("#search-box").val();
+		localStorage["com.jdg.swwt.tmp.extras_search_term"] = $("#search-box").val();
 	});
 
 });

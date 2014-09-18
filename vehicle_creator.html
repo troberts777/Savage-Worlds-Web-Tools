@@ -157,7 +157,7 @@
 				</p>
 			</div>
 			<div class="col-xs-6 text-right">
-				<p>App Version: 2014-09-18-01</p>
+				<p>App Version: 2014-09-18-02</p>
 			</div>
 		</div>
 	</div>
@@ -183,8 +183,8 @@ $(window).load(
 	function(){
 		current_selected_object = new sw_vehicle();
 		current_selected_object.init("vehicle", "Vehicle", vehicle_sizes, vehicle_modifications);
-		if( typeof(localStorage["current_" + current_selected_object.object_type]) != "undefined" && localStorage["current_" + current_selected_object.object_type]) {
-			current_selected_object.import_json( localStorage["current_" + current_selected_object.object_type] );
+		if( typeof(localStorage["com.jdg.swwt.tmp.current_" + current_selected_object.object_type]) != "undefined" && localStorage["com.jdg.swwt.tmp.current_" + current_selected_object.object_type]) {
+			current_selected_object.import_json( localStorage["com.jdg.swwt.tmp.current_" + current_selected_object.object_type] );
 			$(".js-set-name").val(current_selected_object.item_name);
 			$(".js-set-description").val(current_selected_object.object_description);
 		}

@@ -3,12 +3,70 @@
 	Creative Commons Attribution 4.0 International License.
 */
 
-if(!localStorage.vehicles)
-	localStorage.vehicles = "";
+if(!localStorage["com.jdg.swwt.vehicles"])
+	localStorage["com.jdg.swwt.vehicles"] = "";
+
+if(!localStorage["com.jdg.swwt.characters"])
+	localStorage["com.jdg.swwt.characters"] = "";
+
+if(localStorage.vehicles) {
+	localStorage["com.jdg.swwt.vehicles"] = localStorage.vehicles;
+	localStorage.removeItem("vehicles");
+}
+
+if(localStorage.characters) {
+	localStorage["com.jdg.swwt.characters"] = localStorage.characters;
+	localStorage.removeItem("characters");
+}
+
+
+if(localStorage.current_walker) {
+	localStorage["com.jdg.swwt.tmp.current_walker"] = localStorage.current_walker;
+	localStorage.removeItem("current_walker");
+}
+
+if(localStorage.current_starship) {
+	localStorage["com.jdg.swwt.tmp.current_starship"] = localStorage.current_starship;
+	localStorage.removeItem("current_starship");
+}
+
+if(localStorage.current_vehicle) {
+	localStorage["com.jdg.swwt.tmp.current_vehicle"] = localStorage.current_vehicle;
+	localStorage.removeItem("current_vehicle");
+}
+
+if(localStorage.current_power_armor) {
+	localStorage["com.jdg.swwt.tmp.current_power_armor"] = localStorage.current_power_armor;
+	localStorage.removeItem("current_power_armor");
+}
+
+if(localStorage.current_printcart) {
+	localStorage["com.jdg.swwt.tmp.current_printcart"] = localStorage.current_printcart;
+	localStorage.removeItem("current_printcart");
+}
+
+if(localStorage.saved_printcarts) {
+	localStorage["com.jdg.swwt.tmp.saved_printcarts"] = localStorage.saved_printcarts;
+	localStorage.removeItem("saved_printcarts");
+}
+
+if(localStorage.extras_search_term) {
+	localStorage["com.jdg.swwt.tmp.extras_search_term"] = localStorage.extras_search_term;
+	localStorage.removeItem("extras_search_term");
+}
+
+if(localStorage.current_character) {
+	localStorage["com.jdg.swwt.tmp.current_character"] = localStorage.current_character;
+	localStorage.removeItem("current_character");
+}
+
+if(localStorage.current_Walker) {
+	localStorage.removeItem("current_Walker");
+}
 
 function localstorage_parse_data() {
 	try {
-		current_vehicles = JSON.parse(localStorage.vehicles);
+		current_vehicles = JSON.parse(localStorage["com.jdg.swwt.vehicles"]);
 	}
 	catch(e) {
 		current_vehicles = Array();
@@ -31,7 +89,7 @@ function save_to_localstorage(saveJSON) {
 
 	current_vehicles = current_vehicles.concat(storageObject);
 
-	localStorage.vehicles = JSON.stringify(current_vehicles);
+	localStorage["com.jdg.swwt.vehicles"] = JSON.stringify(current_vehicles);
 }
 
 function get_data_from_localstorage(itemIndex) {
@@ -48,13 +106,13 @@ function get_data_from_localstorage(itemIndex) {
 	}
 }
 
-function delete_item_from_localstorage(itemIndex) {
+function delete_item_from_localStorage(itemIndex) {
 	current_vehicles = localstorage_parse_data();
 
 	if( typeof(current_vehicles[itemIndex]) != "undefined" ) {
 		if( typeof(current_vehicles[itemIndex].data) != "undefined" ) {
 			current_vehicles.splice(itemIndex, 1);
-			localStorage.vehicles = JSON.stringify(current_vehicles);
+			localStorage["com.jdg.swwt.vehicles"] = JSON.stringify(current_vehicles);
 		}
 	}
 }
@@ -73,34 +131,37 @@ function get_localstorage_list() {
 function get_backup_summary() {
 	html = "";
 
+	var total_count_items = 0;
 	for (var key in localStorage){
     	if (localStorage.hasOwnProperty(key)) {
-    		counted_items = 0;
+    		var counted_items = 0;
     		if(
-    			key.indexOf("current_") == -1
-    			&& key.indexOf("gm_control_") == -1
-    			&& key != "localStats"
-    			&& key != "saved_printcarts"
-    			&& key != "extras_search_term"
+    			key.indexOf("com.jdg.swwt") === 0
+    			&& key.indexOf("com.jdg.swwt.tmp") === -1
     		) {
+    			keyname = uc_words( key.replace("com.jdg.swwt.", "") );
+
     			if(localStorage[key] && localStorage[key].length >  0) {
+
     				try{
-    					html += "" + uc_words(key) + " has " + JSON.parse(localStorage[key]).length + " items<br />";
-    					counted_items += JSON.parse(localStorage[key]).length;
+    					num_items = JSON.parse(localStorage[key]).length;
+    					html += "" + keyname + " has " + num_items + " items<br />";
+    					counted_items += num_items;
+    					total_count_items += num_items;
     				}
     				catch(err) {
-    					html += "" + uc_words(key) + " has an encoding error.<br />";
+    					html += "" + keyname + " has an encoding error.<br />";
     				}
 
     			} else {
-    	     		html += "" + uc_words(key) + " is empty<br />";
+    	     		html += "" + keyname + " is empty<br />";
     			}
     		}
    	 	}
 
 	}
 
-	if(counted_items > 0)
+	if(total_count_items > 0)
 		html += "<br /><button class=\"btn btn-primary js-export-data\">Download Data</button>";
 
 	return html;
@@ -169,7 +230,7 @@ function import_restore_file( import_data, run_import ) {
 			return false;
 		} else {
 			if( run_import ) {
-				import_to_localstorage( import_object );
+				import_to_localStorage( import_object );
 			}
 			return true;
 		}

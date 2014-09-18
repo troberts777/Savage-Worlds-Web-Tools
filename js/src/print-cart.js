@@ -5,8 +5,8 @@
 
 /* Welcome to the PRINT CART! */
 
-if( !localStorage.current_printcart ) {
-	localStorage.current_printcart = "";
+if( !localStorage["com.jdg.swwt.tmp.current_printcart"] ) {
+	localStorage["com.jdg.swwt.tmp.current_printcart"] = "";
 }
 
 // if( !localStorage.saved_printcarts ) {
@@ -14,15 +14,15 @@ if( !localStorage.current_printcart ) {
 // }
 
 function get_print_cart_items() {
-	if( localStorage.current_printcart != "") {
-		return JSON.parse(localStorage.current_printcart);
+	if( localStorage["com.jdg.swwt.tmp.current_printcart"] != "") {
+		return JSON.parse(localStorage["com.jdg.swwt.tmp.current_printcart"]);
 	} else {
 		return Array();
 	}
 }
 
 function save_print_cart_items(current_items) {
-	localStorage.current_printcart = JSON.stringify(current_items);
+	localStorage["com.jdg.swwt.tmp.current_printcart"] = JSON.stringify(current_items);
 	print_cart_items_html();
 }
 

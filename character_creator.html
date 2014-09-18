@@ -429,7 +429,7 @@
 				</p>
 			</div>
 			<div class="col-xs-6 text-right">
-				<p>App Version: 2014-09-18-01</p>
+				<p>App Version: 2014-09-18-02</p>
 			</div>
 		</div>
 	</div>
@@ -457,8 +457,8 @@ $(window).load(
 	function(){
 		current_character = new character_class();
 		current_character.init();
-		if( typeof(localStorage["current_character"]) != "undefined" && localStorage["current_character"]) {
-			current_character.import_json( localStorage["current_character"] );
+		if( typeof(localStorage["com.jdg.swwt.tmp.current_character"]) != "undefined" && localStorage["com.jdg.swwt.tmp.current_character"]) {
+			current_character.import_json( localStorage["com.jdg.swwt.tmp.current_character"] );
 			$(".js-chargen-name").val(current_character.name);
 			$(".js-chargen-description").val(current_character.description);
 		}

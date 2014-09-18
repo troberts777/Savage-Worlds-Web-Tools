@@ -495,7 +495,7 @@ character_class.prototype = {
 
 	don_power_armor: function ( power_armor_index ) {
 
-		selected_item = get_data_from_localstorage(power_armor_index);
+		selected_item = get_data_from_localStorage(power_armor_index);
 		this.load_power_armor( selected_item );
 	},
 

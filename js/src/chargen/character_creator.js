@@ -1633,7 +1633,7 @@ function init_main_buttons() {
 			};
 
 			try {
-				current_characters = JSON.parse(localStorage.characters);
+				current_characters = JSON.parse(localStorage["com.jdg.swwt.characters"]);
 			}
 			catch(e) {
 				current_characters = Array();
@@ -1641,7 +1641,7 @@ function init_main_buttons() {
 
 			current_characters = current_characters.concat(storageObject);
 
-			localStorage.characters = JSON.stringify(current_characters);
+			localStorage["com.jdg.swwt.characters"] = JSON.stringify(current_characters);
 
 			propagate_character_load_list();
 
@@ -1661,7 +1661,7 @@ function load_selected_character() {
 		$(".js-chargen-description").unbind("keyup");
 		selectedItemIndex = selectedItemIndex / 1;
 		try {
-			current_characters = JSON.parse(localStorage.characters);
+			current_characters = JSON.parse(localStorage["com.jdg.swwt.characters"]);
 		}
 		catch(e) {
 			current_characters = Array();
@@ -1688,7 +1688,7 @@ function load_selected_character() {
 
 function propagate_character_load_list() {
 	try {
-		current_load_data = JSON.parse(localStorage.characters);
+		current_load_data = JSON.parse(localStorage["com.jdg.swwt.characters"]);
 	}
 	catch(e) {
 		current_load_data = Array();
@@ -1730,7 +1730,7 @@ function propagate_character_load_list() {
 			if(ok_clicked) {
 
 				try {
-					current_characters = JSON.parse(localStorage.characters);
+					current_characters = JSON.parse(localStorage["com.jdg.swwt.characters"]);
 				}
 				catch(e) {
 					current_characters = Array();
@@ -1739,7 +1739,7 @@ function propagate_character_load_list() {
 				if( typeof(current_characters[selectedItemIndex]) != "undefined" ) {
 					if( typeof(current_characters[selectedItemIndex].data) != "undefined" ) {
 						current_characters.splice(selectedItemIndex, 1);
-						localStorage.characters = JSON.stringify(current_characters);
+						localStorage["com.jdg.swwt.characters"] = JSON.stringify(current_characters);
 					}
 				}
 
