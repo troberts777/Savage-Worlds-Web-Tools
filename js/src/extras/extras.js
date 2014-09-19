@@ -3,8 +3,8 @@
 	Creative Commons Attribution 4.0 International License.
 */
 
-if(!localStorage["com.jdg.swwt.tmp.extras_search_term"])
-	localStorage["com.jdg.swwt.tmp.extras_search_term"] = "";
+if(!localStorage["com.jdg.swwt.tmp.extras.search_term"])
+	localStorage["com.jdg.swwt.tmp.extras.search_term"] = "";
 
 function exportToSQL() {
 	sql = "truncate table `extras`;\n\n";
@@ -289,16 +289,13 @@ function filterExtras(searchTerm) {
 
 	for (var lCount = 0; lCount < extraBooks.length; lCount++) {
 
-		check_var_name = "com.jdg.swwt.tmp.extras_" + extraBooks[lCount].name.toLowerCase().replace(" ", "_").replace(" ", "_").replace(" ", "_") + "_checked";
+		check_var_name = "com.jdg.swwt.tmp.extras." + extraBooks[lCount].short_name + "_checked";
 
-		if( $("input[name=\"" + extraBooks[lCount].name + "\"]").is(":checked") ) {
+		if( $("." + extraBooks[lCount].short_name + "_check").is(":checked") ) {
 			localStorage[ check_var_name ] = 1;
-			console.log(check_var_name + ": 1");
 		} else {
 			localStorage[ check_var_name ] = 0;
-			console.log(check_var_name + ": 0");
 		}
-
 
 	}
 
@@ -310,10 +307,6 @@ function filterExtras(searchTerm) {
 		if((typeof(extraDatabase[lCount].book.name)) != "undefined") {
 			if( $("input[name=\"" + extraDatabase[lCount].book.name + "\"]").is(":checked") ) {
 				bookIsChecked = true;
-				localStorage[ check_var_name ] = 1;
-
-			} else {
-				localStorage[ check_var_name ] = 0;
 			}
 		}
 
@@ -365,7 +358,7 @@ function availableBookChecks() {
 	returnHTML = "";
 	for (var lCount = 0; lCount < extraBooks.length; lCount++) {
 		checked = " checked=\"checked\"";
-		check_var_name = "com.jdg.swwt.tmp.extras_" + extraBooks[lCount].name.toLowerCase().replace(" ", "_").replace(" ", "_").replace(" ", "_") + "_checked";
+		check_var_name = "com.jdg.swwt.tmp.extras." + extraBooks[lCount].short_name + "_checked";
 		if( typeof(localStorage[ check_var_name ]) != "undefined" ) {
 			if( localStorage[ check_var_name ] == 0 ){
 				checked = "";
@@ -374,8 +367,9 @@ function availableBookChecks() {
 		} else {
 			localStorage[ check_var_name ] = 1;
 		}
+
 		returnHTML += "<label>";
-		returnHTML += "<input  type=\"checkbox\"" + checked + " name=\"" + extraBooks[lCount].name + "\" value=\"1\"> " + extraBooks[lCount].name + "</li>";
+		returnHTML += "<input class=\"" + extraBooks[lCount].short_name + "_check\" type=\"checkbox\"" + checked + " name=\"" + extraBooks[lCount].name + "\" value=\"1\"> " + extraBooks[lCount].name + "</li>";
 		returnHTML += "</label>";
 	}
 
@@ -415,11 +409,11 @@ $(document).ready( function() {
 		availableBookChecks()
 	);
 
-	if( localStorage["com.jdg.swwt.tmp.extras_search_term"] != "") {
-		$("#search-box").val(localStorage["com.jdg.swwt.tmp.extras_search_term"]);
+	if( localStorage["com.jdg.swwt.tmp.extras.search_term"] != "") {
+		$("#search-box").val(localStorage["com.jdg.swwt.tmp.extras.search_term"]);
 
-		if(localStorage["com.jdg.swwt.tmp.extras_search_term"] != "")
-			$("#search-results").html( filterExtras( localStorage["com.jdg.swwt.tmp.extras_search_term"] ) );
+		if(localStorage["com.jdg.swwt.tmp.extras.search_term"] != "")
+			$("#search-results").html( filterExtras( localStorage["com.jdg.swwt.tmp.extras.search_term"] ) );
 		else
 			$("#search-results").html( defaultSearchMessage() );
 
@@ -436,7 +430,7 @@ $(document).ready( function() {
 		else
 			$("#search-results").html( defaultSearchMessage() );
 		updateLocalStats();
-		localStorage["com.jdg.swwt.tmp.extras_search_term"] = $("#search-box").val().toLowerCase().trim();
+		localStorage["com.jdg.swwt.tmp.extras.search_term"] = $("#search-box").val().toLowerCase().trim();
 	});
 
 	$("#book-checks label input[type=checkbox]").change( function() {
@@ -446,7 +440,7 @@ $(document).ready( function() {
 		else
 			$("#search-results").html( defaultSearchMessage() );
 		updateLocalStats();
-		localStorage["com.jdg.swwt.tmp.extras_search_term"] = $("#search-box").val();
+		localStorage["com.jdg.swwt.tmp.extras.search_term"] = $("#search-box").val();
 	});
 
 });

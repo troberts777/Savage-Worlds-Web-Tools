@@ -13,7 +13,8 @@ var books_list = Array();
 
 books_list[0] = {
 	id: 1,
-	name: "Savage Worlds Deluxe",
+	name: "Savage Worlds Deluxe (EE)",
+	short_name: "peg_swd_ee",
 	publisher: "Pinnacle Entertainment Group",
 	year: "2011",
 	copyright: "2011 Pinnacle Entertainment Group",
@@ -23,6 +24,7 @@ books_list[0] = {
 books_list[1] = {
 	id: 2,
 	name: "Fantasy Companion",
+	short_name: "peg_swfc",
 	publisher: "Pinnacle Entertainment Group",
 	year: "2013",
 	copyright: "2012 Pinnacle Entertainment Group",
@@ -32,6 +34,7 @@ books_list[1] = {
 books_list[2] = {
 	id: 3,
 	name: "Horror Companion",
+	short_name: "peg_swhc",
 	publisher: "Pinnacle Entertainment Group",
 	year: "2012",
 	copyright: "2012 Pinnacle Entertainment Group",
@@ -41,6 +44,7 @@ books_list[2] = {
 books_list[3] = {
 	id: 4,
 	name: "Savage Worlds Deluxe",
+	short_name: "peg_swd",
 	publisher: "Pinnacle Entertainment Group",
 	year: "2011",
 	copyright: "2011 Pinnacle Entertainment Group"
@@ -49,6 +53,7 @@ books_list[3] = {
 books_list[4] = {
 	id: 5,
 	name: "Sci-Fi Companion",
+	short_name: "peg_sfc",
 	publisher: "Pinnacle Entertainment Group",
 	year: "2014",
 	copyright: "2014 Pinnacle Entertainment Group",
@@ -58,16 +63,17 @@ books_list[4] = {
 books_list[5] = {
 	id: 6,
 	name: "Super Powers Companion",
+	short_name: "peg_spc",
 	publisher: "Pinnacle Entertainment Group",
 	year: "2014",
 	copyright: "2014 Pinnacle Entertainment Group",
 	buyme: "https://www.peginc.com/store/super-powers-companion-second-edition-le/"
 }
 
-
 books_list[6] = {
 	id: 7,
 	name: "Savage Free Bestiary",
+	short_name: "sfb",
 	publisher: "(Unknown) Pinnacle Enterainment Group, Butch Curry, Andrea \“Lord Lance\” Parducci and probably others",
 	year: "",
 	buyme: "https://docs.google.com/document/edit?id=1qu4zzMYbPqOquVlCfgpPeoCmCEqGUgWh5dz-rpKJ1ck&hl=it&authkey=CIySp98E",
