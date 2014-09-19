@@ -39,9 +39,7 @@ Fully Functional Tools Include:
 * Monster Search
 	* TODO:
 		* Data Entry still needed
-			* Savage Worlds Deluxe - Complete
-			* Fantasy Companion - Complete
-			* Horror Companion - has only a test entry (1) / of approx 130 entries
+			* Horror Companion - has only a test entry (13) / of approx 130 entries
 			* Savage Free Bestiary - has 7 entries
 			* Sci-Fi Companion - has no entries
 			* Super Powers Companion - has no entries

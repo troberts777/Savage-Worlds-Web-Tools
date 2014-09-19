@@ -138,37 +138,54 @@ function displayExtra(extra, indexNumber, no_buttons) {
 		}
 
 		// Attributes
-		extraHTML += "<strong>Attributes: </strong>";
-		extraHTML += "Agility: " + extra.attributes.agility + ", ";
-		extraHTML += "Smarts: " + extra.attributes.smarts + ", ";
-		extraHTML += "Spirit: " + extra.attributes.spirit + ", ";
-		extraHTML += "Strength: " + extra.attributes.strength + ", ";
-		extraHTML += "Vigor: " + extra.attributes.vigor + " ";
+		if( extra.attributes ) {
+			extraHTML += "<strong>Attributes: </strong>";
+			extraHTML += "Agility: " + extra.attributes.agility + ", ";
+			extraHTML += "Smarts: " + extra.attributes.smarts + ", ";
+			extraHTML += "Spirit: " + extra.attributes.spirit + ", ";
+			extraHTML += "Strength: " + extra.attributes.strength + ", ";
+			extraHTML += "Vigor: " + extra.attributes.vigor + " ";
+			extraHTML += "<br />";
+		}
+
+		if(extra.acc) {
+				extraHTML += "<b>Acceleration</b>: " + extra.acc + "<br />";
+		}
+		if(extra.top_speed) {
+				extraHTML += "<b>Top Speed</b>: " + extra.top_speed + "<br />";
+		}
 
 		// Skills
-		extraHTML += "<br />";
-		extraHTML += "<strong>Skills: </strong>";
-		//extra.skills.Each( function(skillValue, skillName) {
-		skillsHTML = "";
-		$.map(extra.skills, function(skillValue, skillName){
-			skillsHTML += skillName + ": " + skillValue + ", ";
-		});
-		if(skillsHTML != "")
-			skillsHTML = skillsHTML.substring(0, skillsHTML.length -2);
-		else
-			skillsHTML = "none.";
-		extraHTML += skillsHTML;
+
+		if(extra.skills) {
+			extraHTML += "<strong>Skills: </strong>";
+			//extra.skills.Each( function(skillValue, skillName) {
+			skillsHTML = "";
+			$.map(extra.skills, function(skillValue, skillName){
+				skillsHTML += skillName + ": " + skillValue + ", ";
+			});
+			if(skillsHTML != "")
+				skillsHTML = skillsHTML.substring(0, skillsHTML.length -2);
+			else
+				skillsHTML = "none.";
+			extraHTML += skillsHTML;
+			extraHTML += "<br />";
+		}
 
 		// Derived/Combat Stats
-		extraHTML += "<br />";
+
 		if(extra.charisma && extra.charisma != "")
 			extraHTML += "<strong>Charisma:</strong> " + extra.charisma + "; ";
-		extraHTML += "<strong>Pace:</strong> " + extra.pace + "; ";
-		extraHTML += "<strong>Parry:</strong> " + extra.parry + "; ";
-		if(extra.armor > 0)
-			extraHTML += "<strong>Toughness:</strong> " + extra.toughness + " (" + extra.armor + ")<br />";
-		else
-			extraHTML += "<strong>Toughness:</strong> " + extra.toughness + "<br />";
+		if(typeof extra.pace != "undefined")
+			extraHTML += "<strong>Pace:</strong> " + extra.pace + "; ";
+		if(typeof extra.parry != "undefined")
+			extraHTML += "<strong>Parry:</strong> " + extra.parry + "; ";
+		if(extra.acc) {
+			if(extra.armor > 0)
+				extraHTML += "<strong>Toughness:</strong> " + extra.toughness + " (" + extra.armor + ")<br />";
+			else
+				extraHTML += "<strong>Toughness:</strong> " + extra.toughness + "<br />";
+		}
 
 		//Hindrances
 		if(extra.hindrances)
@@ -261,19 +278,43 @@ function sortExtras() {
 }
 
 function filterExtras(searchTerm) {
+	if(!on_extras_page)
+		return;
+
 	returnHTML = "";
 	if(searchTerm && searchTerm != "")
 		searchTerm = searchTerm.toLowerCase().trim();
 	else
 		searchTerm = "";
 
+	for (var lCount = 0; lCount < extraBooks.length; lCount++) {
+
+		check_var_name = "com.jdg.swwt.tmp.extras_" + extraBooks[lCount].name.toLowerCase().replace(" ", "_").replace(" ", "_").replace(" ", "_") + "_checked";
+
+		if( $("input[name=\"" + extraBooks[lCount].name + "\"]").is(":checked") ) {
+			localStorage[ check_var_name ] = 1;
+			console.log(check_var_name + ": 1");
+		} else {
+			localStorage[ check_var_name ] = 0;
+			console.log(check_var_name + ": 0");
+		}
+
+
+	}
+
+
 	for (var lCount = 0; lCount < extraDatabase.length; lCount++) {
 
 		bookIsChecked = false;
 
 		if((typeof(extraDatabase[lCount].book.name)) != "undefined") {
-			if( $("input[name=\"" + extraDatabase[lCount].book.name + "\"]").is(":checked") )
+			if( $("input[name=\"" + extraDatabase[lCount].book.name + "\"]").is(":checked") ) {
 				bookIsChecked = true;
+				localStorage[ check_var_name ] = 1;
+
+			} else {
+				localStorage[ check_var_name ] = 0;
+			}
 		}
 
 		if((typeof(extraDatabase[lCount].tags)) == "undefined") {
@@ -323,8 +364,18 @@ function availableBooks() {
 function availableBookChecks() {
 	returnHTML = "";
 	for (var lCount = 0; lCount < extraBooks.length; lCount++) {
+		checked = " checked=\"checked\"";
+		check_var_name = "com.jdg.swwt.tmp.extras_" + extraBooks[lCount].name.toLowerCase().replace(" ", "_").replace(" ", "_").replace(" ", "_") + "_checked";
+		if( typeof(localStorage[ check_var_name ]) != "undefined" ) {
+			if( localStorage[ check_var_name ] == 0 ){
+				checked = "";
+			}
+
+		} else {
+			localStorage[ check_var_name ] = 1;
+		}
 		returnHTML += "<label>";
-		returnHTML += "<input  type=\"checkbox\" checked=\"checked\" name=\"" + extraBooks[lCount].name + "\" value=\"1\"> " + extraBooks[lCount].name + "</li>";
+		returnHTML += "<input  type=\"checkbox\"" + checked + " name=\"" + extraBooks[lCount].name + "\" value=\"1\"> " + extraBooks[lCount].name + "</li>";
 		returnHTML += "</label>";
 	}
 
