@@ -1,8 +1,8 @@
 CACHE MANIFEST
 
-# Version 2014-09-19-01
-# September 19, 2014 revision 1
-# Minor bugfix to extras checkboxes
+# Version 2014-09-21-01
+# September 21, 2014 revision 1
+# Fixes #27, initial optimizations for speeding up Raspberry Pi class speeds
 
 CACHE:
 http://jdgwf.github.io/savage-worlds-web-tools/vehicle_creator.html

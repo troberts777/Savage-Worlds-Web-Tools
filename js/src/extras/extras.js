@@ -412,7 +412,7 @@ $(document).ready( function() {
 	if( localStorage["com.jdg.swwt.tmp.extras.search_term"] != "") {
 		$("#search-box").val(localStorage["com.jdg.swwt.tmp.extras.search_term"]);
 
-		if(localStorage["com.jdg.swwt.tmp.extras.search_term"] != "")
+		if(localStorage["com.jdg.swwt.tmp.extras.search_term"].length > 2 )
 			$("#search-results").html( filterExtras( localStorage["com.jdg.swwt.tmp.extras.search_term"] ) );
 		else
 			$("#search-results").html( defaultSearchMessage() );
@@ -425,7 +425,7 @@ $(document).ready( function() {
 
 
 	$("#search-box").keyup( function(){
-		if($(this).val() != "")
+		if($(this).val().length > 2)
 			$("#search-results").html( filterExtras($(this).val()) );
 		else
 			$("#search-results").html( defaultSearchMessage() );
@@ -435,7 +435,7 @@ $(document).ready( function() {
 
 	$("#book-checks label input[type=checkbox]").change( function() {
 		searchValue = $("#search-box").val();
-		if(searchValue != "")
+		if(searchValue.length > 2)
 			$("#search-results").html( filterExtras(searchValue) );
 		else
 			$("#search-results").html( defaultSearchMessage() );

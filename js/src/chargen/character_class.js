@@ -73,6 +73,7 @@ character_class.prototype = {
 		};
 
 		this.starting_funds = 500;
+		this.extra_wealth = 0;
 		this.base_starting_funds = 500;
 		this.current_funds = 0;
 		this.selected_gear = Array();
@@ -91,9 +92,9 @@ character_class.prototype = {
 		this.attribute_points = 5;
 		this.skill_points = 15;
 
-
-
 		this.starting_funds = this.base_starting_funds;
+
+
 
 		this.is_valid = true;
 
@@ -422,8 +423,14 @@ character_class.prototype = {
 			this.arcane_background_selected = "";
 			this.selected_powers = Array();
 		}
+
 		/* Equipment */
 		this.current_funds = this.starting_funds;
+		if( this.is_complete() > 0)
+			this.current_funds += this.extra_wealth;
+		else
+			this.extra_wealth = 0;
+
 		for( eq_count = 0; eq_count < this.selected_gear.length; eq_count++) {
 			if(!this.selected_gear[eq_count].free)
 				this.selected_gear[eq_count].free = 0;
@@ -540,6 +547,12 @@ character_class.prototype = {
 			}
 		}
 		return false;
+	},
+
+	set_extra_wealth: function( new_wealth ) {
+		console.log("set_extra_wealth(" + new_wealth + ")");
+		if(new_wealth)
+			this.extra_wealth = new_wealth;
 	},
 
 	edge_already_taken_at_rank: function( edge_name, edge_index, rank_level ) {
@@ -1460,6 +1473,7 @@ character_class.prototype = {
 			perks: Array(),
 			skills: Array(),
 			gear: Array(),
+			extra_wealth: this.extra_wealth,
 			arcane: {
 				type : this.arcane_background_selected.short_name,
 				powers: Array()
@@ -1922,6 +1936,9 @@ character_class.prototype = {
 				this.set_xp( imported_object.xp );
 			else
 				this.set_xp( 0 );
+
+			if( imported_object.extra_wealth )
+				this.set_extra_wealth( imported_object.extra_wealth );
 
 			this.creation_completed = false;
 			if( imported_object.complete )

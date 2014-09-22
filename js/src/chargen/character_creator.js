@@ -352,7 +352,7 @@ function propagate_character_section() {
 	$(".js-chargen-name").unbind("keyup");
 	$(".js-chargen-name").keyup( function(event) {
 		current_character.set_name($(this).val() );
-		refresh_chargen_page();
+		refresh_chargen_page(true);
 		return;
 	});
 
@@ -368,7 +368,7 @@ function propagate_character_section() {
 	$(".js-chargen-gender").unbind("change");
 	$(".js-chargen-gender").change( function(event) {
 		current_character.set_gender($(this).val() );
-		refresh_chargen_page();
+		refresh_chargen_page(true);
 		return;
 	});
 
@@ -376,7 +376,7 @@ function propagate_character_section() {
 	$(".js-chargen-description").unbind("keyup");
 	$(".js-chargen-description").keyup( function(event) {
 		current_character.set_description($(this).val() );
-		refresh_chargen_page();
+		refresh_chargen_page(true);
 		return;
 	});
 }
@@ -1203,10 +1203,28 @@ function propagate_gear_section() {
 	html += "<button type=\"button\" class=\"btn btn-default\" data-toggle=\"modal\" data-target=\".js-gear-dialog\">Get Gear</button>";
 
 	// Show current wealth....
-	html += "<div class=\"text-right\">Current Wealth: \$" + current_character.current_funds + "</div>";
+	html += "<div class=\"text-right\">Current Wealth: \$" + current_character.current_funds;
+	if( current_character.is_complete() )
+		html += "<br /><button class=\"btn btn-xs js-set-extra-wealth\">Set Wealth</button></div>";
 
 
 	$(".js-gear-area").html( html );
+
+	$(".js-dialog-current-wealth").text( "\$" + current_character.current_funds );
+	$(".js-dialog-set-wealth").val( current_character.current_funds );
+
+	$(".js-set-extra-wealth").unbind( "click" );
+	$(".js-set-extra-wealth").click( function() {
+		//$(".js-set-extra-wealth-content").html( "<p>" + current_character.export_html() + "</p>" );
+
+		$(".js-set-extra-wealth-dialog").modal();
+	});
+
+	$(".js-dialog-set-wealth-button").unbind("click");
+	$(".js-dialog-set-wealth-button").click( function() {
+		current_character.set_extra_wealth( ($(".js-dialog-set-wealth").val() / 1) - current_character.starting_funds );
+		refresh_chargen_page();
+	});
 
 	$(".js-starting-wealth").unbind( "change" );
 	$(".js-starting-wealth").change( function() {
@@ -1859,53 +1877,47 @@ function propagate_derived_stats_section() {
 	$(".derived-stats-data").html( html );
 }
 
-function refresh_chargen_page() {
-	current_character.calculate();
+function refresh_chargen_page(no_calculate) {
+	// only calculate the character section since it's a non-fluff change
+	// this is because it was very slow on a Raspberry Pi
+	if(!no_calculate && no_calculate != true)
+		current_character.calculate();
+
 	localStorage["current_character"] = current_character.export_json(".js-chargen-json-code");
 
 	propagate_character_load_list();
 
 	propagate_character_section();
-	propagate_attributes_section();
-	propagate_derived_stats_section();
-	propagate_edges_section();
-	propagate_perks_section();
-	propagate_skills_sections();
-	propagate_hindrances_section();
-	propagate_gear_section();
-	propagate_arcane_background_options();
-	propagate_advancement_section();
 
-	init_main_buttons();
+	// only propagate the character section since it's a non-fluff change
+	// this is because it was very slow on a Raspberry Pi
+	if(!no_calculate && no_calculate != true) {
+		propagate_attributes_section();
+		propagate_derived_stats_section();
+		propagate_edges_section();
+		propagate_perks_section();
+		propagate_skills_sections();
+		propagate_hindrances_section();
+		propagate_gear_section();
+		propagate_arcane_background_options();
+		propagate_advancement_section();
 
-	test_validity();
+		init_main_buttons();
+
+		test_validity();
+	}
 	current_character.export_bbcode(".js-chargen-bb-code");
 
 }
 
 function create_print_popup() {
-	// var mywindow = window.open('', 'Viewing/Printing Character', 'height=400,width=600');
-	// data = current_character.export_html();
-	// mywindow.document.write('<html><head><title>my div</title>');
-	// mywindow.document.write('<style>');
-	// mywindow.document.write('h3 {margin: 0; padding:0}');
-	// mywindow.document.write('</style>');
-	// mywindow.document.write('</head><body>');
-	// mywindow.document.write("<div style='text-align: right'>");
-	// mywindow.document.write('<button onclick="window.print()" type="button">Print</button>');
-	// mywindow.document.write('<button onclick="window.history.back();window.close()" type="button">Close</button>');
-	// mywindow.document.write('</div>');
-	// mywindow.document.write(data);
-	// mywindow.document.write('</body></html>');
 
 	$(".js-print-character-content").html( "<p>" + current_character.export_html() + "</p>" );
 	$(".js-print-character-dialog").modal();
-//	mywindow.print();
-//	mywindow.close();
 
 	return true;
-
 }
+
 
 $(".js-chargen-add-printcart").unbind("click");
 $(".js-chargen-add-printcart").click( function() {
