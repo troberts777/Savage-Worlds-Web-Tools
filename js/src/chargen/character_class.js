@@ -484,7 +484,6 @@ character_class.prototype = {
 	},
 
 	load_power_armor: function( selected_item ) {
-		console.log("load_power_armor: " + selected_item );
 		if(selected_item != "") {
 
 			sw_power_armor.prototype = new creator_base();
@@ -511,7 +510,7 @@ character_class.prototype = {
 	},
 
 	clear_advancement: function( advancement_index ) {
-//		console.log( "clear_advancement: " + advancement_index);
+
 		advancement_index = advancement_index / 1;
 		for(advc = advancement_index; advc < this.selected_advancements.length; advc++) {
 			if( this.selected_advancements[advc] ) {
@@ -533,7 +532,7 @@ character_class.prototype = {
 	},
 
 	advancement_already_taken_at_rank: function(  short_name, advancement_index, rank_level ) {
-		// console.log("advancement_already_taken_at_rank: " + short_name + ", " + advancement_index + ", " + rank_level);
+
 		advancement_index = advancement_index /1;
 		rank_level = rank_level /1;
 		for( aatarc = 0; aatarc < this.selected_advancements.length; aatarc++) {
@@ -541,7 +540,7 @@ character_class.prototype = {
 
 			if( short_name.toLowerCase() == this.selected_advancements[aatarc].short_name) {
 				if( current_rank == rank_level && advancement_index != aatarc){
-					// console.log( short_name + ": " + current_rank + " == " + rank_level + " && " + advancement_index + " != " + aatarc);
+
 					return true;
 				}
 			}
@@ -550,7 +549,7 @@ character_class.prototype = {
 	},
 
 	set_extra_wealth: function( new_wealth ) {
-		console.log("set_extra_wealth(" + new_wealth + ")");
+
 		if(new_wealth)
 			this.extra_wealth = new_wealth;
 	},
@@ -568,12 +567,12 @@ character_class.prototype = {
 	},
 
 	apply_advancement: function( advancement_index, short_name, applies_to1, applies_to2 ) {
-		// console.log( "apply_advancement: " + short_name + ", " + applies_to1 + ", " + applies_to2);
+
 		chosen_at_rank  = Math.floor(advancement_index/4);
 
 		if( short_name.toLowerCase() == "gain-edge" ) {
 			// Add an edge...
-//			console.log( "Adding edge");
+
 			return this.add_advancement_edge( applies_to1, advancement_index );
 		} else if( short_name.toLowerCase() == "increase-skill" ) {
 			// Increase a skill equal or greater than linked trait
@@ -585,7 +584,7 @@ character_class.prototype = {
 			return true;
 		} else if( short_name.toLowerCase() == "increase-2skills" ) {
 			// increase 2 skills less than linked trait
-//			console.log( "Increasing 2 skills");
+
 			skill1 = this.get_skill( applies_to1 );
 			skill2 = this.get_skill( applies_to2 );
 			if(!skill1.bonus)
@@ -599,11 +598,11 @@ character_class.prototype = {
 			return true;
 		} else if( short_name.toLowerCase() == "add-skill" ) {
 			// Add a new skill
-//			console.log( "Increasing 1 skill");
+
 			this.set_skill_bonus( applies_to1, 1 );
 		} else if( short_name.toLowerCase() == "increase-attribute" ) {
 			// increase attribute (once per session, handled in front-end)
-//			console.log( "Increasing attribute");
+
 			if( !this.advancement_already_taken_at_rank(short_name, advancement_index, chosen_at_rank) ) {
 				if( applies_to1.toLowerCase() == "agility" ) {
 
@@ -1963,7 +1962,7 @@ character_class.prototype = {
 			}
 
 			if( imported_object.power_armor ) {
-				console.log("!");
+
 				this.load_power_armor( imported_object.power_armor );
 			}
 

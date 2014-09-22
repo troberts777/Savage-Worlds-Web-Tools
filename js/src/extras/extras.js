@@ -262,9 +262,6 @@ function getExtra(extraName) {
 	return null;
 }
 
-function debugMessage(message) {
-	console.log(message);
-}
 
 function sortExtras() {
 	extraDatabase.sort(
