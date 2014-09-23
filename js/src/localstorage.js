@@ -106,7 +106,7 @@ function get_data_from_localstorage(itemIndex) {
 	}
 }
 
-function delete_item_from_localStorage(itemIndex) {
+function delete_item_from_localstorage(itemIndex) {
 	current_vehicles = localstorage_parse_data();
 
 	if( typeof(current_vehicles[itemIndex]) != "undefined" ) {
@@ -230,7 +230,7 @@ function import_restore_file( import_data, run_import ) {
 			return false;
 		} else {
 			if( run_import ) {
-				import_to_localStorage( import_object );
+				import_to_localstorage( import_object );
 			}
 			return true;
 		}
