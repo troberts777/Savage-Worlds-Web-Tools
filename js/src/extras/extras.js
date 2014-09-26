@@ -3,6 +3,8 @@
 	Creative Commons Attribution 4.0 International License.
 */
 
+if(typeof(on_extras_page) == "unddefined")
+	var on_extras_page = 0;
 if(!localStorage["com.jdg.swwt.tmp.extras.search_term"])
 	localStorage["com.jdg.swwt.tmp.extras.search_term"] = "";
 

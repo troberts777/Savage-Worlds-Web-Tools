@@ -251,7 +251,7 @@ function propagate_trapping_base_options() {
 
 		if(bookoptgroup != chargen_trappings[ts_counter].book.name ) {
 			if( bookoptgroup != "")
-				ps_html += "</optgroup>";
+				ts_html += "</optgroup>";
 			ts_html += "<optgroup label='" + chargen_trappings[ts_counter].book.name + "'>";
 			bookoptgroup = chargen_trappings[ts_counter].book.name;
 		}
