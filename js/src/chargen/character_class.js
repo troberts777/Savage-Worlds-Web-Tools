@@ -584,8 +584,6 @@ character_class.prototype = {
 
 		}
 
-
-
 		// Test edges validity
 		for(edge_vcounter = 0; edge_vcounter < this.advancement_edges.length; edge_vcounter++) {
 			current_vedge = this.advancement_edges[edge_vcounter];
