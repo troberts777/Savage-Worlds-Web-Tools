@@ -1877,11 +1877,17 @@ function propagate_derived_stats_section() {
 	$(".derived-stats-data").html( html );
 }
 
-function refresh_chargen_page(no_calculate) {
+function refresh_chargen_page(no_full_refresh, no_calculate) {
 	// only calculate the character section since it's a non-fluff change
 	// this is because it was very slow on a Raspberry Pi
-	if(!no_calculate && no_calculate != true)
+	if(
+		(!no_calculate && no_calculate != true)
+			&&
+		(!no_full_refresh && no_full_refresh != true)
+	) {
 		current_character.calculate();
+	}
+
 
 	localStorage["current_character"] = current_character.export_json(".js-chargen-json-code");
 
@@ -1891,7 +1897,7 @@ function refresh_chargen_page(no_calculate) {
 
 	// only propagate the character section since it's a non-fluff change
 	// this is because it was very slow on a Raspberry Pi
-	if(!no_calculate && no_calculate != true) {
+	if(!no_full_refresh && no_full_refresh != true) {
 		propagate_attributes_section();
 		propagate_derived_stats_section();
 		propagate_edges_section();

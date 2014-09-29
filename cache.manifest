@@ -1,8 +1,8 @@
 CACHE MANIFEST
 
-# Version 2014-09-29-03
-# September 29, 2014 revision 3
-# ...or not
+# Version 2014-09-29-04
+# September 29, 2014 revision 4
+# Ok, reduced number of current_character.calculate() without the logic error
 
 CACHE:
 http://jdgwf.github.io/savage-worlds-web-tools/vehicle_creator.html
