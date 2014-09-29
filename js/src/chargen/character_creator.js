@@ -991,7 +991,7 @@ function propagate_hindrances_section() {
 
 
 			) {
-				disabled = " disabled=\"disabled\"";
+				disabled = " class=\"unmet-deps\"";
 			}
 			minor_major = "";
 			if(chargen_hindrances[hind_counter].major > 0)
@@ -1134,14 +1134,14 @@ function get_add_edge_options() {
 			retakable = chargen_edges[edge_counter].retakable;
 
 		if(
-			( current_character.has_edge( chargen_edges[edge_counter].name, retakable, check_this_rank_only ) == true )
+			current_character.has_edge( chargen_edges[edge_counter].name, retakable, check_this_rank_only ) == true
 				||
 			current_character.is_incompatible_with( chargen_edges[edge_counter] ) == true
 				||
 			current_character.edge_available( chargen_edges[edge_counter] ) == false
 
 		) {
-			disabled = " disabled=\"disabled\"";
+			disabled = " class=\"unmet-deps\"";
 		}
 
 		if(!chargen_edges[edge_counter].unlisted || chargen_edges[edge_counter].unlisted < 1) {

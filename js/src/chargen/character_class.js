@@ -343,7 +343,6 @@ character_class.prototype = {
 			this.validity_messages.push("Overspent skill points");
 		}
 
-
 		// remove bonuses to skills - will be re-added later during advancement processing
 		for(skc = 0; skc < this.selected_skills.length; skc++) {
 			this.selected_skills[skc].bonus = 0;
@@ -423,6 +422,303 @@ character_class.prototype = {
 			this.arcane_background_selected = "";
 			this.selected_powers = Array();
 		}
+
+
+		// Test hindrances validity
+		for(hind_vcounter = 0; hind_vcounter < this.selected_hindrances.length; hind_vcounter++) {
+			current_vhind = this.selected_hindrances[hind_vcounter];
+
+			if( current_vhind.incompatible ) {
+				// Check for Incompatible Edges
+				if( current_vhind.incompatible.edges ) {
+					for(hind_edge_vcounter = 0; hind_edge_vcounter < current_vhind.incompatible.edges.length; hind_edge_vcounter++) {
+
+						if( this.has_edge(current_vhind.incompatible.edges[hind_edge_vcounter]) ) {
+							this.is_valid = false;
+							this.validity_messages.push("Hindrance '" + current_vhind.name + "' is incompatible with edge '" + current_vhind.incompatible.edges[hind_edge_vcounter] + "'");
+						}
+					}
+				}
+				// Check for Incompatible Hindrances
+				if( current_vhind.incompatible.hindrances ) {
+					for(hind_hind_vcounter = 0; hind_hind_vcounter < current_vhind.incompatible.hindrances.length; hind_hind_vcounter++) {
+
+						if( this.has_hindrance(current_vhind.incompatible.hindrances[hind_hind_vcounter]) ) {
+							this.is_valid = false;
+							this.validity_messages.push("Hindrance '" + current_vhind.name + "' is incompatible with hindrance '" + current_vhind.incompatible.hindrances[hind_hind_vcounter] + "'");
+						}
+					}
+				}
+			}
+		}
+
+		// Test edges validity
+		for(edge_vcounter = 0; edge_vcounter < this.selected_edges.length; edge_vcounter++) {
+			current_vedge = this.selected_edges[edge_vcounter];
+			if( current_vedge.prereqs ) {
+				// Check for Pre-required Edges
+				if( current_vedge.prereqs.edges ) {
+					for(hind_edge_vcounter = 0; hind_edge_vcounter < current_vedge.prereqs.edges.length; hind_edge_vcounter++) {
+
+						if( !this.has_edge(current_vedge.prereqs.edges[hind_edge_vcounter]) ) {
+							this.is_valid = false;
+							this.validity_messages.push("Edge '" + current_vedge.name + "' requires the edge '" + current_vedge.prereqs.edges[hind_edge_vcounter] + "'");
+						}
+					}
+				}
+
+				// Check for Pre-required Attributes
+				if( current_vedge.prereqs.attributes ) {
+					if( current_vedge.prereqs.attributes.agility ) {
+						if( this.attributes.agility < current_vedge.prereqs.attributes.agility ) {
+							this.is_valid = false;
+							this.validity_messages.push("Edge '" + current_vedge.name + "' requires Agility to be " + attribute_labels[current_vedge.prereqs.attributes.agility] + " or better");
+						}
+					}
+					if( current_vedge.prereqs.attributes.smarts ) {
+						if( this.attributes.smarts < current_vedge.prereqs.attributes.smarts ) {
+							this.is_valid = false;
+							this.validity_messages.push("Edge '" + current_vedge.name + "' requires Smarts to be " + attribute_labels[current_vedge.prereqs.attributes.smarts] + " or better");
+						}
+					}
+					if( current_vedge.prereqs.attributes.spirit ) {
+						if( this.attributes.spirit < current_vedge.prereqs.attributes.spirit ) {
+							this.is_valid = false;
+							this.validity_messages.push("Edge '" + current_vedge.name + "' requires Spirit to be " + attribute_labels[current_vedge.prereqs.attributes.spirit] + " or better");
+						}
+					}
+					if( current_vedge.prereqs.attributes.strength ) {
+						if( this.attributes.strength < current_vedge.prereqs.attributes.strength ) {
+							this.is_valid = false;
+							this.validity_messages.push("Edge '" + current_vedge.name + "' requires Strength to be " + attribute_labels[current_vedge.prereqs.attributes.strength] + " or better");
+						}
+					}
+					if( current_vedge.prereqs.attributes.vigor ) {
+						if( this.attributes.vigor < current_vedge.prereqs.attributes.vigor ) {
+							this.is_valid = false;
+							this.validity_messages.push("Edge '" + current_vedge.name + "' requires Vigor to be " + attribute_labels[current_vedge.prereqs.attributes.vigor] + " or better");
+						}
+					}
+				}
+
+				// Check for Pre-required Skills
+				if( current_vedge.prereqs.skills ) {
+					for(edge_skill_vcounter = 0; edge_skill_vcounter < current_vedge.prereqs.skills.length; edge_skill_vcounter++) {
+
+						req_skill = current_vedge.prereqs.skills[edge_skill_vcounter];
+						if(req_skill.name.indexOf("||") > 0 ) {
+							// Multi skill check, a few edgesmay require an option of skills (such as Wizard requires some sort of Arcana knowledge)
+							all_good = false;
+							skills_list = req_skill.name.split("||");
+							renamed_skill = "";
+							for( sklistc = 0; sklistc < skills_list.length; sklistc++) {
+								get_skill_return = this.get_skill( skills_list[sklistc] );
+
+								if( get_skill_return ) {
+									if( get_skill_return.total >= req_skill.required ) {
+										all_good = true;
+									}
+								}
+								if(sklistc > 0)
+									renamed_skill += "' or '";
+								renamed_skill += skills_list[sklistc];
+							}
+
+							if( all_good == false ) {
+								this.is_valid = false;
+								this.validity_messages.push("Edge '" + current_vedge.name + "' any of the skills '" + renamed_skill + "' at " + attribute_labels[req_skill.required]);
+							}
+						} else {
+							// Check for single skill
+							get_skill_return = this.get_skill( req_skill.name )
+
+							if( get_skill_return ) {
+
+								if( get_skill_return.total < req_skill.required ) {
+									this.is_valid = false;
+									this.validity_messages.push("Edge '" + current_vedge.name + "' requires the skill '" + req_skill.name + "' at " + attribute_labels[req_skill.required]);
+								}
+
+							} else {
+								this.is_valid = false;
+								this.validity_messages.push("Edge '" + current_vedge.name + "' requires the skill '" + req_skill.name + "' at " + attribute_labels[req_skill.required]);
+							}
+
+						}
+
+					}
+				}
+			}
+
+			if( current_vedge.incompatible ) {
+				// Check for Incompatible Edges
+				if( current_vedge.incompatible.edges ) {
+					for(hind_edge_vcounter = 0; hind_edge_vcounter < current_vedge.incompatible.edges.length; hind_edge_vcounter++) {
+
+						if( this.has_edge(current_vedge.incompatible.edges[hind_edge_vcounter]) ) {
+							this.is_valid = false;
+							this.validity_messages.push("Edge '" + current_vedge.name + "' is incompatible with edge '" + current_vedge.incompatible.edges[hind_edge_vcounter] + "'");
+						}
+					}
+				}
+				// Check for Incompatible Hindrances
+				if( current_vedge.incompatible.hindrances ) {
+					for(hind_hind_vcounter = 0; hind_hind_vcounter < current_vedge.incompatible.hindrances.length; hind_hind_vcounter++) {
+						if( this.has_hindrance(current_vedge.incompatible.hindrances[hind_hind_vcounter]) ) {
+							this.is_valid = false;
+							this.validity_messages.push("Edge '" + current_vedge.name + "' is incompatible with hindrance '" + current_vedge.incompatible.hindrances[hind_hind_vcounter] + "'");
+						}
+					}
+				}
+
+				if( current_vedge.incompatible.once_per_rank && current_vedge.incompatible.once_per_rank > 0) {
+					// check once per rank...
+//					console.log(current_vedge.name + "," + edge_vcounter + "," + current_vedge.taken_on_rank);
+					if( this.edge_already_taken_at_rank( current_vedge.name, edge_vcounter, current_vedge.taken_on_rank )  ) {
+						this.is_valid = false;
+						this.validity_messages.push("You may only take '" + current_vedge.name + "' once per rank.");
+					}
+				}
+			}
+
+
+		}
+
+
+
+		// Test edges validity
+		for(edge_vcounter = 0; edge_vcounter < this.advancement_edges.length; edge_vcounter++) {
+			current_vedge = this.advancement_edges[edge_vcounter];
+			if( current_vedge.prereqs ) {
+				// Check for Pre-required Edges
+				if( current_vedge.prereqs.edges ) {
+					for(hind_edge_vcounter = 0; hind_edge_vcounter < current_vedge.prereqs.edges.length; hind_edge_vcounter++) {
+
+						if( !this.has_edge(current_vedge.prereqs.edges[hind_edge_vcounter]) ) {
+							this.is_valid = false;
+							this.validity_messages.push("Edge '" + current_vedge.name + "' requires the edge '" + current_vedge.prereqs.edges[hind_edge_vcounter] + "'");
+						}
+					}
+				}
+
+				// Check for Pre-required Attributes
+				if( current_vedge.prereqs.attributes ) {
+					if( current_vedge.prereqs.attributes.agility ) {
+						if( this.attributes.agility < current_vedge.prereqs.attributes.agility ) {
+							this.is_valid = false;
+							this.validity_messages.push("Edge '" + current_vedge.name + "' requires Agility to be " + attribute_labels[current_vedge.prereqs.attributes.agility] + " or better");
+						}
+					}
+					if( current_vedge.prereqs.attributes.smarts ) {
+						if( this.attributes.smarts < current_vedge.prereqs.attributes.smarts ) {
+							this.is_valid = false;
+							this.validity_messages.push("Edge '" + current_vedge.name + "' requires Smarts to be " + attribute_labels[current_vedge.prereqs.attributes.smarts] + " or better");
+						}
+					}
+					if( current_vedge.prereqs.attributes.spirit ) {
+						if( this.attributes.spirit < current_vedge.prereqs.attributes.spirit ) {
+							this.is_valid = false;
+							this.validity_messages.push("Edge '" + current_vedge.name + "' requires Spirit to be " + attribute_labels[current_vedge.prereqs.attributes.spirit] + " or better");
+						}
+					}
+					if( current_vedge.prereqs.attributes.strength ) {
+						if( this.attributes.strength < current_vedge.prereqs.attributes.strength ) {
+							this.is_valid = false;
+							this.validity_messages.push("Edge '" + current_vedge.name + "' requires Strength to be " + attribute_labels[current_vedge.prereqs.attributes.strength] + " or better");
+						}
+					}
+					if( current_vedge.prereqs.attributes.vigor ) {
+						if( this.attributes.vigor < current_vedge.prereqs.attributes.vigor ) {
+							this.is_valid = false;
+							this.validity_messages.push("Edge '" + current_vedge.name + "' requires Vigor to be " + attribute_labels[current_vedge.prereqs.attributes.vigor] + " or better");
+						}
+					}
+				}
+
+				// Check for Pre-required Skills
+				if( current_vedge.prereqs.skills ) {
+					for(edge_skill_vcounter = 0; edge_skill_vcounter < current_vedge.prereqs.skills.length; edge_skill_vcounter++) {
+
+						req_skill = current_vedge.prereqs.skills[edge_skill_vcounter];
+						if(req_skill.name.indexOf("||") > 0 ) {
+							// Multi skill check, a few edgesmay require an option of skills (such as Wizard requires some sort of Arcana knowledge)
+							all_good = false;
+							skills_list = req_skill.name.split("||");
+							renamed_skill = "";
+							for( sklistc = 0; sklistc < skills_list.length; sklistc++) {
+								get_skill_return = this.get_skill( skills_list[sklistc] );
+
+								if( get_skill_return ) {
+									if( get_skill_return.total >= req_skill.required ) {
+										all_good = true;
+									}
+								}
+								if(sklistc > 0)
+									renamed_skill += "' or '";
+								renamed_skill += skills_list[sklistc];
+							}
+
+							if( all_good == false ) {
+								this.is_valid = false;
+								this.validity_messages.push("Edge '" + current_vedge.name + "' any of the skills '" + renamed_skill + "' at " + attribute_labels[req_skill.required]);
+							}
+						} else {
+							// Check for single skill
+							get_skill_return = this.get_skill( req_skill.name )
+
+							if( get_skill_return ) {
+
+								if( get_skill_return.total < req_skill.required ) {
+									this.is_valid = false;
+									this.validity_messages.push("Edge '" + current_vedge.name + "' requires the skill '" + req_skill.name + "' at " + attribute_labels[req_skill.required]);
+								}
+
+							} else {
+								this.is_valid = false;
+								this.validity_messages.push("Edge '" + current_vedge.name + "' requires the skill '" + req_skill.name + "' at " + attribute_labels[req_skill.required]);
+							}
+
+						}
+
+					}
+				}
+			}
+
+			if( current_vedge.incompatible ) {
+				// Check for Incompatible Edges
+				if( current_vedge.incompatible.edges ) {
+					for(hind_edge_vcounter = 0; hind_edge_vcounter < current_vedge.incompatible.edges.length; hind_edge_vcounter++) {
+
+						if( this.has_edge(current_vedge.incompatible.edges[hind_edge_vcounter]) ) {
+							this.is_valid = false;
+							this.validity_messages.push("Edge '" + current_vedge.name + "' is incompatible with edge '" + current_vedge.incompatible.edges[hind_edge_vcounter] + "'");
+						}
+					}
+				}
+				// Check for Incompatible Hindrances
+				if( current_vedge.incompatible.hindrances ) {
+					for(hind_hind_vcounter = 0; hind_hind_vcounter < current_vedge.incompatible.hindrances.length; hind_hind_vcounter++) {
+						if( this.has_hindrance(current_vedge.incompatible.hindrances[hind_hind_vcounter]) ) {
+							this.is_valid = false;
+							this.validity_messages.push("Edge '" + current_vedge.name + "' is incompatible with hindrance '" + current_vedge.incompatible.hindrances[hind_hind_vcounter] + "'");
+						}
+					}
+				}
+
+				if( current_vedge.incompatible.once_per_rank && current_vedge.incompatible.once_per_rank > 0) {
+					// check once per rank...
+//					console.log(current_vedge.name + "," + edge_vcounter + "," + current_vedge.taken_on_rank);
+					if( this.edge_already_taken_at_rank( current_vedge.name, edge_vcounter, current_vedge.taken_on_rank )  ) {
+						this.is_valid = false;
+						this.validity_messages.push("You may only take '" + current_vedge.name + "' once per rank.");
+					}
+				}
+			}
+
+
+		}
+
+
 
 		/* Equipment */
 		this.current_funds = this.starting_funds;
@@ -556,13 +852,31 @@ character_class.prototype = {
 
 	edge_already_taken_at_rank: function( edge_name, edge_index, rank_level ) {
 		edge_index = edge_index /1 ;
-		rank_level = rank_level /1 ;
+
+
 		for( eatarc = 0; eatarc < this.selected_edges.length; eatarc++) {
-			current_rank = Math.floor(eatarc/4);
-			if( edge_name.toLowerCase().trim() == this.selected_edges[eatarc].name.toLowerCase().trim() )
-				if( this.selected_edges[eatarc].selected_rank / 1 == rank_level && edge_index != eatarc )
+
+			if( edge_name.toLowerCase().trim() == this.selected_edges[eatarc].name.toLowerCase().trim() ) {
+
+				if( this.selected_edges[eatarc].taken_on_rank == rank_level && edge_index != eatarc ) {
+
 					return true;
+				}
+			}
 		}
+
+		for( eatarc = 0; eatarc < this.advancement_edges.length; eatarc++) {
+
+			if( edge_name.toLowerCase().trim() == this.advancement_edges[eatarc].name.toLowerCase().trim() ) {
+
+
+				if( this.advancement_edges[eatarc].taken_on_rank == rank_level && edge_index != eatarc ) {
+
+					return true;
+				}
+			}
+		}
+
 		return false;
 	},
 
@@ -910,7 +1224,7 @@ character_class.prototype = {
 						if(retakable && this_rank_only) {
 
 							if( current_edge.name.toLowerCase().trim() == edge_name.toLowerCase().trim() ){
-								if( current_edge.selected_rank == this.rank ) {
+								if( current_edge.taken_on_rank == this.rank ) {
 									return true;
 								}
 							}
@@ -932,7 +1246,7 @@ character_class.prototype = {
 						if(retakable && this_rank_only) {
 
 							if( current_edge.name.toLowerCase().trim() == edge_name.toLowerCase().trim() ){
-								if( current_edge.selected_rank == this.rank ) {
+								if( current_edge.taken_on_rank == this.rank ) {
 									return true;
 								}
 							}
@@ -1128,6 +1442,7 @@ character_class.prototype = {
 				if(edge_name.toLowerCase().trim() == chargen_edges[edge_counter].name.toLowerCase().trim() ) {
 					found_edge = clone_object( chargen_edges[edge_counter] );
 					found_edge.selected_rank = during_slot;
+					found_edge.taken_on_rank = 0;
 					this.selected_edges.push( found_edge );
 
 					return found_edge;
@@ -1138,7 +1453,7 @@ character_class.prototype = {
 	},
 
 	add_advancement_edge: function(edge_name, during_slot) {
-
+//		console.log("add_advancement_edge: "+ edge_name +"," + during_slot);
 		if(edge_name) {
 			for( edge_counter = 0; edge_counter < chargen_edges.length; edge_counter++ ) {
 				if(edge_name.toLowerCase().trim() == chargen_edges[edge_counter].name.toLowerCase().trim() ) {
