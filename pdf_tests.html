@@ -19,29 +19,107 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12">
+
 				<div class="pull-right text-right js-print-cart-button"></div>
 				<div class="bug-tweet pull-right text-right">Found a bug?<br /><a href="https://twitter.com/intent/tweet?screen_name=Gauthic&text=%23SWWebTools%20Main%20Bug%3A%20" class="twitter-mention-button" data-related="Gauthic">Tweet to @Gauthic</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></a></div>
-				<h1><a class="ios_app_click" href="./index.html" title="Savage Worlds Web Tools">Savage Worlds Web Tools</a></h1>
-				<p class="js-smarty-comment">This utility is to backup and restore your date from one device to another</p>
+
+				<h1><a class="ios_app_click" href="./index.html" title="Savage Worlds Web Tools">Savage Worlds Web Tools</a> - PDF Testing</h1>
+				<p class="js-smarty-comment">PDF Testing for future use</p>
 			</div>
 		</div>
 	</div>
 </div>
 
 <div class="container">
+	<a style="display:block;text-align: center" target="jspdf-functions" href="http://mrrio.github.io/jsPDF/doc/symbols/jsPDF.html">jsPDF Function Reference</a>
 	<div class="row">
-		<div class="col-xs-12">
-			<p>It appears that this doesn't work on iOS devices in any way :(</p>
-			<h3>Backup</h3>
-			<div class="js-backup-summary"></div>
-			<h3>Restore</h3>
-			<label>Select a Restore File: <input type="file" class="js-restore-input" /></label>
-			<div class="js-is-valid"></div>
+		<div class="col-xs-6">
+
+			<textarea style="height: 650px" class="js-pdftest">
+var doc = new jsPDF();
+doc.setFontSize(20);
+doc.setFontStyle("italic");
+doc.text(60, 20, 'Savage Worlds Character Sheet!');
+
+doc.setFontSize(12);
+doc.setFontStyle("bold");
+doc.text(20, 30, 'Character Name: MyCharacter Name');
+doc.setFontStyle("normal");
+doc.lines([[0,0],[125,0]], 55, 31);
+
+doc.setFontStyle("bold");
+doc.text(20, 40, 'Player Name:');
+doc.setFontStyle("normal");
+doc.lines([[0,0],[130,0]], 50, 41);
+
+doc.setFontStyle("bold");
+doc.text(20, 45, 'Race: I\'m a Human!');
+doc.setFontStyle("normal");
+doc.lines([[0,0],[95,0]], 32, 46);
+
+doc.setFontStyle("bold");
+doc.text(133, 45, 'Gender: I\'m a Grrrl');
+doc.setFontStyle("normal");
+doc.lines([[0,0],[30,0]], 150, 46);
+
+doc.rect(20,50,160,80);
+doc.setFontStyle("bold");
+doc.text(25, 55, 'Agility: d4');
+doc.text(55, 55, 'Smarts: d4');
+doc.text(95, 55, 'Spirit: d4');
+doc.text(125, 55, 'Strength: d4');
+doc.text(155, 55, 'Vigor: d4');
+
+// Agility Skills
+doc.setFontSize(10);
+doc.setFontStyle("normal");
+currentSkillCount = 0;
+for(skillCount = 0; skillCount < chargen_skills.length; skillCount++) {
+	if(chargen_skills[skillCount].attribute == "agility") {
+		doc.text(25, 63+currentSkillCount*4, chargen_skills[skillCount].name + ': d4');
+		currentSkillCount++;
+	}
+}
+
+// Smarts Skills
+doc.setFontSize(10);
+doc.setFontStyle("normal");
+currentSkillCount = 0;
+for(skillCount = 0; skillCount < chargen_skills.length; skillCount++) {
+	if(chargen_skills[skillCount].attribute == "smarts") {
+		doc.text(55, 63+currentSkillCount*4, chargen_skills[skillCount].name + ': d4');
+		currentSkillCount++;
+	}
+}
+
+// Spirit Skills
+doc.setFontSize(10);
+doc.setFontStyle("normal");
+currentSkillCount = 0;
+for(skillCount = 0; skillCount < chargen_skills.length; skillCount++) {
+	if(chargen_skills[skillCount].attribute == "spirit") {
+		doc.text(95, 63+currentSkillCount*4, chargen_skills[skillCount].name + ': d4');
+		currentSkillCount++;
+	}
+}
+
+// Strength Skills
+doc.setFontSize(10);
+doc.setFontStyle("normal");
+currentSkillCount = 0;
+for(skillCount = 0; skillCount < chargen_skills.length; skillCount++) {
+	if(chargen_skills[skillCount].attribute == "strength") {
+		doc.text(125, 63+currentSkillCount*4, chargen_skills[skillCount].name + ': d4');
+		currentSkillCount++;
+	}
+}
+</textarea>
+		</div>
+		<div class="col-xs-6">
+			<iframe class="preview-pane" type="application/pdf" width="100%" height="650" frameborder="0" style="position:relative;z-index:999"></iframe>
 		</div>
 	</div>
-
 </div>
-
 <div class="footer">
 	<div class="container">
 		<div class="row">
@@ -50,6 +128,8 @@
 				<p>This tool references the Savage Worlds game system, available from Pinnacle Entertainment Group at <a href="http:/www.peginc.com" title="Pinnacle Entertainment Group">www.peginc.com</a>. Savage Worlds and all associated logos and trademarks are copyrights of Pinnacle Entertainment Group. Used with permission. Pinnacle makes no representation or warranty as to the quality, viability, or suitability for purpose of this product.</p>
 
 				<p>Many thanks to <a href="http://glyphicons.com/" title="Glyphicons">Glyphicons</a> for providing their Halflings for users of <a href="http://getbootstrap.com/" title="Bootstrap">Bootstrap 3</a> for free!</p>
+
+				<p>And more thanks go to <a href="https://github.com/MrRio">MrRio</a> for his awesome <a href="https://github.com/MrRio/jsPDF">jsPDF project</a>!</p>
 
 				<p>Thanks to <a href="http://iconcubic.deviantart.com/">iconcubic</a> and his <a href="http://www.iconeasy.com/iconset/dnd-dice-icons/">DnD Icons Set</a> for the dice icons. Used for free as per the <a href="http://www.iconeasy.com/icon/license/Object/DnD%20Dice/license.txt">license</a></p>
 
@@ -78,7 +158,7 @@
 <script src="./js/bootstrap.min.js"></script>
 <script src="./js/bootbox.min.js"></script>
 <script src="./js/swwt.min.js"></script>
-<script src="./js/FileSaver.min.js"></script>
+<script src="./js/jspdf.min.js"></script>
 <script>var smarty_comment_section = 'index';</script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -89,52 +169,24 @@
   ga('create', 'UA-41054868-5', 'jdgwf.github.io');
   ga('send', 'pageview');
 
-</script>
-<script>
 
-$(".js-backup-summary").html( get_backup_summary() );
-$(".js-export-data").click( function() {
-	export_as_file();
-});
-$(".js-restore-input").change( function() {
-	var input = $(".js-restore-input").get(0);
-	var file = input.files[0];
-	$(".js-import-data").unbind("click");
-	if(file) {
-
-		var fr = new FileReader();
-
-		var filedata = fr.readAsDataURL(file);
-		fr.onloadend = function() {
-			var filedata = fr.result;
-			if(import_restore_file( filedata )) {
-				$(".js-is-valid").html("This appears to be a valid file.<br /><button class=\"btn btn-primary btn-xs js-import-data\">Import It!</button><br />This will <strong>not</strong> delete your current data, only append to it");
-				$(".js-import-data").click( function() {
-						var input = $(".js-restore-input").get(0);
-						var file = input.files[0];
-						if(file) {
-							var fr = new FileReader();
-							var filedata = fr.readAsDataURL(file);
-							fr.onloadend = function() {
-								var filedata = fr.result;
-								if(import_restore_file( filedata, true )) {
-									alert("DING You're imported!");
-								} else {
-									alert("BOOO! It didn't work!");
-								}
-							};
-						}
-
-					}
-				);
+	function update_pdf() {
+		eval('try{' + $(".js-pdftest").val() + '} catch(e) { console.error(e.message,e.stack,e); }');
+		// Save the PDF
+	//	if(doc) {
+			if (navigator.msSaveBlob) {
+				string = 'http://microsoft.com/thisdoesnotexists';
+				console.error('Sorry, we cannot show live PDFs in MSIE')
 			} else {
-				$(".js-is-valid").html("This doesn't look like a valid import file");
+				var string = doc.output('bloburi');
 			}
-		}
-	} else {
-		$(".js-is-valid").html('');
+			$('.preview-pane').attr('src', string);
+	//	}
 	}
+	update_pdf();
+	$(".js-pdftest").keyup( function() {
+		update_pdf();
+	});
 
-});
 </script>
 </html>
