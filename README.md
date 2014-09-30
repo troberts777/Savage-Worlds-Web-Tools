@@ -30,11 +30,11 @@ Fully Functional Tools Include:
 				* COMPLETE - SWD Personal Equipment
 				* COMPLETE - Fantasy Companion Equipment
 				* Horror Companion Equipment
-				* SciFi Companion Equipment
+				* COMPLETE - SciFi Companion Equipment
 				* Super Powers Companion Equipment
 			* Powers
 				* COMPLETE - SWD Trappings and Powers
-				* Fantasy Companion Trappings and Powers
+				* COMPLETE - Fantasy Companion Trappings and Powers
 				* Horror Companion Trappings and Powers
 * Monster Search
 	* TODO:
@@ -47,6 +47,7 @@ Fully Functional Tools Include:
 ###The roadmap for these tools include:
 
 * Character Creator ( rewrite in progress since Aug 9th 2014, basic code completion on Sept 4th 2014 )
+	* PDF Export Testing is in Progress
 	* TODO
 		* Optional derived stats (e.g. Sanity from Horror Companion )
 		* Data entry for Horror and SFC Companions
