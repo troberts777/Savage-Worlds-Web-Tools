@@ -34,93 +34,17 @@
 	<a style="display:block;text-align: center" target="jspdf-functions" href="http://mrrio.github.io/jsPDF/doc/symbols/jsPDF.html">jsPDF Function Reference</a>
 	<div class="row">
 		<div class="col-xs-6">
-
-			<textarea style="height: 650px" class="js-pdftest">
-var doc = new jsPDF();
-doc.setFontSize(20);
-doc.setFontStyle("italic");
-doc.text(60, 20, 'Savage Worlds Character Sheet!');
-
-doc.setFontSize(12);
-doc.setFontStyle("bold");
-doc.text(20, 30, 'Character Name: MyCharacter Name');
-doc.setFontStyle("normal");
-doc.lines([[0,0],[125,0]], 55, 31);
-
-doc.setFontStyle("bold");
-doc.text(20, 40, 'Player Name:');
-doc.setFontStyle("normal");
-doc.lines([[0,0],[130,0]], 50, 41);
-
-doc.setFontStyle("bold");
-doc.text(20, 45, 'Race: I\'m a Human!');
-doc.setFontStyle("normal");
-doc.lines([[0,0],[95,0]], 32, 46);
-
-doc.setFontStyle("bold");
-doc.text(133, 45, 'Gender: I\'m a Grrrl');
-doc.setFontStyle("normal");
-doc.lines([[0,0],[30,0]], 150, 46);
-
-doc.rect(20,50,160,80);
-doc.setFontStyle("bold");
-doc.text(25, 55, 'Agility: d4');
-doc.text(55, 55, 'Smarts: d4');
-doc.text(95, 55, 'Spirit: d4');
-doc.text(125, 55, 'Strength: d4');
-doc.text(155, 55, 'Vigor: d4');
-
-// Agility Skills
-doc.setFontSize(10);
-doc.setFontStyle("normal");
-currentSkillCount = 0;
-for(skillCount = 0; skillCount < chargen_skills.length; skillCount++) {
-	if(chargen_skills[skillCount].attribute == "agility") {
-		doc.text(25, 63+currentSkillCount*4, chargen_skills[skillCount].name + ': d4');
-		currentSkillCount++;
-	}
-}
-
-// Smarts Skills
-doc.setFontSize(10);
-doc.setFontStyle("normal");
-currentSkillCount = 0;
-for(skillCount = 0; skillCount < chargen_skills.length; skillCount++) {
-	if(chargen_skills[skillCount].attribute == "smarts") {
-		doc.text(55, 63+currentSkillCount*4, chargen_skills[skillCount].name + ': d4');
-		currentSkillCount++;
-	}
-}
-
-// Spirit Skills
-doc.setFontSize(10);
-doc.setFontStyle("normal");
-currentSkillCount = 0;
-for(skillCount = 0; skillCount < chargen_skills.length; skillCount++) {
-	if(chargen_skills[skillCount].attribute == "spirit") {
-		doc.text(95, 63+currentSkillCount*4, chargen_skills[skillCount].name + ': d4');
-		currentSkillCount++;
-	}
-}
-
-// Strength Skills
-doc.setFontSize(10);
-doc.setFontStyle("normal");
-currentSkillCount = 0;
-for(skillCount = 0; skillCount < chargen_skills.length; skillCount++) {
-	if(chargen_skills[skillCount].attribute == "strength") {
-		doc.text(125, 63+currentSkillCount*4, chargen_skills[skillCount].name + ': d4');
-		currentSkillCount++;
-	}
-}
-</textarea>
+			<p>Obviously this is a work in progress. You current character on the <a href="character_creator.html">Character Creator</a> page should be displayed here (and downloadable/printable!!)</p>
+			<p>If it's not, please tweet me above.</p>
+			<p><strong>It does NOT work on iApple devices as expected, the PDF shows up, but no way to print or save :(</strong></p>
 		</div>
 		<div class="col-xs-6">
-			<iframe class="preview-pane" type="application/pdf" width="100%" height="650" frameborder="0" style="position:relative;z-index:999"></iframe>
+			<iframe class="preview-pane" type="application/pdf" width="100%" height="800" frameborder="0" style="position:relative;z-index:999"></iframe>
 			<button type="button" class="btn btn-primary js-download-pdf">Download PDF</button>
 		</div>
 	</div>
 </div>
+
 <div class="footer">
 	<div class="container">
 		<div class="row">
@@ -147,7 +71,7 @@ for(skillCount = 0; skillCount < chargen_skills.length; skillCount++) {
 				</p>
 			</div>
 			<div class="col-xs-6 text-right">
-				<p>App Version: 2014-09-29-06</p>
+				<p>App Version: 2014-09-29-07</p>
 			</div>
 		</div>
 	</div>
@@ -158,8 +82,9 @@ for(skillCount = 0; skillCount < chargen_skills.length; skillCount++) {
 <script src="./js/jquery-1.10.2.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>
 <script src="./js/bootbox.min.js"></script>
-<script src="./js/swwt.min.js"></script>
 <script src="./js/jspdf.min.js"></script>
+<script src="./js/swwt.min.js"></script>
+
 <script>var smarty_comment_section = 'index';</script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -170,36 +95,25 @@ for(skillCount = 0; skillCount < chargen_skills.length; skillCount++) {
   ga('create', 'UA-41054868-5', 'jdgwf.github.io');
   ga('send', 'pageview');
 
+	var current_character;
 
-	function update_pdf() {
-		eval('try{' + $(".js-pdftest").val() + '} catch(e) { console.error(e.message,e.stack,e); }');
-		// Save the PDF
-	//	if(doc) {
-			if (navigator.msSaveBlob) {
-				string = 'http://microsoft.com/thisdoesnotexists';
-				console.error('Sorry, we cannot show live PDFs in MSIE')
-			} else {
-				var string = doc.output('bloburi');
-			}
-			$('.preview-pane').attr('src', string);
-	//	}
+	var app_version = "2014-09-29-07";
+
+	current_character = new character_class();
+	current_character.init();
+	if( typeof(localStorage["com.jdg.swwt.tmp.current_character"]) != "undefined" && localStorage["com.jdg.swwt.tmp.current_character"]) {
+		current_character.import_json( localStorage["com.jdg.swwt.tmp.current_character"] );
+	//			$(".js-chargen-name").val(current_character.name);
+	//			$(".js-chargen-description").val(current_character.description);
 	}
-	update_pdf();
-	$(".js-pdftest").keyup( function() {
-		update_pdf();
-	});
+
+
+
+  	create_basic_pdf();
+  	chargen_show_preview_pane(".preview-pane");
 
 	$(".js-download-pdf").click( function() {
-		eval('try{' + $(".js-pdftest").val() + '} catch(e) { console.error(e.message,e.stack,e); }');
-
-		if (navigator.msSaveBlob) {
-			string = 'http://microsoft.com/thisdoesnotexists';
-			console.error('Sorry, we cannot show live PDFs in MSIE')
-		} else {
-			var string = doc.output('bloburi');
-		}
-		if(doc)
-			doc.save('My Character.pdf');
+		chargen_download_pdf();
 	});
 
 </script>

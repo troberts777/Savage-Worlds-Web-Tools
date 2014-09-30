@@ -94,8 +94,6 @@ character_class.prototype = {
 
 		this.starting_funds = this.base_starting_funds;
 
-
-
 		this.is_valid = true;
 
 		if( this.wild_card > 0)

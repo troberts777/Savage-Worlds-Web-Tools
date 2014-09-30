@@ -456,7 +456,7 @@
 				</p>
 			</div>
 			<div class="col-xs-6 text-right">
-				<p>App Version: 2014-09-29-06</p>
+				<p>App Version: 2014-09-29-07</p>
 			</div>
 		</div>
 	</div>
@@ -468,17 +468,13 @@
 <script src="./js/jquery-1.10.2.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>
 <script src="./js/bootbox.min.js"></script>
+<script src="./js/jspdf.min.js"></script>
 <script src="./js/swwt.min.js"></script>
 
 <script type="text/javascript">var smarty_comment_section = 'character_creator';</script>
 
 <script>
-
-sw_starship.prototype = new creator_base();
-function sw_starship() {
-	creator_base.apply( this, arguments );
-}
-
+var app_version = "2014-09-29-07";
 var current_character;
 $(window).load(
 	function(){
