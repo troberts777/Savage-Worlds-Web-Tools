@@ -2353,6 +2353,51 @@ character_class.prototype = {
 		return this.xp;
 	},
 
+	get_weapons: function() {
+		return_array = Array();
+		for(eq_c = 0; eq_c < this.selected_gear.length; eq_c++) {
+			if(this.selected_gear[eq_c].damage && this.selected_gear[eq_c].damage != "")
+				return_array.push(this.selected_gear[eq_c]);
+		}
+		return return_array;
+	},
+	get_armor: function() {
+		return_array = Array();
+		for(eq_c = 0; eq_c < this.selected_gear.length; eq_c++) {
+			if(this.selected_gear[eq_c].armor && this.selected_gear[eq_c].armor > 0)
+				return_array.push(this.selected_gear[eq_c]);
+		}
+		return return_array;
+	},
+	get_mundane: function() {
+		return_array = Array();
+		for(eq_c = 0; eq_c < this.selected_gear.length; eq_c++) {
+			if(
+				(
+					!this.selected_gear[eq_c].damage
+					||
+					(
+						this.selected_gear[eq_c].damage && this.selected_gear[eq_c].damage == ""
+					)
+				)
+				&&
+				(
+					!this.selected_gear[eq_c].armor
+					||
+					(
+						this.selected_gear[eq_c].armor && this.selected_gear[eq_c].armor == ""
+					)
+				)
+			)
+			{
+
+				return_array.push(this.selected_gear[eq_c]);
+			}
+		}
+		return return_array;
+	},
+
+
 
 	get_rank_name: function() {
 		if( chargen_ranks[this.rank] )

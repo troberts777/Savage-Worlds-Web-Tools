@@ -1937,6 +1937,7 @@ $(".js-chargen-import-data").click( function() {
 			$(".js-chargen-name").val(current_character.name);
 			$(".js-chargen-description").val(current_character.description);
 			$(".js-import-code").val('');
+			localStorage["current_character"] = current_character.export_json(".js-chargen-json-code");
 			bootstrap_alert( "Your Character has been imported.", "success" );
 		} else {
 			bootstrap_alert( "Your Character could not be imported - please check the formatting of your code.", "warning" );

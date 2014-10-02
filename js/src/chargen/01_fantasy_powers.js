@@ -154,6 +154,7 @@ chargen_powers = chargen_powers.concat(Array(
 		duration: "Instant",
 		trappings: "Balls of fire, ice, light, darkness, colored bolts, swarm of insects.",
 		page: "p30",
+		damage: "2d6",
 		book: books_list[1],
 		description: Array(
 			"Blast is an area effect power that can put down many opponents at once. The caster first picks where he wants to center the blast, then makes the appropriate skill roll. Normal ranged attack modifiers apply.",
@@ -209,6 +210,7 @@ chargen_powers = chargen_powers.concat(Array(
 		duration: "Instant",
 		trappings: "Fire, ice, light, darkness, colored bolts, insects.",
 		page: "p31",
+		damage: "2d6",
 		book: books_list[1],
 		description: Array(
 			"Bolt is a standard attack power of wizards, and can also be used for ray guns, bursts of energy, streaks of holy light, and other ranged attacks. The damage of the bolt is 2d6."
@@ -263,6 +265,7 @@ chargen_powers = chargen_powers.concat(Array(
 		duration: "Instant",
 		trappings: "A shower of flames, light, or other energy.",
 		page: "p32",
+		damage: "2d10",
 		book: books_list[1],
 		description: Array(
 			"Burst produces a large fan of energy that bathes its targets in red-hot fire or other damaging energy. ",
@@ -730,6 +733,7 @@ chargen_powers = chargen_powers.concat(Array(
 		trappings: "Lightning bolt, battering ram of pure force, rolling ball of fire.",
 		page: "p39",
 		book: books_list[1],
+		damage: "2d10",
 		description: Array(
 			"Jet creates a damaging stream that shoots out from the caster. Measure a straight line 1” wide and 12” long starting from the character’s position (a 12” ruler works perfectly for this). If successful, targets within this area must make an opposed Agility roll versus the arcane skill roll or suffer 2d10 damage."
 		),

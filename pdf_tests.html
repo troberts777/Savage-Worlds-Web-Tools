@@ -33,13 +33,14 @@
 <div class="container">
 	<a style="display:block;text-align: center" target="jspdf-functions" href="http://mrrio.github.io/jsPDF/doc/symbols/jsPDF.html">jsPDF Function Reference</a>
 	<div class="row">
-		<div class="col-xs-6">
+		<div class="col-xs-12">
 			<p>Obviously this is a work in progress. You current character on the <a href="character_creator.html">Character Creator</a> page should be displayed here (and downloadable/printable!!)</p>
 			<p>If it's not, please tweet me above.</p>
 			<p><strong>It does NOT work on iApple devices as expected, the PDF shows up, but no way to print or save :(</strong></p>
-		</div>
-		<div class="col-xs-6">
-			<iframe class="preview-pane" type="application/pdf" width="100%" height="800" frameborder="0" style="position:relative;z-index:999"></iframe>
+			<p>It also appears that it doesn't work on the Kindle Fire (original), so I'll assume it's not support on Android.</p>
+
+			<iframe class="preview-pane" type="application/pdf" width="400" height="600" frameborder="0" style="position:relative;z-index:999"></iframe>
+			<br />
 			<button type="button" class="btn btn-primary js-download-pdf">Download PDF</button>
 		</div>
 	</div>
@@ -71,7 +72,7 @@
 				</p>
 			</div>
 			<div class="col-xs-6 text-right">
-				<p>App Version: 2014-09-30-01</p>
+				<p>App Version: 2014-10-02-01</p>
 			</div>
 		</div>
 	</div>
@@ -97,7 +98,7 @@
 
 	var current_character;
 
-	var app_version = "2014-09-30-01";
+	var app_version = "2014-10-02-01";
 
 	current_character = new character_class();
 	current_character.init();

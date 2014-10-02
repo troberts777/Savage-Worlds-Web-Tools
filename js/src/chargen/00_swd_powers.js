@@ -141,6 +141,7 @@ chargen_powers = chargen_powers.concat(Array(
 		trappings: "Balls of fire, ice, light, darkness, colored bolts, swarm of insects.",
 		page: "p126",
 		book: books_list[0],
+		damage: "2d6",
 		description: Array(
 			"Blast is an area effect power that can put down many opponents at once. The caster first picks where he wants to center the blast, then makes the appropriate skill roll. Normal ranged attack modifiers apply.",
 			"The area of effect is a Medium Burst Template. If the roll is failed, the blast deviates as a launched projectile.",
@@ -176,6 +177,7 @@ chargen_powers = chargen_powers.concat(Array(
 		duration: "Instant",
 		trappings: "Fire, ice, light, darkness, colored bolts, insects.",
 		page: "p126",
+		damage: "2d6",
 		book: books_list[0],
 		description: Array(
 			"Bolt is a standard attack power of wizards, and can also be used for ray guns, bursts of energy, streaks of holy light, and other ranged attacks. The damage of the bolt is 2d6."
@@ -230,6 +232,7 @@ chargen_powers = chargen_powers.concat(Array(
 		duration: "Instant",
 		trappings: "A shower of flames, light, or other energy.",
 		page: "p127",
+		damage: "2d10",
 		book: books_list[0],
 		description: Array(
 			"Burst produces a large fan of energy that bathes its targets in red-hot fire or other damaging energy. ",
