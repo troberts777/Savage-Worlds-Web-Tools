@@ -36,10 +36,11 @@
 		<div class="col-xs-12">
 			<p>Obviously this is a work in progress. You current character on the <a href="character_creator.html">Character Creator</a> page should be displayed here (and downloadable/printable!!)</p>
 			<p>If it's not, please tweet me above.</p>
-			<p><strong>It does NOT work on iApple devices as expected, the PDF shows up, but no way to print or save :(</strong></p>
-			<p>It also appears that it doesn't work on the Kindle Fire (original), so I'll assume it's not support on Android.</p>
-
-			<iframe class="preview-pane" type="application/pdf" width="400" height="600" frameborder="0" style="position:relative;z-index:999"></iframe>
+			<p><strong>It does NOT work on iApple devices as expected. The PDF shows up, but no way to print or save :(</strong></p>
+			<p>It also appears that it doesn't work on the Kindle Fire (original), so I'll assume it's not support on Android as iOS above. I'll have to filter any Export PDF buttons on the live version to only be for desktop systems.</p>
+			<label><input type="radio" name="orientation" class="js-portrait" checked="checked"> Portrait</label>
+			<label><input type="radio" name="orientation" class="js-landscape"> Landscape</label>
+			<iframe class="preview-pane" type="application/pdf" width="900" height="650" frameborder="0" style="position:relative;z-index:999"></iframe>
 			<br />
 			<button type="button" class="btn btn-primary js-download-pdf">Download PDF</button>
 		</div>
@@ -72,7 +73,7 @@
 				</p>
 			</div>
 			<div class="col-xs-6 text-right">
-				<p>App Version: 2014-10-02-01</p>
+				<p>App Version: 2014-10-03-01</p>
 			</div>
 		</div>
 	</div>
@@ -98,7 +99,7 @@
 
 	var current_character;
 
-	var app_version = "2014-10-02-01";
+	var app_version = "2014-10-03-01";
 
 	current_character = new character_class();
 	current_character.init();
@@ -110,8 +111,18 @@
 
 
 
-  	create_basic_pdf();
+  	create_basic_portrait_pdf();
   	chargen_show_preview_pane(".preview-pane");
+
+  	$(".js-landscape").click( function() {
+  	create_basic_landscape_pdf();
+  	chargen_show_preview_pane(".preview-pane");
+  	});
+
+  	$(".js-portrait").click( function() {
+  	create_basic_portrait_pdf();
+  	chargen_show_preview_pane(".preview-pane");
+  	});
 
 	$(".js-download-pdf").click( function() {
 		chargen_download_pdf();
