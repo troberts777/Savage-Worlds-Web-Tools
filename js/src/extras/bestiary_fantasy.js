@@ -2995,7 +2995,7 @@ extraDatabase = extraDatabase.concat(Array(
 			smarts: "d6",
 			spirit: "d6",
 			strength: "d4",
-			vigor: "d8"
+			vigor: "d6"
 		},
 		skills: {
 			'Climbing' : "d6",

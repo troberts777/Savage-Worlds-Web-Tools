@@ -182,13 +182,13 @@ function displayExtra(extra, indexNumber, no_buttons) {
 			extraHTML += "<strong>Pace:</strong> " + extra.pace + "; ";
 		if(typeof extra.parry != "undefined")
 			extraHTML += "<strong>Parry:</strong> " + extra.parry + "; ";
-		if(extra.acc) {
+		if(extra.toughness) {
 			if(extra.armor > 0)
-				extraHTML += "<strong>Toughness:</strong> " + extra.toughness + " (" + extra.armor + ")<br />";
+				extraHTML += "<strong>Toughness:</strong> " + extra.toughness + " (" + extra.armor + ")";
 			else
-				extraHTML += "<strong>Toughness:</strong> " + extra.toughness + "<br />";
+				extraHTML += "<strong>Toughness:</strong> " + extra.toughness;
 		}
-
+		extraHTML += "<br />";
 		//Hindrances
 		if(extra.hindrances)
 			extraHTML += "<strong>Hindrances:</strong> " + extra.hindrances + "<br />";
