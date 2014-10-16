@@ -216,10 +216,6 @@ character_class.prototype = {
 		this.attributes.strength += this.race.attributes.strength;
 		this.attributes.vigor += this.race.attributes.vigor;
 
-		if(this.attributes.vigor > 5) // d12
-			this.derived.toughness += 8 + this.attributes.vigor - 5;
-		else
-			this.derived.toughness = (dice_int_value[this.attributes.vigor] / 2) + 2;
 
 
 		this.max_strain = 0;
@@ -303,22 +299,6 @@ character_class.prototype = {
 
 
 
-		// calculate parry
-		this.derived.parry = 2;
-		if(this.has_skill("Fighting")) {
-			fighting_skill = this.get_skill("Fighting");
-			if(fighting_skill.value == 1) // d4
-				this.derived.parry = 4;
-			if(fighting_skill.value == 2) // d6
-				this.derived.parry = 5;
-			if(fighting_skill.value == 3) // d8
-				this.derived.parry = 6;
-			if(fighting_skill.value == 4) // d10
-				this.derived.parry = 7;
-			if(fighting_skill.value == 5) // d12
-				this.derived.parry = 8;
-
-		}
 
 		this.validity_messages = Array();
 		if( this.perks_available < 0) {
@@ -402,6 +382,30 @@ character_class.prototype = {
 			this.xp = 0;
 			this.rank = 0;
 			this.selected_advancements = Array();
+		}
+
+
+		if(this.attributes.vigor > 5) // d12
+			this.derived.toughness += 8 + this.attributes.vigor - 5;
+		else
+			this.derived.toughness += (dice_int_value[this.attributes.vigor] / 2) + 2;
+
+
+		// calculate parry
+		this.derived.parry = 2;
+		if(this.has_skill("Fighting")) {
+			fighting_skill = this.get_skill("Fighting");
+			if(fighting_skill.value == 1) // d4
+				this.derived.parry = 4;
+			if(fighting_skill.value == 2) // d6
+				this.derived.parry = 5;
+			if(fighting_skill.value == 3) // d8
+				this.derived.parry = 6;
+			if(fighting_skill.value == 4) // d10
+				this.derived.parry = 7;
+			if(fighting_skill.value == 5) // d12
+				this.derived.parry = 8;
+
 		}
 
 
