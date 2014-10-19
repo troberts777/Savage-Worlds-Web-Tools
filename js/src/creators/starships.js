@@ -11,7 +11,7 @@ The entries in this file are from Savage Worlds: Sci-Fi Companion and are owned 
 var starship_modifications = Array(
 	{
 		name: "AMCM",
-		description: "Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM’s call) or other factors that might interfere with the bomb’s targeting systems inflicts a –2 penalty.",
+		description: "Anti-Missile Counter Measures are integrated jammers and decoys. They add +2 to Driving, Piloting or Knowledge (Electronics) rolls made to evade missile attacks.",
 		get_max: function(selected_starship) { return 1 },
 		get_mod_cost: function(selected_starship) {
 			return 1;

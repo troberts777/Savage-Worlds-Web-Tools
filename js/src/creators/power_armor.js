@@ -412,7 +412,7 @@ var power_armor_modifications = Array(
 	},
 	{
 		name: "Weapon Mount",
-		description: "Automated systems within the suit are loaded with minor antibiotics, stimulants, and anesthetics designed to keep a soldier alive after suffering trauma. It has a d8 Healing and adds +2 to recover from being Shaken and resisting Bleeding Out.",
+		description: "A single mount can hold any one personal weapon up to 100 pounds, or one Mod point of vehicular weaponry. Two shoulder mounts can be combined into a central weapon mount over the user’s head to hold a vehicle weapon with a Mod cost of 2. The user may fire mounted and personal weapons at standard multi-action penalties (but see Targeting System). Weaponry is purchased separately.",
 		get_max: function(selected_object) { return 2 },
 		get_mod_cost: function(selected_object) {
 			return 1;

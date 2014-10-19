@@ -290,7 +290,7 @@ var vehicle_modifications = Array(
 	},
 	{
 		name: "Climb",
-		description: "Add 1 Mod slot for every four crewman deducted (round up).",
+		description: "Aircraft only. The vehicle’s Climb is increased by 1.",
 		get_max: function(selected_vehicle) { return 5 },
 		get_mod_cost: function(selected_vehicle) {
 			return 1;
