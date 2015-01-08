@@ -230,7 +230,10 @@ var power_armor_modifications = Array(
 
 			if(selected_object.aircraft == 0) {
 				selected_object.climb = 0;
-				selected_object.flying_pace = selected_object.base_pace;
+				//selected_object.flying_pace = selected_object.base_pace;
+
+				selected_object.ts = selected_object.base_pace;
+				selected_object.acc = selected_object.ts / 4;
 			}
 
 			selected_object.aircraft = 1;
@@ -255,7 +258,8 @@ var power_armor_modifications = Array(
 		},
 		get_mod_effect: function(selected_object) {
 
-			selected_object.flying_pace = selected_object.flying_pace * 2;
+			selected_object.ts = selected_object.ts * 2;
+			selected_object.acc = selected_object.ts / 4;
 		},
 		get_weight: function(selected_object) {
 			return 0;
@@ -307,7 +311,8 @@ var power_armor_modifications = Array(
 			return 0;
 		},
 		get_mod_effect: function(selected_object) {
-			selected_object.flying_pace = selected_object.flying_pace * 2;
+			selected_object.ts = selected_object.ts * 2;
+			selected_object.acc = selected_object.ts / 4;
 			selected_object.climb--;
 		},
 		get_weight: function(selected_object) {
