@@ -365,6 +365,7 @@ creator_base.prototype = {
 			this.strength_bonus = 0;
 			this.aircraft = 0;
 			this.watercraft = 0;
+			this.flying_pace = 0;
 			this.has_weapon_mounts = 0;
 			this.vehicle_weapon_mod_points = 0;
 
