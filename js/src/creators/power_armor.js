@@ -298,7 +298,7 @@ var power_armor_modifications = Array(
 	{
 		name: "Faster Flight (unofficial) - Exchange Climb for Speed",
 		description: "The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it’s taken doubles previous Pace or increases Climb by 1.",
-		show_with_option: "faster-flight",
+		show_with_option: "climb-top-speed",
 		get_max: function(selected_object) { return "u" },
 		get_mod_cost: function(selected_object) {
 			return 0;
