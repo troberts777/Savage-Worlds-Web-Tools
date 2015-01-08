@@ -13,12 +13,13 @@ var power_armor_options = Array(
 	{
 		title: "Faster Flight Systems",
 		short_tag: "faster-flight",
-		description: "Some Desc",
+		description: "Some Ideas for making more agressive flight systems for Power Armor. <a href='http://www.peginc.com/forum/viewtopic.php?p=423784#423784'>Discussion is here.</a>",
 		type: "bool"
 	},
 	{
 		title: "Exchange Climb for Top Speed",
 		short_tag: "climb-top-speed",
+		description: "Some Ideas for making more agressive flight systems for Power Armor. <a href='http://www.peginc.com/forum/viewtopic.php?p=423784#423784'>Discussion is here.</a>",
 		type: "bool"
 	}
 );
