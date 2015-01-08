@@ -13,7 +13,7 @@ var walker_options = Array(
 	{
 		title: "Ultra-Light Chassis",
 		short_tag: "ultra-light",
-		description: "This is a proposed walker size for 12-15 foot tall, Heavy Gear sized, Walkers",
+		description: "This is a proposed walker size for 12-15 foot tall, Heavy Gear sized, Walkers. <a href='http://www.peginc.com/forum/viewtopic.php?t=45126'>The discussion is here</a>.",
 		type: "bool"
 	}
 );
