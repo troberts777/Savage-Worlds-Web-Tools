@@ -17,8 +17,29 @@ function propogate_add_mods(selected_modification_list) {
 		object_mod_count = current_selected_object.get_modification_count(selected_modification_list[mod_count].name);
 		mod_cost = selected_modification_list[mod_count].get_mod_cost(current_selected_object);
 		is_available = true;
+		very_hidden = false;
+
+		if( typeof(selected_modification_list[mod_count].show_with_option) != "undefined" ) {
+			if( current_selected_object.option_active( selected_modification_list[mod_count].show_with_option ) ) {
+				is_available = true;
+			} else {
+				is_available = false;
+				very_hidden = true;
+			}
+		}
+
+		if( typeof(selected_modification_list[mod_count].hide_with_option) != "undefined" ) {
+			if( current_selected_object.option_active( selected_modification_list[mod_count].hide_with_option ) ) {
+				is_available = false;
+				very_hidden = true;
+			} else {
+				is_available = true;
+			}
+		}
+
 		if( selected_modification_list[mod_count].is_available )
-			is_available = selected_modification_list[mod_count].is_available (current_selected_object);
+			if( very_hidden == false )
+				is_available = selected_modification_list[mod_count].is_available (current_selected_object);
 
 		if( (object_mods_available >= mod_cost || object_mod_count > 0 ) && is_available ) {
 			modifications_html += "<tr title='" + selected_modification_list[mod_count].description + "'>";
@@ -47,6 +68,75 @@ function propogate_add_mods(selected_modification_list) {
 	}
 	modifications_html += "</tbody></table>";
 	$(".js-select-modifications").html(modifications_html);
+}
+
+
+
+function propogate_settings_box() {
+	current_settings = current_selected_object.get_available_options();
+
+	if(current_settings === Array()) {
+		html = "";
+		$(".js-show-options").hide();
+	} else {
+		html = "";
+		for( option_count = 0; option_count < current_settings.length; option_count++) {
+			switch(	current_settings[option_count].type.toLowerCase() ) {
+				case "boolean":
+				case "bool":
+//					console.log(" .... " + current_settings[option_count].value);
+					if( current_settings[option_count].value > 0)
+						html += "<label><input class=\"js-page-setting-item\" type=\"checkbox\" checked=\"checked\" name=\"" + current_settings[option_count].short_tag + "\" value=\"1\" /> " + current_settings[option_count].title + "</label>";
+					else
+						html += "<label><input class=\"js-page-setting-item\" type=\"checkbox\" name=\"" + current_settings[option_count].short_tag + "\" value=\"1\" /> " + current_settings[option_count].title + "</label>";
+					break;
+				default:
+					html += "<label>" + current_settings[option_count].title + " <input class=\"js-page-setting-item\" type=\"text\" name=\"\" value=\"" + current_settings[option_count].value + "\" /></label>";
+					break;
+			}
+			if( current_settings[option_count].description )
+				html += "<p>" +  current_settings[option_count].description + "</p>";
+			else
+				html += "<br />";
+		}
+		$(".js-page-options").html( html );
+
+
+		// $('.js-page-setting-item').unbind('keyup');
+		// $(".js-page-setting-item").keyup( function() {
+		// 	type = $(this).attr("type");
+		// 	name = $(this).attr("name");
+		// 	value = $(this).val();
+
+		// 	if( type = "checkbox") {
+		// 		if( $(this).is(":checked") )
+		// 			value = 1;
+		// 		else
+		// 			value = 0;
+		// 	}
+		// 	current_selected_object.set_option( name, value);
+		// 	refresh_creator_page();
+		// });
+
+		$('.js-page-setting-item').unbind('change');
+		$(".js-page-setting-item").change( function() {
+			type = $(this).attr("type");
+			name = $(this).attr("name");
+			value = $(this).val();
+
+			if( type = "checkbox") {
+				if( $(this).is(":checked") )
+					value = 1;
+				else
+					value = 0;
+			}
+			current_selected_object.set_option( name, value);
+			refresh_creator_page();
+		});
+
+		$(".js-show-options").show();
+	}
+
 }
 
 function propogate_weapon_mods() {
@@ -327,7 +417,7 @@ function refresh_creator_page() {
 	current_selected_object.export_bbcode(".js-bb-code");
 	current_selected_object.export_json(".js-json-code");
 
-
+	propogate_settings_box();
 
 	$('.js-set-name').unbind('keyup');
 	$(".js-set-name").keyup( function() {

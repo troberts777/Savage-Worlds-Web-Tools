@@ -38,6 +38,7 @@
 				<button type="button" class="btn btn-default" data-toggle="modal" data-target=".js-export-dialog"><span class="glyphicon glyphicon-export"></span> Export</button>
 				<button type="button" class="btn btn-default" data-toggle="modal" data-target=".js-import-dialog"><span class="glyphicon glyphicon-import"></span> Import</button>
 				<button type="button" class="btn btn-default js-add-item-to-print-cart"><span class="glyphicon glyphicon-print"></span> Add to Print Cart</button>
+				<button type="button" style="display: none" class="btn btn-default js-show-options pull-right" data-toggle="modal" data-target=".js-settings-page"><span class="glyphicon glyphicon-wrench"></span> Settings</button>
 			</div>
 		</div>
 	</div>
@@ -58,6 +59,22 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="js-settings-page modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Options</h4>
+			</div>
+			<div class="modal-body js-page-options">
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>
@@ -143,7 +160,7 @@
 			<div class="col-xs-6 text-right">
 				<p>You can contribute to this project at <a href="https://github.com/jdgwf/savage-worlds-web-tools">https://github.com/jdgwf/savage-worlds-web-tools</a></p>
 				<p><a href="license.html" class="ios_app_click" title="More License Info">More License and Credits Information can be viewed here</a></p>
-<p>App Version: 2014-10-19-01</p>
+<p>App Version: 2015-01-08-01</p>
 			</div>
 		</div>
 	</div>
@@ -157,7 +174,7 @@
 <script src="./js/jspdf.min.js"></script>
 <script src="./js/swwt.min.js"></script>
 <script>
-var app_version = "2014-10-19-01";
+var app_version = "2015-01-08-01";
 sw_power_armor.prototype = new creator_base();
 function sw_power_armor() {
 	creator_base.apply( this, arguments );
@@ -168,7 +185,9 @@ var current_selected_object;
 $(window).load(
 	function(){
 		current_selected_object = new sw_power_armor();
-		current_selected_object.init("power_armor", "Power Armor", power_armor_sizes, power_armor_modifications);
+		if(typeof(power_armor_options) == "undefined")
+			power_armor_options = Array();
+		current_selected_object.init("power_armor", "Power Armor", power_armor_sizes, power_armor_modifications, power_armor_options);
 		if( typeof(localStorage["com.jdg.swwt.tmp.current_" + current_selected_object.object_type]) != "undefined" && localStorage["com.jdg.swwt.tmp.current_" + current_selected_object.object_type]) {
 			current_selected_object.import_json( localStorage["com.jdg.swwt.tmp.current_" + current_selected_object.object_type] );
 			$(".js-set-name").val(current_selected_object.item_name);

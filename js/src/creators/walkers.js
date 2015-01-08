@@ -9,6 +9,15 @@ Pinnacle makes no representation or warranty as to the quality, viability, or su
 The entries in this file are from Savage Worlds: Sci-Fi Companion and are owned by Pinnacle Entertainment Group.
 */
 
+var walker_options = Array(
+	{
+		title: "Ultra-Light Chassis",
+		short_tag: "ultra-light",
+		description: "This is a proposed walker size for 12-15 foot tall, Heavy Gear sized, Walkers",
+		type: "bool"
+	}
+);
+
 var walker_sizes = Array(
 	{
 		size_label: "Ultraight (unofficial)",
@@ -26,6 +35,7 @@ var walker_sizes = Array(
 		cost: 400000,
 		energy_capacity: 0,
 		provisions: 0,
+		show_with_option: "ultra-light",
 		unofficial: 1
 	},
 	{

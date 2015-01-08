@@ -9,6 +9,20 @@ Pinnacle makes no representation or warranty as to the quality, viability, or su
 The entries in this file are from Savage Worlds: Sci-Fi Companion and are owned by Pinnacle Entertainment Group.
 */
 
+var power_armor_options = Array(
+	{
+		title: "Faster Flight Systems",
+		short_tag: "faster-flight",
+		description: "Some Desc",
+		type: "bool"
+	},
+	{
+		title: "Exchange Climb for Top Speed",
+		short_tag: "climb-top-speed",
+		type: "bool"
+	}
+);
+
 var power_armor_sizes = Array(
 	{
 		size_label: "Light",
@@ -124,6 +138,7 @@ var power_armor_modifications = Array(
 	{
 		name: "Flight",
 		description: "The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it’s taken doubles previous Pace or increases Climb by 1.",
+		hide_with_option: "faster-flight",
 		get_max: function(selected_object) { return 1 },
 		get_mod_cost: function(selected_object) {
 			return 3;
@@ -150,6 +165,7 @@ var power_armor_modifications = Array(
 	{
 		name: "Flight - Double Speed",
 		description: "The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it’s taken doubles previous Pace or increases Climb by 1.",
+		hide_with_option: "faster-flight",
 		get_max: function(selected_object) { return "u" },
 		get_mod_cost: function(selected_object) {
 			return 3;
@@ -176,6 +192,7 @@ var power_armor_modifications = Array(
 	{
 		name: "Flight - +1 Climb",
 		description: "The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it’s taken doubles previous Pace or increases Climb by 1.",
+		hide_with_option: "faster-flight",
 		get_max: function(selected_object) { return "u" },
 		get_mod_cost: function(selected_object) {
 			return 3;
@@ -192,6 +209,112 @@ var power_armor_modifications = Array(
 		},
 		is_available: function(selected_object) {
 			if( selected_object.aircraft > 0  )
+				return true;
+			else
+				return false;
+		}
+
+	},
+	{
+		name: "Faster Flight (unofficial)",
+		description: "The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it’s taken doubles previous Pace or increases Climb by 1.",
+		show_with_option: "faster-flight",
+		get_max: function(selected_object) { return 1 },
+		get_mod_cost: function(selected_object) {
+			return selected_object.size;
+		},
+		get_cost: function(selected_object) {
+			return 5000 * selected_object.size;
+		},
+		get_mod_effect: function(selected_object) {
+
+			if(selected_object.aircraft == 0) {
+				selected_object.climb = 0;
+				selected_object.flying_pace = selected_object.base_pace;
+			}
+
+			selected_object.aircraft = 1;
+//			selected_object.acc = Math.ceil(selected_object.acc / 2);
+		},
+		get_weight: function(selected_object) {
+			return 0;
+		}
+
+	},
+
+	{
+		name: "Faster Flight (unofficial) - Double Speed",
+		description: "The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it’s taken doubles previous Pace or increases Climb by 1.",
+		show_with_option: "faster-flight",
+		get_max: function(selected_object) { return "u" },
+		get_mod_cost: function(selected_object) {
+			return selected_object.size;
+		},
+		get_cost: function(selected_object) {
+			return 5000 * selected_object.size;
+		},
+		get_mod_effect: function(selected_object) {
+
+			selected_object.flying_pace = selected_object.flying_pace * 2;
+		},
+		get_weight: function(selected_object) {
+			return 0;
+		},
+		is_available: function(selected_object) {
+			if( selected_object.aircraft > 0  )
+				return true;
+			else
+				return false;
+		}
+
+	},
+
+	{
+		name: "Faster Flight (unofficial) - +1 Climb",
+		description: "The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it’s taken doubles previous Pace or increases Climb by 1.",
+		show_with_option: "faster-flight",
+		get_max: function(selected_object) { return "u" },
+		get_mod_cost: function(selected_object) {
+			return selected_object.size;
+		},
+		get_cost: function(selected_object) {
+			return 5000 * selected_object.size;
+		},
+		get_mod_effect: function(selected_object) {
+
+			selected_object.climb++;
+		},
+		get_weight: function(selected_object) {
+			return 0;
+		},
+		is_available: function(selected_object) {
+			if( selected_object.aircraft > 0  )
+				return true;
+			else
+				return false;
+		}
+
+	},
+	{
+		name: "Faster Flight (unofficial) - Exchange Climb for Speed",
+		description: "The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it’s taken doubles previous Pace or increases Climb by 1.",
+		show_with_option: "faster-flight",
+		get_max: function(selected_object) { return "u" },
+		get_mod_cost: function(selected_object) {
+			return 0;
+		},
+		get_cost: function(selected_object) {
+			return 0;
+		},
+		get_mod_effect: function(selected_object) {
+			selected_object.flying_pace = selected_object.flying_pace * 2;
+			selected_object.climb--;
+		},
+		get_weight: function(selected_object) {
+			return 0;
+		},
+		is_available: function(selected_object) {
+			if( selected_object.aircraft > 0 && selected_object.climb > -2 )
 				return true;
 			else
 				return false;

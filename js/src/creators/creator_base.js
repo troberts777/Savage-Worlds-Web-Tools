@@ -6,7 +6,7 @@
 var creator_base = function() {};
 creator_base.prototype = {
 
-	init: function(object_type, object_label, available_sizes, available_mods) {
+	init: function(object_type, object_label, available_sizes, available_mods, available_options) {
 		this.item_name = "(nameless)";
 		this.object_description = "";
 
@@ -14,7 +14,7 @@ creator_base.prototype = {
 		this.object_label = object_label;
 		this.examples = "";
 		this.size = 0;
-		this.object_type = object_type,
+		this.object_type = object_type;
 		this.acc = 0;
 		this.ts = 0;
 		this.climb = 0;
@@ -40,6 +40,11 @@ creator_base.prototype = {
 		this.aircraft = 0;
 
 		this.selected_size = 0;
+
+		if(available_options)
+			this.available_options = available_options;
+		else
+			this.available_options = Array();
 
 		if(available_sizes)
 			this.available_sizes = available_sizes;
@@ -69,7 +74,7 @@ creator_base.prototype = {
 	},
 
 	reset: function() {
-		this.init(this.object_type, this.object_label, this.available_sizes, this.available_mods);
+		this.init(this.object_type, this.object_label, this.available_sizes, this.available_mods, this.available_options);
 	},
 
 	set_sizes: function(available_sizes) {
@@ -388,6 +393,7 @@ creator_base.prototype = {
 			this.provisions = this.selected_size.provisions;
 			this.weight = this.selected_size.weight;
 			this.pace = this.selected_size.pace;
+			this.base_pace = this.selected_size.pace;
 
 			this.mods_available = this.mods;
 
@@ -505,6 +511,37 @@ creator_base.prototype = {
 		this.item_name = newValue;
 	},
 
+	set_option: function( short_tag, value ) {
+//		console.log("set_option called: " + this.get_option_ls_name(short_tag) + ", " + value);
+		localStorage.setItem( this.get_option_ls_name(short_tag), value.toString() );
+	},
+
+	get_option_ls_name: function( short_tag) {
+		return "com.jdg.swwt.settings." + current_selected_object.object_type + "." + short_tag;
+	},
+
+	get_available_options: function() {
+//		console.log("get_available_options called");
+		if(this.available_options) {
+			// put current values into system
+			for(localSettingCount = 0; localSettingCount < this.available_options.length; localSettingCount++) {
+				if( typeof(this.available_options[localSettingCount].desciption) == "undefined") {
+					this.available_options[localSettingCount].desciption = "";
+				}
+
+				this.available_options[localSettingCount].value = localStorage.getItem( this.get_option_ls_name( this.available_options[localSettingCount].short_tag ) );
+//				console.log(this.get_option_ls_name( this.available_options[localSettingCount].short_tag ) + " - " + this.available_options[localSettingCount].value);
+				if(this.available_options[localSettingCount].value == "1")
+					this.available_options[localSettingCount].value = this.available_options[localSettingCount].value / 1;
+			}
+			return this.available_options;
+
+		} else {
+//			console.log("No settings?");
+			return Array();
+		}
+	},
+
 	set_description: function(newValue) {
 		this.object_description = newValue;
 	},
@@ -620,19 +657,49 @@ creator_base.prototype = {
 			}
 		}
 	},
+
+
+	option_active: function( short_tag ) {
+		value = localStorage.getItem( this.get_option_ls_name( short_tag) );
+		value = value / 1;
+		if( value > 0 )
+			return true;
+		else
+			return false;
+	},
+
 	propogate_size_select: function(jquery_selector) {
 		if(jquery_selector)
 			jquery_selector = ".js-select-size";
 		selectOptions = "<option value=''>- Select " + this.object_label + " Size -</option>";
 		for(sizeCount = 0; sizeCount < this.available_sizes.length; sizeCount++) {
 			isSelected = "";
-			if( this.selected_size && this.selected_size.size )
-				if(  this.selected_size.size == this.available_sizes[sizeCount].size )
-					isSelected = " selected='selected'";
-			selectOptions += "<option value='" + this.available_sizes[sizeCount].size + "'" + isSelected + ">" + this.available_sizes[sizeCount].size_label + " - Size " + this.available_sizes[sizeCount].size;
-			if( this.available_sizes[sizeCount].examples )
-				selectOptions += " - " + this.available_sizes[sizeCount].examples;
-			selectOptions += "</option>";
+			display_option = true;
+			if( typeof(this.available_sizes[sizeCount].show_with_option) != "undefined" ) {
+				if( this.option_active( this.available_sizes[sizeCount].show_with_option ) ) {
+					display_option = true;
+				} else {
+					display_option = false;
+				}
+			}
+
+			if( typeof(this.available_sizes[sizeCount].hide_with_option) != "undefined" ) {
+				if( this.option_active( this.available_sizes[sizeCount].hide_with_option ) ) {
+					display_option = false;
+				} else {
+					display_option = true;
+				}
+			}
+
+			if( display_option ) {
+				if( this.selected_size && this.selected_size.size )
+					if(  this.selected_size.size == this.available_sizes[sizeCount].size )
+						isSelected = " selected='selected'";
+				selectOptions += "<option value='" + this.available_sizes[sizeCount].size + "'" + isSelected + ">" + this.available_sizes[sizeCount].size_label + " - Size " + this.available_sizes[sizeCount].size;
+				if( this.available_sizes[sizeCount].examples )
+					selectOptions += " - " + this.available_sizes[sizeCount].examples;
+				selectOptions += "</option>";
+			}
 		}
 		$(jquery_selector).html(selectOptions);
 	}
