@@ -23,6 +23,11 @@ var chargen_genders = Array(
 if(!chargen_races)
 	var chargen_races = Array();
 
+if(!chargen_sourcebooks)
+	var chargen_sourcebooks = Array();
+
+chargen_sourcebooks = chargen_sourcebooks.concat( books_list[0] );
+
 chargen_races = chargen_races.concat(Array(
 	/* Savage Worlds Deluxe - These are the same Fantasy Companion Races */
 	{

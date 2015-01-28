@@ -2,8 +2,13 @@
 	Savage Worlds Web Tools by Jeffrey Gordon is licensed under a
 	Creative Commons Attribution 4.0 International License.
 */
+
+
+
 var character_class = function() {};
 character_class.prototype = {
+
+
 
 	init: function() {
 
@@ -779,13 +784,67 @@ character_class.prototype = {
 
 	},
 
+	set_option: function( short_tag, value ) {
+		//console.log("set_option called: " + this.get_option_ls_name(short_tag) + ", " + value);
+		localStorage.setItem( this.get_option_ls_name(short_tag), value.toString() );
+	},
+
+	get_option_ls_name: function( short_tag) {
+		return "com.jdg.swwt.settings.chargen." + short_tag;
+	},
+
+	is_book_in_use: function( short_tag ) {
+		for( bookusecount = 0; bookusecount < this.enabled_books.length; bookusecount++) {
+			if( short_tag == this.enabled_books[bookusecount].short_name)
+				return true;
+		}
+		return false;
+	},
+
+	get_available_options: function() {
+
+		available_options = Array();
+		availOptionsCount = 0;
+		available_options[availOptionsCount] = {
+			type: "header",
+		 	title: "Sourcebook Selection",
+		 	value: 1
+		};
+		this.enabled_books = Array();
+		availOptionsCount++;
+		for(localBooksCount = 0; localBooksCount < chargen_sourcebooks.length; localBooksCount++) {
+			available_options[availOptionsCount] = chargen_sourcebooks[localBooksCount];
+			available_options[availOptionsCount].type = "book";
+			available_options[availOptionsCount].value = "";
+			available_options[availOptionsCount].readonly = 0;
+			if(localBooksCount == 0) {
+				available_options[availOptionsCount].value = 1; // SW:D will always be enabled.
+				available_options[availOptionsCount].readonly = 1;
+			} else {
+				value = localStorage.getItem( this.get_option_ls_name( available_options[availOptionsCount].short_name ) )
+			//	console.log("get_option called: " + available_options[availOptionsCount].short_name + ", " + value);
+				available_options[availOptionsCount].value = value;
+			}
+
+			if( available_options[availOptionsCount].value == 1 || available_options[availOptionsCount].value == "1") {
+				this.enabled_books = this.enabled_books.concat( available_options[availOptionsCount] );
+			}
+
+			availOptionsCount++;
+		}
+
+		return available_options;
+	},
+
 	load_power_armor: function( selected_item ) {
 		if(selected_item != "") {
 
 			sw_power_armor.prototype = new creator_base();
+
 			function sw_power_armor() {
 				creator_base.apply( this, arguments );
 			}
+
 			this.power_armor = new sw_power_armor();
 			this.power_armor.init("power_armor", "Power Armor", power_armor_sizes, power_armor_modifications);
 			this.power_armor.import_json( selected_item );

@@ -68,7 +68,7 @@ books_list[4] = {
 books_list[5] = {
 	id: 6,
 	name: "Super Powers Companion",
-	short_name: "peg_spc",
+	short_name: "peg_spc2",
 	abbrev: "SPC",
 	publisher: "Pinnacle Entertainment Group",
 	year: "2014",

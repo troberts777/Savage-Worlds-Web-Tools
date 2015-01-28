@@ -8,6 +8,74 @@ var current_gear_class = "";
 var current_gear_type = "";
 var current_gear_search = "";
 
+
+
+function propogate_chargen_settings_box() {
+	current_settings = current_character.get_available_options();
+
+	if(current_settings === Array()) {
+		html = "";
+		$(".js-show-options").hide();
+	} else {
+		html = "";
+		for( option_count = 0; option_count < current_settings.length; option_count++) {
+			switch(	current_settings[option_count].type.toLowerCase() ) {
+				case "header":
+					html += "<h3>" + current_settings[option_count].title  + "</h3>";
+					break;
+				case "boolean":
+				case "bool":
+//					console.log(" .... " + current_settings[option_count].value);
+					if( current_settings[option_count].value > 0)
+						html += "<label><input class=\"js-chargen-setting-item\" type=\"checkbox\" checked=\"checked\" name=\"" + current_settings[option_count].short_tag + "\" value=\"1\" /> " + current_settings[option_count].title + "</label>";
+					else
+						html += "<label><input class=\"js-chargen-setting-item\" type=\"checkbox\" name=\"" + current_settings[option_count].short_tag + "\" value=\"1\" /> " + current_settings[option_count].title + "</label>";
+					break;
+				case "book-select":
+				case "book":
+//					console.log(" .... " + current_settings[option_count].value);
+					readonly = "";
+					if( current_settings[option_count].readonly > 0 )
+						readonly = " readonly=\"readonly\" ";
+					if( current_settings[option_count].value == 1 || current_settings[option_count].value == "1")
+						html += "<label><input class=\"js-chargen-setting-item\" type=\"checkbox\" " + readonly + " checked=\"checked\" name=\"" + current_settings[option_count].short_name + "\" value=\"1\" /> " + current_settings[option_count].name + "</label>";
+					else
+						html += "<label><input class=\"js-chargen-setting-item\" type=\"checkbox\" " + readonly + " name=\"" + current_settings[option_count].short_name + "\" value=\"1\" /> " + current_settings[option_count].name + "</label>";
+					break;
+				default:
+					html += "<label>" + current_settings[option_count].title + " <input class=\"js-chargen-setting-item\" type=\"text\" name=\"\" value=\"" + current_settings[option_count].value + "\" /></label>";
+					break;
+			}
+			if( current_settings[option_count].description )
+				html += "<p>" +  current_settings[option_count].description + "</p>";
+			else
+				html += "<br />";
+		}
+		$(".js-chargen-options").html( html );
+
+
+
+		$('.js-chargen-setting-item').unbind('change');
+		$(".js-chargen-setting-item").change( function() {
+			type = $(this).attr("type");
+			name = $(this).attr("name");
+			value = $(this).val();
+
+			if( type = "checkbox") {
+				if( $(this).is(":checked") )
+					value = 1;
+				else
+					value = 0;
+			}
+			current_character.set_option( name, value);
+			refresh_chargen_page();
+		});
+
+		$(".js-show-options").show();
+	}
+
+}
+
 function propagate_attribute_options(current_value, current_attribute) {
 	if(!current_value)
 		current_value = 0;
@@ -79,16 +147,18 @@ function propagate_race_options(select_selector) {
 		html = "";
 		bookoptgroup = "";
 		for(race_counter = 0; race_counter < chargen_races.length; race_counter++) {
-			if(bookoptgroup != chargen_races[race_counter].book.name ) {
-				if( bookoptgroup != "")
-					html += "</optgroup>";
-				html += "<optgroup label='" + chargen_races[race_counter].book.name + "'>";
-				bookoptgroup = chargen_races[race_counter].book.name;
+			if( current_character.is_book_in_use( chargen_races[race_counter].book.short_name ) ) {
+				if(bookoptgroup != chargen_races[race_counter].book.name ) {
+					if( bookoptgroup != "")
+						html += "</optgroup>";
+					html += "<optgroup label='" + chargen_races[race_counter].book.name + "'>";
+					bookoptgroup = chargen_races[race_counter].book.name;
+				}
+				if(current_character.race == chargen_races[race_counter])
+					html += "<option selected=\"selected\" value=\"" + chargen_races[race_counter].name + "\">" + chargen_races[race_counter].name + "</option>";
+				else
+					html += "<option value=\"" + chargen_races[race_counter].name + "\">" + chargen_races[race_counter].name + "</option>";
 			}
-			if(current_character.race == chargen_races[race_counter])
-				html += "<option selected=\"selected\" value=\"" + chargen_races[race_counter].name + "\">" + chargen_races[race_counter].name + "</option>";
-			else
-				html += "<option value=\"" + chargen_races[race_counter].name + "\">" + chargen_races[race_counter].name + "</option>";
 		}
 		$(select_selector).html(html);
 		$(".race-locked").hide();
@@ -126,17 +196,19 @@ function propagate_arcane_background_options() {
 
 			bookoptgroup = ""
 			for(arcane_background_counter = 0; arcane_background_counter < chargen_arcane_backgrounds.length; arcane_background_counter++) {
-				if(bookoptgroup != chargen_arcane_backgrounds[arcane_background_counter].book.name ) {
-					if( bookoptgroup != "")
-						html += "</optgroup>";
-					html += "<optgroup label='" + chargen_arcane_backgrounds[arcane_background_counter].book.name + "'>";
-					bookoptgroup = chargen_arcane_backgrounds[arcane_background_counter].book.name;
-				}
+				if( current_character.is_book_in_use( chargen_arcane_backgrounds[arcane_background_counter].book.short_name ) ) {
+					if(bookoptgroup != chargen_arcane_backgrounds[arcane_background_counter].book.name ) {
+						if( bookoptgroup != "")
+							html += "</optgroup>";
+						html += "<optgroup label='" + chargen_arcane_backgrounds[arcane_background_counter].book.name + "'>";
+						bookoptgroup = chargen_arcane_backgrounds[arcane_background_counter].book.name;
+					}
 
-				if(current_character.arcane_background_selected.short_name == chargen_arcane_backgrounds[arcane_background_counter].short_name)
-					html += "<option selected=\"selected\" value=\"" + chargen_arcane_backgrounds[arcane_background_counter].short_name + "\">" + chargen_arcane_backgrounds[arcane_background_counter].name + "</option>";
-				else
-					html += "<option value=\"" + chargen_arcane_backgrounds[arcane_background_counter].short_name + "\">" + chargen_arcane_backgrounds[arcane_background_counter].name + "</option>";
+					if(current_character.arcane_background_selected.short_name == chargen_arcane_backgrounds[arcane_background_counter].short_name)
+						html += "<option selected=\"selected\" value=\"" + chargen_arcane_backgrounds[arcane_background_counter].short_name + "\">" + chargen_arcane_backgrounds[arcane_background_counter].name + "</option>";
+					else
+						html += "<option value=\"" + chargen_arcane_backgrounds[arcane_background_counter].short_name + "\">" + chargen_arcane_backgrounds[arcane_background_counter].name + "</option>";
+				}
 			}
 			html += "</select></label>";
 		} else {
@@ -346,7 +418,7 @@ function display_remaining_skill_points(selector_name) {
 }
 
 
-function propagate_character_section() {
+function propogate_chargen_section() {
 // Fill in Fluff Section
 //	$(".js-chargen-name").val(current_character.name);
 	$(".js-chargen-name").unbind("keyup");
@@ -964,46 +1036,47 @@ function propagate_hindrances_section() {
 		add_hindrance_html += "<div class=\"row\"><div class=\"col-xs-12\"><h4>Add Hindrance</h4><select class=\"js-add-hind-select\">";
 		bookoptgroup = "";
 		for(hind_counter = 0; hind_counter < chargen_hindrances.length; hind_counter++) {
+			if( current_character.is_book_in_use( chargen_hindrances[hind_counter].book.short_name ) ) {
+				if(bookoptgroup != chargen_hindrances[hind_counter].book.name ) {
+					if( bookoptgroup != "")
+						add_hindrance_html += "</optgroup>";
+					add_hindrance_html += "<optgroup label='" + chargen_hindrances[hind_counter].book.name + "'>";
+					bookoptgroup = chargen_hindrances[hind_counter].book.name;
+				}
 
-			if(bookoptgroup != chargen_hindrances[hind_counter].book.name ) {
-				if( bookoptgroup != "")
-					add_hindrance_html += "</optgroup>";
-				add_hindrance_html += "<optgroup label='" + chargen_hindrances[hind_counter].book.name + "'>";
-				bookoptgroup = chargen_hindrances[hind_counter].book.name;
-			}
+				if(!chargen_hindrances[hind_counter].specify_field)
+					chargen_hindrances[hind_counter].specify_field = 0;
 
-			if(!chargen_hindrances[hind_counter].specify_field)
-				chargen_hindrances[hind_counter].specify_field = 0;
-
-			disabled = "";
-			if(
-				(
-					current_character.has_edge( chargen_hindrances[hind_counter].name ) == true
+				disabled = "";
+				if(
+					(
+						current_character.has_edge( chargen_hindrances[hind_counter].name ) == true
+							||
+						current_character.is_incompatible_with( chargen_hindrances[hind_counter] ) == true
+					)
 						||
-					current_character.is_incompatible_with( chargen_hindrances[hind_counter] ) == true
-				)
-					||
-				(
-					chargen_hindrances[hind_counter].specify_field == 0
-						&&
-					current_character.has_hindrance( chargen_hindrances[hind_counter].name ) == true
-				)
+					(
+						chargen_hindrances[hind_counter].specify_field == 0
+							&&
+						current_character.has_hindrance( chargen_hindrances[hind_counter].name ) == true
+					)
 
 
-			) {
-				disabled = " class=\"unmet-deps\"";
+				) {
+					disabled = " class=\"unmet-deps\"";
+				}
+				minor_major = "";
+				if(chargen_hindrances[hind_counter].major > 0)
+					minor_major = " (major)";
+				if(chargen_hindrances[hind_counter].minor > 0)
+					minor_major = " (minor)";
+
+				specify_field = "";
+				if(chargen_hindrances[hind_counter].specify_field > 0)
+					specify_field = " specified=\"1\"";
+
+				add_hindrance_html += "<option" + disabled + specify_field + ">&nbsp;&nbsp;&nbsp;&nbsp;" + chargen_hindrances[hind_counter].name + minor_major + "</option>";
 			}
-			minor_major = "";
-			if(chargen_hindrances[hind_counter].major > 0)
-				minor_major = " (major)";
-			if(chargen_hindrances[hind_counter].minor > 0)
-				minor_major = " (minor)";
-
-			specify_field = "";
-			if(chargen_hindrances[hind_counter].specify_field > 0)
-				specify_field = " specified=\"1\"";
-
-			add_hindrance_html += "<option" + disabled + specify_field + ">&nbsp;&nbsp;&nbsp;&nbsp;" + chargen_hindrances[hind_counter].name + minor_major + "</option>";
 		}
 		add_hindrance_html += "</select></div></div><div class=\"row\">";
 		add_hindrance_html += "<div class=\"col-xs-12\"><input type=\"text\" placeholder=\"specify your hindrance\" style=\"display: none\" class=\"js-add-hindrance-specify\" />";
@@ -1145,22 +1218,23 @@ function get_add_edge_options() {
 		}
 
 		if(!chargen_edges[edge_counter].unlisted || chargen_edges[edge_counter].unlisted < 1) {
+			if( current_character.is_book_in_use( chargen_edges[edge_counter].book.short_name ) ) {
+				if(bookoptgroup != chargen_edges[edge_counter].book.name ) {
+					if( bookoptgroup != "")
+						add_edge_html += "</optgroup>";
+					add_edge_html += "<optgroup label='" + chargen_edges[edge_counter].book.name + "'>";
+					bookoptgroup = chargen_edges[edge_counter].book.name;
+				}
 
-			if(bookoptgroup != chargen_edges[edge_counter].book.name ) {
-				if( bookoptgroup != "")
-					add_edge_html += "</optgroup>";
-				add_edge_html += "<optgroup label='" + chargen_edges[edge_counter].book.name + "'>";
-				bookoptgroup = chargen_edges[edge_counter].book.name;
+				if(optgroup != chargen_edges[edge_counter].category ) {
+					if( optgroup != "")
+						add_edge_html += "</optgroup>";
+					add_edge_html += "<optgroup label='&nbsp;&nbsp;&nbsp;&nbsp;" + chargen_edges[edge_counter].category + "'>";
+					optgroup = chargen_edges[edge_counter].category;
+				}
+
+				add_edge_html += "<option" + disabled + ">&nbsp;&nbsp;&nbsp;&nbsp;" + chargen_edges[edge_counter].name + "</option>";
 			}
-
-			if(optgroup != chargen_edges[edge_counter].category ) {
-				if( optgroup != "")
-					add_edge_html += "</optgroup>";
-				add_edge_html += "<optgroup label='&nbsp;&nbsp;&nbsp;&nbsp;" + chargen_edges[edge_counter].category + "'>";
-				optgroup = chargen_edges[edge_counter].category;
-			}
-
-			add_edge_html += "<option" + disabled + ">&nbsp;&nbsp;&nbsp;&nbsp;" + chargen_edges[edge_counter].name + "</option>";
 		}
 	}
 
@@ -1244,9 +1318,11 @@ function propagate_gear_section() {
 		if(
 			gear_book_dd.indexOf( chargen_gear[gear_count].book ) == -1
 		) {
-			gear_book_dd.push(chargen_gear[gear_count].book);
-			if( current_gear_book == "")
-				current_gear_book = chargen_gear[gear_count].book.name;
+			if( current_character.is_book_in_use( chargen_gear[gear_count].book.short_name ) ) {
+				gear_book_dd.push(chargen_gear[gear_count].book);
+				if( current_gear_book == "")
+					current_gear_book = chargen_gear[gear_count].book.name;
+			}
 		}
 
 		if(
@@ -1661,7 +1737,7 @@ function init_main_buttons() {
 
 			localStorage["com.jdg.swwt.characters"] = JSON.stringify(current_characters);
 
-			propagate_character_load_list();
+			propogate_chargen_load_list();
 
 			bootstrap_alert( "Your character has been saved.", "success" );
 		} else {
@@ -1704,7 +1780,7 @@ function load_selected_character() {
 }
 
 
-function propagate_character_load_list() {
+function propogate_chargen_load_list() {
 	try {
 		current_load_data = JSON.parse(localStorage["com.jdg.swwt.characters"]);
 	}
@@ -1761,7 +1837,7 @@ function propagate_character_load_list() {
 					}
 				}
 
-				propagate_character_load_list();
+				propogate_chargen_load_list();
 			}
 		});
 
@@ -1891,9 +1967,11 @@ function refresh_chargen_page(no_full_refresh, no_calculate) {
 
 	localStorage["current_character"] = current_character.export_json(".js-chargen-json-code");
 
-	propagate_character_load_list();
+	propogate_chargen_settings_box();
 
-	propagate_character_section();
+	propogate_chargen_load_list();
+
+	propogate_chargen_section();
 
 	// only propagate the character section since it's a non-fluff change
 	// this is because it was very slow on a Raspberry Pi

@@ -12,6 +12,11 @@ The entries in this file are from Savage Worlds: Sci-Fi Companion and are owned 
 if(!chargen_races)
 	var chargen_races = Array();
 
+if(!chargen_sourcebooks)
+	var chargen_sourcebooks = Array();
+
+chargen_sourcebooks = chargen_sourcebooks.concat( books_list[4] );
+
 chargen_races = chargen_races.concat(Array(
 	{
 		name: "Atlantean",

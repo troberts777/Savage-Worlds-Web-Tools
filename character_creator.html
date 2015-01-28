@@ -49,10 +49,28 @@
 				<button type="button" class="btn btn-default" data-toggle="modal" data-target=".js-export-character-dialog"><span class="glyphicon glyphicon-export"> Export</button>
 				<button type="button" class="btn btn-default" data-toggle="modal" data-target=".js-import-character-dialog"><span class="glyphicon glyphicon-import"> Import</button>
 				<button type="button" class="btn btn-default js-print-character"><span class="glyphicon glyphicon-print"> View/Print</button>
+				<button type="button" style="display: none" class="btn btn-default js-show-options pull-right" data-toggle="modal" data-target=".js-settings-page"><span class="glyphicon glyphicon-wrench"></span> Options</button>
 			</div>
 		</div>
 	</div>
 </div>
+
+<div class="js-settings-page modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Chargen Options</h4>
+			</div>
+			<div class="modal-body js-chargen-options">
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="js-export-character-dialog modal fade">
 	<div class="modal-character-dialog">
 		<div class="modal-content">

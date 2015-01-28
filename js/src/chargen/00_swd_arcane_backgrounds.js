@@ -12,6 +12,9 @@ The entries in this file are from Savage Worlds: Deluxe and are owned by Pinnacl
 if(!chargen_arcane_backgrounds)
 	var chargen_arcane_backgrounds = Array();
 
+if(!chargen_sourcebooks)
+	var chargen_sourcebooks = Array();
+
 chargen_arcane_backgrounds = chargen_arcane_backgrounds.concat(Array(
 	{
 		name: "Magic",
