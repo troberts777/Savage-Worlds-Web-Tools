@@ -94,6 +94,7 @@ character_class.prototype = {
 	},
 
 	calculate: function() {
+		console.log("this.calculate() called");
 		this.attribute_points = 5;
 		this.skill_points = 15;
 

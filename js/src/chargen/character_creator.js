@@ -88,7 +88,7 @@ function propagate_attribute_options(current_value, current_attribute) {
 	max_count = 6;
 
 	subtract_modifier = 0;
-	if(current_character.race.attributes[current_attribute]) {
+	if(current_character.race && current_character.race.attributes && current_character.race.attributes[current_attribute]) {
 		min_count += current_character.race.attributes[current_attribute];
 		max_count += current_character.race.attributes[current_attribute];
 		subtract_modifier += current_character.race.attributes[current_attribute];
@@ -1956,6 +1956,7 @@ function propagate_derived_stats_section() {
 function refresh_chargen_page(no_full_refresh, no_calculate) {
 	// only calculate the character section since it's a non-fluff change
 	// this is because it was very slow on a Raspberry Pi
+	console.log("refresh_chargen_page() called");
 	if(
 		(!no_calculate && no_calculate != true)
 			&&
@@ -1965,7 +1966,7 @@ function refresh_chargen_page(no_full_refresh, no_calculate) {
 	}
 
 
-	localStorage["current_character"] = current_character.export_json(".js-chargen-json-code");
+	localStorage["com.jdg.swwt.tmp.current_character"] = current_character.export_json(".js-chargen-json-code");
 
 	propogate_chargen_settings_box();
 

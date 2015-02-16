@@ -461,7 +461,7 @@
 			<div class="col-xs-6 text-right">
 				<p>You can contribute to this project at <a href="https://github.com/jdgwf/savage-worlds-web-tools">https://github.com/jdgwf/savage-worlds-web-tools</a></p>
 				<p><a href="license.html" class="ios_app_click" title="More License Info">More License and Credits Information can be viewed here</a></p>
-<p>App Version: 2015-01-27-01</p>
+<p>App Version: 2015-02-16-01</p>
 			</div>
 		</div>
 	</div>
@@ -479,7 +479,7 @@
 <script type="text/javascript">var smarty_comment_section = 'character_creator';</script>
 
 <script>
-var app_version = "2015-01-27-01";
+var app_version = "2015-02-16-01";
 var current_character;
 $(window).load(
 	function(){
@@ -489,8 +489,12 @@ $(window).load(
 			current_character.import_json( localStorage["com.jdg.swwt.tmp.current_character"] );
 			$(".js-chargen-name").val(current_character.name);
 			$(".js-chargen-description").val(current_character.description);
+		} else {
+			current_character.calculate();
 		}
+
 		refresh_chargen_page(false, true);
+
 	}
 );
 </script>
