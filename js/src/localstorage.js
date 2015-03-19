@@ -169,29 +169,45 @@ function get_backup_summary() {
 
 	return html;
 }
+var export_as_file_object = [];
 function export_as_file() {
 
 	var export_as_file_object = [];
 	var export_count = 0;
 
+	//console.log("export_as_file() called");
+
 	for (var key in localStorage){
+		//console.log("export_as_file() for called, key = " + key);
     	if (localStorage.hasOwnProperty(key)) {
+  //  		console.log("export_as_file() if called");
     		if(
-    			key.indexOf("current_") == -1
+    			key.indexOf("com.jdg.swwt") == 0
+    			&& key.indexOf("current_") == -1
     			&& key.indexOf("gm_control_") == -1
-    			&& key != "localStats"
-    			&& key != "saved_printcarts"
-    			&& key != "extras_search_term"
+    			&& key.indexOf("tmp") == -1
     		) {
-    			export_as_file_object.push( {
-    				name: key,
-    				data: JSON.parse(localStorage[key])
-    			} );
-    			export_count += JSON.parse(localStorage[key]).length;
+    			console.log("export_as_file() pushing to array called, key = " + key);
+    			objectData = "";
+    			try {
+    				objectData = JSON.parse(localStorage[key]);
+    			}
+    			catch(err) {
+    				objectData = "";
+    			}
+    			if( objectData != "") {
+	    			export_as_file_object.push( {
+	    				name: key,
+	    				data: objectData
+	    			} );
+	    			export_count += JSON.parse(localStorage[key]).length;
+	    		}
+    //			console.log("export_as_file() pushing to array finished");
     		}
     	}
     }
 
+ //   console.log("export_count = " + export_count);
     if(export_count > 0) {
     //	console.log ( export_as_file_object["characters"] );
     //	console.log( JSON.stringify(export_as_file_object["characters"]) );
