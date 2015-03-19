@@ -9,7 +9,7 @@ var smarty_comments = {
 	),
 	character_creator: Array(
 		"This web app is a rudimentary Character Creator for the Savage Worlds pen and paper role playing game.",
-		"Then God said, “Let us make mankind in our image, in our likeness, so that they may rule over the fish in the sea and the birds in the sky, over the livestock and all the wild animals,a and over all the creatures that move along the ground.”<p class='text-right'><a href='http://biblehub.com/genesis/1-26.htm' target='smarty-link'>Genesis 1:26 NIV</a><p>"
+		"Then God said, “Let us make mankind in our image, in our likeness, so that they may rule over the fish in the sea and the birds in the sky, over the livestock and all the wild animals, and over all the creatures that move along the ground.”<p class='text-right'><a href='http://biblehub.com/genesis/1-26.htm' target='smarty-link'>Genesis 1:26 NIV</a><p>"
 	),
 
 	power_armor_creator: Array(

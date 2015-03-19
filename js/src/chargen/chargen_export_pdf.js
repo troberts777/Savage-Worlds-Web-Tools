@@ -530,7 +530,7 @@ function create_powers_table(label, left, top, width, height, small_font_size) {
 			}
 		}
 	} else {
-		current_doc.rect(left, top ,width, numlines * 4 + 17);
+		current_doc.rect(left, top ,width, height);
 		current_doc.setFontStyle("bold");
 		current_doc.setFontSize(14);
 		current_doc.text(75, top + 5, "Powers");
