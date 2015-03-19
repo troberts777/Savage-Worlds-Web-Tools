@@ -138,23 +138,20 @@ function get_backup_summary() {
     		if(
     			key.indexOf("com.jdg.swwt") === 0
     			&& key.indexOf("com.jdg.swwt.tmp") === -1
+    			&& key.indexOf("com.jdg.swwt.settings") === -1
     		) {
     			keyname = uc_words( key.replace("com.jdg.swwt.", "") );
 
     			if(localStorage[key] && localStorage[key].length >  0) {
 
-    				try{
-    					if( typeof(JSON.parse(localStorage[key]).length) != "undefined")
-    						num_items = JSON.parse(localStorage[key]).length;
-    					else
-    						num_items = 0;
-    					html += "" + keyname + " has " + num_items + " items<br />";
-    					counted_items += num_items;
-    					total_count_items += num_items;
-    				}
-    				catch(err) {
-    					html += "" + keyname + " has an encoding error.<br />";
-    				}
+					if( typeof(JSON.parse(localStorage[key]).length) != "undefined")
+						num_items = JSON.parse(localStorage[key]).length;
+					else
+						num_items = 0;
+
+   					html += "" + keyname + " has " + num_items + " items<br />";
+   					counted_items += num_items;
+   					total_count_items += num_items;
 
     			} else {
     	     		html += "" + keyname + " is empty<br />";
@@ -186,6 +183,7 @@ function export_as_file() {
     			&& key.indexOf("current_") == -1
     			&& key.indexOf("gm_control_") == -1
     			&& key.indexOf("tmp") == -1
+    			&& key.indexOf("settings") == -1
     		) {
 //    			console.log("export_as_file() pushing to array called, key = " + key);
     			objectData = "";
