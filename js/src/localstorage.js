@@ -187,7 +187,7 @@ function export_as_file() {
     			&& key.indexOf("gm_control_") == -1
     			&& key.indexOf("tmp") == -1
     		) {
-    			console.log("export_as_file() pushing to array called, key = " + key);
+//    			console.log("export_as_file() pushing to array called, key = " + key);
     			objectData = "";
     			try {
     				objectData = JSON.parse(localStorage[key]);
