@@ -144,7 +144,10 @@ function get_backup_summary() {
     			if(localStorage[key] && localStorage[key].length >  0) {
 
     				try{
-    					num_items = JSON.parse(localStorage[key]).length;
+    					if( typeof(JSON.parse(localStorage[key]).length) != "undefined")
+    						num_items = JSON.parse(localStorage[key]).length;
+    					else
+    						num_items = 0;
     					html += "" + keyname + " has " + num_items + " items<br />";
     					counted_items += num_items;
     					total_count_items += num_items;
