@@ -282,6 +282,24 @@ fieldset {
 	}
 }
 
+.hidden-header-bar {
+	background: @color-black;
+	color: @color-very-white;
+	overflow: hidden;
+	height: 15px;
+	a {
+		text-decoration: none;
+		&:hover {
+			color: @color-very-white;
+			text-decoration: none;
+		}
+	}
+	&:hover {
+		overflow: hidden;
+		height: auto;
+	}
+}
+
 .action-bar {
 	background: @color-dark-gray;
 	color: @color-very-white;
