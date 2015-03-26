@@ -19,10 +19,12 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12">
+
 				<div class="pull-right text-right js-print-cart-button"></div>
 				<div class="bug-tweet pull-right text-right">Found a bug?<br /><a href="https://twitter.com/intent/tweet?screen_name=Gauthic&text=%23SWWebTools%20Main%20Bug%3A%20" class="twitter-mention-button" data-related="Gauthic">Tweet to @Gauthic</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></a></div>
-				<h1><a class="ios_app_click" href="./index.html" title="Savage Worlds Web Tools">Savage Worlds Web Tools</a></h1>
-				<p class="js-smarty-comment">This utility is to backup and restore your date from one device to another</p>
+
+				<h1><a class="ios_app_click" href="./index.html" title="Savage Worlds Web Tools">Savage Worlds Web Tools</a> - PDF Testing</h1>
+				<p class="js-smarty-comment">PDF Testing for future use</p>
 			</div>
 			<div class="js-datasync-notifier">&nbsp;</div>
 		</div>
@@ -30,17 +32,20 @@
 </div>
 
 <div class="container">
+	<a style="display:block;text-align: center" target="jspdf-functions" href="http://mrrio.github.io/jsPDF/doc/symbols/jsPDF.html">jsPDF Function Reference</a>
 	<div class="row">
 		<div class="col-xs-12">
-			<p>It appears that this doesn't work on iOS devices in any way :(</p>
-			<h3>Backup</h3>
-			<div class="js-backup-summary"></div>
-			<h3>Restore</h3>
-			<label>Select a Restore File: <input type="file" class="js-restore-input" /></label>
-			<div class="js-is-valid"></div>
+			<p>Obviously this is a work in progress. You current character on the <a href="character_creator.html">Character Creator</a> page should be displayed here (and downloadable/printable!!)</p>
+			<p>If it's not, please tweet me above.</p>
+			<p><strong>It does NOT work on iApple devices as expected. The PDF shows up, but no way to print or save :(</strong></p>
+			<p>It also appears that it doesn't work on the Kindle Fire (original), so I'll assume it's not support on Android as iOS above. I'll have to filter any Export PDF buttons on the live version to only be for desktop systems.</p>
+			<label><input type="radio" name="orientation" class="js-portrait" checked="checked"> Portrait</label>
+			<label><input type="radio" name="orientation" class="js-landscape"> Landscape</label>
+			<iframe class="preview-pane" type="application/pdf" width="900" height="650" frameborder="0" style="position:relative;z-index:999"></iframe>
+			<br />
+			<button type="button" class="btn btn-primary js-download-pdf">Download PDF</button>
 		</div>
 	</div>
-
 </div>
 
 <div class="footer">
@@ -60,7 +65,6 @@
 	</div>
 </div>
 
-
 </body>
 
 <script src="./js/jquery-1.10.2.min.js"></script>
@@ -68,7 +72,7 @@
 <script src="./js/bootbox.min.js"></script>
 <script src="./js/jspdf.min.js"></script>
 <script src="./js/swwt.min.js"></script>
-<script src="./js/FileSaver.min.js"></script>
+
 <script>var smarty_comment_section = 'index';</script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -79,55 +83,38 @@
   ga('create', 'UA-41054868-5', 'jdgwf.github.io');
   ga('send', 'pageview');
 
-</script>
-<script>
-var app_version = "2015-03-26-07";
-$(".js-backup-summary").html( get_backup_summary() );
-
-$(".js-export-data").click( function() {
-	export_as_file();
-});
+	var current_character;
 
 
-$(".js-restore-input").change( function() {
-	var input = $(".js-restore-input").get(0);
-	var file = input.files[0];
-	$(".js-import-data").unbind("click");
-	if(file) {
+	var app_version = "2015-03-26-07";
 
-		var fr = new FileReader();
 
-		var filedata = fr.readAsDataURL(file);
-		fr.onloadend = function() {
-			var filedata = fr.result;
-			if(import_restore_file( filedata )) {
-				$(".js-is-valid").html("This appears to be a valid file.<br /><button class=\"btn btn-primary btn-xs js-import-data\">Import It!</button><br />This will <strong>not</strong> delete your current data, only append to it");
-				$(".js-import-data").click( function() {
-						var input = $(".js-restore-input").get(0);
-						var file = input.files[0];
-						if(file) {
-							var fr = new FileReader();
-							var filedata = fr.readAsDataURL(file);
-							fr.onloadend = function() {
-								var filedata = fr.result;
-								if(import_restore_file( filedata, true )) {
-									alert("DING You're imported!");
-								} else {
-									alert("BOOO! It didn't work!");
-								}
-							};
-						}
-
-					}
-				);
-			} else {
-				$(".js-is-valid").html("This doesn't look like a valid import file");
-			}
-		}
-	} else {
-		$(".js-is-valid").html('');
+	current_character = new character_class();
+	current_character.init();
+	if( typeof(localStorage["com.jdg.swwt.tmp.current_character"]) != "undefined" && localStorage["com.jdg.swwt.tmp.current_character"]) {
+		current_character.import_json( localStorage["com.jdg.swwt.tmp.current_character"] );
+	//			$(".js-chargen-name").val(current_character.name);
+	//			$(".js-chargen-description").val(current_character.description);
 	}
 
-});
+
+
+  	create_basic_portrait_pdf();
+  	chargen_show_preview_pane(".preview-pane");
+
+  	$(".js-landscape").click( function() {
+  	create_basic_landscape_pdf();
+  	chargen_show_preview_pane(".preview-pane");
+  	});
+
+  	$(".js-portrait").click( function() {
+  	create_basic_portrait_pdf();
+  	chargen_show_preview_pane(".preview-pane");
+  	});
+
+	$(".js-download-pdf").click( function() {
+		chargen_download_pdf();
+	});
+
 </script>
 </html>

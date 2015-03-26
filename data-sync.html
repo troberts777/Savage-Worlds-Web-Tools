@@ -22,8 +22,9 @@
 				<div class="pull-right text-right js-print-cart-button"></div>
 				<div class="bug-tweet pull-right text-right">Found a bug?<br /><a href="https://twitter.com/intent/tweet?screen_name=Gauthic&text=%23SWWebTools%20Main%20Bug%3A%20" class="twitter-mention-button" data-related="Gauthic">Tweet to @Gauthic</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></a></div>
 				<h1><a class="ios_app_click" href="./index.html" title="Savage Worlds Web Tools">Savage Worlds Web Tools</a></h1>
-				<p class="js-smarty-comment">This page is here only to test and fiddle with randomization of a deck of cards</p>
+				<p class="js-smarty-comment">This utility is to backup and restore your date from one device to another</p>
 			</div>
+			<div class="js-datasync-notifier">&nbsp;</div>
 		</div>
 	</div>
 </div>
@@ -31,25 +32,27 @@
 <div class="container">
 	<div class="row">
 		<div class="col-xs-12">
-			<h3>Deck o' Cards</h3>
+			<h4>Notice of Full Discolsure</h4>
+			<p>
+				This functionality will contact a remote, central server and store the information and settings of your localStorage periodically. There is <strong>NO SECURITY</strong> other than the obscurity of the email address you put below. <strong>By entering an email address and enabling DataSync you agree that your gaming data will be stored on a central server.</strong>
+			</p>
+			<p>
+				However, if you use multiple devices the advantage of this will be that your data is synced across all devices.
+			</p>
+			<h4>Warning!</h4>
+			<p>Right now this function could very well destroy important data! <a href='backup.html' class='ios_app_click'>Back up your data</a> before enabling this feature!</p>
+			<label>
+				Datasync Email Address:
+				<input type="text" class="js-datasync-email-address" />
+			</label>
+			<label>
+				<input type="checkbox" class="js-datasync-enabled" />
+				Enable Datasync
+			</label>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-xs-3">
-			<h4>What You Can Do</h4>
-			<button class="btn btn-primary js-draw-card">Draw A Card</button>
-			<button class="btn btn-primary js-shuffle-deck">Shuffle Deck</button>
-		</div>
-		<div class="col-xs-9 ">
-			<h4>What's on the Table</h4>
-			<div class="js-cards-remaining"></div>
-			<div class="js-card-results" style="min-height: 400px;">
-			</div>
-		</div>
-	</div>
+
 </div>
-
-
 
 <div class="footer">
 	<div class="container">
@@ -62,11 +65,12 @@
 			<div class="col-xs-6 text-right">
 				<p>You can contribute to this project at <a href="https://github.com/jdgwf/savage-worlds-web-tools">https://github.com/jdgwf/savage-worlds-web-tools</a></p>
 				<p><a href="license.html" class="ios_app_click" title="More License Info">More License and Credits Information can be viewed here</a></p>
-<p>App Version: 2015-03-26-01</p>
+<p>App Version: 2015-03-26-07</p>
 			</div>
 		</div>
 	</div>
 </div>
+
 
 </body>
 
@@ -75,6 +79,7 @@
 <script src="./js/bootbox.min.js"></script>
 <script src="./js/jspdf.min.js"></script>
 <script src="./js/swwt.min.js"></script>
+<script src="./js/FileSaver.min.js"></script>
 <script>var smarty_comment_section = 'index';</script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -87,27 +92,53 @@
 
 </script>
 <script>
-var app_version = "2015-03-26-01";
-var deck = new deck_of_cards();
-deck.shuffle();
-print_remaining_cards(deck);
-$(".js-shuffle-deck").click( function() {
-	deck.shuffle();
-	$(".js-card-results").html('');
-	print_remaining_cards(deck) ;
+var app_version = "2015-03-26-07";
+$(".js-backup-summary").html( get_backup_summary() );
+
+$(".js-export-data").click( function() {
+	export_as_file();
 });
 
-$(".js-draw-card").click( function() {
-	card = deck.draw();
-	current_html = $(".js-card-results").html();
-	current_html += "<img width=\"100px\" src=\"" + card.image  + "\" title=\"" + card.name + "\" />";
-	$(".js-card-results").html(current_html);
-	print_remaining_cards(deck) ;
+
+$(".js-restore-input").change( function() {
+	var input = $(".js-restore-input").get(0);
+	var file = input.files[0];
+	$(".js-import-data").unbind("click");
+	if(file) {
+
+		var fr = new FileReader();
+
+		var filedata = fr.readAsDataURL(file);
+		fr.onloadend = function() {
+			var filedata = fr.result;
+			if(import_restore_file( filedata )) {
+				$(".js-is-valid").html("This appears to be a valid file.<br /><button class=\"btn btn-primary btn-xs js-import-data\">Import It!</button><br />This will <strong>not</strong> delete your current data, only append to it");
+				$(".js-import-data").click( function() {
+						var input = $(".js-restore-input").get(0);
+						var file = input.files[0];
+						if(file) {
+							var fr = new FileReader();
+							var filedata = fr.readAsDataURL(file);
+							fr.onloadend = function() {
+								var filedata = fr.result;
+								if(import_restore_file( filedata, true )) {
+									alert("DING You're imported!");
+								} else {
+									alert("BOOO! It didn't work!");
+								}
+							};
+						}
+
+					}
+				);
+			} else {
+				$(".js-is-valid").html("This doesn't look like a valid import file");
+			}
+		}
+	} else {
+		$(".js-is-valid").html('');
+	}
+
 });
-
-function print_remaining_cards(deck) {
-	$(".js-cards-remaining").text( deck.cards.length + " cards remaining in this deck");
-}
-
 </script>
 </html>

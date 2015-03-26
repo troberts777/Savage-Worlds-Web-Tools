@@ -1,9 +1,9 @@
 CACHE MANIFEST
 
 
-# Version 2015-03-26-01
-# March 26, 2015 revision 1
-# Bugfixes to a few vehicles mods and creator import functions
+# Version
+# March 26, 2015 revision 6
+# Added functionality for data syncing
 
 
 CACHE:
@@ -21,8 +21,8 @@ http://jdgwf.github.io/savage-worlds-web-tools/robot_creator.html
 http://jdgwf.github.io/savage-worlds-web-tools/power_armor_creator.html
 http://jdgwf.github.io/savage-worlds-web-tools/walker_creator.html
 http://jdgwf.github.io/savage-worlds-web-tools/index.html
-http://jdgwf.github.io/savage-worlds-web-tools/cards_test.html
-http://jdgwf.github.io/savage-worlds-web-tools/pdf_tests.html
+http://jdgwf.github.io/savage-worlds-web-tools/cards-test.html
+http://jdgwf.github.io/savage-worlds-web-tools/pdf-tests.html
 http://jdgwf.github.io/savage-worlds-web-tools/print_cart.html
 http://jdgwf.github.io/savage-worlds-web-tools/
 
