@@ -318,9 +318,10 @@ function propogate_load_list() {
 $(".js-import-data").click( function() {
 	if( $(".js-import-code").val() != "" ) {
 		if( current_selected_object.import_json( $(".js-import-code").val() ) ) {
-			$(".js-set-name").val(current_selected_object.item_name);
-			$(".js-set-description").val(current_selected_object.object_description);
+			$(".js-set-name").val( current_selected_object.item_name );
+			$(".js-set-description").val( current_selected_object.object_description );
 			$(".js-import-code").val('');
+			refresh_creator_page();
 			bootstrap_alert( "Your " + current_selected_object.object_label+ " has been imported.", "success" );
 		} else {
 			bootstrap_alert( "Your " + current_selected_object.object_label+ " could not be imported - please check the formatting of your code.", "warning" );

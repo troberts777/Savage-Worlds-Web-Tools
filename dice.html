@@ -34,14 +34,14 @@
 		<div class="col-sm-6">
 			<fieldset>
 			<legend>Dice</legend>
-			<label>Dice: <input type="text" name="roll" value="d8* x 2" /></label>
+			<label>Dice: <input type="text" name="roll" value="d8* + 2" /></label>
 			Designate your Trait roll with an * for wild die rolling, just about anything (logical) can be put here<br />
 			Examples
 			<ul class="no-bullet">
 				<li>d8 add 2: <a onclick="$('input[name=roll]').val('d8* + 2');$('#trait-check').attr('checked', 'checked')">d8* + 2</a> (trait test)</li>
-				<li>d8 with wild die + d6: <a onclick="$('input[name=roll]').val('d8 + d6');$('#damage-check').attr('checked', 'checked')">d8 + d6</a> (damage test)</li>
+				<li>d8 with adding strengh die + d6: <a onclick="$('input[name=roll]').val('d8 + d6');$('#damage-check').attr('checked', 'checked')">d8 + d6</a> (melee damage test)</li>
 				<li>d12 with wild die subtract 4: <a onclick="$('input[name=roll]').val('d12* - 4');$('#trait-check').attr('checked', 'checked')">d12* - 4</a> (trait test)</li>
-				<li>d12 but substract d6 then add 6: <a onclick="$('input[name=roll]').val('d12 - d6 + 6');$('#damage-check').attr('checked', 'checked')">d12 - d6 + 6</a> (damage test)</li>
+				<li>d12 but substract d6 then add 6: <a onclick="$('input[name=roll]').val('d12 - d6 + 6');$('#damage-check').attr('checked', 'checked')">d12 - d6 + 6</a> (unusual damage test)</li>
 				<li>You can now use multiplication (x) and division (/) as well as adding and subtracting. <strong>NOTE</strong>: This system doesn't use Algebraic Order of Operations (yet, this is planned as are parenthesis and exponents)</li>
 			</ul>
 
@@ -105,7 +105,7 @@
 			<div class="col-xs-6 text-right">
 				<p>You can contribute to this project at <a href="https://github.com/jdgwf/savage-worlds-web-tools">https://github.com/jdgwf/savage-worlds-web-tools</a></p>
 				<p><a href="license.html" class="ios_app_click" title="More License Info">More License and Credits Information can be viewed here</a></p>
-<p>App Version: 2015-03-25-01</p>
+<p>App Version: 2015-03-26-01</p>
 			</div>
 		</div>
 	</div>
@@ -120,7 +120,7 @@
 <script src="./js/swwt.min.js"></script>
 <script>var smarty_comment_section = 'dice';</script>
 <script>
-var app_version = "2015-03-25-01";
+var app_version = "2015-03-26-01";
 alwaysExplodingDice = true;
 </script>
 
