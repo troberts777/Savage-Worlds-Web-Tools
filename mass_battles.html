@@ -34,10 +34,21 @@
 	<div class="col-sm-6">
 		<fieldset>
 			<input type="text" name="army1_name" value="Army #1" /><br />
-			<label>Tokens <input type="text" name="army1_tokens" value="10" style="width: 50px" /></label>
-			<label>Leaders' Knowledge: Battle<sup>*</sup> <input type="text" name="army1_skill" value="d10*" style="width: 50px" /></label>
-			<label>Leaders' Spirit<sup>*</sup> <input type="text" name="army1_spirit" value="d8*" style="width: 50px" /></label>
+			<div class="row">
+				<div class="col-xs-4">
+			<label>Tokens <input type="text" name="army1_tokens" value="10" /></label>
+				</div>
+				<div class="col-xs-4">
+			<label>Leaders' Knowledge: Battle<sup>*</sup> <input type="text" name="army1_skill" value="d10*" /></label>
+				</div>
+				<div class="col-xs-4">
+			<label>Leaders' Spirit<sup>*</sup> <input type="text" name="army1_spirit" value="d8*" /></label>
+				</div>
+			</div>
+
 			<h3>Battle Modifiers</h3>
+			<div class="row">
+				<div class="col-xs-4">
 			<label>Artillery Support:
 				<select name="army1_artillery">
 					<option selected="selected" value="0">None</option>
@@ -46,6 +57,8 @@
 					<option value="3">Heavy</option>
 				</select>
 			</label>
+				</div>
+				<div class="col-xs-4">
 			<label>Air Support:
 				<select name="army1_air">
 					<option selected="selected" value="0">None</option>
@@ -54,6 +67,8 @@
 					<option value="3">Heavy</option>
 				</select>
 			</label>
+							</div>
+				<div class="col-xs-4">
 
 			<label>Situational Modifiers:
 				<select name="army1_situational">
@@ -74,6 +89,8 @@
 					<option value="7">+7</option>
 				</select>
 			</label>
+							</div>
+				</div>
 			<fieldset>
 				<legend>Morale Modifiers</legend>
 				<label><input type="checkbox" name="army1_fearless" /> 75% is undead or other fearless drones</label>
@@ -85,10 +102,20 @@
 	<div class="col-sm-6">
 		<fieldset>
 			<input type="text" name="army2_name" value="Army #2" /><br />
-			<label>Tokens <input type="text" name="army2_tokens" value="10" style="width: 50px" /></label>
-			<label>Leaders' Knowledge: Battle<sup>*</sup> <input type="text" name="army2_skill" value="d10*" style="width: 50px" /></label>
-			<label>Leaders' Spirit<sup>*</sup> <input type="text" name="army2_spirit" value="d8*" style="width: 50px" /></label>
+			<div class="row">
+				<div class="col-xs-4">
+			<label>Tokens <input type="text" name="army2_tokens" value="10" /></label>
+				</div>
+				<div class="col-xs-4">
+			<label>Leaders' Knowledge: Battle<sup>*</sup> <input type="text" name="army2_skill" value="d10*" /></label>
+				</div>
+				<div class="col-xs-4">
+			<label>Leaders' Spirit<sup>*</sup> <input type="text" name="army2_spirit" value="d8*" /></label>
+				</div>
+			</div>
 			<h3>Battle Modifiers</h3>
+			<div class="row">
+				<div class="col-xs-4">
 			<label>Artillery Support:
 				<select name="army2_artillery">
 					<option selected="selected" value="0">None</option>
@@ -97,6 +124,8 @@
 					<option value="3">Heavy</option>
 				</select>
 			</label>
+							</div>
+				<div class="col-xs-4">
 			<label>Air Support:
 				<select name="army2_air">
 					<option selected="selected" value="0">None</option>
@@ -105,6 +134,8 @@
 					<option value="3">Heavy</option>
 				</select>
 			</label>
+							</div>
+				<div class="col-xs-4">
 
 			<label>Situational Modifiers:
 				<select name="army2_situational">
@@ -125,6 +156,8 @@
 					<option value="7">+7</option>
 				</select>
 			</label>
+							</div>
+</div>
 			<fieldset>
 				<legend>Morale Modifiers</legend>
 				<label><input type="checkbox" name="army2_fearless" /> 75% is undead or other fearless drones</label>
