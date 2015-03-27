@@ -34,7 +34,7 @@
 		<div class="col-xs-6">
 			<h4>Notice of Full Discolsure</h4>
 			<p>
-				This functionality will contact a remote, central server (owned and managed by <a href="https://github.com/jdgwf/">the developer</a>) and store the information and settings of your localStorage periodically. There is <strong>NO SECURITY</strong> other than the obscurity of the email address you put below. <strong>By entering an email address and enabling DataSync you agree that your gaming data will be stored on a central server.</strong>
+				This functionality will contact a remote, central server (owned and managed by <a href="https://github.com/jdgwf/">the developer</a>) and store the information and settings of your localStorage periodically. There is <strong>NO SECURITY</strong> other than the obscurity of the email address you put below. This is by design for simplicity of use. <strong>By entering an email address and enabling DataSync you agree that your gaming data will be stored on a central server.</strong>
 			</p>
 			<p>
 				I can't promise that I won't take a gander at the data used out of curiousity of how this web application is being used (and I more than likely will because this is an exciting project!), but <strong>do strongly promise</string> that I won't disclose, share or mention any of your information and email addresses without contacting you and obtaining your permission first. The only exception I may make of this is how many users are actually using sync as in a big lump sum and no indvidiual details would be revealed.
@@ -49,7 +49,7 @@
 				</blockquote>
 			</p>
 			<p>
-				The reason I may do this is for promitional use on my blod or Twitter to have both Savage Worlds and this app have more popularity.
+				The only reason I may do this is for promitional use on my blog or Twitter to have both Savage Worlds and this app have more popularity.
 			</p>
 
 
@@ -57,7 +57,7 @@
 		<div class="col-xs-6">
 			<h4>How this works:</h4>
 			<p>
-				If you use multiple devices the advantage of this will be that your data is synced across all devices. This works simply. When navigate to another page (or open the initial page) and you've got sync enabled the app will reach out to the central server then pull any data it finds and overwrite your localStorage items with the data found (don't worry if there's no data, it won't be overwritten). When any refresh or saving is done the app will sync the changes once every ten seconds. A notification will appear at the bottom of the screen to notify you of the successful sync.
+				If you use multiple devices the advantage of this will be that your data is synced across all devices. This works simply: When one navigates to another page (or open the initial page) and DataSync is enabled the app will reach out to the central server then pull any data it finds and overwrite your localStorage items with the data found (don't worry if there's no data, it won't be overwritten). When any refresh or saving is done the app will sync the changes once every ten seconds. A notification will appear at the bottom of the screen to notify you of the successful or unsuccessful sync.
 			</p>
 			<h4>Warnings and Caveats!</h4>
 			<p>
@@ -99,7 +99,7 @@
 			<div class="col-xs-6 text-right">
 				<p>You can contribute to this project at <a href="https://github.com/jdgwf/savage-worlds-web-tools">https://github.com/jdgwf/savage-worlds-web-tools</a></p>
 				<p><a href="license.html" class="ios_app_click" title="More License Info">More License and Credits Information can be viewed here</a></p>
-<p>App Version: 2015-03-27-09</p>
+<p>App Version: 2015-03-27-10</p>
 			</div>
 		</div>
 	</div>
@@ -126,7 +126,7 @@
 
 </script>
 <script>
-var app_version = "2015-03-27-09";
+var app_version = "2015-03-27-10";
 $(".js-backup-summary").html( get_backup_summary() );
 
 $(".js-export-data").click( function() {

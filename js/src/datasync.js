@@ -103,10 +103,17 @@ function performPushSync(dataText) {
 				                + hours + ":"
 				                + minutes + ":"
 				                + seconds;
+				$(".js-datasync-notifier").removeClass("js-datasync-notifier-error");
 				$(".js-datasync-notifier").html("Data has been synced to the central server at " + datetime + "<br /><a href='data-sync.html' class='ios_app_click'>Click here to change sync settings</a>");
 				$(".js-datasync-notifier").fadeIn(1000).delay(2000).fadeOut(1000);
 				setSyncClean();
 			}
-		);
+		).fail(
+			function() {
+				$(".js-datasync-notifier").addClass("js-datasync-notifier-error");
+    			$(".js-datasync-notifier").html("Error: could not reach DataSync server. Your Internet connection may be offline.");
+				$(".js-datasync-notifier").fadeIn(1000).delay(2000).fadeOut(1000);
+  			}
+  		);
 	}
 }
