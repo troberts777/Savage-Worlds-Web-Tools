@@ -101,6 +101,7 @@ function performPushSync(dataText) {
 				                + seconds;
 				$(".js-datasync-notifier").html("Data has been synced to the central server at " + datetime + "<br /><a href='data-sync.html' class='ios_app_click'>Click here to change sync settings</a>");
 				$(".js-datasync-notifier").fadeIn(1000).delay(2000).fadeOut(1000);
+				syncDirty = false;
 			}
 		);
 	}
