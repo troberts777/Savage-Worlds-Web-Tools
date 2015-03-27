@@ -430,7 +430,7 @@ $(document).ready( function() {
 			$("#search-results").html( defaultSearchMessage() );
 		updateLocalStats();
 		localStorage["com.jdg.swwt.tmp.extras.search_term"] = $("#search-box").val().toLowerCase().trim();
-		dirtySync();
+		setSyncDirty();
 	});
 
 	$("#book-checks label input[type=checkbox]").change( function() {
@@ -441,7 +441,7 @@ $(document).ready( function() {
 			$("#search-results").html( defaultSearchMessage() );
 		updateLocalStats();
 		localStorage["com.jdg.swwt.tmp.extras.search_term"] = $("#search-box").val();
-		dirtySync();
+		setSyncDirty();
 	});
 
 });

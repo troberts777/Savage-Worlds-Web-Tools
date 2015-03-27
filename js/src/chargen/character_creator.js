@@ -1956,7 +1956,7 @@ function propagate_derived_stats_section() {
 function refresh_chargen_page(no_full_refresh, no_calculate) {
 	// only calculate the character section since it's a non-fluff change
 	// this is because it was very slow on a Raspberry Pi
-	dirtySync();
+	setSyncDirty();
 	console.log("refresh_chargen_page() called");
 	if(
 		(!no_calculate && no_calculate != true)

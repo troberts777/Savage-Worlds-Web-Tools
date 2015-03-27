@@ -66,7 +66,7 @@ function performPullSync() {
 	}
 }
 
-function dirtySync() {
+function setSyncDirty() {
 	syncDirty = true;
 }
 

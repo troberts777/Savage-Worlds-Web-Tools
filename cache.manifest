@@ -1,9 +1,9 @@
 CACHE MANIFEST
 
 
-# Version 2015-03-27-05
+# Version 2015-03-27-06
 # March 27, 2015 revision 5
-# Minor Sync Notification Style Fix
+# Fixing of sync dirty setting function name to be congruent with rest of function names
 
 
 CACHE:

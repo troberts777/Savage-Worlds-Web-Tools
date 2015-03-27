@@ -419,7 +419,7 @@ function refresh_creator_page() {
 	current_selected_object.export_json(".js-json-code");
 
 	propogate_settings_box();
-	dirtySync();
+	setSyncDirty();
 
 	$('.js-set-name').unbind('keyup');
 	$(".js-set-name").keyup( function() {
