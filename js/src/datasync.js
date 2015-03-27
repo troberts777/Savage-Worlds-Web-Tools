@@ -65,7 +65,7 @@ function performPullSync() {
 	}
 }
 
-setInterval(performPushSync, 30000);
+setInterval(performPushSync, 120000);
 
 function performPushSync(dataText) {
 	if( syncEnabled && syncEmailAddress != "") {
