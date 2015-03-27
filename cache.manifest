@@ -1,29 +1,29 @@
 CACHE MANIFEST
 
 
-# Version
-# March 26, 2015 revision 6
+# Version 2015-03-27-01
+# March 27, 2015 revision 1
 # Added functionality for data syncing
 
 
 CACHE:
-http://jdgwf.github.io/savage-worlds-web-tools/vehicle_creator.html
+http://jdgwf.github.io/savage-worlds-web-tools/vehicle-creator.html
 http://jdgwf.github.io/savage-worlds-web-tools/extras.html
 http://jdgwf.github.io/savage-worlds-web-tools/backup.html
-http://jdgwf.github.io/savage-worlds-web-tools/space_travel_time.html
+http://jdgwf.github.io/savage-worlds-web-tools/space-travel-time.html
 http://jdgwf.github.io/savage-worlds-web-tools/dice.html
-http://jdgwf.github.io/savage-worlds-web-tools/starship_creator.html
-http://jdgwf.github.io/savage-worlds-web-tools/character_creator.html
-http://jdgwf.github.io/savage-worlds-web-tools/mass_battles.html
-http://jdgwf.github.io/savage-worlds-web-tools/raise_calculator.html
-http://jdgwf.github.io/savage-worlds-web-tools/world_maker.html
-http://jdgwf.github.io/savage-worlds-web-tools/robot_creator.html
-http://jdgwf.github.io/savage-worlds-web-tools/power_armor_creator.html
-http://jdgwf.github.io/savage-worlds-web-tools/walker_creator.html
+http://jdgwf.github.io/savage-worlds-web-tools/starship-creator.html
+http://jdgwf.github.io/savage-worlds-web-tools/character-creator.html
+http://jdgwf.github.io/savage-worlds-web-tools/mass-battles.html
+http://jdgwf.github.io/savage-worlds-web-tools/raise-calculator.html
+http://jdgwf.github.io/savage-worlds-web-tools/world-maker.html
+http://jdgwf.github.io/savage-worlds-web-tools/robot-creator.html
+http://jdgwf.github.io/savage-worlds-web-tools/power-armor-creator.html
+http://jdgwf.github.io/savage-worlds-web-tools/walker-creator.html
 http://jdgwf.github.io/savage-worlds-web-tools/index.html
 http://jdgwf.github.io/savage-worlds-web-tools/cards-test.html
 http://jdgwf.github.io/savage-worlds-web-tools/pdf-tests.html
-http://jdgwf.github.io/savage-worlds-web-tools/print_cart.html
+http://jdgwf.github.io/savage-worlds-web-tools/print-cart.html
 http://jdgwf.github.io/savage-worlds-web-tools/
 
 http://jdgwf.github.io/savage-worlds-web-tools/js/jquery-1.10.2.min.js

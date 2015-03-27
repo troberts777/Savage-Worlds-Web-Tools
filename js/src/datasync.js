@@ -4,6 +4,7 @@
 var syncHost = "https://datasync.ithinc.net";
 var syncAppId = "com.jdg.swwt";
 
+var syncDirty = false;
 var syncEnabled = false;
 var syncEmailAddress = "";
 
@@ -65,10 +66,14 @@ function performPullSync() {
 	}
 }
 
-setInterval(performPushSync, 120000);
+function dirtySync() {
+	syncDirty = true;
+}
+
+setInterval(performPushSync, 10000);
 
 function performPushSync(dataText) {
-	if( syncEnabled && syncEmailAddress != "") {
+	if( syncEnabled && syncDirty && syncEmailAddress != "") {
 		gotoURL = syncHost + "/" + syncAppId + "/" + syncEmailAddress;
 	//	console.log("gotoURL: " + gotoURL);
 		if( typeof(dataText) == "undefined")

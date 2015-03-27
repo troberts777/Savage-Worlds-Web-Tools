@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	<title>Savage Worlds Web Tools - Walker Creator/Maker</title>
-	<meta name="description" value="This is the Walker Creator. It should be currently feature-complete.">
+	<title>Savage Worlds Web Tools - Starship Creator/Maker</title>
+	<meta name="description" value="This is the Starship Creator. It should be currently feature-complete.">
 	<meta name="keywords" value="savage worlds web tools,savage worlds online tools,savage worlds ipad app,savage worlds android app,savage worlds iphone app,savage worlds,savage worlds tools">
 	<link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css">
 	<link rel="stylesheet" href="./css/style.css" type="text/css">
@@ -20,9 +20,9 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="pull-right text-right js-print-cart-button"></div>
-				<div class="bug-tweet pull-right text-right">Found a bug?<br /><a href="https://twitter.com/intent/tweet?screen_name=Gauthic&text=%23SWWebTools%20Walkers%20Bug%3A%20" class="twitter-mention-button" data-related="Gauthic">Tweet to @Gauthic</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></a></div>
-				<h1><a class="ios_app_click" href="./index.html" title="Savage Worlds Web Tools">Savage Worlds Web Tools</a><br /> Walker Creator</h1>
-				<p class="js-smarty-comment">This is the Walker Creator. It should be currently feature-complete.</p>
+				<div class="bug-tweet pull-right text-right">Found a bug?<br /><a href="https://twitter.com/intent/tweet?screen_name=Gauthic&text=%23SWWebTools%20Starships%20Bug%3A%20" class="twitter-mention-button" data-related="Gauthic">Tweet to @Gauthic</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></a></div>
+				<h1><a class="ios_app_click" href="./index.html" title="Savage Worlds Web Tools">Savage Worlds Web Tools</a><br /> Starship Creator</h1>
+				<p class="js-smarty-comment">This is the Starship Creator. It should be currently feature-complete.</p>
 			</div>
 			<div class="js-datasync-notifier">&nbsp;</div>
 		</div>
@@ -39,7 +39,6 @@
 				<button type="button" class="btn btn-default" data-toggle="modal" data-target=".js-export-dialog"><span class="glyphicon glyphicon-export"></span> Export</button>
 				<button type="button" class="btn btn-default" data-toggle="modal" data-target=".js-import-dialog"><span class="glyphicon glyphicon-import"></span> Import</button>
 				<button type="button" class="btn btn-default js-add-item-to-print-cart"><span class="glyphicon glyphicon-print"></span> Add to Print Cart</button>
-				<button type="button" style="display: none" class="btn btn-default js-show-options pull-right" data-toggle="modal" data-target=".js-settings-page"><span class="glyphicon glyphicon-wrench"></span> Options</button>
 			</div>
 		</div>
 	</div>
@@ -48,7 +47,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Export Walker</h4>
+				<h4 class="modal-title">Export Ship</h4>
 			</div>
 			<div class="modal-body">
 				<h5>BB Code</h5>
@@ -69,7 +68,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Load Walker</h4>
+				<h4 class="modal-title">Load Ship</h4>
 			</div>
 			<div class="modal-body js-load-list">
 
@@ -82,27 +81,11 @@
 	</div>
 </div>
 
-<div class="js-settings-page modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title">Unofficial Options</h4>
-			</div>
-			<div class="modal-body js-page-options">
-
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
-
 <div class="js-import-dialog modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Import Walker</h4>
+				<h4 class="modal-title">Import Ship</h4>
 			</div>
 			<div class="modal-body">
 				<h5>Paste exported JSON code below</h5>
@@ -125,28 +108,27 @@
 		<div class="col-sm-6">
 			<fieldset>
 				<legend>Details</legend>
-				<label>Walker Name<br />
+				<label>Ship Name<br />
 				<input type="text" value="" class="js-set-name" /></label>
 
-				<label>Walker Description<br />
+				<label>Ship Description<br />
 				<textarea value="" class="js-set-description"></textarea></label>
 
 				<label>Size<br />
 				<select class="js-select-size">
-					<option value="">- Select Walker Size -</option>
+					<option value="">- Select Starship Size -</option>
 				</select></label>
 			</fieldset>
-
 			<fieldset class="js-select-modifications-container">
 				<legend>Modifications</legend>
 				<div class="js-select-modifications"></div>
 			</fieldset>
-
 		</div>
 		<div class="col-sm-6">
 			<div class="js-select-modifications-container">
 				<div class="js-select-weapons"></div>
 			</div>
+
 		</div>
 	</div>
 </div>
@@ -162,7 +144,7 @@
 			<div class="col-xs-6 text-right">
 				<p>You can contribute to this project at <a href="https://github.com/jdgwf/savage-worlds-web-tools">https://github.com/jdgwf/savage-worlds-web-tools</a></p>
 				<p><a href="license.html" class="ios_app_click" title="More License Info">More License and Credits Information can be viewed here</a></p>
-<p>App Version: 2015-03-26-07</p>
+<p>App Version: 2015-03-27-01</p>
 			</div>
 		</div>
 	</div>
@@ -175,21 +157,19 @@
 <script src="./js/bootbox.min.js"></script>
 <script src="./js/jspdf.min.js"></script>
 <script src="./js/swwt.min.js"></script>
-<script>
 
-var app_version = "2015-03-26-07";
-sw_walker.prototype = new creator_base();
-function sw_walker() {
+<script>
+var app_version = "2015-03-27-01";
+sw_starship.prototype = new creator_base();
+function sw_starship() {
 	creator_base.apply( this, arguments );
 }
 
 var current_selected_object;
 $(window).load(
 	function(){
-		current_selected_object = new sw_walker();
-		if(typeof(walker_options) == "undefined")
-			walker_options = Array();
-		current_selected_object.init("walker", "Walker", walker_sizes, walker_modifications, walker_options);
+		current_selected_object = new sw_starship();
+		current_selected_object.init("starship", "Starship", starship_sizes, starship_modifications);
 		if( typeof(localStorage["com.jdg.swwt.tmp.current_" + current_selected_object.object_type]) != "undefined" && localStorage["com.jdg.swwt.tmp.current_" + current_selected_object.object_type]) {
 			current_selected_object.import_json( localStorage["com.jdg.swwt.tmp.current_" + current_selected_object.object_type] );
 			$(".js-set-name").val(current_selected_object.item_name);
@@ -199,10 +179,7 @@ $(window).load(
 		propogate_load_list();
 	}
 );
-
 </script>
-
-<script>var smarty_comment_section = 'walker_creator';</script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
