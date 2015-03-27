@@ -1,9 +1,9 @@
 CACHE MANIFEST
 
 
-# Version 2015-03-27-06
-# March 27, 2015 revision 5
-# Fixing of sync dirty setting function name to be congruent with rest of function names
+# Version 2015-03-27-07
+# March 27, 2015 revision 7
+# Sync Data explanation and verbiage.
 
 
 CACHE:

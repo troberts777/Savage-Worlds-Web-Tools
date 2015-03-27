@@ -31,16 +31,50 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-xs-12">
+		<div class="col-xs-6">
 			<h4>Notice of Full Discolsure</h4>
 			<p>
-				This functionality will contact a remote, central server and store the information and settings of your localStorage periodically. There is <strong>NO SECURITY</strong> other than the obscurity of the email address you put below. <strong>By entering an email address and enabling DataSync you agree that your gaming data will be stored on a central server.</strong>
+				This functionality will contact a remote, central server (owned and managed by <a href="https://github.com/jdgwf/">the developer</a>) and store the information and settings of your localStorage periodically. There is <strong>NO SECURITY</strong> other than the obscurity of the email address you put below. <strong>By entering an email address and enabling DataSync you agree that your gaming data will be stored on a central server.</strong>
 			</p>
 			<p>
-				However, if you use multiple devices the advantage of this will be that your data is synced across all devices.
+				I can't promise (and I more than likely will!) that I won't take a gander at the data used out of curiousity of how this web application is being used, but <strong>do strongly promise</string> that I won't disclose, share or mention any of your information and email addresses without contacting you and obtaining your permission first. The only exception I may make of this is how many users are actually using sync as in a big lump sum and no indvidiual details would be revealed.
 			</p>
-			<h4>Warning!</h4>
-			<p>Right now this function could very well destroy important data! <a href='backup.html' class='ios_app_click'>Back up your data</a> before enabling this feature!</p>
+			<p>
+				For example:<br />
+				<blockquote>
+					We have 13 users using the DataSync function of the Savage Worlds Web Tools<br />
+					12% of these users have 3 or more saved characters<br />
+					34% of these users are creating vehicles<br />
+					etc, etc.<br />
+				</blockquote>
+			</p>
+			<p>
+				The reason I may do this is for promitional use on my blod or Twitter to have both Savage Worlds and this app have more popularity.
+			</p>
+
+
+		</div>
+		<div class="col-xs-6">
+			<h4>How this works:</h4>
+			<p>
+				If you use multiple devices the advantage of this will be that your data is synced across all devices. This works simply. When navigate to another page (or open the initial page) and you've got sync enabled the app will reach out to the central server then pull any data it finds and overwrite your localStorage items with the data found (don't worry if there's no data, it won't be overwritten). When any refresh or saving is done the app will sync the changes once every ten seconds. A notification will appear at the bottom of the screen to notify you of the successful sync.
+			</p>
+			<h4>Warnings and Caveats!</h4>
+			<p>
+				Right now this function could very well destroy important data! <a href='backup.html' class='ios_app_click'>Back up your data</a> before enabling this feature!
+				</p>
+			<p>
+				It's recommended to only have <strong>ONE INSTANCE</strong> actually running and open one multiple devices at one time. Having multiple instances syncing to the server may result in data loss as this is a <strong>VERY SIMPLE</strong> method (one written in 2 hours, both client and server) for syncing.
+			</p>
+			<h4>End User Agreement</h4>
+			<p>
+				<strong>By entering an email address and enabling DataSync you agree that your gaming data will be stored on a central server and that you will not hold the developer liable for any data loss on this <em>free-to-use application</em>.</strong>
+			</p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-6">
+		<h3>Sync Settings</h3>
 			<label>
 				Datasync Email Address:
 				<input type="text" class="js-datasync-email-address" />
@@ -65,7 +99,7 @@
 			<div class="col-xs-6 text-right">
 				<p>You can contribute to this project at <a href="https://github.com/jdgwf/savage-worlds-web-tools">https://github.com/jdgwf/savage-worlds-web-tools</a></p>
 				<p><a href="license.html" class="ios_app_click" title="More License Info">More License and Credits Information can be viewed here</a></p>
-<p>App Version: 2015-03-27-06</p>
+<p>App Version: 2015-03-27-07</p>
 			</div>
 		</div>
 	</div>
@@ -92,7 +126,7 @@
 
 </script>
 <script>
-var app_version = "2015-03-27-06";
+var app_version = "2015-03-27-07";
 $(".js-backup-summary").html( get_backup_summary() );
 
 $(".js-export-data").click( function() {
