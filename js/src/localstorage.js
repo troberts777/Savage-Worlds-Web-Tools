@@ -137,8 +137,10 @@ function get_backup_summary() {
     		var counted_items = 0;
     		if(
     			key.indexOf("com.jdg.swwt") === 0
-    			&& key.indexOf("com.jdg.swwt.tmp") === -1
-    			&& key.indexOf("com.jdg.swwt.settings") === -1
+    			&& key.indexOf("current_") === -1
+    			&& key.indexOf("gm_control_") === -1
+    			&& key.indexOf("tmp") === -1
+    			&& key.indexOf("settings") === -1
     		) {
     			keyname = uc_words( key.replace("com.jdg.swwt.", "") );
 
@@ -179,11 +181,11 @@ function export_as_file() {
     	if (localStorage.hasOwnProperty(key)) {
   //  		console.log("export_as_file() if called");
     		if(
-    			key.indexOf("com.jdg.swwt") == 0
-    			&& key.indexOf("current_") == -1
-    			&& key.indexOf("gm_control_") == -1
-    			&& key.indexOf("tmp") == -1
-    			&& key.indexOf("settings") == -1
+    			key.indexOf("com.jdg.swwt") === 0
+    			&& key.indexOf("current_") === -1
+    			&& key.indexOf("gm_control_") === -1
+    			&& key.indexOf("tmp") === -1
+    			&& key.indexOf("settings") === -1
     		) {
 //    			console.log("export_as_file() pushing to array called, key = " + key);
     			objectData = "";
