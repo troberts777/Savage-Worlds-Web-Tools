@@ -313,7 +313,7 @@ var walker_modifications = Array(
 		},
 		get_mod_effect: function(selected_object) {
 			selected_object.pace -=  2;
-			selected_object.mods += selected_object.base_mods / 2;
+			selected_object.mods += selected_object.size / 2;
 		}
 	},
 	{

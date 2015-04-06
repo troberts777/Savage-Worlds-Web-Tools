@@ -271,7 +271,7 @@ var starship_modifications = Array(
 		get_mod_effect: function(selected_object) {
 			selected_object.ts -=  50;
 			selected_object.acc -=  5;
-			selected_object.mods += selected_object.base_mods / 2;
+			selected_object.mods += selected_object.size / 2;
 		}
 	},
 	{
