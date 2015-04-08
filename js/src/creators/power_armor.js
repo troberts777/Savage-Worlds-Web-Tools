@@ -142,7 +142,7 @@ var power_armor_modifications = Array(
 		hide_with_option: "faster-flight",
 		get_max: function(selected_object) { return 1 },
 		get_mod_cost: function(selected_object) {
-			return 3;
+			return selected_object.size;
 		},
 		get_cost: function(selected_object) {
 			return 5000 * selected_object.size;

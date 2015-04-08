@@ -22,6 +22,9 @@ creator_base.prototype = {
 		this.base_toughness = 0;
 		this.base_cost = 0;
 		this.armor = 0;
+		this.front_armor = 0
+		this.side_armor = 0;
+		this.rear_armor = 0;
 		this.mods = 0;
 		this.base_mods = 0;
 		this.crew = 0;
@@ -103,7 +106,12 @@ creator_base.prototype = {
 			if(this.flying_pace > 0)
 				html_return += "Flying Pace " + format_pace_realworld(this.flying_pace) + ", ";
 			if(this.toughness > 0) {
-				html_return += "Toughness " + this.toughness + " (" + this.armor + "), ";
+				if( this.front_armor > 0 ) {
+					html_return += "Toughness " + this.toughness + " (<span title='Front Armor / Side Armor / Rear Armor)'>" + this.front_armor + "/" + this.side_armor + "/" +  this.rear_armor + "</span>), ";
+				} else {
+					html_return += "Toughness " + this.toughness + " (" + this.armor + "), ";
+				}
+
 			} else {
 				if(this.armor) {
 					html_return += "Armor +" + this.armor + ", ";

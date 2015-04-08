@@ -72,8 +72,23 @@ var starship_modifications = Array(
 		},
 	},
 	{
+		name: "Crew Reduction",
+		description: "Reduces living space, quarters, and facilities for personnel equal to 20% of the listed Crew for the vessel’s Size, granting Size/4 Mods. If this reduces the Crew to 0, the ship is a fully automated drone",
+		get_max: function(selected_object) { return "u" },
+		get_mod_cost: function(selected_object) {
+			return 0;
+		},
+		get_cost: function(selected_object) {
+			return 10000 * selected_object.size;
+		},
+		get_mod_effect: function(selected_object) {
+			selected_object.mods +=  selected_object.size / 4;
+			selected_object.crew -= selected_object.selected_size.crew / 5;
+		}
+	},
+	{
 		name: "Crew Space",
-		description: "Space for four permanent crew members.",
+		description: "Enough space and facilities for more personnel equal to 20% of the listed Crew for the vessel’s Size. To accommodate even more passengers, use Superstructures instead.",
 		get_max: function(selected_object) { return "u" },
 		get_mod_cost: function(selected_object) {
 			return 1;
@@ -81,6 +96,9 @@ var starship_modifications = Array(
 		get_cost: function(selected_object) {
 			return 100000;
 		},
+		get_mod_effect: function(selected_object) {
+			selected_object.crew += selected_object.selected_size.crew / 5;
+		}
 	},
 	{
 		name: "Deflector Screens",

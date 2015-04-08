@@ -250,17 +250,41 @@ var vehicle_modifications = Array(
 	},
 	{
 		name: "Armor",
-		description: "Increases a vehicle’s Armor value by +2. An armor value of +4 (2 slots) or more is considered Heavy Armor.",
+		description: " Increases a vehicle’s Armor value by +2. Armor +4 and higher is considered Heavy Armor. Vehicular Armor can also be front-loaded if desired. If so, Armor’s maximum becomes 2x Size and each level increases the front armor by +3, side and top armor by +2, and rear and bottom Armor by +1. In the Chase rules, an attacker with Advantage and a Jack or higher can target the side armor, and one with a King or higher can target the rear.",
 		get_max: function(selected_object) { return selected_object.size },
 		get_mod_cost: function(selected_object) {
 			return 1;
 		},
 		get_cost: function(selected_object) {
-			return 10000 * selected_object.size;
+			return 1000 * selected_object.size;
 		},
 		get_mod_effect: function(selected_object) {
 			selected_object.armor++;
 			selected_object.armor++;
+
+			selected_object.toughness++;
+			selected_object.toughness++;
+		}
+	},
+	{
+		name: "Armor, Front Loaded",
+		description: " Increases a vehicle’s Armor value by +2. Armor +4 and higher is considered Heavy Armor. Vehicular Armor can also be front-loaded if desired. If so, Armor’s maximum becomes 2x Size and each level increases the front armor by +3, side and top armor by +2, and rear and bottom Armor by +1. In the Chase rules, an attacker with Advantage and a Jack or higher can target the side armor, and one with a King or higher can target the rear.",
+		get_max: function(selected_object) { return selected_object.size },
+		get_mod_cost: function(selected_object) {
+			return 1;
+		},
+		get_cost: function(selected_object) {
+			return 1000 * selected_object.size;
+		},
+		get_mod_effect: function(selected_object) {
+			selected_object.front_armor++;
+			selected_object.front_armor++;
+			selected_object.front_armor++;
+
+			selected_object.side_armor++;
+			selected_object.side_armor++;
+
+			selected_object.rear_armor++;
 
 			selected_object.toughness++;
 			selected_object.toughness++;
