@@ -160,7 +160,7 @@ var vehicle_modifications = Array(
 			return 20000 * selected_object.size;
 		},
 		get_mod_effect: function(selected_object) {
-			selected_object.aircraft = 1;
+			selected_object.aircraft += 1;
 			selected_object.climb = 2;
 
 			selected_object.acc = 30;
@@ -179,7 +179,7 @@ var vehicle_modifications = Array(
 			return 5000 * selected_object.size;
 		},
 		get_mod_effect: function(selected_object) {
-			selected_object.aircraft = 1;
+			selected_object.aircraft += 1;
 			selected_object.climb = -1;
 
 			selected_object.acc = 10;
@@ -198,7 +198,7 @@ var vehicle_modifications = Array(
 			return 10000 * selected_object.size;
 		},
 		get_mod_effect: function(selected_object) {
-			selected_object.aircraft = 1;
+			selected_object.aircraft += 1;
 			selected_object.climb = 2;
 
 			selected_object.acc = 50;
@@ -217,7 +217,7 @@ var vehicle_modifications = Array(
 			return 5000 * selected_object.size;
 		},
 		get_mod_effect: function(selected_object) {
-			selected_object.aircraft = 1;
+			selected_object.aircraft += 1;
 			selected_object.climb = 1;
 
 			selected_object.acc = 20;
