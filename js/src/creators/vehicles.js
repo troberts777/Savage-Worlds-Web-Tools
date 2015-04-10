@@ -339,7 +339,7 @@ var vehicle_modifications = Array(
 			return 0;
 		},
 		get_mod_effect: function(selected_object) {
-			selected_object.crew = selected_object.crew - 4;
+			selected_object.crew += -4;
 			selected_object.mods ++;
 
 		}
@@ -354,6 +354,10 @@ var vehicle_modifications = Array(
 		get_cost: function(selected_object) {
 			return 100000;
 		},
+		get_mod_effect: function(selected_object) {
+			selected_object.crew += 4;
+		}
+
 	},
 	{
 		name: "Deflector Screens",
