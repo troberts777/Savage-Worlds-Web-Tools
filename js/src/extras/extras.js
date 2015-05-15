@@ -221,6 +221,25 @@ function displayExtra(extra, indexNumber, no_buttons) {
 				}
 			}
 		}
+
+		// Attacks
+
+		// if(typeof(extra.attacks) != "undefined") {
+		// 	// always going to be an array of objects.
+		// 	extraHTML += "<strong>Attacks: </strong><br />";
+		// 	attacksHTML = "";
+		// 	//extraHTML += "" + extra.attacks.count;
+		// 	for(attackcount = 0; attackcount < extra.attacks.length; attackcount++) {
+		// 		attack = extra.attacks[attackcount];
+		// 		if( attack.range == "melee") {
+		// 			attacksHTML += "<li>" + attack.name + ", melee, " + attack.damage + "</li>";
+		// 		} else {
+		// 			attacksHTML += "<li>" + attack.name + ", ranged, " + attack.damage + "</li>";
+		// 		}
+		// 	}
+		// 	extraHTML += "<ul>" + attacksHTML + "</ul>";
+		// }
+
 		// Special Abilities
 		extraHTML += "<strong>Abilities: </strong><br />";
 		abilitiesHTML = "";

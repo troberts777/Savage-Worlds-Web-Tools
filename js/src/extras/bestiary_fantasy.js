@@ -3015,6 +3015,14 @@ extraDatabase = extraDatabase.concat(Array(
 		gear: "Short spears (Str+d4)",
 		armor: "",
 		hindrances: "",
+		attacks: Array(
+			{
+				name: "Short Spear",
+				range: "melee",
+				type: "weapon",
+				damage: "d4 + d4"
+			}
+		),
 		abilities: Array(
 			{
 				name: "Infravision",
@@ -3062,6 +3070,20 @@ extraDatabase = extraDatabase.concat(Array(
 		gear: "Short spear (Str+d4)",
 		armor: "",
 		hindrances: "",
+		attacks: Array(
+			{
+				name: "Short Spear",
+				range: "melee",
+				type: "weapon",
+				damage: "d4 + d4"
+			},
+			{
+				name: "Bolt",
+				range: "12/24/48",
+				type: "power",
+				damage: "2d6"
+			}
+		),
 		abilities: Array(
 			{
 				name: "Infravision",

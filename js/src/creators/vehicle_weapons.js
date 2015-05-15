@@ -526,6 +526,48 @@ var vehicle_weapons = Array(
 		}
 	},
 	{
+		name: "Medium MG (2)",
+		classification: "Slugthrowers",
+		description: "Slugthrowers are traditional firearms firing chemically-propelled rounds.",
+		range: "30/60/120",
+		damage: "2d8+1",
+		rof: 4,
+		shots: 200,
+		missiles_per: 0,
+		linkable: 0,
+		mods: 1,
+		cost: 3000,
+		notes: "AP 2, Auto. A 200 round belt of ammo costs $400 and weighs 15 pounds."
+	},
+	{
+		name: "Heavy MG (2)",
+		classification: "Slugthrowers",
+		description: "Slugthrowers are traditional firearms firing chemically-propelled rounds.",
+		range: "50/100/200",
+		damage: "2d10",
+		rof: 3,
+		shots: 200,
+		missiles_per: 0,
+		linkable: 0,
+		mods: 1,
+		cost: 5000,
+		notes: "AP 4, Auto, HW. A 200 round belt of ammo costs $500 and weighs 20 pounds."
+	},
+	{
+		name: "Minigun",
+		classification: "Slugthrowers",
+		description: "Slugthrowers are traditional firearms firing chemically-propelled rounds.",
+		range: "24/48/96",
+		damage: "2d8+4",
+		rof: 4,
+		shots: 1000,
+		missiles_per: 0,
+		linkable: 0,
+		mods: 1,
+		cost: 10000,
+		notes: "AP 3, Auto, HW. An additional 1000 round drum of ammunition weighs 20 pounds and costs $1000."
+	},
+	{
 		name: "Light Missile",
 		classification: "Missiles & Torpedoes",
 		description: "These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship—if a ship gets a lock, it may fire all the missiles or torpedoes it’s allowed.",
@@ -629,77 +671,6 @@ var vehicle_weapons = Array(
 		mods: 1,
 		cost: 1000000,
 		notes: "AP 50, HW, LBT. Space or watercraft only. Half Range in water."
-	},
-/*	{
-		name: "Light Rail Gun",
-		classification: "Rail Guns",
-		description: "“Rail guns” are smaller versions of mass drivers, magnetically propelling dense shells (in atmosphere) or spheroids (space). They fire Light (3” diameter) or Heavy (5”) shells.",
-		range: "50/100/200",
-		damage: "4d10",
-		rof: 1,
-		shots: 20,
-		missiles_per: 0,
-		linkable: 0,
-		mods: 1,
-		cost: 50000,
-		notes: "HW. Projectiles weigh 10 lb and cost $100 each."
-	},
-	{
-		name: "Heavy Rail Gun",
-		classification: "Rail Guns",
-		description: "“Rail guns” are smaller versions of mass drivers, magnetically propelling dense shells (in atmosphere) or spheroids (space). They fire Light (3” diameter) or Heavy (5”) shells.",
-		range: "75/150/300",
-		damage: "5d10",
-		rof: 1,
-		shots: 20,
-		missiles_per: 0,
-		linkable: 0,
-		mods: 2,
-		cost: 100000,
-		notes: "HW. Projectiles weigh 25 lb and cost $200 each."
-	},
-*/
-	{
-		name: "Medium MG",
-		classification: "Slugthrowers",
-		description: "Slugthrowers are traditional firearms firing chemically-propelled rounds.",
-		range: "30/60/120",
-		damage: "2d8+1",
-		rof: 4,
-		shots: 200,
-		missiles_per: 0,
-		linkable: 0,
-		mods: 1,
-		cost: 3000,
-		notes: "AP 2, Auto. A 200 round belt of ammo costs $400 and weighs 15 pounds."
-	},
-	{
-		name: "Heavy MG",
-		classification: "Slugthrowers",
-		description: "Slugthrowers are traditional firearms firing chemically-propelled rounds.",
-		range: "50/100/200",
-		damage: "2d10",
-		rof: 3,
-		shots: 200,
-		missiles_per: 0,
-		linkable: 0,
-		mods: 1,
-		cost: 5000,
-		notes: "AP 4, Auto, HW. A 200 round belt of ammo costs $500 and weighs 20 pounds."
-	},
-	{
-		name: "Minigun",
-		classification: "Slugthrowers",
-		description: "Slugthrowers are traditional firearms firing chemically-propelled rounds.",
-		range: "24/48/96",
-		damage: "2d8+4",
-		rof: 4,
-		shots: 1000,
-		missiles_per: 0,
-		linkable: 0,
-		mods: 1,
-		cost: 10000,
-		notes: "AP 3, Auto, HW. An additional 1000 round drum of ammunition weighs 20 pounds and costs $1000."
 	}
 
 );
