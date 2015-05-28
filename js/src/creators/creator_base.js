@@ -704,7 +704,8 @@ creator_base.prototype = {
 				if( this.selected_size && this.selected_size.size )
 					if(  this.selected_size.size == this.available_sizes[sizeCount].size )
 						isSelected = " selected='selected'";
-				selectOptions += "<option value='" + this.available_sizes[sizeCount].size + "'" + isSelected + ">" + this.available_sizes[sizeCount].size_label + " - Size " + this.available_sizes[sizeCount].size;
+				selectOptions += "<option value='" + this.available_sizes[sizeCount].size + "'" + isSelected + ">";
+				selectOptions += this.available_sizes[sizeCount].size_label + " - Size " + this.available_sizes[sizeCount].size;
 				if( this.available_sizes[sizeCount].examples )
 					selectOptions += " - " + this.available_sizes[sizeCount].examples;
 				selectOptions += "</option>";
