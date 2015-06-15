@@ -1,9 +1,9 @@
 CACHE MANIFEST
 
 
-# Version 2015-06-14-02
-# June 14, 2015 revision 2
-# Disabling the Syncing of Temporary (Current *) Variables
+# Version 2015-06-15-01
+# June 15, 2015 revision 1
+# Fix of DataSync - temp vars no longer synced
 
 
 CACHE:

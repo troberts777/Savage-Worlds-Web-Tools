@@ -48,16 +48,28 @@ function performPullSync() {
 		$.getJSON(
 			gotoURL,
 			function(returnedResults) {
-//				console.log( returnedResults.data );
+
+				currentTemp = Array();
+
+				for (var key in localStorage){
+					if( key.indexOf("com.jdg.swwt.tmp.") === 0 ) {
+						currentTemp[key] = localStorage[key];
+					}
+				}
+
 				if(returnedResults.data != "") {
 					importedData = JSON.parse( returnedResults.data ) ;
-	//				console.log(importedData);
+
 					localStorage.clear();
 
 					for (var key in importedData){
-	//					console.log(key + ": " + importedData[key]);
-	//					if( key.indexOf("com.jdg.swwt.tmp.") !== 0 )
+//						console.log("importedData: " + key + ": " + importedData[key]);
+						if( key.indexOf("com.jdg.swwt.tmp.") !== 0 )
 							localStorage[key] = importedData[key];
+					}
+					for (var key in currentTemp){
+//						console.log("currentTemp: " + key + ": " + importedData[key]);
+						localStorage[key] = currentTemp[key];
 					}
 				}
 

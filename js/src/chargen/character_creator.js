@@ -1957,7 +1957,7 @@ function refresh_chargen_page(no_full_refresh, no_calculate) {
 	// only calculate the character section since it's a non-fluff change
 	// this is because it was very slow on a Raspberry Pi
 	setSyncDirty();
-	console.log("refresh_chargen_page() called");
+//	console.log("refresh_chargen_page() called");
 	if(
 		(!no_calculate && no_calculate != true)
 			&&
