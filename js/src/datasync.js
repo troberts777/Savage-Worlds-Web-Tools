@@ -56,7 +56,7 @@ function performPullSync() {
 
 					for (var key in importedData){
 	//					console.log(key + ": " + importedData[key]);
-						if( key.indexOf("com.jdg.swwt.tmp.") !== 0 )
+	//					if( key.indexOf("com.jdg.swwt.tmp.") !== 0 )
 							localStorage[key] = importedData[key];
 					}
 				}

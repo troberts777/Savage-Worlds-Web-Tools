@@ -15,7 +15,8 @@ if( !localStorage["com.jdg.swwt.tmp.current_printcart"] ) {
 // }
 
 function get_print_cart_items() {
-	if( localStorage["com.jdg.swwt.tmp.current_printcart"] != "") {
+
+	if( typeof(localStorage["com.jdg.swwt.tmp.current_printcart"]) != "undefined" && localStorage["com.jdg.swwt.tmp.current_printcart"] != ""  && localStorage["com.jdg.swwt.tmp.current_printcart"] != "undefined") {
 		return JSON.parse(localStorage["com.jdg.swwt.tmp.current_printcart"]);
 	} else {
 		return Array();
