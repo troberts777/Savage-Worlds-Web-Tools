@@ -70,8 +70,6 @@ function propogate_add_mods(selected_modification_list) {
 	$(".js-select-modifications").html(modifications_html);
 }
 
-
-
 function propogate_settings_box() {
 	current_settings = current_selected_object.get_available_options();
 
@@ -100,23 +98,6 @@ function propogate_settings_box() {
 				html += "<br />";
 		}
 		$(".js-page-options").html( html );
-
-
-		// $('.js-page-setting-item').unbind('keyup');
-		// $(".js-page-setting-item").keyup( function() {
-		// 	type = $(this).attr("type");
-		// 	name = $(this).attr("name");
-		// 	value = $(this).val();
-
-		// 	if( type = "checkbox") {
-		// 		if( $(this).is(":checked") )
-		// 			value = 1;
-		// 		else
-		// 			value = 0;
-		// 	}
-		// 	current_selected_object.set_option( name, value);
-		// 	refresh_creator_page();
-		// });
 
 		$('.js-page-setting-item').unbind('change');
 		$(".js-page-setting-item").change( function() {

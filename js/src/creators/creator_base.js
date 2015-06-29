@@ -13,6 +13,7 @@ creator_base.prototype = {
 		this.object_label = object_label;
 		this.object_label = object_label;
 		this.examples = "";
+		this.extra_notes = "";
 		this.size = 0;
 		this.object_type = object_type;
 		this.acc = 0;
@@ -161,6 +162,11 @@ creator_base.prototype = {
 				html_return += "<strong>Shields</strong>: ";
 				html_return += this.size * 10;
 				html_return += " - may recover  " + this.size + "/round<br />";
+			}
+
+			if( this.extra_notes != "" ) {
+				html_return += "<strong>Extra Notes</strong>: ";
+				html_return += this.extra_notes;
 			}
 		} else {
 			html_return += "A size must be selected.";
@@ -363,6 +369,13 @@ creator_base.prototype = {
 		this.selected_weapons_list = newList;
 	},
 
+	append_extra_notes: function( note ) {
+		if(this.extra_notes != "")
+			this.extra_notes += ", ";
+		this.extra_notes += note;
+		return note;
+	},
+
 	calculate: function() {
 
 
@@ -403,6 +416,8 @@ creator_base.prototype = {
 			this.weight = this.selected_size.weight;
 			this.pace = this.selected_size.pace;
 			this.base_pace = this.selected_size.pace;
+
+			this.extra_notes = "";
 
 			this.mods_available = this.mods;
 

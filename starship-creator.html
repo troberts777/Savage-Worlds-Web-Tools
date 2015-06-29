@@ -39,6 +39,7 @@
 				<button type="button" class="btn btn-default" data-toggle="modal" data-target=".js-export-dialog"><span class="glyphicon glyphicon-export"></span> Export</button>
 				<button type="button" class="btn btn-default" data-toggle="modal" data-target=".js-import-dialog"><span class="glyphicon glyphicon-import"></span> Import</button>
 				<button type="button" class="btn btn-default js-add-item-to-print-cart"><span class="glyphicon glyphicon-print"></span> Add to Print Cart</button>
+				<button type="button" style="display: none" class="btn btn-default js-show-options pull-right" data-toggle="modal" data-target=".js-settings-page"><span class="glyphicon glyphicon-wrench"></span> Options</button>
 			</div>
 		</div>
 	</div>
@@ -99,6 +100,22 @@
 	</div>
 </div>
 
+<div class="js-settings-page modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Settings Options</h4>
+			</div>
+			<div class="modal-body js-page-options">
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="container">
 	<div class="js-alert-container"></div>
 	<div class="row">
@@ -144,7 +161,7 @@
 			<div class="col-xs-6 text-right">
 				<p>You can contribute to this project at <a href="./https://github.com/jdgwf/savage-worlds-web-tools">https://github.com/jdgwf/savage-worlds-web-tools</a></p>
 				<p><a href="./license.html" class="ios-app-click" title="More License Info">More License and Credits Information can be viewed here</a></p>
-<p>App Version: 2015-06-29-05</p>
+<p>App Version: 2015-06-29-06</p>
 			</div>
 		</div>
 	</div>
@@ -159,7 +176,7 @@
 <script src="./js/swwt.min.js"></script>
 
 <script>
-var app_version = "2015-06-29-05";
+var app_version = "2015-06-29-06";
 sw_starship.prototype = new creator_base();
 function sw_starship() {
 	creator_base.apply( this, arguments );
@@ -169,7 +186,7 @@ var current_selected_object;
 $(window).load(
 	function(){
 		current_selected_object = new sw_starship();
-		current_selected_object.init("starship", "Starship", starship_sizes, starship_modifications);
+		current_selected_object.init("starship", "Starship", starship_sizes, starship_modifications, starship_options);
 		if( typeof(localStorage["com.jdg.swwt.tmp.current_" + current_selected_object.object_type]) != "undefined" && localStorage["com.jdg.swwt.tmp.current_" + current_selected_object.object_type]) {
 			current_selected_object.import_json( localStorage["com.jdg.swwt.tmp.current_" + current_selected_object.object_type] );
 			$(".js-set-name").val(current_selected_object.item_name);

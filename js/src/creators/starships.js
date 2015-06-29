@@ -8,6 +8,25 @@ Pinnacle makes no representation or warranty as to the quality, viability, or su
 
 The entries in this file are from Savage Worlds: Sci-Fi Companion and are owned by Pinnacle Entertainment Group.
 */
+
+function get_same_vehicle_size( selected_size ) {
+	for(vehicle_counter = 0; vehicle_counter < vehicle_sizes.length; vehicle_counter++) {
+		if( selected_size == vehicle_sizes[vehicle_counter].size)
+			return vehicle_sizes[vehicle_counter];
+	}
+
+	return 0;
+}
+
+var starship_options = Array(
+	{
+		title: "The Last Parsec Options",
+		short_tag: "the-last-parsec",
+		description: "Various options from The Last Parsec Sourcebooks starship options ",
+		type: "bool"
+	}
+);
+
 var starship_modifications = Array(
 	{
 		name: "AMCM",
@@ -48,6 +67,38 @@ var starship_modifications = Array(
 		get_cost: function(selected_object) {
 			return 10000 * selected_object.size;
 		},
+	},
+	{
+		name: "Aquatic",
+		description: "The ship is built to withstand deep pressurization and is equipped with thrusters suitable for use in aqueous mediums, allowing it to function underwater as if it were a submersible. Acc and Top Speed are half a vehicle of equal Size",
+		show_with_option: "the-last-parsec",
+		get_max: function(selected_object) { return 1 },
+		get_mod_cost: function(selected_object) {
+			return 2;
+		},
+		get_cost: function(selected_object) {
+			return 5000 * selected_object.size;
+		},
+		get_mod_effect: function(selected_object) {
+			selected_object.watercraft = 1;
+			if( selected_object.size > 0) {
+				same_vehicle = get_same_vehicle_size(selected_object.size);
+				water_ts = 0;
+				water_acc = 0;
+				if( same_vehicle ) {
+					water_ts = Math.ceil(same_vehicle.ts / 2);
+					water_acc = Math.ceil(same_vehicle.acc / 2);
+				}
+				if( water_ts > 0 )
+					selected_object.append_extra_notes("Water Top Speed: " + water_ts);
+				if( water_acc > 0 )
+					selected_object.append_extra_notes("Water Acc: " + water_acc);
+			}
+		},
+		get_weight: function(selected_object) {
+			return 0;
+		}
+
 	},
 	{
 		name: "Atmospheric",
