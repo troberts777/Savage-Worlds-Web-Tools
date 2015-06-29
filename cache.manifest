@@ -1,9 +1,9 @@
 CACHE MANIFEST
 
 
-# Version 2015-06-15-01
-# June 15, 2015 revision 1
-# Fix of DataSync - temp vars no longer synced
+# Version 2015-06-29-01
+# June 29, 2015 revision 1
+# Setup of going back to last opened page for web applications.
 
 
 CACHE:

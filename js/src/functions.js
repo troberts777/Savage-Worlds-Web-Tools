@@ -24,11 +24,13 @@ function debugConsole(message) {
 
 }
 
-$(".ios_app_click").click( function(event) {
+$(".ios-app-click").click( function(event) {
 	event.preventDefault();
 	url = $(this).attr("href");
 	if($(this).hasClass("btn-danger"))
 		alert("This function is still under development and will not work as expected");
+
+	localStorage["com.jdg.swwt.tmp.gotourl"] = url;
 	window.location.assign(url);
 	return false;
 });
