@@ -19,7 +19,11 @@
 	<meta name="mobile-web-app-capable" content="yes">
 	<script>
 	// forward to page last opened in web app.
-	if( typeof(localStorage["com.jdg.swwt.tmp.gotourl"]) != "undefined" && localStorage["com.jdg.swwt.tmp.gotourl"] && localStorage["com.jdg.swwt.tmp.gotourl"] != "./index.html"  && localStorage["com.jdg.swwt.tmp.gotourl"] != "index.html" ) {
+	if( typeof(localStorage["com.jdg.swwt.tmp.gotourl"]) != "undefined"
+		&& localStorage["com.jdg.swwt.tmp.gotourl"] != ""
+		&& localStorage["com.jdg.swwt.tmp.gotourl"] != "./index.html"
+		&& localStorage["com.jdg.swwt.tmp.gotourl"] != "index.html"
+	) {
 		window.location.assign(localStorage["com.jdg.swwt.tmp.gotourl"]);
 	}
 	</script>
@@ -191,7 +195,7 @@
 			<div class="col-xs-6 text-right">
 				<p>You can contribute to this project at <a href="./https://github.com/jdgwf/savage-worlds-web-tools">https://github.com/jdgwf/savage-worlds-web-tools</a></p>
 				<p><a href="./license.html" class="ios-app-click" title="More License Info">More License and Credits Information can be viewed here</a></p>
-<p>App Version: 2015-06-29-04</p>
+<p>App Version: 2015-06-29-05</p>
 			</div>
 		</div>
 	</div>
@@ -206,7 +210,7 @@
 <script src="./js/swwt.min.js"></script>
 <script>
 var smarty_comment_section = 'index';
-var app_version = "2015-06-29-04";
+var app_version = "2015-06-29-05";
 </script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
