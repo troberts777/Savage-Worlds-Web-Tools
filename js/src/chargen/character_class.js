@@ -2159,9 +2159,10 @@ character_class.prototype = {
 
 		html_return += "<strong>Pace</strong>: " + this.derived.pace;
 		html_return += ", <strong>Parry</strong>: " + this.derived.parry;
+		html_return += ", <strong>Sanity</strong>: " + this.derived.sanity;
 
 
-		html_return += ", <strong>Toughness</strong>: " + this.derived.toughness_formatted;
+
 
 		if(this.derived.charisma > 0)
 			html_return += ", <strong>Charisma</strong>: " + this.derived.charisma;
@@ -2169,6 +2170,8 @@ character_class.prototype = {
 		if(this.derived.encumbrance > 0)
 			html_return += ", <strong>Load</strong>: " + this.derived.encumbrance;
 
+
+		html_return += ", <strong>Toughness</strong>: " + this.derived.toughness_formatted;
 
 		html_return += "<br />";
 
