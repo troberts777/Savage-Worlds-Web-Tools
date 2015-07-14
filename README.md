@@ -6,7 +6,7 @@
 ##Overview
 This is a collection of javascript web applications for the Savage Worlds pen and paper role playing system owned by Pinnacle Entertainment Group.
 
-A few may question why I chose HTML/JS for this app instead of traditional compile and distrubute. The primary reason was accessiblity. I can use the same code on an iPad, a Mac Pro, a Windows XP machine, Linux and even my daughter's Kindle. I'm not afraid of closing my source up so the the accessabiliy of javascript (although the distributed code is minified) was a bonus to me not a burden.
+A few may question why I chose HTML/JS for this app instead of traditional compile and distrubute. The primary reason was accessiblity. I can use the same code on an iPad, a Mac Pro, a Windows XP machine, Linux and even my daughter's Kindle. I'm not afraid of closing my source up so the the accessibility of javascript (although the distributed code is minified) was a bonus to me not a burden.
 
 **This is a encapsulated app that can be used completly offline once it's on your device.**
 
@@ -26,18 +26,15 @@ Fully Functional Tools Include:
 * Character Creator (Novice and basic advancements are fully functional)
 	* TODO:
 		* Data Entry still needed
+			* Edges
+				* Fantasy Companion Edges
 			* Equipment
-				* COMPLETE - SWD Personal Equipment
-				* COMPLETE - Fantasy Companion Equipment
-				* Horror Companion Equipment
-				* COMPLETE - SciFi Companion Equipment
 				* Super Powers Companion Equipment
 			* Powers
-				* COMPLETE - SWD Trappings and Powers
-				* COMPLETE - Fantasy Companion Trappings and Powers
 				* Horror Companion Trappings and Powers
-* Monster Search
+* Monster/Extras Search
 	* TODO:
+		* Add calculated point cost for Showdown (Pie in the sky :) )
 		* Data Entry still needed
 			* Horror Companion - has only a test entry (13) / of approx 130 entries
 			* Savage Free Bestiary - has 7 entries
