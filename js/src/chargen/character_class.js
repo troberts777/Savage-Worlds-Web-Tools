@@ -71,6 +71,7 @@ character_class.prototype = {
 			charisma : 0,
 			pace : 0,
 			toughness : 0,
+			sanity : 0,
 			parry : 2,
 			armor : 0,
 			encumbrance : 0,
@@ -127,6 +128,7 @@ character_class.prototype = {
 			charisma : 0,
 			pace : 0,
 			toughness : 0,
+			sanity: 0,
 			parry : 2,
 			armor: 0,
 			encumbrance : 0,
@@ -150,6 +152,7 @@ character_class.prototype = {
 		this.racial_hindrances = Array();
 
 		this.derived.toughness = 0;
+		this.derived.sanity = 0;
 
 		// Calculate secondary Attributes
 		this.derived.pace = 6;
@@ -392,10 +395,14 @@ character_class.prototype = {
 
 
 		if(this.attributes.vigor > 5) // d12
-			this.derived.toughness += 8 + this.attributes.vigor - 5;
+			this.derived.toughness += this.attributes.vigor + 3;
 		else
 			this.derived.toughness += (dice_int_value[this.attributes.vigor] / 2) + 2;
 
+			if(this.attributes.spirit > 5) // d12
+				this.derived.sanity += this.attributes.spirit + 3;
+			else
+				this.derived.sanity += (dice_int_value[this.attributes.spirit] / 2) + 2;
 
 		// calculate parry
 		this.derived.parry = 2;
@@ -1568,8 +1575,20 @@ character_class.prototype = {
 
 					if( edge_object.prereqs.arcane_background_selected ) {
 						if( edge_object.prereqs.arcane_background_selected != ""  && this.arcane_background_selected.short_name ) {
-							if( edge_object.prereqs.arcane_background_selected.toLowerCase().trim() != this.arcane_background_selected.short_name.toLowerCase().trim() )
-								return false;
+							if( edge_object.prereqs.arcane_background_selected.indexOf("||") > 0) {
+								var splititems = edge_object.prereqs.arcane_background_selected.split("||");
+								found = false;
+								for( itemcount = 0; itemcount < splititems.length; itemcount++ ) {
+									if( splititems[itemcount].toLowerCase().trim() == edge_object.prereqs.arcane_background_selected.toLowerCase().trim())
+										found = true;
+								}
+								if( found == false )
+									return false;
+							} else {
+								if( edge_object.prereqs.arcane_background_selected.toLowerCase().trim() != this.arcane_background_selected.short_name.toLowerCase().trim() )
+									return false;
+							}
+
 						}
 					}
 				}

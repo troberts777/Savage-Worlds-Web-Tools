@@ -1948,6 +1948,7 @@ function propagate_derived_stats_section() {
 	html += "<label>Pace: " + current_character.derived.pace + "</label>";
 	html += "<label>Parry: " + current_character.derived.parry + "</label>";
 	html += "<label>Toughness: " + current_character.derived.toughness_formatted + "</label>";
+	html += "<label>Sanity: " + current_character.derived.sanity + "</label>";
 	html += "<label>Current Load: " + current_character.derived.current_load + "</label>";
 
 	$(".derived-stats-data").html( html );

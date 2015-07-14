@@ -1,6 +1,6 @@
 {
-  "name": "Savage Worlds Web Tools",
-  "version": "0.1.0",
+  "name": "Savage-Worlds-Web-Tools",
+  "version": "1.0.0",
   "devDependencies": {
     "grunt": "~0.4.4",
     "grunt-contrib-jshint": "~0.6.3",
