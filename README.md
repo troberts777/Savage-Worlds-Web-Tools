@@ -26,12 +26,8 @@ Fully Functional Tools Include:
 * Character Creator (Novice and basic advancements are fully functional)
 	* TODO:
 		* Data Entry still needed
-			* Edges
-				* Fantasy Companion Edges
 			* Equipment
 				* Super Powers Companion Equipment
-			* Powers
-				* Horror Companion Trappings and Powers
 * Monster/Extras Search
 	* TODO:
 		* Add calculated point cost for Showdown (Pie in the sky :) )
