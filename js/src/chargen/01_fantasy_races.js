@@ -176,7 +176,7 @@ chargen_races = chargen_races.concat(Array(
 				}
 			},
 			{
-				name: "Claws",
+				name: "Natural Weapons",
 				description: "Rakashans have retractable claws that do Str+d6 damage and grant +2 to Climbing rolls on all but completely sheer surfaces."
 			},
 			"Low Light Vision"

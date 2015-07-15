@@ -8,6 +8,7 @@ Pinnacle makes no representation or warranty as to the quality, viability, or su
 
 The entries in this file are from Savage Worlds: Deluxe and are owned by Pinnacle Entertainment Group.
 */
+/*
 if(!chargen_trappings)
 	var chargen_trappings = Array();
 
@@ -1106,3 +1107,4 @@ chargen_powers = chargen_powers.concat(Array(
 
 
 ));
+*/
