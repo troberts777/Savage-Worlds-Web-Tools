@@ -23,7 +23,7 @@ var smarty_comments = {
 		,"As I have said so many times, God doesn't play dice with the world.<p class='text-right'><a href='http://en.wikiquote.org/wiki/Albert_Einstein' target='smarty-link'>Albert Einstein (1943)</a></p>"
 	),
 	raise_calculator: Array(
-		"Do you get confused in the middle of a game how many wounds someone gets with a certain number? We undertstand! The numbers sometimes get lost in the story. Here's something that'll help."
+		"Do you get confused in the middle of a game how many wounds someone gets with a certain number? We understand! The numbers sometimes get lost in the story. Here's something that'll help."
 		,"<strong>Wadsworth</strong>: One plus two plus two plus one.<br /><strong>Miss Scarlet</strong>: Uh-uh, there was only one shot that got the chandelier. That's one plus two plus *one* plus one.<br /><strong>Wadsworth</strong>: Even if you were right, that would be one plus one plus two plus one, not one plus *two* plus one plus one.<br /><strong>Miss Scarlet</strong>: Okay, fine. One plus two plus one... Shut up! The point is, there is one bullet left in this gun and guess who's gonna get it!<p class='text-right'><a href='http://www.imdb.com/title/tt0088930/' target='smarty-link'>Clue (1985)</a></p>"
 	),
 	vehicle_creator: Array(
