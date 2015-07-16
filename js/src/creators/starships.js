@@ -369,6 +369,9 @@ var starship_modifications = Array(
 				return true;
 			else
 				return false;
+		},
+		get_mod_effect: function(selected_object) {
+			selected_object.toughness = selected_object.toughness - 1;
 		}
 	},
 	{
