@@ -1024,7 +1024,7 @@ are staples in many space-opera campaigns"
 		page: "p54",
 	},
 	{
-		name: "Desert Eagle (.50)",
+		name: "Glock 9mm",
 		damage: "2d6",
 		class: "Modern",
 		general: "Ranged Weapons",
