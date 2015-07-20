@@ -1099,8 +1099,8 @@ character_class.prototype = {
 				if( new_skill.name ) {
 					if(skill_specify_name != "")
 						new_skill.specify_text = skill_specify_name;
-					new_skill.bonus = 0;
-					new_skill.value = new_value;
+					new_skill.bonus = 1;
+					new_skill.value = 0;
 					this.selected_skills.push( new_skill );
 					return true;
 				} else {
@@ -2184,7 +2184,7 @@ character_class.prototype = {
 					html_return += this.selected_skills[sk_c].name + " (" + this.selected_skills[sk_c].specify_text + ")";
 				else
 					html_return += this.selected_skills[sk_c].name;
-				html_return += " " + attribute_labels[this.selected_skills[sk_c].value]
+				html_return += " " + attribute_labels[this.selected_skills[sk_c].total]
 			}
 			html_return += "<br />";
 		}
