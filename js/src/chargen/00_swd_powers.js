@@ -387,26 +387,6 @@ chargen_powers = chargen_powers.concat(Array(
 		)
 	},
 	{
-		name: "Divination",
-		short_name: "divination",
-		rank: 3,
-		cost: "5",
-		range: "Self",
-		duration: "1 Minute",
-		trappings: "Contact spirits of dead, commune with deity, demonic interrogation.",
-		page: "p130",
-		book: books_list[0],
-		description: Array(
-			"This power allows the caster to contact an otherworldly being to gain information. Due to the extraplanar nature of this power, it is very draining to the caster.",
-			"On a success, the caster may ask one question that can be answered by “Yes,” “No,” or “Possibly” (if there is no absolute answer). On a raise, the question may be answered in five words or less (the GM may allow a longer, more detailed answer in cryptic form).",
-			"The spell’s duration is one minute, during which the caster may take no other actions or movement. If the caster is Shaken during that time, he must make a Smarts roll or the power is disrupted.",
-			"If the question relates to a living being (including beings who may “live” by mystical means such as undead, constructs, elementals, etc.), then the arcane skill roll is opposed by their Spirit. Divination is also opposed by conceal arcana. In the case of conceal arcana on a being, the divination must first beat the conceal arcana, and then if successful, the subject may roll Spirit against the divination result."
-		),
-		additional: Array(
-
-		)
-	},
-	{
 		name: "Drain Power Points",
 		short_name: "drain-power-points",
 		rank: 3,

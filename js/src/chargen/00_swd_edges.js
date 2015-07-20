@@ -1431,7 +1431,7 @@ chargen_edges = chargen_edges.concat(Array(
 		page: "p43"
 	},
 	{
-		name: "Investigator",
+		name: "Jack of All Trades",
 		category: "Professional",
 		description: Array(
 			"Through advanced schooling, book-learning, computer-enhanced skill programs, or just amazing intuitive perception, your hero has a talent for picking up skills on the fly. There is little he can’t figure out given a little time and a dash of luck.",
