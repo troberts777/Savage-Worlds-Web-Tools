@@ -1099,8 +1099,8 @@ character_class.prototype = {
 				if( new_skill.name ) {
 					if(skill_specify_name != "")
 						new_skill.specify_text = skill_specify_name;
-					new_skill.bonus = new_value;
-					new_skill.value = 0;
+					new_skill.bonus = 0;
+					new_skill.value = new_value;
 					this.selected_skills.push( new_skill );
 					return true;
 				} else {

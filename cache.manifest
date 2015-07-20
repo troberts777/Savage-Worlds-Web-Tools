@@ -1,9 +1,9 @@
 CACHE MANIFEST
 
 
-# Version 2015-07-19-01
+# Version 2015-07-20-01
 # July 19, 2015 revision 1
-# Minor typo in 'Smartass Subtitle' - last commit for a whilas I start to re-gear interface and add 'standard starships, vehicles, etc' to the Creators for folks to base off
+# Fix in "Add Skill" advancement - didn't set value properly
 
 
 CACHE:
