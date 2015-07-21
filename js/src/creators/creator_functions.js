@@ -249,6 +249,8 @@ function propogate_weapon_mods() {
 
 	}
 
+	weapon_mods_html += current_weapon_class_html;
+
 	if(total_weapon_count == 0)
 		if(current_selected_object.requires_mount_point) {
 			weapon_mods_html += "<p>You need to purchase weapon mounts for weapons.</p>";
