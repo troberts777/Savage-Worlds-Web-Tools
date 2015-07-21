@@ -519,7 +519,7 @@ var vehicle_weapons = Array(
 		cost: 1000000,
 		notes: "Hw. Projectiles are 100 pound spheres that cost $1000 each.",
 		is_available: function(selected_object) {
-			if(selected_object.size / 2 >= 11)
+			if(selected_object.size / 2 >= 10)
 				return true;
 			else
 				return false;
@@ -539,7 +539,7 @@ var vehicle_weapons = Array(
 		cost: 1100000,
 		notes: "Hw. Projectiles are 100 pound spheres that cost $1000 each.",
 		is_available: function(selected_object) {
-			if(selected_object.size / 2 >= 12)
+			if(selected_object.size / 2 >= 11)
 				return true;
 			else
 				return false;
@@ -559,7 +559,7 @@ var vehicle_weapons = Array(
 		cost: 1200000,
 		notes: "Hw. Projectiles are 100 pound spheres that cost $1000 each.",
 		is_available: function(selected_object) {
-			if(selected_object.size / 2 >= 13)
+			if(selected_object.size / 2 >= 12)
 				return true;
 			else
 				return false;
