@@ -526,6 +526,46 @@ var vehicle_weapons = Array(
 		}
 	},
 	{
+		name: "Mass Driver (Size 11)",
+		classification: "Mass Drivers",
+		description: "Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).",
+		range: "100/200/400 (tripled in space)",
+		damage: "11d12",
+		rof: 1,
+		shots: 15,
+		missiles_per: 0,
+		linkable: 0,
+		mods: 6,
+		cost: 1100000,
+		notes: "Hw. Projectiles are 100 pound spheres that cost $1000 each.",
+		is_available: function(selected_object) {
+			if(selected_object.size / 2 >= 12)
+				return true;
+			else
+				return false;
+		}
+	},
+	{
+		name: "Mass Driver (Size 12)",
+		classification: "Mass Drivers",
+		description: "Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).",
+		range: "100/200/400 (tripled in space)",
+		damage: "12d12",
+		rof: 1,
+		shots: 15,
+		missiles_per: 0,
+		linkable: 0,
+		mods: 6,
+		cost: 1200000,
+		notes: "Hw. Projectiles are 100 pound spheres that cost $1000 each.",
+		is_available: function(selected_object) {
+			if(selected_object.size / 2 >= 13)
+				return true;
+			else
+				return false;
+		}
+	},
+	{
 		name: "Medium MG (2)",
 		classification: "Slugthrowers",
 		description: "Slugthrowers are traditional firearms firing chemically-propelled rounds.",

@@ -191,6 +191,18 @@ var starship_modifications = Array(
 		},
 	},
 	{
+		name: "FTL Drive, Kalian",
+		show_with_option: "the-last-parsec",
+		description: "Kalian superluminal drives are considered the most finely crafted faster-than-light drives in the known worlds. They are high-end drives known for durability and dependability. They add +2 to Knowledge (Astrogation) rolls when traveling via “hyperspace.” For more information, see Space Travel on page 69. In addition, if a Kalian FTL system is damaged with a starship critical hit during combat, the Repair roll is only –1 per wound instead of the normal –2.",
+		get_max: function(selected_object) { return 1 },
+		get_mod_cost: function(selected_object) {
+			return selected_object.size / 2;
+		},
+		get_cost: function(selected_object) {
+			return 4000000 * selected_object.size;
+		},
+	},
+	{
 		name: "Fuel Pods",
 		description: "Each fuel pod increases the vessel’s energy capacity by 50%",
 		get_max: function(selected_object) { return "u" },
@@ -267,6 +279,18 @@ var starship_modifications = Array(
 		get_cost: function(selected_object) {
 			return 50000;
 		}
+	},
+	{
+		name: "Self-Destruct",
+		show_with_option: "the-last-parsec",
+		description: "Self-destruct is a mechanism that can cause an object to destroy itself within a predefined set of circumstances. The self-destruct mechanism is usually the most complete way to destroy the object. For that reason the self-destruct mechanism can be used to destroy objects that are meant to be discarded. Most civilian starships do not have a self-destruct mechanism.",
+		get_max: function(selected_object) { return 1 },
+		get_mod_cost: function(selected_object) {
+			return 2;
+		},
+		get_cost: function(selected_object) {
+			return 1000000 * selected_object.size;
+		},
 	},
 	{
 		name: "Sensor Suite (Galactic)",
