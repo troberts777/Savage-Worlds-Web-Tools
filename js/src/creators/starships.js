@@ -154,7 +154,7 @@ var starship_modifications = Array(
 	{
 		name: "Deflector Screens",
 		description: "The vessel is protected by an energy field that deflects incoming ballistic attacks (it has no effect against lasers). Attackers must subtract –2 from their Shooting rolls. Mod cost is 2 for Small to Large ships, and 3 for Huge to Gargantuan vessels.",
-		get_max: function(selected_object) { return "u" },
+		get_max: function(selected_object) { return 1 },
 		get_mod_cost: function(selected_object) {
 			if( selected_object.size >= 25)
 				return 5;
