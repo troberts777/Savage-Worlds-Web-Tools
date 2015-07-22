@@ -522,7 +522,11 @@ creator_base.prototype = {
 				if( this.selected_weapons[calcModCount].get_weight )
 					this.weight += this.selected_weapons[calcModCount].get_weight(this);
 
-				this.cost += this.selected_weapons[calcModCount].cost;
+				if( this.selected_weapons[calcModCount].count > 1) {
+					this.cost += this.selected_weapons[calcModCount].cost * this.selected_weapons[calcModCount].count;
+				} else {
+					this.cost += this.selected_weapons[calcModCount].cost;
+				}
 
 				weaponListName = this.selected_weapons[calcModCount].display_name;
 				if(this.selected_weapons[calcModCount].fixed != 0 && this.selected_weapons[calcModCount].fixed != "") {
