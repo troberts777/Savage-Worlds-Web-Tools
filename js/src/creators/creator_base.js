@@ -148,19 +148,25 @@ creator_base.prototype = {
 
   				mod_count++;
 			}
+			if( mod_count == 0)
+				html_return += "none";
 
 			html_return += "<br />";
 
 			html_return += "<strong>Weapons</strong>: ";
 			this.sort_selected_weapons_list();
 			html_return += "<ul>";
+			var weapon_count = 0;
 			for(var weaponName in this.selected_weapons_list){
 				html_return += "<li>";
 				if(this.selected_weapons_list[weaponName] > 1)
   					html_return += this.selected_weapons_list[weaponName] + "x ";
   				html_return += weaponName;
   				html_return += "</li>";
+  				weapon_count++;
 			}
+			if( weapon_count == 0 )
+				html_return += "<li>None.</li>";
 			html_return += "</ul>";
 
 			if( this.get_modification_count("Shields") > 0) {
@@ -235,12 +241,15 @@ creator_base.prototype = {
 				html_return += modName;
 				mod_count++;
 			}
+			if(mod_count == 0)
+				html_return += "none";
 
 			html_return += "\n";
 
 			html_return += "[b]Weapons[/b]: ";
 			html_return += "[list]";
 			this.sort_selected_weapons_list();
+			var weapon_count = 0;
 			for(var weaponName in this.selected_weapons_list){
 
 				html_return += "[*]";
@@ -249,7 +258,10 @@ creator_base.prototype = {
   				html_return += weaponName;
 
   				html_return += "\n";
+  				weapon_count++;
 			}
+			if( weapon_count == 0 )
+				html_return += "[*]None.\n";
 			html_return += "[/list]";
 
 			html_return += "\n";
