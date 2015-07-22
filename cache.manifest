@@ -2,9 +2,9 @@ CACHE MANIFEST
 
 
 
-# Version 2015-07-21-03
-# July 21, 2015 revision 3
-# Minor fix in regression of creator_functions.js
+# Version 2015-07-22-01
+# July 22, 2015 revision 1
+# Added TLP Saurian Sub-Races, Linking of Weapons in Creators now is done at weapon level not mod level, it IS backward-compatible to view old style linking, but new linked weapons will have to be inputted the new way (Fixes #37) - Weapons are now listed as an unordered list (Fixes #39) weapons are now sorted by linkable weapon size then non-linkable weapon size on calculate.
 
 
 

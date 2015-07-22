@@ -41,6 +41,11 @@ function propogate_add_mods(selected_modification_list) {
 			if( very_hidden == false )
 				is_available = selected_modification_list[mod_count].is_available (current_selected_object);
 
+		if( typeof(selected_modification_list[mod_count].hidden) != "undefined" ) {
+			if(selected_modification_list[mod_count].hidden > 0)
+				is_available = false;
+		}
+
 		if( (object_mods_available >= mod_cost || object_mod_count > 0 ) && is_available ) {
 			modifications_html += "<tr title='" + selected_modification_list[mod_count].description + "'>";
 			modifications_html += "<td style='white-space: nowrap;'>";
@@ -134,7 +139,7 @@ function propogate_weapon_mods() {
 		for(weapon_count = 0; weapon_count < current_selected_object.selected_weapons.length; weapon_count++) {
 			weapon_mods_html += "<tr>";
 			weapon_mods_html += "<td>";
-			weapon_mods_html += current_selected_object.selected_weapons[weapon_count].name;
+			weapon_mods_html += current_selected_object.selected_weapons[weapon_count].display_name;
 			weapon_mods_html += "</td>";
 			weapon_mods_html += "<td>";
 			fixedcheck = "";
@@ -182,6 +187,22 @@ function propogate_weapon_mods() {
 			} else {
 				weapon_mods_html += "&nbsp;";
 			}
+
+			if( typeof(current_selected_object.selected_weapons[weapon_count].linkable) != "undefined" && current_selected_object.selected_weapons[weapon_count].linkable > 0 ) {
+				weapon_mods_html += "<div class='pull-right'>";
+				if( current_selected_object.selected_weapons[weapon_count].count > 1  ) {
+					weapon_mods_html += "<button type='button' class='js-decrement-count btn btn-xs' ref='" + weapon_count + "'>Delink</button>";
+				}
+
+				if( current_selected_object.selected_weapons[weapon_count].count < 4  ) {
+					weapon_mods_html += "<button type='button' class='js-increment-count btn btn-xs' ref='" + weapon_count + "'>Link</button>";
+				}
+				weapon_mods_html += "</div>";
+			}
+
+
+
+
 			weapon_mods_html += "</td>";
 			weapon_mods_html += "<td>";
 			weapon_mods_html += "<button type='button' class='js-remove-weapon btn btn-danger  btn-xs' ref='" + weapon_count + "'>Remove</button>";
@@ -448,6 +469,18 @@ function refresh_creator_page() {
 		$('.js-remove-weapon').unbind('click');
 		$(".js-remove-weapon").click( function() {
 			current_selected_object.remove_weapon( $(this).attr("ref") );
+			refresh_creator_page();
+		});
+
+		$('.js-decrement-count').unbind('click');
+		$('.js-decrement-count').click( function() {
+			current_selected_object.decrement_weapon_count( $(this).attr("ref") );
+			refresh_creator_page();
+		});
+
+		$('.js-increment-count').unbind('click');
+		$('.js-increment-count').click( function() {
+			current_selected_object.increment_weapon_count( $(this).attr("ref") );
 			refresh_creator_page();
 		});
 

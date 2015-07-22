@@ -139,9 +139,10 @@ creator_base.prototype = {
 
 			this.sort_selected_modifications_list();
 			for(var modName in this.selected_modifications_list){
-				html_return += modName;
+
 				if(this.selected_modifications_list[modName] > 1)
-  					html_return += " x" + this.selected_modifications_list[modName];
+  					html_return += this.selected_modifications_list[modName]; + "x "
+  				html_return += modName;
   				html_return += ", ";
 			}
 
@@ -149,12 +150,15 @@ creator_base.prototype = {
 
 			html_return += "<strong>Weapons</strong>: ";
 			this.sort_selected_weapons_list();
+			html_return += "<ul>";
 			for(var weaponName in this.selected_weapons_list){
-				html_return += weaponName;
+				html_return += "<li>";
 				if(this.selected_weapons_list[weaponName] > 1)
-  					html_return += " x" + this.selected_weapons_list[weaponName];
-  				html_return += ", ";
+  					html_return += this.selected_weapons_list[weaponName] + "x ";
+  				html_return += weaponName;
+  				html_return += "</li>";
 			}
+			html_return += "</ul>";
 
 			html_return += "<br />";
 
@@ -230,13 +234,18 @@ creator_base.prototype = {
 			html_return += "\n";
 
 			html_return += "[b]Weapons[/b]: ";
+			html_return += "[list]";
 			this.sort_selected_weapons_list();
 			for(var weaponName in this.selected_weapons_list){
-				html_return += weaponName;
+
+				html_return += "[*]";
 				if(this.selected_weapons_list[weaponName] > 1)
-  					html_return += " x" + this.selected_weapons_list[weaponName];
-  				html_return += ", ";
+  					html_return += this.selected_weapons_list[weaponName] + "x ";
+  				html_return += weaponName;
+
+  				html_return += "\n";
 			}
+			html_return += "[/list]";
 
 			html_return += "\n";
 
@@ -280,6 +289,7 @@ creator_base.prototype = {
 			weapon_item = {
 				name: this.selected_weapons[local_weapon_counter].name,
 				fixed: this.selected_weapons[local_weapon_counter].fixed,
+				count: this.selected_weapons[local_weapon_counter].count,
 				linked: this.selected_weapons[local_weapon_counter].linked,
 			};
 			exportObject.weapons = exportObject.weapons.concat( weapon_item );
@@ -327,10 +337,13 @@ creator_base.prototype = {
 			for(local_weapon_counter = 0; local_weapon_counter < importedObj.weapons.length; local_weapon_counter++) {
 				this.add_weapon( importedObj.weapons[local_weapon_counter].name );
 
-				if( importedObj.weapons[local_weapon_counter].fixed )
+				if( typeof(importedObj.weapons[local_weapon_counter].fixed) != "undefined" && importedObj.weapons[local_weapon_counter].fixed != "")
 					this.fix_weapon( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].fixed );
 
-				if( importedObj.weapons[local_weapon_counter].linked > 0)
+				if( typeof(importedObj.weapons[local_weapon_counter].count) != "undefined" && importedObj.weapons[local_weapon_counter].count > 0)
+					this.set_weapon_count( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].count );
+
+				if( typeof(importedObj.weapons[local_weapon_counter].linked) != "undefined" && importedObj.weapons[local_weapon_counter].linked > 0)
 					this.link_weapon( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].linked);
 
 			}
@@ -356,17 +369,18 @@ creator_base.prototype = {
 	},
 
 	sort_selected_weapons_list: function() {
-		var keyList = Object.keys(this.selected_weapons_list);
+	 	/* Do nothing as the main should handle this now */
+	},
 
-		keyList.sort();
+	sort_weapon_list: function() {
 
-		var newList = {};
-
-		for (var keyCount = 0; keyCount < keyList.length; keyCount++) {
-			keyName = keyList[keyCount];
-			newList[keyName] = this.selected_weapons_list[keyName];
-		}
-		this.selected_weapons_list = newList;
+		this.selected_weapons.sort(function(a, b){
+			if( a.linkable < b.linkable ) return 1;
+			if( a.linkable > b.linkable ) return -1;
+			if(a.mods > b.mods) return -1;
+			if(a.mods < b.mods) return 1;
+			return 0;
+		});
 	},
 
 	append_extra_notes: function( note ) {
@@ -461,7 +475,8 @@ creator_base.prototype = {
 
 			// Go through Weapons for availability, calculation and listings
 			// Sort weapons
-			this.selected_weapons.sort( sort_mods );
+			//this.selected_weapons.sort( sort_mods );
+			this.sort_weapon_list();
 
 			this.selected_weapons_list = {};
 			fixedWeaponModUsage = 0;
@@ -481,7 +496,10 @@ creator_base.prototype = {
 
 				// Continue on....
 				weaponModCost = this.selected_weapons[calcModCount].mods;
-				if(this.selected_weapons[calcModCount].fixed > 0)
+				if( typeof(this.selected_weapons[calcModCount].current_mod_cost) != "undefined")
+					weaponModCost = this.selected_weapons[calcModCount].current_mod_cost;
+
+				if(this.selected_weapons[calcModCount].fixed != 0 && this.selected_weapons[calcModCount].fixed != "")
 					weaponModCost = weaponModCost / 2;
 				if(this.selected_weapons[calcModCount].linked > 0)
 					weaponModCost = weaponModCost / 2;
@@ -497,8 +515,8 @@ creator_base.prototype = {
 
 				this.cost += this.selected_weapons[calcModCount].cost;
 
-				weaponListName = this.selected_weapons[calcModCount].name;
-				if(this.selected_weapons[calcModCount].fixed) {
+				weaponListName = this.selected_weapons[calcModCount].display_name;
+				if(this.selected_weapons[calcModCount].fixed != 0 && this.selected_weapons[calcModCount].fixed != "") {
 					fixedLabel = "fixed";
 					if( this.selected_weapons[calcModCount].fixed != 1)
 						fixedLabel = "fixed - " + this.selected_weapons[calcModCount].fixed;
@@ -598,13 +616,63 @@ creator_base.prototype = {
 //				newWeapon = new vehicle_weapons[addlocal_weapon_count];
 				newWeapon = jQuery.extend({}, vehicle_weapons[addlocal_weapon_count]);
 				newWeapon.linked = 0;
+				newWeapon.count = 1;
 				newWeapon.fixed = 0;
+				newWeapon = this.update_weapon_display_name( newWeapon );
 				this.selected_weapons = this.selected_weapons.concat( newWeapon );
 				return;
 			}
 		}
 
+
+
 		return return_value;
+	},
+
+	update_weapon_display_name: function( weaponObject ) {
+		if( weaponObject.count == 1 )
+			weaponObject.display_name = weaponObject.name;
+		if( weaponObject.count == 2 )
+			weaponObject.display_name = "Dual-Linked " + weaponObject.name + "s";
+		if( weaponObject.count == 3 )
+			weaponObject.display_name = "Tri-Linked " + weaponObject.name + "s";
+		if( weaponObject.count == 4 )
+			weaponObject.display_name = "Quad-Linked " + weaponObject.name + "s";
+
+		if( weaponObject.count > 1 )
+			weaponObject.current_mod_cost = weaponObject.mods * weaponObject.count / 2;
+		else
+			weaponObject.current_mod_cost = weaponObject.mods;
+
+		return weaponObject;
+	},
+
+	increment_weapon_count: function( weaponIndex ) {
+		weaponIndex = weaponIndex / 1;
+		this.selected_weapons[weaponIndex].count++;
+		if( this.selected_weapons[weaponIndex].count > 4)
+			this.selected_weapons[weaponIndex].count = 4;
+
+;
+		this.selected_weapons[weaponIndex] = this.update_weapon_display_name( this.selected_weapons[weaponIndex] );
+	},
+
+	set_weapon_count: function( weaponIndex, newCount ) {
+		weaponIndex = weaponIndex / 1;
+		this.selected_weapons[weaponIndex].count = newCount;
+		if( this.selected_weapons[weaponIndex].count < 1)
+			this.selected_weapons[weaponIndex].count = 1;
+		if( this.selected_weapons[weaponIndex].count > 4)
+			this.selected_weapons[weaponIndex].count = 4;
+		this.selected_weapons[weaponIndex] = this.update_weapon_display_name( this.selected_weapons[weaponIndex] );
+	},
+
+	decrement_weapon_count: function( weaponIndex ) {
+		weaponIndex = weaponIndex / 1;
+		this.selected_weapons[weaponIndex].count--;
+		if( this.selected_weapons[weaponIndex].count < 1)
+			this.selected_weapons[weaponIndex].count = 1;
+		this.selected_weapons[weaponIndex] = this.update_weapon_display_name( this.selected_weapons[weaponIndex] );
 	},
 
 	remove_mod: function(modName) {

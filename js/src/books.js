@@ -87,3 +87,24 @@ books_list[6] = {
 	copyright: "Butch Curry, Open?"
 }
 
+books_list[7] = {
+	id: 7,
+	name: "Lankhmar",
+	short_name: "peg_lank",
+	abbrev: "LANK",
+	publisher: "Pinnacle Enterainment Group",
+	year: "2015",
+	buyme: "https://www.peginc.com/store/lankhmar-city-of-thieves/",
+	copyright: "2015 Pinnacle Entertainment Group"
+}
+
+books_list[8] = {
+	id: 7,
+	name: "The Last Parsec",
+	short_name: "peg_tlp",
+	abbrev: "TLP",
+	publisher: "Pinnacle Enterainment Group",
+	year: "2015",
+	buyme: "https://www.peginc.com/store/the-last-parsec-core/",
+	copyright: "2015 Pinnacle Entertainment Group"
+}

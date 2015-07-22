@@ -61,6 +61,7 @@ chargen_races = chargen_races.concat(Array(
 				description: "The humanoid part of an aurax is thick, stocky, and man-sized, while the rear body is the size of a bull. This adds +2 to Toughness.",
 				char_effects: function( character_object ) {
 					character_object.derived.toughness += 2;
+					character_object.derived.size += 2;
 				}
 			},
 			{

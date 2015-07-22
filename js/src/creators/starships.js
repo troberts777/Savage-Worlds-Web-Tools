@@ -231,6 +231,7 @@ var starship_modifications = Array(
 		name: "Linked",
 		description: "Up to four direct-fire weapons of the same type may be linked and fired as one, increasing the damage by +2 per weapon and reducing the total number of Mods required. Total all Linked weapons in a set first, then halve their required Mods. (If Linking Fixed weapons, halve the total.)",
 		get_max: function(selected_object) { return "u" },
+		hidden: 1,
 		get_mod_cost: function(selected_object) {
 			return 0;
 		},
