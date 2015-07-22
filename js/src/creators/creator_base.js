@@ -127,23 +127,26 @@ creator_base.prototype = {
 			if(this.strength > 0)
 				html_return += "Strength " + this.get_strength_label( this.strength ) + ", ";
 
-			html_return += "Cost $" + simplify_cost(this.cost) + "<br />";
+			html_return += "Cost C$" + simplify_cost(this.cost) + ", ";
+			html_return += "Remaining Mods " + this.mods_available + "<br />";
 
-			if(this.energy_capacity > 0)
-				html_return += "<strong>Energy Capacity</strong>: " + this.energy_capacity + "<br />";
-			html_return += "<strong>Mods Available</strong>: " + this.mods_available + "<br />";
+
+			//html_return += "<strong>Mods Available</strong>: " + this.mods_available + "<br />";
 			if( this.has_weapon_mounts )
 				html_return += "<strong>Weapon Mods Available</strong>: " + this.vehicle_weapon_mod_points + "<br />";
 
 			html_return += "<strong>Notes</strong>: ";
 
 			this.sort_selected_modifications_list();
+			var mod_count = 0;
 			for(var modName in this.selected_modifications_list){
-
+				if( mod_count > 0)
+					html_return += ", ";
 				if(this.selected_modifications_list[modName] > 1)
   					html_return += this.selected_modifications_list[modName] + "x "
   				html_return += modName;
-  				html_return += ", ";
+
+  				mod_count++;
 			}
 
 			html_return += "<br />";
@@ -160,13 +163,14 @@ creator_base.prototype = {
 			}
 			html_return += "</ul>";
 
-			html_return += "<br />";
-
 			if( this.get_modification_count("Shields") > 0) {
 				html_return += "<strong>Shields</strong>: ";
 				html_return += this.size * 10;
 				html_return += " - may recover  " + this.size + "/round<br />";
 			}
+
+			if(this.energy_capacity > 0)
+				html_return += "<strong>Energy Capacity</strong>: " + this.energy_capacity + "<br />";
 
 			if( this.extra_notes != "" ) {
 				html_return += "<strong>Extra Notes</strong>: ";
@@ -215,21 +219,21 @@ creator_base.prototype = {
 			if(this.strength > 0)
 				html_return += "Strength " + this.get_strength_label( this.strength ) + ", ";
 
-			html_return += "Cost $" + simplify_cost(this.cost) + "\n";
+			html_return += "Cost C$" + simplify_cost(this.cost) + ", ";
+			html_return += "Remaining Mods " + this.mods_available + "\n";
 
-			if(this.energy_capacity > 0)
-				html_return += "[b]Energy Capacity[/b]: " + this.energy_capacity + "\n";
-			html_return += "[b]Mods Available[/b]: " + this.mods_available + "\n";
+
 
 			html_return += "[b]Notes[/b]: ";
 
-			this.sort_selected_modifications_list();
+			var mod_count = 0;
 			for(var modName in this.selected_modifications_list){
+				if( mod_count > 0)
+					html_return += ", ";
 				if(this.selected_modifications_list[modName] > 1)
   					html_return += this.selected_modifications_list[modName] + "x ";
 				html_return += modName;
-
-  				html_return += ", ";
+				mod_count++;
 			}
 
 			html_return += "\n";
@@ -255,6 +259,10 @@ creator_base.prototype = {
 				html_return += this.size * 10;
 				html_return += " - may recover  " + this.size + "/round\n";
 			}
+
+
+			if(this.energy_capacity > 0)
+				html_return += "[b]Energy Capacity[/b]: " + this.energy_capacity + "\n";
 		} else {
 			html_return += "A size must be selected.";
 		}

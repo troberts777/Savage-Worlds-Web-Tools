@@ -191,11 +191,11 @@ function propogate_weapon_mods() {
 			if( typeof(current_selected_object.selected_weapons[weapon_count].linkable) != "undefined" && current_selected_object.selected_weapons[weapon_count].linkable > 0 ) {
 				weapon_mods_html += "<div class='pull-right'>";
 				if( current_selected_object.selected_weapons[weapon_count].count > 1  ) {
-					weapon_mods_html += "<button type='button' class='js-decrement-count btn btn-xs' ref='" + weapon_count + "'>Delink</button>";
+					weapon_mods_html += "<button type='button' style='margin-left: 5px;' class='js-decrement-count btn btn-xs' ref='" + weapon_count + "'>Delink</button>";
 				}
 
 				if( current_selected_object.selected_weapons[weapon_count].count < 4  ) {
-					weapon_mods_html += "<button type='button' class='js-increment-count btn btn-xs' ref='" + weapon_count + "'>Link</button>";
+					weapon_mods_html += "<button type='button' style='margin-left: 5px;' class='js-increment-count btn btn-xs' ref='" + weapon_count + "'>Link</button>";
 				}
 				weapon_mods_html += "</div>";
 			}
