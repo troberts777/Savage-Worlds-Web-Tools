@@ -382,6 +382,130 @@ var starship_modifications = Array(
 	{
 		name: "Superstructure",
 		description: "Superstructures are large sections that add great amounts of space to large ships, typically to accommodate more passengers or cargo. Each superstructure adds one to the fuel used per day, consumes 10 regular Mods, and subtracts 1 from the ship’s base Toughness (not Armor) as it reduces overall structural integrity. Choose the type of superstructure from the sidebar below.",
+		hidden: 1,
+		get_max: function(selected_object) { return "u" },
+		get_mod_cost: function(selected_object) {
+			return 10;
+		},
+		get_cost: function(selected_object) {
+			return 5000000;
+		},
+		is_available: function(selected_object) {
+			if(selected_object.size >= 12)
+				return true;
+			else
+				return false;
+		},
+		get_mod_effect: function(selected_object) {
+			selected_object.toughness = selected_object.toughness - 1;
+		}
+	},
+	{
+		name: "Superstructure (Bulk Cargo)",
+		description: "These are massive, open hulls for hauling bulk cargo. This is equivalent to 18 train box-cars, and can handle up to 800,000 cubic feet of cargo (but no more than 1800 tons if the vessel enters atmosphere). Halve the cost if the storage area is a vacuum.",
+		get_max: function(selected_object) { return "u" },
+		get_mod_cost: function(selected_object) {
+			return 10;
+		},
+		get_cost: function(selected_object) {
+			return 5000000;
+		},
+		is_available: function(selected_object) {
+			if(selected_object.size >= 12)
+				return true;
+			else
+				return false;
+		},
+		get_mod_effect: function(selected_object) {
+			selected_object.toughness = selected_object.toughness - 1;
+			selected_object.crew += 100;
+		}
+	},
+	{
+		name: "Superstructure (Factory)",
+		description: "The ship contains processing and manufacturing facilities that can take in raw materials and create new goods (usually those necessary for extended voyages, military operations, or colony survival). This adds 100 Crew. The vessel must also have at least one shuttle per Factory Superstructure to take in raw goods. Each factory can generate 2d6×$100K in goods, supplies, or raw materials a week in an average environment (such as an asteroid field or small planet). Add or subtract a d6 for a sparse / rich find.) Materials can be used to fuel and resupply the ship (and other ships as well).",
+		get_max: function(selected_object) { return "u" },
+		get_mod_cost: function(selected_object) {
+			return 10;
+		},
+		get_cost: function(selected_object) {
+			return 5000000;
+		},
+		is_available: function(selected_object) {
+			if(selected_object.size >= 12)
+				return true;
+			else
+				return false;
+		},
+		get_mod_effect: function(selected_object) {
+			selected_object.toughness = selected_object.toughness - 1;
+			selected_object.crew += 100;
+		}
+	},
+	{
+		name: "Superstructure (Hangar)",
+		description: "A large, dedicated flight bay that holds up to 24 Size points of vehicles, walkers, or Small or Medium ships (Large and greater ships won’t fit due to logarithmic scaling). This includes additional fuel storage, maintenance bays, training rooms, and briefing areas, and adds 50 additional crew members.",
+		get_max: function(selected_object) { return "u" },
+		get_mod_cost: function(selected_object) {
+			return 10;
+		},
+		get_cost: function(selected_object) {
+			return 5000000;
+		},
+		is_available: function(selected_object) {
+			if(selected_object.size >= 12)
+				return true;
+			else
+				return false;
+		},
+		get_mod_effect: function(selected_object) {
+			selected_object.toughness = selected_object.toughness - 1;
+			selected_object.crew += 50;
+		}
+	},
+	{
+		name: "Superstructure (Passenger, Civilian)",
+		description: "Luxury accommodations for long-term travelers, including hydroponic gardens, theatres, gyms, malls, restaurants, shopping, and lodging for 700 passengers and 50 additional staff. Passengers typically pay an average of $200 per day.",
+		get_max: function(selected_object) { return "u" },
+		get_mod_cost: function(selected_object) {
+			return 10;
+		},
+		get_cost: function(selected_object) {
+			return 5000000;
+		},
+		is_available: function(selected_object) {
+			if(selected_object.size >= 12)
+				return true;
+			else
+				return false;
+		},
+		get_mod_effect: function(selected_object) {
+			selected_object.toughness = selected_object.toughness - 1;
+		}
+	},
+	{
+		name: "Superstructure (Passenger, Military)",
+		description: "Spartan barracks, training facilities, armories, and a few multi- purpose recreational areas for 450 marines and 50 staff (cooks, techs, etc).",
+		get_max: function(selected_object) { return "u" },
+		get_mod_cost: function(selected_object) {
+			return 10;
+		},
+		get_cost: function(selected_object) {
+			return 5000000;
+		},
+		is_available: function(selected_object) {
+			if(selected_object.size >= 12)
+				return true;
+			else
+				return false;
+		},
+		get_mod_effect: function(selected_object) {
+			selected_object.toughness = selected_object.toughness - 1;
+		}
+	},
+	{
+		name: "Superstructure (Specialty)",
+		description: "This covers anything not detailed above, such as massive medical bays for a hospital ship, research facilities, etc. The specific function determines specifics, but a basic guideline is a Specialty Superstructure houses and services 200 individuals, their equipment, and storage needs.",
 		get_max: function(selected_object) { return "u" },
 		get_mod_cost: function(selected_object) {
 			return 10;
