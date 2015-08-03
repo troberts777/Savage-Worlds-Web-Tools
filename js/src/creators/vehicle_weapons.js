@@ -328,7 +328,13 @@ var vehicle_weapons = Array(
 		linkable: 1,
 		mods: 5,
 		cost: 2000000,
-		notes: "AP 20, HW."
+		notes: "AP 20, HW.",
+		is_available: function(selected_object) {
+			if( selected_object.size >= 14  )
+				return true;
+			else
+				return false;
+		}
 	},
 	{
 		name: "Massive Laser",
@@ -343,7 +349,13 @@ var vehicle_weapons = Array(
 		linkable: 1,
 		mods: 7,
 		cost: 4000000,
-		notes: "AP 25, HW."
+		notes: "AP 25, HW.",
+		is_available: function(selected_object) {
+			if( selected_object.size >= 16  )
+				return true;
+			else
+				return false;
+		}
 	},
 	{
 		name: "Mass Driver 1",

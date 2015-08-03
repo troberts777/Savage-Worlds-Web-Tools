@@ -1423,7 +1423,7 @@ chargen_edges = chargen_edges.concat(Array(
 				}
 			),
 			attributes: {
-				spirit: 3
+				smarts: 3
 			}
 		},
 		incompatible: {
