@@ -35,12 +35,16 @@ function propogate_chargen_settings_box() {
 				case "book":
 //					console.log(" .... " + current_settings[option_count].value);
 					readonly = "";
-					if( current_settings[option_count].readonly > 0 )
-						readonly = " readonly=\"readonly\" ";
-					if( current_settings[option_count].value == 1 || current_settings[option_count].value == "1")
-						html += "<label><input class=\"js-chargen-setting-item\" type=\"checkbox\" " + readonly + " checked=\"checked\" name=\"" + current_settings[option_count].short_name + "\" value=\"1\" /> " + current_settings[option_count].name + "</label>";
-					else
-						html += "<label><input class=\"js-chargen-setting-item\" type=\"checkbox\" " + readonly + " name=\"" + current_settings[option_count].short_name + "\" value=\"1\" /> " + current_settings[option_count].name + "</label>";
+					if( current_settings[option_count].readonly > 0 ) {
+						if( current_settings[option_count].value == 1 || current_settings[option_count].value == "1")
+							html += "<label>" + current_settings[option_count].name + "</label>";
+					} else {
+						if( current_settings[option_count].value == 1 || current_settings[option_count].value == "1")
+							html += "<label><input class=\"js-chargen-setting-item\" type=\"checkbox\" " + readonly + " checked=\"checked\" name=\"" + current_settings[option_count].short_name + "\" value=\"1\" /> " + current_settings[option_count].name + "</label>";
+						else
+							html += "<label><input class=\"js-chargen-setting-item\" type=\"checkbox\" " + readonly + " name=\"" + current_settings[option_count].short_name + "\" value=\"1\" /> " + current_settings[option_count].name + "</label>";
+					}
+
 					break;
 				default:
 					html += "<label>" + current_settings[option_count].title + " <input class=\"js-chargen-setting-item\" type=\"text\" name=\"\" value=\"" + current_settings[option_count].value + "\" /></label>";
@@ -1214,26 +1218,34 @@ function get_add_edge_options() {
 			current_character.edge_available( chargen_edges[edge_counter] ) == false
 
 		) {
-			disabled = " class=\"unmet-deps\"";
+			disabled = " class=\"unmet-deps\" ";
 		}
 
-		if(!chargen_edges[edge_counter].unlisted || chargen_edges[edge_counter].unlisted < 1) {
-			if( current_character.is_book_in_use( chargen_edges[edge_counter].book.short_name ) ) {
-				if(bookoptgroup != chargen_edges[edge_counter].book.name ) {
-					if( bookoptgroup != "")
-						add_edge_html += "</optgroup>";
-					add_edge_html += "<optgroup label='" + chargen_edges[edge_counter].book.name + "'>";
-					bookoptgroup = chargen_edges[edge_counter].book.name;
-				}
+		if(
+			current_character.is_setting_prohbited_edge( chargen_edges[edge_counter] )
+		) {
+			add_edge_html += "<option disabled=\"disabled\" class=\"setting-banned\">&nbsp;&nbsp;&nbsp;&nbsp;<strike>" + chargen_edges[edge_counter].name + "</strike></option>";
+		}else{
 
-				if(optgroup != chargen_edges[edge_counter].category ) {
-					if( optgroup != "")
-						add_edge_html += "</optgroup>";
-					add_edge_html += "<optgroup label='&nbsp;&nbsp;&nbsp;&nbsp;" + chargen_edges[edge_counter].category + "'>";
-					optgroup = chargen_edges[edge_counter].category;
-				}
 
-				add_edge_html += "<option" + disabled + ">&nbsp;&nbsp;&nbsp;&nbsp;" + chargen_edges[edge_counter].name + "</option>";
+			if(!chargen_edges[edge_counter].unlisted || chargen_edges[edge_counter].unlisted < 1) {
+				if( current_character.is_book_in_use( chargen_edges[edge_counter].book.short_name ) ) {
+					if(bookoptgroup != chargen_edges[edge_counter].book.name ) {
+						if( bookoptgroup != "")
+							add_edge_html += "</optgroup>";
+						add_edge_html += "<optgroup label='" + chargen_edges[edge_counter].book.name + "'>";
+						bookoptgroup = chargen_edges[edge_counter].book.name;
+					}
+
+					if(optgroup != chargen_edges[edge_counter].category ) {
+						if( optgroup != "")
+							add_edge_html += "</optgroup>";
+						add_edge_html += "<optgroup label='&nbsp;&nbsp;&nbsp;&nbsp;" + chargen_edges[edge_counter].category + "'>";
+						optgroup = chargen_edges[edge_counter].category;
+					}
+
+					add_edge_html += "<option" + disabled + ">&nbsp;&nbsp;&nbsp;&nbsp;" + chargen_edges[edge_counter].name + "</option>";
+				}
 			}
 		}
 	}

@@ -809,6 +809,44 @@ character_class.prototype = {
 		return false;
 	},
 
+	is_setting_prohbited_edge: function( edge_object ) {
+
+		for(enabled_book_count = 1; enabled_book_count < this.enabled_books.length; enabled_book_count++) {
+			if( typeof( chargen_prohibited_edges[this.enabled_books[enabled_book_count].id -1 ] ) != "undefined" ) {
+				if( edge_object.book.id == 1) {
+					if( chargen_prohibited_edges[this.enabled_books[enabled_book_count].id -1 ].indexOf( edge_object.name.toLowerCase() ) > -1) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	},
+
+	is_setting_prohbited_hindrance: function( short_tag, edge_name ) {
+		found_book_id = -1;
+		for( bookusecount = 0; bookusecount < this.enabled_books.length; bookusecount++) {
+			if( short_tag == this.enabled_books[bookusecount].short_name) {
+				found_book_id = bookusecount;
+			}
+		}
+
+		if( found_book_id > -1 ) {
+			if(
+				typeof(chargen_prohibited_hindrances[found_book_id] ) != "undefined"
+					&&
+				chargen_prohibited_hindrances[found_book_id].indexOf( edge_name.toLowerCase() ) > -1
+			) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+
+	},
+
 	get_available_options: function() {
 
 		available_options = Array();

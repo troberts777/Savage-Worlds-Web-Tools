@@ -32,7 +32,7 @@ chargen_edges = chargen_edges.concat(Array(
 		description: "base d6 Agility",
 		book: books_list[0],
 		char_effects: function( character_object ) {
-			character_object.race.attributes.agility = 1;
+			character_object.attributes.agility++;
 		},
 		prereqs: {},
 		incompatible: {},

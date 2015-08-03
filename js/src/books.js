@@ -13,6 +13,7 @@ var books_list = Array();
 
 books_list[0] = {
 	id: 1,
+	core: true,
 	name: "Savage Worlds Deluxe (EE)",
 	short_name: "peg_swd_ee",
 	abbrev: "SWD:EE",
@@ -24,6 +25,7 @@ books_list[0] = {
 
 books_list[1] = {
 	id: 2,
+	core: false,
 	name: "Fantasy Companion",
 	short_name: "peg_swfc",
 	abbrev: "FC",
@@ -35,6 +37,7 @@ books_list[1] = {
 
 books_list[2] = {
 	id: 3,
+	core: false,
 	name: "Horror Companion",
 	short_name: "peg_swhc",
 	abbrev: "HC",
@@ -46,6 +49,7 @@ books_list[2] = {
 
 books_list[3] = {
 	id: 4,
+	core: false,
 	name: "Savage Worlds Deluxe",
 	short_name: "peg_swd",
 	abbrev: "SWD",
@@ -56,6 +60,7 @@ books_list[3] = {
 
 books_list[4] = {
 	id: 5,
+	core: false,
 	name: "Sci-Fi Companion",
 	short_name: "peg_sfc",
 	abbrev: "SFC",
@@ -67,6 +72,7 @@ books_list[4] = {
 
 books_list[5] = {
 	id: 6,
+	core: false,
 	name: "Super Powers Companion",
 	short_name: "peg_spc2",
 	abbrev: "SPC",
@@ -78,6 +84,7 @@ books_list[5] = {
 
 books_list[6] = {
 	id: 7,
+	core: false,
 	name: "Savage Free Bestiary",
 	short_name: "sfb",
 	abbrev: "SFB",
@@ -88,18 +95,20 @@ books_list[6] = {
 }
 
 books_list[7] = {
-	id: 7,
+	id: 8,
+	core: false,
 	name: "Lankhmar",
 	short_name: "peg_lank",
 	abbrev: "LANK",
 	publisher: "Pinnacle Enterainment Group",
 	year: "2015",
 	buyme: "https://www.peginc.com/store/lankhmar-city-of-thieves/",
-	copyright: "2015 Pinnacle Entertainment Group"
+	copyright: "2015 Pinnacle Entertainment Group, Trademarks of the Estate of Fritz Leiber."
 }
 
 books_list[8] = {
-	id: 7,
+	id: 9,
+	core: false,
 	name: "The Last Parsec",
 	short_name: "peg_tlp",
 	abbrev: "TLP",
@@ -107,4 +116,28 @@ books_list[8] = {
 	year: "2015",
 	buyme: "https://www.peginc.com/store/the-last-parsec-core/",
 	copyright: "2015 Pinnacle Entertainment Group"
+}
+
+books_list[9] = {
+	id: 10,
+	core: false,
+	name: "Rifts",
+	short_name: "peg_rifts",
+	abbrev: "RIFTS",
+	publisher: "Pinnacle Enterainment Group",
+	year: "2016",
+	buyme: "",
+	copyright: "2015 Pinnacle Entertainment Group and Palladium Books"
+}
+
+books_list[10] = {
+	id: 11,
+	core: false,
+	name: "Flash Gordon",
+	short_name: "peg_flash",
+	abbrev: "FLASH",
+	publisher: "Pinnacle Enterainment Group",
+	year: "2016",
+	buyme: "",
+	copyright: "2016 Pinnacle Entertainment Group"
 }

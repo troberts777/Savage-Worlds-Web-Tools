@@ -1,12 +1,8 @@
 CACHE MANIFEST
 
-
-
-# Version 2015-08-03-01
-# Aug 03, 2015 revision 1
-# Fixes issue #41 and fixes issue #40
-
-
+# Version 2015-08-03-02
+# Aug 03, 2015 revision 2
+# Initial integration of Lankhmar book.
 
 CACHE:
 http://jdgwf.github.io/savage-worlds-web-tools/vehicle-creator.html
