@@ -152,16 +152,36 @@ function propagate_race_options(select_selector) {
 		bookoptgroup = "";
 		for(race_counter = 0; race_counter < chargen_races.length; race_counter++) {
 			if( current_character.is_book_in_use( chargen_races[race_counter].book.short_name ) ) {
-				if(bookoptgroup != chargen_races[race_counter].book.name ) {
-					if( bookoptgroup != "")
-						html += "</optgroup>";
-					html += "<optgroup label='" + chargen_races[race_counter].book.name + "'>";
-					bookoptgroup = chargen_races[race_counter].book.name;
+				show_option = true;
+
+				if( overrides_core_races.length > 0 ) {
+					for (var key in overrides_core_races){
+						key = key / 1;
+						if( overrides_core_races[key] == true) {
+//							console.log(overrides_core_races[key] + " / " +  key + 1 )
+							if( chargen_races[race_counter].book.id != key + 1) {
+								if( current_character.is_book_in_use( books_list[key].short_name) )
+									show_option = false;
+							}
+						}
+					}
 				}
-				if(current_character.race == chargen_races[race_counter])
-					html += "<option selected=\"selected\" value=\"" + chargen_races[race_counter].name + "\">" + chargen_races[race_counter].name + "</option>";
-				else
-					html += "<option value=\"" + chargen_races[race_counter].name + "\">" + chargen_races[race_counter].name + "</option>";
+
+				if( show_option ) {
+
+					if(bookoptgroup != chargen_races[race_counter].book.name ) {
+						if( bookoptgroup != "")
+							html += "</optgroup>";
+						html += "<optgroup label='" + chargen_races[race_counter].book.name + "'>";
+						bookoptgroup = chargen_races[race_counter].book.name;
+					}
+					if(current_character.race == chargen_races[race_counter])
+						html += "<option selected=\"selected\" value=\"" + chargen_races[race_counter].name + "\">" + chargen_races[race_counter].name + "</option>";
+					else
+						html += "<option value=\"" + chargen_races[race_counter].name + "\">" + chargen_races[race_counter].name + "</option>";
+
+				}
+
 			}
 		}
 		$(select_selector).html(html);
@@ -1257,18 +1277,44 @@ function propagate_gear_section() {
 	html = "";
 
 	if( !current_character.is_complete() ) {
-		html += "<label>Starting Wealth (as per setting):<br /><select class='js-starting-wealth'>";
-		for(lc = 0; lc < starting_funds.length; lc++) {
-			selected = "";
-			if( starting_funds[lc] == current_character.base_starting_funds)
-				selected = " selected='selected'";
-			default_string = "";
-			if(500 == starting_funds[lc])
-				default_string = " (default)";
-			html += "<option value='" + starting_funds[lc] + "'" + selected + ">$" + starting_funds[lc] + default_string + "</option>";
+		html += "<label>Starting Wealth (as per setting):<br />";
+		starting_wealth = 0;
+		base_starting_wealth_dropdown = true;
+		if( override_starting_wealth.length > 0 ) {
+			for (var key in override_starting_wealth){
+				key = key / 1;
+				if( typeof(override_starting_wealth[key]) !== undefined) {
+//					console.log(override_starting_wealth[key] + " / " +  (key + 1) )
+					if( current_character.is_book_in_use( books_list[key].short_name) ) {
+						base_starting_wealth_dropdown = false;
+						starting_wealth = override_starting_wealth[key];
+					}
+				}
+
+			}
 		}
 
-		html += "</select></label>";
+		if( base_starting_wealth_dropdown ) {
+			html += "<select class='js-starting-wealth'>";
+			if(current_character.base_starting_funds < 250)
+				current_character.set_base_starting_funds(500);
+
+			for(lc = 0; lc < starting_funds.length; lc++) {
+				selected = "";
+				if( starting_funds[lc] == current_character.base_starting_funds)
+					selected = " selected='selected'";
+				default_string = "";
+				if(500 == starting_funds[lc])
+					default_string = " (default)";
+				html += "<option value='" + starting_funds[lc] + "'" + selected + ">$" + starting_funds[lc] + default_string + "</option>";
+			}
+			html += "</select></label>";
+		} else {
+			current_character.set_base_starting_funds( starting_wealth );
+			html += "Starting Funds: " + current_character.base_starting_funds + "<br />";
+		}
+
+
 	} else {
 		html += "<label>Starting Wealth (as per setting): $" + current_character.starting_funds + "</label>";
 	}
@@ -1327,48 +1373,66 @@ function propagate_gear_section() {
 	gear_type_dd = Array();
 
 	for( gear_count = 0; gear_count < chargen_gear.length; gear_count++) {
-		if(
-			gear_book_dd.indexOf( chargen_gear[gear_count].book ) == -1
-		) {
-			if( current_character.is_book_in_use( chargen_gear[gear_count].book.short_name ) ) {
-				gear_book_dd.push(chargen_gear[gear_count].book);
-				if( current_gear_book == "")
-					current_gear_book = chargen_gear[gear_count].book.name;
+
+
+		if( overrides_core_gear.length > 0 ) {
+			for (var key in overrides_core_gear){
+				key = key / 1;
+				if( overrides_core_gear[key] == true) {
+//					console.log(overrides_core_gear[key] + " / " +  key + 1 )
+					if( chargen_gear[gear_count].book.id != key + 1) {
+						if( current_character.is_book_in_use( books_list[key].short_name) )
+							show_option = false;
+					}
+				}
 			}
 		}
 
-		if(
-			gear_general_dd.indexOf( chargen_gear[gear_count].general ) == -1
-				&&
-			chargen_gear[gear_count].book.name.toLowerCase().trim() == current_gear_book.toLowerCase().trim()
-		) {
-			gear_general_dd.push(chargen_gear[gear_count].general);
-			if( current_gear_general == "")
-				current_gear_general = chargen_gear[gear_count].general;
-		}
+		if( show_option ) {
 
-		if(
-			gear_class_dd.indexOf( chargen_gear[gear_count].class ) == -1
-				&&
-			chargen_gear[gear_count].general.toLowerCase().trim() == current_gear_general.toLowerCase().trim()
-				&&
-			chargen_gear[gear_count].class != ""
-		) {
-			gear_class_dd.push(chargen_gear[gear_count].class);
-			if( current_gear_class == "")
-				current_gear_class = chargen_gear[gear_count].class;
-		}
+			if(
+				gear_book_dd.indexOf( chargen_gear[gear_count].book ) == -1
+			) {
+				if( current_character.is_book_in_use( chargen_gear[gear_count].book.short_name ) ) {
+					gear_book_dd.push(chargen_gear[gear_count].book);
+					if( current_gear_book == "")
+						current_gear_book = chargen_gear[gear_count].book.name;
+				}
+			}
 
-		if(
-			gear_type_dd.indexOf( chargen_gear[gear_count].type ) == -1
-				&&
-			chargen_gear[gear_count].class.toLowerCase().trim() == current_gear_class.toLowerCase().trim()
-				&&
-			chargen_gear[gear_count].type != ""
-		) {
-			gear_type_dd.push(chargen_gear[gear_count].type);
-			if( current_gear_type == "")
-				current_gear_type = chargen_gear[gear_count].type;
+			if(
+				gear_general_dd.indexOf( chargen_gear[gear_count].general ) == -1
+					&&
+				chargen_gear[gear_count].book.name.toLowerCase().trim() == current_gear_book.toLowerCase().trim()
+			) {
+				gear_general_dd.push(chargen_gear[gear_count].general);
+				if( current_gear_general == "")
+					current_gear_general = chargen_gear[gear_count].general;
+			}
+
+			if(
+				gear_class_dd.indexOf( chargen_gear[gear_count].class ) == -1
+					&&
+				chargen_gear[gear_count].general.toLowerCase().trim() == current_gear_general.toLowerCase().trim()
+					&&
+				chargen_gear[gear_count].class != ""
+			) {
+				gear_class_dd.push(chargen_gear[gear_count].class);
+				if( current_gear_class == "")
+					current_gear_class = chargen_gear[gear_count].class;
+			}
+
+			if(
+				gear_type_dd.indexOf( chargen_gear[gear_count].type ) == -1
+					&&
+				chargen_gear[gear_count].class.toLowerCase().trim() == current_gear_class.toLowerCase().trim()
+					&&
+				chargen_gear[gear_count].type != ""
+			) {
+				gear_type_dd.push(chargen_gear[gear_count].type);
+				if( current_gear_type == "")
+					current_gear_type = chargen_gear[gear_count].type;
+			}
 		}
 	}
 

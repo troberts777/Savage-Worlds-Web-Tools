@@ -240,6 +240,8 @@ character_class.prototype = {
 		major_perks_selected = 0;
 		this.perks_available = 0;
 
+		this.current_funds = this.starting_funds;
+
 		this.selected_edges.sort(
 			function(a, b)
 			{
@@ -734,7 +736,7 @@ character_class.prototype = {
 
 
 		/* Equipment */
-		this.current_funds = this.starting_funds;
+
 		if( this.is_complete() > 0)
 			this.current_funds += this.extra_wealth;
 		else

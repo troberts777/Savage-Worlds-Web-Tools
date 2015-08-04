@@ -15,6 +15,10 @@ if(!overrides_core_gear)
 	var overrides_core_gear = Array();
 overrides_core_gear[7] = true;
 
+if(!override_starting_wealth)
+	var override_starting_wealth = Array();
+override_starting_wealth[7] = 50;
+
 chargen_gear = chargen_gear.concat( Array(
 	/* Mundane Items */
 	{

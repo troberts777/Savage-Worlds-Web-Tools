@@ -16,6 +16,11 @@ if(!chargen_races)
 if(!chargen_sourcebooks)
 	var chargen_sourcebooks = Array();
 
+
+if(!overrides_core_races)
+	var overrides_core_races = Array();
+overrides_core_races[7] = true;
+
 chargen_sourcebooks = chargen_sourcebooks.concat( books_list[7] );
 
 chargen_races = chargen_races.concat(Array(

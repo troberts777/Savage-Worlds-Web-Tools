@@ -310,6 +310,8 @@ chargen_edges = chargen_edges.concat(Array(
 		prereqs: {
 		},
 		char_effects: function( character_object ) {
+			console.log("That's rich!");
+			character_object.current_funds = (character_object.current_funds / 1) * 3;
 		},
 		incompatible: {},
 		page: "p36"
@@ -323,6 +325,7 @@ chargen_edges = chargen_edges.concat(Array(
 			edges: Array("Rich|Noble")
 		},
 		char_effects: function( character_object ) {
+			character_object.current_funds = (character_object.current_funds / 3) * 5;
 		},
 		incompatible: {},
 		page: "p36"
