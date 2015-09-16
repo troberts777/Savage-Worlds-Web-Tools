@@ -148,6 +148,15 @@ var vehicle_sizes = Array(
 
 );
 
+var vehicle_options = Array(
+	{
+		title: "The Last Parsec Options",
+		short_tag: "the-last-parsec",
+		description: "Various options from The Last Parsec Sourcebooks vehicle options ",
+		type: "bool"
+	}
+);
+
 var vehicle_modifications = Array(
 	{
 		name: "Aircraft, Anti-Grav",
@@ -494,6 +503,42 @@ var vehicle_modifications = Array(
 			selected_object.has_missile_launcher = 1;
 		}
 	},
+	{
+		name: "Multi-Legged",
+		show_with_option: "the-last-parsec",
+		description: "The vehicle has legs instead of wheels or tracks and can climb over small obstacles. Each time this Mod is taken increase Acc by 5 and TS by 10. The vehicle gains four legs and an additional pair each time this Mod is taken. Ignore driving penalties for difficult terrain and treat each inch of difficult terrain as 1.5” instead of 2”. On Super Heavy and Titan vehicles this modifier must be taken twice and on Colossus and Goliath taken three times for eight legs total. Vehicles with legs may not take the Speed modifier but may still take Speed Reduction.",
+		get_max: function(selected_object) { return 3 },
+		get_mod_cost: function(selected_object) {
+			if( selected_object.size < 8) {
+				return 2;
+			} else if ( selected_object.size < 12) {
+				return 4;
+			} else {
+				return 6;
+			}
+
+		},
+		get_cost: function(selected_object) {
+			return 10000 * selected_object.size;
+		},
+		get_mod_effect: function(selected_object) {
+			selected_object.acc += 5;
+			selected_object.ts += 10;
+			this_mod_count = selected_object.get_modification_count("Multi-Legged");
+			if( this_mod_count == 1 )
+				selected_object.number_of_legs = 4;
+			else if( this_mod_count == 2 )
+				selected_object.number_of_legs = 6;
+			else if( this_mod_count == 3 )
+				selected_object.number_of_legs = 8;
+
+
+		},
+		get_display_name: function(selected_object) {
+			return "Multi-Legged (" + selected_object.number_of_legs + " legs)";
+		}
+	},
+
 	{
 		name: "Reinforced Chassis",
 		description: "Increases Toughness of the chassis by +1.",

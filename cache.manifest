@@ -1,8 +1,9 @@
 CACHE MANIFEST
 
-# Version 2015-08-04-01
-# Aug 04, 2015 revision 1
-# More Lankhmar/Setting overrides - fixed Rich and Filthy Rich edge wealth calculations
+# Version 2015-09-16-01
+# Sep 16, 2015 revision 1
+# Completes Issue #43
+
 
 CACHE:
 http://jdgwf.github.io/savage-worlds-web-tools/vehicle-creator.html

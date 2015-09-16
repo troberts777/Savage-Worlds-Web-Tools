@@ -25,6 +25,7 @@ creator_base.prototype = {
 		this.armor = 0;
 		this.front_armor = 0
 		this.side_armor = 0;
+		number_of_legs = 0;
 		this.rear_armor = 0;
 		this.mods = 0;
 		this.base_mods = 0;
@@ -89,6 +90,19 @@ creator_base.prototype = {
 		return this.create_stats_block();
 	},
 
+	get_mod_name: function( theModName ) {
+		// search through available mods to see if function exists
+		for(getModCount = 0; getModCount < this.available_mods.length; getModCount++) {
+			if( this.available_mods[getModCount].name == theModName ) {
+				if( typeof(this.available_mods[getModCount].get_display_name)  == "function" ) {
+					theModName = this.available_mods[getModCount].get_display_name(this);
+				}
+			}
+		}
+
+		return theModName;
+	},
+
 	create_stats_block: function(jquery_selector) {
 		html_return = "";
 
@@ -144,6 +158,8 @@ creator_base.prototype = {
 					html_return += ", ";
 				if(this.selected_modifications_list[modName] > 1)
   					html_return += this.selected_modifications_list[modName] + "x "
+
+  				modName = this.get_mod_name(modName);
   				html_return += modName;
 
   				mod_count++;
