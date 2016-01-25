@@ -424,6 +424,7 @@ character_class.prototype = {
 		}
 
 
+		this.additional_powers = Array();
 		// Apply Any Arcane Background items.
 		if( this.arcane_background > 0 ) {
 			if(this.arcane_background_selected) {
@@ -433,11 +434,17 @@ character_class.prototype = {
 					this.powers_available += this.arcane_background_selected.starting_powers;
 
 				this.powers_available -= this.selected_powers.length;
+
+				if( this.arcane_background_selected.additonal_power ) {
+					this.add_additional_power( this.arcane_background_selected.additonal_power, "", "" )
+				}
+
 			}
 		} else {
 			// remove any arcane items
 			this.arcane_background_selected = "";
 			this.selected_powers = Array();
+			this.additional_powers = Array();
 		}
 
 
@@ -1442,6 +1449,19 @@ character_class.prototype = {
 		return false;
 	},
 
+	add_additional_power: function( power_shortname, trapping, description ) {
+
+		for( add_power_counter = 0; add_power_counter < chargen_powers.length; add_power_counter++ ) {
+			if( power_shortname.toLowerCase().trim() == chargen_powers[add_power_counter].short_name.toLowerCase().trim() ) {
+				new_power = clone_object( chargen_powers[add_power_counter] );
+				new_power.description = description;
+				new_power.trapping = trapping;
+				this.additional_powers.push(new_power);
+				return true;
+			}
+		}
+		return false;
+	},
 
 	remove_power: function( power_shortname, trapping ) {
 		if(!trapping)
@@ -2261,8 +2281,30 @@ character_class.prototype = {
 			html_return += "<strong>Arcane Background</strong>: " + this.arcane_background_selected.name + "<br />\n";
 			html_return += "<strong>Power Points</strong>: " + this.power_points_available + "<br />\n";
 			html_return += "<strong>Powers</strong>: ";
-			for(sk_c = 0; sk_c < this.selected_powers.length; sk_c++) {
+
+			add_power_comma = false;
+
+			for(sk_c = 0; sk_c < this.additional_powers.length; sk_c++) {
 				if(sk_c > 0)
+					html_return += ", ";
+				if( this.additional_powers[sk_c].description != "") {
+					html_return += this.additional_powers[sk_c].description + " (" + this.additional_powers[sk_c].name;
+						if( this.selected_powers[sk_c].trapping != "" )
+							html_return += ", " + this.additional_powers[sk_c].trapping  + ")";
+						else
+							html_return += ")";
+
+				} else {
+					if( this.additional_powers[sk_c].trapping != "" )
+						html_return += this.additional_powers[sk_c].name + " (" + this.additional_powers[sk_c].trapping  + ")";
+					else
+						html_return += this.additional_powers[sk_c].name;
+				}
+				add_power_comma = true;
+			}
+
+			for(sk_c = 0; sk_c < this.selected_powers.length; sk_c++) {
+				if(sk_c > 0 || add_power_comma == true)
 					html_return += ", ";
 				if( this.selected_powers[sk_c].description != "") {
 					html_return += this.selected_powers[sk_c].description + " (" + this.selected_powers[sk_c].name;

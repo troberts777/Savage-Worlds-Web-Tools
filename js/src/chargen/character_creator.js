@@ -245,10 +245,43 @@ function propagate_arcane_background_options() {
 			html += "<br />Your character has no power points";
 		}
 
+
+		if( current_character.additional_powers.length > 0 ) {
+			html += "<h4>Included Arcane Powers</h4><ul>";
+			for(p_counter = 0; p_counter < current_character.additional_powers.length; p_counter++) {
+				html += "<li>";
+				// if(!current_character.is_complete() ) {
+				// 	html += "<button";
+				// 		html += " type=\"button\"";
+				// 		html += " class=\"btn btn-xs btn-danger js-delete-power-button\"";
+				// 		html += " shortname=\"" + current_character.additional_powers[p_counter].short_name + "\"";
+				// 		html += " trap=\"" + current_character.additional_powers[p_counter].trapping + "\"";
+				// 	html += ">";
+				// 	html += "Remove</button> ";
+				// }
+				if( current_character.additional_powers[p_counter].description != "") {
+					html += current_character.additional_powers[p_counter].description + " (" + current_character.additional_powers[p_counter].name;
+						if( current_character.additional_powers[p_counter].trapping != "" )
+							html += ", " + current_character.additional_powers[p_counter].trapping  + ")";
+						else
+							html += ")";
+
+				} else {
+					if( current_character.additional_powers[p_counter].trapping != "" )
+						html += current_character.additional_powers[p_counter].name + " (" + current_character.additional_powers[p_counter].trapping  + ")";
+					else
+						html += current_character.additional_powers[p_counter].name;
+				}
+				html += "</li>";
+			}
+			html += "</ul>";
+		}
+
 		if( current_character.powers_available > 0) {
 			html += "<br />You have " + current_character.powers_available + " powers available.";
 			html += "<br /><button class='btn btn-primary btn-sm js-open-power-modal'>Select a New Power</button>";
 		}
+
 
 		if( current_character.selected_powers.length > 0 ) {
 			html += "<h4>Current Powers</h4>";
