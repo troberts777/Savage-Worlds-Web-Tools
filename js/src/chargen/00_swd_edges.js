@@ -741,7 +741,7 @@ chargen_edges = chargen_edges.concat(Array(
 		),
 		book: books_list[0],
 		prereqs: {
-			rank: 1,
+			rank: 0,
 			skills: Array(
 				{
 					name: "Fighting",
