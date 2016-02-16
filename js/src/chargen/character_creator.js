@@ -1421,7 +1421,7 @@ function propagate_gear_section() {
 			}
 		}
 
-		if( show_option ) {
+		if( typeof show_option != "undefined" && show_option ) {
 
 			if(
 				gear_book_dd.indexOf( chargen_gear[gear_count].book ) == -1
