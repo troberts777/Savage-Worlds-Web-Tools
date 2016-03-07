@@ -141,3 +141,15 @@ books_list[10] = {
 	buyme: "",
 	copyright: "2016 Pinnacle Entertainment Group"
 }
+
+books_list[11] = {
+	id: 12,
+	core: false,
+	name: "Thrilling Tales (2nd Edition)",
+	short_name: "ad_tt",
+	abbrev: "TALES",
+	publisher: "Adamant Entertainment",
+	year: "",
+	buyme: "",
+	copyright: "Adamant Entertainment"
+}
