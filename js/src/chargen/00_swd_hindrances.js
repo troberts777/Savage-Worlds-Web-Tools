@@ -461,6 +461,9 @@ chargen_hindrances = chargen_hindrances.concat(Array(
 		incompatible: {},
 		major: 1,
 		minor: 0,
+		char_effects: function( character_object ) {
+			character_object.derived.pace = character_object.derived.pace - 2;
+		},
 		page: "p30"
 	},
 	{
