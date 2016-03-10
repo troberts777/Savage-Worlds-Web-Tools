@@ -1,0 +1,331 @@
+$fontColor: #fdfde3;
+$fontSize: 14px;
+$headerFooterBackground: #111;
+$subMenuBackground: #222;
+$bodyBackground: #333;
+
+$primaryBG: #7b5e25;
+$primaryBGHover: #86734a;
+$primaryTextColor: #fff;
+
+$secondaryBG: #c7c4b2;
+$secondaryBGHover: #d4d1c7;
+$secondaryTextColor: #333;
+
+$lightBG: #efefef;
+
+body {
+	background: $bodyBackground;
+	color: $fontColor;
+	font-size: $fontSize;
+	font-family: 'Ubuntu', sans-serif !important;
+
+	a {
+		color: $primaryBG;
+		&:active,
+		&:visited {
+			color: $primaryBG;
+		}
+		&:hover {
+			color: $primaryBGHover;
+		}
+	}
+	table {
+		background: $secondaryBG;
+		color: $secondaryTextColor;
+		width: 100%;
+
+		border: none;
+		font-size: $fontSize;
+		tbody {
+			border: none;
+			padding: 3px;
+		}
+		thead {
+			background: transparent !important;
+			border: 0 !important;
+			padding: 3px;
+		}
+		tr {
+			td, th {
+				margin: 0;
+				padding: 1px 3px;
+				background: $secondaryBG;
+				color: $secondaryTextColor;
+				text-align: left;
+			}
+			th {
+				vertical-align: bottom;
+				font-weight: 700;
+			}
+			td {
+				vertical-align: top;
+				&.button-container {
+					width: 60px;
+					height: 30px;
+					button {
+						margin: 0;
+					}
+				}
+			}
+		}
+		&.installed-weapons {
+			background: transparent;
+			tbody {
+				margin: 0;
+				padding: 0;
+				tr {
+					border: 1px solid #000;
+					background: $secondaryBG;
+					color: $secondaryTextColor;
+					margin: 0 0 3px 0;
+				}
+			}
+
+		}
+	}
+	.main-content {
+		margin: 1rem 0;
+	}
+
+	.button {
+		// background-color: $secondaryBG;
+		// color: $secondaryTextColor;
+
+		// &:active,
+		// &:visited {
+		// 	background-color: $secondaryBG;
+		// 	color: $secondaryTextColor;
+		// }
+		// &:hover {
+		// 	background-color: $primaryBGHover;
+		// 	color: $primaryTextColor;
+		// }
+		&.primary {
+			background-color: $primaryBG;
+			color: $primaryTextColor;
+
+			&:active,
+			&:visited {
+				background-color: $primaryBG;
+				color: $primaryTextColor;
+			}
+			&:hover {
+				background-color: $primaryBGHover;
+				color: $primaryTextColor;
+			}
+		}
+		&.secondary {
+			background-color: $secondaryBG;
+			color: $secondaryTextColor;
+			&:active,
+			&:visited {
+				background-color: $secondaryBG;
+				color: $secondaryTextColor;
+			}
+			&:hover {
+				background-color: $secondaryBGHover;
+				color: $secondaryTextColor;
+			}
+		}
+	}
+	select,
+	textarea,
+	input[type=text],
+	input[type=number] {
+		background-color: $lightBG;
+		resize: none;
+	}
+
+
+	.creator-preview {
+		background: $secondaryBG;
+		color: #333;
+		padding: 10px;
+		p, h3 {
+			margin: 0;
+			padding: 0;
+		}
+	}
+
+	header {
+		background: $headerFooterBackground;
+		padding: 0 1rem .5rem 1rem;
+		color: $fontColor;
+		margin: 0;
+		h1 {
+			a {
+				color: $fontColor;
+			}
+			font-size: 2rem;
+			padding: 0;
+			margin: 0;
+		}
+		h2 {
+			a {
+				color: $fontColor;
+			}
+			font-size: 1rem;
+			padding: 0;
+			margin: 0;
+		}
+	}
+	.sub-menu {
+		background: $subMenuBackground;
+	}
+
+	footer {
+		background: $headerFooterBackground;
+		padding: 1rem;
+		margin: 1rem 0 0 0;
+		color: $fontColor;
+	}
+	label {
+		color: $fontColor;
+	}
+	.fieldset {
+		color: $fontColor;
+		legend {
+			background: $bodyBackground;
+			color: $fontColor;
+			padding: 0 1rem;
+			font-size: 1.4rem;
+			font-weight: 500;
+		}
+
+	}
+	.small-text {
+		font-size: .7em;
+	}
+	.sidebar-menu {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		li {
+			a {
+				.title {
+					font-size: 20px;
+				}
+				.subtitle {
+					font-size: 11px;
+				}
+			}
+		}
+	}
+	.mech-status-bar {
+		text-align: right;
+		margin-bottom: 5px;
+		font-size: 12px;
+	}
+	.next-button {
+		margin: 2rem 0 0 0;
+		float: right;
+	}
+	.mech-tro {
+		background: $bodyBackground;
+		color: $fontColor;
+		width: 100%;
+
+		border: none;
+		font-size: 12px;
+		tbody {
+			border: none;
+		}
+
+		tr {
+			td, th {
+				margin: auto;
+				padding: 0 5px 0 0;
+				background: $bodyBackground;
+				color: $fontColor;
+
+			}
+			th {
+				vertical-align: bottom;
+				font-weight: 700;
+			}
+			td {
+				vertical-align: top;
+			}
+		}
+	}
+}
+
+.ng-cloak {
+	display: none;
+}
+.no-outline  {
+	outline: 0 !important;
+}
+
+button.radius, .button.radius {
+    border-radius: 3px;
+}
+button.round, .button.round {
+    border-radius: 1000px;
+}
+.extras-results {
+	.result-entry {
+		border-top: 1px solid $primaryBG;
+		margin-top: 20px;
+		padding-top: 20px;
+		&:first-child {
+			border-top: 0;
+			margin-top: 0;
+			padding-top: 0;
+		}
+		.copyright-box {
+			margin-top: 10px;
+			background: $secondaryBG;
+			color: #333;
+			padding: 5px 10px;
+		}
+	}
+
+
+}
+.no-bottom-margin {
+	margin-bottom: 0;
+}
+.overflow-hidden {
+	overflow: hidden;
+}
+.plus-minus-placeholder {
+	width: 27px;
+	height: 27px;
+}
+.modal-container {
+	position: fixed;
+	width: 100%;
+	left: 0;
+	top: 0;
+	height: 100%;
+	background: rgba(0,0,0,.7);
+	z-index: 1000;
+	.reveal {
+		color: $bodyBackground;
+		background: $lightBG;
+		width: 500px;
+		display: block;
+		top: 10px;
+		left: 50%;
+		margin-left: -250px;
+		label {
+			color: $bodyBackground;
+		}
+	}
+}
+.no-wrap {
+	white-space: nowrap;
+}
+.language-select {
+	outline: none;
+	border: solid 1px #999;
+	background: #666;
+	color: $lightBG;
+	padding: 0 25px 0 50px;
+	background-repeat: no-repeat;
+	background-position: center left;
+    background-size: 25% auto;
+    background-position-x: 5%;
+}

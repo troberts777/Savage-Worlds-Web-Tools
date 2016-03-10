@@ -1,0 +1,15 @@
+<div class="modal-container" ng-show="optionsDialogOpen == true">
+	<div class="reveal">
+
+	  <p class="lead" translate="CREATOR_OPTIONS_DIALOG">Options Dialog</p>
+			<div ng-repeat="option in creator_options track by $index">
+				<label><input type="checkbox" value="{{option.short_tag}}" ng-model="selected_options[$index]" ng-change="updateOption($index)"> <span ng-bind="option.local_name"></span></label>
+				<p ng-bind-html="option.local_description"></p>
+			</div>
+			<div ng-show="creator_options.length == 0" translate="CREATOR_NO_OPTIONS_AVAILABLE"></div>
+	  <div class="text-right">
+
+	  	<button class="button small primary" ng-click="closeDialogs()"  type="button" translate="GENERAL_CLOSE"></button>
+	  </div>
+	</div>
+</div>

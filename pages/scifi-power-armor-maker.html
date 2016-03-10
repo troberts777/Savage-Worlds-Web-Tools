@@ -1,0 +1,99 @@
+<div class="sub-menu">
+	<div class="row">
+		<div class="column small-12">
+			<button ng-click="newDialog()" class="secondary small button no-bottom-margin">New</button>
+			<button ng-click="loadDialog()" class="secondary small button no-bottom-margin">Load</button>
+			<button ng-click="saveDialog()" class="secondary small button no-bottom-margin">Save</button>
+			<button ng-click="importDialog()" class="secondary small button no-bottom-margin">Import</button>
+			<button ng-click="exportDialog()" class="secondary small button no-bottom-margin">Export</button>
+			<button ng-click="optionsDialog()" class="secondary small button no-bottom-margin">Options</button>
+		</div>
+	</div>
+</div>
+<div ng-include="'pages/scifi-creator-dialog-new.html'"></div>
+<div ng-include="'pages/scifi-creator-dialog-load.html'"></div>
+<div ng-include="'pages/scifi-creator-dialog-save.html'"></div>
+<div ng-include="'pages/scifi-creator-dialog-import.html'"></div>
+<div ng-include="'pages/scifi-creator-dialog-export.html'"></div>
+<div ng-include="'pages/scifi-creator-dialog-options.html'"></div>
+
+<div class="main-content">
+	<div class="row">
+		<div class="column small-12">
+			<h2 translate="INDEX_BUTTON_SCIFI_POWER">Power Armor Creator</h2>
+			<div class="creator-preview" ng-bind-html="creator_preview"></div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="column small-12 medium-6">
+			<fieldset class="fieldset">
+				<legend translate="CREATOR_BASIC"></legend>
+			<label>
+				<span translate="CREATOR_ARMOR_NAME">Power Armor Name</span><br />
+				<input type="text" ng-keyup="updatePage()" ng-model="creatorObj.item_name" />
+			</label>
+
+			<label>
+				<span translate="CREATOR_ARMOR_DESCRIPTION">Power Armor Description</span><br />
+				<textarea rows="4" ng-keyup="updatePage()" ng-model="creatorObj.object_description"></textarea>
+			</label>
+
+
+			<label>
+				<span translate="CREATOR_ARMOR_SIZE">Size</span><br />
+				<select ng-options="item.label for item in size_options track by item.id" ng-change="updateSize()" ng-model="size_selected">
+				</select>
+			</label>
+			</fieldset>
+
+			<div ng-show="set_size">
+				<fieldset class="fieldset">
+				<legend translate="CREATOR_MODS"></legend>
+				<table>
+					<thead>
+						<tr>
+							<th colspan="2">&nbsp;</th>
+							<th translate="CREATOR_MOD_NAME">Name</th>
+							<th translate="CREATOR_USED_MAX">Used/Max</th>
+							<th translate="CREATOR_MOD_COST">Mod Cost</th>
+							<th translate="CREATOR_COST">Cost</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="mod in mod_list" ng-include="'pages/scifi-creator-mod-row.html'"></tr>
+					</tbody>
+				</table>
+				</fieldset>
+			</div>
+		</div>
+		<div class="column small-12 medium-6">
+			<div ng-show="set_size">
+				<fieldset class="fieldset">
+					<legend translate="CREATOR_INSTALLED_WEAPONS"></legend>
+						<div ng-show="installed_weapons.length == 0" translate="CREATOR_NO_INSTALLED_WEAPONS"></div>
+						<table ng-hide="installed_weapons.length == 0"class="installed-weapons">
+							<tbody ng-repeat="weapon in installed_weapons" ng-include="'pages/scifi-creator-installed-weapon-row.html'">
+							</tbody>
+						</table>
+				</fieldset>
+			</div>
+			<div ng-show="set_size">
+				<fieldset class="fieldset">
+					<legend translate="CREATOR_AVAILABLE_WEAPONS"></legend>
+		<table>
+							<thead>
+								<tr>
+									<th>&nbsp;</th>
+									<th translate="CREATOR_MOD_NAME">Name</th>
+									<th translate="CREATOR_MOD_COST">Mod Cost</th>
+									<th translate="CREATOR_COST">Cost</th>
+								</tr>
+							</thead>
+							<tbody ng-repeat="weapon in available_weapons" ng-include="'pages/scifi-creator-available-weapon-row.html'">
+							</tbody>
+						</table>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+</div>

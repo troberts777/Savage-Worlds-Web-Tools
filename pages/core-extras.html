@@ -1,0 +1,39 @@
+<div class="main-content">
+	<div class="row">
+		<div class="column small-12 medium-4 large-3">
+			<fieldset class="fieldset">
+				<legend translate="EXTRAS_SEARCH">Search</legend>
+				<div class="row">
+					<div class="small-12">
+						<label>
+							<span translate="EXTRAS_SEARCH">Search</span>: <input type="text" ng-model="input_extras_search" ng-keyup="update_results_pane()" />
+						</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="column small-12">
+						<h4 translate="EXTRAS_LIBRARIES">Libraries</h4>
+
+						<div ng-repeat="bookcheck in activebooklist track by $index" class="form-group">
+
+							<label><input type="checkbox" ng-click="update_results_pane()" ng-model="active_books[$index]"> {{bookcheck.local_name}}</label>
+
+						</div>
+
+					</div>
+				</div>
+			</fieldset>
+		</div>
+		<div class="column small-12 medium-8 large-9">
+			<fieldset class="fieldset">
+				<legend translate="EXTRAS_RESULTS">Results</legend>
+				<div ng-bind-html="results_pane">Please search for a name in the search field.</div>
+				<div ng-show="show_no_results" translate="EXTRAS_NO_RESULTS">No events</div>
+				<div ng-show="show_default_text" translate="EXTRAS_RESULTS_INTRO">No events</div>
+				<div class="extras-results">
+					<div class="result-entry" ng-repeat="extra_item in search_results" ng-include="'pages/core-extras-entry.html'"></div>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+</div>

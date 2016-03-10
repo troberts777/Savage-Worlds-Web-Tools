@@ -1,0 +1,12 @@
+<td class="no-wrap">
+	<div class="plus-minus-placeholder" ng-hide="mod.can_remove"></div>
+	<button class="no-bottom-margin float-left radius button tiny primary" ng-click="removeMod(mod.tag)" ng-show="mod.can_remove">-</button>
+</td>
+<td>
+	<div ng-hide="mod.can_add" class="plus-minus-placeholder"></div>
+	<button class="no-bottom-margin float-right radius button tiny primary" ng-click="addMod(mod.tag)" ng-show="mod.can_add">+</button>
+</td>
+<td>{{mod.local_name}}</td>
+<td>{{mod.currently_added}} / {{mod.local_max}}</td>
+<td>{{mod.local_mod_cost}}</td>
+<td>{{mod.local_cost}}</td>

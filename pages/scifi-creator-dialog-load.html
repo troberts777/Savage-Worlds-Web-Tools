@@ -1,0 +1,24 @@
+<div class="modal-container" ng-show="loadDialogOpen == true">
+	<div class="reveal">
+
+	 <h4 translate="CREATOR_LOAD_ITEM">Load Items</h4>
+	 	 <div ng-show="saved_items.length > 0">
+	  	<div ng-repeat="item in saved_items track by $index">
+	 		 <div class="overflow-hidden">
+	 		 	<button ng-click="removeSavedItem($index)" class="button primary tiny float-right" translate="GENERAL_REMOVE">Remove</button>
+	 		 	<label>&nbsp;<input name="load_item" type="radio" ng-click="updateLoad(load_item)" ng-model="load_item" value="{{$index}}"> {{item.name}} ({{item.datetime | date:medium}})</label>
+	 		 </div>
+	 	</div>
+	 </div>
+	 <div ng-show="saved_items.length == 0">
+	 	<span translate="CREATOR_NO_SAVED_ITEMS">You have no saved items</span>
+	 </div>
+
+	 <div class="text-right">
+	 	<div ng-show="saved_items.length > 0" translate="CREATOR_LOAD_WARNING">Load Warning</div>
+	  	<button ng-show="saved_items.length > 0" class="button small secondary" ng-click="closeDialogs()"  type="button" translate="GENERAL_CANCEL"></button>
+	  	<button ng-show="saved_items.length > 0" class="button small primary" ng-click="loadItem(load_item)" type="button" translate="GENERAL_LOAD">Load</button>
+	  	<button ng-hide="saved_items.length > 0" class="button small secondary" ng-click="closeDialogs()"  type="button" translate="GENERAL_CLOSE"></button>
+	  </div>
+	</div>
+</div>

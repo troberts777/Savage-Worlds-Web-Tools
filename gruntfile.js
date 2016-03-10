@@ -1,53 +1,103 @@
 module.exports = function(grunt) {
+
 	grunt.initConfig({
-		less: {
-			development: {
+
+		pkg: grunt.file.readJSON('package.json'),
+		sass: {
+			dist: {
 				options: {
-					compress: true,
-					yuicompress: true,
-					optimization: 2
+					sourceComments: 'map',
+					includePaths: require('node-bourbon').includePaths
 				},
 				files: {
-					// target.css file: source.less file
-					"css/style.css": "css/less/style.less"
+					'css/style.css': 'css/src/style.scss'
 				}
 			}
 		},
 
+		cssmin: {
+			css:{
+				src: 'css/style.css',
+				dest: 'css/style.min.css'
+			}
+		},
+
+		jshint: {
+			beforeconcat: ['js/*.js']
+		},
+
+		concat: {
+			dist: {
+				src: [
+			 	'js/src/*',
+			 	'js/src/classes/*',
+			 	'js/src/controllers/*',
+			 	'js/src/data/*',
+				],
+				dest: 'js/script.js'
+			}
+		},
+
 		uglify: {
-			development: {
+			my_target: {
 				options: {
 					sourceMap: true,
 					sourceMapName: 'js/sourcemap.map'
 				},
 				files: {
-					'js/swwt.min.js' : ['js/src/*.js', 'js/src/chargen/*.js', 'js/src/extras/*.js', 'js/src/creators/*.js'],
+					'js/script.min.js': ['js/script.js']
 				}
 			}
 		},
+
 		watch: {
-			styles: {
-				// Which files to watch (all .less files recursively in the less directory)
-				files: ['css/less/*.less'],
-				tasks: ['less'],
-				options: {
-					nospawn: true
-				}
+			options: {
+				livereload: true,
+				delay: 1000,
 			},
 			scripts: {
-				// Which files to watch (all .js files recursively in the js src directory)
-				files: ['js/src/*.js','js/src/extras/*js','js/src/chargen/*js','js/src/creators/*js'],
-				tasks: ['uglify'],
+				files: [
+				 	'js/src/*',
+				 	'js/src/classes/*',
+				 	'js/src/controllers/*',
+				 	'js/src/langs/*',
+				 	'js/src/data/*',
+				],
+				tasks: ['concat', 'uglify'],
 				options: {
-					nospawn: true
+					spawn: false,
+				}
+			},
+			css: {
+				files: ['css/src/*.scss'],
+				tasks: ['sass', 'cssmin'],
+				options: {
+					spawn: false,
+				}
+			},
+			php: {
+				files: ['*.php'],
+				options: {
+					spawn: false
+				}
+			},
+		},
+
+		connect: {
+			server: {
+				options: {
+					port: 8000,
+					base: './'
 				}
 			}
-		}
+		},
+
 	});
 
-	grunt.loadNpmTasks('grunt-contrib-less');
-	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-sass');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
-
+	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.registerTask('default', ['watch']);
 };

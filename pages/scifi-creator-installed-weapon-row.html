@@ -1,0 +1,14 @@
+<tr>
+
+<td>
+	{{weapon.display_name}}<br />
+	<select ng-options="fixeditem.label for fixeditem in fixed_options track by fixeditem.id" ng-change="setFixed($index)" ng-model="installed_weapons[$index].fixed_dd_value">
+	</select>
+</td>
+
+<td class="text-right no-wrap">
+	<button class="button radius tiny alert no-bottom-margin" ng-click="removeWeapon($index)" translate="CREATOR_REMOVE">Remove</button>
+	<br /><br />
+	<button class="button tiny radius primary no-bottom-margin" ng-hide="weapon.count > 3" ng-click="linkWeapon($index)" translate="CREATOR_LINK">Link</button>&nbsp;<button class="button tiny radius primary no-bottom-margin" ng-hide="weapon.count < 2" ng-click="unlinkWeapon($index)" translate="CREATOR_DELINK">De-link</button>
+</td>
+</tr>

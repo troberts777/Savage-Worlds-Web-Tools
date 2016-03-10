@@ -1,0 +1,14 @@
+<tr ng-show="{{weapon.local_classification != available_weapons[$index - 1].local_classification}}">
+	<th>&nbsp;</th>
+	<th colspan="3">
+		{{weapon.local_classification}}
+	</th>
+</tr>
+<tr>
+<td>
+<button class="tiny radius button no-bottom-margin primary" ng-click="addWeapon(weapon.tag)" ng-show="weapon.can_add">+</button>
+</td>
+<td>{{weapon.local_name}}</td>
+<td>{{weapon.mods}}</td>
+<td>{{weapon.local_cost}}</td>
+</tr>

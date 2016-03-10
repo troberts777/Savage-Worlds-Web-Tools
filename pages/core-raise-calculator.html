@@ -1,0 +1,32 @@
+<div class="main-content">
+	<div class="row">
+		<div class="columns small-12 medium-6">
+			<fieldset class="fieldset">
+				<legend translate="RAISE_ROLL_VARS">Roll Specifics</legend>
+				<label>
+					<span translate="RAISE_ROLL">Roll</span>:<br />
+					<input ng-keyup="update_results()" ng-change="update_results()" ng-model="input_roll" type="number" value="5">
+				</label>
+				<label>
+					<span translate="RAISE_TARGET_NUMBER">Target Number</span>:<br />
+					<input ng-keyup="update_results()" ng-change="update_results()" ng-model="input_target_number" type="number" value="4">
+				</label>
+				<label>
+					<span translate="RAISE_ARMOR">Armor</span>:<br />
+					<input ng-keyup="update_results()" ng-change="update_results()" ng-model="input_armor" type="number" id="dice-roll" value="0">
+				</label>
+				<label>
+					<span translate="RAISE_WEAPON_AP">Weapon AP</span>:<br />
+					<input ng-keyup="update_results()" ng-change="update_results()" ng-model="input_weapons_ap" type="number" id="dice-roll" value="0">
+				</label>
+			</fieldset>
+		</div>
+		<div class="columns small-12 medium-6">
+			<fieldset class="fieldset">
+				<legend translate="RAISE_ROLL_RESULTS">Results</legend>
+				<h5><span translate="RAISE_RESULT_TRAIT">Trait Result</span>: <span ng-bind-html="trait_results"></span></h5>
+				<h5><span translate="RAISE_RESULT_DAMAGE">Damage Result</span>: <span ng-bind-html="damage_results"></span></h5>
+			</fieldset>
+		</div>
+	</div>
+</div>

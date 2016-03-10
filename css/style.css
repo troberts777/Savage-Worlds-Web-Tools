@@ -1,1 +1,282 @@
-body{font-size:11px;background:#666;color:#ccc}a{color:#6a6}a:focus,a:hover{color:#7c7}.modal-content{background:#666;color:#ccc}h1{font-size:30px}.js-info-stats{padding:10px;background:#eee}.js-datasync-notifier{position:fixed;bottom:0;left:0;width:100%;padding:5px;text-align:center;display:none;border-top:solid 2px #eee;color:#eee;background:#595;z-index:100}.js-datasync-notifier a{color:#fff}.js-datasync-notifier a:hover{color:#eee}.js-datasync-notifier-error{background:#751e1b}.setting-banned{text-decoration:line-through!important}.unmet-deps{color:#b43d3a!important}table{width:100%;border-top:1px solid #333;border-left:1px solid #333}table th,table td{border-right:1px solid #333;border-bottom:1px solid #333;padding:2px 5px}table th{background:#333;color:#fff}.creator-selected{color:#6a6}label{display:block}select,input[type="text"],input[type="number"],input[type="email"],textarea{padding:5px 10px;display:block;width:100%;background:#999;font-size:17px;color:#eee;resize:none;outline:0;border:1px solid #333;border-radius:5px}select:focus,input[type="text"]:focus,input[type="number"]:focus,input[type="email"]:focus,textarea:focus{background:#ccc;color:#333}.footer{background:#333;margin:20px auto 0 auto;color:#ccc}.footer .container .row div{padding:20px 0}.footer .container .row div img{float:left;margin:0 10px 10px 0}.btn-default{color:#eee;background-color:#6a6;border-color:#595}.btn-default:focus,.btn-default:hover{color:#eee;background-color:#7c7}.bigger-text{font-size:18px}.btn-warning{color:#eee;background-color:#be750e;border-color:#6c512a}.btn-warning:focus,.btn-warning:hover{color:#eee;background-color:#ed9c28}.btn-danger{color:#eee;background-color:#b43d3a;border-color:#751e1b}.btn-danger:focus,.btn-danger:hover{color:#eee;background-color:#d2322d}.btn-primary{color:#eee;background-color:#6a6;border-color:#595}.btn-primary:focus,.btn-primary:hover{color:#eee;background-color:#7c7}.js-info-stats{color:#333}.js-info-stats h3{margin:0;padding:0}.js-info-stats p{margin:0;padding:0}.js-bb-code,.js-json-code,.js-import-code,.js-chargen-bb-code,.js-chargen-json-code,.js-chargen-import-code{background:#eee;color:#333;font-size:8px}.js-bb-code:focus,.js-json-code:focus,.js-import-code:focus,.js-chargen-bb-code:focus,.js-chargen-json-code:focus,.js-chargen-import-code:focus{background:#eee}.front-desc{position:relative}.front-desc p{display:none}.front-desc:hover p{display:block;position:absolute;background:#eee;color:#333;border:solid 2px #333;padding:10px 20px;top:60px;left:0;z-index:100;font-size:11px}.js-alert-container{margin-top:20px}.fade{opacity:0;-webkit-transition:opacity .1s linear;-moz-transition:opacity .1s linear;-o-transition:opacity .1s linear;transition:opacity .1s linear}.fade.in{opacity:1}fieldset{border:solid 1px #eee;padding:15px;border-radius:10px;margin:0 0 15px 0}.full-width{width:100%}.header-bar{background:#333;color:#fff}.header-bar a{text-decoration:none}.header-bar a:hover{color:#fff;text-decoration:none}.hidden-header-bar{background:#333;color:#fff;overflow:hidden;height:15px}.hidden-header-bar a{text-decoration:none}.hidden-header-bar a:hover{color:#fff;text-decoration:none}.hidden-header-bar:hover{overflow:hidden;height:auto}.action-bar{background:#666;color:#fff;padding:5px 0}.color-red{color:#b43d3a}.color-green{color:#6a6}.color-orange{color:#be750e}.bolded{font-weight:bold}.uppercase{text-transform:uppercase}.color-blue{color:#428bca}.js-smarty-comment{color:#ccc;font-size:11px}.js-smarty-comment strong{color:#eee}.extra-img{float:left;margin:0 10px 10px 0}.extra-stats{overflow:hidden}.clear-both,.c-b{clear:both}.width-auto{width:auto}.a-h-line{margin-bottom:5px;background:#eee;border-radius:5px;padding-left:57px;color:#333}.a-h-line button{margin-right:10px;margin-left:-57px}.adv-line{margin-bottom:5px;background:#eee;border-radius:5px;padding:3px 0 0 10px;color:#333;overflow:hidden}.adv-line button{margin-top:-3px;float:right}.thinned{margin:0;padding:0}@media only screen and (min-width:320px) and (max-width:480px){.extra-img{float:none;margin:0 auto 10px auto}}.js-chargen-skill-points-label,.js-chargen-attributes-points-label{text-align:center}.col-xs-15,.col-sm-15,.col-md-15,.col-lg-15{position:relative;min-height:1px;padding-right:10px;padding-left:10px}.js-print-cart-button,.bug-tweet{margin-top:20px;margin-left:10px}.col-xs-15{width:20%;float:left}legend{border:0;display:inline;width:auto;color:#eee;padding:0 20px;margin:0}.js-validity-container{border-color:#eee;color:#eee;background:#b43d3a;font-size:14px}.js-validity-container h3{text-align:center;margin-top:-10px;color:#eee}.attribute-display{text-align:center;font-size:30px;font-weight:bold}.attribute-select{text-align:center;-webkit-appearance:none!important;width:auto;font-size:25px;margin:0 auto}.attribute-select .die-select{text-align:center}.skill-container{font-size:11px;clear:both;overflow:hidden;border:1px solid #333;padding:2px 2px 2px 5px;margin-bottom:2px;border-radius:4px}.skill-container img{width:20px;height:20px}.subskills{margin:5px 0;padding:5px 0;overflow:hidden;clear:both}.derived-stats-container{position:absolute;bottom:10%;right:5%;width:40%;height:auto;font-size:12px}.modal-content{max-width:400px;margin:50px auto}.js-print-character-dialog .modal-content,.js-gear-dialog .modal-content{max-width:90%}.js-print-character-content{background:#eee;color:#333}.spinner{width:100px}.spinner input{text-align:right}.input-group-btn-vertical{position:relative;white-space:nowrap;width:1%;vertical-align:middle;display:table-cell}.input-group-btn-vertical>.btn{display:block;float:none;width:100%;max-width:100%;padding:8px;margin-left:-1px;position:relative;border-radius:0}.input-group-btn-vertical>.btn:first-child{border-top-right-radius:4px}.input-group-btn-vertical>.btn:last-child{margin-top:-2px;border-bottom-right-radius:4px}.input-group-btn-vertical i{position:absolute;top:0;left:1px}@media(min-width:768px){.col-sm-15{width:20%;float:left}}@media(min-width:992px){.col-md-15{width:20%;float:left}}@media(min-width:1200px){.col-lg-15{width:20%;float:left}}@media screen{.no-screen{visibility:hidden!important;display:none!important}}@media print{.no-print{visibility:hidden!important;display:none!important}h1,h2,h3,h4{margin:0!important;padding:0!important}h1{text-align:center}hr{margin:5px 0 10px 0}article{border:1px solid #ccc;border-radius:20px;padding:10px;margin-bottom:10px}img{float:left;border:0 10px 10px 0;height:100px;width:auto}a,button{visibility:hidden!important;display:none!important}.c-b{border:0;border-top:1px solid #ccc;margin:10px 0 0 0;border-radius:0}}
+/* line 17, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+body {
+  background: #333;
+  color: #fdfde3;
+  font-size: 14px;
+  font-family: 'Ubuntu', sans-serif !important; }
+  /* line 23, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  body a {
+    color: #7b5e25; }
+    /* line 25, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    body a:active, body a:visited {
+      color: #7b5e25; }
+    /* line 29, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    body a:hover {
+      color: #86734a; }
+  /* line 33, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  body table {
+    background: #c7c4b2;
+    color: #333;
+    width: 100%;
+    border: none;
+    font-size: 14px; }
+    /* line 40, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    body table tbody {
+      border: none;
+      padding: 3px; }
+    /* line 44, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    body table thead {
+      background: transparent !important;
+      border: 0 !important;
+      padding: 3px; }
+    /* line 50, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    body table tr td, body table tr th {
+      margin: 0;
+      padding: 1px 3px;
+      background: #c7c4b2;
+      color: #333;
+      text-align: left; }
+    /* line 57, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    body table tr th {
+      vertical-align: bottom;
+      font-weight: 700; }
+    /* line 61, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    body table tr td {
+      vertical-align: top; }
+      /* line 63, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+      body table tr td.button-container {
+        width: 60px;
+        height: 30px; }
+        /* line 66, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+        body table tr td.button-container button {
+          margin: 0; }
+    /* line 72, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    body table.installed-weapons {
+      background: transparent; }
+      /* line 74, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+      body table.installed-weapons tbody {
+        margin: 0;
+        padding: 0; }
+        /* line 77, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+        body table.installed-weapons tbody tr {
+          border: 1px solid #000;
+          background: #c7c4b2;
+          color: #333;
+          margin: 0 0 3px 0; }
+  /* line 87, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  body .main-content {
+    margin: 1rem 0; }
+  /* line 104, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  body .button.primary {
+    background-color: #7b5e25;
+    color: #fff; }
+    /* line 108, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    body .button.primary:active, body .button.primary:visited {
+      background-color: #7b5e25;
+      color: #fff; }
+    /* line 113, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    body .button.primary:hover {
+      background-color: #86734a;
+      color: #fff; }
+  /* line 118, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  body .button.secondary {
+    background-color: #c7c4b2;
+    color: #333; }
+    /* line 121, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    body .button.secondary:active, body .button.secondary:visited {
+      background-color: #c7c4b2;
+      color: #333; }
+    /* line 126, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    body .button.secondary:hover {
+      background-color: #d4d1c7;
+      color: #333; }
+  /* line 132, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  body select,
+  body textarea,
+  body input[type=text],
+  body input[type=number] {
+    background-color: #efefef;
+    resize: none; }
+  /* line 141, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  body .creator-preview {
+    background: #c7c4b2;
+    color: #333;
+    padding: 10px; }
+    /* line 145, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    body .creator-preview p, body .creator-preview h3 {
+      margin: 0;
+      padding: 0; }
+  /* line 151, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  body header {
+    background: #111;
+    padding: 0 1rem .5rem 1rem;
+    color: #fdfde3;
+    margin: 0; }
+    /* line 156, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    body header h1 {
+      font-size: 2rem;
+      padding: 0;
+      margin: 0; }
+      /* line 157, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+      body header h1 a {
+        color: #fdfde3; }
+    /* line 164, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    body header h2 {
+      font-size: 1rem;
+      padding: 0;
+      margin: 0; }
+      /* line 165, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+      body header h2 a {
+        color: #fdfde3; }
+  /* line 173, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  body .sub-menu {
+    background: #222; }
+  /* line 177, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  body footer {
+    background: #111;
+    padding: 1rem;
+    margin: 1rem 0 0 0;
+    color: #fdfde3; }
+  /* line 183, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  body label {
+    color: #fdfde3; }
+  /* line 186, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  body .fieldset {
+    color: #fdfde3; }
+    /* line 188, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    body .fieldset legend {
+      background: #333;
+      color: #fdfde3;
+      padding: 0 1rem;
+      font-size: 1.4rem;
+      font-weight: 500; }
+  /* line 197, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  body .small-text {
+    font-size: .7em; }
+  /* line 200, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  body .sidebar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0; }
+    /* line 206, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    body .sidebar-menu li a .title {
+      font-size: 20px; }
+    /* line 209, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    body .sidebar-menu li a .subtitle {
+      font-size: 11px; }
+  /* line 215, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  body .mech-status-bar {
+    text-align: right;
+    margin-bottom: 5px;
+    font-size: 12px; }
+  /* line 220, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  body .next-button {
+    margin: 2rem 0 0 0;
+    float: right; }
+  /* line 224, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  body .mech-tro {
+    background: #333;
+    color: #fdfde3;
+    width: 100%;
+    border: none;
+    font-size: 12px; }
+    /* line 231, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    body .mech-tro tbody {
+      border: none; }
+    /* line 236, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    body .mech-tro tr td, body .mech-tro tr th {
+      margin: auto;
+      padding: 0 5px 0 0;
+      background: #333;
+      color: #fdfde3; }
+    /* line 243, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    body .mech-tro tr th {
+      vertical-align: bottom;
+      font-weight: 700; }
+    /* line 247, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    body .mech-tro tr td {
+      vertical-align: top; }
+
+/* line 254, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+.ng-cloak {
+  display: none; }
+
+/* line 257, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+.no-outline {
+  outline: 0 !important; }
+
+/* line 261, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+button.radius, .button.radius {
+  border-radius: 3px; }
+
+/* line 264, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+button.round, .button.round {
+  border-radius: 1000px; }
+
+/* line 268, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+.extras-results .result-entry {
+  border-top: 1px solid #7b5e25;
+  margin-top: 20px;
+  padding-top: 20px; }
+  /* line 272, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  .extras-results .result-entry:first-child {
+    border-top: 0;
+    margin-top: 0;
+    padding-top: 0; }
+  /* line 277, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  .extras-results .result-entry .copyright-box {
+    margin-top: 10px;
+    background: #c7c4b2;
+    color: #333;
+    padding: 5px 10px; }
+
+/* line 287, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+.no-bottom-margin {
+  margin-bottom: 0; }
+
+/* line 290, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+.overflow-hidden {
+  overflow: hidden; }
+
+/* line 293, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+.plus-minus-placeholder {
+  width: 27px;
+  height: 27px; }
+
+/* line 297, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+.modal-container {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000; }
+  /* line 305, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  .modal-container .reveal {
+    color: #333;
+    background: #efefef;
+    width: 500px;
+    display: block;
+    top: 10px;
+    left: 50%;
+    margin-left: -250px; }
+    /* line 313, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    .modal-container .reveal label {
+      color: #333; }
+
+/* line 318, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+.no-wrap {
+  white-space: nowrap; }
+
+/* line 321, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+.language-select {
+  outline: none;
+  border: solid 1px #999;
+  background: #666;
+  color: #efefef;
+  padding: 0 25px 0 50px;
+  background-repeat: no-repeat;
+  background-position: center left;
+  background-size: 25% auto;
+  background-position-x: 5%; }

@@ -1,0 +1,28 @@
+<div class="modal-container" ng-show="saveDialogOpen == true">
+	<div class="reveal">
+
+	  <label>
+	  	<span translate="CREATOR_SAVE_NAME">Save Name</span>: 	<input ng-model="save_as_name">
+	  </label>
+
+	 <h4 translate="CREATOR_SAVED_ITEM_AS">Saved Items</h4>
+	 <div><label>&nbsp;<input name="save_item" type="radio" ng-click="updateSave(save_over)" ng-model="save_over" value="-1"> <span translate="CREATOR_SAVE_AS_NEW">New</span></label></div>
+	 <div ng-show="saved_items.length > 0">
+	  	<div ng-repeat="item in saved_items track by $index">
+	 		 <div class="overflow-hidden">
+	 		 	<button ng-click="removeSavedItem($index)" class="button primary tiny float-right" translate="GENERAL_REMOVE">Remove</button>
+	 		 	<label>&nbsp;<input name="save_item" type="radio" ng-click="updateSave(save_over)" ng-model="save_over" value="{{$index}}"> {{item.name}} ({{item.datetime | date:medium}})</label>
+	 		 </div>
+	 	</div>
+	 </div>
+	 <div ng-show="saved_items.length == 0">
+	 	<span translate="CREATOR_NO_SAVED_ITEMS">You have no saved items</span>
+	 </div>
+
+	 <div class="text-right">
+		 <div ng-show="save_over > -1" translate="CREATOR_IMPORT_WARNING">Import Warning</div>
+	  	<button class="button small secondary" ng-click="closeDialogs()"  type="button" translate="GENERAL_CANCEL"></button>
+	  	<button class="button small primary" ng-click="saveItem(save_over, save_as_name)" type="button" translate="GENERAL_SAVE">Save</button>
+	  </div>
+	</div>
+</div>
