@@ -7,7 +7,7 @@ var sciFiCreator = function() {};
 sciFiCreator.prototype = {
 
 	init: function(object_type, object_label, available_sizes, available_mods, available_options) {
-		this.item_name = "(nameless)";
+		this.item_name = "";
 		this.object_description = "";
 		this.useLang = "en-US";
 

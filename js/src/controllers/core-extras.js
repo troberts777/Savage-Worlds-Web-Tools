@@ -124,16 +124,16 @@ angular.module("baseApp").controller(
 						//console.log("...", skill_key.substring(0, "SKILL_KNOWLEDGE".length));
 						if( skill_key.substring(0, "SKILL_KNOWLEDGE".length) == "SKILL_KNOWLEDGE") {
 							if( parsed_skills[skill_key].special[ localStorage["users_preferred_language"] ] )
-								entry_object.display_skills += translation[skill_key.substring(0, "SKILL_KNOWLEDGE".length)] + " (" + parsed_skills[skill_key].special[ localStorage["users_preferred_language"] ] + "): " + parsed_skills[skill_key].value + ", ";
+								entry_object.display_skills += get_local_skill_name(skill_key.substring(0, "SKILL_KNOWLEDGE".length)) + " (" + parsed_skills[skill_key].special[ localStorage["users_preferred_language"] ] + "): " + parsed_skills[skill_key].value + ", ";
 							else
-								entry_object.display_skills += translation[skill_key.substring(0, "SKILL_KNOWLEDGE".length)] + " (" + parsed_skills[skill_key].special["en-US"] + "): " + parsed_skills[skill_key].value + ", ";
+								entry_object.display_skills += get_local_skill_name(skill_key.substring(0, "SKILL_KNOWLEDGE".length)) + " (" + parsed_skills[skill_key].special["en-US"] + "): " + parsed_skills[skill_key].value + ", ";
 						} else if ( skill_key.substring(0, "SKILL_CUSTOM".length) == "SKILL_CUSTOM") {
 							if( parsed_skills[skill_key].special[ localStorage["users_preferred_language"] ] )
 								entry_object.display_skills += parsed_skills[skill_key].special[ localStorage["users_preferred_language"] ] + ": " + parsed_skills[skill_key].value + ", ";
 							else
 								entry_object.display_skills += parsed_skills[skill_key].special["en-US"] + ": " + parsed_skills[skill_key].value + ", ";
 						} else {
-							entry_object.display_skills += translation[skill_key] + ": " + parsed_skills[skill_key].value + ", ";
+							entry_object.display_skills += get_local_skill_name(skill_key) + ": " + parsed_skills[skill_key].value + ", ";
 						}
 					}
 

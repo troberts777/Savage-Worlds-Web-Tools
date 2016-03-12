@@ -122,7 +122,6 @@ angular.module('baseApp').controller(
 		'$route',
 		function ($translate, $scope, $route) {
 
-			console.log("$scope",  $scope);
 			$scope.available_languages = Array();
 			$scope.users_language = {};
 			for( lang_count = 0; lang_count < availableLanguages.length; lang_count++) {
@@ -197,213 +196,48 @@ function get_book_by_id( book_id, language ) {
 
 	return null;
 }
-/*
 
-Data here is NOT Licensed under the Creative Commons and is owned by Pinnacle Entertainment Group.
-
-This product references the Savage Worlds game system, available from Pinnacle Entertainment Group at www.peginc.com.
-Savage Worlds and all associated logos and trademarks are copyrights of Pinnacle Entertainment Group. Used with permission.
-Pinnacle makes no representation or warranty as to the quality, viability, or suitability for purpose of this product.
-
-The entries in this file are from Savage Worlds Role Playing Game and are owned by Pinnacle Entertainment Group.
-
-DEVELOPERS: Do Not Edit or Pull Request this file, it is auto generated from a rudimentary admin area!
-*/
-
-var savageWorldsBooksList = Array();
-
-savageWorldsBooksList[0] = {
-	id: 1,
-	core: true,
-	name: {
-		"en-US": "Savage Worlds Deluxe",
-		"de-DE": "German Savage Worlds",
-		"pt-BR": "Savage Brazilians",
-	},
-	short_name: "peg_swd_ee",
-	abbrev: "SWD:EE",
-	publisher: {
-		"en-US": "Pinnacle Entertainment Group",
-		"de-DE": "Pinnacle Entertainment Group",
-		"pt-BR": "PEG",
-
-	},
-	year: "2011",
-	copyright: {
-		"en-US": "2011 Pinnacle Entertainment Group",
-		"de-DE": "2011 Pinnacle Entertainment Group",
-		"pt-BR": "Poog",
-
-	},
-	buyme: "http://www.peginc.com/store/savage-worlds-deluxe/"
+function localizeDiceValues() {
+	for( var ldcv = 0 ; ldcv < globalDiceValues.length; ldcv++) {
+		if( typeof(globalDiceValues[ldcv].label[ localStorage["users_preferred_language"] ] ) != "undefined") {
+			globalDiceValues[ldcv].local_label = globalDiceValues[ldcv].label[ localStorage["users_preferred_language"] ];
+		} else {
+			globalDiceValues.local_label = globalDiceValues[ldcv].label[ "en-US" ];
+		}
+	}
 }
 
-savageWorldsBooksList[1] = {
-	id: 2,
-	core: false,
-	name: {
-		"en-US": "Fantasy Companion",
-		"pt-BR": "Brazilian Fantasy",
-		"de-DE": "German Fantasy",
-	},
-	short_name: "peg_swfc",
-	abbrev: "FC",
-	publisher: {
-		"en-US": "Pinnacle Entertainment Group",
-		"pt-BR": "Pinnacle Entertainment Group",
-		"de-DE": "",
+function localizeSkills() {
+	for( var ldcv = 0 ; ldcv < savageWorldsSkillList.length; ldcv++) {
+		if( typeof(savageWorldsSkillList[ldcv].name[ localStorage["users_preferred_language"] ] ) != "undefined") {
+			savageWorldsSkillList[ldcv].local_name = savageWorldsSkillList[ldcv].name[ localStorage["users_preferred_language"] ];
+		} else {
+			savageWorldsSkillList.local_name = savageWorldsSkillList[ldcv].name[ "en-US" ];
+		}
 
-	},
-	year: "2012",
-	copyright: {
-		"en-US": "2012 Pinnacle Entertainment Group",
-		"pt-BR": "",
-		"de-DE": "",
-
-	},
-	buyme: "http://www.peginc.com/store/savage-worlds-fantasy-companion/"
+		if( typeof(savageWorldsSkillList[ldcv].description[ localStorage["users_preferred_language"] ] ) != "undefined") {
+			savageWorldsSkillList[ldcv].local_description = savageWorldsSkillList[ldcv].description[ localStorage["users_preferred_language"] ];
+		} else {
+			savageWorldsSkillList.local_description = savageWorldsSkillList[ldcv].description[ "en-US" ];
+		}
+	}
 }
 
-savageWorldsBooksList[2] = {
-	id: 3,
-	core: false,
-	name: {
-		"en-US": "Horror Companion",
-	},
-	short_name: "peg_swhc",
-	abbrev: "HC",
-	publisher: {
-		"en-US": "Pinnacle Entertainment Group",
 
-	},
-	year: "2012",
-	copyright: {
-		"en-US": "2012 Pinnacle Entertainment Group",
 
-	},
-	buyme: "http://www.peginc.com/store/savage-worlds-horror-companion-2/"
+function get_local_skill_name( skill_id ) {
+	for( var ldcv = 0 ; ldcv < savageWorldsSkillList.length; ldcv++) {
+		if( savageWorldsSkillList[ldcv].id == skill_id ) {
+			if( typeof(savageWorldsSkillList[ldcv].name[ localStorage["users_preferred_language"] ] ) != "undefined") {
+				return savageWorldsSkillList[ldcv].name[ localStorage["users_preferred_language"] ];;
+			} else {
+				//return savageWorldsSkillList[ldcv].name[ "en-US" ];
+				return skill_id;
+			}
+		}
+	}
+	return skill_id;
 }
-
-savageWorldsBooksList[3] = {
-	id: 4,
-	core: false,
-	name: {
-		"en-US": "Science Fiction Companion",
-	},
-	short_name: "peg_sfc",
-	abbrev: "SFC",
-	publisher: {
-		"en-US": "Pinnacle Entertainment Group",
-
-	},
-	year: "2014",
-	copyright: {
-		"en-US": "2014 Pinnacle Entertainment Group",
-
-	},
-	buyme: "https://www.peginc.com/store/science-fiction-companion-le-bundle/"
-}
-
-savageWorldsBooksList[4] = {
-	id: 5,
-	core: false,
-	name: {
-		"en-US": "Super Powers Companion",
-	},
-	short_name: "peg_spc2",
-	abbrev: "SPC",
-	publisher: {
-		"en-US": "Pinnacle Entertainment Group",
-
-	},
-	year: "2014",
-	copyright: {
-		"en-US": "2014 Pinnacle Entertainment Group",
-
-	},
-	buyme: "https://www.peginc.com/store/super-powers-companion-second-edition-le/"
-}
-
-savageWorldsBooksList[5] = {
-	id: 6,
-	core: false,
-	name: {
-		"en-US": "Savage Free Bestiary",
-	},
-	short_name: "sfb",
-	abbrev: "SFB",
-	publisher: {
-		"en-US": "(Unknown) Pinnacle Enterainment Group, Butch Curry, Andrea �Lord Lance� Parducci and probably others",
-
-	},
-	year: "",
-	copyright: {
-		"en-US": "Butch Curry, Open?",
-
-	},
-	buyme: "https://docs.google.com/document/edit?id=1qu4zzMYbPqOquVlCfgpPeoCmCEqGUgWh5dz-rpKJ1ck&hl=it&authkey=CIySp98E"
-}
-
-savageWorldsBooksList[6] = {
-	id: 7,
-	core: false,
-	name: {
-		"en-US": "Lankhmar",
-	},
-	short_name: "peg_lank",
-	abbrev: "LANK",
-	publisher: {
-		"en-US": "Pinnacle Enterainment Group",
-
-	},
-	year: "2015",
-	copyright: {
-		"en-US": "2015 Pinnacle Entertainment Group, Trademarks of the Estate of Fritz Leiber.",
-
-	},
-	buyme: "https://www.peginc.com/store/lankhmar-city-of-thieves/"
-}
-
-savageWorldsBooksList[7] = {
-	id: 8,
-	core: false,
-	name: {
-		"en-US": "The Last Parsec",
-	},
-	short_name: "peg_tlp",
-	abbrev: "TLP",
-	publisher: {
-		"en-US": "Pinnacle Enterainment Group",
-
-	},
-	year: "2015",
-	copyright: {
-		"en-US": "2015 Pinnacle Enterainment Group",
-
-	},
-	buyme: "https://www.peginc.com/store/the-last-parsec-core/"
-}
-
-savageWorldsBooksList[8] = {
-	id: 13,
-	core: false,
-	name: {
-		"en-US": "Thrilling Tales (2nd Edition)",
-	},
-	short_name: "ad_tt",
-	abbrev: "TALES",
-	publisher: {
-		"en-US": "Adamant Entertainment",
-
-	},
-	year: "",
-	copyright: {
-		"en-US": "Adamant Entertainment",
-
-	},
-	buyme: ""
-}
-
 var classDice = function() {};
 
 classDice.prototype = {
@@ -877,6 +711,312 @@ classDice.prototype = {
 }
 
 
+var globalDiceValues = Array(
+	{
+		id: 0,
+		label: {
+			"en-US" : "n/a"
+		}
+	},
+	{
+		id: 1,
+		label: {
+			"en-US" : "d4"
+		}
+	},
+	{
+		id: 2,
+		label: {
+			"en-US" : "d6"
+		}
+	},
+	{
+		id: 3,
+		label: {
+			"en-US" : "d8"
+		}
+	},
+	{
+		id: 4,
+		label: {
+			"en-US" : "d10"
+		}
+	},
+	{
+		id: 5,
+		label: {
+			"en-US" : "d12"
+		}
+	},
+	{
+		id: 6,
+		label: {
+			"en-US" : "d12+1"
+		}
+	},
+	{
+		id: 7,
+		label: {
+			"en-US" : "d12+2"
+		}
+	},
+	{
+		id: 8,
+		label: {
+			"en-US" : "d12+3"
+		}
+	},
+	{
+		id: 9,
+		label: {
+			"en-US" : "d12+4"
+		}
+	},
+	{
+		id: 10,
+		label: {
+			"en-US" : "d12+5"
+		}
+	},
+	{
+		id: 11,
+		label: {
+			"en-US" : "d12+6"
+		}
+	},
+	{
+		id: 12,
+		label: {
+			"en-US" : "d12+7"
+		}
+	},
+	{
+		id: 13,
+		label: {
+			"en-US" : "d12+8"
+		}
+	},
+	{
+		id: 14,
+		label: {
+			"en-US" : "d12+9"
+		}
+	},
+	{
+		id: 15,
+		label: {
+			"en-US" : "d12+10"
+		}
+	},
+	{
+		id: 16,
+		label: {
+			"en-US" : "d12+11"
+		}
+	},
+	{
+		id: 17,
+		label: {
+			"en-US" : "d12+12"
+		}
+	},
+	{
+		id: 18,
+		label: {
+			"en-US" : "d12+13"
+		}
+	},
+	{
+		id: 19,
+		label: {
+			"en-US" : "d12+14"
+		}
+	}
+);
+
+function getDiceValue( diceID ) {
+	for( var gdv = 0 ; gdv < globalDiceValues.length; gdv++) {
+		if( diceID == globalDiceValues[gdv].id )
+			return globalDiceValues[gdv];
+	}
+	return false;
+}
+function savageCharacter (useLang) {
+	this.name = "";
+	this.background = "";
+
+	this.description = "";
+
+	this.XP = 0;
+
+	this.options = Array();
+
+	// SWD is /always/ available.
+	this.books = Array(
+		savageWorldsBooksList[0]
+	);
+
+	// base attributes...
+	this.attributes = {
+		agility: getDiceValue(1),
+		smarts: getDiceValue(1),
+		spirit: getDiceValue(1),
+		strength: getDiceValue(1),
+		vigor: getDiceValue(1)
+	};
+
+	// derived statistics...
+	this.derived = {
+		pace: 6,
+		charisma: 0,
+		parry: 2,
+		toughness: 4,
+		armor: 0,
+		sanity: 0
+	};
+
+	if( useLang )
+		this.useLang = useLang;
+	else if( localStorage["users_preferred_language"] )
+		this.useLang = localStorage["users_preferred_language"];
+	else
+		this.useLang = "en-US";
+	// character creation perks....
+	this.perks = Array();
+
+	// character development advances....
+	this.advances = Array();
+
+	// skills list...
+	this.skills = Array();
+
+	// edges list...
+	this.edges = Array();
+
+	// gear list...
+	this.gear = Array();
+
+	this.genderOptions = Array(
+		{
+			id: "m",
+			label: this.getTranslation( "GENERAL_MALE" )
+		},
+		{
+			id: "f",
+			label: this.getTranslation( "GENERAL_FEMALE" )
+		},
+		{
+			id: "o",
+			label: this.getTranslation( "GENERAL_OTHER" )
+		}
+	);
+	this.gender = this.genderOptions[0];
+}
+
+savageCharacter.prototype.setGender = function( genderID ) {
+	for(var gc = 0; gc < this.genderOptions.length; gc++) {
+		if( genderID == this.genderOptions[gc].id ) {
+			this.gender = this.genderOptions[gc];
+			return true;
+		}
+	}
+	return false;
+}
+
+savageCharacter.prototype.addEdge = function(bookId, tag) {
+}
+
+savageCharacter.prototype.removeEdge = function(indexNumber) {
+}
+
+savageCharacter.prototype.addHindrance = function(bookId, tag) {
+}
+
+savageCharacter.prototype.removeHindrance = function(indexNumber) {
+}
+
+savageCharacter.prototype.addGear = function(bookId, tag) {
+}
+
+savageCharacter.prototype.removeGear = function(indexNumber) {
+}
+
+// Validate does both calculation and validation of the character as per the base rules and settings
+savageCharacter.prototype.validate = function() {
+}
+
+savageCharacter.prototype.loadJSON = function( jsonString ) {
+	if( jsonString ) {
+		importObject = JSON.parse(jsonString);
+		if( importObject ) {
+			this.name = importObject.name;
+			this.background = importObject.background;
+			this.description = importObject.description;
+			for( attribute in this.attributes ) {
+				if( importObject.attributes[ attribute ] ) {
+					this.setAttribute( attribute, importObject.attributes[ attribute ] );
+				}
+			}
+
+			if( importObject.gender )
+				this.setGender( importObject.gender  );
+
+			this.validate();
+			return true;
+		}
+	}
+
+	return false;
+}
+
+savageCharacter.prototype.setAttribute = function( attributeName, attributeID ) {
+	attributeName = attributeName.toLowerCase().trim();
+	if( this.attributes[attributeName] )
+		this.attributes[attributeName] = getDiceValue( attributeID );
+}
+
+savageCharacter.prototype.saveJSON = function() {
+	exportObject = {};
+	exportObject.name = this.name;
+	exportObject.background = this.background;
+	exportObject.description = this.description;
+
+	exportObject.xp = this.xp;
+	exportObject.gender = this.gender.id;
+
+	exportObject.attributes = {
+		agility: this.attributes.agility.id,
+		smarts: this.attributes.smarts.id,
+		spirit: this.attributes.spirit.id,
+		strength: this.attributes.strength.id,
+		vigor: this.attributes.vigor.id,
+	}
+
+	return JSON.stringify( exportObject );
+}
+
+savageCharacter.prototype.getTranslation = function(langKey) {
+	for( lang_count = 0; lang_count < availableLanguages.length; lang_count++ ) {
+		if( availableLanguages[lang_count].short_code == this.useLang ) {
+
+			if(availableLanguages[lang_count].translations[langKey] ) {
+				return availableLanguages[lang_count].translations[langKey];
+			} else {
+				return langKey;
+			}
+		}
+	}
+	return langKey;
+}
+
+
+savageCharacter.prototype.getLocalName = function( incoming_string_array ) {
+		if( incoming_string_array[ this.useLang] ) {
+			return incoming_string_array[ this.useLang];
+		} else {
+			return incoming_string_array[ "en-US" ];
+		}
+}
 /*
 	Savage Worlds Web Tools by Jeffrey Gordon is licensed under a
 	Creative Commons Attribution 4.0 International License.
@@ -886,7 +1026,7 @@ var sciFiCreator = function() {};
 sciFiCreator.prototype = {
 
 	init: function(object_type, object_label, available_sizes, available_mods, available_options) {
-		this.item_name = "(nameless)";
+		this.item_name = "";
 		this.object_description = "";
 		this.useLang = "en-US";
 
@@ -1975,9 +2115,57 @@ sciFiCreator.prototype = {
 
 angular.module("baseApp").controller(
 	"coreChargenController",
-	function() {
+	[
+		'$rootScope',
+		'$translate',
+		'$scope',
+		function ($rootScope, $translate, $scope) {
 
-	}
+			var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_chargen";
+			var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.chargen";
+			var optionsLocalStorageVariable = "com.jdg.swwt2.options.chargen";
+			var itemType = "chargen";
+			var itemName = "Character";
+
+
+
+			$translate([
+				'APP_TITLE', 'INDEX_BUTTON_CORE_CHAR'
+			]).then(
+				function (translation) {
+
+					$rootScope.title_tag = translation.INDEX_BUTTON_CORE_CHAR + " | " + translation.APP_TITLE;
+					$rootScope.subtitle_tag = translation.INDEX_BUTTON_CORE_CHAR;
+				}
+			);
+
+			localizeDiceValues();
+
+			$scope.diceValues = Array();
+
+			for(gdvc = 0; gdvc < globalDiceValues.length; gdvc++) {
+				if( 0 < globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id < 6 )
+					$scope.diceValues.push( globalDiceValues[gdvc] );
+			}
+
+			$scope.savageCharacter = new savageCharacter( localStorage["users_preferred_language"] );
+
+			if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
+				$scope.savageCharacter.loadJSON( localStorage[ currentItemLocalStorageVariable ] );
+			}
+
+
+
+			$scope.charGenAttributes = $scope.savageCharacter.attributes;
+			$scope.validateAndSave = function() {
+				$scope.savageCharacter.validate();
+				localStorage[currentItemLocalStorageVariable] = $scope.savageCharacter.saveJSON();
+			}
+			$scope.justSave = function() {
+				localStorage[currentItemLocalStorageVariable] = $scope.savageCharacter.saveJSON();
+			}
+		}
+	]
 );
 angular.module("baseApp").controller(
 	"coreDiceController",
@@ -2258,16 +2446,16 @@ angular.module("baseApp").controller(
 						//console.log("...", skill_key.substring(0, "SKILL_KNOWLEDGE".length));
 						if( skill_key.substring(0, "SKILL_KNOWLEDGE".length) == "SKILL_KNOWLEDGE") {
 							if( parsed_skills[skill_key].special[ localStorage["users_preferred_language"] ] )
-								entry_object.display_skills += translation[skill_key.substring(0, "SKILL_KNOWLEDGE".length)] + " (" + parsed_skills[skill_key].special[ localStorage["users_preferred_language"] ] + "): " + parsed_skills[skill_key].value + ", ";
+								entry_object.display_skills += get_local_skill_name(skill_key.substring(0, "SKILL_KNOWLEDGE".length)) + " (" + parsed_skills[skill_key].special[ localStorage["users_preferred_language"] ] + "): " + parsed_skills[skill_key].value + ", ";
 							else
-								entry_object.display_skills += translation[skill_key.substring(0, "SKILL_KNOWLEDGE".length)] + " (" + parsed_skills[skill_key].special["en-US"] + "): " + parsed_skills[skill_key].value + ", ";
+								entry_object.display_skills += get_local_skill_name(skill_key.substring(0, "SKILL_KNOWLEDGE".length)) + " (" + parsed_skills[skill_key].special["en-US"] + "): " + parsed_skills[skill_key].value + ", ";
 						} else if ( skill_key.substring(0, "SKILL_CUSTOM".length) == "SKILL_CUSTOM") {
 							if( parsed_skills[skill_key].special[ localStorage["users_preferred_language"] ] )
 								entry_object.display_skills += parsed_skills[skill_key].special[ localStorage["users_preferred_language"] ] + ": " + parsed_skills[skill_key].value + ", ";
 							else
 								entry_object.display_skills += parsed_skills[skill_key].special["en-US"] + ": " + parsed_skills[skill_key].value + ", ";
 						} else {
-							entry_object.display_skills += translation[skill_key] + ": " + parsed_skills[skill_key].value + ", ";
+							entry_object.display_skills += get_local_skill_name(skill_key) + ": " + parsed_skills[skill_key].value + ", ";
 						}
 					}
 
@@ -4749,6 +4937,708 @@ angular.module("baseApp").controller(
 		}
 	]
 );
+
+/*
+
+Data here is NOT Licensed under the Creative Commons and is owned by Pinnacle Entertainment Group.
+
+This product references the Savage Worlds game system, available from Pinnacle Entertainment Group at www.peginc.com.
+Savage Worlds and all associated logos and trademarks are copyrights of Pinnacle Entertainment Group. Used with permission.
+Pinnacle makes no representation or warranty as to the quality, viability, or suitability for purpose of this product.
+
+The entries in this file are from Savage Worlds Role Playing Game and are owned by Pinnacle Entertainment Group.
+
+DEVELOPERS: Do Not Edit or Pull Request this file, it is auto generated from a rudimentary admin area!
+*/
+
+var savageWorldsBooksList = Array();
+
+savageWorldsBooksList[0] = {
+	id: 1,
+	core: true,
+	name: {
+		"en-US": "Savage Worlds Deluxe",
+		"de-DE": "German Savage Worlds",
+		"pt-BR": "Savage Brazilians",
+	},
+	short_name: "peg_swd_ee",
+	abbrev: "SWD:EE",
+	publisher: {
+		"en-US": "Pinnacle Entertainment Group",
+		"de-DE": "Pinnacle Entertainment Group",
+		"pt-BR": "PEG",
+
+	},
+	year: "2011",
+	copyright: {
+		"en-US": "2011 Pinnacle Entertainment Group",
+		"de-DE": "2011 Pinnacle Entertainment Group",
+		"pt-BR": "Poog",
+
+	},
+	buyme: "http://www.peginc.com/store/savage-worlds-deluxe/"
+}
+
+savageWorldsBooksList[1] = {
+	id: 2,
+	core: false,
+	name: {
+		"en-US": "Fantasy Companion",
+		"pt-BR": "Brazilian Fantasy",
+		"de-DE": "German Fantasy",
+	},
+	short_name: "peg_swfc",
+	abbrev: "FC",
+	publisher: {
+		"en-US": "Pinnacle Entertainment Group",
+		"pt-BR": "Pinnacle Entertainment Group",
+		"de-DE": "",
+
+	},
+	year: "2012",
+	copyright: {
+		"en-US": "2012 Pinnacle Entertainment Group",
+		"pt-BR": "",
+		"de-DE": "",
+
+	},
+	buyme: "http://www.peginc.com/store/savage-worlds-fantasy-companion/"
+}
+
+savageWorldsBooksList[2] = {
+	id: 3,
+	core: false,
+	name: {
+		"en-US": "Horror Companion",
+	},
+	short_name: "peg_swhc",
+	abbrev: "HC",
+	publisher: {
+		"en-US": "Pinnacle Entertainment Group",
+
+	},
+	year: "2012",
+	copyright: {
+		"en-US": "2012 Pinnacle Entertainment Group",
+
+	},
+	buyme: "http://www.peginc.com/store/savage-worlds-horror-companion-2/"
+}
+
+savageWorldsBooksList[3] = {
+	id: 4,
+	core: false,
+	name: {
+		"en-US": "Science Fiction Companion",
+	},
+	short_name: "peg_sfc",
+	abbrev: "SFC",
+	publisher: {
+		"en-US": "Pinnacle Entertainment Group",
+
+	},
+	year: "2014",
+	copyright: {
+		"en-US": "2014 Pinnacle Entertainment Group",
+
+	},
+	buyme: "https://www.peginc.com/store/science-fiction-companion-le-bundle/"
+}
+
+savageWorldsBooksList[4] = {
+	id: 5,
+	core: false,
+	name: {
+		"en-US": "Super Powers Companion",
+	},
+	short_name: "peg_spc2",
+	abbrev: "SPC",
+	publisher: {
+		"en-US": "Pinnacle Entertainment Group",
+
+	},
+	year: "2014",
+	copyright: {
+		"en-US": "2014 Pinnacle Entertainment Group",
+
+	},
+	buyme: "https://www.peginc.com/store/super-powers-companion-second-edition-le/"
+}
+
+savageWorldsBooksList[5] = {
+	id: 6,
+	core: false,
+	name: {
+		"en-US": "Savage Free Bestiary",
+	},
+	short_name: "sfb",
+	abbrev: "SFB",
+	publisher: {
+		"en-US": "(Unknown) Pinnacle Enterainment Group, Butch Curry, Andrea �Lord Lance� Parducci and probably others",
+
+	},
+	year: "",
+	copyright: {
+		"en-US": "Butch Curry, Open?",
+
+	},
+	buyme: "https://docs.google.com/document/edit?id=1qu4zzMYbPqOquVlCfgpPeoCmCEqGUgWh5dz-rpKJ1ck&hl=it&authkey=CIySp98E"
+}
+
+savageWorldsBooksList[6] = {
+	id: 7,
+	core: false,
+	name: {
+		"en-US": "Lankhmar",
+	},
+	short_name: "peg_lank",
+	abbrev: "LANK",
+	publisher: {
+		"en-US": "Pinnacle Enterainment Group",
+
+	},
+	year: "2015",
+	copyright: {
+		"en-US": "2015 Pinnacle Entertainment Group, Trademarks of the Estate of Fritz Leiber.",
+
+	},
+	buyme: "https://www.peginc.com/store/lankhmar-city-of-thieves/"
+}
+
+savageWorldsBooksList[7] = {
+	id: 8,
+	core: false,
+	name: {
+		"en-US": "The Last Parsec",
+	},
+	short_name: "peg_tlp",
+	abbrev: "TLP",
+	publisher: {
+		"en-US": "Pinnacle Enterainment Group",
+
+	},
+	year: "2015",
+	copyright: {
+		"en-US": "2015 Pinnacle Enterainment Group",
+
+	},
+	buyme: "https://www.peginc.com/store/the-last-parsec-core/"
+}
+
+savageWorldsBooksList[8] = {
+	id: 13,
+	core: false,
+	name: {
+		"en-US": "Thrilling Tales (2nd Edition)",
+	},
+	short_name: "ad_tt",
+	abbrev: "TALES",
+	publisher: {
+		"en-US": "Adamant Entertainment",
+
+	},
+	year: "",
+	copyright: {
+		"en-US": "Adamant Entertainment",
+
+	},
+	buyme: ""
+}
+
+/*
+
+	Data here is NOT Licensed under the Creative Commons and is owned by Pinnacle Entertainment Group.
+
+	This product references the Savage Worlds game system, available from Pinnacle Entertainment Group at www.peginc.com.
+	Savage Worlds and all associated logos and trademarks are copyrights of Pinnacle Entertainment Group. Used with permission.
+	Pinnacle makes no representation or warranty as to the quality, viability, or suitability for purpose of this product.
+
+	The entries in this file are from Savage Worlds Role Playing Game and are owned by Pinnacle Entertainment Group.
+
+	DEVELOPERS: Do Not Edit or Pull Request this file, it is auto generated from a rudimentary admin area!
+	*/
+
+	var savageWorldsSkillList = Array(
+
+
+{
+		 'id': 'SKILL_BOATING',
+	 name: {
+		 'en-US': 'Boating',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': 'Boating',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'smarts',
+		 'for_power': '',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_CLIMBING',
+	 name: {
+		 'en-US': 'Climbing',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': 'Climbing',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'strength',
+		 'for_power': '',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_DRIVING',
+	 name: {
+		 'en-US': 'Driving',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'agility',
+		 'for_power': '',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_FAITH',
+	 name: {
+		 'en-US': 'Faith',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'spirit',
+		 'for_power': 'miracles',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_FIGHTING',
+	 name: {
+		 'en-US': 'Fighting',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'agility',
+		 'for_power': '',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_GAMBLING',
+	 name: {
+		 'en-US': 'Gambling',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'smarts',
+		 'for_power': '',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_HEALING',
+	 name: {
+		 'en-US': 'Healing',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'smarts',
+		 'for_power': '',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_INTIMIDATION',
+	 name: {
+		 'en-US': 'Intimidation',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'spirit',
+		 'for_power': '',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_INVESTIGATION',
+	 name: {
+		 'en-US': 'Investigation',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'smarts',
+		 'for_power': '',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_KNOWLEDGE',
+	 name: {
+		 'en-US': 'Knowledge',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'smarts',
+		 'for_power': '',
+		 'specify': 1
+},
+{
+		 'id': 'SKILL_LOCKPICKING',
+	 name: {
+		 'en-US': 'Lockpicking',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'agility',
+		 'for_power': '',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_NOTICE',
+	 name: {
+		 'en-US': 'Notice',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'smarts',
+		 'for_power': '',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_PERSUASION',
+	 name: {
+		 'en-US': 'Persuasion',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'spirit',
+		 'for_power': '',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_PILOTING',
+	 name: {
+		 'en-US': 'Piloting',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'agility',
+		 'for_power': '',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_PSIONICS',
+	 name: {
+		 'en-US': 'Psionics',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'smarts',
+		 'for_power': 'psionics',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_REPAIR',
+	 name: {
+		 'en-US': 'Repair',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'smarts',
+		 'for_power': '',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_RIDING',
+	 name: {
+		 'en-US': 'Riding',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'agility',
+		 'for_power': '',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_SHOOTING',
+	 name: {
+		 'en-US': 'Shooting',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'agility',
+		 'for_power': '',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_SPELLCASTING',
+	 name: {
+		 'en-US': 'Spellcasting',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'smarts',
+		 'for_power': 'magic',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_STEALTH',
+	 name: {
+		 'en-US': 'Stealth',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'agility',
+		 'for_power': '',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_STREETWISE',
+	 name: {
+		 'en-US': 'Streetwise',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'smarts',
+		 'for_power': '',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_SURVIVAL',
+	 name: {
+		 'en-US': 'Survival',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'smarts',
+		 'for_power': '',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_SWIMMING',
+	 name: {
+		 'en-US': 'Swimming',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'agility',
+		 'for_power': '',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_TAUNT',
+	 name: {
+		 'en-US': 'Taunt',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'smarts',
+		 'for_power': '',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_THROWING',
+	 name: {
+		 'en-US': 'Throwing',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'agility',
+		 'for_power': '',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_TRACKING',
+	 name: {
+		 'en-US': 'Tracking',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'smarts',
+		 'for_power': '',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_WEIRD_SCIENCE',
+	 name: {
+		 'en-US': 'Weird Science',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '1',
+		 'attribute': 'smarts',
+		 'for_power': 'weird-science',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_GUTS',
+	 name: {
+		 'en-US': 'Guts',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '2',
+		 'attribute': 'spirit',
+		 'for_power': '',
+		 'specify': 0
+}
+);
+
 
 /*
 
@@ -13673,34 +14563,6 @@ availableLanguages.push ({
 	translations: {
 			BUTTON_LANG_EN: 'English',
 			BUTTON_LANG_BR: 'German',
-			SKILL_BOATING: 'de-Boating',
-			SKILL_CLIMBING: 'de-Climbing',
-			SKILL_DRIVING: 'de-Driving',
-			SKILL_FAITH: 'de-Faith',
-			SKILL_FIGHTING: 'de-Fighting',
-			SKILL_GAMBLING: 'de-Gambling',
-			SKILL_GUTS: 'de-Guts',
-			SKILL_HEALING: 'de-Healing',
-			SKILL_INTIMIDATION: 'de-Intimidation',
-			SKILL_INVESTIGATION: 'de-Investigation',
-			SKILL_KNOWLEDGE: 'de-Knowledge',
-			SKILL_LOCKPICKING: 'de-Lockpicking',
-			SKILL_NOTICE: 'de-',
-			SKILL_PERSUASION: 'de-',
-			SKILL_PILOTING: 'de-Piloting',
-			SKILL_PSIONICS: 'de-Psionics',
-			SKILL_REPAIR: 'de-Repair',
-			SKILL_RIDING: 'de-Riding',
-			SKILL_SHOOTING: 'de-Shooting',
-			SKILL_SPELLCASTING: 'de-Spellcasting',
-			SKILL_STEALTH: 'de-Stealth',
-			SKILL_STREETWISE: 'de-Streetwise',
-			SKILL_SURVIVAL: 'de-Survival',
-			SKILL_SWIMMING: 'de-Swimming',
-			SKILL_TAUNT: 'de-Taunt',
-			SKILL_THROWING: 'de-Throwing',
-			SKILL_TRACKING: 'de-Tracking',
-			SKILL_WEIRD_SCIENCE: 'de-Weird Science',
 
 	}
 
@@ -13732,10 +14594,17 @@ availableLanguages.push ({
 			INDEX_BUTTON_SCIFI_WALKER: 'Walker Maker',
 			INDEX_BUTTON_SCIFI_WORLD: 'World Maker',
 			GENERAL_NEW: 'New',
+			GENERAL_NAME: 'Name',
+			GENERAL_RACE: 'Race',
+			GENERAL_DESCRIPTION: 'Description',
+			GENERAL_BACKGROUND: 'Background',
+			GENERAL_GENDER: 'Gender',
 			GENERAL_LOAD: 'Load',
 			GENERAL_SAVE: 'Save',
 			GENERAL_IMPORT: 'Import',
 			GENERAL_EXPORT: 'Export',
+			GENERAL_OPTIONS: 'Options',
+			GENERAL_BOOKS: 'Books',
 			GENERAL_PRINT: 'Print',
 			GENERAL_YES: 'Yes',
 			GENERAL_NO: 'No',
@@ -13744,36 +14613,33 @@ availableLanguages.push ({
 			GENERAL_REMOVE: 'Remove',
 			GENERAL_DELETE: 'Delete',
 			GENERAL_ADD: 'Add',
+			GENERAL_MALE: 'Male',
+			GENERAL_FEMALE: 'Female',
+			GENERAL_OTHER: 'Other',
 			GENERAL_BBCODE: 'BB Code',
 			GENERAL_JSON: 'JSON',
-			SKILL_BOATING: 'Boating',
-			SKILL_CLIMBING: 'Climbing',
-			SKILL_DRIVING: 'Driving',
-			SKILL_FAITH: 'Faith',
-			SKILL_FIGHTING: 'Fighting',
-			SKILL_GAMBLING: 'Gambling',
-			SKILL_GUTS: 'Guts',
-			SKILL_HEALING: 'Healing',
-			SKILL_INTIMIDATION: 'Intimidation',
-			SKILL_INVESTIGATION: 'Investigation',
-			SKILL_KNOWLEDGE: 'Knowledge',
-			SKILL_LOCKPICKING: 'Lockpicking',
-			SKILL_NOTICE: 'Notice',
-			SKILL_PERSUASION: 'Persuasion',
-			SKILL_PILOTING: 'Piloting',
-			SKILL_PSIONICS: 'Psionics',
-			SKILL_REPAIR: 'Repair',
-			SKILL_RIDING: 'Riding',
-			SKILL_SHOOTING: 'Shooting',
-			SKILL_SPELLCASTING: 'Spellcasting',
-			SKILL_STEALTH: 'Stealth',
-			SKILL_STREETWISE: 'Streetwise',
-			SKILL_SURVIVAL: 'Survival',
-			SKILL_SWIMMING: 'Swimming',
-			SKILL_TAUNT: 'Taunt',
-			SKILL_THROWING: 'Throwing',
-			SKILL_TRACKING: 'Tracking',
-			SKILL_WEIRD_SCIENCE: 'Weird Science',
+			GENERAL_ATTRIBUTES: 'Attributes',
+			ATTRIBUTE_AGILITY: 'Agility',
+			ATTRIBUTE_SMARTS: 'Smarts',
+			ATTRIBUTE_SPIRIT: 'Spirit',
+			ATTRIBUTE_STRENGTH: 'Strength',
+			ATTRIBUTE_VIGOR: 'Vigor',
+			EXTRAS_SKILLS: 'Skills',
+			EXTRAS_H4_ABILITIES: 'Abilities',
+			EXTRAS_BUY_BOOK: 'Buy this book',
+			GENERAL_TOUGHNESS: 'Toughness',
+			GENERAL_PACE: 'Pace',
+			GENERAL_CHARISMA: 'Charisma',
+			GENERAL_PARRY: 'Parry',
+			GENERAL_HINDARANCES: 'Hindrances',
+			GENERAL_EDGES: 'Edges',
+			GENERAL_GEAR: 'Gear',
+			CHARGEN_ATTRIBUTES_AND_SKILLS: 'Attributes & Skills',
+			CHARGEN_CHARACTER_INFORMATION: 'Character Information',
+			CHARGEN_AGILITY_SKILLS: 'Agility Skills',
+			CHARGEN_SMARTS_SKILLS: 'Smarts Skills',
+			CHARGEN_SPIRIT_SKILLS: 'Spirit Skills',
+			CHARGEN_STRENGTH_SKILLS: 'Strength Skills',
 			DICE_TITLE_TAG: 'Flexible Dice Roller | Savage Worlds Web Tools',
 			DICE_H3_DICE: 'Dice',
 			DICE_H3_ROLL_TYPE: 'Roll Type',
@@ -13818,23 +14684,7 @@ availableLanguages.push ({
 			EXTRAS_RESULTS: 'Results',
 			EXTRAS_NO_RESULTS: 'No extras were found with your search terms.',
 			EXTRAS_RESULTS_INTRO: 'Please search for a name in the search field.',
-			EXTRAS_ATTRIBUTES: 'Attributes',
-			EXTRAS_ATTRIBUTE_AGILITY: 'Agility',
-			EXTRAS_ATTRIBUTE_SMARTS: 'Smarts',
-			EXTRAS_ATTRIBUTE_SPIRIT: 'Spirit',
-			EXTRAS_ATTRIBUTE_STRENGTH: 'Strength',
-			EXTRAS_ATTRIBUTE_VIGOR: 'Vigor',
-			EXTRAS_SKILLS: 'Skills',
-			EXTRAS_H4_ABILITIES: 'Abilities',
-			EXTRAS_BUY_BOOK: 'Buy this book',
-			EXTRAS_TOUGHNESS: 'Toughness',
-			EXTRAS_PACE: 'Pace',
-			EXTRAS_CHARISMA: 'Charisma',
-			EXTRAS_PARRY: 'Parry',
-			EXTRAS_HINDARANCES: 'Hindrances',
-			EXTRAS_EDGES: 'Edges',
 			EXTRAS_TREASURE: 'Treasure',
-			EXTRAS_GEAR: 'Gear',
 			CREATOR_SIZE: 'Size',
 			CREATOR_ACC_TS: 'Acc/TS',
 			CREATOR_CLIMB: 'Climb',

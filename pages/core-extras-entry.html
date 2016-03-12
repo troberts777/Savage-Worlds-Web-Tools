@@ -5,12 +5,12 @@
 		<div ng-bind-html="extra_item.local_blurb"></div>
 
 		<div class="stat-block"  ng-hide="{{(extra_item.parsed_attributes.agility == '' || extra_item.parsed_attributes.agility == '0') && (extra_item.parsed_attributes.smarts == '' || extra_item.parsed_attributes.smarts == '0') && (extra_item.parsed_attributes.spirit == '' || extra_item.parsed_attributes.spirit == '0') && (extra_item.parsed_attributes.strength == '' || extra_item.parsed_attributes.strength == '0')  && (extra_item.parsed_attributes.vigor == '' || extra_item.parsed_attributes.vigor == '0') }}" >
-			<strong><span translate="EXTRAS_ATTRIBUTES">Attributes</span>:</strong>
-			<span translate="EXTRAS_ATTRIBUTE_AGILITY">Agility:</span>: {{extra_item.parsed_attributes.agility}},
-			<span translate="EXTRAS_ATTRIBUTE_SMARTS">Smarts</span>: {{extra_item.parsed_attributes.smarts}},
-			<span translate="EXTRAS_ATTRIBUTE_SPIRIT">Spirit</span>: {{extra_item.parsed_attributes.spirit}},
-			<span translate="EXTRAS_ATTRIBUTE_STRENGTH">Strength</span>: {{extra_item.parsed_attributes.strength}},
-			<span translate="EXTRAS_ATTRIBUTE_VIGOR">Vigor</span>: {{extra_item.parsed_attributes.vigor}}
+			<strong><span translate="GENERAL_ATTRIBUTES">Attributes</span>:</strong>
+			<span translate="ATTRIBUTE_AGILITY">Agility:</span>: {{extra_item.parsed_attributes.agility}},
+			<span translate="ATTRIBUTE_SMARTS">Smarts</span>: {{extra_item.parsed_attributes.smarts}},
+			<span translate="ATTRIBUTE_SPIRIT">Spirit</span>: {{extra_item.parsed_attributes.spirit}},
+			<span translate="ATTRIBUTE_STRENGTH">Strength</span>: {{extra_item.parsed_attributes.strength}},
+			<span translate="ATTRIBUTE_VIGOR">Vigor</span>: {{extra_item.parsed_attributes.vigor}}
 		</div>
 
 
@@ -20,18 +20,18 @@
 		</div>
 
 		<div class="stat-block" ng-hide="{{(extra_item.pace == '' || extra_item.pace == '0') && (extra_item.parry == '' || extra_item.parry == '0') && (extra_item.display_toughness == '' || extra_item.display_toughness == '0') && (extra_item.charisma == '' || extra_item.charisma == '0') }}">
-			<strong><span translate="EXTRAS_PACE">Pace</span>:</strong> {{extra_item.pace}},
-			<strong><span translate="EXTRAS_PARRY">Parry</span>:</strong> {{extra_item.parry}},
-			<strong><span translate="EXTRAS_TOUGHNESS">Toughness</span>:</strong> {{extra_item.display_toughness}}
-			<span ng-hide="{{extra_item.charisma == 0}}">, <strong><span translate="EXTRAS_ARMOR">Charisma</span>:</strong> {{extra_item.charisma}}</span>
+			<strong><span translate="GENERAL_PACE">Pace</span>:</strong> {{extra_item.pace}},
+			<strong><span translate="GENERAL_PARRY">Parry</span>:</strong> {{extra_item.parry}},
+			<strong><span translate="GENERAL_TOUGHNESS">Toughness</span>:</strong> {{extra_item.display_toughness}}
+			<span ng-hide="{{extra_item.charisma == 0}}">, <strong><span translate="GENERAL_ARMOR">Charisma</span>:</strong> {{extra_item.charisma}}</span>
 		</div>
 
 		<div ng-hide="{{extra_item.local_hindrances == ''}}">
-			<strong><span translate="EXTRAS_HINDARANCES">Hindrances</span></strong>: <span ng-bind-html="extra_item.local_hindrances"></span>
+			<strong><span translate="GENERAL_HINDARANCES">Hindrances</span></strong>: <span ng-bind-html="extra_item.local_hindrances"></span>
 		</div>
 
 		<div ng-hide="{{extra_item.local_edges == ''}}">
-			<strong><span translate="EXTRAS_EDGES">Edges</span></strong>: <span ng-bind-html="extra_item.local_edges"></span>
+			<strong><span translate="GENERAL_EDGES">Edges</span></strong>: <span ng-bind-html="extra_item.local_edges"></span>
 		</div>
 
 		<div ng-hide="{{extra_item.local_treasure == ''}}">
@@ -39,7 +39,7 @@
 		</div>
 
 		<div ng-hide="{{extra_item.local_gear == '' || extra_item.local_gear == '[]'}}">
-			<strong><span translate="EXTRAS_GEAR">Gear</span></strong>: <span ng-bind-html="extra_item.local_gear"></span>
+			<strong><span translate="GENERAL_GEAR">Gear</span></strong>: <span ng-bind-html="extra_item.local_gear"></span>
 		</div>
 
 		<div ng-hide="{{extra_item.local_abilities == ''}}">

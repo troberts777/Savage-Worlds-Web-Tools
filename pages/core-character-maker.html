@@ -1,1 +1,137 @@
-Character Maker template
+<div class="sub-menu">
+	<div class="row">
+		<div class="column small-12">
+			<button ng-click="newDialog()" class="secondary small button no-bottom-margin" translate="GENERAL_NEW">New</button>
+			<button ng-click="printDialog()" class="secondary small button no-bottom-margin" translate="GENERAL_PRINT">Print</button>
+			<button ng-click="loadDialog()" class="secondary small button no-bottom-margin" translate="GENERAL_LOAD">Load</button>
+			<button ng-click="saveDialog()" class="secondary small button no-bottom-margin" translate="GENERAL_SAVE">Save</button>
+			<button ng-click="importDialog()" class="secondary small button no-bottom-margin" translate="GENERAL_IMPORT">Import</button>
+			<button ng-click="exportDialog()" class="secondary small button no-bottom-margin" translate="GENERAL_EXPORT">Export</button>
+			<button ng-click="optionsDialog()" class="secondary small button no-bottom-margin" translate="GENERAL_OPTIONS">Options</button>
+		</div>
+	</div>
+</div>
+<!-- <div ng-include="'pages/chargen-dialog-new.html'"></div>
+<div ng-include="'pages/chargen-dialog-load.html'"></div>
+<div ng-include="'pages/chargen-dialog-save.html'"></div>
+<div ng-include="'pages/chargen-dialog-import.html'"></div>
+<div ng-include="'pages/chargen-dialog-export.html'"></div>
+<div ng-include="'pages/chargen-dialog-options.html'"></div> -->
+
+
+
+<div class="main-content">
+	<div class="row">
+		<div class="column small-12">
+<!-- 			<h2 translate="INDEX_BUTTON_CORE_CHAR">Character Creator</h2> -->
+<!-- 			<div class="creator-preview" ng-bind-html="creator_preview"></div> -->
+		<fieldset class="fieldset">
+			<legend translate="CHARGEN_CHARACTER_INFORMATION">Character Information</legend>
+
+			<div class="row">
+
+			  	<div class="small-12 columns">
+			  		<label><span translate="GENERAL_NAME">Name</span>:
+			  			<input type="text" ng-model="savageCharacter.name" ng-keyup="justSave()" />
+			  		</label>
+			  	</div>
+			</div>
+			<div class="row">
+
+			  	<div class="small-12 medium-6 columns">
+
+
+			  		<label><span translate="GENERAL_RACE">Race</span>:
+			  			<input type="text" />
+			  		</label>
+			  		<label><span translate="GENERAL_DESCRIPTION">Description</span>:
+			  			<textarea rows=4 ng-model="savageCharacter.description" ng-keyup="justSave()"></textarea>
+			  		</label>
+			  	</div>
+
+			  	<div class="small-12 medium-6 columns">
+			  		<label><span translate="GENERAL_GENDER">Gender</span>:
+			  			<select ng-options="genderItem as genderItem.label for genderItem in savageCharacter.genderOptions track by genderItem.id" ng-model="savageCharacter.gender" ng-change="justSave()"></select>
+			  		</label>
+
+			  		<label><span translate="GENERAL_BACKGROUND">Background</span>:
+			  			<textarea rows=4 ng-model="savageCharacter.background" ng-keyup="justSave()"></textarea>
+			  		</label>
+			  	</div>
+			</div>
+			</fieldset>
+		</div>
+	</div>
+	<div class="row">
+		<div class="column small-12">
+			<fieldset class="fieldset">
+				<legend translate="CHARGEN_ATTRIBUTES_AND_SKILLS">Attributes and Skills</legend>
+
+				<div class="row">
+
+				  <div class="small-12 medium-2-5 columns text-center">
+				    <label class="attribute">
+				    	<span translate="ATTRIBUTE_AGILITY">Agility</span>
+
+				    	<select ng-options="diceItem as diceItem.local_label for diceItem in diceValues track by diceItem.id" ng-model="savageCharacter.attributes.agility" ng-change="validateAndSave()">
+				    	</select>
+				    </label>
+				  </div>
+				  <div class="small-12 medium-2-5 columns text-center">
+			    	<label class="attribute">
+				    	<span translate="ATTRIBUTE_SMARTS">Smarts</span>
+				    	<select ng-options="diceItem as diceItem.local_label for diceItem in diceValues track by diceItem.id" ng-model="savageCharacter.attributes.smarts" ng-change="validateAndSave()">
+				    	</select>
+				    </label>
+				  </div>
+				  <div class="small-12 medium-2-5 columns text-center">
+			    	<label class="attribute">
+				    	<span translate="ATTRIBUTE_SPIRIT">Spirit</span>
+				    	<select ng-options="diceItem as diceItem.local_label for diceItem in diceValues track by diceItem.id" ng-model="savageCharacter.attributes.spirit" ng-change="validateAndSave()">
+				    	</select>
+				    </label>
+				  </div>
+				  <div class="small-12 medium-2-5 columns text-center">
+			    	<label class="attribute">
+				    	<span translate="ATTRIBUTE_STRENGTH">Strength</span>
+				    	<select ng-options="diceItem as diceItem.local_label for diceItem in diceValues track by diceItem.id" ng-model="savageCharacter.attributes.strength" ng-change="validateAndSave()">
+				    	</select>
+				    </label>
+				  </div>
+				  <div class="small-12 medium-2-5 columns text-center">
+			    	<label class="attribute">
+				    	<span translate="ATTRIBUTE_VIGOR">Vigor</span>
+				    	<select ng-options="diceItem as diceItem.local_label for diceItem in diceValues track by diceItem.id" ng-model="savageCharacter.attributes.vigor" ng-change="validateAndSave()">
+				    	</select>
+				    </label>
+				  </div>
+
+				</div>
+
+				<div class="row">
+					<div class="small-12 medium-3 columns">
+						<h5 class="text-center" translate="CHARGEN_AGILITY_SKILLS">Agility Skills</h5>
+					</div>
+					<div class="small-12 medium-3 columns">
+						<h5 class="text-center" translate="CHARGEN_SMARTS_SKILLS">Smarts Skills</h5>
+					</div>
+					<div class="small-12 medium-3 columns">
+						<h5 class="text-center" translate="CHARGEN_SPIRIT_SKILLS">Spirit Skills</h5>
+					</div>
+					<div class="small-12 medium-3 columns">
+						<h5 class="text-center" translate="CHARGEN_STRENGTH_SKILLS">Strength Skills</h5>
+					</div>
+				</div>
+
+			</fieldset>
+		</div>
+	</div>
+	<div class="row">
+		<div class="column small-12 medium-6">
+			left col
+		</div>
+		<div class="column small-12 medium-6">
+			right col
+		</div>
+	</div>
+</div>

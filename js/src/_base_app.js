@@ -122,7 +122,6 @@ angular.module('baseApp').controller(
 		'$route',
 		function ($translate, $scope, $route) {
 
-			console.log("$scope",  $scope);
 			$scope.available_languages = Array();
 			$scope.users_language = {};
 			for( lang_count = 0; lang_count < availableLanguages.length; lang_count++) {

@@ -1,249 +1,279 @@
-/* line 17, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+/* Define mobile styles */
+/* max-width 640px, mobile-only styles, use when QAing mobile issues */
+@media only screen and (min-width: 40.063em) {
+  /* line 12, /srv/www/jdgwf.com/swwt2/public_html/css/src/_foundation6-5-cols.scss */
+  .medium-2-5 {
+    width: 20%; } }
+
+/* min-width 641px, medium screens */
+/* min-width 641px and max-width 1024px, use when QAing tablet-only issues */
+@media only screen and (min-width: 64.063em) {
+  /* line 21, /srv/www/jdgwf.com/swwt2/public_html/css/src/_foundation6-5-cols.scss */
+  .large-2-5 {
+    width: 20%; } }
+
+/* min-width 1025px, large screens */
+/* min-width 1025px and max-width 1440px, use when QAing large screen-only issues */
+@media only screen and (min-width: 90.063em) {
+  /* line 30, /srv/www/jdgwf.com/swwt2/public_html/css/src/_foundation6-5-cols.scss */
+  .xlarge-2-5 {
+    width: 20%; } }
+
+/* min-width 1441px, xlarge screens */
+/* min-width 1441px and max-width 1920px, use when QAing xlarge screen-only issues */
+@media only screen and (min-width: 120.063em) {
+  /* line 39, /srv/www/jdgwf.com/swwt2/public_html/css/src/_foundation6-5-cols.scss */
+  .xxlarge-2-5 {
+    width: 20%; } }
+
+/* min-width 1921px, xxlarge screens */
+/* line 19, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
 body {
   background: #333;
   color: #fdfde3;
   font-size: 14px;
   font-family: 'Ubuntu', sans-serif !important; }
-  /* line 23, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  /* line 25, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
   body a {
     color: #7b5e25; }
-    /* line 25, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    /* line 27, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
     body a:active, body a:visited {
       color: #7b5e25; }
-    /* line 29, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    /* line 31, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
     body a:hover {
       color: #86734a; }
-  /* line 33, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  /* line 35, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
   body table {
     background: #c7c4b2;
     color: #333;
     width: 100%;
     border: none;
     font-size: 14px; }
-    /* line 40, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    /* line 42, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
     body table tbody {
       border: none;
       padding: 3px; }
-    /* line 44, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    /* line 46, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
     body table thead {
       background: transparent !important;
       border: 0 !important;
       padding: 3px; }
-    /* line 50, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    /* line 52, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
     body table tr td, body table tr th {
       margin: 0;
       padding: 1px 3px;
       background: #c7c4b2;
       color: #333;
       text-align: left; }
-    /* line 57, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    /* line 59, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
     body table tr th {
       vertical-align: bottom;
       font-weight: 700; }
-    /* line 61, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    /* line 63, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
     body table tr td {
       vertical-align: top; }
-      /* line 63, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+      /* line 65, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
       body table tr td.button-container {
         width: 60px;
         height: 30px; }
-        /* line 66, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+        /* line 68, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
         body table tr td.button-container button {
           margin: 0; }
-    /* line 72, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    /* line 74, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
     body table.installed-weapons {
       background: transparent; }
-      /* line 74, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+      /* line 76, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
       body table.installed-weapons tbody {
         margin: 0;
         padding: 0; }
-        /* line 77, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+        /* line 79, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
         body table.installed-weapons tbody tr {
           border: 1px solid #000;
           background: #c7c4b2;
           color: #333;
           margin: 0 0 3px 0; }
-  /* line 87, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  /* line 89, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
   body .main-content {
     margin: 1rem 0; }
-  /* line 104, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  /* line 106, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
   body .button.primary {
     background-color: #7b5e25;
     color: #fff; }
-    /* line 108, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    /* line 110, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
     body .button.primary:active, body .button.primary:visited {
       background-color: #7b5e25;
       color: #fff; }
-    /* line 113, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    /* line 115, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
     body .button.primary:hover {
       background-color: #86734a;
       color: #fff; }
-  /* line 118, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  /* line 120, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
   body .button.secondary {
     background-color: #c7c4b2;
     color: #333; }
-    /* line 121, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    /* line 123, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
     body .button.secondary:active, body .button.secondary:visited {
       background-color: #c7c4b2;
       color: #333; }
-    /* line 126, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    /* line 128, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
     body .button.secondary:hover {
       background-color: #d4d1c7;
       color: #333; }
-  /* line 132, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  /* line 134, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
   body select,
   body textarea,
   body input[type=text],
   body input[type=number] {
     background-color: #efefef;
     resize: none; }
-  /* line 141, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  /* line 143, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
   body .creator-preview {
     background: #c7c4b2;
     color: #333;
     padding: 10px; }
-    /* line 145, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    /* line 147, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
     body .creator-preview p, body .creator-preview h3 {
       margin: 0;
       padding: 0; }
-  /* line 151, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  /* line 153, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
   body header {
     background: #111;
     padding: 0 1rem .5rem 1rem;
     color: #fdfde3;
     margin: 0; }
-    /* line 156, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    /* line 158, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
     body header h1 {
       font-size: 2rem;
       padding: 0;
       margin: 0; }
-      /* line 157, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+      /* line 159, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
       body header h1 a {
         color: #fdfde3; }
-    /* line 164, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    /* line 166, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
     body header h2 {
       font-size: 1rem;
       padding: 0;
       margin: 0; }
-      /* line 165, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+      /* line 167, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
       body header h2 a {
         color: #fdfde3; }
-  /* line 173, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  /* line 175, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
   body .sub-menu {
-    background: #222; }
-  /* line 177, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    background: #111;
+    padding-bottom: 2px; }
+  /* line 180, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
   body footer {
     background: #111;
     padding: 1rem;
     margin: 1rem 0 0 0;
     color: #fdfde3; }
-  /* line 183, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  /* line 186, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
   body label {
     color: #fdfde3; }
-  /* line 186, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  /* line 189, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
   body .fieldset {
     color: #fdfde3; }
-    /* line 188, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    /* line 191, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
     body .fieldset legend {
       background: #333;
       color: #fdfde3;
       padding: 0 1rem;
       font-size: 1.4rem;
       font-weight: 500; }
-  /* line 197, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  /* line 200, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
   body .small-text {
     font-size: .7em; }
-  /* line 200, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  /* line 203, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
   body .sidebar-menu {
     list-style: none;
     margin: 0;
     padding: 0; }
-    /* line 206, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    /* line 209, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
     body .sidebar-menu li a .title {
       font-size: 20px; }
-    /* line 209, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    /* line 212, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
     body .sidebar-menu li a .subtitle {
       font-size: 11px; }
-  /* line 215, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  /* line 218, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
   body .mech-status-bar {
     text-align: right;
     margin-bottom: 5px;
     font-size: 12px; }
-  /* line 220, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  /* line 223, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
   body .next-button {
     margin: 2rem 0 0 0;
     float: right; }
-  /* line 224, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  /* line 227, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
   body .mech-tro {
     background: #333;
     color: #fdfde3;
     width: 100%;
     border: none;
     font-size: 12px; }
-    /* line 231, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    /* line 234, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
     body .mech-tro tbody {
       border: none; }
-    /* line 236, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    /* line 239, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
     body .mech-tro tr td, body .mech-tro tr th {
       margin: auto;
       padding: 0 5px 0 0;
       background: #333;
       color: #fdfde3; }
-    /* line 243, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    /* line 246, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
     body .mech-tro tr th {
       vertical-align: bottom;
       font-weight: 700; }
-    /* line 247, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    /* line 250, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
     body .mech-tro tr td {
       vertical-align: top; }
 
-/* line 254, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+/* line 257, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
 .ng-cloak {
   display: none; }
 
-/* line 257, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+/* line 260, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
 .no-outline {
   outline: 0 !important; }
 
-/* line 261, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+/* line 264, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
 button.radius, .button.radius {
   border-radius: 3px; }
 
-/* line 264, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+/* line 267, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
 button.round, .button.round {
   border-radius: 1000px; }
 
-/* line 268, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+/* line 271, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
 .extras-results .result-entry {
   border-top: 1px solid #7b5e25;
   margin-top: 20px;
   padding-top: 20px; }
-  /* line 272, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  /* line 275, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
   .extras-results .result-entry:first-child {
     border-top: 0;
     margin-top: 0;
     padding-top: 0; }
-  /* line 277, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  /* line 280, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
   .extras-results .result-entry .copyright-box {
     margin-top: 10px;
     background: #c7c4b2;
     color: #333;
     padding: 5px 10px; }
 
-/* line 287, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+/* line 290, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
 .no-bottom-margin {
   margin-bottom: 0; }
 
-/* line 290, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+/* line 293, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
 .overflow-hidden {
   overflow: hidden; }
 
-/* line 293, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+/* line 296, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
 .plus-minus-placeholder {
   width: 27px;
   height: 27px; }
 
-/* line 297, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+/* line 300, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
 .modal-container {
   position: fixed;
   width: 100%;
@@ -252,7 +282,7 @@ button.round, .button.round {
   height: 100%;
   background: rgba(0, 0, 0, 0.7);
   z-index: 1000; }
-  /* line 305, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  /* line 308, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
   .modal-container .reveal {
     color: #333;
     background: #efefef;
@@ -261,15 +291,15 @@ button.round, .button.round {
     top: 10px;
     left: 50%;
     margin-left: -250px; }
-    /* line 313, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    /* line 316, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
     .modal-container .reveal label {
       color: #333; }
 
-/* line 318, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+/* line 321, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
 .no-wrap {
   white-space: nowrap; }
 
-/* line 321, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+/* line 324, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
 .language-select {
   outline: none;
   border: solid 1px #999;
