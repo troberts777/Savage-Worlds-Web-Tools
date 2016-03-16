@@ -62,6 +62,7 @@ savageWorldsSciFiSizes['power_armor'] = Array(
 		 'de-DE': '',
 	},
 	 size: 1,
+	 strength: 0,
 	 acc: 0,
 	 ts: 0,
 	 climb: 0,
@@ -72,9 +73,9 @@ savageWorldsSciFiSizes['power_armor'] = Array(
 	 crew: 1,
 	 cost: 500000,
 	 weight: 100,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -88,6 +89,7 @@ savageWorldsSciFiSizes['power_armor'] = Array(
 		 'de-DE': '',
 	},
 	 size: 2,
+	 strength: 0,
 	 acc: 0,
 	 ts: 0,
 	 climb: 0,
@@ -98,9 +100,9 @@ savageWorldsSciFiSizes['power_armor'] = Array(
 	 crew: 1,
 	 cost: 1000000,
 	 weight: 200,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -114,6 +116,7 @@ savageWorldsSciFiSizes['power_armor'] = Array(
 		 'de-DE': '',
 	},
 	 size: 3,
+	 strength: 0,
 	 acc: 0,
 	 ts: 0,
 	 climb: 0,
@@ -124,9 +127,9 @@ savageWorldsSciFiSizes['power_armor'] = Array(
 	 crew: 1,
 	 cost: 2000000,
 	 weight: 300,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 }
 );
 savageWorldsSciFiMods['power_armor'] = Array(
@@ -138,18 +141,18 @@ savageWorldsSciFiMods['power_armor'] = Array(
 		 'en-US': 'When activated (a free action via voice command), detonation packs attached to the suit explode in a Large Burst Template around the armor, causing 5d6 damage (the blast is shaped away from the suit so the wearer suffers only half damage). Wearers are advised to use this only as a last resort. Shrapnel pack reloads cost $1000, weigh 10 lb, and take one hour to install.',
 	},
 	 tag: 'anti-personnel-system',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000;
 },
-get_mod_effect: function(selected_object) {
-//selected_object.ts = Math.ceil(selected_object.ts / 2);
-//selected_object.acc = Math.ceil(selected_object.acc / 2);
+getModEffect: function(selectedObject) {
+//selectedObject.ts = Math.ceil(selectedObject.ts / 2);
+//selectedObject.acc = Math.ceil(selectedObject.acc / 2);
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 10;
 }
 },
@@ -161,17 +164,17 @@ return 10;
 		 'en-US': 'Adds +2 Heavy Armor each time this Modification is taken.',
 	},
 	 tag: 'armor',
-get_max: function(selected_object) { return selected_object.size },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return selectedObject.size },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 10000 * selected_object.size;
+getCost: function(selectedObject) {
+return 10000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.armor += 2;
+getModEffect: function(selectedObject) {
+selectedObject.armor += 2;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 //return 10;
 return 0;
 }
@@ -184,18 +187,18 @@ return 0;
 		 'en-US': 'A well-designed suite of HUD apps and sensors to constantly monitor up to 100 team members within twenty miles. This extends the user’s Command Range to all those in contact. The Command Pack requires the Sensor Suite Modification first.',
 	},
 	 tag: 'command-pack',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 50000;
 },
-get_mod_effect: function(selected_object) {
-//selected_object.ts = Math.ceil(selected_object.ts / 2);
-//selected_object.acc = Math.ceil(selected_object.acc / 2);
+getModEffect: function(selectedObject) {
+//selectedObject.ts = Math.ceil(selectedObject.ts / 2);
+//selectedObject.acc = Math.ceil(selectedObject.acc / 2);
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -207,22 +210,22 @@ return 0;
 		 'en-US': 'The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it’s taken doubles previous Pace or increases Climb by 1.',
 	},
 	 tag: 'fflight-1-climb',
-show_with_option: "faster-flight",
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
-return selected_object.size;
+showWithOption: "faster-flight",
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
+return selectedObject.size;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.climb++;
+getModEffect: function(selectedObject) {
+selectedObject.climb++;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 },
-is_available: function(selected_object) {
-if( selected_object.aircraft > 0  )
+isAvailable: function(selectedObject) {
+if( selectedObject.aircraft > 0  )
 return true;
 else
 return false;
@@ -236,23 +239,23 @@ return false;
 		 'en-US': 'The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it’s taken doubles previous Pace or increases Climb by 1.',
 	},
 	 tag: 'fflight-double-speed',
-show_with_option: "faster-flight",
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
-return selected_object.size;
+showWithOption: "faster-flight",
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
+return selectedObject.size;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.ts = selected_object.ts * 2;
-selected_object.acc = selected_object.ts / 4;
+getModEffect: function(selectedObject) {
+selectedObject.ts = selectedObject.ts * 2;
+selectedObject.acc = selectedObject.ts / 4;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 },
-is_available: function(selected_object) {
-if( selected_object.aircraft > 0  )
+isAvailable: function(selectedObject) {
+if( selectedObject.aircraft > 0  )
 return true;
 else
 return false;
@@ -266,24 +269,24 @@ return false;
 		 'en-US': 'The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it’s taken doubles previous Pace or increases Climb by 1.',
 	},
 	 tag: 'fflight-exchange-climb-fo',
-show_with_option: "climb-top-speed",
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+showWithOption: "climb-top-speed",
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 0;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 0;
 },
-get_mod_effect: function(selected_object) {
-selected_object.ts = selected_object.ts * 2;
-selected_object.acc = selected_object.ts / 4;
-selected_object.climb--;
+getModEffect: function(selectedObject) {
+selectedObject.ts = selectedObject.ts * 2;
+selectedObject.acc = selectedObject.ts / 4;
+selectedObject.climb--;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 },
-is_available: function(selected_object) {
-if( selected_object.aircraft > 0 && selected_object.climb > -2 )
+isAvailable: function(selectedObject) {
+if( selectedObject.aircraft > 0 && selectedObject.climb > -2 )
 return true;
 else
 return false;
@@ -297,25 +300,25 @@ return false;
 		 'en-US': 'The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it’s taken doubles previous Pace or increases Climb by 1.',
 	},
 	 tag: 'fflight',
-show_with_option: "faster-flight",
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size;
+showWithOption: "faster-flight",
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-if(selected_object.aircraft == 0) {
-selected_object.climb = 0;
-//selected_object.flying_pace = selected_object.base_pace;
-selected_object.ts = selected_object.base_pace;
-selected_object.acc = selected_object.ts / 4;
+getModEffect: function(selectedObject) {
+if(selectedObject.aircraft == 0) {
+selectedObject.climb = 0;
+//selectedObject.flyingPace = selectedObject.basePace;
+selectedObject.ts = selectedObject.basePace;
+selectedObject.acc = selectedObject.ts / 4;
 }
-selected_object.aircraft = 1;
-//selected_object.acc = Math.ceil(selected_object.acc / 2);
+selectedObject.aircraft = 1;
+//selectedObject.acc = Math.ceil(selectedObject.acc / 2);
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -327,22 +330,22 @@ return 0;
 		 'en-US': 'The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it’s taken doubles previous Pace or increases Climb by 1.',
 	},
 	 tag: 'flight-1-climb',
-hide_with_option: "faster-flight",
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+hideWithOption: "faster-flight",
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 3;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.climb++;
+getModEffect: function(selectedObject) {
+selectedObject.climb++;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 },
-is_available: function(selected_object) {
-if( selected_object.aircraft > 0  )
+isAvailable: function(selectedObject) {
+if( selectedObject.aircraft > 0  )
 return true;
 else
 return false;
@@ -356,22 +359,22 @@ return false;
 		 'en-US': 'The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it’s taken doubles previous Pace or increases Climb by 1.',
 	},
 	 tag: 'flight-double-speed',
-hide_with_option: "faster-flight",
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+hideWithOption: "faster-flight",
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 3;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.flying_pace = selected_object.flying_pace * 2;
+getModEffect: function(selectedObject) {
+selectedObject.flyingPace = selectedObject.flyingPace * 2;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 },
-is_available: function(selected_object) {
-if( selected_object.aircraft > 0  )
+isAvailable: function(selectedObject) {
+if( selectedObject.aircraft > 0  )
 return true;
 else
 return false;
@@ -385,23 +388,23 @@ return false;
 		 'en-US': 'The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it’s taken doubles previous Pace or increases Climb by 1.',
 	},
 	 tag: 'flight',
-hide_with_option: "faster-flight",
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size;
+hideWithOption: "faster-flight",
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-if(selected_object.aircraft == 0) {
-selected_object.climb = 0;
-selected_object.flying_pace = 6;
+getModEffect: function(selectedObject) {
+if(selectedObject.aircraft == 0) {
+selectedObject.climb = 0;
+selectedObject.flyingPace = 6;
 }
-selected_object.aircraft = 1;
-//selected_object.acc = Math.ceil(selected_object.acc / 2);
+selectedObject.aircraft = 1;
+//selectedObject.acc = Math.ceil(selectedObject.acc / 2);
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -413,17 +416,17 @@ return 0;
 		 'en-US': 'The user can jump up to 2× the suit’s Pace horizontally or 1× Pace vertically.',
 	},
 	 tag: 'jump-pack',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-//selected_object.acc = Math.ceil(selected_object.acc / 2);
+getModEffect: function(selectedObject) {
+//selectedObject.acc = Math.ceil(selectedObject.acc / 2);
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -435,17 +438,17 @@ return 0;
 		 'en-US': 'The soles and palms of the suit are fitted with powerful magnets, allowing the wearer to walk up or cling to metal surfaces at full Pace. These are most often used in zero-g to allow marines to attach to ship’s hulls or walkways.',
 	},
 	 tag: 'magnetic-pads',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000 ;
 },
-get_mod_effect: function(selected_object) {
-//selected_object.acc = Math.ceil(selected_object.acc / 2);
+getModEffect: function(selectedObject) {
+//selectedObject.acc = Math.ceil(selectedObject.acc / 2);
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -457,18 +460,18 @@ return 0;
 		 'en-US': 'Powerful motors in the leg joints combine with gyroscopic stabilizers to increase Pace by +2 and the running die to d10. Each enhancement after the first only increases Pace by +2.',
 	},
 	 tag: 'pace',
-get_max: function(selected_object) { return 3 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 3 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000 ;
 },
-get_mod_effect: function(selected_object) {
-selected_object.pace++;
-selected_object.pace++;
+getModEffect: function(selectedObject) {
+selectedObject.pace++;
+selectedObject.pace++;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -480,18 +483,18 @@ return 0;
 		 'en-US': 'Additional power cells add another 72 hours of energy.',
 	},
 	 tag: 'power-pack',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 50000 ;
 },
-get_mod_effect: function(selected_object) {
-selected_object.pace++;
-selected_object.pace++;
+getModEffect: function(selectedObject) {
+selectedObject.pace++;
+selectedObject.pace++;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -503,16 +506,16 @@ return 0;
 		 'en-US': 'Small propulsion jets allow the character to move in vacuum or water at 6”. The jets provide no benefits outside these environments.',
 	},
 	 tag: 'propulsion-jets',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000 ;
 },
-get_mod_effect: function(selected_object) {
+getModEffect: function(selectedObject) {
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -524,16 +527,16 @@ return 0;
 		 'en-US': 'The suit automatically seals minor breaches (the user suffers one or two wounds) with a fast-hardening sealant. This is critical when operating in a vacuum. If the wearer suffers three or more wounds from a single attack, however, the suit cannot seal and is breached.',
 	},
 	 tag: 'self-sealing',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 10000 ;
 },
-get_mod_effect: function(selected_object) {
+getModEffect: function(selectedObject) {
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -545,16 +548,16 @@ return 0;
 		 'en-US': 'An array of various sensors extends the suit’s +2 bonus to visual and aural Notice rolls to 500 yards.',
 	},
 	 tag: 'sensor-suite',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000 ;
 },
-get_mod_effect: function(selected_object) {
+getModEffect: function(selectedObject) {
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -566,16 +569,16 @@ return 0;
 		 'en-US': 'Increases communication range to 500 miles.',
 	},
 	 tag: 'signal-booster',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000 ;
 },
-get_mod_effect: function(selected_object) {
+getModEffect: function(selectedObject) {
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -587,16 +590,16 @@ return 0;
 		 'en-US': 'This thin and pliable piezoelectric material combines chameleon-like visual skin with heat baffles, radar scramblers, and other devices to make the suit difficult to detect by vision or sensors. Those trying to attack or detect the suit subtract 4 from their rolls against it. The effect is triggered as a free action, but is negated any round in which the user fires a weapon or emits some other non-cloakable signal such as radio broadcasts or active sensor searches.',
 	},
 	 tag: 'stealth-system',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 3;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 10000 ;
 },
-get_mod_effect: function(selected_object) {
+getModEffect: function(selectedObject) {
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -608,17 +611,17 @@ return 0;
 		 'en-US': 'Increases Strength by one die type each time it’s taken. After d12, add +1 per servo (d12+1, d12+2, etc).',
 	},
 	 tag: 'strength-enhancement',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000 ;
 },
-get_mod_effect: function(selected_object) {
-selected_object.strength_bonus++;
+getModEffect: function(selectedObject) {
+selectedObject.strengthBonus++;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -630,17 +633,17 @@ return 0;
 		 'en-US': 'An integrated system connects to all personal and weapon mounts to compensate for movement, range, multi-actions, and the like. This negates up to two points of the user’s Shooting penalties.',
 	},
 	 tag: 'targeting-system',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 20000 ;
 },
-get_mod_effect: function(selected_object) {
-selected_object.strength_bonus++;
+getModEffect: function(selectedObject) {
+selectedObject.strengthBonus++;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -652,17 +655,17 @@ return 0;
 		 'en-US': 'Automated systems within the suit are loaded with minor antibiotics, stimulants, and anesthetics designed to keep a soldier alive after suffering trauma. It has a d8 Healing and adds +2 to recover from being Shaken and resisting Bleeding Out.',
 	},
 	 tag: 'trauma-system',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 25000 ;
 },
-get_mod_effect: function(selected_object) {
-selected_object.strength_bonus++;
+getModEffect: function(selectedObject) {
+selectedObject.strengthBonus++;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -678,18 +681,18 @@ return 0;
 		 'de-DE': '',
 	},
 	 tag: 'weapon-mount',
-get_max: function(selected_object) { return 2 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 2 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000 ;
 },
-get_mod_effect: function(selected_object) {
-selected_object.has_weapon_mounts = 1;
-selected_object.vehicle_weapon_mod_points++;
+getModEffect: function(selectedObject) {
+selectedObject.hasWeaponMounts = 1;
+selectedObject.vehicleWeaponModPoints++;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 }

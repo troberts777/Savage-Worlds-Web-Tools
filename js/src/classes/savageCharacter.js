@@ -81,21 +81,39 @@ savageCharacter.prototype.setGender = function( genderID ) {
 }
 
 savageCharacter.prototype.addEdge = function(bookId, tag) {
+// TODO
 }
 
 savageCharacter.prototype.removeEdge = function(indexNumber) {
+	if( this.edges[indexNumber] ) {
+		this.edges = this.edges.splice(indexNumber, 1);
+		return true;
+	}
+	return false;
 }
 
 savageCharacter.prototype.addHindrance = function(bookId, tag) {
+// TODO
 }
 
 savageCharacter.prototype.removeHindrance = function(indexNumber) {
+	if( this.hindrances[indexNumber] ) {
+		this.hindrances = this.hindrances.splice(indexNumber, 1);
+		return true;
+	}
+	return false;
 }
 
 savageCharacter.prototype.addGear = function(bookId, tag) {
+// TODO
 }
 
 savageCharacter.prototype.removeGear = function(indexNumber) {
+	if( this.gear[indexNumber] ) {
+		this.gear = this.gear.splice(indexNumber, 1);
+		return true;
+	}
+	return false;
 }
 
 // Validate does both calculation and validation of the character as per the base rules and settings
@@ -111,7 +129,9 @@ savageCharacter.prototype.loadJSON = function( jsonString ) {
 			this.description = importObject.description;
 			for( attribute in this.attributes ) {
 				if( importObject.attributes[ attribute ] ) {
-					this.setAttribute( attribute, importObject.attributes[ attribute ] );
+					attribute = attribute.toLowerCase().trim();
+					if( this.attributes[attribute] )
+						this.attributes[attribute] = getDiceValue( importObject.attributes[ attribute ] );					
 				}
 			}
 
@@ -126,11 +146,6 @@ savageCharacter.prototype.loadJSON = function( jsonString ) {
 	return false;
 }
 
-savageCharacter.prototype.setAttribute = function( attributeName, attributeID ) {
-	attributeName = attributeName.toLowerCase().trim();
-	if( this.attributes[attributeName] )
-		this.attributes[attributeName] = getDiceValue( attributeID );
-}
 
 savageCharacter.prototype.saveJSON = function() {
 	exportObject = {};

@@ -28,24 +28,24 @@ angular.module("baseApp").controller(
 				}
 
 				if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
-					$scope.creatorObj.import_json( localStorage[ currentItemLocalStorageVariable ] );
+					$scope.creatorObj.importJSON( localStorage[ currentItemLocalStorageVariable ] );
 				}
 
 				$scope.creatorObj.useLang = localStorage["users_preferred_language"];
 
 				$scope.selected_options = Array();
-				$scope.creator_options = savageWorldsSciFiOptions[ itemType ];
-				for(optc = 0; optc < $scope.creator_options.length; optc++) {
-					if( typeof($scope.creator_options[optc].name[ localStorage["users_preferred_language"] ] ) != "undefined") {
-						$scope.creator_options[optc].local_name = $scope.creator_options[optc].name[ localStorage["users_preferred_language"] ];
+				$scope.creatorOptions = savageWorldsSciFiOptions[ itemType ];
+				for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
+					if( typeof($scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ] ) != "undefined") {
+						$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ];
 					} else {
-						$scope.creator_options[optc].local_name = $scope.creator_options[optc].name[ "en-US" ];
+						$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ "en-US" ];
 					}
 
-					if( typeof($scope.creator_options[optc].description[ localStorage["users_preferred_language"] ] ) != "undefined") {
-						$scope.creator_options[optc].local_description = $scope.creator_options[optc].description[ localStorage["users_preferred_language"] ];
+					if( typeof($scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ] ) != "undefined") {
+						$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ];
 					} else {
-						$scope.creator_options[optc].local_description = $scope.creator_options[optc].description[ "en-US" ];
+						$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ "en-US" ];
 					}
 					$scope.selected_options[optc] = false;
 				}
@@ -91,57 +91,57 @@ angular.module("baseApp").controller(
 			}
 
 			$scope.addMod = function( modTag ) {
-				$scope.creatorObj.add_mod(modTag);
+				$scope.creatorObj.addMod(modTag);
 				$scope.updatePage();
 			}
 
 			$scope.addWeapon = function( modTag ) {
-				$scope.creatorObj.add_weapon(modTag);
+				$scope.creatorObj.addWeapon(modTag);
 				$scope.updatePage();
 			}
 
 			$scope.removeMod = function( modTag ) {
-				$scope.creatorObj.remove_mod(modTag);
+				$scope.creatorObj.removeMod(modTag);
 				$scope.updatePage();
 			}
 
 			$scope.updateSize = function() {
 
-				$scope.creatorObj.set_size( $scope.size_selected.id );
+				$scope.creatorObj.setSize( $scope.size_selected.id );
 				$scope.updatePage();
 			}
 
 			$scope.linkWeapon = function(weaponIndex, linkValue) {
-				$scope.creatorObj.increment_weapon_count( weaponIndex);
+				$scope.creatorObj.incrementWeaponCount( weaponIndex);
 				$scope.updatePage();
 			}
 
 			$scope.setFixed = function(weaponIndex) {
 				newValue = $scope.installed_weapons[weaponIndex].fixed_dd_value.id
-				$scope.creatorObj.fix_weapon( weaponIndex, newValue);
+				$scope.creatorObj.fixWeapon( weaponIndex, newValue);
 				$scope.updatePage();
 			}
 
 			$scope.unlinkWeapon = function(weaponIndex, linkValue) {
-				$scope.creatorObj.decrement_weapon_count( weaponIndex);
+				$scope.creatorObj.decrementWeaponCount( weaponIndex);
 				$scope.updatePage();
 			}
 
 			$scope.updateOption = function( option_index ) {
 
 				for(optc = 0; optc < $scope.selected_options.length; optc++ ) {
-					if( $scope.creator_options[optc].short_tag ) {
+					if( $scope.creatorOptions[optc].short_tag ) {
 						if( $scope.selected_options[optc] == 0 )
-							$scope.creatorObj.remove_option( $scope.creator_options[optc].short_tag );
+							$scope.creatorObj.removeOption( $scope.creatorOptions[optc].short_tag );
 						else
-							$scope.creatorObj.add_option( $scope.creator_options[optc].short_tag );
+							$scope.creatorObj.addOption( $scope.creatorOptions[optc].short_tag );
 					}
 				}
 				$scope.updatePage();
 			}
 
 			$scope.removeWeapon = function(weaponIndex) {
-				$scope.creatorObj.remove_weapon( weaponIndex );
+				$scope.creatorObj.removeWeapon( weaponIndex );
 				$scope.updatePage();
 			}
 
@@ -187,29 +187,29 @@ angular.module("baseApp").controller(
 				}
 
 				$scope.closeDialogs();
-				$scope.save_as_name = $scope.creatorObj.item_name;
+				$scope.save_as_name = $scope.creatorObj.itemName;
 				$scope.saveDialogOpen = true;
 			}
 			$scope.importDialog = function() {
-				$scope.import_json = "";
+				$scope.importJSON = "";
 				$scope.closeDialogs();
 				$scope.importDialogOpen = true;
 			}
 
-			$scope.updateImportData = function(import_json) {
-				$scope.import_json = import_json;
+			$scope.updateImportData = function(importJSON) {
+				$scope.importJSON = importJSON;
 			}
 
-			$scope.importData = function(import_json) {
+			$scope.importData = function(importJSON) {
 
-				localStorage[ currentItemLocalStorageVariable ] = $scope.import_json;
+				localStorage[ currentItemLocalStorageVariable ] = $scope.importJSON;
 				$scope.closeDialogs();
 				$scope.init();
 			}
 
 			$scope.exportDialog = function() {
-				$scope.export_bbcode = $scope.creatorObj.export_bbcode();
-				$scope.export_json = $scope.creatorObj.export_json();
+				$scope.exportBBCode = $scope.creatorObj.exportBBCode();
+				$scope.exportJSON = $scope.creatorObj.exportJSON();
 				$scope.closeDialogs();
 				$scope.exportDialogOpen = true;
 			}
@@ -280,7 +280,7 @@ angular.module("baseApp").controller(
 					name: saveName,
 					datetime: Date(),
 					type: itemType,
-					data:  $scope.creatorObj.export_json()
+					data:  $scope.creatorObj.exportJSON()
 				};
 				return save_object;
 			}
@@ -288,10 +288,10 @@ angular.module("baseApp").controller(
 			$scope.updatePage = function() {
 				$scope.creatorObj.calculate();
 
-				$scope.set_size = $scope.creatorObj.size;
+				$scope.setSize = $scope.creatorObj.size;
 
-				$scope.creator_preview = $scope.creatorObj.create_stats_block();
-				localStorage[ currentItemLocalStorageVariable ] = $scope.creatorObj.export_json();
+				$scope.creator_preview = $scope.creatorObj.createStatesBlock();
+				localStorage[ currentItemLocalStorageVariable ] = $scope.creatorObj.exportJSON();
 
 				$scope.mod_list = Array();
 				angular.extend(	$scope.mod_list, savageWorldsSciFiMods[ itemType ] );
@@ -301,17 +301,17 @@ angular.module("baseApp").controller(
 					} else {
 						$scope.mod_list[modc].local_name = $scope.mod_list[modc].name[ "en-US" ];
 					}
-					$scope.mod_list[modc].local_mod_cost = $scope.mod_list[modc].get_mod_cost($scope.creatorObj);
-					$scope.mod_list[modc].local_cost = $scope.creatorObj.simplify_cost($scope.mod_list[modc].get_cost($scope.creatorObj));
-					$scope.mod_list[modc].local_max = $scope.mod_list[modc].get_max($scope.creatorObj);
-					$scope.mod_list[modc].currently_added = $scope.creatorObj.get_modification_count( $scope.mod_list[modc].tag );
+					$scope.mod_list[modc].local_mod_cost = $scope.mod_list[modc].getModCost($scope.creatorObj);
+					$scope.mod_list[modc].local_cost = $scope.creatorObj.simplify_cost($scope.mod_list[modc].getCost($scope.creatorObj));
+					$scope.mod_list[modc].local_max = $scope.mod_list[modc].getMax($scope.creatorObj);
+					$scope.mod_list[modc].currently_added = $scope.creatorObj.getModificationCount( $scope.mod_list[modc].tag );
 					if(
 						( $scope.mod_list[modc].local_max == "u" || $scope.mod_list[modc].currently_added < $scope.mod_list[modc].local_max )
 						&&
 						( $scope.mod_list[modc].local_mod_cost <= $scope.creatorObj.mods_available )
 					) {
-						if( typeof($scope.mod_list[modc].is_available) == "function" ) {
-							if ( $scope.mod_list[modc].is_available( $scope.creatorObj ) ) {
+						if( typeof($scope.mod_list[modc].isAvailable) == "function" ) {
+							if ( $scope.mod_list[modc].isAvailable( $scope.creatorObj ) ) {
 								$scope.mod_list[modc].can_add = true;
 							} else {
 								$scope.mod_list[modc].can_add = false;
@@ -334,11 +334,11 @@ angular.module("baseApp").controller(
 				for(var modc = $scope.mod_list.length -1; modc >= 0; modc--) {
 					if(
 
-						typeof($scope.mod_list[modc].show_with_option) != "undefined"
+						typeof($scope.mod_list[modc].showWithOption) != "undefined"
 							&&
-						$scope.mod_list[modc].show_with_option != ""
+						$scope.mod_list[modc].showWithOption != ""
 					) {
-						if( $scope.creatorObj.has_option( $scope.mod_list[modc].show_with_option ) == false) {
+						if( $scope.creatorObj.hasOption( $scope.mod_list[modc].showWithOption ) == false) {
 							$scope.mod_list.splice(modc, 1);
 						}
 
@@ -346,11 +346,11 @@ angular.module("baseApp").controller(
 
 					if(
 
-						typeof($scope.mod_list[modc].hide_with_option) != "undefined"
+						typeof($scope.mod_list[modc].hideWithOption) != "undefined"
 							&&
-						$scope.mod_list[modc].hide_with_option != ""
+						$scope.mod_list[modc].hideWithOption != ""
 					) {
-						if( $scope.creatorObj.has_option( $scope.mod_list[modc].hide_with_option ) == true ) {
+						if( $scope.creatorObj.hasOption( $scope.mod_list[modc].hideWithOption ) == true ) {
 							$scope.mod_list.splice(modc, 1);
 						}
 
@@ -365,7 +365,7 @@ angular.module("baseApp").controller(
 
 						$scope.size_options = Array();
 						$scope.size_selected = null;
-						$scope.set_size = 0;
+						$scope.setSize = 0;
 
 						default_size_object = {
 							id: 0,
@@ -382,22 +382,22 @@ angular.module("baseApp").controller(
 								id: savageWorldsSciFiSizes[itemType][sizec].size,
 								label: display_label
 							};
-							if( savageWorldsSciFiSizes[itemType][sizec].show_with_option )
-								push_object.show_with_option = savageWorldsSciFiSizes[itemType][sizec].show_with_option;
-							if( savageWorldsSciFiSizes[itemType][sizec].hide_with_option )
-								push_object.hide_with_option = savageWorldsSciFiSizes[itemType][sizec].hide_with_option;
+							if( savageWorldsSciFiSizes[itemType][sizec].showWithOption )
+								push_object.showWithOption = savageWorldsSciFiSizes[itemType][sizec].showWithOption;
+							if( savageWorldsSciFiSizes[itemType][sizec].hideWithOption )
+								push_object.hideWithOption = savageWorldsSciFiSizes[itemType][sizec].hideWithOption;
 
 							$scope.size_options.push( push_object );
 							if( savageWorldsSciFiSizes[itemType][sizec].size == $scope.creatorObj.size ) {
 								$scope.size_selected = push_object;
-								$scope.set_size = $scope.creatorObj.size;
+								$scope.setSize = $scope.creatorObj.size;
 							}
 
 
 						}
 						if( $scope.size_selected == null) {
 							$scope.size_selected = default_size_object;
-							$scope.set_size = 0;
+							$scope.setSize = 0;
 						}
 
 				// remove sizes that aren't enabled or disabled by option
@@ -405,11 +405,11 @@ angular.module("baseApp").controller(
 
 					if(
 
-						typeof($scope.size_options[sizec].show_with_option) != "undefined"
+						typeof($scope.size_options[sizec].showWithOption) != "undefined"
 							&&
-						$scope.size_options[sizec].show_with_option != ""
+						$scope.size_options[sizec].showWithOption != ""
 					) {
-						if( $scope.creatorObj.has_option( $scope.size_options[sizec].show_with_option ) == false) {
+						if( $scope.creatorObj.hasOption( $scope.size_options[sizec].showWithOption ) == false) {
 
 							$scope.size_options.splice(sizec, 1);
 						}
@@ -418,11 +418,11 @@ angular.module("baseApp").controller(
 
 					if(
 
-						typeof($scope.size_options[sizec].hide_with_option) != "undefined"
+						typeof($scope.size_options[sizec].hideWithOption) != "undefined"
 							&&
-						$scope.size_options[sizec].hide_with_option != ""
+						$scope.size_options[sizec].hideWithOption != ""
 					) {
-						if( $scope.creatorObj.has_option( $scope.size_options[sizec].hide_with_option ) == true ) {
+						if( $scope.creatorObj.hasOption( $scope.size_options[sizec].hideWithOption ) == true ) {
 							$scope.size_options.splice(sizec, 1);
 						}
 
@@ -465,16 +465,16 @@ angular.module("baseApp").controller(
 					}
 
 					savageWorldsVehicleWeapons[weap_c].can_add = true;
-					if( typeof(savageWorldsVehicleWeapons[weap_c].is_available) == "function") {
-						if( savageWorldsVehicleWeapons[weap_c].is_available( $scope.creatorObj) == false ){
+					if( typeof(savageWorldsVehicleWeapons[weap_c].isAvailable) == "function") {
+						if( savageWorldsVehicleWeapons[weap_c].isAvailable( $scope.creatorObj) == false ){
 
 							savageWorldsVehicleWeapons[weap_c].can_add = false;
 						}
 					}
 
-					// change vehicle_weapon_mod_points to mods_available for non power armor vehicles ;)
+					// change vehicleWeaponModPoints to mods_available for non power armor vehicles ;)
 
-					if( $scope.creatorObj.vehicle_weapon_mod_points < parseInt(savageWorldsVehicleWeapons[weap_c].mods) ) {
+					if( $scope.creatorObj.vehicleWeaponModPoints < parseInt(savageWorldsVehicleWeapons[weap_c].mods) ) {
 
 						savageWorldsVehicleWeapons[weap_c].can_add = false;
 					}
@@ -512,9 +512,9 @@ angular.module("baseApp").controller(
 
 				$scope.selected_options = Array();
 
-				angular.extend(	$scope.creator_options,savageWorldsSciFiOptions[ itemType ] );
-				for(optc = 0; optc < $scope.creator_options.length; optc++) {
-					if( $scope.creatorObj.has_option($scope.creator_options[optc].short_tag) )
+				angular.extend(	$scope.creatorOptions,savageWorldsSciFiOptions[ itemType ] );
+				for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
+					if( $scope.creatorObj.hasOption($scope.creatorOptions[optc].short_tag) )
 						$scope.selected_options[optc] = true;
 					else
 						$scope.selected_options[optc] = false;

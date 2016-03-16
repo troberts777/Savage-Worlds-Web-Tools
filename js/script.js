@@ -924,21 +924,39 @@ savageCharacter.prototype.setGender = function( genderID ) {
 }
 
 savageCharacter.prototype.addEdge = function(bookId, tag) {
+// TODO
 }
 
 savageCharacter.prototype.removeEdge = function(indexNumber) {
+	if( this.edges[indexNumber] ) {
+		this.edges = this.edges.splice(indexNumber, 1);
+		return true;
+	}
+	return false;
 }
 
 savageCharacter.prototype.addHindrance = function(bookId, tag) {
+// TODO
 }
 
 savageCharacter.prototype.removeHindrance = function(indexNumber) {
+	if( this.hindrances[indexNumber] ) {
+		this.hindrances = this.hindrances.splice(indexNumber, 1);
+		return true;
+	}
+	return false;
 }
 
 savageCharacter.prototype.addGear = function(bookId, tag) {
+// TODO
 }
 
 savageCharacter.prototype.removeGear = function(indexNumber) {
+	if( this.gear[indexNumber] ) {
+		this.gear = this.gear.splice(indexNumber, 1);
+		return true;
+	}
+	return false;
 }
 
 // Validate does both calculation and validation of the character as per the base rules and settings
@@ -954,7 +972,9 @@ savageCharacter.prototype.loadJSON = function( jsonString ) {
 			this.description = importObject.description;
 			for( attribute in this.attributes ) {
 				if( importObject.attributes[ attribute ] ) {
-					this.setAttribute( attribute, importObject.attributes[ attribute ] );
+					attribute = attribute.toLowerCase().trim();
+					if( this.attributes[attribute] )
+						this.attributes[attribute] = getDiceValue( importObject.attributes[ attribute ] );					
 				}
 			}
 
@@ -969,11 +989,6 @@ savageCharacter.prototype.loadJSON = function( jsonString ) {
 	return false;
 }
 
-savageCharacter.prototype.setAttribute = function( attributeName, attributeID ) {
-	attributeName = attributeName.toLowerCase().trim();
-	if( this.attributes[attributeName] )
-		this.attributes[attributeName] = getDiceValue( attributeID );
-}
 
 savageCharacter.prototype.saveJSON = function() {
 	exportObject = {};
@@ -1017,6 +1032,7 @@ savageCharacter.prototype.getLocalName = function( incoming_string_array ) {
 			return incoming_string_array[ "en-US" ];
 		}
 }
+
 /*
 	Savage Worlds Web Tools by Jeffrey Gordon is licensed under a
 	Creative Commons Attribution 4.0 International License.
@@ -1025,83 +1041,82 @@ savageCharacter.prototype.getLocalName = function( incoming_string_array ) {
 var sciFiCreator = function() {};
 sciFiCreator.prototype = {
 
-	init: function(object_type, object_label, available_sizes, available_mods, available_options) {
-		this.item_name = "";
-		this.object_description = "";
+	init: function(objectType, objectLabel, availableSizes, availableMods, availableOptions) {
+		this.itemName = "";
+		this.objectDescription = "";
 		this.useLang = "en-US";
 
-		this.uuid = this.make_uuid();
+		this.uuid = this.makeUUID();
 
-		this.object_label = object_label;
-		this.object_label = object_label;
+		this.objectLabel = objectLabel;
 		this.examples = "";
-		this.extra_notes = "";
+		this.extraNotes = "";
 		this.size = 0;
-		this.object_type = object_type;
+		this.objectType = objectType;
 		this.acc = 0;
 		this.ts = 0;
 		this.climb = 0;
 		this.toughness = 0;
-		this.base_toughness = 0;
-		this.base_cost = 0;
+		this.baseToughness = 0;
+		this.baseCost = 0;
 		this.armor = 0;
-		this.front_armor = 0
-		this.side_armor = 0;
-		this.creator_options = Array();
-		this.number_of_legs = 0;
-		this.rear_armor = 0;
+		this.frontArmor = 0
+		this.sideArmor = 0;
+		this.creatorOptions = Array();
+		this.numberOfLegs = 0;
+		this.rearArmor = 0;
 		this.mods = 0;
-		this.base_mods = 0;
+		this.baseMods = 0;
 		this.crew = 0;
-		this.has_weapon_mounts = 0;
-		this.requires_mount_point = 0;
-		this.flying_pace = 0;
+		this.hasWeaponMounts = 0;
+		this.requiresMountPoint = 0;
+		this.flyingPace = 0;
 		this.cost = 0;
-		this.vehicle_weapon_mod_points = 0;
-		this.energy_capacity =  0;
-		this.base_energy_capacity =  0;
+		this.vehicleWeaponModPoints = 0;
+		this.energyCapacity =  0;
+		this.baseEnergyCapacity =  0;
 		this.provisions = 0;
 
-		this.has_torpedo_tube = 0;
-		this.has_missile_launcher = 0;
+		this.hasTorpedoTube = 0;
+		this.hasMissileLauncher = 0;
 
 		this.aircraft = 0;
 
-		this.selected_size = 0;
+		this.selectedSize = 0;
 
-		if(available_options)
-			this.available_options = available_options;
+		if(availableOptions)
+			this.availableOptions = availableOptions;
 		else
-			this.available_options = Array();
+			this.availableOptions = Array();
 
-		if(available_sizes)
-			this.available_sizes = available_sizes;
+		if(availableSizes)
+			this.availableSizes = availableSizes;
 		else
-			this.available_sizes = Array();
+			this.availableSizes = Array();
 
-		if(available_mods)
-			this.available_mods = available_mods;
+		if(availableMods)
+			this.availableMods = availableMods;
 		else
-			this.available_mods = Array();
+			this.availableMods = Array();
 
-		this.selected_modifications = Array();
-		this.selected_modifications_list = {};
+		this.selectedModifications = Array();
+		this.selectedModifications_list = {};
 
 		this.mods_available = 0;
 
 		this.selected_weapons = Array();
-		this.selected_weapons_list = Array();
+		this.selectedWeaponsList = Array();
 
-		if(this.object_type == "power_armor") {
-			this.requires_mount_point = 1;
-			this.has_weapon_mounts = 1;
+		if(this.objectType == "power_armor") {
+			this.requiresMountPoint = 1;
+			this.hasWeaponMounts = 1;
 		} else {
-			this.requires_mount_point = 0;
-			this.has_weapon_mounts = 0;
+			this.requiresMountPoint = 0;
+			this.hasWeaponMounts = 0;
 		}
 	},
 
-	make_uuid: function(){
+	makeUUID: function(){
 	    var d = new Date().getTime();
 	    if(window.performance && typeof window.performance.now === "function"){
 	        d += performance.now(); //use high-precision timer if available
@@ -1115,27 +1130,27 @@ sciFiCreator.prototype = {
 	},
 
 	reset: function() {
-		this.init(this.object_type, this.object_label, this.available_sizes, this.available_mods, this.available_options);
+		this.init(this.objectType, this.objectLabel, this.availableSizes, this.availableMods, this.availableOptions);
 	},
 
-	set_sizes: function(available_sizes) {
-		this.available_sizes = available_sizes
+	setSizes: function(availableSizes) {
+		this.availableSizes = availableSizes
 	},
 
-	export_html: function() {
-		return this.create_stats_block();
+	exportHTML: function() {
+		return this.createStatesBlock();
 	},
 
-	get_mod_name: function( modTag ) {
+	getModName: function( modTag ) {
 		// search through available mods to see if function exists
 
-		for(getModCount = 0; getModCount < this.available_mods.length; getModCount++) {
-			if( this.available_mods[getModCount].tag == modTag ) {
-				return this.get_local_name( this.available_mods[getModCount].name );
+		for(getModCount = 0; getModCount < this.availableMods.length; getModCount++) {
+			if( this.availableMods[getModCount].tag == modTag ) {
+				return this.getLocalName( this.availableMods[getModCount].name );
 			}
 		}
 
-		return "Error: get_mod_name - Not Found !";
+		return "Error: getModName - Not Found !";
 	},
 
 	getTranslation: function(langKey) {
@@ -1169,7 +1184,7 @@ sciFiCreator.prototype = {
 		}
 	},
 
-	get_local_name: function( incoming_string_array ) {
+	getLocalName: function( incoming_string_array ) {
 		if( incoming_string_array[ this.useLang] ) {
 			return incoming_string_array[ this.useLang];
 		} else {
@@ -1188,26 +1203,26 @@ sciFiCreator.prototype = {
 	    return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
 	},
 
-	create_stats_block: function(jquery_selector) {
+	createStatesBlock: function(jquery_selector) {
 		html_return = "";
 
-		html_return += "<h3>" + this.item_name + "</h3>";
+		html_return += "<h3>" + this.itemName + "</h3>";
 		html_return += "<p>";
 
-		html_return += this.object_description + "</p><br />";
+		html_return += this.objectDescription + "</p><br />";
 
-		if(this.selected_size && this.selected_size.size > 0) {
-			html_return += "<strong>" + this.get_local_name(this.selected_size.size_label)  + "</strong>: ";
+		if(this.selectedSize && this.selectedSize.size > 0) {
+			html_return += "<strong>" + this.getLocalName(this.selectedSize.size_label)  + "</strong>: ";
 			html_return += this.getTranslation("CREATOR_SIZE") + " " + this.size + ", ";
 			if(this.acc > 0)
-				html_return += this.getTranslation("CREATOR_ACC_TS") + " " +  this.acc + "/" + this.format_pace_realworld(this.ts) + ", ";
+				html_return += this.getTranslation("CREATOR_ACC_TS") + " " +  this.acc + "/" + this.formatPaceRealWorld(this.ts) + ", ";
 			if(this.aircraft)
 				html_return += this.getTranslation("CREATOR_CLIMB") + " " + this.climb + ", ";
-			if(this.flying_pace > 0)
-				html_return += this.getTranslation("CREATOR_FLYPACE") + " " +  this.format_pace_realworld(this.flying_pace) + ", ";
+			if(this.flyingPace > 0)
+				html_return += this.getTranslation("CREATOR_FLYPACE") + " " +  this.formatPaceRealWorld(this.flyingPace) + ", ";
 			if(this.toughness > 0) {
-				if( this.front_armor > 0 ) {
-					html_return += this.getTranslation("CREATOR_TOUGHNESS") + " " + this.toughness + " (<span title='" + this.getTranslation("CREATOR_FASARA")  + ")'>" + this.front_armor + "/" + this.side_armor + "/" +  this.rear_armor + "</span>), ";
+				if( this.frontArmor > 0 ) {
+					html_return += this.getTranslation("CREATOR_TOUGHNESS") + " " + this.toughness + " (<span title='" + this.getTranslation("CREATOR_FASARA")  + ")'>" + this.frontArmor + "/" + this.sideArmor + "/" +  this.rearArmor + "</span>), ";
 				} else {
 					html_return += this.getTranslation("CREATOR_TOUGHNESS") + " " + this.toughness + " (" + this.armor + "), ";
 				}
@@ -1219,34 +1234,34 @@ sciFiCreator.prototype = {
 			}
 
 			if(this.pace > 0)
-				html_return += this.getTranslation("CREATOR_PACE") + " "  + this.format_pace_realworld(this.pace) + ", ";
+				html_return += this.getTranslation("CREATOR_PACE") + " "  + this.formatPaceRealWorld(this.pace) + ", ";
 			if(this.crew > 0)
 				html_return += this.getTranslation("CREATOR_CREW") + " "  + this.crew + ", ";
 
-			if(this.strength > 0)
-				html_return += this.getTranslation("CREATOR_STRENGTH") + " "  + this.get_strength_label( this.strength ) + ", ";
+			if(this.strength > 0 && this.objectType != "power_armor")
+				html_return += this.getTranslation("CREATOR_STRENGTH") + " "  + this.getLocalName(  this.getStrengthLabel( this.strength ).label ) + ", ";
 
 			html_return += this.getTranslation("CREATOR_COST") + " C$" + this.formatMoney(this.cost, 0) + ", ";
 			html_return += this.getTranslation("CREATOR_REMAINING_MODS") + " "  + this.mods_available + "<br />";
 
 
 			//html_return += "<strong>Mods Available</strong>: " + this.mods_available + "<br />";
-			if( this.has_weapon_mounts )
-				html_return += "<strong>" + this.getTranslation("CREATOR_WEAPON_MODS_AVAILABLE")  + "</strong>: " + this.vehicle_weapon_mod_points + "<br />";
+			if( this.hasWeaponMounts )
+				html_return += "<strong>" + this.getTranslation("CREATOR_WEAPON_MODS_AVAILABLE")  + "</strong>: " + this.vehicleWeaponModPoints + "<br />";
 
 			html_return += "<strong>" + this.getTranslation("CREATOR_NOTES")  + "</strong>: ";
 
-			this.sort_selected_modifications_list();
+			this.sortSelectedModificationsList();
 			var mod_count = 0;
 
-			for(var modTag in this.selected_modifications_list){
+			for(var modTag in this.selectedModifications_list){
 
 				if( mod_count > 0)
 					html_return += ", ";
-				if(this.selected_modifications_list[modTag] > 1)
-  					html_return += this.selected_modifications_list[modTag] + "x "
+				if(this.selectedModifications_list[modTag] > 1)
+  					html_return += this.selectedModifications_list[modTag] + "x "
 
-  				modName = this.get_mod_name(modTag);
+  				modName = this.getModName(modTag);
   				html_return += modName;
 
   				mod_count++;
@@ -1257,17 +1272,17 @@ sciFiCreator.prototype = {
 			html_return += "<br />";
 
 			html_return += "<strong>" + this.getTranslation("CREATOR_WEAPONS")  + "</strong>: ";
-			this.sort_selected_weapons_list();
+			//this.sort_selectedWeaponsList();
 			html_return += "<ul>";
 			var weapon_count = 0;
-			// console.log("this.selected_weapons_list",this.selected_weapons_list);
-			for(var weaponName in this.selected_weapons_list){
+//			console.log("this.selectedWeaponsList",this.selectedWeaponsList);
+			for(var weaponName in this.selectedWeaponsList){
 				html_return += "<li>";
-				if(this.selected_weapons_list[weaponName].count > 1)
-  					html_return += this.selected_weapons_list[weaponName].count + "x ";
-  				//this.selected_weapons_list[weaponName].obj = this.update_weapon_display_name( this.selected_weapons_list[weaponName] );
-  				html_return += this.selected_weapons_list[weaponName].obj.display_name;
-  				html_return += this.make_weapon_stat_html( this.selected_weapons_list[weaponName].obj );
+				if(this.selectedWeaponsList[weaponName].count > 1)
+  					html_return += this.selectedWeaponsList[weaponName].count + "x ";
+  				//this.selectedWeaponsList[weaponName].obj = this.updateWeaponDisplayName( this.selectedWeaponsList[weaponName] );
+  				html_return += this.selectedWeaponsList[weaponName].obj.display_name;
+  				html_return += this.makeWeaponStatHTML( this.selectedWeaponsList[weaponName].obj );
   				html_return += "</li>";
   				weapon_count++;
 			}
@@ -1275,19 +1290,19 @@ sciFiCreator.prototype = {
 				html_return += "<li>" + this.getTranslation("CREATOR_NONE")  + "</li>";
 			html_return += "</ul>";
 
-			if( this.get_modification_count("Shields") > 0) {
+			if( this.getModificationCount("Shields") > 0) {
 				html_return += "<strong>" + this.getTranslation("CREATOR_SHIELDS")  + "</strong>: ";
 				html_return += this.size * 10;
 				may_recover = this.getTranslation("CREATOR_MAY_RECOVER").replace("{value}", this.size);
 				html_return += " - " + may_recover + "<br />";
 			}
 
-			if(this.energy_capacity > 0)
-				html_return += "<strong>" + this.getTranslation("CREATOR_ENERGY_CAPACITY")  + "</strong>: " + this.energy_capacity + "<br />";
+			if(this.energyCapacity > 0)
+				html_return += "<strong>" + this.getTranslation("CREATOR_ENERGY_CAPACITY")  + "</strong>: " + this.energyCapacity + "<br />";
 
-			if( this.extra_notes != "" ) {
+			if( this.extraNotes != "" ) {
 				html_return += "<strong>" + this.getTranslation("CREATOR_EXTRA_NOTES")  + "</strong>: ";
-				html_return += this.extra_notes;
+				html_return += this.extraNotes;
 			}
 		} else {
 			html_return += this.getTranslation("CREATOR_SIZE_MUST_BE_SELECTED");
@@ -1298,7 +1313,7 @@ sciFiCreator.prototype = {
 		return html_return;
 	},
 
-	make_weapon_stat_html: function( weapon_object ) {
+	makeWeaponStatHTML: function( weapon_object ) {
 		return_val = " (";
 		return_val += weapon_object.range + ", ";
 		return_val += weapon_object.damage;
@@ -1310,7 +1325,7 @@ sciFiCreator.prototype = {
 			return_val += " +1";
 
 		return_val += ", ";
-		notes = this.get_local_name( weapon_object.notes );
+		notes = this.getLocalName( weapon_object.notes );
 		if( notes != "")
 			return_val += notes + ", ";
 		return_val = return_val.substring(0, return_val.length - 2);
@@ -1318,24 +1333,24 @@ sciFiCreator.prototype = {
 		return return_val;
 	},
 
-	export_bbcode: function(jquery_selector) {
+	exportBBCode: function(jquery_selector) {
 		html_return = "";
 
-		html_return += "[b][size=150]" + this.item_name + "[/size][/b]\n";
-		if(this.object_description)
-			html_return += "" + this.object_description + "\n\n";
+		html_return += "[b][size=150]" + this.itemName + "[/size][/b]\n";
+		if(this.objectDescription)
+			html_return += "" + this.objectDescription + "\n\n";
 		else
 			html_return += "\n";
 
-		if(this.selected_size && this.selected_size.size_label) {
-			html_return += "[b]" + this.get_local_name(this.selected_size.size_label) + "[/b]: ";
+		if(this.selectedSize && this.selectedSize.size_label) {
+			html_return += "[b]" + this.getLocalName(this.selectedSize.size_label) + "[/b]: ";
 			html_return += this.getTranslation("CREATOR_SIZE") + " " + this.size + ", ";
 			if(this.acc > 0)
-				html_return += this.getTranslation("CREATOR_ACC_TS") + " " + this.acc + "/" + this.format_pace_realworld(this.ts) + ", ";
+				html_return += this.getTranslation("CREATOR_ACC_TS") + " " + this.acc + "/" + this.formatPaceRealWorld(this.ts) + ", ";
 			if(this.aircraft)
 				html_return += this.getTranslation("CREATOR_CLIMB") + " " + this.climb + ", ";
-			if(this.flying_pace > 0)
-				html_return += this.getTranslation("CREATOR_FLYPACE") + " " + this.format_pace_realworld(this.flying_pace) + ", ";
+			if(this.flyingPace > 0)
+				html_return += this.getTranslation("CREATOR_FLYPACE") + " " + this.formatPaceRealWorld(this.flyingPace) + ", ";
 			if(this.toughness > 0) {
 				html_return += this.getTranslation("CREATOR_TOUGHNESS") + " " + this.toughness + " (" + this.armor + "), ";
 			} else {
@@ -1345,12 +1360,12 @@ sciFiCreator.prototype = {
 			}
 
 			if(this.pace > 0)
-				html_return += this.getTranslation("CREATOR_PACE") + "  " + this.format_pace_realworld(this.pace) + ", ";
+				html_return += this.getTranslation("CREATOR_PACE") + "  " + this.formatPaceRealWorld(this.pace) + ", ";
 			if(this.crew > 0)
 				html_return += this.getTranslation("CREATOR_CREW") + "  " + this.crew + ", ";
 
-			if(this.strength > 0)
-				html_return += this.getTranslation("CREATOR_STRENGTH") + "  " + this.get_strength_label( this.strength ) + ", ";
+			if(this.strength > 0 && this.objectType != "power_armor")
+				html_return += this.getTranslation("CREATOR_STRENGTH") + " "  + this.getLocalName(  this.getStrengthLabel( this.strength ).label ) + ", ";
 
 			html_return += this.getTranslation("CREATOR_COST") + " C$" + this.simplify_cost(this.cost) + ", ";
 			html_return += this.getTranslation("CREATOR_REMAINING_MODS") + " " + this.mods_available + "\n";
@@ -1358,11 +1373,11 @@ sciFiCreator.prototype = {
 			html_return += "[b]" + this.getTranslation("CREATOR_NOTES") + "[/b]: ";
 
 			var mod_count = 0;
-			for(var modName in this.selected_modifications_list){
+			for(var modName in this.selectedModifications_list){
 				if( mod_count > 0)
 					html_return += ", ";
-				if(this.selected_modifications_list[modName] > 1)
-  					html_return += this.selected_modifications_list[modName] + "x ";
+				if(this.selectedModifications_list[modName] > 1)
+  					html_return += this.selectedModifications_list[modName] + "x ";
 				html_return += modName;
 				mod_count++;
 			}
@@ -1373,17 +1388,17 @@ sciFiCreator.prototype = {
 
 			html_return += "[b]" + this.getTranslation("CREATOR_WEAPONS") + "[/b]: ";
 			html_return += "[list]";
-			this.sort_selected_weapons_list();
+			//this.sort_selectedWeaponsList();
 			var weapon_count = 0;
 			var weapon_count = 0;
-			// console.log("this.selected_weapons_list",this.selected_weapons_list);
-			for(var weaponName in this.selected_weapons_list){
+			// console.log("this.selectedWeaponsList",this.selectedWeaponsList);
+			for(var weaponName in this.selectedWeaponsList){
 				html_return += "[*]";
-				if(this.selected_weapons_list[weaponName].count > 1)
-  					html_return += this.selected_weapons_list[weaponName].count + "x ";
-  				//this.selected_weapons_list[weaponName].obj = this.update_weapon_display_name( this.selected_weapons_list[weaponName] );
-  				html_return += this.selected_weapons_list[weaponName].obj.display_name;
-  				html_return += this.make_weapon_stat_html( this.selected_weapons_list[weaponName].obj );
+				if(this.selectedWeaponsList[weaponName].count > 1)
+  					html_return += this.selectedWeaponsList[weaponName].count + "x ";
+  				//this.selectedWeaponsList[weaponName].obj = this.updateWeaponDisplayName( this.selectedWeaponsList[weaponName] );
+  				html_return += this.selectedWeaponsList[weaponName].obj.display_name;
+  				html_return += this.makeWeaponStatHTML( this.selectedWeaponsList[weaponName].obj );
   				html_return += "\n";
   				weapon_count++;
 			}
@@ -1393,7 +1408,7 @@ sciFiCreator.prototype = {
 
 			html_return += "\n";
 
-			if( this.get_modification_count("Shields") > 0) {
+			if( this.getModificationCount("Shields") > 0) {
 				html_return += "[b]" + this.getTranslation("CREATOR_SHIELDS") + "[/b]: ";
 				html_return += this.size * 10;
 				may_recover = this.getTranslation("CREATOR_MAY_RECOVER").replace("{value}", this.size);
@@ -1401,8 +1416,8 @@ sciFiCreator.prototype = {
 			}
 
 
-			if(this.energy_capacity > 0)
-				html_return += "[b]" + this.getTranslation("CREATOR_ENERGY_CAPACITY") + "[/b]: " + this.energy_capacity + "\n";
+			if(this.energyCapacity > 0)
+				html_return += "[b]" + this.getTranslation("CREATOR_ENERGY_CAPACITY") + "[/b]: " + this.energyCapacity + "\n";
 		} else {
 			html_return += this.getTranslation("CREATOR_SIZE_MUST_BE_SELECTED");
 		}
@@ -1424,17 +1439,17 @@ sciFiCreator.prototype = {
 		return html_return;
 	},
 
-	export_json: function(jquery_selector) {
+	exportJSON: function(jquery_selector) {
 		exportObject = {};
 		exportObject.size = this.size;
-		exportObject.object_type = this.object_type;
-		exportObject.item_name = this.item_name;
+		exportObject.objectType = this.objectType;
+		exportObject.itemName = this.itemName;
 		exportObject.uuid = this.uuid;
-		exportObject.object_description = this.object_description;
+		exportObject.objectDescription = this.objectDescription;
 		exportObject.mods = Array();
-		exportObject.options = this.creator_options;
-		for(modCounter = 0; modCounter < this.selected_modifications.length; modCounter++)
-			exportObject.mods = exportObject.mods.concat( this.selected_modifications[modCounter].tag );
+		exportObject.options = this.creatorOptions;
+		for(modCounter = 0; modCounter < this.selectedModifications.length; modCounter++)
+			exportObject.mods = exportObject.mods.concat( this.selectedModifications[modCounter].tag );
 		exportObject.weapons = Array();
 		for(local_weapon_counter = 0; local_weapon_counter < this.selected_weapons.length; local_weapon_counter++) {
 			weapon_item = {
@@ -1468,7 +1483,7 @@ sciFiCreator.prototype = {
 		});
 	},
 
-	import_json: function(importedObjectString) {
+	importJSON: function(importedObjectString) {
 		try {
 			importedObjectString = this.stripslashes(importedObjectString);
 			importedObj= JSON.parse(importedObjectString);
@@ -1482,43 +1497,50 @@ sciFiCreator.prototype = {
 
 		if(typeof importedObj =='object') {
 			this.reset();
-			this.set_size(importedObj.size);
-			this.set_name(importedObj.item_name);
-			if( typeof(importedObj.object_description) != "undefined")
-				this.set_description(importedObj.object_description);
+			this.setSize(importedObj.size);
+			this.setName(importedObj.itemName);
+			if( typeof(importedObj.objectDescription) != "undefined")
+				this.setDescription(importedObj.objectDescription);
+
+
+
 			if( typeof(importedObj.uuid) != "undefined")
 				this.uuid = importedObj.uuid;
 
 			// legacy version description checks
 			if( typeof(importedObj.ship_description) != "undefined")
-				this.set_description(importedObj.ship_description);
+				this.setDescription(importedObj.ship_description);
 			if( typeof(importedObj.power_armor_description) != "undefined")
-				this.set_description(importedObj.power_armor_description);
+				this.setDescription(importedObj.power_armor_description);
 			if( typeof(importedObj.walker_description) != "undefined")
-				this.set_description(importedObj.walker_description);
+				this.setDescription(importedObj.walker_description);
 			if( typeof(importedObj.vehicle_description) != "undefined")
-				this.set_description(importedObj.vehicle_description);
+				this.setDescription(importedObj.vehicle_description);
+			if( typeof(importedObj.object_description) != "undefined")
+				this.setDescription(importedObj.object_description);
+			if( typeof(importedObj.item_name) != "undefined")
+				this.setName(importedObj.item_name);
 
 			if( importedObj.options )
-				this.creator_options = importedObj.options;
+				this.creatorOptions = importedObj.options;
 
 			for(modCounter = 0; modCounter < importedObj.mods.length; modCounter++)
-				this.add_mod( importedObj.mods[modCounter] );
+				this.addMod( importedObj.mods[modCounter] );
 
 			for(local_weapon_counter = 0; local_weapon_counter < importedObj.weapons.length; local_weapon_counter++) {
 				if( importedObj.weapons[local_weapon_counter].tag)
-					this.add_weapon( importedObj.weapons[local_weapon_counter].tag );
+					this.addWeapon( importedObj.weapons[local_weapon_counter].tag );
 				else
-					this.add_weapon( importedObj.weapons[local_weapon_counter].name );
+					this.addWeapon( importedObj.weapons[local_weapon_counter].name );
 
 				if( typeof(importedObj.weapons[local_weapon_counter].fixed) != "undefined" && importedObj.weapons[local_weapon_counter].fixed != "")
-					this.fix_weapon( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].fixed );
+					this.fixWeapon( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].fixed );
 
 				if( typeof(importedObj.weapons[local_weapon_counter].count) != "undefined" && importedObj.weapons[local_weapon_counter].count > 0)
-					this.set_weapon_count( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].count );
+					this.setWeaponCount( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].count );
 
 				if( typeof(importedObj.weapons[local_weapon_counter].linked) != "undefined" && importedObj.weapons[local_weapon_counter].linked > 0)
-					this.link_weapon( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].linked);
+					this.linkWeapon( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].linked);
 
 			}
 			this.calculate();
@@ -1529,8 +1551,8 @@ sciFiCreator.prototype = {
 		return false;
 	},
 
-	sort_selected_modifications_list: function() {
-		var keyList = Object.keys(this.selected_modifications_list);
+	sortSelectedModificationsList: function() {
+		var keyList = Object.keys(this.selectedModifications_list);
 
 		keyList.sort();
 
@@ -1538,16 +1560,16 @@ sciFiCreator.prototype = {
 
 		for (var keyCount = 0; keyCount < keyList.length; keyCount++) {
 			keyName = keyList[keyCount];
-			newList[keyName] = this.selected_modifications_list[keyName];
+			newList[keyName] = this.selectedModifications_list[keyName];
 		}
-		this.selected_modifications_list = newList;
+		this.selectedModifications_list = newList;
 	},
 
-	sort_selected_weapons_list: function() {
-	 	/* Do nothing as the main should handle this now */
-	},
+	// sort_selectedWeaponsList: function() {
+	//  	 Do nothing as the main should handle this now
+	// },
 
-	sort_weapon_list: function() {
+	sortWeaponList: function() {
 
 		this.selected_weapons.sort(function(a, b){
 			if( a.linkable < b.linkable ) return 1;
@@ -1558,120 +1580,122 @@ sciFiCreator.prototype = {
 		});
 	},
 
-	append_extra_notes: function( note ) {
-		if(this.extra_notes != "")
-			this.extra_notes += ", ";
-		this.extra_notes += note;
+	appendExtraNotes: function( note ) {
+		if(this.extraNotes != "")
+			this.extraNotes += ", ";
+		this.extraNotes += note;
 		return note;
 	},
 
 	calculate: function() {
 
 
-		if( this.selected_size && this.selected_size.size_label ) {
+		if( this.selectedSize && this.selectedSize.size_label ) {
 			// Flush Stats for recalulation
 			this.strength = 0;
 
-			this.strength_bonus = 0;
+			this.strengthBonus = 0;
 			this.aircraft = 0;
 			this.watercraft = 0;
-			this.flying_pace = 0;
-			this.has_weapon_mounts = 0;
-			this.vehicle_weapon_mod_points = 0;
+			this.flyingPace = 0;
+			this.hasWeaponMounts = 0;
+			this.vehicleWeaponModPoints = 0;
 
-			this.has_torpedo_tube = 0;
-			this.has_missile_launcher = 0;
+			this.hasTorpedoTube = 0;
+			this.hasMissileLauncher = 0;
 
-			this.examples = this.selected_size.examples;
-			this.size = this.selected_size.size;
-			this.acc = this.selected_size.acc;
-			this.ts = this.selected_size.ts;
+			this.examples = this.selectedSize.examples;
+			this.size = this.selectedSize.size;
+			this.acc = this.selectedSize.acc;
+			this.ts = this.selectedSize.ts;
 			this.aircraft = 0;
-			this.strength_bonus = 0;
-			this.climb = this.selected_size.climb;
-			if(this.selected_size.strength)
-				this.strength = this.selected_size.strength;
-			this.toughness = this.selected_size.toughness;
-			this.base_toughness = this.selected_size.toughness;
-			this.armor = this.selected_size.armor;
-			this.mods = this.selected_size.mods;
-			this.base_mods = this.selected_size.mods;
-			this.crew = this.selected_size.crew;
-			this.cost = this.selected_size.cost;
-			this.base_cost =  this.selected_size.cost;
-			this.energy_capacity = this.selected_size.energy_capacity;
-			this.base_energy_capacity = this.selected_size.energy_capacity;
-			this.provisions = this.selected_size.provisions;
-			this.weight = this.selected_size.weight;
-			this.pace = this.selected_size.pace;
-			this.base_pace = this.selected_size.pace;
+			this.strengthBonus = 0;
+			this.climb = this.selectedSize.climb;
+			if(this.selectedSize.strength)
+				this.strength = this.selectedSize.strength;
+			this.toughness = this.selectedSize.toughness;
+			this.baseToughness = this.selectedSize.toughness;
+			this.armor = this.selectedSize.armor;
+			this.mods = this.selectedSize.mods;
+			this.baseMods = this.selectedSize.mods;
+			this.crew = this.selectedSize.crew;
+			this.cost = this.selectedSize.cost;
+			this.baseCost =  this.selectedSize.cost;
+			this.energyCapacity = this.selectedSize.energyCapacity;
+			this.baseEnergyCapacity = this.selectedSize.energyCapacity;
+			this.provisions = this.selectedSize.provisions;
+			this.weight = this.selectedSize.weight;
+			this.pace = this.selectedSize.pace;
+			this.basePace = this.selectedSize.pace;
 
-			this.extra_notes = "";
+			this.extraNotes = "";
 
 			this.mods_available = this.mods;
 
 			// Starship is always an aircraft for these purposes ;)
-			if(this.object_type == "starship")
+			if(this.objectType == "starship")
 				this.aircraft = 1;
 
+			if( this.selectedSize && this.selectedSize.strength )
+				this.strength = this.selectedSize.strength;
 			// Go through Mods for availability, calculation and listings
-			this.selected_modifications.sort( this.sort_mods );
+			this.selectedModifications.sort( this.sortMods );
 			// Sort mods
-			this.selected_modifications_list = {};
-			for(calcModCount = 0; calcModCount < this.selected_modifications.length; calcModCount++) {
-				//this.selected_modifications_list += "<li>" + this.selected_modifications[modCount].name + "</li>";
-				this.mods = this.mods - this.selected_modifications[calcModCount].get_mod_cost(this);
-				this.cost += this.selected_modifications[calcModCount].get_cost(this);
+			this.selectedModifications_list = {};
+			for(calcModCount = 0; calcModCount < this.selectedModifications.length; calcModCount++) {
+				//this.selectedModifications_list += "<li>" + this.selectedModifications[modCount].name + "</li>";
+				this.mods = this.mods - this.selectedModifications[calcModCount].getModCost(this);
+				this.cost += this.selectedModifications[calcModCount].getCost(this);
 
 				// attempt to see if mod is still availble - remove if it's not.
-				if( this.selected_modifications[calcModCount].is_available ) {
-					if(this.selected_modifications[calcModCount].is_available(this) == false) {
-						this.remove_mod(this.selected_modifications[calcModCount].tag);
+				if( this.selectedModifications[calcModCount].isAvailable ) {
+					if(this.selectedModifications[calcModCount].isAvailable(this) == false) {
+						this.removeMod(this.selectedModifications[calcModCount].tag);
 						this.calculate();
 						// stop all processing as the page is recalcuating anyways
 						return;
 					}
 				}
 
-				// console.log( this.selected_modifications[calcModCount].name + "/" + this.selected_modifications[calcModCount].get_mod_cost(this) + "/" + this.mods );
+				// console.log( this.selectedModifications[calcModCount].name + "/" + this.selectedModifications[calcModCount].getModCost(this) + "/" + this.mods );
 
-				if( this.selected_modifications[calcModCount].get_weight )
-					this.weight += this.selected_modifications[calcModCount].get_weight(this);
+				if( this.selectedModifications[calcModCount].getWeight )
+					this.weight += this.selectedModifications[calcModCount].getWeight(this);
 
-				if( this.selected_modifications[calcModCount].get_mod_effect )
-					this.selected_modifications[calcModCount].get_mod_effect(this);
+				if( this.selectedModifications[calcModCount].getModEffect )
+					this.selectedModifications[calcModCount].getModEffect(this);
 
 				// Linked weapons are displayed elsewhere...
-				if(this.selected_modifications[calcModCount].tag != "linked") {
-					if( typeof(this.selected_modifications_list[this.selected_modifications[calcModCount].tag]) == "undefined")
-						this.selected_modifications_list[this.selected_modifications[calcModCount].tag] = 1;
+				if(this.selectedModifications[calcModCount].tag != "linked") {
+					if( typeof(this.selectedModifications_list[this.selectedModifications[calcModCount].tag]) == "undefined")
+						this.selectedModifications_list[this.selectedModifications[calcModCount].tag] = 1;
 					else
-						this.selected_modifications_list[this.selected_modifications[calcModCount].tag]++;
+						this.selectedModifications_list[this.selectedModifications[calcModCount].tag]++;
 				}
 			}
 
 			// Go through Weapons for availability, calculation and listings
 			// Sort weapons
-			//this.selected_weapons.sort( sort_mods );
-			this.sort_weapon_list();
+			//this.selected_weapons.sort( sortMods );
+			this.sortWeaponList();
 
-			this.selected_weapons_list = {};
+			this.selectedWeaponsList = {};
 			fixedWeaponModUsage = 0;
 			linkedWeaponModUsage = Array();
 			otherWeaponModUsage = 0;
 			for(calcModCount = 0; calcModCount < this.selected_weapons.length; calcModCount++) {
 
 				// attempt to see if weapon is still availble - remove if it's not.
-				if( this.selected_weapons[calcModCount].is_available ) {
-					if(this.selected_weapons[calcModCount].is_available(this) == false) {
-						this.remove_weapon(calcModCount);
+				if( this.selected_weapons[calcModCount].isAvailable ) {
+					if(this.selected_weapons[calcModCount].isAvailable(this) == false) {
+						this.removeWeapon(calcModCount);
 						this.calculate();
 						// stop all processing as the page is recalcuating anyways
 						return;
 					}
 				}
 
-				this.selected_weapons[calcModCount] = this.update_weapon_display_name( this.selected_weapons[calcModCount] );
+				this.selected_weapons[calcModCount] = this.updateWeaponDisplayName( this.selected_weapons[calcModCount] );
 				// Continue on....
 				weaponModCost = this.selected_weapons[calcModCount].mods;
 
@@ -1687,18 +1711,18 @@ sciFiCreator.prototype = {
 				// 	weaponModCost = (this.selected_weapons[calcModCount].count * weaponModCost) / 2;
 				// 	console.log(weaponModCost);
 				// }
-				//this.vehicle_weapon_mod_points = this.vehicle_weapon_mod_points - weaponModCost;
+				//this.vehicleWeaponModPoints = this.vehicleWeaponModPoints - weaponModCost;
 
 
-				if(this.requires_mount_point > 0)
-					this.vehicle_weapon_mod_points -= weaponModCost;
+				if(this.requiresMountPoint > 0)
+					this.vehicleWeaponModPoints -= weaponModCost;
 				else
 					this.mods -= weaponModCost;
 
 				// console.log( this.selected_weapons[calcModCount].name + "(" + this.selected_weapons[calcModCount].count + ")/" + weaponModCost + "/" + this.mods );
 
-				if( this.selected_weapons[calcModCount].get_weight )
-					this.weight += this.selected_weapons[calcModCount].get_weight(this);
+				if( this.selected_weapons[calcModCount].getWeight )
+					this.weight += this.selected_weapons[calcModCount].getWeight(this);
 
 				if( this.selected_weapons[calcModCount].count > 1) {
 					this.cost += this.selected_weapons[calcModCount].cost / 1 * this.selected_weapons[calcModCount].count;
@@ -1745,64 +1769,64 @@ sciFiCreator.prototype = {
 					}
 				}
 				// console.log("weaponListName", weaponListName);
-				// console.log("this.selected_weapons_list[weaponListName]", this.selected_weapons_list[weaponListName]);
-				if( typeof(this.selected_weapons_list[weaponListName]) == "undefined" || this.selected_weapons_list[weaponListName] == "0") {
+				// console.log("this.selectedWeaponsList[weaponListName]", this.selectedWeaponsList[weaponListName]);
+				if( typeof(this.selectedWeaponsList[weaponListName]) == "undefined" || this.selectedWeaponsList[weaponListName] == "0") {
 					if( this.selected_weapons[calcModCount].missiles_per > 0)
-						this.selected_weapons_list[weaponListName] = {
+						this.selectedWeaponsList[weaponListName] = {
 							obj: this.selected_weapons[calcModCount],
 							count: this.selected_weapons[calcModCount].missiles_per
 						};
 					else
-						this.selected_weapons_list[weaponListName] = {
+						this.selectedWeaponsList[weaponListName] = {
 							obj: this.selected_weapons[calcModCount],
 							count: 1
 						};
 
 				} else {
 					if( this.selected_weapons[calcModCount].missiles_per > 0 )
-						this.selected_weapons_list[weaponListName].count += this.selected_weapons[calcModCount].missiles_per.count;
+						this.selectedWeaponsList[weaponListName].count = (this.selectedWeaponsList[weaponListName].count / 1) + (this.selected_weapons[calcModCount].missiles_per / 1);
 					else
-						this.selected_weapons_list[weaponListName].count++;
+						this.selectedWeaponsList[weaponListName].count++;
 				}
 			}
 
-			this.mods_available = this.mods; // - sort_selected_modifications_list.length;
-			if(this.requires_mount_point == 0) {
-				this.vehicle_weapon_mod_points = this.mods_available; // - sort_selected_modifications_list.length;
+			this.mods_available = this.mods; // - sortSelectedModificationsList.length;
+			if(this.requiresMountPoint == 0) {
+				this.vehicleWeaponModPoints = this.mods_available; // - sortSelectedModificationsList.length;
 			}
 
 
 		}
 	},
 
-	set_name: function(newValue) {
-		this.item_name = newValue;
+	setName: function(newValue) {
+		this.itemName = newValue;
 	},
 
-	set_option: function( short_tag, value ) {
-//		console.log("set_option called: " + this.get_option_ls_name(short_tag) + ", " + value);
-		localStorage.setItem( this.get_option_ls_name(short_tag), value.toString() );
+	setOption: function( short_tag, value ) {
+//		console.log("setOption called: " + this.getOptionLSName(short_tag) + ", " + value);
+		localStorage.setItem( this.getOptionLSName(short_tag), value.toString() );
 	},
 
-	get_option_ls_name: function( short_tag) {
-		return "com.jdg.swwt.settings." + current_selected_object.object_type + "." + short_tag;
+	getOptionLSName: function( short_tag) {
+		return "com.jdg.swwt.settings." + current_selectedObject.objectType + "." + short_tag;
 	},
 
-	get_available_options: function() {
-//		console.log("get_available_options called");
-		if(this.available_options) {
+	getAvailableOptions: function() {
+//		console.log("getAvailableOptions called");
+		if(this.availableOptions) {
 			// put current values into system
-			for(localSettingCount = 0; localSettingCount < this.available_options.length; localSettingCount++) {
-				if( typeof(this.available_options[localSettingCount].desciption) == "undefined") {
-					this.available_options[localSettingCount].desciption = "";
+			for(localSettingCount = 0; localSettingCount < this.availableOptions.length; localSettingCount++) {
+				if( typeof(this.availableOptions[localSettingCount].desciption) == "undefined") {
+					this.availableOptions[localSettingCount].desciption = "";
 				}
 
-				this.available_options[localSettingCount].value = localStorage.getItem( this.get_option_ls_name( this.available_options[localSettingCount].short_tag ) );
-//				console.log(this.get_option_ls_name( this.available_options[localSettingCount].short_tag ) + " - " + this.available_options[localSettingCount].value);
-				if(this.available_options[localSettingCount].value == "1")
-					this.available_options[localSettingCount].value = this.available_options[localSettingCount].value / 1;
+				this.availableOptions[localSettingCount].value = localStorage.getItem( this.getOptionLSName( this.availableOptions[localSettingCount].short_tag ) );
+//				console.log(this.getOptionLSName( this.availableOptions[localSettingCount].short_tag ) + " - " + this.availableOptions[localSettingCount].value);
+				if(this.availableOptions[localSettingCount].value == "1")
+					this.availableOptions[localSettingCount].value = this.availableOptions[localSettingCount].value / 1;
 			}
-			return this.available_options;
+			return this.availableOptions;
 
 		} else {
 //			console.log("No settings?");
@@ -1810,30 +1834,30 @@ sciFiCreator.prototype = {
 		}
 	},
 
-	format_pace_realworld: function(pace_value) {
+	formatPaceRealWorld: function(pace_value) {
 		// never take things at pace value. /groan
 		return pace_value + " (" + Math.floor(pace_value * 2.4)+ " mph, " + Math.floor(pace_value * 3.862416) + " kph)";
 	},
 
-	set_description: function(newValue) {
-		this.object_description = newValue;
+	setDescription: function(newValue) {
+		this.objectDescription = newValue;
 	},
 
-	add_mod: function(modName) {
+	addMod: function(modName) {
 		return_value = 0;
 		if( !modName ) {
 			return false;
 		}
-		for(addModCount = 0; addModCount < this.available_mods.length; addModCount++) {
+		for(addModCount = 0; addModCount < this.availableMods.length; addModCount++) {
 			if(
-				modName.toLowerCase() == this.available_mods[addModCount].tag.toLowerCase()
+				modName.toLowerCase() == this.availableMods[addModCount].tag.toLowerCase()
 				||
-				modName.toLowerCase() == this.available_mods[addModCount].name["en-US"].toLowerCase()
+				modName.toLowerCase() == this.availableMods[addModCount].name["en-US"].toLowerCase()
 			) {
-				//newMod = jQuery.extend({}, this.available_mods[addModCount]);
+				//newMod = jQuery.extend({}, this.availableMods[addModCount]);
 				var newMod = {};
-				angular.extend(newMod, this.available_mods[addModCount]);
-				this.selected_modifications = this.selected_modifications.concat( newMod  );
+				angular.extend(newMod, this.availableMods[addModCount]);
+				this.selectedModifications = this.selectedModifications.concat( newMod  );
 				return;
 			}
 		}
@@ -1841,15 +1865,16 @@ sciFiCreator.prototype = {
 		return return_value;
 	},
 
-	get_strength_label: function( strength_value ) {
-		strength_value = strength_value / 1;
-		if( attribute_labels[strength_value] )
-			return attribute_labels[strength_value];
-		else
-			return "UNKNOWN VALUE";
+	getStrengthLabel: function( strength_value ) {
+		return getDiceValue( strength_value );
+		// strength_value = strength_value / 1;
+		// if( attribute_labels[strength_value] )
+		// 	return attribute_labels[strength_value];
+		// else
+		// 	return "UNKNOWN VALUE";
 	},
 
-	add_weapon: function(weaponName) {
+	addWeapon: function(weaponName) {
 		return_value = 0;
 		for(addlocal_weapon_count = 0; addlocal_weapon_count < savageWorldsVehicleWeapons.length; addlocal_weapon_count++) {
 			if(
@@ -1885,24 +1910,24 @@ sciFiCreator.prototype = {
 		return return_value;
 	},
 
-	update_weapon_display_name: function( weaponObject ) {
+	updateWeaponDisplayName: function( weaponObject ) {
 		weaponObject.count = weaponObject.count / 1;
 		weaponObject.mods = weaponObject.mods / 1;
 
 		if( weaponObject.count == 1 ){
-			weaponObject.display_name = this.get_local_name(weaponObject.name);
+			weaponObject.display_name = this.getLocalName(weaponObject.name);
 		}
 		if( weaponObject.count == 2 ){
 			linkedTranslation = this.getTranslation("CREATOR_DUAL_LINKED");
-			weaponObject.display_name = linkedTranslation.replace("{name}",this.get_local_name(weaponObject.name_plural) );
+			weaponObject.display_name = linkedTranslation.replace("{name}",this.getLocalName(weaponObject.name_plural) );
 		}
 		if( weaponObject.count == 3 ){
 			linkedTranslation = this.getTranslation("CREATOR_TRI_LINKED");
-			weaponObject.display_name = linkedTranslation.replace("{name}",this.get_local_name(weaponObject.name_plural) );
+			weaponObject.display_name = linkedTranslation.replace("{name}",this.getLocalName(weaponObject.name_plural) );
 		}
 		if( weaponObject.count == 4 ){
 			linkedTranslation = this.getTranslation("CREATOR_QUAD_LINKED");
-			weaponObject.display_name = linkedTranslation.replace("{name}",this.get_local_name(weaponObject.name_plural) );
+			weaponObject.display_name = linkedTranslation.replace("{name}",this.getLocalName(weaponObject.name_plural) );
 		}
 
 		if( weaponObject.count > 1 ) {
@@ -1914,7 +1939,7 @@ sciFiCreator.prototype = {
 		return weaponObject;
 	},
 
-	increment_weapon_count: function( weaponIndex ) {
+	incrementWeaponCount: function( weaponIndex ) {
 		weaponIndex = weaponIndex / 1;
 		this.selected_weapons[weaponIndex].count++;
 		if( this.selected_weapons[weaponIndex].count > 4)
@@ -1922,7 +1947,7 @@ sciFiCreator.prototype = {
 
 	},
 
-	set_weapon_count: function( weaponIndex, newCount ) {
+	setWeaponCount: function( weaponIndex, newCount ) {
 		weaponIndex = weaponIndex / 1;
 		if( this.selected_weapons[weaponIndex] ) {
 			this.selected_weapons[weaponIndex].count = newCount;
@@ -1933,41 +1958,41 @@ sciFiCreator.prototype = {
 		}
 	},
 
-	decrement_weapon_count: function( weaponIndex ) {
+	decrementWeaponCount: function( weaponIndex ) {
 		weaponIndex = weaponIndex / 1;
 		this.selected_weapons[weaponIndex].count--;
 		if( this.selected_weapons[weaponIndex].count < 1)
 			this.selected_weapons[weaponIndex].count = 1;
 	},
 
-	remove_mod: function(modName) {
-		for(removeModCount = 0; removeModCount < this.selected_modifications.length; removeModCount++) {
-			if(modName.toLowerCase() == this.selected_modifications[removeModCount].tag.toLowerCase()) {
-				this.selected_modifications.splice(removeModCount, 1);
+	removeMod: function(modName) {
+		for(removeModCount = 0; removeModCount < this.selectedModifications.length; removeModCount++) {
+			if(modName.toLowerCase() == this.selectedModifications[removeModCount].tag.toLowerCase()) {
+				this.selectedModifications.splice(removeModCount, 1);
 				return;
 			}
 		}
 	},
 
-	remove_weapon: function(weaponIndex) {
+	removeWeapon: function(weaponIndex) {
 		weaponIndex = weaponIndex / 1;
 		this.selected_weapons.splice(weaponIndex, 1);
 	},
 
-	link_weapon: function(weaponIndex, linkIndex) {
+	linkWeapon: function(weaponIndex, linkIndex) {
 		weaponIndex = weaponIndex / 1;
 
 		this.selected_weapons[weaponIndex].linked = (linkIndex / 1);
 	},
 
-	fix_weapon: function(weaponIndex, fixedValue) {
+	fixWeapon: function(weaponIndex, fixedValue) {
 		weaponIndex = weaponIndex / 1;
 
 		this.selected_weapons[weaponIndex].fixed = (fixedValue);
 	},
 
-	get_linked_weapons: function() {
-		numberOfLinks = this.get_modification_count("Linked");
+	getLinkedWeapons: function() {
+		numberOfLinks = this.getModificationCount("Linked");
 		returnVal = Array();
 		if( numberOfLinks > 0 ){
 
@@ -1997,45 +2022,45 @@ sciFiCreator.prototype = {
 
 	},
 
-	get_modification_count: function(modName) {
+	getModificationCount: function(modName) {
 		return_value = 0;
-		for(modCount = 0; modCount < this.selected_modifications.length; modCount++) {
-			if(modName.toLowerCase() == this.selected_modifications[modCount].tag.toLowerCase())
+		for(modCount = 0; modCount < this.selectedModifications.length; modCount++) {
+			if(modName.toLowerCase() == this.selectedModifications[modCount].tag.toLowerCase())
 				return_value++;
 		}
 
 		return return_value;
 	},
 
-	set_size: function(sizeNumber) {
-		for(sizeCount = 0; sizeCount < this.available_sizes.length; sizeCount++) {
-			if(sizeNumber == this.available_sizes[sizeCount].size) {
-				this.selected_size = this.available_sizes[sizeCount];
-				this.size = this.available_sizes[sizeCount].size;
+	setSize: function(sizeNumber) {
+		for(sizeCount = 0; sizeCount < this.availableSizes.length; sizeCount++) {
+			if(sizeNumber == this.availableSizes[sizeCount].size) {
+				this.selectedSize = this.availableSizes[sizeCount];
+				this.size = this.availableSizes[sizeCount].size;
 				return true;
 			}
 		}
 		return false;
 	},
 
-	sort_mods: function(a,b) {
-		if( typeof(a.calc_weight) == "undefined")
-			a.calc_weight = 5;
-		if( typeof(b.calc_weight) == "undefined")
-			b.calc_weight = 5;
+	sortMods: function(a,b) {
+		if( typeof(a.calcWeight) == "undefined")
+			a.calcWeight = 5;
+		if( typeof(b.calcWeight) == "undefined")
+			b.calcWeight = 5;
 
-		if (a.calc_weight < b.calc_weight){
+		if (a.calcWeight < b.calcWeight){
 			return -1;
 		} else {
-			if (a.calc_weight > b.calc_weight) {
+			if (a.calcWeight > b.calcWeight) {
 				return 1;
 			} else {
 				return a.name > b.name;
 			}
 		}
 	},
-	option_active: function( short_tag ) {
-		value = localStorage.getItem( this.get_option_ls_name( short_tag) );
+	optionActive: function( short_tag ) {
+		value = localStorage.getItem( this.getOptionLSName( short_tag) );
 		value = value / 1;
 		if( value > 0 )
 			return true;
@@ -2043,55 +2068,55 @@ sciFiCreator.prototype = {
 			return false;
 	},
 
-	add_option: function(option_tag) {
-	//	console.log("add_option", option_tag);
-	//	if( this.creator_options && !this.creator_options.contains( option_tag ) ) {
-	//		this.creator_options.push( option_tag ) ;
+	addOption: function(option_tag) {
+	//	console.log("addOption", option_tag);
+	//	if( this.creatorOptions && !this.creatorOptions.contains( option_tag ) ) {
+	//		this.creatorOptions.push( option_tag ) ;
 	//	}
 		var push_it = false;
-		for( var opt_c = this.creator_options.length - 1; opt_c >= 0; opt_c--) {
-			if( this.creator_options[opt_c] == option_tag )
+		for( var opt_c = this.creatorOptions.length - 1; opt_c >= 0; opt_c--) {
+			if( this.creatorOptions[opt_c] == option_tag )
 				return false;
 		}
-		this.creator_options.push( option_tag ) ;
+		this.creatorOptions.push( option_tag ) ;
 
 	},
 
-	remove_option: function(option_tag) {
-	//	console.log("remove_option", option_tag);
-		for( var opt_c = this.creator_options.length - 1; opt_c >= 0; opt_c--) {
-			if( this.creator_options[opt_c] == option_tag )
-				this.creator_options.splice( opt_c, 1);
+	removeOption: function(option_tag) {
+	//	console.log("removeOption", option_tag);
+		for( var opt_c = this.creatorOptions.length - 1; opt_c >= 0; opt_c--) {
+			if( this.creatorOptions[opt_c] == option_tag )
+				this.creatorOptions.splice( opt_c, 1);
 
 		}
 	},
 
-	has_option: function(option_tag) {
+	hasOption: function(option_tag) {
 
-		for( var opt_c = this.creator_options.length - 1; opt_c >= 0; opt_c--) {
-			if( this.creator_options[opt_c] == option_tag )
+		for( var opt_c = this.creatorOptions.length - 1; opt_c >= 0; opt_c--) {
+			if( this.creatorOptions[opt_c] == option_tag )
 				return true;
 		}
 		return false;
 	},
 
-	propogate_size_select: function(jquery_selector) {
+	propogateSizeSelect: function(jquery_selector) {
 		if(jquery_selector)
 			jquery_selector = ".js-select-size";
 		selectOptions = "<option value=''>- Select Size -</option>";
-		for(sizeCount = 0; sizeCount < this.available_sizes.length; sizeCount++) {
+		for(sizeCount = 0; sizeCount < this.availableSizes.length; sizeCount++) {
 			isSelected = "";
 			display_option = true;
-			if( typeof(this.available_sizes[sizeCount].show_with_option) != "undefined" ) {
-				if( this.option_active( this.available_sizes[sizeCount].show_with_option ) ) {
+			if( typeof(this.availableSizes[sizeCount].showWithOption) != "undefined" ) {
+				if( this.optionActive( this.availableSizes[sizeCount].showWithOption ) ) {
 					display_option = true;
 				} else {
 					display_option = false;
 				}
 			}
 
-			if( typeof(this.available_sizes[sizeCount].hide_with_option) != "undefined" ) {
-				if( this.option_active( this.available_sizes[sizeCount].hide_with_option ) ) {
+			if( typeof(this.availableSizes[sizeCount].hideWithOption) != "undefined" ) {
+				if( this.optionActive( this.availableSizes[sizeCount].hideWithOption ) ) {
 					display_option = false;
 				} else {
 					display_option = true;
@@ -2099,13 +2124,13 @@ sciFiCreator.prototype = {
 			}
 
 			if( display_option ) {
-				if( this.selected_size && this.selected_size.size )
-					if(  this.selected_size.size == this.available_sizes[sizeCount].size )
+				if( this.selectedSize && this.selectedSize.size )
+					if(  this.selectedSize.size == this.availableSizes[sizeCount].size )
 						isSelected = " selected='selected'";
-				selectOptions += "<option value='" + this.available_sizes[sizeCount].size + "'" + isSelected + ">";
-				selectOptions += this.available_sizes[sizeCount].size_label + " - Size " + this.available_sizes[sizeCount].size;
-				if( this.available_sizes[sizeCount].examples )
-					selectOptions += " - " + this.available_sizes[sizeCount].examples;
+				selectOptions += "<option value='" + this.availableSizes[sizeCount].size + "'" + isSelected + ">";
+				selectOptions += this.availableSizes[sizeCount].size_label + " - Size " + this.availableSizes[sizeCount].size;
+				if( this.availableSizes[sizeCount].examples )
+					selectOptions += " - " + this.availableSizes[sizeCount].examples;
 				selectOptions += "</option>";
 			}
 		}
@@ -2664,24 +2689,24 @@ angular.module("baseApp").controller(
 				}
 
 				if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
-					$scope.creatorObj.import_json( localStorage[ currentItemLocalStorageVariable ] );
+					$scope.creatorObj.importJSON( localStorage[ currentItemLocalStorageVariable ] );
 				}
 
 				$scope.creatorObj.useLang = localStorage["users_preferred_language"];
 
 				$scope.selected_options = Array();
-				$scope.creator_options = savageWorldsSciFiOptions[ itemType ];
-				for(optc = 0; optc < $scope.creator_options.length; optc++) {
-					if( typeof($scope.creator_options[optc].name[ localStorage["users_preferred_language"] ] ) != "undefined") {
-						$scope.creator_options[optc].local_name = $scope.creator_options[optc].name[ localStorage["users_preferred_language"] ];
+				$scope.creatorOptions = savageWorldsSciFiOptions[ itemType ];
+				for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
+					if( typeof($scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ] ) != "undefined") {
+						$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ];
 					} else {
-						$scope.creator_options[optc].local_name = $scope.creator_options[optc].name[ "en-US" ];
+						$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ "en-US" ];
 					}
 
-					if( typeof($scope.creator_options[optc].description[ localStorage["users_preferred_language"] ] ) != "undefined") {
-						$scope.creator_options[optc].local_description = $scope.creator_options[optc].description[ localStorage["users_preferred_language"] ];
+					if( typeof($scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ] ) != "undefined") {
+						$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ];
 					} else {
-						$scope.creator_options[optc].local_description = $scope.creator_options[optc].description[ "en-US" ];
+						$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ "en-US" ];
 					}
 					$scope.selected_options[optc] = false;
 				}
@@ -2727,57 +2752,57 @@ angular.module("baseApp").controller(
 			}
 
 			$scope.addMod = function( modTag ) {
-				$scope.creatorObj.add_mod(modTag);
+				$scope.creatorObj.addMod(modTag);
 				$scope.updatePage();
 			}
 
 			$scope.addWeapon = function( modTag ) {
-				$scope.creatorObj.add_weapon(modTag);
+				$scope.creatorObj.addWeapon(modTag);
 				$scope.updatePage();
 			}
 
 			$scope.removeMod = function( modTag ) {
-				$scope.creatorObj.remove_mod(modTag);
+				$scope.creatorObj.removeMod(modTag);
 				$scope.updatePage();
 			}
 
 			$scope.updateSize = function() {
 
-				$scope.creatorObj.set_size( $scope.size_selected.id );
+				$scope.creatorObj.setSize( $scope.size_selected.id );
 				$scope.updatePage();
 			}
 
 			$scope.linkWeapon = function(weaponIndex, linkValue) {
-				$scope.creatorObj.increment_weapon_count( weaponIndex);
+				$scope.creatorObj.incrementWeaponCount( weaponIndex);
 				$scope.updatePage();
 			}
 
 			$scope.setFixed = function(weaponIndex) {
 				newValue = $scope.installed_weapons[weaponIndex].fixed_dd_value.id
-				$scope.creatorObj.fix_weapon( weaponIndex, newValue);
+				$scope.creatorObj.fixWeapon( weaponIndex, newValue);
 				$scope.updatePage();
 			}
 
 			$scope.unlinkWeapon = function(weaponIndex, linkValue) {
-				$scope.creatorObj.decrement_weapon_count( weaponIndex);
+				$scope.creatorObj.decrementWeaponCount( weaponIndex);
 				$scope.updatePage();
 			}
 
 			$scope.updateOption = function( option_index ) {
 
 				for(optc = 0; optc < $scope.selected_options.length; optc++ ) {
-					if( $scope.creator_options[optc].short_tag ) {
+					if( $scope.creatorOptions[optc].short_tag ) {
 						if( $scope.selected_options[optc] == 0 )
-							$scope.creatorObj.remove_option( $scope.creator_options[optc].short_tag );
+							$scope.creatorObj.removeOption( $scope.creatorOptions[optc].short_tag );
 						else
-							$scope.creatorObj.add_option( $scope.creator_options[optc].short_tag );
+							$scope.creatorObj.addOption( $scope.creatorOptions[optc].short_tag );
 					}
 				}
 				$scope.updatePage();
 			}
 
 			$scope.removeWeapon = function(weaponIndex) {
-				$scope.creatorObj.remove_weapon( weaponIndex );
+				$scope.creatorObj.removeWeapon( weaponIndex );
 				$scope.updatePage();
 			}
 
@@ -2823,29 +2848,29 @@ angular.module("baseApp").controller(
 				}
 
 				$scope.closeDialogs();
-				$scope.save_as_name = $scope.creatorObj.item_name;
+				$scope.save_as_name = $scope.creatorObj.itemName;
 				$scope.saveDialogOpen = true;
 			}
 			$scope.importDialog = function() {
-				$scope.import_json = "";
+				$scope.importJSON = "";
 				$scope.closeDialogs();
 				$scope.importDialogOpen = true;
 			}
 
-			$scope.updateImportData = function(import_json) {
-				$scope.import_json = import_json;
+			$scope.updateImportData = function(importJSON) {
+				$scope.importJSON = importJSON;
 			}
 
-			$scope.importData = function(import_json) {
+			$scope.importData = function(importJSON) {
 
-				localStorage[ currentItemLocalStorageVariable ] = $scope.import_json;
+				localStorage[ currentItemLocalStorageVariable ] = $scope.importJSON;
 				$scope.closeDialogs();
 				$scope.init();
 			}
 
 			$scope.exportDialog = function() {
-				$scope.export_bbcode = $scope.creatorObj.export_bbcode();
-				$scope.export_json = $scope.creatorObj.export_json();
+				$scope.exportBBCode = $scope.creatorObj.exportBBCode();
+				$scope.exportJSON = $scope.creatorObj.exportJSON();
 				$scope.closeDialogs();
 				$scope.exportDialogOpen = true;
 			}
@@ -2916,7 +2941,7 @@ angular.module("baseApp").controller(
 					name: saveName,
 					datetime: Date(),
 					type: itemType,
-					data:  $scope.creatorObj.export_json()
+					data:  $scope.creatorObj.exportJSON()
 				};
 				return save_object;
 			}
@@ -2924,10 +2949,10 @@ angular.module("baseApp").controller(
 			$scope.updatePage = function() {
 				$scope.creatorObj.calculate();
 
-				$scope.set_size = $scope.creatorObj.size;
+				$scope.setSize = $scope.creatorObj.size;
 
-				$scope.creator_preview = $scope.creatorObj.create_stats_block();
-				localStorage[ currentItemLocalStorageVariable ] = $scope.creatorObj.export_json();
+				$scope.creator_preview = $scope.creatorObj.createStatesBlock();
+				localStorage[ currentItemLocalStorageVariable ] = $scope.creatorObj.exportJSON();
 
 				$scope.mod_list = Array();
 				angular.extend(	$scope.mod_list, savageWorldsSciFiMods[ itemType ] );
@@ -2938,17 +2963,17 @@ angular.module("baseApp").controller(
 					} else {
 						$scope.mod_list[modc].local_name = $scope.mod_list[modc].name[ "en-US" ];
 					}
-					$scope.mod_list[modc].local_mod_cost = $scope.mod_list[modc].get_mod_cost($scope.creatorObj);
-					$scope.mod_list[modc].local_cost = $scope.creatorObj.simplify_cost($scope.mod_list[modc].get_cost($scope.creatorObj));
-					$scope.mod_list[modc].local_max = $scope.mod_list[modc].get_max($scope.creatorObj);
-					$scope.mod_list[modc].currently_added = $scope.creatorObj.get_modification_count( $scope.mod_list[modc].tag );
+					$scope.mod_list[modc].local_mod_cost = $scope.mod_list[modc].getModCost($scope.creatorObj);
+					$scope.mod_list[modc].local_cost = $scope.creatorObj.simplify_cost($scope.mod_list[modc].getCost($scope.creatorObj));
+					$scope.mod_list[modc].local_max = $scope.mod_list[modc].getMax($scope.creatorObj);
+					$scope.mod_list[modc].currently_added = $scope.creatorObj.getModificationCount( $scope.mod_list[modc].tag );
 					if(
 						( $scope.mod_list[modc].local_max == "u" || $scope.mod_list[modc].currently_added < $scope.mod_list[modc].local_max )
 						&&
 						( $scope.mod_list[modc].local_mod_cost <= $scope.creatorObj.mods_available )
 					) {
-						if( typeof($scope.mod_list[modc].is_available) == "function" ) {
-							if ( $scope.mod_list[modc].is_available( $scope.creatorObj ) ) {
+						if( typeof($scope.mod_list[modc].isAvailable) == "function" ) {
+							if ( $scope.mod_list[modc].isAvailable( $scope.creatorObj ) ) {
 								$scope.mod_list[modc].can_add = true;
 							} else {
 								$scope.mod_list[modc].can_add = false;
@@ -2971,11 +2996,11 @@ angular.module("baseApp").controller(
 				for(var modc = $scope.mod_list.length -1; modc >= 0; modc--) {
 					if(
 
-						typeof($scope.mod_list[modc].show_with_option) != "undefined"
+						typeof($scope.mod_list[modc].showWithOption) != "undefined"
 							&&
-						$scope.mod_list[modc].show_with_option != ""
+						$scope.mod_list[modc].showWithOption != ""
 					) {
-						if( $scope.creatorObj.has_option( $scope.mod_list[modc].show_with_option ) == false) {
+						if( $scope.creatorObj.hasOption( $scope.mod_list[modc].showWithOption ) == false) {
 							$scope.mod_list.splice(modc, 1);
 						}
 
@@ -2983,11 +3008,11 @@ angular.module("baseApp").controller(
 
 					if(
 
-						typeof($scope.mod_list[modc].hide_with_option) != "undefined"
+						typeof($scope.mod_list[modc].hideWithOption) != "undefined"
 							&&
-						$scope.mod_list[modc].hide_with_option != ""
+						$scope.mod_list[modc].hideWithOption != ""
 					) {
-						if( $scope.creatorObj.has_option( $scope.mod_list[modc].hide_with_option ) == true ) {
+						if( $scope.creatorObj.hasOption( $scope.mod_list[modc].hideWithOption ) == true ) {
 							$scope.mod_list.splice(modc, 1);
 						}
 
@@ -3002,7 +3027,7 @@ angular.module("baseApp").controller(
 
 						$scope.size_options = Array();
 						$scope.size_selected = null;
-						$scope.set_size = 0;
+						$scope.setSize = 0;
 
 						default_size_object = {
 							id: 0,
@@ -3019,22 +3044,22 @@ angular.module("baseApp").controller(
 								id: savageWorldsSciFiSizes[itemType][sizec].size,
 								label: display_label
 							};
-							if( savageWorldsSciFiSizes[itemType][sizec].show_with_option )
-								push_object.show_with_option = savageWorldsSciFiSizes[itemType][sizec].show_with_option;
-							if( savageWorldsSciFiSizes[itemType][sizec].hide_with_option )
-								push_object.hide_with_option = savageWorldsSciFiSizes[itemType][sizec].hide_with_option;
+							if( savageWorldsSciFiSizes[itemType][sizec].showWithOption )
+								push_object.showWithOption = savageWorldsSciFiSizes[itemType][sizec].showWithOption;
+							if( savageWorldsSciFiSizes[itemType][sizec].hideWithOption )
+								push_object.hideWithOption = savageWorldsSciFiSizes[itemType][sizec].hideWithOption;
 
 							$scope.size_options.push( push_object );
 							if( savageWorldsSciFiSizes[itemType][sizec].size == $scope.creatorObj.size ) {
 								$scope.size_selected = push_object;
-								$scope.set_size = $scope.creatorObj.size;
+								$scope.setSize = $scope.creatorObj.size;
 							}
 
 
 						}
 						if( $scope.size_selected == null) {
 							$scope.size_selected = default_size_object;
-							$scope.set_size = 0;
+							$scope.setSize = 0;
 						}
 
 				// remove sizes that aren't enabled or disabled by option
@@ -3042,11 +3067,11 @@ angular.module("baseApp").controller(
 
 					if(
 
-						typeof($scope.size_options[sizec].show_with_option) != "undefined"
+						typeof($scope.size_options[sizec].showWithOption) != "undefined"
 							&&
-						$scope.size_options[sizec].show_with_option != ""
+						$scope.size_options[sizec].showWithOption != ""
 					) {
-						if( $scope.creatorObj.has_option( $scope.size_options[sizec].show_with_option ) == false) {
+						if( $scope.creatorObj.hasOption( $scope.size_options[sizec].showWithOption ) == false) {
 
 							$scope.size_options.splice(sizec, 1);
 						}
@@ -3055,11 +3080,11 @@ angular.module("baseApp").controller(
 
 					if(
 
-						typeof($scope.size_options[sizec].hide_with_option) != "undefined"
+						typeof($scope.size_options[sizec].hideWithOption) != "undefined"
 							&&
-						$scope.size_options[sizec].hide_with_option != ""
+						$scope.size_options[sizec].hideWithOption != ""
 					) {
-						if( $scope.creatorObj.has_option( $scope.size_options[sizec].hide_with_option ) == true ) {
+						if( $scope.creatorObj.hasOption( $scope.size_options[sizec].hideWithOption ) == true ) {
 							$scope.size_options.splice(sizec, 1);
 						}
 
@@ -3102,16 +3127,16 @@ angular.module("baseApp").controller(
 					}
 
 					savageWorldsVehicleWeapons[weap_c].can_add = true;
-					if( typeof(savageWorldsVehicleWeapons[weap_c].is_available) == "function") {
-						if( savageWorldsVehicleWeapons[weap_c].is_available( $scope.creatorObj) == false ){
+					if( typeof(savageWorldsVehicleWeapons[weap_c].isAvailable) == "function") {
+						if( savageWorldsVehicleWeapons[weap_c].isAvailable( $scope.creatorObj) == false ){
 
 							savageWorldsVehicleWeapons[weap_c].can_add = false;
 						}
 					}
 
-					// change vehicle_weapon_mod_points to mods_available for non power armor vehicles ;)
+					// change vehicleWeaponModPoints to mods_available for non power armor vehicles ;)
 
-					if( $scope.creatorObj.vehicle_weapon_mod_points < parseInt(savageWorldsVehicleWeapons[weap_c].mods) ) {
+					if( $scope.creatorObj.vehicleWeaponModPoints < parseInt(savageWorldsVehicleWeapons[weap_c].mods) ) {
 
 						savageWorldsVehicleWeapons[weap_c].can_add = false;
 					}
@@ -3148,10 +3173,10 @@ angular.module("baseApp").controller(
 				);
 
 				$scope.selected_options = Array();
-				angular.extend(	$scope.creator_options, savageWorldsSciFiOptions[ itemType ] );
+				angular.extend(	$scope.creatorOptions, savageWorldsSciFiOptions[ itemType ] );
 
-				for(optc = 0; optc < $scope.creator_options.length; optc++) {
-					if( $scope.creatorObj.has_option($scope.creator_options[optc].short_tag) )
+				for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
+					if( $scope.creatorObj.hasOption($scope.creatorOptions[optc].short_tag) )
 						$scope.selected_options[optc] = true;
 					else
 						$scope.selected_options[optc] = false;
@@ -3240,24 +3265,24 @@ angular.module("baseApp").controller(
 				}
 
 				if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
-					$scope.creatorObj.import_json( localStorage[ currentItemLocalStorageVariable ] );
+					$scope.creatorObj.importJSON( localStorage[ currentItemLocalStorageVariable ] );
 				}
 
 				$scope.creatorObj.useLang = localStorage["users_preferred_language"];
 
 				$scope.selected_options = Array();
-				$scope.creator_options = savageWorldsSciFiOptions[ itemType ];
-				for(optc = 0; optc < $scope.creator_options.length; optc++) {
-					if( typeof($scope.creator_options[optc].name[ localStorage["users_preferred_language"] ] ) != "undefined") {
-						$scope.creator_options[optc].local_name = $scope.creator_options[optc].name[ localStorage["users_preferred_language"] ];
+				$scope.creatorOptions = savageWorldsSciFiOptions[ itemType ];
+				for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
+					if( typeof($scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ] ) != "undefined") {
+						$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ];
 					} else {
-						$scope.creator_options[optc].local_name = $scope.creator_options[optc].name[ "en-US" ];
+						$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ "en-US" ];
 					}
 
-					if( typeof($scope.creator_options[optc].description[ localStorage["users_preferred_language"] ] ) != "undefined") {
-						$scope.creator_options[optc].local_description = $scope.creator_options[optc].description[ localStorage["users_preferred_language"] ];
+					if( typeof($scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ] ) != "undefined") {
+						$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ];
 					} else {
-						$scope.creator_options[optc].local_description = $scope.creator_options[optc].description[ "en-US" ];
+						$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ "en-US" ];
 					}
 					$scope.selected_options[optc] = false;
 				}
@@ -3303,57 +3328,57 @@ angular.module("baseApp").controller(
 			}
 
 			$scope.addMod = function( modTag ) {
-				$scope.creatorObj.add_mod(modTag);
+				$scope.creatorObj.addMod(modTag);
 				$scope.updatePage();
 			}
 
 			$scope.addWeapon = function( modTag ) {
-				$scope.creatorObj.add_weapon(modTag);
+				$scope.creatorObj.addWeapon(modTag);
 				$scope.updatePage();
 			}
 
 			$scope.removeMod = function( modTag ) {
-				$scope.creatorObj.remove_mod(modTag);
+				$scope.creatorObj.removeMod(modTag);
 				$scope.updatePage();
 			}
 
 			$scope.updateSize = function() {
 
-				$scope.creatorObj.set_size( $scope.size_selected.id );
+				$scope.creatorObj.setSize( $scope.size_selected.id );
 				$scope.updatePage();
 			}
 
 			$scope.linkWeapon = function(weaponIndex, linkValue) {
-				$scope.creatorObj.increment_weapon_count( weaponIndex);
+				$scope.creatorObj.incrementWeaponCount( weaponIndex);
 				$scope.updatePage();
 			}
 
 			$scope.setFixed = function(weaponIndex) {
 				newValue = $scope.installed_weapons[weaponIndex].fixed_dd_value.id
-				$scope.creatorObj.fix_weapon( weaponIndex, newValue);
+				$scope.creatorObj.fixWeapon( weaponIndex, newValue);
 				$scope.updatePage();
 			}
 
 			$scope.unlinkWeapon = function(weaponIndex, linkValue) {
-				$scope.creatorObj.decrement_weapon_count( weaponIndex);
+				$scope.creatorObj.decrementWeaponCount( weaponIndex);
 				$scope.updatePage();
 			}
 
 			$scope.updateOption = function( option_index ) {
 
 				for(optc = 0; optc < $scope.selected_options.length; optc++ ) {
-					if( $scope.creator_options[optc].short_tag ) {
+					if( $scope.creatorOptions[optc].short_tag ) {
 						if( $scope.selected_options[optc] == 0 )
-							$scope.creatorObj.remove_option( $scope.creator_options[optc].short_tag );
+							$scope.creatorObj.removeOption( $scope.creatorOptions[optc].short_tag );
 						else
-							$scope.creatorObj.add_option( $scope.creator_options[optc].short_tag );
+							$scope.creatorObj.addOption( $scope.creatorOptions[optc].short_tag );
 					}
 				}
 				$scope.updatePage();
 			}
 
 			$scope.removeWeapon = function(weaponIndex) {
-				$scope.creatorObj.remove_weapon( weaponIndex );
+				$scope.creatorObj.removeWeapon( weaponIndex );
 				$scope.updatePage();
 			}
 
@@ -3399,29 +3424,29 @@ angular.module("baseApp").controller(
 				}
 
 				$scope.closeDialogs();
-				$scope.save_as_name = $scope.creatorObj.item_name;
+				$scope.save_as_name = $scope.creatorObj.itemName;
 				$scope.saveDialogOpen = true;
 			}
 			$scope.importDialog = function() {
-				$scope.import_json = "";
+				$scope.importJSON = "";
 				$scope.closeDialogs();
 				$scope.importDialogOpen = true;
 			}
 
-			$scope.updateImportData = function(import_json) {
-				$scope.import_json = import_json;
+			$scope.updateImportData = function(importJSON) {
+				$scope.importJSON = importJSON;
 			}
 
-			$scope.importData = function(import_json) {
+			$scope.importData = function(importJSON) {
 
-				localStorage[ currentItemLocalStorageVariable ] = $scope.import_json;
+				localStorage[ currentItemLocalStorageVariable ] = $scope.importJSON;
 				$scope.closeDialogs();
 				$scope.init();
 			}
 
 			$scope.exportDialog = function() {
-				$scope.export_bbcode = $scope.creatorObj.export_bbcode();
-				$scope.export_json = $scope.creatorObj.export_json();
+				$scope.exportBBCode = $scope.creatorObj.exportBBCode();
+				$scope.exportJSON = $scope.creatorObj.exportJSON();
 				$scope.closeDialogs();
 				$scope.exportDialogOpen = true;
 			}
@@ -3492,7 +3517,7 @@ angular.module("baseApp").controller(
 					name: saveName,
 					datetime: Date(),
 					type: itemType,
-					data:  $scope.creatorObj.export_json()
+					data:  $scope.creatorObj.exportJSON()
 				};
 				return save_object;
 			}
@@ -3500,10 +3525,10 @@ angular.module("baseApp").controller(
 			$scope.updatePage = function() {
 				$scope.creatorObj.calculate();
 
-				$scope.set_size = $scope.creatorObj.size;
+				$scope.setSize = $scope.creatorObj.size;
 
-				$scope.creator_preview = $scope.creatorObj.create_stats_block();
-				localStorage[ currentItemLocalStorageVariable ] = $scope.creatorObj.export_json();
+				$scope.creator_preview = $scope.creatorObj.createStatesBlock();
+				localStorage[ currentItemLocalStorageVariable ] = $scope.creatorObj.exportJSON();
 
 				$scope.mod_list = Array();
 				angular.extend(	$scope.mod_list, savageWorldsSciFiMods[ itemType ] );
@@ -3513,17 +3538,17 @@ angular.module("baseApp").controller(
 					} else {
 						$scope.mod_list[modc].local_name = $scope.mod_list[modc].name[ "en-US" ];
 					}
-					$scope.mod_list[modc].local_mod_cost = $scope.mod_list[modc].get_mod_cost($scope.creatorObj);
-					$scope.mod_list[modc].local_cost = $scope.creatorObj.simplify_cost($scope.mod_list[modc].get_cost($scope.creatorObj));
-					$scope.mod_list[modc].local_max = $scope.mod_list[modc].get_max($scope.creatorObj);
-					$scope.mod_list[modc].currently_added = $scope.creatorObj.get_modification_count( $scope.mod_list[modc].tag );
+					$scope.mod_list[modc].local_mod_cost = $scope.mod_list[modc].getModCost($scope.creatorObj);
+					$scope.mod_list[modc].local_cost = $scope.creatorObj.simplify_cost($scope.mod_list[modc].getCost($scope.creatorObj));
+					$scope.mod_list[modc].local_max = $scope.mod_list[modc].getMax($scope.creatorObj);
+					$scope.mod_list[modc].currently_added = $scope.creatorObj.getModificationCount( $scope.mod_list[modc].tag );
 					if(
 						( $scope.mod_list[modc].local_max == "u" || $scope.mod_list[modc].currently_added < $scope.mod_list[modc].local_max )
 						&&
 						( $scope.mod_list[modc].local_mod_cost <= $scope.creatorObj.mods_available )
 					) {
-						if( typeof($scope.mod_list[modc].is_available) == "function" ) {
-							if ( $scope.mod_list[modc].is_available( $scope.creatorObj ) ) {
+						if( typeof($scope.mod_list[modc].isAvailable) == "function" ) {
+							if ( $scope.mod_list[modc].isAvailable( $scope.creatorObj ) ) {
 								$scope.mod_list[modc].can_add = true;
 							} else {
 								$scope.mod_list[modc].can_add = false;
@@ -3546,11 +3571,11 @@ angular.module("baseApp").controller(
 				for(var modc = $scope.mod_list.length -1; modc >= 0; modc--) {
 					if(
 
-						typeof($scope.mod_list[modc].show_with_option) != "undefined"
+						typeof($scope.mod_list[modc].showWithOption) != "undefined"
 							&&
-						$scope.mod_list[modc].show_with_option != ""
+						$scope.mod_list[modc].showWithOption != ""
 					) {
-						if( $scope.creatorObj.has_option( $scope.mod_list[modc].show_with_option ) == false) {
+						if( $scope.creatorObj.hasOption( $scope.mod_list[modc].showWithOption ) == false) {
 							$scope.mod_list.splice(modc, 1);
 						}
 
@@ -3558,11 +3583,11 @@ angular.module("baseApp").controller(
 
 					if(
 
-						typeof($scope.mod_list[modc].hide_with_option) != "undefined"
+						typeof($scope.mod_list[modc].hideWithOption) != "undefined"
 							&&
-						$scope.mod_list[modc].hide_with_option != ""
+						$scope.mod_list[modc].hideWithOption != ""
 					) {
-						if( $scope.creatorObj.has_option( $scope.mod_list[modc].hide_with_option ) == true ) {
+						if( $scope.creatorObj.hasOption( $scope.mod_list[modc].hideWithOption ) == true ) {
 							$scope.mod_list.splice(modc, 1);
 						}
 
@@ -3577,7 +3602,7 @@ angular.module("baseApp").controller(
 
 						$scope.size_options = Array();
 						$scope.size_selected = null;
-						$scope.set_size = 0;
+						$scope.setSize = 0;
 
 						default_size_object = {
 							id: 0,
@@ -3594,22 +3619,22 @@ angular.module("baseApp").controller(
 								id: savageWorldsSciFiSizes[itemType][sizec].size,
 								label: display_label
 							};
-							if( savageWorldsSciFiSizes[itemType][sizec].show_with_option )
-								push_object.show_with_option = savageWorldsSciFiSizes[itemType][sizec].show_with_option;
-							if( savageWorldsSciFiSizes[itemType][sizec].hide_with_option )
-								push_object.hide_with_option = savageWorldsSciFiSizes[itemType][sizec].hide_with_option;
+							if( savageWorldsSciFiSizes[itemType][sizec].showWithOption )
+								push_object.showWithOption = savageWorldsSciFiSizes[itemType][sizec].showWithOption;
+							if( savageWorldsSciFiSizes[itemType][sizec].hideWithOption )
+								push_object.hideWithOption = savageWorldsSciFiSizes[itemType][sizec].hideWithOption;
 
 							$scope.size_options.push( push_object );
 							if( savageWorldsSciFiSizes[itemType][sizec].size == $scope.creatorObj.size ) {
 								$scope.size_selected = push_object;
-								$scope.set_size = $scope.creatorObj.size;
+								$scope.setSize = $scope.creatorObj.size;
 							}
 
 
 						}
 						if( $scope.size_selected == null) {
 							$scope.size_selected = default_size_object;
-							$scope.set_size = 0;
+							$scope.setSize = 0;
 						}
 
 				// remove sizes that aren't enabled or disabled by option
@@ -3617,11 +3642,11 @@ angular.module("baseApp").controller(
 
 					if(
 
-						typeof($scope.size_options[sizec].show_with_option) != "undefined"
+						typeof($scope.size_options[sizec].showWithOption) != "undefined"
 							&&
-						$scope.size_options[sizec].show_with_option != ""
+						$scope.size_options[sizec].showWithOption != ""
 					) {
-						if( $scope.creatorObj.has_option( $scope.size_options[sizec].show_with_option ) == false) {
+						if( $scope.creatorObj.hasOption( $scope.size_options[sizec].showWithOption ) == false) {
 
 							$scope.size_options.splice(sizec, 1);
 						}
@@ -3630,11 +3655,11 @@ angular.module("baseApp").controller(
 
 					if(
 
-						typeof($scope.size_options[sizec].hide_with_option) != "undefined"
+						typeof($scope.size_options[sizec].hideWithOption) != "undefined"
 							&&
-						$scope.size_options[sizec].hide_with_option != ""
+						$scope.size_options[sizec].hideWithOption != ""
 					) {
-						if( $scope.creatorObj.has_option( $scope.size_options[sizec].hide_with_option ) == true ) {
+						if( $scope.creatorObj.hasOption( $scope.size_options[sizec].hideWithOption ) == true ) {
 							$scope.size_options.splice(sizec, 1);
 						}
 
@@ -3677,16 +3702,16 @@ angular.module("baseApp").controller(
 					}
 
 					savageWorldsVehicleWeapons[weap_c].can_add = true;
-					if( typeof(savageWorldsVehicleWeapons[weap_c].is_available) == "function") {
-						if( savageWorldsVehicleWeapons[weap_c].is_available( $scope.creatorObj) == false ){
+					if( typeof(savageWorldsVehicleWeapons[weap_c].isAvailable) == "function") {
+						if( savageWorldsVehicleWeapons[weap_c].isAvailable( $scope.creatorObj) == false ){
 
 							savageWorldsVehicleWeapons[weap_c].can_add = false;
 						}
 					}
 
-					// change vehicle_weapon_mod_points to mods_available for non power armor vehicles ;)
+					// change vehicleWeaponModPoints to mods_available for non power armor vehicles ;)
 
-					if( $scope.creatorObj.vehicle_weapon_mod_points < parseInt(savageWorldsVehicleWeapons[weap_c].mods) ) {
+					if( $scope.creatorObj.vehicleWeaponModPoints < parseInt(savageWorldsVehicleWeapons[weap_c].mods) ) {
 
 						savageWorldsVehicleWeapons[weap_c].can_add = false;
 					}
@@ -3724,9 +3749,9 @@ angular.module("baseApp").controller(
 
 				$scope.selected_options = Array();
 
-				angular.extend(	$scope.creator_options,savageWorldsSciFiOptions[ itemType ] );
-				for(optc = 0; optc < $scope.creator_options.length; optc++) {
-					if( $scope.creatorObj.has_option($scope.creator_options[optc].short_tag) )
+				angular.extend(	$scope.creatorOptions,savageWorldsSciFiOptions[ itemType ] );
+				for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
+					if( $scope.creatorObj.hasOption($scope.creatorOptions[optc].short_tag) )
 						$scope.selected_options[optc] = true;
 					else
 						$scope.selected_options[optc] = false;
@@ -3809,24 +3834,24 @@ angular.module("baseApp").controller(
 				}
 
 				if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
-					$scope.creatorObj.import_json( localStorage[ currentItemLocalStorageVariable ] );
+					$scope.creatorObj.importJSON( localStorage[ currentItemLocalStorageVariable ] );
 				}
 
 				$scope.creatorObj.useLang = localStorage["users_preferred_language"];
 
 				$scope.selected_options = Array();
-				$scope.creator_options = savageWorldsSciFiOptions[ itemType ];
-				for(optc = 0; optc < $scope.creator_options.length; optc++) {
-					if( typeof($scope.creator_options[optc].name[ localStorage["users_preferred_language"] ] ) != "undefined") {
-						$scope.creator_options[optc].local_name = $scope.creator_options[optc].name[ localStorage["users_preferred_language"] ];
+				$scope.creatorOptions = savageWorldsSciFiOptions[ itemType ];
+				for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
+					if( typeof($scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ] ) != "undefined") {
+						$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ];
 					} else {
-						$scope.creator_options[optc].local_name = $scope.creator_options[optc].name[ "en-US" ];
+						$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ "en-US" ];
 					}
 
-					if( typeof($scope.creator_options[optc].description[ localStorage["users_preferred_language"] ] ) != "undefined") {
-						$scope.creator_options[optc].local_description = $scope.creator_options[optc].description[ localStorage["users_preferred_language"] ];
+					if( typeof($scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ] ) != "undefined") {
+						$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ];
 					} else {
-						$scope.creator_options[optc].local_description = $scope.creator_options[optc].description[ "en-US" ];
+						$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ "en-US" ];
 					}
 					$scope.selected_options[optc] = false;
 				}
@@ -3872,57 +3897,57 @@ angular.module("baseApp").controller(
 			}
 
 			$scope.addMod = function( modTag ) {
-				$scope.creatorObj.add_mod(modTag);
+				$scope.creatorObj.addMod(modTag);
 				$scope.updatePage();
 			}
 
 			$scope.addWeapon = function( modTag ) {
-				$scope.creatorObj.add_weapon(modTag);
+				$scope.creatorObj.addWeapon(modTag);
 				$scope.updatePage();
 			}
 
 			$scope.removeMod = function( modTag ) {
-				$scope.creatorObj.remove_mod(modTag);
+				$scope.creatorObj.removeMod(modTag);
 				$scope.updatePage();
 			}
 
 			$scope.updateSize = function() {
 
-				$scope.creatorObj.set_size( $scope.size_selected.id );
+				$scope.creatorObj.setSize( $scope.size_selected.id );
 				$scope.updatePage();
 			}
 
 			$scope.linkWeapon = function(weaponIndex, linkValue) {
-				$scope.creatorObj.increment_weapon_count( weaponIndex);
+				$scope.creatorObj.incrementWeaponCount( weaponIndex);
 				$scope.updatePage();
 			}
 
 			$scope.setFixed = function(weaponIndex) {
 				newValue = $scope.installed_weapons[weaponIndex].fixed_dd_value.id
-				$scope.creatorObj.fix_weapon( weaponIndex, newValue);
+				$scope.creatorObj.fixWeapon( weaponIndex, newValue);
 				$scope.updatePage();
 			}
 
 			$scope.unlinkWeapon = function(weaponIndex, linkValue) {
-				$scope.creatorObj.decrement_weapon_count( weaponIndex);
+				$scope.creatorObj.decrementWeaponCount( weaponIndex);
 				$scope.updatePage();
 			}
 
 			$scope.updateOption = function( option_index ) {
 
 				for(optc = 0; optc < $scope.selected_options.length; optc++ ) {
-					if( $scope.creator_options[optc].short_tag ) {
+					if( $scope.creatorOptions[optc].short_tag ) {
 						if( $scope.selected_options[optc] == 0 )
-							$scope.creatorObj.remove_option( $scope.creator_options[optc].short_tag );
+							$scope.creatorObj.removeOption( $scope.creatorOptions[optc].short_tag );
 						else
-							$scope.creatorObj.add_option( $scope.creator_options[optc].short_tag );
+							$scope.creatorObj.addOption( $scope.creatorOptions[optc].short_tag );
 					}
 				}
 				$scope.updatePage();
 			}
 
 			$scope.removeWeapon = function(weaponIndex) {
-				$scope.creatorObj.remove_weapon( weaponIndex );
+				$scope.creatorObj.removeWeapon( weaponIndex );
 				$scope.updatePage();
 			}
 
@@ -3968,29 +3993,29 @@ angular.module("baseApp").controller(
 				}
 
 				$scope.closeDialogs();
-				$scope.save_as_name = $scope.creatorObj.item_name;
+				$scope.save_as_name = $scope.creatorObj.itemName;
 				$scope.saveDialogOpen = true;
 			}
 			$scope.importDialog = function() {
-				$scope.import_json = "";
+				$scope.importJSON = "";
 				$scope.closeDialogs();
 				$scope.importDialogOpen = true;
 			}
 
-			$scope.updateImportData = function(import_json) {
-				$scope.import_json = import_json;
+			$scope.updateImportData = function(importJSON) {
+				$scope.importJSON = importJSON;
 			}
 
-			$scope.importData = function(import_json) {
+			$scope.importData = function(importJSON) {
 
-				localStorage[ currentItemLocalStorageVariable ] = $scope.import_json;
+				localStorage[ currentItemLocalStorageVariable ] = $scope.importJSON;
 				$scope.closeDialogs();
 				$scope.init();
 			}
 
 			$scope.exportDialog = function() {
-				$scope.export_bbcode = $scope.creatorObj.export_bbcode();
-				$scope.export_json = $scope.creatorObj.export_json();
+				$scope.exportBBCode = $scope.creatorObj.exportBBCode();
+				$scope.exportJSON = $scope.creatorObj.exportJSON();
 				$scope.closeDialogs();
 				$scope.exportDialogOpen = true;
 			}
@@ -4061,7 +4086,7 @@ angular.module("baseApp").controller(
 					name: saveName,
 					datetime: Date(),
 					type: itemType,
-					data:  $scope.creatorObj.export_json()
+					data:  $scope.creatorObj.exportJSON()
 				};
 				return save_object;
 			}
@@ -4069,10 +4094,10 @@ angular.module("baseApp").controller(
 			$scope.updatePage = function() {
 				$scope.creatorObj.calculate();
 
-				$scope.set_size = $scope.creatorObj.size;
+				$scope.setSize = $scope.creatorObj.size;
 
-				$scope.creator_preview = $scope.creatorObj.create_stats_block();
-				localStorage[ currentItemLocalStorageVariable ] = $scope.creatorObj.export_json();
+				$scope.creator_preview = $scope.creatorObj.createStatesBlock();
+				localStorage[ currentItemLocalStorageVariable ] = $scope.creatorObj.exportJSON();
 
 				$scope.mod_list = Array();
 				angular.extend(	$scope.mod_list, savageWorldsSciFiMods[ itemType ] );
@@ -4082,17 +4107,17 @@ angular.module("baseApp").controller(
 					} else {
 						$scope.mod_list[modc].local_name = $scope.mod_list[modc].name[ "en-US" ];
 					}
-					$scope.mod_list[modc].local_mod_cost = $scope.mod_list[modc].get_mod_cost($scope.creatorObj);
-					$scope.mod_list[modc].local_cost = $scope.creatorObj.simplify_cost($scope.mod_list[modc].get_cost($scope.creatorObj));
-					$scope.mod_list[modc].local_max = $scope.mod_list[modc].get_max($scope.creatorObj);
-					$scope.mod_list[modc].currently_added = $scope.creatorObj.get_modification_count( $scope.mod_list[modc].tag );
+					$scope.mod_list[modc].local_mod_cost = $scope.mod_list[modc].getModCost($scope.creatorObj);
+					$scope.mod_list[modc].local_cost = $scope.creatorObj.simplify_cost($scope.mod_list[modc].getCost($scope.creatorObj));
+					$scope.mod_list[modc].local_max = $scope.mod_list[modc].getMax($scope.creatorObj);
+					$scope.mod_list[modc].currently_added = $scope.creatorObj.getModificationCount( $scope.mod_list[modc].tag );
 					if(
 						( $scope.mod_list[modc].local_max == "u" || $scope.mod_list[modc].currently_added < $scope.mod_list[modc].local_max )
 						&&
 						( $scope.mod_list[modc].local_mod_cost <= $scope.creatorObj.mods_available )
 					) {
-						if( typeof($scope.mod_list[modc].is_available) == "function" ) {
-							if ( $scope.mod_list[modc].is_available( $scope.creatorObj ) ) {
+						if( typeof($scope.mod_list[modc].isAvailable) == "function" ) {
+							if ( $scope.mod_list[modc].isAvailable( $scope.creatorObj ) ) {
 								$scope.mod_list[modc].can_add = true;
 							} else {
 								$scope.mod_list[modc].can_add = false;
@@ -4115,11 +4140,11 @@ angular.module("baseApp").controller(
 				for(var modc = $scope.mod_list.length -1; modc >= 0; modc--) {
 					if(
 
-						typeof($scope.mod_list[modc].show_with_option) != "undefined"
+						typeof($scope.mod_list[modc].showWithOption) != "undefined"
 							&&
-						$scope.mod_list[modc].show_with_option != ""
+						$scope.mod_list[modc].showWithOption != ""
 					) {
-						if( $scope.creatorObj.has_option( $scope.mod_list[modc].show_with_option ) == false) {
+						if( $scope.creatorObj.hasOption( $scope.mod_list[modc].showWithOption ) == false) {
 							$scope.mod_list.splice(modc, 1);
 						}
 
@@ -4127,11 +4152,11 @@ angular.module("baseApp").controller(
 
 					if(
 
-						typeof($scope.mod_list[modc].hide_with_option) != "undefined"
+						typeof($scope.mod_list[modc].hideWithOption) != "undefined"
 							&&
-						$scope.mod_list[modc].hide_with_option != ""
+						$scope.mod_list[modc].hideWithOption != ""
 					) {
-						if( $scope.creatorObj.has_option( $scope.mod_list[modc].hide_with_option ) == true ) {
+						if( $scope.creatorObj.hasOption( $scope.mod_list[modc].hideWithOption ) == true ) {
 							$scope.mod_list.splice(modc, 1);
 						}
 
@@ -4146,7 +4171,7 @@ angular.module("baseApp").controller(
 
 						$scope.size_options = Array();
 						$scope.size_selected = null;
-						$scope.set_size = 0;
+						$scope.setSize = 0;
 
 						default_size_object = {
 							id: 0,
@@ -4163,22 +4188,22 @@ angular.module("baseApp").controller(
 								id: savageWorldsSciFiSizes[itemType][sizec].size,
 								label: display_label
 							};
-							if( savageWorldsSciFiSizes[itemType][sizec].show_with_option )
-								push_object.show_with_option = savageWorldsSciFiSizes[itemType][sizec].show_with_option;
-							if( savageWorldsSciFiSizes[itemType][sizec].hide_with_option )
-								push_object.hide_with_option = savageWorldsSciFiSizes[itemType][sizec].hide_with_option;
+							if( savageWorldsSciFiSizes[itemType][sizec].showWithOption )
+								push_object.showWithOption = savageWorldsSciFiSizes[itemType][sizec].showWithOption;
+							if( savageWorldsSciFiSizes[itemType][sizec].hideWithOption )
+								push_object.hideWithOption = savageWorldsSciFiSizes[itemType][sizec].hideWithOption;
 
 							$scope.size_options.push( push_object );
 							if( savageWorldsSciFiSizes[itemType][sizec].size == $scope.creatorObj.size ) {
 								$scope.size_selected = push_object;
-								$scope.set_size = $scope.creatorObj.size;
+								$scope.setSize = $scope.creatorObj.size;
 							}
 
 
 						}
 						if( $scope.size_selected == null) {
 							$scope.size_selected = default_size_object;
-							$scope.set_size = 0;
+							$scope.setSize = 0;
 						}
 
 				// remove sizes that aren't enabled or disabled by option
@@ -4186,11 +4211,11 @@ angular.module("baseApp").controller(
 
 					if(
 
-						typeof($scope.size_options[sizec].show_with_option) != "undefined"
+						typeof($scope.size_options[sizec].showWithOption) != "undefined"
 							&&
-						$scope.size_options[sizec].show_with_option != ""
+						$scope.size_options[sizec].showWithOption != ""
 					) {
-						if( $scope.creatorObj.has_option( $scope.size_options[sizec].show_with_option ) == false) {
+						if( $scope.creatorObj.hasOption( $scope.size_options[sizec].showWithOption ) == false) {
 
 							$scope.size_options.splice(sizec, 1);
 						}
@@ -4199,11 +4224,11 @@ angular.module("baseApp").controller(
 
 					if(
 
-						typeof($scope.size_options[sizec].hide_with_option) != "undefined"
+						typeof($scope.size_options[sizec].hideWithOption) != "undefined"
 							&&
-						$scope.size_options[sizec].hide_with_option != ""
+						$scope.size_options[sizec].hideWithOption != ""
 					) {
-						if( $scope.creatorObj.has_option( $scope.size_options[sizec].hide_with_option ) == true ) {
+						if( $scope.creatorObj.hasOption( $scope.size_options[sizec].hideWithOption ) == true ) {
 							$scope.size_options.splice(sizec, 1);
 						}
 
@@ -4246,16 +4271,16 @@ angular.module("baseApp").controller(
 					}
 
 					savageWorldsVehicleWeapons[weap_c].can_add = true;
-					if( typeof(savageWorldsVehicleWeapons[weap_c].is_available) == "function") {
-						if( savageWorldsVehicleWeapons[weap_c].is_available( $scope.creatorObj) == false ){
+					if( typeof(savageWorldsVehicleWeapons[weap_c].isAvailable) == "function") {
+						if( savageWorldsVehicleWeapons[weap_c].isAvailable( $scope.creatorObj) == false ){
 
 							savageWorldsVehicleWeapons[weap_c].can_add = false;
 						}
 					}
 
-					// change vehicle_weapon_mod_points to mods_available for non power armor vehicles ;)
+					// change vehicleWeaponModPoints to mods_available for non power armor vehicles ;)
 
-					if( $scope.creatorObj.vehicle_weapon_mod_points < parseInt(savageWorldsVehicleWeapons[weap_c].mods) ) {
+					if( $scope.creatorObj.vehicleWeaponModPoints < parseInt(savageWorldsVehicleWeapons[weap_c].mods) ) {
 
 						savageWorldsVehicleWeapons[weap_c].can_add = false;
 					}
@@ -4293,9 +4318,9 @@ angular.module("baseApp").controller(
 
 				$scope.selected_options = Array();
 
-				angular.extend(	$scope.creator_options,savageWorldsSciFiOptions[ itemType ] );
-				for(optc = 0; optc < $scope.creator_options.length; optc++) {
-					if( $scope.creatorObj.has_option($scope.creator_options[optc].short_tag) )
+				angular.extend(	$scope.creatorOptions,savageWorldsSciFiOptions[ itemType ] );
+				for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
+					if( $scope.creatorObj.hasOption($scope.creatorOptions[optc].short_tag) )
 						$scope.selected_options[optc] = true;
 					else
 						$scope.selected_options[optc] = false;
@@ -4378,24 +4403,24 @@ angular.module("baseApp").controller(
 				}
 
 				if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
-					$scope.creatorObj.import_json( localStorage[ currentItemLocalStorageVariable ] );
+					$scope.creatorObj.importJSON( localStorage[ currentItemLocalStorageVariable ] );
 				}
 
 				$scope.creatorObj.useLang = localStorage["users_preferred_language"];
 
 				$scope.selected_options = Array();
-				$scope.creator_options = savageWorldsSciFiOptions[ itemType ];
-				for(optc = 0; optc < $scope.creator_options.length; optc++) {
-					if( typeof($scope.creator_options[optc].name[ localStorage["users_preferred_language"] ] ) != "undefined") {
-						$scope.creator_options[optc].local_name = $scope.creator_options[optc].name[ localStorage["users_preferred_language"] ];
+				$scope.creatorOptions = savageWorldsSciFiOptions[ itemType ];
+				for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
+					if( typeof($scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ] ) != "undefined") {
+						$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ];
 					} else {
-						$scope.creator_options[optc].local_name = $scope.creator_options[optc].name[ "en-US" ];
+						$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ "en-US" ];
 					}
 
-					if( typeof($scope.creator_options[optc].description[ localStorage["users_preferred_language"] ] ) != "undefined") {
-						$scope.creator_options[optc].local_description = $scope.creator_options[optc].description[ localStorage["users_preferred_language"] ];
+					if( typeof($scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ] ) != "undefined") {
+						$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ];
 					} else {
-						$scope.creator_options[optc].local_description = $scope.creator_options[optc].description[ "en-US" ];
+						$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ "en-US" ];
 					}
 					$scope.selected_options[optc] = false;
 				}
@@ -4441,57 +4466,57 @@ angular.module("baseApp").controller(
 			}
 
 			$scope.addMod = function( modTag ) {
-				$scope.creatorObj.add_mod(modTag);
+				$scope.creatorObj.addMod(modTag);
 				$scope.updatePage();
 			}
 
 			$scope.addWeapon = function( modTag ) {
-				$scope.creatorObj.add_weapon(modTag);
+				$scope.creatorObj.addWeapon(modTag);
 				$scope.updatePage();
 			}
 
 			$scope.removeMod = function( modTag ) {
-				$scope.creatorObj.remove_mod(modTag);
+				$scope.creatorObj.removeMod(modTag);
 				$scope.updatePage();
 			}
 
 			$scope.updateSize = function() {
 
-				$scope.creatorObj.set_size( $scope.size_selected.id );
+				$scope.creatorObj.setSize( $scope.size_selected.id );
 				$scope.updatePage();
 			}
 
 			$scope.linkWeapon = function(weaponIndex, linkValue) {
-				$scope.creatorObj.increment_weapon_count( weaponIndex);
+				$scope.creatorObj.incrementWeaponCount( weaponIndex);
 				$scope.updatePage();
 			}
 
 			$scope.setFixed = function(weaponIndex) {
 				newValue = $scope.installed_weapons[weaponIndex].fixed_dd_value.id
-				$scope.creatorObj.fix_weapon( weaponIndex, newValue);
+				$scope.creatorObj.fixWeapon( weaponIndex, newValue);
 				$scope.updatePage();
 			}
 
 			$scope.unlinkWeapon = function(weaponIndex, linkValue) {
-				$scope.creatorObj.decrement_weapon_count( weaponIndex);
+				$scope.creatorObj.decrementWeaponCount( weaponIndex);
 				$scope.updatePage();
 			}
 
 			$scope.updateOption = function( option_index ) {
 
 				for(optc = 0; optc < $scope.selected_options.length; optc++ ) {
-					if( $scope.creator_options[optc].short_tag ) {
+					if( $scope.creatorOptions[optc].short_tag ) {
 						if( $scope.selected_options[optc] == 0 )
-							$scope.creatorObj.remove_option( $scope.creator_options[optc].short_tag );
+							$scope.creatorObj.removeOption( $scope.creatorOptions[optc].short_tag );
 						else
-							$scope.creatorObj.add_option( $scope.creator_options[optc].short_tag );
+							$scope.creatorObj.addOption( $scope.creatorOptions[optc].short_tag );
 					}
 				}
 				$scope.updatePage();
 			}
 
 			$scope.removeWeapon = function(weaponIndex) {
-				$scope.creatorObj.remove_weapon( weaponIndex );
+				$scope.creatorObj.removeWeapon( weaponIndex );
 				$scope.updatePage();
 			}
 
@@ -4537,29 +4562,29 @@ angular.module("baseApp").controller(
 				}
 
 				$scope.closeDialogs();
-				$scope.save_as_name = $scope.creatorObj.item_name;
+				$scope.save_as_name = $scope.creatorObj.itemName;
 				$scope.saveDialogOpen = true;
 			}
 			$scope.importDialog = function() {
-				$scope.import_json = "";
+				$scope.importJSON = "";
 				$scope.closeDialogs();
 				$scope.importDialogOpen = true;
 			}
 
-			$scope.updateImportData = function(import_json) {
-				$scope.import_json = import_json;
+			$scope.updateImportData = function(importJSON) {
+				$scope.importJSON = importJSON;
 			}
 
-			$scope.importData = function(import_json) {
+			$scope.importData = function(importJSON) {
 
-				localStorage[ currentItemLocalStorageVariable ] = $scope.import_json;
+				localStorage[ currentItemLocalStorageVariable ] = $scope.importJSON;
 				$scope.closeDialogs();
 				$scope.init();
 			}
 
 			$scope.exportDialog = function() {
-				$scope.export_bbcode = $scope.creatorObj.export_bbcode();
-				$scope.export_json = $scope.creatorObj.export_json();
+				$scope.exportBBCode = $scope.creatorObj.exportBBCode();
+				$scope.exportJSON = $scope.creatorObj.exportJSON();
 				$scope.closeDialogs();
 				$scope.exportDialogOpen = true;
 			}
@@ -4630,7 +4655,7 @@ angular.module("baseApp").controller(
 					name: saveName,
 					datetime: Date(),
 					type: itemType,
-					data:  $scope.creatorObj.export_json()
+					data:  $scope.creatorObj.exportJSON()
 				};
 				return save_object;
 			}
@@ -4638,10 +4663,10 @@ angular.module("baseApp").controller(
 			$scope.updatePage = function() {
 				$scope.creatorObj.calculate();
 
-				$scope.set_size = $scope.creatorObj.size;
+				$scope.setSize = $scope.creatorObj.size;
 
-				$scope.creator_preview = $scope.creatorObj.create_stats_block();
-				localStorage[ currentItemLocalStorageVariable ] = $scope.creatorObj.export_json();
+				$scope.creator_preview = $scope.creatorObj.createStatesBlock();
+				localStorage[ currentItemLocalStorageVariable ] = $scope.creatorObj.exportJSON();
 
 				$scope.mod_list = Array();
 				angular.extend(	$scope.mod_list, savageWorldsSciFiMods[ itemType ] );
@@ -4651,17 +4676,17 @@ angular.module("baseApp").controller(
 					} else {
 						$scope.mod_list[modc].local_name = $scope.mod_list[modc].name[ "en-US" ];
 					}
-					$scope.mod_list[modc].local_mod_cost = $scope.mod_list[modc].get_mod_cost($scope.creatorObj);
-					$scope.mod_list[modc].local_cost = $scope.creatorObj.simplify_cost($scope.mod_list[modc].get_cost($scope.creatorObj));
-					$scope.mod_list[modc].local_max = $scope.mod_list[modc].get_max($scope.creatorObj);
-					$scope.mod_list[modc].currently_added = $scope.creatorObj.get_modification_count( $scope.mod_list[modc].tag );
+					$scope.mod_list[modc].local_mod_cost = $scope.mod_list[modc].getModCost($scope.creatorObj);
+					$scope.mod_list[modc].local_cost = $scope.creatorObj.simplify_cost($scope.mod_list[modc].getCost($scope.creatorObj));
+					$scope.mod_list[modc].local_max = $scope.mod_list[modc].getMax($scope.creatorObj);
+					$scope.mod_list[modc].currently_added = $scope.creatorObj.getModificationCount( $scope.mod_list[modc].tag );
 					if(
 						( $scope.mod_list[modc].local_max == "u" || $scope.mod_list[modc].currently_added < $scope.mod_list[modc].local_max )
 						&&
 						( $scope.mod_list[modc].local_mod_cost <= $scope.creatorObj.mods_available )
 					) {
-						if( typeof($scope.mod_list[modc].is_available) == "function" ) {
-							if ( $scope.mod_list[modc].is_available( $scope.creatorObj ) ) {
+						if( typeof($scope.mod_list[modc].isAvailable) == "function" ) {
+							if ( $scope.mod_list[modc].isAvailable( $scope.creatorObj ) ) {
 								$scope.mod_list[modc].can_add = true;
 							} else {
 								$scope.mod_list[modc].can_add = false;
@@ -4684,11 +4709,11 @@ angular.module("baseApp").controller(
 				for(var modc = $scope.mod_list.length -1; modc >= 0; modc--) {
 					if(
 
-						typeof($scope.mod_list[modc].show_with_option) != "undefined"
+						typeof($scope.mod_list[modc].showWithOption) != "undefined"
 							&&
-						$scope.mod_list[modc].show_with_option != ""
+						$scope.mod_list[modc].showWithOption != ""
 					) {
-						if( $scope.creatorObj.has_option( $scope.mod_list[modc].show_with_option ) == false) {
+						if( $scope.creatorObj.hasOption( $scope.mod_list[modc].showWithOption ) == false) {
 							$scope.mod_list.splice(modc, 1);
 						}
 
@@ -4696,11 +4721,11 @@ angular.module("baseApp").controller(
 
 					if(
 
-						typeof($scope.mod_list[modc].hide_with_option) != "undefined"
+						typeof($scope.mod_list[modc].hideWithOption) != "undefined"
 							&&
-						$scope.mod_list[modc].hide_with_option != ""
+						$scope.mod_list[modc].hideWithOption != ""
 					) {
-						if( $scope.creatorObj.has_option( $scope.mod_list[modc].hide_with_option ) == true ) {
+						if( $scope.creatorObj.hasOption( $scope.mod_list[modc].hideWithOption ) == true ) {
 							$scope.mod_list.splice(modc, 1);
 						}
 
@@ -4715,7 +4740,7 @@ angular.module("baseApp").controller(
 
 						$scope.size_options = Array();
 						$scope.size_selected = null;
-						$scope.set_size = 0;
+						$scope.setSize = 0;
 
 						default_size_object = {
 							id: 0,
@@ -4732,22 +4757,22 @@ angular.module("baseApp").controller(
 								id: savageWorldsSciFiSizes[itemType][sizec].size,
 								label: display_label
 							};
-							if( savageWorldsSciFiSizes[itemType][sizec].show_with_option )
-								push_object.show_with_option = savageWorldsSciFiSizes[itemType][sizec].show_with_option;
-							if( savageWorldsSciFiSizes[itemType][sizec].hide_with_option )
-								push_object.hide_with_option = savageWorldsSciFiSizes[itemType][sizec].hide_with_option;
+							if( savageWorldsSciFiSizes[itemType][sizec].showWithOption )
+								push_object.showWithOption = savageWorldsSciFiSizes[itemType][sizec].showWithOption;
+							if( savageWorldsSciFiSizes[itemType][sizec].hideWithOption )
+								push_object.hideWithOption = savageWorldsSciFiSizes[itemType][sizec].hideWithOption;
 
 							$scope.size_options.push( push_object );
 							if( savageWorldsSciFiSizes[itemType][sizec].size == $scope.creatorObj.size ) {
 								$scope.size_selected = push_object;
-								$scope.set_size = $scope.creatorObj.size;
+								$scope.setSize = $scope.creatorObj.size;
 							}
 
 
 						}
 						if( $scope.size_selected == null) {
 							$scope.size_selected = default_size_object;
-							$scope.set_size = 0;
+							$scope.setSize = 0;
 						}
 
 				// remove sizes that aren't enabled or disabled by option
@@ -4755,11 +4780,11 @@ angular.module("baseApp").controller(
 
 					if(
 
-						typeof($scope.size_options[sizec].show_with_option) != "undefined"
+						typeof($scope.size_options[sizec].showWithOption) != "undefined"
 							&&
-						$scope.size_options[sizec].show_with_option != ""
+						$scope.size_options[sizec].showWithOption != ""
 					) {
-						if( $scope.creatorObj.has_option( $scope.size_options[sizec].show_with_option ) == false) {
+						if( $scope.creatorObj.hasOption( $scope.size_options[sizec].showWithOption ) == false) {
 
 							$scope.size_options.splice(sizec, 1);
 						}
@@ -4768,11 +4793,11 @@ angular.module("baseApp").controller(
 
 					if(
 
-						typeof($scope.size_options[sizec].hide_with_option) != "undefined"
+						typeof($scope.size_options[sizec].hideWithOption) != "undefined"
 							&&
-						$scope.size_options[sizec].hide_with_option != ""
+						$scope.size_options[sizec].hideWithOption != ""
 					) {
-						if( $scope.creatorObj.has_option( $scope.size_options[sizec].hide_with_option ) == true ) {
+						if( $scope.creatorObj.hasOption( $scope.size_options[sizec].hideWithOption ) == true ) {
 							$scope.size_options.splice(sizec, 1);
 						}
 
@@ -4815,16 +4840,16 @@ angular.module("baseApp").controller(
 					}
 
 					savageWorldsVehicleWeapons[weap_c].can_add = true;
-					if( typeof(savageWorldsVehicleWeapons[weap_c].is_available) == "function") {
-						if( savageWorldsVehicleWeapons[weap_c].is_available( $scope.creatorObj) == false ){
+					if( typeof(savageWorldsVehicleWeapons[weap_c].isAvailable) == "function") {
+						if( savageWorldsVehicleWeapons[weap_c].isAvailable( $scope.creatorObj) == false ){
 
 							savageWorldsVehicleWeapons[weap_c].can_add = false;
 						}
 					}
 
-					// change vehicle_weapon_mod_points to mods_available for non power armor vehicles ;)
+					// change vehicleWeaponModPoints to mods_available for non power armor vehicles ;)
 
-					if( $scope.creatorObj.vehicle_weapon_mod_points < parseInt(savageWorldsVehicleWeapons[weap_c].mods) ) {
+					if( $scope.creatorObj.vehicleWeaponModPoints < parseInt(savageWorldsVehicleWeapons[weap_c].mods) ) {
 
 						savageWorldsVehicleWeapons[weap_c].can_add = false;
 					}
@@ -4862,9 +4887,9 @@ angular.module("baseApp").controller(
 
 				$scope.selected_options = Array();
 
-				angular.extend(	$scope.creator_options,savageWorldsSciFiOptions[ itemType ] );
-				for(optc = 0; optc < $scope.creator_options.length; optc++) {
-					if( $scope.creatorObj.has_option($scope.creator_options[optc].short_tag) )
+				angular.extend(	$scope.creatorOptions,savageWorldsSciFiOptions[ itemType ] );
+				for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
+					if( $scope.creatorObj.hasOption($scope.creatorOptions[optc].short_tag) )
 						$scope.selected_options[optc] = true;
 					else
 						$scope.selected_options[optc] = false;
@@ -5175,7 +5200,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -5192,7 +5217,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'strength',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -5209,7 +5234,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'agility',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -5226,7 +5251,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'spirit',
-		 'for_power': 'miracles',
+		 'for_arcane': 'miracles',
 		 'specify': 0
 },
 {
@@ -5243,7 +5268,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'agility',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -5260,7 +5285,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -5277,7 +5302,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -5294,7 +5319,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'spirit',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -5311,7 +5336,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -5328,7 +5353,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 1
 },
 {
@@ -5345,7 +5370,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'agility',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -5362,7 +5387,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -5379,7 +5404,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'spirit',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -5396,7 +5421,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'agility',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -5413,7 +5438,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': 'psionics',
+		 'for_arcane': 'psionics',
 		 'specify': 0
 },
 {
@@ -5430,7 +5455,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -5447,7 +5472,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'agility',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -5464,7 +5489,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'agility',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -5481,7 +5506,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': 'magic',
+		 'for_arcane': 'magic',
 		 'specify': 0
 },
 {
@@ -5498,7 +5523,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'agility',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -5515,7 +5540,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -5532,7 +5557,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -5549,7 +5574,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'agility',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -5566,7 +5591,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -5583,7 +5608,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'agility',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -5600,7 +5625,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -5617,7 +5642,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': 'weird-science',
+		 'for_arcane': 'weird-science',
 		 'specify': 0
 },
 {
@@ -5634,7 +5659,7 @@ savageWorldsBooksList[8] = {
 	},
 		 'book': '2',
 		 'attribute': 'spirit',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 }
 );
@@ -14826,6 +14851,7 @@ savageWorldsSciFiSizes['power_armor'] = Array(
 		 'de-DE': '',
 	},
 	 size: 1,
+	 strength: 0,
 	 acc: 0,
 	 ts: 0,
 	 climb: 0,
@@ -14836,9 +14862,9 @@ savageWorldsSciFiSizes['power_armor'] = Array(
 	 crew: 1,
 	 cost: 500000,
 	 weight: 100,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -14852,6 +14878,7 @@ savageWorldsSciFiSizes['power_armor'] = Array(
 		 'de-DE': '',
 	},
 	 size: 2,
+	 strength: 0,
 	 acc: 0,
 	 ts: 0,
 	 climb: 0,
@@ -14862,9 +14889,9 @@ savageWorldsSciFiSizes['power_armor'] = Array(
 	 crew: 1,
 	 cost: 1000000,
 	 weight: 200,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -14878,6 +14905,7 @@ savageWorldsSciFiSizes['power_armor'] = Array(
 		 'de-DE': '',
 	},
 	 size: 3,
+	 strength: 0,
 	 acc: 0,
 	 ts: 0,
 	 climb: 0,
@@ -14888,9 +14916,9 @@ savageWorldsSciFiSizes['power_armor'] = Array(
 	 crew: 1,
 	 cost: 2000000,
 	 weight: 300,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 }
 );
 savageWorldsSciFiMods['power_armor'] = Array(
@@ -14902,18 +14930,18 @@ savageWorldsSciFiMods['power_armor'] = Array(
 		 'en-US': 'When activated (a free action via voice command), detonation packs attached to the suit explode in a Large Burst Template around the armor, causing 5d6 damage (the blast is shaped away from the suit so the wearer suffers only half damage). Wearers are advised to use this only as a last resort. Shrapnel pack reloads cost $1000, weigh 10 lb, and take one hour to install.',
 	},
 	 tag: 'anti-personnel-system',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000;
 },
-get_mod_effect: function(selected_object) {
-//selected_object.ts = Math.ceil(selected_object.ts / 2);
-//selected_object.acc = Math.ceil(selected_object.acc / 2);
+getModEffect: function(selectedObject) {
+//selectedObject.ts = Math.ceil(selectedObject.ts / 2);
+//selectedObject.acc = Math.ceil(selectedObject.acc / 2);
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 10;
 }
 },
@@ -14925,17 +14953,17 @@ return 10;
 		 'en-US': 'Adds +2 Heavy Armor each time this Modification is taken.',
 	},
 	 tag: 'armor',
-get_max: function(selected_object) { return selected_object.size },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return selectedObject.size },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 10000 * selected_object.size;
+getCost: function(selectedObject) {
+return 10000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.armor += 2;
+getModEffect: function(selectedObject) {
+selectedObject.armor += 2;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 //return 10;
 return 0;
 }
@@ -14948,18 +14976,18 @@ return 0;
 		 'en-US': 'A well-designed suite of HUD apps and sensors to constantly monitor up to 100 team members within twenty miles. This extends the user’s Command Range to all those in contact. The Command Pack requires the Sensor Suite Modification first.',
 	},
 	 tag: 'command-pack',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 50000;
 },
-get_mod_effect: function(selected_object) {
-//selected_object.ts = Math.ceil(selected_object.ts / 2);
-//selected_object.acc = Math.ceil(selected_object.acc / 2);
+getModEffect: function(selectedObject) {
+//selectedObject.ts = Math.ceil(selectedObject.ts / 2);
+//selectedObject.acc = Math.ceil(selectedObject.acc / 2);
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -14971,22 +14999,22 @@ return 0;
 		 'en-US': 'The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it’s taken doubles previous Pace or increases Climb by 1.',
 	},
 	 tag: 'fflight-1-climb',
-show_with_option: "faster-flight",
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
-return selected_object.size;
+showWithOption: "faster-flight",
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
+return selectedObject.size;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.climb++;
+getModEffect: function(selectedObject) {
+selectedObject.climb++;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 },
-is_available: function(selected_object) {
-if( selected_object.aircraft > 0  )
+isAvailable: function(selectedObject) {
+if( selectedObject.aircraft > 0  )
 return true;
 else
 return false;
@@ -15000,23 +15028,23 @@ return false;
 		 'en-US': 'The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it’s taken doubles previous Pace or increases Climb by 1.',
 	},
 	 tag: 'fflight-double-speed',
-show_with_option: "faster-flight",
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
-return selected_object.size;
+showWithOption: "faster-flight",
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
+return selectedObject.size;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.ts = selected_object.ts * 2;
-selected_object.acc = selected_object.ts / 4;
+getModEffect: function(selectedObject) {
+selectedObject.ts = selectedObject.ts * 2;
+selectedObject.acc = selectedObject.ts / 4;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 },
-is_available: function(selected_object) {
-if( selected_object.aircraft > 0  )
+isAvailable: function(selectedObject) {
+if( selectedObject.aircraft > 0  )
 return true;
 else
 return false;
@@ -15030,24 +15058,24 @@ return false;
 		 'en-US': 'The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it’s taken doubles previous Pace or increases Climb by 1.',
 	},
 	 tag: 'fflight-exchange-climb-fo',
-show_with_option: "climb-top-speed",
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+showWithOption: "climb-top-speed",
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 0;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 0;
 },
-get_mod_effect: function(selected_object) {
-selected_object.ts = selected_object.ts * 2;
-selected_object.acc = selected_object.ts / 4;
-selected_object.climb--;
+getModEffect: function(selectedObject) {
+selectedObject.ts = selectedObject.ts * 2;
+selectedObject.acc = selectedObject.ts / 4;
+selectedObject.climb--;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 },
-is_available: function(selected_object) {
-if( selected_object.aircraft > 0 && selected_object.climb > -2 )
+isAvailable: function(selectedObject) {
+if( selectedObject.aircraft > 0 && selectedObject.climb > -2 )
 return true;
 else
 return false;
@@ -15061,25 +15089,25 @@ return false;
 		 'en-US': 'The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it’s taken doubles previous Pace or increases Climb by 1.',
 	},
 	 tag: 'fflight',
-show_with_option: "faster-flight",
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size;
+showWithOption: "faster-flight",
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-if(selected_object.aircraft == 0) {
-selected_object.climb = 0;
-//selected_object.flying_pace = selected_object.base_pace;
-selected_object.ts = selected_object.base_pace;
-selected_object.acc = selected_object.ts / 4;
+getModEffect: function(selectedObject) {
+if(selectedObject.aircraft == 0) {
+selectedObject.climb = 0;
+//selectedObject.flyingPace = selectedObject.basePace;
+selectedObject.ts = selectedObject.basePace;
+selectedObject.acc = selectedObject.ts / 4;
 }
-selected_object.aircraft = 1;
-//selected_object.acc = Math.ceil(selected_object.acc / 2);
+selectedObject.aircraft = 1;
+//selectedObject.acc = Math.ceil(selectedObject.acc / 2);
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -15091,22 +15119,22 @@ return 0;
 		 'en-US': 'The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it’s taken doubles previous Pace or increases Climb by 1.',
 	},
 	 tag: 'flight-1-climb',
-hide_with_option: "faster-flight",
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+hideWithOption: "faster-flight",
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 3;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.climb++;
+getModEffect: function(selectedObject) {
+selectedObject.climb++;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 },
-is_available: function(selected_object) {
-if( selected_object.aircraft > 0  )
+isAvailable: function(selectedObject) {
+if( selectedObject.aircraft > 0  )
 return true;
 else
 return false;
@@ -15120,22 +15148,22 @@ return false;
 		 'en-US': 'The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it’s taken doubles previous Pace or increases Climb by 1.',
 	},
 	 tag: 'flight-double-speed',
-hide_with_option: "faster-flight",
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+hideWithOption: "faster-flight",
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 3;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.flying_pace = selected_object.flying_pace * 2;
+getModEffect: function(selectedObject) {
+selectedObject.flyingPace = selectedObject.flyingPace * 2;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 },
-is_available: function(selected_object) {
-if( selected_object.aircraft > 0  )
+isAvailable: function(selectedObject) {
+if( selectedObject.aircraft > 0  )
 return true;
 else
 return false;
@@ -15149,23 +15177,23 @@ return false;
 		 'en-US': 'The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it’s taken doubles previous Pace or increases Climb by 1.',
 	},
 	 tag: 'flight',
-hide_with_option: "faster-flight",
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size;
+hideWithOption: "faster-flight",
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-if(selected_object.aircraft == 0) {
-selected_object.climb = 0;
-selected_object.flying_pace = 6;
+getModEffect: function(selectedObject) {
+if(selectedObject.aircraft == 0) {
+selectedObject.climb = 0;
+selectedObject.flyingPace = 6;
 }
-selected_object.aircraft = 1;
-//selected_object.acc = Math.ceil(selected_object.acc / 2);
+selectedObject.aircraft = 1;
+//selectedObject.acc = Math.ceil(selectedObject.acc / 2);
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -15177,17 +15205,17 @@ return 0;
 		 'en-US': 'The user can jump up to 2× the suit’s Pace horizontally or 1× Pace vertically.',
 	},
 	 tag: 'jump-pack',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-//selected_object.acc = Math.ceil(selected_object.acc / 2);
+getModEffect: function(selectedObject) {
+//selectedObject.acc = Math.ceil(selectedObject.acc / 2);
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -15199,17 +15227,17 @@ return 0;
 		 'en-US': 'The soles and palms of the suit are fitted with powerful magnets, allowing the wearer to walk up or cling to metal surfaces at full Pace. These are most often used in zero-g to allow marines to attach to ship’s hulls or walkways.',
 	},
 	 tag: 'magnetic-pads',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000 ;
 },
-get_mod_effect: function(selected_object) {
-//selected_object.acc = Math.ceil(selected_object.acc / 2);
+getModEffect: function(selectedObject) {
+//selectedObject.acc = Math.ceil(selectedObject.acc / 2);
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -15221,18 +15249,18 @@ return 0;
 		 'en-US': 'Powerful motors in the leg joints combine with gyroscopic stabilizers to increase Pace by +2 and the running die to d10. Each enhancement after the first only increases Pace by +2.',
 	},
 	 tag: 'pace',
-get_max: function(selected_object) { return 3 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 3 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000 ;
 },
-get_mod_effect: function(selected_object) {
-selected_object.pace++;
-selected_object.pace++;
+getModEffect: function(selectedObject) {
+selectedObject.pace++;
+selectedObject.pace++;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -15244,18 +15272,18 @@ return 0;
 		 'en-US': 'Additional power cells add another 72 hours of energy.',
 	},
 	 tag: 'power-pack',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 50000 ;
 },
-get_mod_effect: function(selected_object) {
-selected_object.pace++;
-selected_object.pace++;
+getModEffect: function(selectedObject) {
+selectedObject.pace++;
+selectedObject.pace++;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -15267,16 +15295,16 @@ return 0;
 		 'en-US': 'Small propulsion jets allow the character to move in vacuum or water at 6”. The jets provide no benefits outside these environments.',
 	},
 	 tag: 'propulsion-jets',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000 ;
 },
-get_mod_effect: function(selected_object) {
+getModEffect: function(selectedObject) {
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -15288,16 +15316,16 @@ return 0;
 		 'en-US': 'The suit automatically seals minor breaches (the user suffers one or two wounds) with a fast-hardening sealant. This is critical when operating in a vacuum. If the wearer suffers three or more wounds from a single attack, however, the suit cannot seal and is breached.',
 	},
 	 tag: 'self-sealing',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 10000 ;
 },
-get_mod_effect: function(selected_object) {
+getModEffect: function(selectedObject) {
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -15309,16 +15337,16 @@ return 0;
 		 'en-US': 'An array of various sensors extends the suit’s +2 bonus to visual and aural Notice rolls to 500 yards.',
 	},
 	 tag: 'sensor-suite',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000 ;
 },
-get_mod_effect: function(selected_object) {
+getModEffect: function(selectedObject) {
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -15330,16 +15358,16 @@ return 0;
 		 'en-US': 'Increases communication range to 500 miles.',
 	},
 	 tag: 'signal-booster',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000 ;
 },
-get_mod_effect: function(selected_object) {
+getModEffect: function(selectedObject) {
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -15351,16 +15379,16 @@ return 0;
 		 'en-US': 'This thin and pliable piezoelectric material combines chameleon-like visual skin with heat baffles, radar scramblers, and other devices to make the suit difficult to detect by vision or sensors. Those trying to attack or detect the suit subtract 4 from their rolls against it. The effect is triggered as a free action, but is negated any round in which the user fires a weapon or emits some other non-cloakable signal such as radio broadcasts or active sensor searches.',
 	},
 	 tag: 'stealth-system',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 3;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 10000 ;
 },
-get_mod_effect: function(selected_object) {
+getModEffect: function(selectedObject) {
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -15372,17 +15400,17 @@ return 0;
 		 'en-US': 'Increases Strength by one die type each time it’s taken. After d12, add +1 per servo (d12+1, d12+2, etc).',
 	},
 	 tag: 'strength-enhancement',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000 ;
 },
-get_mod_effect: function(selected_object) {
-selected_object.strength_bonus++;
+getModEffect: function(selectedObject) {
+selectedObject.strengthBonus++;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -15394,17 +15422,17 @@ return 0;
 		 'en-US': 'An integrated system connects to all personal and weapon mounts to compensate for movement, range, multi-actions, and the like. This negates up to two points of the user’s Shooting penalties.',
 	},
 	 tag: 'targeting-system',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 20000 ;
 },
-get_mod_effect: function(selected_object) {
-selected_object.strength_bonus++;
+getModEffect: function(selectedObject) {
+selectedObject.strengthBonus++;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -15416,17 +15444,17 @@ return 0;
 		 'en-US': 'Automated systems within the suit are loaded with minor antibiotics, stimulants, and anesthetics designed to keep a soldier alive after suffering trauma. It has a d8 Healing and adds +2 to recover from being Shaken and resisting Bleeding Out.',
 	},
 	 tag: 'trauma-system',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 25000 ;
 },
-get_mod_effect: function(selected_object) {
-selected_object.strength_bonus++;
+getModEffect: function(selectedObject) {
+selectedObject.strengthBonus++;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -15442,18 +15470,18 @@ return 0;
 		 'de-DE': '',
 	},
 	 tag: 'weapon-mount',
-get_max: function(selected_object) { return 2 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 2 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000 ;
 },
-get_mod_effect: function(selected_object) {
-selected_object.has_weapon_mounts = 1;
-selected_object.vehicle_weapon_mod_points++;
+getModEffect: function(selectedObject) {
+selectedObject.hasWeaponMounts = 1;
+selectedObject.vehicleWeaponModPoints++;
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 }
@@ -15492,6 +15520,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 		 'en-US': 'Fighters, shuttles',
 	},
 	 size: 6,
+	 strength: 0,
 	 acc: 50,
 	 ts: 700,
 	 climb: 3,
@@ -15502,9 +15531,9 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 crew: 1,
 	 cost: 2000000,
 	 weight: 0,
-	 energy_capacity: 25,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 25,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -15514,6 +15543,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 		 'en-US': 'Bombers, large shuttles, scout ships',
 	},
 	 size: 8,
+	 strength: 0,
 	 acc: 45,
 	 ts: 600,
 	 climb: 2,
@@ -15524,9 +15554,9 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 crew: 5,
 	 cost: 5000000,
 	 weight: 0,
-	 energy_capacity: 100,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 100,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -15536,6 +15566,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 		 'en-US': 'Freighters, corvettes, scientific exploration vessels',
 	},
 	 size: 12,
+	 strength: 0,
 	 acc: 40,
 	 ts: 500,
 	 climb: 1,
@@ -15546,9 +15577,9 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 crew: 50,
 	 cost: 20000000,
 	 weight: 0,
-	 energy_capacity: 300,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 300,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -15558,6 +15589,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 		 'en-US': 'Destroyers, bulk freighters, light cruisers',
 	},
 	 size: 16,
+	 strength: 0,
 	 acc: 35,
 	 ts: 400,
 	 climb: 0,
@@ -15568,9 +15600,9 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 crew: 300,
 	 cost: 50000000,
 	 weight: 0,
-	 energy_capacity: 500,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 500,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -15580,6 +15612,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 		 'en-US': 'Cruisers, small battleships or carriers',
 	},
 	 size: 20,
+	 strength: 0,
 	 acc: 30,
 	 ts: 300,
 	 climb: -1,
@@ -15590,9 +15623,9 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 crew: 1000,
 	 cost: 200000000,
 	 weight: 0,
-	 energy_capacity: 1000,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 1000,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -15602,6 +15635,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 		 'en-US': 'Battleships, carriers',
 	},
 	 size: 24,
+	 strength: 0,
 	 acc: 25,
 	 ts: 200,
 	 climb: -2,
@@ -15612,9 +15646,9 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 crew: 3000,
 	 cost: 1000000000,
 	 weight: 0,
-	 energy_capacity: 2000,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 2000,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -15624,6 +15658,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 		 'en-US': 'Dreadnoughts, invasion carriers.',
 	},
 	 size: 28,
+	 strength: 0,
 	 acc: 20,
 	 ts: 200,
 	 climb: -3,
@@ -15634,9 +15669,9 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 crew: 8000,
 	 cost: 2147483647,
 	 weight: 0,
-	 energy_capacity: 2000,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 2000,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -15646,6 +15681,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 		 'en-US': 'Super dreadnoughts, super carriers, settlement ships.',
 	},
 	 size: 32,
+	 strength: 0,
 	 acc: 20,
 	 ts: 200,
 	 climb: -4,
@@ -15656,9 +15692,9 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 crew: 20000,
 	 cost: 2147483647,
 	 weight: 0,
-	 energy_capacity: 2000,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 2000,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -15668,6 +15704,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 		 'en-US': 'Mega dreadnoughts, mega carriers, colony ships.',
 	},
 	 size: 40,
+	 strength: 0,
 	 acc: 20,
 	 ts: 200,
 	 climb: -5,
@@ -15678,9 +15715,9 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 crew: 50000,
 	 cost: 2147483647,
 	 weight: 0,
-	 energy_capacity: 2000,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 2000,
+	 hideWithOption: '',
+	 showWithOption: '',
 }
 );
 savageWorldsSciFiMods['starship'] = Array(
@@ -15692,12 +15729,12 @@ savageWorldsSciFiMods['starship'] = Array(
 		 'en-US': 'Anti-Missile Counter Measures are integrated jammers and decoys. They add +2 to Driving, Piloting or Knowledge (Electronics) rolls made to evade missile attacks.',
 	},
 	 tag: 'amcm',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
 },
 {
@@ -15708,31 +15745,31 @@ return 5000 * selected_object.size;
 		 'en-US': 'The ship is built to withstand deep pressurization and is equipped with thrusters suitable for use in aqueous mediums, allowing it to function underwater as if it were a submersible. Acc and Top Speed are half a vehicle of equal Size',
 	},
 	 tag: 'aquatic',
-show_with_option: "the-last-parsec",
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+showWithOption: "the-last-parsec",
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.watercraft = 1;
-if( selected_object.size > 0) {
-same_vehicle = get_same_vehicle_size(selected_object.size);
-water_ts = 0;
-water_acc = 0;
-if( same_vehicle ) {
-water_ts = Math.ceil(same_vehicle.ts / 2);
-water_acc = Math.ceil(same_vehicle.acc / 2);
+getModEffect: function(selectedObject) {
+selectedObject.watercraft = 1;
+if( selectedObject.size > 0) {
+sameVehicle = getSameVehicleSize(selectedObject.size);
+waterTS = 0;
+waterAcc = 0;
+if( sameVehicle ) {
+waterTS = Math.ceil(sameVehicle.ts / 2);
+waterAcc = Math.ceil(sameVehicle.acc / 2);
 }
-if( water_ts > 0 )
-selected_object.append_extra_notes("Water Top Speed: " + water_ts);
-if( water_acc > 0 )
-selected_object.append_extra_notes("Water Acc: " + water_acc);
+if( waterTS > 0 )
+selectedObject.appendExtraNotes("Water Top Speed: " + waterTS);
+if( waterAcc > 0 )
+selectedObject.appendExtraNotes("Water Acc: " + waterAcc);
 }
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -15744,18 +15781,18 @@ return 0;
 		 'en-US': 'Increases a ship’s Armor value by +2. Due to the nature of space and the size and shape of starships, all Armor is considered Heavy Armor.',
 	},
 	 tag: 'armor',
-get_max: function(selected_object) {  return selected_object.size },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) {  return selectedObject.size },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 10000 * selected_object.size;
+getCost: function(selectedObject) {
+return 10000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.armor++;
-selected_object.armor++;
-selected_object.toughness++;
-selected_object.toughness++;
+getModEffect: function(selectedObject) {
+selectedObject.armor++;
+selectedObject.armor++;
+selectedObject.toughness++;
+selectedObject.toughness++;
 }
 },
 {
@@ -15766,12 +15803,12 @@ selected_object.toughness++;
 		 'en-US': 'The ship’s AI can operate all systems — from locomotion to weapons to opening or closing hatches. It has a skill level of d10 in these tasks, but is an “Extra” and does not receive a Wild Die. The AI does not suffer from multi-action penalties if given simultaneous tasks. In combat, the AI acts on the captain’s Action Card. Giving the AI a short verbal command is a free action.',
 	},
 	 tag: 'artificial-intelligence',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 0;
 },
-get_cost: function(selected_object) {
-return 10000 * selected_object.size;
+getCost: function(selectedObject) {
+return 10000 * selectedObject.size;
 },
 },
 {
@@ -15782,12 +15819,12 @@ return 10000 * selected_object.size;
 		 'en-US': 'Allows the ship to enter planetary atmospheres. This includes heat shielding and additional work to handle the stress and strain of entry. All starships have vertical take-off and landing (VTOL) capability.',
 	},
 	 tag: 'atmospheric',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size / 2;
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
-get_cost: function(selected_object) {
-return 50000 * selected_object.size;
+getCost: function(selectedObject) {
+return 50000 * selectedObject.size;
 },
 },
 {
@@ -15798,11 +15835,11 @@ return 50000 * selected_object.size;
 		 'en-US': 'Each bomb bay may drop up to four Small, 2 Medium, or 1 Large (or larger) bomb per round at no penalty. All use the same attack roll. Dropping bombs uses the Knowledge (Bombardier) skill.',
 	},
 	 tag: 'bomb-bay',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 50000;
 },
 },
@@ -15814,16 +15851,16 @@ return 50000;
 		 'en-US': 'Reduces living space, quarters, and facilities for personnel equal to 20% of the listed Crew for the vessel’s Size, granting Size/4 Mods. If this reduces the Crew to 0, the ship is a fully automated drone',
 	},
 	 tag: 'crew-reduction',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 0;
 },
-get_cost: function(selected_object) {
-return 10000 * selected_object.size;
+getCost: function(selectedObject) {
+return 10000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.mods +=  selected_object.size / 4;
-selected_object.crew -= selected_object.selected_size.crew / 5;
+getModEffect: function(selectedObject) {
+selectedObject.mods +=  selectedObject.size / 4;
+selectedObject.crew -= selectedObject.selectedSize.crew / 5;
 }
 },
 {
@@ -15834,15 +15871,15 @@ selected_object.crew -= selected_object.selected_size.crew / 5;
 		 'en-US': 'Enough space and facilities for more personnel equal to 20% of the listed Crew for the vessel’s Size. To accommodate even more passengers, use Superstructures instead.',
 	},
 	 tag: 'crew-space',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 100000;
 },
-get_mod_effect: function(selected_object) {
-selected_object.crew += selected_object.selected_size.crew / 5;
+getModEffect: function(selectedObject) {
+selectedObject.crew += selectedObject.selectedSize.crew / 5;
 }
 },
 {
@@ -15853,17 +15890,17 @@ selected_object.crew += selected_object.selected_size.crew / 5;
 		 'en-US': 'The vessel is protected by an energy field that deflects incoming ballistic attacks (it has no effect against lasers). Attackers must subtract –2 from their Shooting rolls. Mod cost is 2 for Small to Large ships, and 3 for Huge to Gargantuan vessels.',
 	},
 	 tag: 'deflector-screens',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-if( selected_object.size >= 25)
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+if( selectedObject.size >= 25)
 return 5;
-if( selected_object.size >= 13)
+if( selectedObject.size >= 13)
 return 3;
-if( selected_object.size >= 6)
+if( selectedObject.size >= 6)
 return 2;
 },
-get_cost: function(selected_object) {
-return 10000 * selected_object.size;
+getCost: function(selectedObject) {
+return 10000 * selectedObject.size;
 },
 },
 {
@@ -15874,12 +15911,12 @@ return 10000 * selected_object.size;
 		 'en-US': 'Adds +6 to the ship’s effective Toughness from EMP missiles (see page 25).',
 	},
 	 tag: 'electromagnetic-shielding',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
 },
 {
@@ -15890,12 +15927,12 @@ return 5000 * selected_object.size;
 		 'en-US': 'This includes both the drive and the navigation system required to use it.',
 	},
 	 tag: 'ftl-drive',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size / 2;
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
-get_cost: function(selected_object) {
-return 2000000 * selected_object.size;
+getCost: function(selectedObject) {
+return 2000000 * selectedObject.size;
 },
 },
 {
@@ -15906,13 +15943,13 @@ return 2000000 * selected_object.size;
 		 'en-US': 'Kalian superluminal drives are considered the most finely crafted faster-than-light drives in the known worlds. They are high-end drives known for durability and dependability. They add +2 to Knowledge (Astrogation) rolls when traveling via “hyperspace.” For more information, see Space Travel on page 69. In addition, if a Kalian FTL system is damaged with a starship critical hit during combat, the Repair roll is only –1 per wound instead of the normal –2.',
 	},
 	 tag: 'ftl-drive-kalian',
-show_with_option: "the-last-parsec",
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size / 2;
+showWithOption: "the-last-parsec",
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
-get_cost: function(selected_object) {
-return 4000000 * selected_object.size;
+getCost: function(selectedObject) {
+return 4000000 * selectedObject.size;
 },
 },
 {
@@ -15923,15 +15960,15 @@ return 4000000 * selected_object.size;
 		 'en-US': 'Each fuel pod increases the vessel’s energy capacity by 50%',
 	},
 	 tag: 'fuel-pods',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
-return selected_object.size / 2;
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
-get_cost: function(selected_object) {
-return 100000 * selected_object.size;
+getCost: function(selectedObject) {
+return 100000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.energy_capacity +=  selected_object.base_energy_capacity / 2;
+getModEffect: function(selectedObject) {
+selectedObject.energyCapacity +=  selectedObject.baseEnergyCapacity / 2;
 }
 },
 {
@@ -15942,30 +15979,13 @@ selected_object.energy_capacity +=  selected_object.base_energy_capacity / 2;
 		 'en-US': 'A small hangar (or garage or external lift-hooks) can carry up 8 Size points of ship, vehicle, or walker.',
 	},
 	 tag: 'garage-/-hangar',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 4;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 1000000;
 }
-},
-{
-	 name: {
-		 'en-US': 'Linked',
-	},
-	 description: {
-		 'en-US': 'Up to four direct-fire weapons of the same type may be linked and fired as one, increasing the damage by +2 per weapon and reducing the total number of Mods required. Total all Linked weapons in a set first, then halve their required Mods. (If Linking Fixed weapons, halve the total.)',
-	},
-	 tag: 'linked',
-get_max: function(selected_object) { return "u" },
-hidden: 1,
-get_mod_cost: function(selected_object) {
-return 0;
-},
-get_cost: function(selected_object) {
-return 0;
-},
 },
 {
 	 name: {
@@ -15975,15 +15995,15 @@ return 0;
 		 'en-US': 'Found only on Huge and Gargantuan ships, this might be a restaurant, commissary, or speciality store. Each generates Size+$1d4K a month for the ship (and the same for the mercantile’s owner). The store has 300 square feet of space. Each additional Mod adds roughly 100 square feet and +$1d4K to revenue.',
 	},
 	 tag: 'mercantile',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 100000;
 },
-is_available: function(selected_object) {
-if(selected_object.size >= 16)
+isAvailable: function(selectedObject) {
+if(selectedObject.size >= 16)
 return true;
 else
 return false;
@@ -15997,15 +16017,15 @@ return false;
 		 'en-US': 'Allows up to four Light or two Heavy (or AT) missiles to be fired at once.',
 	},
 	 tag: 'missile-launcher',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 50000;
 },
-get_mod_effect: function(selected_object) {
-selected_object.has_missile_launcher = 1;
+getModEffect: function(selectedObject) {
+selectedObject.hasMissileLauncher = 1;
 }
 },
 {
@@ -16016,11 +16036,11 @@ selected_object.has_missile_launcher = 1;
 		 'en-US': 'Small and Medium ships only. These are rows of fairly spacious seats with safety harnesses, personal vid-screens, and other amenities designed for short travels (typically less than 24 hours). Each pod seats 10.',
 	},
 	 tag: 'passenger-pod',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 50000;
 }
 },
@@ -16032,13 +16052,13 @@ return 50000;
 		 'en-US': 'Self-destruct is a mechanism that can cause an object to destroy itself within a predefined set of circumstances. The self-destruct mechanism is usually the most complete way to destroy the object. For that reason the self-destruct mechanism can be used to destroy objects that are meant to be discarded. Most civilian starships do not have a self-destruct mechanism.',
 	},
 	 tag: 'self-destruct',
-show_with_option: "the-last-parsec",
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+showWithOption: "the-last-parsec",
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
-return 1000000 * selected_object.size;
+getCost: function(selectedObject) {
+return 1000000 * selectedObject.size;
 },
 },
 {
@@ -16049,11 +16069,11 @@ return 1000000 * selected_object.size;
 		 'en-US': 'Light, chemical, motion, and other active sensors allow detection of targets up to one light year away with a Knowledge (Electronics) roll. Within 10K miles, the sensors add +2 to the roll. Illumination penalties are ignored. Targets don’t have to be in direct line of sight, but asteroid or powerful energy fields may cause inaccurate or false readings at the GM’s discretion.',
 	},
 	 tag: 'sensor-suite-galactic',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 1000000;
 }
 },
@@ -16065,11 +16085,11 @@ return 1000000;
 		 'en-US': 'This functions exactly like the Medium Sensor Suite (page 16) but has a range of 10K miles.',
 	},
 	 tag: 'sensor-suite-planetary',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 50000;
 }
 },
@@ -16081,12 +16101,12 @@ return 50000;
 		 'en-US': 'The craft is protected by an ablative energy field that absorbs 10×Size points of damage before it’s depleted. Apply all damage to the shield first, then any left over to the ship (AP counts as usual). Active shields detonate missiles and torpedoes before they hit, reducing their damage total by half. A craft may regenerate its Size in shield points if it makes no attacks in a round.',
 	},
 	 tag: 'shields',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size / 2;
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
-get_cost: function(selected_object) {
-return 25000 * selected_object.size;
+getCost: function(selectedObject) {
+return 25000 * selectedObject.size;
 },
 },
 {
@@ -16097,12 +16117,12 @@ return 25000 * selected_object.size;
 		 'en-US': 'Non-energy, ballistic attacks against this vessel suffer a –2 penalty. It has no effect on energy attacks.',
 	},
 	 tag: 'sloped-armor',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
 },
 {
@@ -16113,17 +16133,17 @@ return 5000 * selected_object.size;
 		 'en-US': 'The ship trades power and speed for additional room. Each time this is taken, reduce Acc by 5 and Top Speed by 50 to gain half the ship’s Size in Mod slots.',
 	},
 	 tag: 'speed-reduction',
-get_max: function(selected_object) { return 3 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 3 },
+getModCost: function(selectedObject) {
 return 0;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 0;
 },
-get_mod_effect: function(selected_object) {
-selected_object.ts -=  50;
-selected_object.acc -=  5;
-selected_object.mods += selected_object.size / 2;
+getModEffect: function(selectedObject) {
+selectedObject.ts -=  50;
+selectedObject.acc -=  5;
+selectedObject.mods += selectedObject.size / 2;
 }
 },
 {
@@ -16134,16 +16154,16 @@ selected_object.mods += selected_object.size / 2;
 		 'en-US': 'Each purchase increases the ship’s Acc by 5 and Top Speed by 50. (This cannot be taken with Speed Reduction.)',
 	},
 	 tag: 'speed',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 100000 * selected_object.size;
+getCost: function(selectedObject) {
+return 100000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.ts +=  50;
-selected_object.acc +=  5;
+getModEffect: function(selectedObject) {
+selectedObject.ts +=  50;
+selectedObject.acc +=  5;
 }
 },
 {
@@ -16154,12 +16174,12 @@ selected_object.acc +=  5;
 		 'en-US': 'Radar-absorbing paint, heat baffles, scramblers, and other devices make the ship difficult to detect by vision or sensors. Those trying to spot, attack, (or lock on to) the ship subtract 4 from their rolls. The effect is triggered as a free action, but is negated any round in which the ship fires a weapon or emits some other non- cloakable signal such as radio signal or active sensor search.',
 	},
 	 tag: 'stealth-system',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size;
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size;
 },
-get_cost: function(selected_object) {
-return 50000 * selected_object.size;
+getCost: function(selectedObject) {
+return 50000 * selectedObject.size;
 }
 },
 {
@@ -16170,22 +16190,22 @@ return 50000 * selected_object.size;
 		 'en-US': 'These are massive, open hulls for hauling bulk cargo. This is equivalent to 18 train box-cars, and can handle up to 800,000 cubic feet of cargo (but no more than 1800 tons if the vessel enters atmosphere). Halve the cost if the storage area is a vacuum.',
 	},
 	 tag: 'superstructure-bulk-cargo',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 10;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000000;
 },
-is_available: function(selected_object) {
-if(selected_object.size >= 12)
+isAvailable: function(selectedObject) {
+if(selectedObject.size >= 12)
 return true;
 else
 return false;
 },
-get_mod_effect: function(selected_object) {
-selected_object.toughness = selected_object.toughness - 1;
-selected_object.crew += 100;
+getModEffect: function(selectedObject) {
+selectedObject.toughness = selectedObject.toughness - 1;
+selectedObject.crew += 100;
 }
 },
 {
@@ -16196,22 +16216,22 @@ selected_object.crew += 100;
 		 'en-US': 'The ship contains processing and manufacturing facilities that can take in raw materials and create new goods (usually those necessary for extended voyages, military operations, or colony survival). This adds 100 Crew. The vessel must also have at least one shuttle per Factory Superstructure to take in raw goods. Each factory can generate 2d6×$100K in goods, supplies, or raw materials a week in an average environment (such as an asteroid field or small planet). Add or subtract a d6 for a sparse / rich find.) Materials can be used to fuel and resupply the ship (and other ships as well).',
 	},
 	 tag: 'superstructure-factory',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 10;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000000;
 },
-is_available: function(selected_object) {
-if(selected_object.size >= 12)
+isAvailable: function(selectedObject) {
+if(selectedObject.size >= 12)
 return true;
 else
 return false;
 },
-get_mod_effect: function(selected_object) {
-selected_object.toughness = selected_object.toughness - 1;
-selected_object.crew += 100;
+getModEffect: function(selectedObject) {
+selectedObject.toughness = selectedObject.toughness - 1;
+selectedObject.crew += 100;
 }
 },
 {
@@ -16222,22 +16242,22 @@ selected_object.crew += 100;
 		 'en-US': 'A large, dedicated flight bay that holds up to 24 Size points of vehicles, walkers, or Small or Medium ships (Large and greater ships won’t fit due to logarithmic scaling). This includes additional fuel storage, maintenance bays, training rooms, and briefing areas, and adds 50 additional crew members.',
 	},
 	 tag: 'superstructure-hangar',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 10;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000000;
 },
-is_available: function(selected_object) {
-if(selected_object.size >= 12)
+isAvailable: function(selectedObject) {
+if(selectedObject.size >= 12)
 return true;
 else
 return false;
 },
-get_mod_effect: function(selected_object) {
-selected_object.toughness = selected_object.toughness - 1;
-selected_object.crew += 50;
+getModEffect: function(selectedObject) {
+selectedObject.toughness = selectedObject.toughness - 1;
+selectedObject.crew += 50;
 }
 },
 {
@@ -16248,21 +16268,21 @@ selected_object.crew += 50;
 		 'en-US': 'Luxury accommodations for long-term travelers, including hydroponic gardens, theatres, gyms, malls, restaurants, shopping, and lodging for 700 passengers and 50 additional staff. Passengers typically pay an average of $200 per day.',
 	},
 	 tag: 'superstructure-passenger-',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 10;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000000;
 },
-is_available: function(selected_object) {
-if(selected_object.size >= 12)
+isAvailable: function(selectedObject) {
+if(selectedObject.size >= 12)
 return true;
 else
 return false;
 },
-get_mod_effect: function(selected_object) {
-selected_object.toughness = selected_object.toughness - 1;
+getModEffect: function(selectedObject) {
+selectedObject.toughness = selectedObject.toughness - 1;
 }
 },
 {
@@ -16273,21 +16293,21 @@ selected_object.toughness = selected_object.toughness - 1;
 		 'en-US': 'Spartan barracks, training facilities, armories, and a few multi- purpose recreational areas for 450 marines and 50 staff (cooks, techs, etc).',
 	},
 	 tag: 'superstructure-passenger-',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 10;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000000;
 },
-is_available: function(selected_object) {
-if(selected_object.size >= 12)
+isAvailable: function(selectedObject) {
+if(selectedObject.size >= 12)
 return true;
 else
 return false;
 },
-get_mod_effect: function(selected_object) {
-selected_object.toughness = selected_object.toughness - 1;
+getModEffect: function(selectedObject) {
+selectedObject.toughness = selectedObject.toughness - 1;
 }
 },
 {
@@ -16298,21 +16318,21 @@ selected_object.toughness = selected_object.toughness - 1;
 		 'en-US': 'This covers anything not detailed above, such as massive medical bays for a hospital ship, research facilities, etc. The specific function determines specifics, but a basic guideline is a Specialty Superstructure houses and services 200 individuals, their equipment, and storage needs.',
 	},
 	 tag: 'superstructure-specialty',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 10;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000000;
 },
-is_available: function(selected_object) {
-if(selected_object.size >= 12)
+isAvailable: function(selectedObject) {
+if(selectedObject.size >= 12)
 return true;
 else
 return false;
 },
-get_mod_effect: function(selected_object) {
-selected_object.toughness = selected_object.toughness - 1;
+getModEffect: function(selectedObject) {
+selectedObject.toughness = selectedObject.toughness - 1;
 }
 },
 {
@@ -16324,21 +16344,21 @@ selected_object.toughness = selected_object.toughness - 1;
 	},
 	 tag: 'superstructure',
 hidden: 1,
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 10;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000000;
 },
-is_available: function(selected_object) {
-if(selected_object.size >= 12)
+isAvailable: function(selectedObject) {
+if(selectedObject.size >= 12)
 return true;
 else
 return false;
 },
-get_mod_effect: function(selected_object) {
-selected_object.toughness = selected_object.toughness - 1;
+getModEffect: function(selectedObject) {
+selectedObject.toughness = selectedObject.toughness - 1;
 }
 },
 {
@@ -16349,12 +16369,12 @@ selected_object.toughness = selected_object.toughness - 1;
 		 'en-US': 'The ship’s internal sensors and computers are linked to all attached weapons. This compensates for movement, range, multi-actions, and the like, negating up to two points of Shooting penalties.',
 	},
 	 tag: 'targeting-system',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 10000  * selected_object.size;
+getCost: function(selectedObject) {
+return 10000  * selectedObject.size;
 }
 },
 {
@@ -16365,11 +16385,11 @@ return 10000  * selected_object.size;
 		 'en-US': 'Ultra Tech. Teleporters work by turning physical objects into energy, blasting them through space, and then reconstituting them at the destination. Each teleporter can transport six average size humans at a time, or 1000 pounds of cargo up to 100 miles distant, or up to 1000 miles distant if a linked transmitter is present at the destination.',
 	},
 	 tag: 'teleporter',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000000;
 }
 },
@@ -16381,15 +16401,15 @@ return 5000000;
 		 'en-US': 'Each tube allows up to two Light or one Heavy torpedo to be fired at once (at one or two targets, as desired).',
 	},
 	 tag: 'torpedo-tube',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 500000;
 },
-get_mod_effect: function(selected_object) {
-selected_object.has_torpedo_tube = 1;
+getModEffect: function(selectedObject) {
+selectedObject.hasTorpedoTube = 1;
 }
 },
 {
@@ -16404,11 +16424,11 @@ selected_object.has_torpedo_tube = 1;
 		 'de-DE': '',
 	},
 	 tag: 'tractor-beam',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 5;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 1000000;
 }
 }
@@ -16460,6 +16480,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 		 'en-US': '',
 	},
 	 size: 1,
+	 strength: 0,
 	 acc: 10,
 	 ts: 35,
 	 climb: 0,
@@ -16470,9 +16491,9 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 crew: 1,
 	 cost: 500,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -16482,6 +16503,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 		 'en-US': 'Motorcycles',
 	},
 	 size: 2,
+	 strength: 0,
 	 acc: 10,
 	 ts: 30,
 	 climb: 0,
@@ -16492,9 +16514,9 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 crew: 2,
 	 cost: 1000,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -16504,6 +16526,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 		 'en-US': 'Cars',
 	},
 	 size: 3,
+	 strength: 0,
 	 acc: 10,
 	 ts: 25,
 	 climb: 0,
@@ -16514,9 +16537,9 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 crew: 4,
 	 cost: 8000,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -16526,6 +16549,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 		 'en-US': 'SUVs, Pickups',
 	},
 	 size: 4,
+	 strength: 0,
 	 acc: 10,
 	 ts: 20,
 	 climb: 0,
@@ -16536,9 +16560,9 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 crew: 6,
 	 cost: 12000,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -16548,6 +16572,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 		 'en-US': 'APCs, Light tanks',
 	},
 	 size: 6,
+	 strength: 0,
 	 acc: 5,
 	 ts: 15,
 	 climb: 0,
@@ -16558,9 +16583,9 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 crew: 8,
 	 cost: 30000,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -16570,6 +16595,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 		 'en-US': 'Tanks',
 	},
 	 size: 8,
+	 strength: 0,
 	 acc: 5,
 	 ts: 10,
 	 climb: 0,
@@ -16580,9 +16606,9 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 crew: 10,
 	 cost: 60000,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -16592,6 +16618,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 		 'en-US': 'Tanks',
 	},
 	 size: 10,
+	 strength: 0,
 	 acc: 5,
 	 ts: 19,
 	 climb: 0,
@@ -16602,9 +16629,9 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 crew: 20,
 	 cost: 100000,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -16614,6 +16641,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 		 'en-US': 'Tanks',
 	},
 	 size: 12,
+	 strength: 0,
 	 acc: 5,
 	 ts: 10,
 	 climb: 0,
@@ -16624,9 +16652,9 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 crew: 40,
 	 cost: 500000,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -16636,6 +16664,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 		 'en-US': 'Battle Platforms',
 	},
 	 size: 14,
+	 strength: 0,
 	 acc: 5,
 	 ts: 10,
 	 climb: 0,
@@ -16646,9 +16675,9 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 crew: 80,
 	 cost: 1000000,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 }
 );
 savageWorldsSciFiMods['vehicle'] = Array(
@@ -16660,20 +16689,20 @@ savageWorldsSciFiMods['vehicle'] = Array(
 		 'en-US': 'Ultra Tech. The vehicle is an aircraft powered by anti-gravitic propulsion. It can hover or fly, and has a Acc/TS of 30/100 and Climb of 2.',
 	},
 	 tag: 'aircraft-anti-grav',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
-return 20000 * selected_object.size;
+getCost: function(selectedObject) {
+return 20000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.aircraft += 1;
-selected_object.climb = 2;
-selected_object.acc = 30;
-selected_object.ts = 100;
+getModEffect: function(selectedObject) {
+selectedObject.aircraft += 1;
+selectedObject.climb = 2;
+selectedObject.acc = 30;
+selectedObject.ts = 100;
 },
-calc_weight: 1 // one of the first things to be calculated
+calcWeight: 1 // one of the first things to be calculated
 },
 {
 	 name: {
@@ -16683,20 +16712,20 @@ calc_weight: 1 // one of the first things to be calculated
 		 'en-US': 'The vehicle is a helicopter. It can hover or fly, and has a Acc/TS 10/80 and a Climb of –1.',
 	},
 	 tag: 'aircraft-helicopter',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size / 2;
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.aircraft += 1;
-selected_object.climb = -1;
-selected_object.acc = 10;
-selected_object.ts = 80;
+getModEffect: function(selectedObject) {
+selectedObject.aircraft += 1;
+selectedObject.climb = -1;
+selectedObject.acc = 10;
+selectedObject.ts = 80;
 },
-calc_weight: 1 // one of the first things to be calculated
+calcWeight: 1 // one of the first things to be calculated
 },
 {
 	 name: {
@@ -16706,20 +16735,20 @@ calc_weight: 1 // one of the first things to be calculated
 		 'en-US': 'Jet planes are Acc/TS 50/600, Climb 2. They must move at least half their Top Speed each round or go Out of Control (they stall). The Speed Mod increases Acc by 10 instead of 5 and Top Speed by 100 instead of 10.',
 	},
 	 tag: 'aircraft-jet-plane',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size / 2;
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
-get_cost: function(selected_object) {
-return 10000 * selected_object.size;
+getCost: function(selectedObject) {
+return 10000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.aircraft += 1;
-selected_object.climb = 2;
-selected_object.acc = 50;
-selected_object.ts = 600;
+getModEffect: function(selectedObject) {
+selectedObject.aircraft += 1;
+selectedObject.climb = 2;
+selectedObject.acc = 50;
+selectedObject.ts = 600;
 },
-calc_weight: 1 // one of the first things to be calculated
+calcWeight: 1 // one of the first things to be calculated
 },
 {
 	 name: {
@@ -16729,20 +16758,20 @@ calc_weight: 1 // one of the first things to be calculated
 		 'en-US': 'A traditional prop plane. Acc/TS 20/150, Climb 1. Planes must move at least half their Top Speed each round or go Out of Control (they stall). The Speed Mod increases Top Speed by 50 instead of 10.',
 	},
 	 tag: 'aircraft-propeller-plane',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size / 2;
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.aircraft += 1;
-selected_object.climb = 1;
-selected_object.acc = 20;
-selected_object.ts = 150;
+getModEffect: function(selectedObject) {
+selectedObject.aircraft += 1;
+selectedObject.climb = 1;
+selectedObject.acc = 20;
+selectedObject.ts = 150;
 },
-calc_weight: 1 // one of the first things to be calculated
+calcWeight: 1 // one of the first things to be calculated
 },
 {
 	 name: {
@@ -16752,12 +16781,12 @@ calc_weight: 1 // one of the first things to be calculated
 		 'en-US': 'Anti-Missile Counter Measures are integrated jammers and decoys. They add +2 to Driving, Piloting or Knowledge (Electronics) rolls made to evade missile attacks.',
 	},
 	 tag: 'amcm',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
 },
 {
@@ -16768,12 +16797,12 @@ return 5000 * selected_object.size;
 		 'en-US': 'The vehicle may move at half Acc/Top Speed while in water.',
 	},
 	 tag: 'amphibious',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 1000 * selected_object.size;
+getCost: function(selectedObject) {
+return 1000 * selectedObject.size;
 },
 },
 {
@@ -16784,18 +16813,18 @@ return 1000 * selected_object.size;
 		 'en-US': 'Increases a vehicle’s Armor value by +2. Armor +4 and higher is considered Heavy Armor. Vehicular Armor can also be front-loaded if desired. If so, Armor’s maximum becomes 2x Size and each level increases the front armor by +3, side and top armor by +2, and rear and bottom Armor by +1. In the Chase rules, an attacker with Advantage and a Jack or higher can target the side armor, and one with a King or higher can target the rear.',
 	},
 	 tag: 'armor',
-get_max: function(selected_object) { return selected_object.size },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return selectedObject.size },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 1000 * selected_object.size;
+getCost: function(selectedObject) {
+return 1000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.armor++;
-selected_object.armor++;
-selected_object.toughness++;
-selected_object.toughness++;
+getModEffect: function(selectedObject) {
+selectedObject.armor++;
+selectedObject.armor++;
+selectedObject.toughness++;
+selectedObject.toughness++;
 }
 },
 {
@@ -16806,22 +16835,22 @@ selected_object.toughness++;
 		 'en-US': 'Increases a vehicle’s Armor value by +2. Armor +4 and higher is considered Heavy Armor. Vehicular Armor can also be front-loaded if desired. If so, Armor’s maximum becomes 2x Size and each level increases the front armor by +3, side and top armor by +2, and rear and bottom Armor by +1. In the Chase rules, an attacker with Advantage and a Jack or higher can target the side armor, and one with a King or higher can target the rear.',
 	},
 	 tag: 'armor-front-loaded',
-get_max: function(selected_object) { return selected_object.size },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return selectedObject.size },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 1000 * selected_object.size;
+getCost: function(selectedObject) {
+return 1000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.front_armor++;
-selected_object.front_armor++;
-selected_object.front_armor++;
-selected_object.side_armor++;
-selected_object.side_armor++;
-selected_object.rear_armor++;
-selected_object.toughness++;
-selected_object.toughness++;
+getModEffect: function(selectedObject) {
+selectedObject.frontArmor++;
+selectedObject.frontArmor++;
+selectedObject.frontArmor++;
+selectedObject.sideArmor++;
+selectedObject.sideArmor++;
+selectedObject.rearArmor++;
+selectedObject.toughness++;
+selectedObject.toughness++;
 }
 },
 {
@@ -16832,12 +16861,12 @@ selected_object.toughness++;
 		 'en-US': 'The vehicle’s AI can operate all systems — from locomotion to weapons to opening or closing hatches. It has a skill level of d10 in these tasks, but is an “Extra” and does not receive a Wild Die. The AI does not suffer from multi-action penalties if given simultaneous tasks. In combat, the AI acts on the captain’s Action Card. Giving the AI a short verbal command is a free action.',
 	},
 	 tag: 'artificial-intelligence',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 0;
 },
-get_cost: function(selected_object) {
-return 10000 * selected_object.size;
+getCost: function(selectedObject) {
+return 10000 * selectedObject.size;
 },
 },
 {
@@ -16848,12 +16877,12 @@ return 10000 * selected_object.size;
 		 'en-US': 'Nitrous oxide or other propellants double a vehicle’s Acceleration and Top Speed for a round. Each booster has six uses before it must be replaced. Their effects do not stack. Refills cost $100 per booster.',
 	},
 	 tag: 'boosters',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 1000 * selected_object.size;
+getCost: function(selectedObject) {
+return 1000 * selectedObject.size;
 },
 },
 {
@@ -16864,15 +16893,15 @@ return 1000 * selected_object.size;
 		 'en-US': 'Aircraft only. The vehicle’s Climb is increased by 1.',
 	},
 	 tag: 'climb',
-get_max: function(selected_object) { return 5 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 5 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.climb = selected_object.climb + 1;
+getModEffect: function(selectedObject) {
+selectedObject.climb = selectedObject.climb + 1;
 }
 },
 {
@@ -16883,16 +16912,16 @@ selected_object.climb = selected_object.climb + 1;
 		 'en-US': 'Add 1 Mod slot for every four crewman deducted (round up).',
 	},
 	 tag: 'crew-reduction',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 0;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 0;
 },
-get_mod_effect: function(selected_object) {
-selected_object.crew += -4;
-selected_object.mods ++;
+getModEffect: function(selectedObject) {
+selectedObject.crew += -4;
+selectedObject.mods ++;
 }
 },
 {
@@ -16903,15 +16932,15 @@ selected_object.mods ++;
 		 'en-US': 'Space for four permanent crew members.',
 	},
 	 tag: 'crew-space',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 100000;
 },
-get_mod_effect: function(selected_object) {
-selected_object.crew += 4;
+getModEffect: function(selectedObject) {
+selectedObject.crew += 4;
 }
 },
 {
@@ -16922,12 +16951,12 @@ selected_object.crew += 4;
 		 'en-US': 'The vessel is protected by an energy field that deflects incoming ballistic attacks (it has no effect against lasers). Attackers must subtract –2 from their Shooting rolls. Mod cost is 2 for Small to Large vehicles, and 3 for Huge to Gargantuan vessels.',
 	},
 	 tag: 'deflector-screens',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
-return 10000 * selected_object.size;
+getCost: function(selectedObject) {
+return 10000 * selectedObject.size;
 },
 },
 {
@@ -16938,12 +16967,12 @@ return 10000 * selected_object.size;
 		 'en-US': 'Should a vehicle suffer a Wrecked result, crew members may make Agility rolls at –4 (or no penalty if an individual was on Hold or hasn’t acted yet that round). Failure results in damage as usual and failure to eject that round. Those who succeed are launched into the air and descend safely via parachute. The system covers all passengers and crew.',
 	},
 	 tag: 'ejection-system',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
-return selected_object.size / 2;
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
 },
 {
@@ -16954,12 +16983,12 @@ return 5000 * selected_object.size;
 		 'en-US': 'Adds +6 to the vehicle’s effective Toughness from EMP missiles (see page 25).',
 	},
 	 tag: 'electromagnetic-shielding',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
 },
 {
@@ -16970,12 +16999,12 @@ return 5000 * selected_object.size;
 		 'en-US': 'Motorcycles and other “ridden” vehicles offer no protection for their passengers. Crew get no Armor bonus should it sustain a Crew critical hit.',
 	},
 	 tag: 'exposed-crew',
-get_max:  function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax:  function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 0;
 },
-get_cost: function(selected_object) {
-return  (selected_object.base_cost / 2 ) * -1;
+getCost: function(selectedObject) {
+return  (selectedObject.baseCost / 2 ) * -1;
 }
 },
 {
@@ -16986,12 +17015,12 @@ return  (selected_object.base_cost / 2 ) * -1;
 		 'en-US': 'Up to four direct-fire weapons of the same type may be linked and fired as one, increasing the damage by +2 per weapon and reducing the total number of Mods required. Total all Linked weapons in a set first, then halve their required Mods. (If Linking Fixed weapons, halve the total.)',
 	},
 	 tag: 'four-wheel-drive',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 1000 * selected_object.size;
+getCost: function(selectedObject) {
+return 1000 * selectedObject.size;
 },
 },
 {
@@ -17002,12 +17031,12 @@ return 1000 * selected_object.size;
 		 'en-US': 'The vehicle is precision crafted and very maneuverable. This adds +1 to Driving rolls per level.',
 	},
 	 tag: 'handling',
-get_max: function(selected_object) { return 3 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 3 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
 },
 {
@@ -17018,12 +17047,12 @@ return 5000 * selected_object.size;
 		 'en-US': 'The vehicle uses hover fans instead of wheels. It ignores difficult terrain modifiers and obstacles less than a yard tall. Round Mod cost up. The Ultra Tech version uses anti-grav. It doubles the cost but halves the Mod cost.',
 	},
 	 tag: 'hover-vehicle',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size;;
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size;;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
 },
 {
@@ -17038,15 +17067,15 @@ return 5000 * selected_object.size;
 		 'de-DE': '',
 	},
 	 tag: 'living-space',
-		get_max: function(selected_object) { return selected_object.base_toughness / 2 },
-		get_mod_cost: function(selected_object) {
+		getMax: function(selectedObject) { return selectedObject.baseToughness / 2 },
+		getModCost: function(selectedObject) {
 			return 3;
 		},
-		get_cost: function(selected_object) {
+		getCost: function(selectedObject) {
 			return 5000;
 		},
-		get_mod_effect: function(selected_object) {
-			selected_object.toughness = selected_object.toughness - 1;
+		getModEffect: function(selectedObject) {
+			selectedObject.toughness = selectedObject.toughness - 1;
 		},
 },
 {
@@ -17061,12 +17090,12 @@ return 5000 * selected_object.size;
 		 'de-DE': '',
 	},
 	 tag: 'luxury-features',
-		get_max: function(selected_object) { return 1 },
-		get_mod_cost: function(selected_object) {
+		getMax: function(selectedObject) { return 1 },
+		getModCost: function(selectedObject) {
 			return 1;
 		},
-		get_cost: function(selected_object) {
-			return 1000 * selected_object.size;
+		getCost: function(selectedObject) {
+			return 1000 * selectedObject.size;
 		}
 },
 {
@@ -17077,15 +17106,15 @@ return 5000 * selected_object.size;
 		 'en-US': 'Allows up to four Light or two Heavy (or AT) missiles to be fired at once.',
 	},
 	 tag: 'missile-launcher',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 50000;
 },
-get_mod_effect: function(selected_object) {
-selected_object.has_missile_launcher = 1;
+getModEffect: function(selectedObject) {
+selectedObject.hasMissileLauncher = 1;
 }
 },
 {
@@ -17100,34 +17129,34 @@ selected_object.has_missile_launcher = 1;
 		 'de-DE': '',
 	},
 	 tag: 'multi-legged',
-show_with_option: "the-last-parsec",
-get_max: function(selected_object) { return 3 },
-get_mod_cost: function(selected_object) {
-if( selected_object.size < 8) {
+showWithOption: "the-last-parsec",
+getMax: function(selectedObject) { return 3 },
+getModCost: function(selectedObject) {
+if( selectedObject.size < 8) {
 return 2;
-} else if ( selected_object.size < 12) {
+} else if ( selectedObject.size < 12) {
 return 4;
 } else {
 return 6;
 }
 },
-get_cost: function(selected_object) {
-return 10000 * selected_object.size;
+getCost: function(selectedObject) {
+return 10000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.acc += 5;
-selected_object.ts += 10;
-this_mod_count = selected_object.get_modification_count("Multi-Legged");
-if( this_mod_count == 1 )
-selected_object.number_of_legs = 4;
-else if( this_mod_count == 2 )
-selected_object.number_of_legs = 6;
-else if( this_mod_count == 3 )
-selected_object.number_of_legs = 8;
+getModEffect: function(selectedObject) {
+selectedObject.acc += 5;
+selectedObject.ts += 10;
+thisModCount = selectedObject.getModificationCount("Multi-Legged");
+if( thisModCount == 1 )
+selectedObject.numberOfLegs = 4;
+else if( thisModCount == 2 )
+selectedObject.numberOfLegs = 6;
+else if( thisModCount == 3 )
+selectedObject.numberOfLegs = 8;
 
 },
-get_display_name: function(selected_object) {
-return "Multi-Legged (" + selected_object.number_of_legs + " legs)";
+getDisplayName: function(selectedObject) {
+return "Multi-Legged (" + selectedObject.numberOfLegs + " legs)";
 }
 },
 {
@@ -17138,15 +17167,15 @@ return "Multi-Legged (" + selected_object.number_of_legs + " legs)";
 		 'en-US': 'Increases Toughness of the chassis by +1.',
 	},
 	 tag: 'reinforced-chassis',
-get_max: function(selected_object) { return 3 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 3 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 1000 * selected_object.size;
+getCost: function(selectedObject) {
+return 1000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.toughness = selected_object.toughness + 1;
+getModEffect: function(selectedObject) {
+selectedObject.toughness = selectedObject.toughness + 1;
 }
 },
 {
@@ -17157,11 +17186,11 @@ selected_object.toughness = selected_object.toughness + 1;
 		 'en-US': 'Light, chemical, motion, and other active sensors allow detection of targets up to one light year away with a Knowledge (Electronics) roll. Within 10K miles, the sensors add +2 to the roll. Illumination penalties are ignored. Targets don’t have to be in direct line of sight, but asteroid or powerful energy fields may cause inaccurate or false readings at the GM’s discretion.',
 	},
 	 tag: 'sensor-suite',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 50000;
 }
 },
@@ -17173,12 +17202,12 @@ return 50000;
 		 'en-US': 'The craft is protected by an ablative energy field that absorbs 10×Size points of damage before it’s depleted. Apply all damage to the shield first, then any left over to the vehicle (AP counts as usual). Active shields detonate missiles and torpedoes before they hit, reducing their damage total by half. A craft may regenerate its Size in shield points if it makes no attacks in a round.',
 	},
 	 tag: 'shields',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size / 2;
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
-get_cost: function(selected_object) {
-return 25000 * selected_object.size;
+getCost: function(selectedObject) {
+return 25000 * selectedObject.size;
 },
 },
 {
@@ -17189,12 +17218,12 @@ return 25000 * selected_object.size;
 		 'en-US': 'Non-energy, ballistic attacks against this vessel suffer a –2 penalty. It has no effect on energy attacks.',
 	},
 	 tag: 'sloped-armor',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
-return 3000 * selected_object.size;
+getCost: function(selectedObject) {
+return 3000 * selectedObject.size;
 },
 },
 {
@@ -17205,17 +17234,17 @@ return 3000 * selected_object.size;
 		 'en-US': 'The vehicle trades power and speed for additional room. Each time this is taken, reduce Acc by 5 and Top Speed by 50 to gain half the vehicle’s Size in Mod slots.',
 	},
 	 tag: 'speed-reduction',
-get_max: function(selected_object) { return 3 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 3 },
+getModCost: function(selectedObject) {
 return 0;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 0;
 },
-get_mod_effect: function(selected_object) {
-selected_object.ts -=  2;
-selected_object.acc -=  1;
-selected_object.mods += selected_object.size / 2;
+getModEffect: function(selectedObject) {
+selectedObject.ts -=  2;
+selectedObject.acc -=  1;
+selectedObject.mods += selectedObject.size / 2;
 }
 },
 {
@@ -17226,16 +17255,16 @@ selected_object.mods += selected_object.size / 2;
 		 'en-US': 'Each purchase increases the vehicle’s Acc by 5 and Top Speed by 50. (This cannot be taken with Speed Reduction.)',
 	},
 	 tag: 'speed',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 1000 * selected_object.size;
+getCost: function(selectedObject) {
+return 1000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.ts +=  10;
-selected_object.acc +=  5;
+getModEffect: function(selectedObject) {
+selectedObject.ts +=  10;
+selectedObject.acc +=  5;
 }
 },
 {
@@ -17246,12 +17275,12 @@ selected_object.acc +=  5;
 		 'en-US': 'Radar-absorbing paint, heat baffles, scramblers, and other devices make the vehicle difficult to detect by vision or sensors. Those trying to spot, attack, (or lock on to) the vehicle subtract 4 from their rolls. The effect is triggered as a free action, but is negated any round in which the vehicle fires a weapon or emits some other non- cloakable signal such as radio signal or active sensor search.',
 	},
 	 tag: 'stealth-system',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size;
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size;
 },
-get_cost: function(selected_object) {
-return 10000 * selected_object.size;
+getCost: function(selectedObject) {
+return 10000 * selectedObject.size;
 }
 },
 {
@@ -17262,12 +17291,12 @@ return 10000 * selected_object.size;
 		 'en-US': 'The vehicle’s internal sensors and computers are linked to all attached weapons. This compensates for movement, range, multi-actions, and the like, negating up to two points of Shooting penalties.',
 	},
 	 tag: 'targeting-system',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 10000  * selected_object.size;
+getCost: function(selectedObject) {
+return 10000  * selectedObject.size;
 }
 },
 {
@@ -17278,18 +17307,18 @@ return 10000  * selected_object.size;
 		 'en-US': 'Each tube allows up to two Light or one Heavy torpedo to be fired at once (at one or two targets, as desired).',
 	},
 	 tag: 'torpedo-tube',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 500000;
 },
-get_mod_effect: function(selected_object) {
-selected_object.has_torpedo_tube = 1;
+getModEffect: function(selectedObject) {
+selectedObject.hasTorpedoTube = 1;
 },
-is_available: function(selected_object) {
-if( selected_object.aircraft > 0 || selected_object.watercraft > 0)
+isAvailable: function(selectedObject) {
+if( selectedObject.aircraft > 0 || selectedObject.watercraft > 0)
 return true;
 else
 return false;
@@ -17303,17 +17332,17 @@ return false;
 		 'en-US': 'The vehicle has tracks instead of wheels and can climb over small obstacles. This reduces Acc by 2 and TS by 5, and ignores Driving penalties for difficult terrain. On the table-top, every inch of movement is treated as 1.5”.',
 	},
 	 tag: 'tracked',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 0;
 },
-get_cost: function(selected_object) {
-return 1000  * selected_object.size;
+getCost: function(selectedObject) {
+return 1000  * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.ts -=  5;
-selected_object.acc -=  2;
-selected_object.mods += selected_object.base_mods / 2;
+getModEffect: function(selectedObject) {
+selectedObject.ts -=  5;
+selectedObject.acc -=  2;
+selectedObject.mods += selectedObject.baseMods / 2;
 }
 },
 {
@@ -17328,17 +17357,17 @@ selected_object.mods += selected_object.base_mods / 2;
 		 'de-DE': '',
 	},
 	 tag: 'watercraft',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 0;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 0;
 },
-get_mod_effect: function(selected_object) {
-selected_object.ts = Math.ceil(selected_object.ts / 2);
-selected_object.acc = Math.ceil(selected_object.acc / 2);
-selected_object.watercraft = 1;
+getModEffect: function(selectedObject) {
+selectedObject.ts = Math.ceil(selectedObject.ts / 2);
+selectedObject.acc = Math.ceil(selectedObject.acc / 2);
+selectedObject.watercraft = 1;
 }
 }
 );
@@ -17393,6 +17422,7 @@ savageWorldsSciFiSizes['walker'] = Array(
 		 'de-DE': '',
 	},
 	 size: 4,
+	 strength: 7,
 	 acc: 0,
 	 ts: 0,
 	 climb: 0,
@@ -17403,9 +17433,9 @@ savageWorldsSciFiSizes['walker'] = Array(
 	 crew: 1,
 	 cost: 400000,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: 'ultra-light',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: 'ultra-light',
 },
 {
 	 size_label: {
@@ -17415,6 +17445,7 @@ savageWorldsSciFiSizes['walker'] = Array(
 		 'en-US': '20 feet tall',
 	},
 	 size: 6,
+	 strength: 9,
 	 acc: 0,
 	 ts: 0,
 	 climb: 0,
@@ -17425,9 +17456,9 @@ savageWorldsSciFiSizes['walker'] = Array(
 	 crew: 1,
 	 cost: 1000000,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -17437,6 +17468,7 @@ savageWorldsSciFiSizes['walker'] = Array(
 		 'en-US': '30 feet tall',
 	},
 	 size: 8,
+	 strength: 11,
 	 acc: 0,
 	 ts: 0,
 	 climb: 0,
@@ -17447,9 +17479,9 @@ savageWorldsSciFiSizes['walker'] = Array(
 	 crew: 1,
 	 cost: 3000000,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -17459,6 +17491,7 @@ savageWorldsSciFiSizes['walker'] = Array(
 		 'en-US': '50 feet tall',
 	},
 	 size: 10,
+	 strength: 13,
 	 acc: 0,
 	 ts: 0,
 	 climb: 0,
@@ -17469,9 +17502,9 @@ savageWorldsSciFiSizes['walker'] = Array(
 	 crew: 1,
 	 cost: 5000000,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -17481,6 +17514,7 @@ savageWorldsSciFiSizes['walker'] = Array(
 		 'en-US': '80 feet tall',
 	},
 	 size: 12,
+	 strength: 15,
 	 acc: 0,
 	 ts: 0,
 	 climb: 0,
@@ -17491,31 +17525,36 @@ savageWorldsSciFiSizes['walker'] = Array(
 	 crew: 1,
 	 cost: 10000000,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
 		 'en-US': 'Titan',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': '120 feet tall',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 size: 14,
+	 strength: 17,
 	 acc: 0,
 	 ts: 0,
 	 climb: 0,
 	 pace: 8,
-	 toughness: 35,
-	 armor: 8,
+	 toughness: 40,
+	 armor: 9,
 	 mods: 50,
 	 crew: 1,
 	 cost: 20000000,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 }
 );
 savageWorldsSciFiMods['walker'] = Array(
@@ -17527,12 +17566,12 @@ savageWorldsSciFiMods['walker'] = Array(
 		 'en-US': 'Anti-Missile Counter Measures are integrated jammers and decoys. They add +2 to Driving, Piloting or Knowledge (Electronics) rolls made to evade missile attacks.',
 	},
 	 tag: 'amcm',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
 },
 {
@@ -17543,18 +17582,18 @@ return 5000 * selected_object.size;
 		 'en-US': 'Increases a walker&apos;s Armor value by +2. All walker Armor is considered Heavy Armor.',
 	},
 	 tag: 'armor',
-get_max: function(selected_object) { return selected_object.size },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return selectedObject.size },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 10000 * selected_object.size;
+getCost: function(selectedObject) {
+return 10000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.armor++;
-selected_object.armor++;
-selected_object.toughness++;
-selected_object.toughness++;
+getModEffect: function(selectedObject) {
+selectedObject.armor++;
+selectedObject.armor++;
+selectedObject.toughness++;
+selectedObject.toughness++;
 }
 },
 {
@@ -17565,11 +17604,11 @@ selected_object.toughness++;
 		 'en-US': 'Some walkers are equipped with chain- blades or swords designed to cut through the hard armor of rival mechs, buildings, or enemy tanks. They have AP equal to the mech&apos;s Size and cause Str+2d10 damage (Heavy Weapon). The pilot uses the lower of his Fighting or Piloting to hit. The TN to hit an enemy mech or vehicle is 4, plus or minus normal speed or Size modifiers. Walkers aren&apos;t subject to all the normal rules of close combat, but GMs can use those as the basis for situational modifiers based on specific circumstances (such as multiple mechs ganging up on a foe).',
 	},
 	 tag: 'close-combat-weapon',
-get_max: function(selected_object) { return 2 },
-get_mod_cost: function(selected_object) {
-return selected_object.size / 2;
+getMax: function(selectedObject) { return 2 },
+getModCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 75000;
 },
 },
@@ -17581,12 +17620,12 @@ return 75000;
 		 'en-US': 'The vessel is protected by an energy field that deflects incoming ballistic attacks (it has no effect against lasers). Attackers must subtract –2 from their Shooting rolls. Mod cost is 2 for Small to Large walkers, and 3 for Huge to Gargantuan vessels.',
 	},
 	 tag: 'deflector-screens',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
-return 10000 * selected_object.size;
+getCost: function(selectedObject) {
+return 10000 * selectedObject.size;
 },
 },
 {
@@ -17597,12 +17636,12 @@ return 10000 * selected_object.size;
 		 'en-US': 'Adds +6 to the walker&apos;s effective Toughness from EMP missiles (see page 25).',
 	},
 	 tag: 'electromagnetic-shielding',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
 },
 {
@@ -17613,29 +17652,12 @@ return 5000 * selected_object.size;
 		 'en-US': 'Powerful rockets give walkers the ability to propel themselves high in the air—to clear obstacles or perform “death from above” attacks on foes. To jump, the pilot uses an action to make a Piloting roll to both maneuver his walker and manage his power reserves. Each round spent jumping increases his height 50 feet for Light walkers, 30 feet for Mediums, and 20 feet for Heavies. Each subsequent round spent jumping (essentially flying) afterwards inflicts a –2 to the Piloting roll, cumulative to a maximum of –6. Failure means the walker descends immediately (a critical failure results in a fall—see Falling, page 59).',
 	},
 	 tag: 'jump-jets',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size / 2;
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
-get_cost: function(selected_object) {
-return selected_object.size / 2;
-},
-},
-{
-	 name: {
-		 'en-US': 'Linked',
-	},
-	 description: {
-		 'en-US': 'Up to four direct-fire weapons of the same type may be linked and fired as one, increasing the damage by +2 per weapon and reducing the total number of Mods required. Total all Linked weapons in a set first, then halve their required Mods. (If Linking Fixed weapons, halve the total.)',
-	},
-	 tag: 'linked',
-get_max: function(selected_object) { return "u" },
-hidden: 1,
-get_mod_cost: function(selected_object) {
-return 0;
-},
-get_cost: function(selected_object) {
-return 0;
+getCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
 },
 {
@@ -17646,15 +17668,15 @@ return 0;
 		 'en-US': 'Allows up to four Light or two Heavy (or AT) missiles to be fired at once.',
 	},
 	 tag: 'missile-launcher',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 50000;
 },
-get_mod_effect: function(selected_object) {
-selected_object.has_missile_launcher = 1;
+getModEffect: function(selectedObject) {
+selectedObject.hasMissileLauncher = 1;
 }
 },
 {
@@ -17665,15 +17687,15 @@ selected_object.has_missile_launcher = 1;
 		 'en-US': 'Increases the mech&apos;s Pace by +4. (This cannot be taken with Speed Reduction.)',
 	},
 	 tag: 'pace',
-get_max: function(selected_object) { return 3 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 3 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 4000 * selected_object.size;
+getCost: function(selectedObject) {
+return 4000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.pace = selected_object.pace + 4;
+getModEffect: function(selectedObject) {
+selectedObject.pace = selectedObject.pace + 4;
 }
 },
 {
@@ -17684,11 +17706,11 @@ selected_object.pace = selected_object.pace + 4;
 		 'en-US': 'Cramped space for four passengers. Rescue mechs often use this Modification.',
 	},
 	 tag: 'passenger-compartment',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000;
 }
 },
@@ -17700,15 +17722,15 @@ return 5000;
 		 'en-US': 'Increases Toughness of the chassis by +2.',
 	},
 	 tag: 'reinforced-frame',
-get_max: function(selected_object) { return 3 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 3 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 10000 * selected_object.size;
+getCost: function(selectedObject) {
+return 10000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.toughness = selected_object.toughness + 2;
+getModEffect: function(selectedObject) {
+selectedObject.toughness = selectedObject.toughness + 2;
 }
 },
 {
@@ -17719,11 +17741,11 @@ selected_object.toughness = selected_object.toughness + 2;
 		 'en-US': '+4 Notice vs sound, motion, strong chemicals, radiation, or electrical fields up to 1000 yards.',
 	},
 	 tag: 'sensor-suite',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 50000;
 }
 },
@@ -17735,12 +17757,12 @@ return 50000;
 		 'en-US': 'The walker is protected by an ablative energy field that absorbs 10×Size points of damage before it&apos;s depleted. Apply all damage to the shield first, then any left over to the mech (AP counts as usual). Active shields detonate missiles and torpedoes before they hit, reducing their damage total by half. A walker may regenerate its Size in shield points if it makes no attacks in a round.',
 	},
 	 tag: 'shields',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size / 2;
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
-get_cost: function(selected_object) {
-return 50000 * selected_object.size;
+getCost: function(selectedObject) {
+return 50000 * selectedObject.size;
 },
 },
 {
@@ -17751,12 +17773,12 @@ return 50000 * selected_object.size;
 		 'en-US': 'Non-energy, ballistic attacks against this vessel suffer a –2 penalty. It has no effect on energy attacks.',
 	},
 	 tag: 'sloped-armor',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
 },
 {
@@ -17767,16 +17789,16 @@ return 5000 * selected_object.size;
 		 'en-US': 'The walker sacrifices speed for additional room. Subtract 2 from Pace and add half its Size in Mod slots (round down).',
 	},
 	 tag: 'speed-reduction',
-get_max: function(selected_object) { return 3 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 3 },
+getModCost: function(selectedObject) {
 return 0;
 },
-get_cost: function(selected_object) {
-return 20000 * selected_object.size;
+getCost: function(selectedObject) {
+return 20000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.pace -=  2;
-selected_object.mods += selected_object.size / 2;
+getModEffect: function(selectedObject) {
+selectedObject.pace -=  2;
+selectedObject.mods += selectedObject.size / 2;
 }
 },
 {
@@ -17787,12 +17809,12 @@ selected_object.mods += selected_object.size / 2;
 		 'en-US': 'Radar-absorbing paint, heat baffles, scramblers, and other devices make the walker difficult to detect by vision or sensors. Those trying to attack or spot the mech subtract 4 from their rolls. The effect is triggered as a free action, but is negated any round in which the walker fires a weapon or emits some other non- cloakable signal such as radio signal or active sensor search.',
 	},
 	 tag: 'stealth-system',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size;
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size;
 },
-get_cost: function(selected_object) {
-return 50000 * selected_object.size;
+getCost: function(selectedObject) {
+return 50000 * selectedObject.size;
 }
 },
 {
@@ -17803,15 +17825,15 @@ return 50000 * selected_object.size;
 		 'en-US': 'Add +2 to the walker&apos;s Strength.',
 	},
 	 tag: 'strength-enhancement',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.strength +=  2;
+getModEffect: function(selectedObject) {
+selectedObject.strength +=  2;
 }
 },
 {
@@ -17826,12 +17848,12 @@ selected_object.strength +=  2;
 		 'de-DE': '',
 	},
 	 tag: 'targeting-system',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 10000  * selected_object.size;
+getCost: function(selectedObject) {
+return 10000  * selectedObject.size;
 }
 }
 );
@@ -17888,8 +17910,8 @@ return 10000  * selected_object.size;
 		 'tag': 'anti-tank-missile',
 		 'cost': '200000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.has_missile_launcher > 0)
+isAvailable: function(selectedObject) {
+if(selectedObject.hasMissileLauncher > 0)
 return true;
 else
 return false;
@@ -17920,8 +17942,8 @@ return false;
 		 'tag': 'block-buster-bomb',
 		 'cost': '1000000',
 		 'flying_only': '1',
-is_available: function(selected_object) {
-if( selected_object.aircraft > 0  )
+isAvailable: function(selectedObject) {
+if( selectedObject.aircraft > 0  )
 return true;
 else
 return false;
@@ -17952,8 +17974,8 @@ return false;
 		 'tag': 'city-buster-bomb',
 		 'cost': '1000000',
 		 'flying_only': '1',
-is_available: function(selected_object) {
-if( selected_object.aircraft > 0  )
+isAvailable: function(selectedObject) {
+if( selectedObject.aircraft > 0  )
 return true;
 else
 return false;
@@ -18123,18 +18145,28 @@ return false;
 {
 	 name: {
 		 'en-US': 'Heavy Missile',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Heavy Missiles',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship—if a ship gets a lock, it may fire all the missiles or torpedoes it’s allowed.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Missiles & Torpedoes',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
 		 'en-US': 'AP 12, HW, MBT.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '200/400/800',
 		 'damage': '8d6',
@@ -18146,8 +18178,8 @@ return false;
 		 'tag': 'heavy-missile',
 		 'cost': '200000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.has_missile_launcher > 0 )
+isAvailable: function(selectedObject) {
+if(selectedObject.hasMissileLauncher > 0 )
 return true;
 else
 return false;
@@ -18178,8 +18210,8 @@ return false;
 		 'tag': 'heavy-torpedo',
 		 'cost': '1000000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.has_torpedo_tube > 0 && ( selected_object.aircraft > 0 || selected_object.watercraft > 0 ) )
+isAvailable: function(selectedObject) {
+if(selectedObject.hasTorpedoTube > 0 && ( selectedObject.aircraft > 0 || selectedObject.watercraft > 0 ) )
 return true;
 else
 return false;
@@ -18210,8 +18242,8 @@ return false;
 		 'tag': 'large-bomb',
 		 'cost': '1000000',
 		 'flying_only': '1',
-is_available: function(selected_object) {
-if( selected_object.aircraft > 0  )
+isAvailable: function(selectedObject) {
+if( selectedObject.aircraft > 0  )
 return true;
 else
 return false;
@@ -18323,8 +18355,8 @@ return false;
 		 'tag': 'light-missile',
 		 'cost': '150000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.has_missile_launcher > 0)
+isAvailable: function(selectedObject) {
+if(selectedObject.hasMissileLauncher > 0)
 return true;
 else
 return false;
@@ -18355,8 +18387,8 @@ return false;
 		 'tag': 'light-torpedo',
 		 'cost': '1000000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.has_torpedo_tube > 0 && ( selected_object.aircraft > 0 || selected_object.watercraft > 0 ) )
+isAvailable: function(selectedObject) {
+if(selectedObject.hasTorpedoTube > 0 && ( selectedObject.aircraft > 0 || selectedObject.watercraft > 0 ) )
 return true;
 else
 return false;
@@ -18387,8 +18419,8 @@ return false;
 		 'tag': 'mass-driver-1',
 		 'cost': '100000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 1 || selected_object.object_type == "power_armor")
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 1 || selectedObject.objectType == "power_armor")
 return true;
 else
 return false;
@@ -18419,8 +18451,8 @@ return false;
 		 'tag': 'mass-driver-10',
 		 'cost': '1000000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 10)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 10)
 return true;
 else
 return false;
@@ -18451,8 +18483,8 @@ return false;
 		 'tag': 'mass-driver-11',
 		 'cost': '1100000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 11)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 11)
 return true;
 else
 return false;
@@ -18483,8 +18515,8 @@ return false;
 		 'tag': 'mass-driver-12',
 		 'cost': '1200000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 12)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 12)
 return true;
 else
 return false;
@@ -18515,8 +18547,8 @@ return false;
 		 'tag': 'mass-driver-13',
 		 'cost': '1300000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 13)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 13)
 return true;
 else
 return false;
@@ -18547,8 +18579,8 @@ return false;
 		 'tag': 'mass-driver-14',
 		 'cost': '1300000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 14)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 14)
 return true;
 else
 return false;
@@ -18579,8 +18611,8 @@ return false;
 		 'tag': 'mass-driver-2',
 		 'cost': '200000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 2 || selected_object.object_type == "power_armor")
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 2 || selectedObject.objectType == "power_armor")
 return true;
 else
 return false;
@@ -18611,8 +18643,8 @@ return false;
 		 'tag': 'mass-driver-3',
 		 'cost': '300000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 3)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 3)
 return true;
 else
 return false;
@@ -18643,8 +18675,8 @@ return false;
 		 'tag': 'mass-driver-4',
 		 'cost': '400000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 4)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 4)
 return true;
 else
 return false;
@@ -18675,8 +18707,8 @@ return false;
 		 'tag': 'mass-driver-5',
 		 'cost': '500000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 5)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 5)
 return true;
 else
 return false;
@@ -18707,8 +18739,8 @@ return false;
 		 'tag': 'mass-driver-6',
 		 'cost': '600000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 6)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 6)
 return true;
 else
 return false;
@@ -18739,8 +18771,8 @@ return false;
 		 'tag': 'mass-driver-7',
 		 'cost': '700000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 7)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 7)
 return true;
 else
 return false;
@@ -18771,8 +18803,8 @@ return false;
 		 'tag': 'mass-driver-8',
 		 'cost': '100000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 8)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 8)
 return true;
 else
 return false;
@@ -18803,8 +18835,8 @@ return false;
 		 'tag': 'mass-driver-9',
 		 'cost': '900000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 9)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 9)
 return true;
 else
 return false;
@@ -18812,21 +18844,31 @@ return false;
 {
 	 name: {
 		 'en-US': 'Massive Laser',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Massive Lasers',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don’t use the rules for personal lasers listed on page 20.)',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Lasers (Vehicular)',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
 		 'en-US': 'AP 25, HW.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '150/300/600',
-		 'damage': '6d10',
+		 'damage': '8d10',
 		 'rof': '1',
 		 'shots': '100',
 		 'missiles_per': '0',
@@ -18835,8 +18877,8 @@ return false;
 		 'tag': 'massive-laser',
 		 'cost': '4000000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if( selected_object.size >= 16  )
+isAvailable: function(selectedObject) {
+if( selectedObject.size >= 14  )
 return true;
 else
 return false;
@@ -18894,8 +18936,8 @@ return false;
 		 'tag': 'medium-bomb',
 		 'cost': '1000000',
 		 'flying_only': '1',
-is_available: function(selected_object) {
-if( selected_object.aircraft > 0  )
+isAvailable: function(selectedObject) {
+if( selectedObject.aircraft > 0  )
 return true;
 else
 return false;
@@ -18981,6 +19023,48 @@ return false;
 		 'cost': '3000',
 		 'flying_only': '0',
 },
+{
+	 name: {
+		 'en-US': 'Mega Laser',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 name_plural: {
+		 'en-US': 'Mega Lasers',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don’t use the rules for personal lasers listed on page 20.)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 classification: {
+		 'en-US': 'Lasers (Vehicular)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 25, HW.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'range': '150/300/600',
+		 'damage': '10d10',
+		 'rof': '',
+		 'shots': '100',
+		 'missiles_per': '0',
+		 'linkable': '1',
+		 'mods': '10',
+		 'tag': 'massive-laser',
+		 'cost': '10000000',
+		 'flying_only': '0',
+isAvailable: function(selectedObject) {
+if( selectedObject.size >= 16  )
+return true;
+else
+return false;
+}},
 {
 	 name: {
 		 'en-US': 'Minigun',
@@ -19115,8 +19199,8 @@ return false;
 		 'tag': 'small-bomb',
 		 'cost': '500000',
 		 'flying_only': '1',
-is_available: function(selected_object) {
-if( selected_object.aircraft > 0  )
+isAvailable: function(selectedObject) {
+if( selectedObject.aircraft > 0  )
 return true;
 else
 return false;
@@ -19201,8 +19285,8 @@ return false;
 		 'tag': 'super-heavy-laser',
 		 'cost': '2000000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if( selected_object.size >= 14  )
+isAvailable: function(selectedObject) {
+if( selectedObject.size >= 14  )
 return true;
 else
 return false;

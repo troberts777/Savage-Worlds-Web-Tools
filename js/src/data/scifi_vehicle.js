@@ -44,6 +44,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 		 'en-US': '',
 	},
 	 size: 1,
+	 strength: 0,
 	 acc: 10,
 	 ts: 35,
 	 climb: 0,
@@ -54,9 +55,9 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 crew: 1,
 	 cost: 500,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -66,6 +67,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 		 'en-US': 'Motorcycles',
 	},
 	 size: 2,
+	 strength: 0,
 	 acc: 10,
 	 ts: 30,
 	 climb: 0,
@@ -76,9 +78,9 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 crew: 2,
 	 cost: 1000,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -88,6 +90,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 		 'en-US': 'Cars',
 	},
 	 size: 3,
+	 strength: 0,
 	 acc: 10,
 	 ts: 25,
 	 climb: 0,
@@ -98,9 +101,9 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 crew: 4,
 	 cost: 8000,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -110,6 +113,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 		 'en-US': 'SUVs, Pickups',
 	},
 	 size: 4,
+	 strength: 0,
 	 acc: 10,
 	 ts: 20,
 	 climb: 0,
@@ -120,9 +124,9 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 crew: 6,
 	 cost: 12000,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -132,6 +136,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 		 'en-US': 'APCs, Light tanks',
 	},
 	 size: 6,
+	 strength: 0,
 	 acc: 5,
 	 ts: 15,
 	 climb: 0,
@@ -142,9 +147,9 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 crew: 8,
 	 cost: 30000,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -154,6 +159,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 		 'en-US': 'Tanks',
 	},
 	 size: 8,
+	 strength: 0,
 	 acc: 5,
 	 ts: 10,
 	 climb: 0,
@@ -164,9 +170,9 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 crew: 10,
 	 cost: 60000,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -176,6 +182,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 		 'en-US': 'Tanks',
 	},
 	 size: 10,
+	 strength: 0,
 	 acc: 5,
 	 ts: 19,
 	 climb: 0,
@@ -186,9 +193,9 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 crew: 20,
 	 cost: 100000,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -198,6 +205,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 		 'en-US': 'Tanks',
 	},
 	 size: 12,
+	 strength: 0,
 	 acc: 5,
 	 ts: 10,
 	 climb: 0,
@@ -208,9 +216,9 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 crew: 40,
 	 cost: 500000,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -220,6 +228,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 		 'en-US': 'Battle Platforms',
 	},
 	 size: 14,
+	 strength: 0,
 	 acc: 5,
 	 ts: 10,
 	 climb: 0,
@@ -230,9 +239,9 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 crew: 80,
 	 cost: 1000000,
 	 weight: 0,
-	 energy_capacity: 0,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 0,
+	 hideWithOption: '',
+	 showWithOption: '',
 }
 );
 savageWorldsSciFiMods['vehicle'] = Array(
@@ -244,20 +253,20 @@ savageWorldsSciFiMods['vehicle'] = Array(
 		 'en-US': 'Ultra Tech. The vehicle is an aircraft powered by anti-gravitic propulsion. It can hover or fly, and has a Acc/TS of 30/100 and Climb of 2.',
 	},
 	 tag: 'aircraft-anti-grav',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
-return 20000 * selected_object.size;
+getCost: function(selectedObject) {
+return 20000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.aircraft += 1;
-selected_object.climb = 2;
-selected_object.acc = 30;
-selected_object.ts = 100;
+getModEffect: function(selectedObject) {
+selectedObject.aircraft += 1;
+selectedObject.climb = 2;
+selectedObject.acc = 30;
+selectedObject.ts = 100;
 },
-calc_weight: 1 // one of the first things to be calculated
+calcWeight: 1 // one of the first things to be calculated
 },
 {
 	 name: {
@@ -267,20 +276,20 @@ calc_weight: 1 // one of the first things to be calculated
 		 'en-US': 'The vehicle is a helicopter. It can hover or fly, and has a Acc/TS 10/80 and a Climb of –1.',
 	},
 	 tag: 'aircraft-helicopter',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size / 2;
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.aircraft += 1;
-selected_object.climb = -1;
-selected_object.acc = 10;
-selected_object.ts = 80;
+getModEffect: function(selectedObject) {
+selectedObject.aircraft += 1;
+selectedObject.climb = -1;
+selectedObject.acc = 10;
+selectedObject.ts = 80;
 },
-calc_weight: 1 // one of the first things to be calculated
+calcWeight: 1 // one of the first things to be calculated
 },
 {
 	 name: {
@@ -290,20 +299,20 @@ calc_weight: 1 // one of the first things to be calculated
 		 'en-US': 'Jet planes are Acc/TS 50/600, Climb 2. They must move at least half their Top Speed each round or go Out of Control (they stall). The Speed Mod increases Acc by 10 instead of 5 and Top Speed by 100 instead of 10.',
 	},
 	 tag: 'aircraft-jet-plane',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size / 2;
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
-get_cost: function(selected_object) {
-return 10000 * selected_object.size;
+getCost: function(selectedObject) {
+return 10000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.aircraft += 1;
-selected_object.climb = 2;
-selected_object.acc = 50;
-selected_object.ts = 600;
+getModEffect: function(selectedObject) {
+selectedObject.aircraft += 1;
+selectedObject.climb = 2;
+selectedObject.acc = 50;
+selectedObject.ts = 600;
 },
-calc_weight: 1 // one of the first things to be calculated
+calcWeight: 1 // one of the first things to be calculated
 },
 {
 	 name: {
@@ -313,20 +322,20 @@ calc_weight: 1 // one of the first things to be calculated
 		 'en-US': 'A traditional prop plane. Acc/TS 20/150, Climb 1. Planes must move at least half their Top Speed each round or go Out of Control (they stall). The Speed Mod increases Top Speed by 50 instead of 10.',
 	},
 	 tag: 'aircraft-propeller-plane',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size / 2;
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.aircraft += 1;
-selected_object.climb = 1;
-selected_object.acc = 20;
-selected_object.ts = 150;
+getModEffect: function(selectedObject) {
+selectedObject.aircraft += 1;
+selectedObject.climb = 1;
+selectedObject.acc = 20;
+selectedObject.ts = 150;
 },
-calc_weight: 1 // one of the first things to be calculated
+calcWeight: 1 // one of the first things to be calculated
 },
 {
 	 name: {
@@ -336,12 +345,12 @@ calc_weight: 1 // one of the first things to be calculated
 		 'en-US': 'Anti-Missile Counter Measures are integrated jammers and decoys. They add +2 to Driving, Piloting or Knowledge (Electronics) rolls made to evade missile attacks.',
 	},
 	 tag: 'amcm',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
 },
 {
@@ -352,12 +361,12 @@ return 5000 * selected_object.size;
 		 'en-US': 'The vehicle may move at half Acc/Top Speed while in water.',
 	},
 	 tag: 'amphibious',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 1000 * selected_object.size;
+getCost: function(selectedObject) {
+return 1000 * selectedObject.size;
 },
 },
 {
@@ -368,18 +377,18 @@ return 1000 * selected_object.size;
 		 'en-US': 'Increases a vehicle’s Armor value by +2. Armor +4 and higher is considered Heavy Armor. Vehicular Armor can also be front-loaded if desired. If so, Armor’s maximum becomes 2x Size and each level increases the front armor by +3, side and top armor by +2, and rear and bottom Armor by +1. In the Chase rules, an attacker with Advantage and a Jack or higher can target the side armor, and one with a King or higher can target the rear.',
 	},
 	 tag: 'armor',
-get_max: function(selected_object) { return selected_object.size },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return selectedObject.size },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 1000 * selected_object.size;
+getCost: function(selectedObject) {
+return 1000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.armor++;
-selected_object.armor++;
-selected_object.toughness++;
-selected_object.toughness++;
+getModEffect: function(selectedObject) {
+selectedObject.armor++;
+selectedObject.armor++;
+selectedObject.toughness++;
+selectedObject.toughness++;
 }
 },
 {
@@ -390,22 +399,22 @@ selected_object.toughness++;
 		 'en-US': 'Increases a vehicle’s Armor value by +2. Armor +4 and higher is considered Heavy Armor. Vehicular Armor can also be front-loaded if desired. If so, Armor’s maximum becomes 2x Size and each level increases the front armor by +3, side and top armor by +2, and rear and bottom Armor by +1. In the Chase rules, an attacker with Advantage and a Jack or higher can target the side armor, and one with a King or higher can target the rear.',
 	},
 	 tag: 'armor-front-loaded',
-get_max: function(selected_object) { return selected_object.size },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return selectedObject.size },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 1000 * selected_object.size;
+getCost: function(selectedObject) {
+return 1000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.front_armor++;
-selected_object.front_armor++;
-selected_object.front_armor++;
-selected_object.side_armor++;
-selected_object.side_armor++;
-selected_object.rear_armor++;
-selected_object.toughness++;
-selected_object.toughness++;
+getModEffect: function(selectedObject) {
+selectedObject.frontArmor++;
+selectedObject.frontArmor++;
+selectedObject.frontArmor++;
+selectedObject.sideArmor++;
+selectedObject.sideArmor++;
+selectedObject.rearArmor++;
+selectedObject.toughness++;
+selectedObject.toughness++;
 }
 },
 {
@@ -416,12 +425,12 @@ selected_object.toughness++;
 		 'en-US': 'The vehicle’s AI can operate all systems — from locomotion to weapons to opening or closing hatches. It has a skill level of d10 in these tasks, but is an “Extra” and does not receive a Wild Die. The AI does not suffer from multi-action penalties if given simultaneous tasks. In combat, the AI acts on the captain’s Action Card. Giving the AI a short verbal command is a free action.',
 	},
 	 tag: 'artificial-intelligence',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 0;
 },
-get_cost: function(selected_object) {
-return 10000 * selected_object.size;
+getCost: function(selectedObject) {
+return 10000 * selectedObject.size;
 },
 },
 {
@@ -432,12 +441,12 @@ return 10000 * selected_object.size;
 		 'en-US': 'Nitrous oxide or other propellants double a vehicle’s Acceleration and Top Speed for a round. Each booster has six uses before it must be replaced. Their effects do not stack. Refills cost $100 per booster.',
 	},
 	 tag: 'boosters',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 1000 * selected_object.size;
+getCost: function(selectedObject) {
+return 1000 * selectedObject.size;
 },
 },
 {
@@ -448,15 +457,15 @@ return 1000 * selected_object.size;
 		 'en-US': 'Aircraft only. The vehicle’s Climb is increased by 1.',
 	},
 	 tag: 'climb',
-get_max: function(selected_object) { return 5 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 5 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.climb = selected_object.climb + 1;
+getModEffect: function(selectedObject) {
+selectedObject.climb = selectedObject.climb + 1;
 }
 },
 {
@@ -467,16 +476,16 @@ selected_object.climb = selected_object.climb + 1;
 		 'en-US': 'Add 1 Mod slot for every four crewman deducted (round up).',
 	},
 	 tag: 'crew-reduction',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 0;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 0;
 },
-get_mod_effect: function(selected_object) {
-selected_object.crew += -4;
-selected_object.mods ++;
+getModEffect: function(selectedObject) {
+selectedObject.crew += -4;
+selectedObject.mods ++;
 }
 },
 {
@@ -487,15 +496,15 @@ selected_object.mods ++;
 		 'en-US': 'Space for four permanent crew members.',
 	},
 	 tag: 'crew-space',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 100000;
 },
-get_mod_effect: function(selected_object) {
-selected_object.crew += 4;
+getModEffect: function(selectedObject) {
+selectedObject.crew += 4;
 }
 },
 {
@@ -506,12 +515,12 @@ selected_object.crew += 4;
 		 'en-US': 'The vessel is protected by an energy field that deflects incoming ballistic attacks (it has no effect against lasers). Attackers must subtract –2 from their Shooting rolls. Mod cost is 2 for Small to Large vehicles, and 3 for Huge to Gargantuan vessels.',
 	},
 	 tag: 'deflector-screens',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
-return 10000 * selected_object.size;
+getCost: function(selectedObject) {
+return 10000 * selectedObject.size;
 },
 },
 {
@@ -522,12 +531,12 @@ return 10000 * selected_object.size;
 		 'en-US': 'Should a vehicle suffer a Wrecked result, crew members may make Agility rolls at –4 (or no penalty if an individual was on Hold or hasn’t acted yet that round). Failure results in damage as usual and failure to eject that round. Those who succeed are launched into the air and descend safely via parachute. The system covers all passengers and crew.',
 	},
 	 tag: 'ejection-system',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
-return selected_object.size / 2;
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
 },
 {
@@ -538,12 +547,12 @@ return 5000 * selected_object.size;
 		 'en-US': 'Adds +6 to the vehicle’s effective Toughness from EMP missiles (see page 25).',
 	},
 	 tag: 'electromagnetic-shielding',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
 },
 {
@@ -554,12 +563,12 @@ return 5000 * selected_object.size;
 		 'en-US': 'Motorcycles and other “ridden” vehicles offer no protection for their passengers. Crew get no Armor bonus should it sustain a Crew critical hit.',
 	},
 	 tag: 'exposed-crew',
-get_max:  function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax:  function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 0;
 },
-get_cost: function(selected_object) {
-return  (selected_object.base_cost / 2 ) * -1;
+getCost: function(selectedObject) {
+return  (selectedObject.baseCost / 2 ) * -1;
 }
 },
 {
@@ -570,12 +579,12 @@ return  (selected_object.base_cost / 2 ) * -1;
 		 'en-US': 'Up to four direct-fire weapons of the same type may be linked and fired as one, increasing the damage by +2 per weapon and reducing the total number of Mods required. Total all Linked weapons in a set first, then halve their required Mods. (If Linking Fixed weapons, halve the total.)',
 	},
 	 tag: 'four-wheel-drive',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 1000 * selected_object.size;
+getCost: function(selectedObject) {
+return 1000 * selectedObject.size;
 },
 },
 {
@@ -586,12 +595,12 @@ return 1000 * selected_object.size;
 		 'en-US': 'The vehicle is precision crafted and very maneuverable. This adds +1 to Driving rolls per level.',
 	},
 	 tag: 'handling',
-get_max: function(selected_object) { return 3 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 3 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
 },
 {
@@ -602,12 +611,12 @@ return 5000 * selected_object.size;
 		 'en-US': 'The vehicle uses hover fans instead of wheels. It ignores difficult terrain modifiers and obstacles less than a yard tall. Round Mod cost up. The Ultra Tech version uses anti-grav. It doubles the cost but halves the Mod cost.',
 	},
 	 tag: 'hover-vehicle',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size;;
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size;;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
 },
 {
@@ -622,15 +631,15 @@ return 5000 * selected_object.size;
 		 'de-DE': '',
 	},
 	 tag: 'living-space',
-		get_max: function(selected_object) { return selected_object.base_toughness / 2 },
-		get_mod_cost: function(selected_object) {
+		getMax: function(selectedObject) { return selectedObject.baseToughness / 2 },
+		getModCost: function(selectedObject) {
 			return 3;
 		},
-		get_cost: function(selected_object) {
+		getCost: function(selectedObject) {
 			return 5000;
 		},
-		get_mod_effect: function(selected_object) {
-			selected_object.toughness = selected_object.toughness - 1;
+		getModEffect: function(selectedObject) {
+			selectedObject.toughness = selectedObject.toughness - 1;
 		},
 },
 {
@@ -645,12 +654,12 @@ return 5000 * selected_object.size;
 		 'de-DE': '',
 	},
 	 tag: 'luxury-features',
-		get_max: function(selected_object) { return 1 },
-		get_mod_cost: function(selected_object) {
+		getMax: function(selectedObject) { return 1 },
+		getModCost: function(selectedObject) {
 			return 1;
 		},
-		get_cost: function(selected_object) {
-			return 1000 * selected_object.size;
+		getCost: function(selectedObject) {
+			return 1000 * selectedObject.size;
 		}
 },
 {
@@ -661,15 +670,15 @@ return 5000 * selected_object.size;
 		 'en-US': 'Allows up to four Light or two Heavy (or AT) missiles to be fired at once.',
 	},
 	 tag: 'missile-launcher',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 50000;
 },
-get_mod_effect: function(selected_object) {
-selected_object.has_missile_launcher = 1;
+getModEffect: function(selectedObject) {
+selectedObject.hasMissileLauncher = 1;
 }
 },
 {
@@ -684,34 +693,34 @@ selected_object.has_missile_launcher = 1;
 		 'de-DE': '',
 	},
 	 tag: 'multi-legged',
-show_with_option: "the-last-parsec",
-get_max: function(selected_object) { return 3 },
-get_mod_cost: function(selected_object) {
-if( selected_object.size < 8) {
+showWithOption: "the-last-parsec",
+getMax: function(selectedObject) { return 3 },
+getModCost: function(selectedObject) {
+if( selectedObject.size < 8) {
 return 2;
-} else if ( selected_object.size < 12) {
+} else if ( selectedObject.size < 12) {
 return 4;
 } else {
 return 6;
 }
 },
-get_cost: function(selected_object) {
-return 10000 * selected_object.size;
+getCost: function(selectedObject) {
+return 10000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.acc += 5;
-selected_object.ts += 10;
-this_mod_count = selected_object.get_modification_count("Multi-Legged");
-if( this_mod_count == 1 )
-selected_object.number_of_legs = 4;
-else if( this_mod_count == 2 )
-selected_object.number_of_legs = 6;
-else if( this_mod_count == 3 )
-selected_object.number_of_legs = 8;
+getModEffect: function(selectedObject) {
+selectedObject.acc += 5;
+selectedObject.ts += 10;
+thisModCount = selectedObject.getModificationCount("Multi-Legged");
+if( thisModCount == 1 )
+selectedObject.numberOfLegs = 4;
+else if( thisModCount == 2 )
+selectedObject.numberOfLegs = 6;
+else if( thisModCount == 3 )
+selectedObject.numberOfLegs = 8;
 
 },
-get_display_name: function(selected_object) {
-return "Multi-Legged (" + selected_object.number_of_legs + " legs)";
+getDisplayName: function(selectedObject) {
+return "Multi-Legged (" + selectedObject.numberOfLegs + " legs)";
 }
 },
 {
@@ -722,15 +731,15 @@ return "Multi-Legged (" + selected_object.number_of_legs + " legs)";
 		 'en-US': 'Increases Toughness of the chassis by +1.',
 	},
 	 tag: 'reinforced-chassis',
-get_max: function(selected_object) { return 3 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 3 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 1000 * selected_object.size;
+getCost: function(selectedObject) {
+return 1000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.toughness = selected_object.toughness + 1;
+getModEffect: function(selectedObject) {
+selectedObject.toughness = selectedObject.toughness + 1;
 }
 },
 {
@@ -741,11 +750,11 @@ selected_object.toughness = selected_object.toughness + 1;
 		 'en-US': 'Light, chemical, motion, and other active sensors allow detection of targets up to one light year away with a Knowledge (Electronics) roll. Within 10K miles, the sensors add +2 to the roll. Illumination penalties are ignored. Targets don’t have to be in direct line of sight, but asteroid or powerful energy fields may cause inaccurate or false readings at the GM’s discretion.',
 	},
 	 tag: 'sensor-suite',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 50000;
 }
 },
@@ -757,12 +766,12 @@ return 50000;
 		 'en-US': 'The craft is protected by an ablative energy field that absorbs 10×Size points of damage before it’s depleted. Apply all damage to the shield first, then any left over to the vehicle (AP counts as usual). Active shields detonate missiles and torpedoes before they hit, reducing their damage total by half. A craft may regenerate its Size in shield points if it makes no attacks in a round.',
 	},
 	 tag: 'shields',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size / 2;
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
-get_cost: function(selected_object) {
-return 25000 * selected_object.size;
+getCost: function(selectedObject) {
+return 25000 * selectedObject.size;
 },
 },
 {
@@ -773,12 +782,12 @@ return 25000 * selected_object.size;
 		 'en-US': 'Non-energy, ballistic attacks against this vessel suffer a –2 penalty. It has no effect on energy attacks.',
 	},
 	 tag: 'sloped-armor',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
-return 3000 * selected_object.size;
+getCost: function(selectedObject) {
+return 3000 * selectedObject.size;
 },
 },
 {
@@ -789,17 +798,17 @@ return 3000 * selected_object.size;
 		 'en-US': 'The vehicle trades power and speed for additional room. Each time this is taken, reduce Acc by 5 and Top Speed by 50 to gain half the vehicle’s Size in Mod slots.',
 	},
 	 tag: 'speed-reduction',
-get_max: function(selected_object) { return 3 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 3 },
+getModCost: function(selectedObject) {
 return 0;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 0;
 },
-get_mod_effect: function(selected_object) {
-selected_object.ts -=  2;
-selected_object.acc -=  1;
-selected_object.mods += selected_object.size / 2;
+getModEffect: function(selectedObject) {
+selectedObject.ts -=  2;
+selectedObject.acc -=  1;
+selectedObject.mods += selectedObject.size / 2;
 }
 },
 {
@@ -810,16 +819,16 @@ selected_object.mods += selected_object.size / 2;
 		 'en-US': 'Each purchase increases the vehicle’s Acc by 5 and Top Speed by 50. (This cannot be taken with Speed Reduction.)',
 	},
 	 tag: 'speed',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 1000 * selected_object.size;
+getCost: function(selectedObject) {
+return 1000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.ts +=  10;
-selected_object.acc +=  5;
+getModEffect: function(selectedObject) {
+selectedObject.ts +=  10;
+selectedObject.acc +=  5;
 }
 },
 {
@@ -830,12 +839,12 @@ selected_object.acc +=  5;
 		 'en-US': 'Radar-absorbing paint, heat baffles, scramblers, and other devices make the vehicle difficult to detect by vision or sensors. Those trying to spot, attack, (or lock on to) the vehicle subtract 4 from their rolls. The effect is triggered as a free action, but is negated any round in which the vehicle fires a weapon or emits some other non- cloakable signal such as radio signal or active sensor search.',
 	},
 	 tag: 'stealth-system',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size;
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size;
 },
-get_cost: function(selected_object) {
-return 10000 * selected_object.size;
+getCost: function(selectedObject) {
+return 10000 * selectedObject.size;
 }
 },
 {
@@ -846,12 +855,12 @@ return 10000 * selected_object.size;
 		 'en-US': 'The vehicle’s internal sensors and computers are linked to all attached weapons. This compensates for movement, range, multi-actions, and the like, negating up to two points of Shooting penalties.',
 	},
 	 tag: 'targeting-system',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 10000  * selected_object.size;
+getCost: function(selectedObject) {
+return 10000  * selectedObject.size;
 }
 },
 {
@@ -862,18 +871,18 @@ return 10000  * selected_object.size;
 		 'en-US': 'Each tube allows up to two Light or one Heavy torpedo to be fired at once (at one or two targets, as desired).',
 	},
 	 tag: 'torpedo-tube',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 500000;
 },
-get_mod_effect: function(selected_object) {
-selected_object.has_torpedo_tube = 1;
+getModEffect: function(selectedObject) {
+selectedObject.hasTorpedoTube = 1;
 },
-is_available: function(selected_object) {
-if( selected_object.aircraft > 0 || selected_object.watercraft > 0)
+isAvailable: function(selectedObject) {
+if( selectedObject.aircraft > 0 || selectedObject.watercraft > 0)
 return true;
 else
 return false;
@@ -887,17 +896,17 @@ return false;
 		 'en-US': 'The vehicle has tracks instead of wheels and can climb over small obstacles. This reduces Acc by 2 and TS by 5, and ignores Driving penalties for difficult terrain. On the table-top, every inch of movement is treated as 1.5”.',
 	},
 	 tag: 'tracked',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 0;
 },
-get_cost: function(selected_object) {
-return 1000  * selected_object.size;
+getCost: function(selectedObject) {
+return 1000  * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.ts -=  5;
-selected_object.acc -=  2;
-selected_object.mods += selected_object.base_mods / 2;
+getModEffect: function(selectedObject) {
+selectedObject.ts -=  5;
+selectedObject.acc -=  2;
+selectedObject.mods += selectedObject.baseMods / 2;
 }
 },
 {
@@ -912,17 +921,17 @@ selected_object.mods += selected_object.base_mods / 2;
 		 'de-DE': '',
 	},
 	 tag: 'watercraft',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 0;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 0;
 },
-get_mod_effect: function(selected_object) {
-selected_object.ts = Math.ceil(selected_object.ts / 2);
-selected_object.acc = Math.ceil(selected_object.acc / 2);
-selected_object.watercraft = 1;
+getModEffect: function(selectedObject) {
+selectedObject.ts = Math.ceil(selectedObject.ts / 2);
+selectedObject.acc = Math.ceil(selectedObject.acc / 2);
+selectedObject.watercraft = 1;
 }
 }
 );

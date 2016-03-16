@@ -31,6 +31,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 		 'en-US': 'Fighters, shuttles',
 	},
 	 size: 6,
+	 strength: 0,
 	 acc: 50,
 	 ts: 700,
 	 climb: 3,
@@ -41,9 +42,9 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 crew: 1,
 	 cost: 2000000,
 	 weight: 0,
-	 energy_capacity: 25,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 25,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -53,6 +54,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 		 'en-US': 'Bombers, large shuttles, scout ships',
 	},
 	 size: 8,
+	 strength: 0,
 	 acc: 45,
 	 ts: 600,
 	 climb: 2,
@@ -63,9 +65,9 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 crew: 5,
 	 cost: 5000000,
 	 weight: 0,
-	 energy_capacity: 100,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 100,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -75,6 +77,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 		 'en-US': 'Freighters, corvettes, scientific exploration vessels',
 	},
 	 size: 12,
+	 strength: 0,
 	 acc: 40,
 	 ts: 500,
 	 climb: 1,
@@ -85,9 +88,9 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 crew: 50,
 	 cost: 20000000,
 	 weight: 0,
-	 energy_capacity: 300,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 300,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -97,6 +100,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 		 'en-US': 'Destroyers, bulk freighters, light cruisers',
 	},
 	 size: 16,
+	 strength: 0,
 	 acc: 35,
 	 ts: 400,
 	 climb: 0,
@@ -107,9 +111,9 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 crew: 300,
 	 cost: 50000000,
 	 weight: 0,
-	 energy_capacity: 500,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 500,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -119,6 +123,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 		 'en-US': 'Cruisers, small battleships or carriers',
 	},
 	 size: 20,
+	 strength: 0,
 	 acc: 30,
 	 ts: 300,
 	 climb: -1,
@@ -129,9 +134,9 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 crew: 1000,
 	 cost: 200000000,
 	 weight: 0,
-	 energy_capacity: 1000,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 1000,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -141,6 +146,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 		 'en-US': 'Battleships, carriers',
 	},
 	 size: 24,
+	 strength: 0,
 	 acc: 25,
 	 ts: 200,
 	 climb: -2,
@@ -151,9 +157,9 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 crew: 3000,
 	 cost: 1000000000,
 	 weight: 0,
-	 energy_capacity: 2000,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 2000,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -163,6 +169,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 		 'en-US': 'Dreadnoughts, invasion carriers.',
 	},
 	 size: 28,
+	 strength: 0,
 	 acc: 20,
 	 ts: 200,
 	 climb: -3,
@@ -173,9 +180,9 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 crew: 8000,
 	 cost: 2147483647,
 	 weight: 0,
-	 energy_capacity: 2000,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 2000,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -185,6 +192,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 		 'en-US': 'Super dreadnoughts, super carriers, settlement ships.',
 	},
 	 size: 32,
+	 strength: 0,
 	 acc: 20,
 	 ts: 200,
 	 climb: -4,
@@ -195,9 +203,9 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 crew: 20000,
 	 cost: 2147483647,
 	 weight: 0,
-	 energy_capacity: 2000,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 2000,
+	 hideWithOption: '',
+	 showWithOption: '',
 },
 {
 	 size_label: {
@@ -207,6 +215,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 		 'en-US': 'Mega dreadnoughts, mega carriers, colony ships.',
 	},
 	 size: 40,
+	 strength: 0,
 	 acc: 20,
 	 ts: 200,
 	 climb: -5,
@@ -217,9 +226,9 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 crew: 50000,
 	 cost: 2147483647,
 	 weight: 0,
-	 energy_capacity: 2000,
-	 hide_with_option: '',
-	 show_with_option: '',
+	 energyCapacity: 2000,
+	 hideWithOption: '',
+	 showWithOption: '',
 }
 );
 savageWorldsSciFiMods['starship'] = Array(
@@ -231,12 +240,12 @@ savageWorldsSciFiMods['starship'] = Array(
 		 'en-US': 'Anti-Missile Counter Measures are integrated jammers and decoys. They add +2 to Driving, Piloting or Knowledge (Electronics) rolls made to evade missile attacks.',
 	},
 	 tag: 'amcm',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
 },
 {
@@ -247,31 +256,31 @@ return 5000 * selected_object.size;
 		 'en-US': 'The ship is built to withstand deep pressurization and is equipped with thrusters suitable for use in aqueous mediums, allowing it to function underwater as if it were a submersible. Acc and Top Speed are half a vehicle of equal Size',
 	},
 	 tag: 'aquatic',
-show_with_option: "the-last-parsec",
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+showWithOption: "the-last-parsec",
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.watercraft = 1;
-if( selected_object.size > 0) {
-same_vehicle = get_same_vehicle_size(selected_object.size);
-water_ts = 0;
-water_acc = 0;
-if( same_vehicle ) {
-water_ts = Math.ceil(same_vehicle.ts / 2);
-water_acc = Math.ceil(same_vehicle.acc / 2);
+getModEffect: function(selectedObject) {
+selectedObject.watercraft = 1;
+if( selectedObject.size > 0) {
+sameVehicle = getSameVehicleSize(selectedObject.size);
+waterTS = 0;
+waterAcc = 0;
+if( sameVehicle ) {
+waterTS = Math.ceil(sameVehicle.ts / 2);
+waterAcc = Math.ceil(sameVehicle.acc / 2);
 }
-if( water_ts > 0 )
-selected_object.append_extra_notes("Water Top Speed: " + water_ts);
-if( water_acc > 0 )
-selected_object.append_extra_notes("Water Acc: " + water_acc);
+if( waterTS > 0 )
+selectedObject.appendExtraNotes("Water Top Speed: " + waterTS);
+if( waterAcc > 0 )
+selectedObject.appendExtraNotes("Water Acc: " + waterAcc);
 }
 },
-get_weight: function(selected_object) {
+getWeight: function(selectedObject) {
 return 0;
 }
 },
@@ -283,18 +292,18 @@ return 0;
 		 'en-US': 'Increases a ship’s Armor value by +2. Due to the nature of space and the size and shape of starships, all Armor is considered Heavy Armor.',
 	},
 	 tag: 'armor',
-get_max: function(selected_object) {  return selected_object.size },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) {  return selectedObject.size },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 10000 * selected_object.size;
+getCost: function(selectedObject) {
+return 10000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.armor++;
-selected_object.armor++;
-selected_object.toughness++;
-selected_object.toughness++;
+getModEffect: function(selectedObject) {
+selectedObject.armor++;
+selectedObject.armor++;
+selectedObject.toughness++;
+selectedObject.toughness++;
 }
 },
 {
@@ -305,12 +314,12 @@ selected_object.toughness++;
 		 'en-US': 'The ship’s AI can operate all systems — from locomotion to weapons to opening or closing hatches. It has a skill level of d10 in these tasks, but is an “Extra” and does not receive a Wild Die. The AI does not suffer from multi-action penalties if given simultaneous tasks. In combat, the AI acts on the captain’s Action Card. Giving the AI a short verbal command is a free action.',
 	},
 	 tag: 'artificial-intelligence',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 0;
 },
-get_cost: function(selected_object) {
-return 10000 * selected_object.size;
+getCost: function(selectedObject) {
+return 10000 * selectedObject.size;
 },
 },
 {
@@ -321,12 +330,12 @@ return 10000 * selected_object.size;
 		 'en-US': 'Allows the ship to enter planetary atmospheres. This includes heat shielding and additional work to handle the stress and strain of entry. All starships have vertical take-off and landing (VTOL) capability.',
 	},
 	 tag: 'atmospheric',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size / 2;
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
-get_cost: function(selected_object) {
-return 50000 * selected_object.size;
+getCost: function(selectedObject) {
+return 50000 * selectedObject.size;
 },
 },
 {
@@ -337,11 +346,11 @@ return 50000 * selected_object.size;
 		 'en-US': 'Each bomb bay may drop up to four Small, 2 Medium, or 1 Large (or larger) bomb per round at no penalty. All use the same attack roll. Dropping bombs uses the Knowledge (Bombardier) skill.',
 	},
 	 tag: 'bomb-bay',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 50000;
 },
 },
@@ -353,16 +362,16 @@ return 50000;
 		 'en-US': 'Reduces living space, quarters, and facilities for personnel equal to 20% of the listed Crew for the vessel’s Size, granting Size/4 Mods. If this reduces the Crew to 0, the ship is a fully automated drone',
 	},
 	 tag: 'crew-reduction',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 0;
 },
-get_cost: function(selected_object) {
-return 10000 * selected_object.size;
+getCost: function(selectedObject) {
+return 10000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.mods +=  selected_object.size / 4;
-selected_object.crew -= selected_object.selected_size.crew / 5;
+getModEffect: function(selectedObject) {
+selectedObject.mods +=  selectedObject.size / 4;
+selectedObject.crew -= selectedObject.selectedSize.crew / 5;
 }
 },
 {
@@ -373,15 +382,15 @@ selected_object.crew -= selected_object.selected_size.crew / 5;
 		 'en-US': 'Enough space and facilities for more personnel equal to 20% of the listed Crew for the vessel’s Size. To accommodate even more passengers, use Superstructures instead.',
 	},
 	 tag: 'crew-space',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 100000;
 },
-get_mod_effect: function(selected_object) {
-selected_object.crew += selected_object.selected_size.crew / 5;
+getModEffect: function(selectedObject) {
+selectedObject.crew += selectedObject.selectedSize.crew / 5;
 }
 },
 {
@@ -392,17 +401,17 @@ selected_object.crew += selected_object.selected_size.crew / 5;
 		 'en-US': 'The vessel is protected by an energy field that deflects incoming ballistic attacks (it has no effect against lasers). Attackers must subtract –2 from their Shooting rolls. Mod cost is 2 for Small to Large ships, and 3 for Huge to Gargantuan vessels.',
 	},
 	 tag: 'deflector-screens',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-if( selected_object.size >= 25)
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+if( selectedObject.size >= 25)
 return 5;
-if( selected_object.size >= 13)
+if( selectedObject.size >= 13)
 return 3;
-if( selected_object.size >= 6)
+if( selectedObject.size >= 6)
 return 2;
 },
-get_cost: function(selected_object) {
-return 10000 * selected_object.size;
+getCost: function(selectedObject) {
+return 10000 * selectedObject.size;
 },
 },
 {
@@ -413,12 +422,12 @@ return 10000 * selected_object.size;
 		 'en-US': 'Adds +6 to the ship’s effective Toughness from EMP missiles (see page 25).',
 	},
 	 tag: 'electromagnetic-shielding',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
 },
 {
@@ -429,12 +438,12 @@ return 5000 * selected_object.size;
 		 'en-US': 'This includes both the drive and the navigation system required to use it.',
 	},
 	 tag: 'ftl-drive',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size / 2;
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
-get_cost: function(selected_object) {
-return 2000000 * selected_object.size;
+getCost: function(selectedObject) {
+return 2000000 * selectedObject.size;
 },
 },
 {
@@ -445,13 +454,13 @@ return 2000000 * selected_object.size;
 		 'en-US': 'Kalian superluminal drives are considered the most finely crafted faster-than-light drives in the known worlds. They are high-end drives known for durability and dependability. They add +2 to Knowledge (Astrogation) rolls when traveling via “hyperspace.” For more information, see Space Travel on page 69. In addition, if a Kalian FTL system is damaged with a starship critical hit during combat, the Repair roll is only –1 per wound instead of the normal –2.',
 	},
 	 tag: 'ftl-drive-kalian',
-show_with_option: "the-last-parsec",
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size / 2;
+showWithOption: "the-last-parsec",
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
-get_cost: function(selected_object) {
-return 4000000 * selected_object.size;
+getCost: function(selectedObject) {
+return 4000000 * selectedObject.size;
 },
 },
 {
@@ -462,15 +471,15 @@ return 4000000 * selected_object.size;
 		 'en-US': 'Each fuel pod increases the vessel’s energy capacity by 50%',
 	},
 	 tag: 'fuel-pods',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
-return selected_object.size / 2;
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
-get_cost: function(selected_object) {
-return 100000 * selected_object.size;
+getCost: function(selectedObject) {
+return 100000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.energy_capacity +=  selected_object.base_energy_capacity / 2;
+getModEffect: function(selectedObject) {
+selectedObject.energyCapacity +=  selectedObject.baseEnergyCapacity / 2;
 }
 },
 {
@@ -481,30 +490,13 @@ selected_object.energy_capacity +=  selected_object.base_energy_capacity / 2;
 		 'en-US': 'A small hangar (or garage or external lift-hooks) can carry up 8 Size points of ship, vehicle, or walker.',
 	},
 	 tag: 'garage-/-hangar',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 4;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 1000000;
 }
-},
-{
-	 name: {
-		 'en-US': 'Linked',
-	},
-	 description: {
-		 'en-US': 'Up to four direct-fire weapons of the same type may be linked and fired as one, increasing the damage by +2 per weapon and reducing the total number of Mods required. Total all Linked weapons in a set first, then halve their required Mods. (If Linking Fixed weapons, halve the total.)',
-	},
-	 tag: 'linked',
-get_max: function(selected_object) { return "u" },
-hidden: 1,
-get_mod_cost: function(selected_object) {
-return 0;
-},
-get_cost: function(selected_object) {
-return 0;
-},
 },
 {
 	 name: {
@@ -514,15 +506,15 @@ return 0;
 		 'en-US': 'Found only on Huge and Gargantuan ships, this might be a restaurant, commissary, or speciality store. Each generates Size+$1d4K a month for the ship (and the same for the mercantile’s owner). The store has 300 square feet of space. Each additional Mod adds roughly 100 square feet and +$1d4K to revenue.',
 	},
 	 tag: 'mercantile',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 100000;
 },
-is_available: function(selected_object) {
-if(selected_object.size >= 16)
+isAvailable: function(selectedObject) {
+if(selectedObject.size >= 16)
 return true;
 else
 return false;
@@ -536,15 +528,15 @@ return false;
 		 'en-US': 'Allows up to four Light or two Heavy (or AT) missiles to be fired at once.',
 	},
 	 tag: 'missile-launcher',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 50000;
 },
-get_mod_effect: function(selected_object) {
-selected_object.has_missile_launcher = 1;
+getModEffect: function(selectedObject) {
+selectedObject.hasMissileLauncher = 1;
 }
 },
 {
@@ -555,11 +547,11 @@ selected_object.has_missile_launcher = 1;
 		 'en-US': 'Small and Medium ships only. These are rows of fairly spacious seats with safety harnesses, personal vid-screens, and other amenities designed for short travels (typically less than 24 hours). Each pod seats 10.',
 	},
 	 tag: 'passenger-pod',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 50000;
 }
 },
@@ -571,13 +563,13 @@ return 50000;
 		 'en-US': 'Self-destruct is a mechanism that can cause an object to destroy itself within a predefined set of circumstances. The self-destruct mechanism is usually the most complete way to destroy the object. For that reason the self-destruct mechanism can be used to destroy objects that are meant to be discarded. Most civilian starships do not have a self-destruct mechanism.',
 	},
 	 tag: 'self-destruct',
-show_with_option: "the-last-parsec",
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+showWithOption: "the-last-parsec",
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
-return 1000000 * selected_object.size;
+getCost: function(selectedObject) {
+return 1000000 * selectedObject.size;
 },
 },
 {
@@ -588,11 +580,11 @@ return 1000000 * selected_object.size;
 		 'en-US': 'Light, chemical, motion, and other active sensors allow detection of targets up to one light year away with a Knowledge (Electronics) roll. Within 10K miles, the sensors add +2 to the roll. Illumination penalties are ignored. Targets don’t have to be in direct line of sight, but asteroid or powerful energy fields may cause inaccurate or false readings at the GM’s discretion.',
 	},
 	 tag: 'sensor-suite-galactic',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 1000000;
 }
 },
@@ -604,11 +596,11 @@ return 1000000;
 		 'en-US': 'This functions exactly like the Medium Sensor Suite (page 16) but has a range of 10K miles.',
 	},
 	 tag: 'sensor-suite-planetary',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 50000;
 }
 },
@@ -620,12 +612,12 @@ return 50000;
 		 'en-US': 'The craft is protected by an ablative energy field that absorbs 10×Size points of damage before it’s depleted. Apply all damage to the shield first, then any left over to the ship (AP counts as usual). Active shields detonate missiles and torpedoes before they hit, reducing their damage total by half. A craft may regenerate its Size in shield points if it makes no attacks in a round.',
 	},
 	 tag: 'shields',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size / 2;
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size / 2;
 },
-get_cost: function(selected_object) {
-return 25000 * selected_object.size;
+getCost: function(selectedObject) {
+return 25000 * selectedObject.size;
 },
 },
 {
@@ -636,12 +628,12 @@ return 25000 * selected_object.size;
 		 'en-US': 'Non-energy, ballistic attacks against this vessel suffer a –2 penalty. It has no effect on energy attacks.',
 	},
 	 tag: 'sloped-armor',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
-return 5000 * selected_object.size;
+getCost: function(selectedObject) {
+return 5000 * selectedObject.size;
 },
 },
 {
@@ -652,17 +644,17 @@ return 5000 * selected_object.size;
 		 'en-US': 'The ship trades power and speed for additional room. Each time this is taken, reduce Acc by 5 and Top Speed by 50 to gain half the ship’s Size in Mod slots.',
 	},
 	 tag: 'speed-reduction',
-get_max: function(selected_object) { return 3 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 3 },
+getModCost: function(selectedObject) {
 return 0;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 0;
 },
-get_mod_effect: function(selected_object) {
-selected_object.ts -=  50;
-selected_object.acc -=  5;
-selected_object.mods += selected_object.size / 2;
+getModEffect: function(selectedObject) {
+selectedObject.ts -=  50;
+selectedObject.acc -=  5;
+selectedObject.mods += selectedObject.size / 2;
 }
 },
 {
@@ -673,16 +665,16 @@ selected_object.mods += selected_object.size / 2;
 		 'en-US': 'Each purchase increases the ship’s Acc by 5 and Top Speed by 50. (This cannot be taken with Speed Reduction.)',
 	},
 	 tag: 'speed',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 100000 * selected_object.size;
+getCost: function(selectedObject) {
+return 100000 * selectedObject.size;
 },
-get_mod_effect: function(selected_object) {
-selected_object.ts +=  50;
-selected_object.acc +=  5;
+getModEffect: function(selectedObject) {
+selectedObject.ts +=  50;
+selectedObject.acc +=  5;
 }
 },
 {
@@ -693,12 +685,12 @@ selected_object.acc +=  5;
 		 'en-US': 'Radar-absorbing paint, heat baffles, scramblers, and other devices make the ship difficult to detect by vision or sensors. Those trying to spot, attack, (or lock on to) the ship subtract 4 from their rolls. The effect is triggered as a free action, but is negated any round in which the ship fires a weapon or emits some other non- cloakable signal such as radio signal or active sensor search.',
 	},
 	 tag: 'stealth-system',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
-return selected_object.size;
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
+return selectedObject.size;
 },
-get_cost: function(selected_object) {
-return 50000 * selected_object.size;
+getCost: function(selectedObject) {
+return 50000 * selectedObject.size;
 }
 },
 {
@@ -709,22 +701,22 @@ return 50000 * selected_object.size;
 		 'en-US': 'These are massive, open hulls for hauling bulk cargo. This is equivalent to 18 train box-cars, and can handle up to 800,000 cubic feet of cargo (but no more than 1800 tons if the vessel enters atmosphere). Halve the cost if the storage area is a vacuum.',
 	},
 	 tag: 'superstructure-bulk-cargo',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 10;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000000;
 },
-is_available: function(selected_object) {
-if(selected_object.size >= 12)
+isAvailable: function(selectedObject) {
+if(selectedObject.size >= 12)
 return true;
 else
 return false;
 },
-get_mod_effect: function(selected_object) {
-selected_object.toughness = selected_object.toughness - 1;
-selected_object.crew += 100;
+getModEffect: function(selectedObject) {
+selectedObject.toughness = selectedObject.toughness - 1;
+selectedObject.crew += 100;
 }
 },
 {
@@ -735,22 +727,22 @@ selected_object.crew += 100;
 		 'en-US': 'The ship contains processing and manufacturing facilities that can take in raw materials and create new goods (usually those necessary for extended voyages, military operations, or colony survival). This adds 100 Crew. The vessel must also have at least one shuttle per Factory Superstructure to take in raw goods. Each factory can generate 2d6×$100K in goods, supplies, or raw materials a week in an average environment (such as an asteroid field or small planet). Add or subtract a d6 for a sparse / rich find.) Materials can be used to fuel and resupply the ship (and other ships as well).',
 	},
 	 tag: 'superstructure-factory',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 10;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000000;
 },
-is_available: function(selected_object) {
-if(selected_object.size >= 12)
+isAvailable: function(selectedObject) {
+if(selectedObject.size >= 12)
 return true;
 else
 return false;
 },
-get_mod_effect: function(selected_object) {
-selected_object.toughness = selected_object.toughness - 1;
-selected_object.crew += 100;
+getModEffect: function(selectedObject) {
+selectedObject.toughness = selectedObject.toughness - 1;
+selectedObject.crew += 100;
 }
 },
 {
@@ -761,22 +753,22 @@ selected_object.crew += 100;
 		 'en-US': 'A large, dedicated flight bay that holds up to 24 Size points of vehicles, walkers, or Small or Medium ships (Large and greater ships won’t fit due to logarithmic scaling). This includes additional fuel storage, maintenance bays, training rooms, and briefing areas, and adds 50 additional crew members.',
 	},
 	 tag: 'superstructure-hangar',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 10;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000000;
 },
-is_available: function(selected_object) {
-if(selected_object.size >= 12)
+isAvailable: function(selectedObject) {
+if(selectedObject.size >= 12)
 return true;
 else
 return false;
 },
-get_mod_effect: function(selected_object) {
-selected_object.toughness = selected_object.toughness - 1;
-selected_object.crew += 50;
+getModEffect: function(selectedObject) {
+selectedObject.toughness = selectedObject.toughness - 1;
+selectedObject.crew += 50;
 }
 },
 {
@@ -787,21 +779,21 @@ selected_object.crew += 50;
 		 'en-US': 'Luxury accommodations for long-term travelers, including hydroponic gardens, theatres, gyms, malls, restaurants, shopping, and lodging for 700 passengers and 50 additional staff. Passengers typically pay an average of $200 per day.',
 	},
 	 tag: 'superstructure-passenger-',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 10;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000000;
 },
-is_available: function(selected_object) {
-if(selected_object.size >= 12)
+isAvailable: function(selectedObject) {
+if(selectedObject.size >= 12)
 return true;
 else
 return false;
 },
-get_mod_effect: function(selected_object) {
-selected_object.toughness = selected_object.toughness - 1;
+getModEffect: function(selectedObject) {
+selectedObject.toughness = selectedObject.toughness - 1;
 }
 },
 {
@@ -812,21 +804,21 @@ selected_object.toughness = selected_object.toughness - 1;
 		 'en-US': 'Spartan barracks, training facilities, armories, and a few multi- purpose recreational areas for 450 marines and 50 staff (cooks, techs, etc).',
 	},
 	 tag: 'superstructure-passenger-',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 10;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000000;
 },
-is_available: function(selected_object) {
-if(selected_object.size >= 12)
+isAvailable: function(selectedObject) {
+if(selectedObject.size >= 12)
 return true;
 else
 return false;
 },
-get_mod_effect: function(selected_object) {
-selected_object.toughness = selected_object.toughness - 1;
+getModEffect: function(selectedObject) {
+selectedObject.toughness = selectedObject.toughness - 1;
 }
 },
 {
@@ -837,21 +829,21 @@ selected_object.toughness = selected_object.toughness - 1;
 		 'en-US': 'This covers anything not detailed above, such as massive medical bays for a hospital ship, research facilities, etc. The specific function determines specifics, but a basic guideline is a Specialty Superstructure houses and services 200 individuals, their equipment, and storage needs.',
 	},
 	 tag: 'superstructure-specialty',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 10;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000000;
 },
-is_available: function(selected_object) {
-if(selected_object.size >= 12)
+isAvailable: function(selectedObject) {
+if(selectedObject.size >= 12)
 return true;
 else
 return false;
 },
-get_mod_effect: function(selected_object) {
-selected_object.toughness = selected_object.toughness - 1;
+getModEffect: function(selectedObject) {
+selectedObject.toughness = selectedObject.toughness - 1;
 }
 },
 {
@@ -863,21 +855,21 @@ selected_object.toughness = selected_object.toughness - 1;
 	},
 	 tag: 'superstructure',
 hidden: 1,
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 10;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000000;
 },
-is_available: function(selected_object) {
-if(selected_object.size >= 12)
+isAvailable: function(selectedObject) {
+if(selectedObject.size >= 12)
 return true;
 else
 return false;
 },
-get_mod_effect: function(selected_object) {
-selected_object.toughness = selected_object.toughness - 1;
+getModEffect: function(selectedObject) {
+selectedObject.toughness = selectedObject.toughness - 1;
 }
 },
 {
@@ -888,12 +880,12 @@ selected_object.toughness = selected_object.toughness - 1;
 		 'en-US': 'The ship’s internal sensors and computers are linked to all attached weapons. This compensates for movement, range, multi-actions, and the like, negating up to two points of Shooting penalties.',
 	},
 	 tag: 'targeting-system',
-get_max: function(selected_object) { return 1 },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return 1 },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
-return 10000  * selected_object.size;
+getCost: function(selectedObject) {
+return 10000  * selectedObject.size;
 }
 },
 {
@@ -904,11 +896,11 @@ return 10000  * selected_object.size;
 		 'en-US': 'Ultra Tech. Teleporters work by turning physical objects into energy, blasting them through space, and then reconstituting them at the destination. Each teleporter can transport six average size humans at a time, or 1000 pounds of cargo up to 100 miles distant, or up to 1000 miles distant if a linked transmitter is present at the destination.',
 	},
 	 tag: 'teleporter',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 2;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 5000000;
 }
 },
@@ -920,15 +912,15 @@ return 5000000;
 		 'en-US': 'Each tube allows up to two Light or one Heavy torpedo to be fired at once (at one or two targets, as desired).',
 	},
 	 tag: 'torpedo-tube',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 1;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 500000;
 },
-get_mod_effect: function(selected_object) {
-selected_object.has_torpedo_tube = 1;
+getModEffect: function(selectedObject) {
+selectedObject.hasTorpedoTube = 1;
 }
 },
 {
@@ -943,11 +935,11 @@ selected_object.has_torpedo_tube = 1;
 		 'de-DE': '',
 	},
 	 tag: 'tractor-beam',
-get_max: function(selected_object) { return "u" },
-get_mod_cost: function(selected_object) {
+getMax: function(selectedObject) { return "u" },
+getModCost: function(selectedObject) {
 return 5;
 },
-get_cost: function(selected_object) {
+getCost: function(selectedObject) {
 return 1000000;
 }
 }

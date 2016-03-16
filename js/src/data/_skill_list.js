@@ -28,7 +28,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -45,7 +45,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'strength',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -62,7 +62,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'agility',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -79,7 +79,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'spirit',
-		 'for_power': 'miracles',
+		 'for_arcane': 'miracles',
 		 'specify': 0
 },
 {
@@ -96,7 +96,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'agility',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -113,7 +113,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -130,7 +130,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -147,7 +147,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'spirit',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -164,7 +164,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -181,7 +181,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 1
 },
 {
@@ -198,7 +198,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'agility',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -215,7 +215,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -232,7 +232,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'spirit',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -249,7 +249,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'agility',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -266,7 +266,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': 'psionics',
+		 'for_arcane': 'psionics',
 		 'specify': 0
 },
 {
@@ -283,7 +283,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -300,7 +300,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'agility',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -317,7 +317,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'agility',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -334,7 +334,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': 'magic',
+		 'for_arcane': 'magic',
 		 'specify': 0
 },
 {
@@ -351,7 +351,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'agility',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -368,7 +368,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -385,7 +385,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -402,7 +402,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'agility',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -419,7 +419,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -436,7 +436,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'agility',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -453,7 +453,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 },
 {
@@ -470,7 +470,7 @@
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
-		 'for_power': 'weird-science',
+		 'for_arcane': 'weird-science',
 		 'specify': 0
 },
 {
@@ -487,7 +487,7 @@
 	},
 		 'book': '2',
 		 'attribute': 'spirit',
-		 'for_power': '',
+		 'for_arcane': '',
 		 'specify': 0
 }
 );

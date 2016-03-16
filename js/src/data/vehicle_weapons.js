@@ -50,8 +50,8 @@
 		 'tag': 'anti-tank-missile',
 		 'cost': '200000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.has_missile_launcher > 0)
+isAvailable: function(selectedObject) {
+if(selectedObject.hasMissileLauncher > 0)
 return true;
 else
 return false;
@@ -82,8 +82,8 @@ return false;
 		 'tag': 'block-buster-bomb',
 		 'cost': '1000000',
 		 'flying_only': '1',
-is_available: function(selected_object) {
-if( selected_object.aircraft > 0  )
+isAvailable: function(selectedObject) {
+if( selectedObject.aircraft > 0  )
 return true;
 else
 return false;
@@ -114,8 +114,8 @@ return false;
 		 'tag': 'city-buster-bomb',
 		 'cost': '1000000',
 		 'flying_only': '1',
-is_available: function(selected_object) {
-if( selected_object.aircraft > 0  )
+isAvailable: function(selectedObject) {
+if( selectedObject.aircraft > 0  )
 return true;
 else
 return false;
@@ -285,18 +285,28 @@ return false;
 {
 	 name: {
 		 'en-US': 'Heavy Missile',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Heavy Missiles',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship—if a ship gets a lock, it may fire all the missiles or torpedoes it’s allowed.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Missiles & Torpedoes',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
 		 'en-US': 'AP 12, HW, MBT.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '200/400/800',
 		 'damage': '8d6',
@@ -308,8 +318,8 @@ return false;
 		 'tag': 'heavy-missile',
 		 'cost': '200000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.has_missile_launcher > 0 )
+isAvailable: function(selectedObject) {
+if(selectedObject.hasMissileLauncher > 0 )
 return true;
 else
 return false;
@@ -340,8 +350,8 @@ return false;
 		 'tag': 'heavy-torpedo',
 		 'cost': '1000000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.has_torpedo_tube > 0 && ( selected_object.aircraft > 0 || selected_object.watercraft > 0 ) )
+isAvailable: function(selectedObject) {
+if(selectedObject.hasTorpedoTube > 0 && ( selectedObject.aircraft > 0 || selectedObject.watercraft > 0 ) )
 return true;
 else
 return false;
@@ -372,8 +382,8 @@ return false;
 		 'tag': 'large-bomb',
 		 'cost': '1000000',
 		 'flying_only': '1',
-is_available: function(selected_object) {
-if( selected_object.aircraft > 0  )
+isAvailable: function(selectedObject) {
+if( selectedObject.aircraft > 0  )
 return true;
 else
 return false;
@@ -485,8 +495,8 @@ return false;
 		 'tag': 'light-missile',
 		 'cost': '150000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.has_missile_launcher > 0)
+isAvailable: function(selectedObject) {
+if(selectedObject.hasMissileLauncher > 0)
 return true;
 else
 return false;
@@ -517,8 +527,8 @@ return false;
 		 'tag': 'light-torpedo',
 		 'cost': '1000000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.has_torpedo_tube > 0 && ( selected_object.aircraft > 0 || selected_object.watercraft > 0 ) )
+isAvailable: function(selectedObject) {
+if(selectedObject.hasTorpedoTube > 0 && ( selectedObject.aircraft > 0 || selectedObject.watercraft > 0 ) )
 return true;
 else
 return false;
@@ -549,8 +559,8 @@ return false;
 		 'tag': 'mass-driver-1',
 		 'cost': '100000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 1 || selected_object.object_type == "power_armor")
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 1 || selectedObject.objectType == "power_armor")
 return true;
 else
 return false;
@@ -581,8 +591,8 @@ return false;
 		 'tag': 'mass-driver-10',
 		 'cost': '1000000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 10)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 10)
 return true;
 else
 return false;
@@ -613,8 +623,8 @@ return false;
 		 'tag': 'mass-driver-11',
 		 'cost': '1100000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 11)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 11)
 return true;
 else
 return false;
@@ -645,8 +655,8 @@ return false;
 		 'tag': 'mass-driver-12',
 		 'cost': '1200000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 12)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 12)
 return true;
 else
 return false;
@@ -677,8 +687,8 @@ return false;
 		 'tag': 'mass-driver-13',
 		 'cost': '1300000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 13)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 13)
 return true;
 else
 return false;
@@ -709,8 +719,8 @@ return false;
 		 'tag': 'mass-driver-14',
 		 'cost': '1300000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 14)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 14)
 return true;
 else
 return false;
@@ -741,8 +751,8 @@ return false;
 		 'tag': 'mass-driver-2',
 		 'cost': '200000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 2 || selected_object.object_type == "power_armor")
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 2 || selectedObject.objectType == "power_armor")
 return true;
 else
 return false;
@@ -773,8 +783,8 @@ return false;
 		 'tag': 'mass-driver-3',
 		 'cost': '300000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 3)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 3)
 return true;
 else
 return false;
@@ -805,8 +815,8 @@ return false;
 		 'tag': 'mass-driver-4',
 		 'cost': '400000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 4)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 4)
 return true;
 else
 return false;
@@ -837,8 +847,8 @@ return false;
 		 'tag': 'mass-driver-5',
 		 'cost': '500000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 5)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 5)
 return true;
 else
 return false;
@@ -869,8 +879,8 @@ return false;
 		 'tag': 'mass-driver-6',
 		 'cost': '600000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 6)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 6)
 return true;
 else
 return false;
@@ -901,8 +911,8 @@ return false;
 		 'tag': 'mass-driver-7',
 		 'cost': '700000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 7)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 7)
 return true;
 else
 return false;
@@ -933,8 +943,8 @@ return false;
 		 'tag': 'mass-driver-8',
 		 'cost': '100000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 8)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 8)
 return true;
 else
 return false;
@@ -965,8 +975,8 @@ return false;
 		 'tag': 'mass-driver-9',
 		 'cost': '900000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if(selected_object.size / 2 >= 9)
+isAvailable: function(selectedObject) {
+if(selectedObject.size / 2 >= 9)
 return true;
 else
 return false;
@@ -974,21 +984,31 @@ return false;
 {
 	 name: {
 		 'en-US': 'Massive Laser',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Massive Lasers',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don’t use the rules for personal lasers listed on page 20.)',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Lasers (Vehicular)',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
 		 'en-US': 'AP 25, HW.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '150/300/600',
-		 'damage': '6d10',
+		 'damage': '8d10',
 		 'rof': '1',
 		 'shots': '100',
 		 'missiles_per': '0',
@@ -997,8 +1017,8 @@ return false;
 		 'tag': 'massive-laser',
 		 'cost': '4000000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if( selected_object.size >= 16  )
+isAvailable: function(selectedObject) {
+if( selectedObject.size >= 14  )
 return true;
 else
 return false;
@@ -1056,8 +1076,8 @@ return false;
 		 'tag': 'medium-bomb',
 		 'cost': '1000000',
 		 'flying_only': '1',
-is_available: function(selected_object) {
-if( selected_object.aircraft > 0  )
+isAvailable: function(selectedObject) {
+if( selectedObject.aircraft > 0  )
 return true;
 else
 return false;
@@ -1143,6 +1163,48 @@ return false;
 		 'cost': '3000',
 		 'flying_only': '0',
 },
+{
+	 name: {
+		 'en-US': 'Mega Laser',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 name_plural: {
+		 'en-US': 'Mega Lasers',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don’t use the rules for personal lasers listed on page 20.)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 classification: {
+		 'en-US': 'Lasers (Vehicular)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 25, HW.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'range': '150/300/600',
+		 'damage': '10d10',
+		 'rof': '',
+		 'shots': '100',
+		 'missiles_per': '0',
+		 'linkable': '1',
+		 'mods': '10',
+		 'tag': 'massive-laser',
+		 'cost': '10000000',
+		 'flying_only': '0',
+isAvailable: function(selectedObject) {
+if( selectedObject.size >= 16  )
+return true;
+else
+return false;
+}},
 {
 	 name: {
 		 'en-US': 'Minigun',
@@ -1277,8 +1339,8 @@ return false;
 		 'tag': 'small-bomb',
 		 'cost': '500000',
 		 'flying_only': '1',
-is_available: function(selected_object) {
-if( selected_object.aircraft > 0  )
+isAvailable: function(selectedObject) {
+if( selectedObject.aircraft > 0  )
 return true;
 else
 return false;
@@ -1363,8 +1425,8 @@ return false;
 		 'tag': 'super-heavy-laser',
 		 'cost': '2000000',
 		 'flying_only': '0',
-is_available: function(selected_object) {
-if( selected_object.size >= 14  )
+isAvailable: function(selectedObject) {
+if( selectedObject.size >= 14  )
 return true;
 else
 return false;

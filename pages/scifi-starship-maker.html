@@ -30,12 +30,12 @@
 				<legend translate="CREATOR_BASIC"></legend>
 			<label>
 				<span translate="CREATOR_ARMOR_NAME">Starship Name</span><br />
-				<input type="text" ng-keyup="updatePage()" ng-model="creatorObj.item_name" />
+				<input type="text" ng-keyup="updatePage()" ng-model="creatorObj.itemName" />
 			</label>
 
 			<label>
 				<span translate="CREATOR_ARMOR_DESCRIPTION">Starship Description</span><br />
-				<textarea rows="4" ng-keyup="updatePage()" ng-model="creatorObj.object_description"></textarea>
+				<textarea rows="4" ng-keyup="updatePage()" ng-model="creatorObj.objectDescription"></textarea>
 			</label>
 
 
@@ -46,7 +46,7 @@
 			</label>
 			</fieldset>
 
-			<div ng-show="set_size">
+			<div ng-show="setSize">
 				<fieldset class="fieldset">
 				<legend translate="CREATOR_MODS"></legend>
 				<table>
@@ -67,7 +67,7 @@
 			</div>
 		</div>
 		<div class="column small-12 medium-6">
-			<div ng-show="set_size">
+			<div ng-show="setSize">
 				<fieldset class="fieldset">
 					<legend translate="CREATOR_INSTALLED_WEAPONS"></legend>
 						<div ng-show="installed_weapons.length == 0" translate="CREATOR_NO_INSTALLED_WEAPONS"></div>
@@ -77,7 +77,7 @@
 						</table>
 				</fieldset>
 			</div>
-			<div ng-show="set_size">
+			<div ng-show="setSize">
 				<fieldset class="fieldset">
 					<legend translate="CREATOR_AVAILABLE_WEAPONS"></legend>
 		<table>

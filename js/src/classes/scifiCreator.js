@@ -6,83 +6,82 @@
 var sciFiCreator = function() {};
 sciFiCreator.prototype = {
 
-	init: function(object_type, object_label, available_sizes, available_mods, available_options) {
-		this.item_name = "";
-		this.object_description = "";
+	init: function(objectType, objectLabel, availableSizes, availableMods, availableOptions) {
+		this.itemName = "";
+		this.objectDescription = "";
 		this.useLang = "en-US";
 
-		this.uuid = this.make_uuid();
+		this.uuid = this.makeUUID();
 
-		this.object_label = object_label;
-		this.object_label = object_label;
+		this.objectLabel = objectLabel;
 		this.examples = "";
-		this.extra_notes = "";
+		this.extraNotes = "";
 		this.size = 0;
-		this.object_type = object_type;
+		this.objectType = objectType;
 		this.acc = 0;
 		this.ts = 0;
 		this.climb = 0;
 		this.toughness = 0;
-		this.base_toughness = 0;
-		this.base_cost = 0;
+		this.baseToughness = 0;
+		this.baseCost = 0;
 		this.armor = 0;
-		this.front_armor = 0
-		this.side_armor = 0;
-		this.creator_options = Array();
-		this.number_of_legs = 0;
-		this.rear_armor = 0;
+		this.frontArmor = 0
+		this.sideArmor = 0;
+		this.creatorOptions = Array();
+		this.numberOfLegs = 0;
+		this.rearArmor = 0;
 		this.mods = 0;
-		this.base_mods = 0;
+		this.baseMods = 0;
 		this.crew = 0;
-		this.has_weapon_mounts = 0;
-		this.requires_mount_point = 0;
-		this.flying_pace = 0;
+		this.hasWeaponMounts = 0;
+		this.requiresMountPoint = 0;
+		this.flyingPace = 0;
 		this.cost = 0;
-		this.vehicle_weapon_mod_points = 0;
-		this.energy_capacity =  0;
-		this.base_energy_capacity =  0;
+		this.vehicleWeaponModPoints = 0;
+		this.energyCapacity =  0;
+		this.baseEnergyCapacity =  0;
 		this.provisions = 0;
 
-		this.has_torpedo_tube = 0;
-		this.has_missile_launcher = 0;
+		this.hasTorpedoTube = 0;
+		this.hasMissileLauncher = 0;
 
 		this.aircraft = 0;
 
-		this.selected_size = 0;
+		this.selectedSize = 0;
 
-		if(available_options)
-			this.available_options = available_options;
+		if(availableOptions)
+			this.availableOptions = availableOptions;
 		else
-			this.available_options = Array();
+			this.availableOptions = Array();
 
-		if(available_sizes)
-			this.available_sizes = available_sizes;
+		if(availableSizes)
+			this.availableSizes = availableSizes;
 		else
-			this.available_sizes = Array();
+			this.availableSizes = Array();
 
-		if(available_mods)
-			this.available_mods = available_mods;
+		if(availableMods)
+			this.availableMods = availableMods;
 		else
-			this.available_mods = Array();
+			this.availableMods = Array();
 
-		this.selected_modifications = Array();
-		this.selected_modifications_list = {};
+		this.selectedModifications = Array();
+		this.selectedModifications_list = {};
 
 		this.mods_available = 0;
 
 		this.selected_weapons = Array();
-		this.selected_weapons_list = Array();
+		this.selectedWeaponsList = Array();
 
-		if(this.object_type == "power_armor") {
-			this.requires_mount_point = 1;
-			this.has_weapon_mounts = 1;
+		if(this.objectType == "power_armor") {
+			this.requiresMountPoint = 1;
+			this.hasWeaponMounts = 1;
 		} else {
-			this.requires_mount_point = 0;
-			this.has_weapon_mounts = 0;
+			this.requiresMountPoint = 0;
+			this.hasWeaponMounts = 0;
 		}
 	},
 
-	make_uuid: function(){
+	makeUUID: function(){
 	    var d = new Date().getTime();
 	    if(window.performance && typeof window.performance.now === "function"){
 	        d += performance.now(); //use high-precision timer if available
@@ -96,27 +95,27 @@ sciFiCreator.prototype = {
 	},
 
 	reset: function() {
-		this.init(this.object_type, this.object_label, this.available_sizes, this.available_mods, this.available_options);
+		this.init(this.objectType, this.objectLabel, this.availableSizes, this.availableMods, this.availableOptions);
 	},
 
-	set_sizes: function(available_sizes) {
-		this.available_sizes = available_sizes
+	setSizes: function(availableSizes) {
+		this.availableSizes = availableSizes
 	},
 
-	export_html: function() {
-		return this.create_stats_block();
+	exportHTML: function() {
+		return this.createStatesBlock();
 	},
 
-	get_mod_name: function( modTag ) {
+	getModName: function( modTag ) {
 		// search through available mods to see if function exists
 
-		for(getModCount = 0; getModCount < this.available_mods.length; getModCount++) {
-			if( this.available_mods[getModCount].tag == modTag ) {
-				return this.get_local_name( this.available_mods[getModCount].name );
+		for(getModCount = 0; getModCount < this.availableMods.length; getModCount++) {
+			if( this.availableMods[getModCount].tag == modTag ) {
+				return this.getLocalName( this.availableMods[getModCount].name );
 			}
 		}
 
-		return "Error: get_mod_name - Not Found !";
+		return "Error: getModName - Not Found !";
 	},
 
 	getTranslation: function(langKey) {
@@ -150,7 +149,7 @@ sciFiCreator.prototype = {
 		}
 	},
 
-	get_local_name: function( incoming_string_array ) {
+	getLocalName: function( incoming_string_array ) {
 		if( incoming_string_array[ this.useLang] ) {
 			return incoming_string_array[ this.useLang];
 		} else {
@@ -169,26 +168,26 @@ sciFiCreator.prototype = {
 	    return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
 	},
 
-	create_stats_block: function(jquery_selector) {
+	createStatesBlock: function(jquery_selector) {
 		html_return = "";
 
-		html_return += "<h3>" + this.item_name + "</h3>";
+		html_return += "<h3>" + this.itemName + "</h3>";
 		html_return += "<p>";
 
-		html_return += this.object_description + "</p><br />";
+		html_return += this.objectDescription + "</p><br />";
 
-		if(this.selected_size && this.selected_size.size > 0) {
-			html_return += "<strong>" + this.get_local_name(this.selected_size.size_label)  + "</strong>: ";
+		if(this.selectedSize && this.selectedSize.size > 0) {
+			html_return += "<strong>" + this.getLocalName(this.selectedSize.size_label)  + "</strong>: ";
 			html_return += this.getTranslation("CREATOR_SIZE") + " " + this.size + ", ";
 			if(this.acc > 0)
-				html_return += this.getTranslation("CREATOR_ACC_TS") + " " +  this.acc + "/" + this.format_pace_realworld(this.ts) + ", ";
+				html_return += this.getTranslation("CREATOR_ACC_TS") + " " +  this.acc + "/" + this.formatPaceRealWorld(this.ts) + ", ";
 			if(this.aircraft)
 				html_return += this.getTranslation("CREATOR_CLIMB") + " " + this.climb + ", ";
-			if(this.flying_pace > 0)
-				html_return += this.getTranslation("CREATOR_FLYPACE") + " " +  this.format_pace_realworld(this.flying_pace) + ", ";
+			if(this.flyingPace > 0)
+				html_return += this.getTranslation("CREATOR_FLYPACE") + " " +  this.formatPaceRealWorld(this.flyingPace) + ", ";
 			if(this.toughness > 0) {
-				if( this.front_armor > 0 ) {
-					html_return += this.getTranslation("CREATOR_TOUGHNESS") + " " + this.toughness + " (<span title='" + this.getTranslation("CREATOR_FASARA")  + ")'>" + this.front_armor + "/" + this.side_armor + "/" +  this.rear_armor + "</span>), ";
+				if( this.frontArmor > 0 ) {
+					html_return += this.getTranslation("CREATOR_TOUGHNESS") + " " + this.toughness + " (<span title='" + this.getTranslation("CREATOR_FASARA")  + ")'>" + this.frontArmor + "/" + this.sideArmor + "/" +  this.rearArmor + "</span>), ";
 				} else {
 					html_return += this.getTranslation("CREATOR_TOUGHNESS") + " " + this.toughness + " (" + this.armor + "), ";
 				}
@@ -200,34 +199,34 @@ sciFiCreator.prototype = {
 			}
 
 			if(this.pace > 0)
-				html_return += this.getTranslation("CREATOR_PACE") + " "  + this.format_pace_realworld(this.pace) + ", ";
+				html_return += this.getTranslation("CREATOR_PACE") + " "  + this.formatPaceRealWorld(this.pace) + ", ";
 			if(this.crew > 0)
 				html_return += this.getTranslation("CREATOR_CREW") + " "  + this.crew + ", ";
 
-			if(this.strength > 0)
-				html_return += this.getTranslation("CREATOR_STRENGTH") + " "  + this.get_strength_label( this.strength ) + ", ";
+			if(this.strength > 0 && this.objectType != "power_armor")
+				html_return += this.getTranslation("CREATOR_STRENGTH") + " "  + this.getLocalName(  this.getStrengthLabel( this.strength ).label ) + ", ";
 
 			html_return += this.getTranslation("CREATOR_COST") + " C$" + this.formatMoney(this.cost, 0) + ", ";
 			html_return += this.getTranslation("CREATOR_REMAINING_MODS") + " "  + this.mods_available + "<br />";
 
 
 			//html_return += "<strong>Mods Available</strong>: " + this.mods_available + "<br />";
-			if( this.has_weapon_mounts )
-				html_return += "<strong>" + this.getTranslation("CREATOR_WEAPON_MODS_AVAILABLE")  + "</strong>: " + this.vehicle_weapon_mod_points + "<br />";
+			if( this.hasWeaponMounts )
+				html_return += "<strong>" + this.getTranslation("CREATOR_WEAPON_MODS_AVAILABLE")  + "</strong>: " + this.vehicleWeaponModPoints + "<br />";
 
 			html_return += "<strong>" + this.getTranslation("CREATOR_NOTES")  + "</strong>: ";
 
-			this.sort_selected_modifications_list();
+			this.sortSelectedModificationsList();
 			var mod_count = 0;
 
-			for(var modTag in this.selected_modifications_list){
+			for(var modTag in this.selectedModifications_list){
 
 				if( mod_count > 0)
 					html_return += ", ";
-				if(this.selected_modifications_list[modTag] > 1)
-  					html_return += this.selected_modifications_list[modTag] + "x "
+				if(this.selectedModifications_list[modTag] > 1)
+  					html_return += this.selectedModifications_list[modTag] + "x "
 
-  				modName = this.get_mod_name(modTag);
+  				modName = this.getModName(modTag);
   				html_return += modName;
 
   				mod_count++;
@@ -238,17 +237,17 @@ sciFiCreator.prototype = {
 			html_return += "<br />";
 
 			html_return += "<strong>" + this.getTranslation("CREATOR_WEAPONS")  + "</strong>: ";
-			this.sort_selected_weapons_list();
+			//this.sort_selectedWeaponsList();
 			html_return += "<ul>";
 			var weapon_count = 0;
-			// console.log("this.selected_weapons_list",this.selected_weapons_list);
-			for(var weaponName in this.selected_weapons_list){
+//			console.log("this.selectedWeaponsList",this.selectedWeaponsList);
+			for(var weaponName in this.selectedWeaponsList){
 				html_return += "<li>";
-				if(this.selected_weapons_list[weaponName].count > 1)
-  					html_return += this.selected_weapons_list[weaponName].count + "x ";
-  				//this.selected_weapons_list[weaponName].obj = this.update_weapon_display_name( this.selected_weapons_list[weaponName] );
-  				html_return += this.selected_weapons_list[weaponName].obj.display_name;
-  				html_return += this.make_weapon_stat_html( this.selected_weapons_list[weaponName].obj );
+				if(this.selectedWeaponsList[weaponName].count > 1)
+  					html_return += this.selectedWeaponsList[weaponName].count + "x ";
+  				//this.selectedWeaponsList[weaponName].obj = this.updateWeaponDisplayName( this.selectedWeaponsList[weaponName] );
+  				html_return += this.selectedWeaponsList[weaponName].obj.display_name;
+  				html_return += this.makeWeaponStatHTML( this.selectedWeaponsList[weaponName].obj );
   				html_return += "</li>";
   				weapon_count++;
 			}
@@ -256,19 +255,19 @@ sciFiCreator.prototype = {
 				html_return += "<li>" + this.getTranslation("CREATOR_NONE")  + "</li>";
 			html_return += "</ul>";
 
-			if( this.get_modification_count("Shields") > 0) {
+			if( this.getModificationCount("Shields") > 0) {
 				html_return += "<strong>" + this.getTranslation("CREATOR_SHIELDS")  + "</strong>: ";
 				html_return += this.size * 10;
 				may_recover = this.getTranslation("CREATOR_MAY_RECOVER").replace("{value}", this.size);
 				html_return += " - " + may_recover + "<br />";
 			}
 
-			if(this.energy_capacity > 0)
-				html_return += "<strong>" + this.getTranslation("CREATOR_ENERGY_CAPACITY")  + "</strong>: " + this.energy_capacity + "<br />";
+			if(this.energyCapacity > 0)
+				html_return += "<strong>" + this.getTranslation("CREATOR_ENERGY_CAPACITY")  + "</strong>: " + this.energyCapacity + "<br />";
 
-			if( this.extra_notes != "" ) {
+			if( this.extraNotes != "" ) {
 				html_return += "<strong>" + this.getTranslation("CREATOR_EXTRA_NOTES")  + "</strong>: ";
-				html_return += this.extra_notes;
+				html_return += this.extraNotes;
 			}
 		} else {
 			html_return += this.getTranslation("CREATOR_SIZE_MUST_BE_SELECTED");
@@ -279,7 +278,7 @@ sciFiCreator.prototype = {
 		return html_return;
 	},
 
-	make_weapon_stat_html: function( weapon_object ) {
+	makeWeaponStatHTML: function( weapon_object ) {
 		return_val = " (";
 		return_val += weapon_object.range + ", ";
 		return_val += weapon_object.damage;
@@ -291,7 +290,7 @@ sciFiCreator.prototype = {
 			return_val += " +1";
 
 		return_val += ", ";
-		notes = this.get_local_name( weapon_object.notes );
+		notes = this.getLocalName( weapon_object.notes );
 		if( notes != "")
 			return_val += notes + ", ";
 		return_val = return_val.substring(0, return_val.length - 2);
@@ -299,24 +298,24 @@ sciFiCreator.prototype = {
 		return return_val;
 	},
 
-	export_bbcode: function(jquery_selector) {
+	exportBBCode: function(jquery_selector) {
 		html_return = "";
 
-		html_return += "[b][size=150]" + this.item_name + "[/size][/b]\n";
-		if(this.object_description)
-			html_return += "" + this.object_description + "\n\n";
+		html_return += "[b][size=150]" + this.itemName + "[/size][/b]\n";
+		if(this.objectDescription)
+			html_return += "" + this.objectDescription + "\n\n";
 		else
 			html_return += "\n";
 
-		if(this.selected_size && this.selected_size.size_label) {
-			html_return += "[b]" + this.get_local_name(this.selected_size.size_label) + "[/b]: ";
+		if(this.selectedSize && this.selectedSize.size_label) {
+			html_return += "[b]" + this.getLocalName(this.selectedSize.size_label) + "[/b]: ";
 			html_return += this.getTranslation("CREATOR_SIZE") + " " + this.size + ", ";
 			if(this.acc > 0)
-				html_return += this.getTranslation("CREATOR_ACC_TS") + " " + this.acc + "/" + this.format_pace_realworld(this.ts) + ", ";
+				html_return += this.getTranslation("CREATOR_ACC_TS") + " " + this.acc + "/" + this.formatPaceRealWorld(this.ts) + ", ";
 			if(this.aircraft)
 				html_return += this.getTranslation("CREATOR_CLIMB") + " " + this.climb + ", ";
-			if(this.flying_pace > 0)
-				html_return += this.getTranslation("CREATOR_FLYPACE") + " " + this.format_pace_realworld(this.flying_pace) + ", ";
+			if(this.flyingPace > 0)
+				html_return += this.getTranslation("CREATOR_FLYPACE") + " " + this.formatPaceRealWorld(this.flyingPace) + ", ";
 			if(this.toughness > 0) {
 				html_return += this.getTranslation("CREATOR_TOUGHNESS") + " " + this.toughness + " (" + this.armor + "), ";
 			} else {
@@ -326,12 +325,12 @@ sciFiCreator.prototype = {
 			}
 
 			if(this.pace > 0)
-				html_return += this.getTranslation("CREATOR_PACE") + "  " + this.format_pace_realworld(this.pace) + ", ";
+				html_return += this.getTranslation("CREATOR_PACE") + "  " + this.formatPaceRealWorld(this.pace) + ", ";
 			if(this.crew > 0)
 				html_return += this.getTranslation("CREATOR_CREW") + "  " + this.crew + ", ";
 
-			if(this.strength > 0)
-				html_return += this.getTranslation("CREATOR_STRENGTH") + "  " + this.get_strength_label( this.strength ) + ", ";
+			if(this.strength > 0 && this.objectType != "power_armor")
+				html_return += this.getTranslation("CREATOR_STRENGTH") + " "  + this.getLocalName(  this.getStrengthLabel( this.strength ).label ) + ", ";
 
 			html_return += this.getTranslation("CREATOR_COST") + " C$" + this.simplify_cost(this.cost) + ", ";
 			html_return += this.getTranslation("CREATOR_REMAINING_MODS") + " " + this.mods_available + "\n";
@@ -339,11 +338,11 @@ sciFiCreator.prototype = {
 			html_return += "[b]" + this.getTranslation("CREATOR_NOTES") + "[/b]: ";
 
 			var mod_count = 0;
-			for(var modName in this.selected_modifications_list){
+			for(var modName in this.selectedModifications_list){
 				if( mod_count > 0)
 					html_return += ", ";
-				if(this.selected_modifications_list[modName] > 1)
-  					html_return += this.selected_modifications_list[modName] + "x ";
+				if(this.selectedModifications_list[modName] > 1)
+  					html_return += this.selectedModifications_list[modName] + "x ";
 				html_return += modName;
 				mod_count++;
 			}
@@ -354,17 +353,17 @@ sciFiCreator.prototype = {
 
 			html_return += "[b]" + this.getTranslation("CREATOR_WEAPONS") + "[/b]: ";
 			html_return += "[list]";
-			this.sort_selected_weapons_list();
+			//this.sort_selectedWeaponsList();
 			var weapon_count = 0;
 			var weapon_count = 0;
-			// console.log("this.selected_weapons_list",this.selected_weapons_list);
-			for(var weaponName in this.selected_weapons_list){
+			// console.log("this.selectedWeaponsList",this.selectedWeaponsList);
+			for(var weaponName in this.selectedWeaponsList){
 				html_return += "[*]";
-				if(this.selected_weapons_list[weaponName].count > 1)
-  					html_return += this.selected_weapons_list[weaponName].count + "x ";
-  				//this.selected_weapons_list[weaponName].obj = this.update_weapon_display_name( this.selected_weapons_list[weaponName] );
-  				html_return += this.selected_weapons_list[weaponName].obj.display_name;
-  				html_return += this.make_weapon_stat_html( this.selected_weapons_list[weaponName].obj );
+				if(this.selectedWeaponsList[weaponName].count > 1)
+  					html_return += this.selectedWeaponsList[weaponName].count + "x ";
+  				//this.selectedWeaponsList[weaponName].obj = this.updateWeaponDisplayName( this.selectedWeaponsList[weaponName] );
+  				html_return += this.selectedWeaponsList[weaponName].obj.display_name;
+  				html_return += this.makeWeaponStatHTML( this.selectedWeaponsList[weaponName].obj );
   				html_return += "\n";
   				weapon_count++;
 			}
@@ -374,7 +373,7 @@ sciFiCreator.prototype = {
 
 			html_return += "\n";
 
-			if( this.get_modification_count("Shields") > 0) {
+			if( this.getModificationCount("Shields") > 0) {
 				html_return += "[b]" + this.getTranslation("CREATOR_SHIELDS") + "[/b]: ";
 				html_return += this.size * 10;
 				may_recover = this.getTranslation("CREATOR_MAY_RECOVER").replace("{value}", this.size);
@@ -382,8 +381,8 @@ sciFiCreator.prototype = {
 			}
 
 
-			if(this.energy_capacity > 0)
-				html_return += "[b]" + this.getTranslation("CREATOR_ENERGY_CAPACITY") + "[/b]: " + this.energy_capacity + "\n";
+			if(this.energyCapacity > 0)
+				html_return += "[b]" + this.getTranslation("CREATOR_ENERGY_CAPACITY") + "[/b]: " + this.energyCapacity + "\n";
 		} else {
 			html_return += this.getTranslation("CREATOR_SIZE_MUST_BE_SELECTED");
 		}
@@ -405,17 +404,17 @@ sciFiCreator.prototype = {
 		return html_return;
 	},
 
-	export_json: function(jquery_selector) {
+	exportJSON: function(jquery_selector) {
 		exportObject = {};
 		exportObject.size = this.size;
-		exportObject.object_type = this.object_type;
-		exportObject.item_name = this.item_name;
+		exportObject.objectType = this.objectType;
+		exportObject.itemName = this.itemName;
 		exportObject.uuid = this.uuid;
-		exportObject.object_description = this.object_description;
+		exportObject.objectDescription = this.objectDescription;
 		exportObject.mods = Array();
-		exportObject.options = this.creator_options;
-		for(modCounter = 0; modCounter < this.selected_modifications.length; modCounter++)
-			exportObject.mods = exportObject.mods.concat( this.selected_modifications[modCounter].tag );
+		exportObject.options = this.creatorOptions;
+		for(modCounter = 0; modCounter < this.selectedModifications.length; modCounter++)
+			exportObject.mods = exportObject.mods.concat( this.selectedModifications[modCounter].tag );
 		exportObject.weapons = Array();
 		for(local_weapon_counter = 0; local_weapon_counter < this.selected_weapons.length; local_weapon_counter++) {
 			weapon_item = {
@@ -449,7 +448,7 @@ sciFiCreator.prototype = {
 		});
 	},
 
-	import_json: function(importedObjectString) {
+	importJSON: function(importedObjectString) {
 		try {
 			importedObjectString = this.stripslashes(importedObjectString);
 			importedObj= JSON.parse(importedObjectString);
@@ -463,43 +462,50 @@ sciFiCreator.prototype = {
 
 		if(typeof importedObj =='object') {
 			this.reset();
-			this.set_size(importedObj.size);
-			this.set_name(importedObj.item_name);
-			if( typeof(importedObj.object_description) != "undefined")
-				this.set_description(importedObj.object_description);
+			this.setSize(importedObj.size);
+			this.setName(importedObj.itemName);
+			if( typeof(importedObj.objectDescription) != "undefined")
+				this.setDescription(importedObj.objectDescription);
+
+
+
 			if( typeof(importedObj.uuid) != "undefined")
 				this.uuid = importedObj.uuid;
 
 			// legacy version description checks
 			if( typeof(importedObj.ship_description) != "undefined")
-				this.set_description(importedObj.ship_description);
+				this.setDescription(importedObj.ship_description);
 			if( typeof(importedObj.power_armor_description) != "undefined")
-				this.set_description(importedObj.power_armor_description);
+				this.setDescription(importedObj.power_armor_description);
 			if( typeof(importedObj.walker_description) != "undefined")
-				this.set_description(importedObj.walker_description);
+				this.setDescription(importedObj.walker_description);
 			if( typeof(importedObj.vehicle_description) != "undefined")
-				this.set_description(importedObj.vehicle_description);
+				this.setDescription(importedObj.vehicle_description);
+			if( typeof(importedObj.object_description) != "undefined")
+				this.setDescription(importedObj.object_description);
+			if( typeof(importedObj.item_name) != "undefined")
+				this.setName(importedObj.item_name);
 
 			if( importedObj.options )
-				this.creator_options = importedObj.options;
+				this.creatorOptions = importedObj.options;
 
 			for(modCounter = 0; modCounter < importedObj.mods.length; modCounter++)
-				this.add_mod( importedObj.mods[modCounter] );
+				this.addMod( importedObj.mods[modCounter] );
 
 			for(local_weapon_counter = 0; local_weapon_counter < importedObj.weapons.length; local_weapon_counter++) {
 				if( importedObj.weapons[local_weapon_counter].tag)
-					this.add_weapon( importedObj.weapons[local_weapon_counter].tag );
+					this.addWeapon( importedObj.weapons[local_weapon_counter].tag );
 				else
-					this.add_weapon( importedObj.weapons[local_weapon_counter].name );
+					this.addWeapon( importedObj.weapons[local_weapon_counter].name );
 
 				if( typeof(importedObj.weapons[local_weapon_counter].fixed) != "undefined" && importedObj.weapons[local_weapon_counter].fixed != "")
-					this.fix_weapon( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].fixed );
+					this.fixWeapon( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].fixed );
 
 				if( typeof(importedObj.weapons[local_weapon_counter].count) != "undefined" && importedObj.weapons[local_weapon_counter].count > 0)
-					this.set_weapon_count( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].count );
+					this.setWeaponCount( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].count );
 
 				if( typeof(importedObj.weapons[local_weapon_counter].linked) != "undefined" && importedObj.weapons[local_weapon_counter].linked > 0)
-					this.link_weapon( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].linked);
+					this.linkWeapon( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].linked);
 
 			}
 			this.calculate();
@@ -510,8 +516,8 @@ sciFiCreator.prototype = {
 		return false;
 	},
 
-	sort_selected_modifications_list: function() {
-		var keyList = Object.keys(this.selected_modifications_list);
+	sortSelectedModificationsList: function() {
+		var keyList = Object.keys(this.selectedModifications_list);
 
 		keyList.sort();
 
@@ -519,16 +525,16 @@ sciFiCreator.prototype = {
 
 		for (var keyCount = 0; keyCount < keyList.length; keyCount++) {
 			keyName = keyList[keyCount];
-			newList[keyName] = this.selected_modifications_list[keyName];
+			newList[keyName] = this.selectedModifications_list[keyName];
 		}
-		this.selected_modifications_list = newList;
+		this.selectedModifications_list = newList;
 	},
 
-	sort_selected_weapons_list: function() {
-	 	/* Do nothing as the main should handle this now */
-	},
+	// sort_selectedWeaponsList: function() {
+	//  	 Do nothing as the main should handle this now
+	// },
 
-	sort_weapon_list: function() {
+	sortWeaponList: function() {
 
 		this.selected_weapons.sort(function(a, b){
 			if( a.linkable < b.linkable ) return 1;
@@ -539,120 +545,122 @@ sciFiCreator.prototype = {
 		});
 	},
 
-	append_extra_notes: function( note ) {
-		if(this.extra_notes != "")
-			this.extra_notes += ", ";
-		this.extra_notes += note;
+	appendExtraNotes: function( note ) {
+		if(this.extraNotes != "")
+			this.extraNotes += ", ";
+		this.extraNotes += note;
 		return note;
 	},
 
 	calculate: function() {
 
 
-		if( this.selected_size && this.selected_size.size_label ) {
+		if( this.selectedSize && this.selectedSize.size_label ) {
 			// Flush Stats for recalulation
 			this.strength = 0;
 
-			this.strength_bonus = 0;
+			this.strengthBonus = 0;
 			this.aircraft = 0;
 			this.watercraft = 0;
-			this.flying_pace = 0;
-			this.has_weapon_mounts = 0;
-			this.vehicle_weapon_mod_points = 0;
+			this.flyingPace = 0;
+			this.hasWeaponMounts = 0;
+			this.vehicleWeaponModPoints = 0;
 
-			this.has_torpedo_tube = 0;
-			this.has_missile_launcher = 0;
+			this.hasTorpedoTube = 0;
+			this.hasMissileLauncher = 0;
 
-			this.examples = this.selected_size.examples;
-			this.size = this.selected_size.size;
-			this.acc = this.selected_size.acc;
-			this.ts = this.selected_size.ts;
+			this.examples = this.selectedSize.examples;
+			this.size = this.selectedSize.size;
+			this.acc = this.selectedSize.acc;
+			this.ts = this.selectedSize.ts;
 			this.aircraft = 0;
-			this.strength_bonus = 0;
-			this.climb = this.selected_size.climb;
-			if(this.selected_size.strength)
-				this.strength = this.selected_size.strength;
-			this.toughness = this.selected_size.toughness;
-			this.base_toughness = this.selected_size.toughness;
-			this.armor = this.selected_size.armor;
-			this.mods = this.selected_size.mods;
-			this.base_mods = this.selected_size.mods;
-			this.crew = this.selected_size.crew;
-			this.cost = this.selected_size.cost;
-			this.base_cost =  this.selected_size.cost;
-			this.energy_capacity = this.selected_size.energy_capacity;
-			this.base_energy_capacity = this.selected_size.energy_capacity;
-			this.provisions = this.selected_size.provisions;
-			this.weight = this.selected_size.weight;
-			this.pace = this.selected_size.pace;
-			this.base_pace = this.selected_size.pace;
+			this.strengthBonus = 0;
+			this.climb = this.selectedSize.climb;
+			if(this.selectedSize.strength)
+				this.strength = this.selectedSize.strength;
+			this.toughness = this.selectedSize.toughness;
+			this.baseToughness = this.selectedSize.toughness;
+			this.armor = this.selectedSize.armor;
+			this.mods = this.selectedSize.mods;
+			this.baseMods = this.selectedSize.mods;
+			this.crew = this.selectedSize.crew;
+			this.cost = this.selectedSize.cost;
+			this.baseCost =  this.selectedSize.cost;
+			this.energyCapacity = this.selectedSize.energyCapacity;
+			this.baseEnergyCapacity = this.selectedSize.energyCapacity;
+			this.provisions = this.selectedSize.provisions;
+			this.weight = this.selectedSize.weight;
+			this.pace = this.selectedSize.pace;
+			this.basePace = this.selectedSize.pace;
 
-			this.extra_notes = "";
+			this.extraNotes = "";
 
 			this.mods_available = this.mods;
 
 			// Starship is always an aircraft for these purposes ;)
-			if(this.object_type == "starship")
+			if(this.objectType == "starship")
 				this.aircraft = 1;
 
+			if( this.selectedSize && this.selectedSize.strength )
+				this.strength = this.selectedSize.strength;
 			// Go through Mods for availability, calculation and listings
-			this.selected_modifications.sort( this.sort_mods );
+			this.selectedModifications.sort( this.sortMods );
 			// Sort mods
-			this.selected_modifications_list = {};
-			for(calcModCount = 0; calcModCount < this.selected_modifications.length; calcModCount++) {
-				//this.selected_modifications_list += "<li>" + this.selected_modifications[modCount].name + "</li>";
-				this.mods = this.mods - this.selected_modifications[calcModCount].get_mod_cost(this);
-				this.cost += this.selected_modifications[calcModCount].get_cost(this);
+			this.selectedModifications_list = {};
+			for(calcModCount = 0; calcModCount < this.selectedModifications.length; calcModCount++) {
+				//this.selectedModifications_list += "<li>" + this.selectedModifications[modCount].name + "</li>";
+				this.mods = this.mods - this.selectedModifications[calcModCount].getModCost(this);
+				this.cost += this.selectedModifications[calcModCount].getCost(this);
 
 				// attempt to see if mod is still availble - remove if it's not.
-				if( this.selected_modifications[calcModCount].is_available ) {
-					if(this.selected_modifications[calcModCount].is_available(this) == false) {
-						this.remove_mod(this.selected_modifications[calcModCount].tag);
+				if( this.selectedModifications[calcModCount].isAvailable ) {
+					if(this.selectedModifications[calcModCount].isAvailable(this) == false) {
+						this.removeMod(this.selectedModifications[calcModCount].tag);
 						this.calculate();
 						// stop all processing as the page is recalcuating anyways
 						return;
 					}
 				}
 
-				// console.log( this.selected_modifications[calcModCount].name + "/" + this.selected_modifications[calcModCount].get_mod_cost(this) + "/" + this.mods );
+				// console.log( this.selectedModifications[calcModCount].name + "/" + this.selectedModifications[calcModCount].getModCost(this) + "/" + this.mods );
 
-				if( this.selected_modifications[calcModCount].get_weight )
-					this.weight += this.selected_modifications[calcModCount].get_weight(this);
+				if( this.selectedModifications[calcModCount].getWeight )
+					this.weight += this.selectedModifications[calcModCount].getWeight(this);
 
-				if( this.selected_modifications[calcModCount].get_mod_effect )
-					this.selected_modifications[calcModCount].get_mod_effect(this);
+				if( this.selectedModifications[calcModCount].getModEffect )
+					this.selectedModifications[calcModCount].getModEffect(this);
 
 				// Linked weapons are displayed elsewhere...
-				if(this.selected_modifications[calcModCount].tag != "linked") {
-					if( typeof(this.selected_modifications_list[this.selected_modifications[calcModCount].tag]) == "undefined")
-						this.selected_modifications_list[this.selected_modifications[calcModCount].tag] = 1;
+				if(this.selectedModifications[calcModCount].tag != "linked") {
+					if( typeof(this.selectedModifications_list[this.selectedModifications[calcModCount].tag]) == "undefined")
+						this.selectedModifications_list[this.selectedModifications[calcModCount].tag] = 1;
 					else
-						this.selected_modifications_list[this.selected_modifications[calcModCount].tag]++;
+						this.selectedModifications_list[this.selectedModifications[calcModCount].tag]++;
 				}
 			}
 
 			// Go through Weapons for availability, calculation and listings
 			// Sort weapons
-			//this.selected_weapons.sort( sort_mods );
-			this.sort_weapon_list();
+			//this.selected_weapons.sort( sortMods );
+			this.sortWeaponList();
 
-			this.selected_weapons_list = {};
+			this.selectedWeaponsList = {};
 			fixedWeaponModUsage = 0;
 			linkedWeaponModUsage = Array();
 			otherWeaponModUsage = 0;
 			for(calcModCount = 0; calcModCount < this.selected_weapons.length; calcModCount++) {
 
 				// attempt to see if weapon is still availble - remove if it's not.
-				if( this.selected_weapons[calcModCount].is_available ) {
-					if(this.selected_weapons[calcModCount].is_available(this) == false) {
-						this.remove_weapon(calcModCount);
+				if( this.selected_weapons[calcModCount].isAvailable ) {
+					if(this.selected_weapons[calcModCount].isAvailable(this) == false) {
+						this.removeWeapon(calcModCount);
 						this.calculate();
 						// stop all processing as the page is recalcuating anyways
 						return;
 					}
 				}
 
-				this.selected_weapons[calcModCount] = this.update_weapon_display_name( this.selected_weapons[calcModCount] );
+				this.selected_weapons[calcModCount] = this.updateWeaponDisplayName( this.selected_weapons[calcModCount] );
 				// Continue on....
 				weaponModCost = this.selected_weapons[calcModCount].mods;
 
@@ -668,18 +676,18 @@ sciFiCreator.prototype = {
 				// 	weaponModCost = (this.selected_weapons[calcModCount].count * weaponModCost) / 2;
 				// 	console.log(weaponModCost);
 				// }
-				//this.vehicle_weapon_mod_points = this.vehicle_weapon_mod_points - weaponModCost;
+				//this.vehicleWeaponModPoints = this.vehicleWeaponModPoints - weaponModCost;
 
 
-				if(this.requires_mount_point > 0)
-					this.vehicle_weapon_mod_points -= weaponModCost;
+				if(this.requiresMountPoint > 0)
+					this.vehicleWeaponModPoints -= weaponModCost;
 				else
 					this.mods -= weaponModCost;
 
 				// console.log( this.selected_weapons[calcModCount].name + "(" + this.selected_weapons[calcModCount].count + ")/" + weaponModCost + "/" + this.mods );
 
-				if( this.selected_weapons[calcModCount].get_weight )
-					this.weight += this.selected_weapons[calcModCount].get_weight(this);
+				if( this.selected_weapons[calcModCount].getWeight )
+					this.weight += this.selected_weapons[calcModCount].getWeight(this);
 
 				if( this.selected_weapons[calcModCount].count > 1) {
 					this.cost += this.selected_weapons[calcModCount].cost / 1 * this.selected_weapons[calcModCount].count;
@@ -726,64 +734,64 @@ sciFiCreator.prototype = {
 					}
 				}
 				// console.log("weaponListName", weaponListName);
-				// console.log("this.selected_weapons_list[weaponListName]", this.selected_weapons_list[weaponListName]);
-				if( typeof(this.selected_weapons_list[weaponListName]) == "undefined" || this.selected_weapons_list[weaponListName] == "0") {
+				// console.log("this.selectedWeaponsList[weaponListName]", this.selectedWeaponsList[weaponListName]);
+				if( typeof(this.selectedWeaponsList[weaponListName]) == "undefined" || this.selectedWeaponsList[weaponListName] == "0") {
 					if( this.selected_weapons[calcModCount].missiles_per > 0)
-						this.selected_weapons_list[weaponListName] = {
+						this.selectedWeaponsList[weaponListName] = {
 							obj: this.selected_weapons[calcModCount],
 							count: this.selected_weapons[calcModCount].missiles_per
 						};
 					else
-						this.selected_weapons_list[weaponListName] = {
+						this.selectedWeaponsList[weaponListName] = {
 							obj: this.selected_weapons[calcModCount],
 							count: 1
 						};
 
 				} else {
 					if( this.selected_weapons[calcModCount].missiles_per > 0 )
-						this.selected_weapons_list[weaponListName].count += this.selected_weapons[calcModCount].missiles_per.count;
+						this.selectedWeaponsList[weaponListName].count = (this.selectedWeaponsList[weaponListName].count / 1) + (this.selected_weapons[calcModCount].missiles_per / 1);
 					else
-						this.selected_weapons_list[weaponListName].count++;
+						this.selectedWeaponsList[weaponListName].count++;
 				}
 			}
 
-			this.mods_available = this.mods; // - sort_selected_modifications_list.length;
-			if(this.requires_mount_point == 0) {
-				this.vehicle_weapon_mod_points = this.mods_available; // - sort_selected_modifications_list.length;
+			this.mods_available = this.mods; // - sortSelectedModificationsList.length;
+			if(this.requiresMountPoint == 0) {
+				this.vehicleWeaponModPoints = this.mods_available; // - sortSelectedModificationsList.length;
 			}
 
 
 		}
 	},
 
-	set_name: function(newValue) {
-		this.item_name = newValue;
+	setName: function(newValue) {
+		this.itemName = newValue;
 	},
 
-	set_option: function( short_tag, value ) {
-//		console.log("set_option called: " + this.get_option_ls_name(short_tag) + ", " + value);
-		localStorage.setItem( this.get_option_ls_name(short_tag), value.toString() );
+	setOption: function( short_tag, value ) {
+//		console.log("setOption called: " + this.getOptionLSName(short_tag) + ", " + value);
+		localStorage.setItem( this.getOptionLSName(short_tag), value.toString() );
 	},
 
-	get_option_ls_name: function( short_tag) {
-		return "com.jdg.swwt.settings." + current_selected_object.object_type + "." + short_tag;
+	getOptionLSName: function( short_tag) {
+		return "com.jdg.swwt.settings." + current_selectedObject.objectType + "." + short_tag;
 	},
 
-	get_available_options: function() {
-//		console.log("get_available_options called");
-		if(this.available_options) {
+	getAvailableOptions: function() {
+//		console.log("getAvailableOptions called");
+		if(this.availableOptions) {
 			// put current values into system
-			for(localSettingCount = 0; localSettingCount < this.available_options.length; localSettingCount++) {
-				if( typeof(this.available_options[localSettingCount].desciption) == "undefined") {
-					this.available_options[localSettingCount].desciption = "";
+			for(localSettingCount = 0; localSettingCount < this.availableOptions.length; localSettingCount++) {
+				if( typeof(this.availableOptions[localSettingCount].desciption) == "undefined") {
+					this.availableOptions[localSettingCount].desciption = "";
 				}
 
-				this.available_options[localSettingCount].value = localStorage.getItem( this.get_option_ls_name( this.available_options[localSettingCount].short_tag ) );
-//				console.log(this.get_option_ls_name( this.available_options[localSettingCount].short_tag ) + " - " + this.available_options[localSettingCount].value);
-				if(this.available_options[localSettingCount].value == "1")
-					this.available_options[localSettingCount].value = this.available_options[localSettingCount].value / 1;
+				this.availableOptions[localSettingCount].value = localStorage.getItem( this.getOptionLSName( this.availableOptions[localSettingCount].short_tag ) );
+//				console.log(this.getOptionLSName( this.availableOptions[localSettingCount].short_tag ) + " - " + this.availableOptions[localSettingCount].value);
+				if(this.availableOptions[localSettingCount].value == "1")
+					this.availableOptions[localSettingCount].value = this.availableOptions[localSettingCount].value / 1;
 			}
-			return this.available_options;
+			return this.availableOptions;
 
 		} else {
 //			console.log("No settings?");
@@ -791,30 +799,30 @@ sciFiCreator.prototype = {
 		}
 	},
 
-	format_pace_realworld: function(pace_value) {
+	formatPaceRealWorld: function(pace_value) {
 		// never take things at pace value. /groan
 		return pace_value + " (" + Math.floor(pace_value * 2.4)+ " mph, " + Math.floor(pace_value * 3.862416) + " kph)";
 	},
 
-	set_description: function(newValue) {
-		this.object_description = newValue;
+	setDescription: function(newValue) {
+		this.objectDescription = newValue;
 	},
 
-	add_mod: function(modName) {
+	addMod: function(modName) {
 		return_value = 0;
 		if( !modName ) {
 			return false;
 		}
-		for(addModCount = 0; addModCount < this.available_mods.length; addModCount++) {
+		for(addModCount = 0; addModCount < this.availableMods.length; addModCount++) {
 			if(
-				modName.toLowerCase() == this.available_mods[addModCount].tag.toLowerCase()
+				modName.toLowerCase() == this.availableMods[addModCount].tag.toLowerCase()
 				||
-				modName.toLowerCase() == this.available_mods[addModCount].name["en-US"].toLowerCase()
+				modName.toLowerCase() == this.availableMods[addModCount].name["en-US"].toLowerCase()
 			) {
-				//newMod = jQuery.extend({}, this.available_mods[addModCount]);
+				//newMod = jQuery.extend({}, this.availableMods[addModCount]);
 				var newMod = {};
-				angular.extend(newMod, this.available_mods[addModCount]);
-				this.selected_modifications = this.selected_modifications.concat( newMod  );
+				angular.extend(newMod, this.availableMods[addModCount]);
+				this.selectedModifications = this.selectedModifications.concat( newMod  );
 				return;
 			}
 		}
@@ -822,15 +830,16 @@ sciFiCreator.prototype = {
 		return return_value;
 	},
 
-	get_strength_label: function( strength_value ) {
-		strength_value = strength_value / 1;
-		if( attribute_labels[strength_value] )
-			return attribute_labels[strength_value];
-		else
-			return "UNKNOWN VALUE";
+	getStrengthLabel: function( strength_value ) {
+		return getDiceValue( strength_value );
+		// strength_value = strength_value / 1;
+		// if( attribute_labels[strength_value] )
+		// 	return attribute_labels[strength_value];
+		// else
+		// 	return "UNKNOWN VALUE";
 	},
 
-	add_weapon: function(weaponName) {
+	addWeapon: function(weaponName) {
 		return_value = 0;
 		for(addlocal_weapon_count = 0; addlocal_weapon_count < savageWorldsVehicleWeapons.length; addlocal_weapon_count++) {
 			if(
@@ -866,24 +875,24 @@ sciFiCreator.prototype = {
 		return return_value;
 	},
 
-	update_weapon_display_name: function( weaponObject ) {
+	updateWeaponDisplayName: function( weaponObject ) {
 		weaponObject.count = weaponObject.count / 1;
 		weaponObject.mods = weaponObject.mods / 1;
 
 		if( weaponObject.count == 1 ){
-			weaponObject.display_name = this.get_local_name(weaponObject.name);
+			weaponObject.display_name = this.getLocalName(weaponObject.name);
 		}
 		if( weaponObject.count == 2 ){
 			linkedTranslation = this.getTranslation("CREATOR_DUAL_LINKED");
-			weaponObject.display_name = linkedTranslation.replace("{name}",this.get_local_name(weaponObject.name_plural) );
+			weaponObject.display_name = linkedTranslation.replace("{name}",this.getLocalName(weaponObject.name_plural) );
 		}
 		if( weaponObject.count == 3 ){
 			linkedTranslation = this.getTranslation("CREATOR_TRI_LINKED");
-			weaponObject.display_name = linkedTranslation.replace("{name}",this.get_local_name(weaponObject.name_plural) );
+			weaponObject.display_name = linkedTranslation.replace("{name}",this.getLocalName(weaponObject.name_plural) );
 		}
 		if( weaponObject.count == 4 ){
 			linkedTranslation = this.getTranslation("CREATOR_QUAD_LINKED");
-			weaponObject.display_name = linkedTranslation.replace("{name}",this.get_local_name(weaponObject.name_plural) );
+			weaponObject.display_name = linkedTranslation.replace("{name}",this.getLocalName(weaponObject.name_plural) );
 		}
 
 		if( weaponObject.count > 1 ) {
@@ -895,7 +904,7 @@ sciFiCreator.prototype = {
 		return weaponObject;
 	},
 
-	increment_weapon_count: function( weaponIndex ) {
+	incrementWeaponCount: function( weaponIndex ) {
 		weaponIndex = weaponIndex / 1;
 		this.selected_weapons[weaponIndex].count++;
 		if( this.selected_weapons[weaponIndex].count > 4)
@@ -903,7 +912,7 @@ sciFiCreator.prototype = {
 
 	},
 
-	set_weapon_count: function( weaponIndex, newCount ) {
+	setWeaponCount: function( weaponIndex, newCount ) {
 		weaponIndex = weaponIndex / 1;
 		if( this.selected_weapons[weaponIndex] ) {
 			this.selected_weapons[weaponIndex].count = newCount;
@@ -914,41 +923,41 @@ sciFiCreator.prototype = {
 		}
 	},
 
-	decrement_weapon_count: function( weaponIndex ) {
+	decrementWeaponCount: function( weaponIndex ) {
 		weaponIndex = weaponIndex / 1;
 		this.selected_weapons[weaponIndex].count--;
 		if( this.selected_weapons[weaponIndex].count < 1)
 			this.selected_weapons[weaponIndex].count = 1;
 	},
 
-	remove_mod: function(modName) {
-		for(removeModCount = 0; removeModCount < this.selected_modifications.length; removeModCount++) {
-			if(modName.toLowerCase() == this.selected_modifications[removeModCount].tag.toLowerCase()) {
-				this.selected_modifications.splice(removeModCount, 1);
+	removeMod: function(modName) {
+		for(removeModCount = 0; removeModCount < this.selectedModifications.length; removeModCount++) {
+			if(modName.toLowerCase() == this.selectedModifications[removeModCount].tag.toLowerCase()) {
+				this.selectedModifications.splice(removeModCount, 1);
 				return;
 			}
 		}
 	},
 
-	remove_weapon: function(weaponIndex) {
+	removeWeapon: function(weaponIndex) {
 		weaponIndex = weaponIndex / 1;
 		this.selected_weapons.splice(weaponIndex, 1);
 	},
 
-	link_weapon: function(weaponIndex, linkIndex) {
+	linkWeapon: function(weaponIndex, linkIndex) {
 		weaponIndex = weaponIndex / 1;
 
 		this.selected_weapons[weaponIndex].linked = (linkIndex / 1);
 	},
 
-	fix_weapon: function(weaponIndex, fixedValue) {
+	fixWeapon: function(weaponIndex, fixedValue) {
 		weaponIndex = weaponIndex / 1;
 
 		this.selected_weapons[weaponIndex].fixed = (fixedValue);
 	},
 
-	get_linked_weapons: function() {
-		numberOfLinks = this.get_modification_count("Linked");
+	getLinkedWeapons: function() {
+		numberOfLinks = this.getModificationCount("Linked");
 		returnVal = Array();
 		if( numberOfLinks > 0 ){
 
@@ -978,45 +987,45 @@ sciFiCreator.prototype = {
 
 	},
 
-	get_modification_count: function(modName) {
+	getModificationCount: function(modName) {
 		return_value = 0;
-		for(modCount = 0; modCount < this.selected_modifications.length; modCount++) {
-			if(modName.toLowerCase() == this.selected_modifications[modCount].tag.toLowerCase())
+		for(modCount = 0; modCount < this.selectedModifications.length; modCount++) {
+			if(modName.toLowerCase() == this.selectedModifications[modCount].tag.toLowerCase())
 				return_value++;
 		}
 
 		return return_value;
 	},
 
-	set_size: function(sizeNumber) {
-		for(sizeCount = 0; sizeCount < this.available_sizes.length; sizeCount++) {
-			if(sizeNumber == this.available_sizes[sizeCount].size) {
-				this.selected_size = this.available_sizes[sizeCount];
-				this.size = this.available_sizes[sizeCount].size;
+	setSize: function(sizeNumber) {
+		for(sizeCount = 0; sizeCount < this.availableSizes.length; sizeCount++) {
+			if(sizeNumber == this.availableSizes[sizeCount].size) {
+				this.selectedSize = this.availableSizes[sizeCount];
+				this.size = this.availableSizes[sizeCount].size;
 				return true;
 			}
 		}
 		return false;
 	},
 
-	sort_mods: function(a,b) {
-		if( typeof(a.calc_weight) == "undefined")
-			a.calc_weight = 5;
-		if( typeof(b.calc_weight) == "undefined")
-			b.calc_weight = 5;
+	sortMods: function(a,b) {
+		if( typeof(a.calcWeight) == "undefined")
+			a.calcWeight = 5;
+		if( typeof(b.calcWeight) == "undefined")
+			b.calcWeight = 5;
 
-		if (a.calc_weight < b.calc_weight){
+		if (a.calcWeight < b.calcWeight){
 			return -1;
 		} else {
-			if (a.calc_weight > b.calc_weight) {
+			if (a.calcWeight > b.calcWeight) {
 				return 1;
 			} else {
 				return a.name > b.name;
 			}
 		}
 	},
-	option_active: function( short_tag ) {
-		value = localStorage.getItem( this.get_option_ls_name( short_tag) );
+	optionActive: function( short_tag ) {
+		value = localStorage.getItem( this.getOptionLSName( short_tag) );
 		value = value / 1;
 		if( value > 0 )
 			return true;
@@ -1024,55 +1033,55 @@ sciFiCreator.prototype = {
 			return false;
 	},
 
-	add_option: function(option_tag) {
-	//	console.log("add_option", option_tag);
-	//	if( this.creator_options && !this.creator_options.contains( option_tag ) ) {
-	//		this.creator_options.push( option_tag ) ;
+	addOption: function(option_tag) {
+	//	console.log("addOption", option_tag);
+	//	if( this.creatorOptions && !this.creatorOptions.contains( option_tag ) ) {
+	//		this.creatorOptions.push( option_tag ) ;
 	//	}
 		var push_it = false;
-		for( var opt_c = this.creator_options.length - 1; opt_c >= 0; opt_c--) {
-			if( this.creator_options[opt_c] == option_tag )
+		for( var opt_c = this.creatorOptions.length - 1; opt_c >= 0; opt_c--) {
+			if( this.creatorOptions[opt_c] == option_tag )
 				return false;
 		}
-		this.creator_options.push( option_tag ) ;
+		this.creatorOptions.push( option_tag ) ;
 
 	},
 
-	remove_option: function(option_tag) {
-	//	console.log("remove_option", option_tag);
-		for( var opt_c = this.creator_options.length - 1; opt_c >= 0; opt_c--) {
-			if( this.creator_options[opt_c] == option_tag )
-				this.creator_options.splice( opt_c, 1);
+	removeOption: function(option_tag) {
+	//	console.log("removeOption", option_tag);
+		for( var opt_c = this.creatorOptions.length - 1; opt_c >= 0; opt_c--) {
+			if( this.creatorOptions[opt_c] == option_tag )
+				this.creatorOptions.splice( opt_c, 1);
 
 		}
 	},
 
-	has_option: function(option_tag) {
+	hasOption: function(option_tag) {
 
-		for( var opt_c = this.creator_options.length - 1; opt_c >= 0; opt_c--) {
-			if( this.creator_options[opt_c] == option_tag )
+		for( var opt_c = this.creatorOptions.length - 1; opt_c >= 0; opt_c--) {
+			if( this.creatorOptions[opt_c] == option_tag )
 				return true;
 		}
 		return false;
 	},
 
-	propogate_size_select: function(jquery_selector) {
+	propogateSizeSelect: function(jquery_selector) {
 		if(jquery_selector)
 			jquery_selector = ".js-select-size";
 		selectOptions = "<option value=''>- Select Size -</option>";
-		for(sizeCount = 0; sizeCount < this.available_sizes.length; sizeCount++) {
+		for(sizeCount = 0; sizeCount < this.availableSizes.length; sizeCount++) {
 			isSelected = "";
 			display_option = true;
-			if( typeof(this.available_sizes[sizeCount].show_with_option) != "undefined" ) {
-				if( this.option_active( this.available_sizes[sizeCount].show_with_option ) ) {
+			if( typeof(this.availableSizes[sizeCount].showWithOption) != "undefined" ) {
+				if( this.optionActive( this.availableSizes[sizeCount].showWithOption ) ) {
 					display_option = true;
 				} else {
 					display_option = false;
 				}
 			}
 
-			if( typeof(this.available_sizes[sizeCount].hide_with_option) != "undefined" ) {
-				if( this.option_active( this.available_sizes[sizeCount].hide_with_option ) ) {
+			if( typeof(this.availableSizes[sizeCount].hideWithOption) != "undefined" ) {
+				if( this.optionActive( this.availableSizes[sizeCount].hideWithOption ) ) {
 					display_option = false;
 				} else {
 					display_option = true;
@@ -1080,13 +1089,13 @@ sciFiCreator.prototype = {
 			}
 
 			if( display_option ) {
-				if( this.selected_size && this.selected_size.size )
-					if(  this.selected_size.size == this.available_sizes[sizeCount].size )
+				if( this.selectedSize && this.selectedSize.size )
+					if(  this.selectedSize.size == this.availableSizes[sizeCount].size )
 						isSelected = " selected='selected'";
-				selectOptions += "<option value='" + this.available_sizes[sizeCount].size + "'" + isSelected + ">";
-				selectOptions += this.available_sizes[sizeCount].size_label + " - Size " + this.available_sizes[sizeCount].size;
-				if( this.available_sizes[sizeCount].examples )
-					selectOptions += " - " + this.available_sizes[sizeCount].examples;
+				selectOptions += "<option value='" + this.availableSizes[sizeCount].size + "'" + isSelected + ">";
+				selectOptions += this.availableSizes[sizeCount].size_label + " - Size " + this.availableSizes[sizeCount].size;
+				if( this.availableSizes[sizeCount].examples )
+					selectOptions += " - " + this.availableSizes[sizeCount].examples;
 				selectOptions += "</option>";
 			}
 		}
