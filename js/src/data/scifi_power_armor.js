@@ -51,7 +51,7 @@ savageWorldsSciFiOptions['power_armor'] = Array(
 );
 savageWorldsSciFiSizes['power_armor'] = Array(
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Light Power Armor',
 		 'pt-BR': 'pg-Light Power Armor',
 		 'de-DE': 'de-Light Power Armor',
@@ -78,7 +78,7 @@ savageWorldsSciFiSizes['power_armor'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Medium Power Armor',
 		 'pt-BR': 'pg-Medium Power Armor',
 		 'de-DE': 'de-Medium Power Armor',
@@ -105,7 +105,7 @@ savageWorldsSciFiSizes['power_armor'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Heavy Power Armor',
 		 'pt-BR': 'pg-Heavy Power Armor',
 		 'de-DE': 'de-Heavy Power Armor',

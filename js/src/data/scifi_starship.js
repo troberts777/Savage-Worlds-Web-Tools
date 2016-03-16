@@ -24,7 +24,7 @@ savageWorldsSciFiOptions['starship'] = Array(
 );
 savageWorldsSciFiSizes['starship'] = Array(
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Small',
 	},
 	 examples: {
@@ -47,7 +47,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Medium',
 	},
 	 examples: {
@@ -70,7 +70,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Large',
 	},
 	 examples: {
@@ -93,7 +93,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Huge',
 	},
 	 examples: {
@@ -116,7 +116,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Giant',
 	},
 	 examples: {
@@ -139,7 +139,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Gargantuan',
 	},
 	 examples: {
@@ -162,7 +162,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Behemoth',
 	},
 	 examples: {
@@ -185,7 +185,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Leviathan',
 	},
 	 examples: {
@@ -208,7 +208,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'World Killer',
 	},
 	 examples: {

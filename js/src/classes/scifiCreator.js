@@ -3,8 +3,8 @@
 	Creative Commons Attribution 4.0 International License.
 */
 
-var sciFiCreator = function() {};
-sciFiCreator.prototype = {
+var scifiCreator = function() {};
+scifiCreator.prototype = {
 
 	init: function(objectType, objectLabel, availableSizes, availableMods, availableOptions) {
 		this.itemName = "";
@@ -177,7 +177,7 @@ sciFiCreator.prototype = {
 		html_return += this.objectDescription + "</p><br />";
 
 		if(this.selectedSize && this.selectedSize.size > 0) {
-			html_return += "<strong>" + this.getLocalName(this.selectedSize.size_label)  + "</strong>: ";
+			html_return += "<strong>" + this.getLocalName(this.selectedSize.sizeLabel)  + "</strong>: ";
 			html_return += this.getTranslation("CREATOR_SIZE") + " " + this.size + ", ";
 			if(this.acc > 0)
 				html_return += this.getTranslation("CREATOR_ACC_TS") + " " +  this.acc + "/" + this.formatPaceRealWorld(this.ts) + ", ";
@@ -307,8 +307,8 @@ sciFiCreator.prototype = {
 		else
 			html_return += "\n";
 
-		if(this.selectedSize && this.selectedSize.size_label) {
-			html_return += "[b]" + this.getLocalName(this.selectedSize.size_label) + "[/b]: ";
+		if(this.selectedSize && this.selectedSize.sizeLabel) {
+			html_return += "[b]" + this.getLocalName(this.selectedSize.sizeLabel) + "[/b]: ";
 			html_return += this.getTranslation("CREATOR_SIZE") + " " + this.size + ", ";
 			if(this.acc > 0)
 				html_return += this.getTranslation("CREATOR_ACC_TS") + " " + this.acc + "/" + this.formatPaceRealWorld(this.ts) + ", ";
@@ -555,7 +555,7 @@ sciFiCreator.prototype = {
 	calculate: function() {
 
 
-		if( this.selectedSize && this.selectedSize.size_label ) {
+		if( this.selectedSize && this.selectedSize.sizeLabel ) {
 			// Flush Stats for recalulation
 			this.strength = 0;
 
@@ -1093,7 +1093,7 @@ sciFiCreator.prototype = {
 					if(  this.selectedSize.size == this.availableSizes[sizeCount].size )
 						isSelected = " selected='selected'";
 				selectOptions += "<option value='" + this.availableSizes[sizeCount].size + "'" + isSelected + ">";
-				selectOptions += this.availableSizes[sizeCount].size_label + " - Size " + this.availableSizes[sizeCount].size;
+				selectOptions += this.availableSizes[sizeCount].sizeLabel + " - Size " + this.availableSizes[sizeCount].size;
 				if( this.availableSizes[sizeCount].examples )
 					selectOptions += " - " + this.availableSizes[sizeCount].examples;
 				selectOptions += "</option>";

@@ -37,7 +37,7 @@ savageWorldsSciFiOptions['walker'] = Array(
 );
 savageWorldsSciFiSizes['walker'] = Array(
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Ultralight (unofficial)',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -64,7 +64,7 @@ savageWorldsSciFiSizes['walker'] = Array(
 	 showWithOption: 'ultra-light',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Light',
 	},
 	 examples: {
@@ -87,7 +87,7 @@ savageWorldsSciFiSizes['walker'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Medium',
 	},
 	 examples: {
@@ -110,7 +110,7 @@ savageWorldsSciFiSizes['walker'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Heavy',
 	},
 	 examples: {
@@ -133,7 +133,7 @@ savageWorldsSciFiSizes['walker'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Super Heavy',
 	},
 	 examples: {
@@ -156,7 +156,7 @@ savageWorldsSciFiSizes['walker'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Titan',
 		 'pt-BR': '',
 		 'de-DE': '',

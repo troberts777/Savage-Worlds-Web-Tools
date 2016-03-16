@@ -14,7 +14,7 @@ angular.module("baseApp").controller(
 
 
 			$scope.init = function() {
-				$scope.creatorObj = new sciFiCreator();
+				$scope.creatorObj = new scifiCreator();
 
 
 
@@ -59,7 +59,7 @@ angular.module("baseApp").controller(
 
 						$rootScope.title_tag = translation.INDEX_BUTTON_SCIFI_STARSHIP + " | " + translation.APP_TITLE;
 						$rootScope.subtitle_tag = translation.INDEX_BUTTON_SCIFI_STARSHIP;
-						$scope.size_label  = translation.CREATOR_SIZE;
+						$scope.sizeLabel  = translation.CREATOR_SIZE;
 
 						$scope.fixed_options = Array(
 							{
@@ -243,17 +243,44 @@ angular.module("baseApp").controller(
 
 			}
 
+
+			$scope.closeConfirmDialog = function( ) {
+				$scope.showConfirmDialog = false;
+				// reset confirm to nothing...
+				$scope.cofirmDialogYes = function() {
+					$scope.showConfirmDialog = false;
+				}
+			}
+
+			$scope.cofirmDialogYes = function() {
+				// empty to be replaced...
+				$scope.showConfirmDialog = false;
+			}
+
+			$scope.confirmDialogQuestion = "";
+
+			$scope.confirmDialog = function( confirmationMessage, onYes ) {
+				$scope.confirmDialogQuestion = confirmationMessage;
+				$scope.showConfirmDialog = true;
+				$scope.cofirmDialogYes = onYes;
+			}
+
+
 			$scope.removeSavedItem = function( itemIndex ) {
 
 				$translate([
 					'CREATOR_DELETION_CONFIRMATION'
 				]).then(
 					function (translation) {
-						if( confirm( translation.CREATOR_DELETION_CONFIRMATION ) ) {
-							$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-							$scope.saved_items.splice( itemIndex, 1);
-							localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
-						}
+						$scope.confirmDialog(
+							translation.CREATOR_DELETION_CONFIRMATION,
+							function() {
+								$scope.showConfirmDialog = false;
+								$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+								$scope.saved_items.splice( itemIndex, 1);
+								localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
+							}
+						);
 					}
 				);
 			}
@@ -373,10 +400,10 @@ angular.module("baseApp").controller(
 						};
 						$scope.size_options.push( default_size_object );
 						for(sizec = 0; sizec < savageWorldsSciFiSizes[itemType].length; sizec++) {
-							if( savageWorldsSciFiSizes[itemType][sizec].size_label[localStorage["users_preferred_language"]])
-								display_label = savageWorldsSciFiSizes[itemType][sizec].size_label[localStorage["users_preferred_language"]] + " - " + $scope.size_label + " " + savageWorldsSciFiSizes[itemType][sizec].size;
+							if( savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]])
+								display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
 							else
-								display_label = savageWorldsSciFiSizes[itemType][sizec].size_label["en-US"] + " - " + $scope.size_label + " " + savageWorldsSciFiSizes[itemType][sizec].size;
+								display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel["en-US"] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
 
 							push_object = {
 								id: savageWorldsSciFiSizes[itemType][sizec].size,

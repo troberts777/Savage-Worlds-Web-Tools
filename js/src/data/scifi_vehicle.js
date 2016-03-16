@@ -37,7 +37,7 @@ savageWorldsSciFiOptions['vehicle'] = Array(
 );
 savageWorldsSciFiSizes['vehicle'] = Array(
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Ultralight',
 	},
 	 examples: {
@@ -60,7 +60,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Light',
 	},
 	 examples: {
@@ -83,7 +83,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Medium',
 	},
 	 examples: {
@@ -106,7 +106,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Large',
 	},
 	 examples: {
@@ -129,7 +129,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Heavy',
 	},
 	 examples: {
@@ -152,7 +152,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Super Heavy',
 	},
 	 examples: {
@@ -175,7 +175,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Titan',
 	},
 	 examples: {
@@ -198,7 +198,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Colossus',
 	},
 	 examples: {
@@ -221,7 +221,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Goliath',
 	},
 	 examples: {

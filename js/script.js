@@ -1038,8 +1038,8 @@ savageCharacter.prototype.getLocalName = function( incoming_string_array ) {
 	Creative Commons Attribution 4.0 International License.
 */
 
-var sciFiCreator = function() {};
-sciFiCreator.prototype = {
+var scifiCreator = function() {};
+scifiCreator.prototype = {
 
 	init: function(objectType, objectLabel, availableSizes, availableMods, availableOptions) {
 		this.itemName = "";
@@ -1212,7 +1212,7 @@ sciFiCreator.prototype = {
 		html_return += this.objectDescription + "</p><br />";
 
 		if(this.selectedSize && this.selectedSize.size > 0) {
-			html_return += "<strong>" + this.getLocalName(this.selectedSize.size_label)  + "</strong>: ";
+			html_return += "<strong>" + this.getLocalName(this.selectedSize.sizeLabel)  + "</strong>: ";
 			html_return += this.getTranslation("CREATOR_SIZE") + " " + this.size + ", ";
 			if(this.acc > 0)
 				html_return += this.getTranslation("CREATOR_ACC_TS") + " " +  this.acc + "/" + this.formatPaceRealWorld(this.ts) + ", ";
@@ -1342,8 +1342,8 @@ sciFiCreator.prototype = {
 		else
 			html_return += "\n";
 
-		if(this.selectedSize && this.selectedSize.size_label) {
-			html_return += "[b]" + this.getLocalName(this.selectedSize.size_label) + "[/b]: ";
+		if(this.selectedSize && this.selectedSize.sizeLabel) {
+			html_return += "[b]" + this.getLocalName(this.selectedSize.sizeLabel) + "[/b]: ";
 			html_return += this.getTranslation("CREATOR_SIZE") + " " + this.size + ", ";
 			if(this.acc > 0)
 				html_return += this.getTranslation("CREATOR_ACC_TS") + " " + this.acc + "/" + this.formatPaceRealWorld(this.ts) + ", ";
@@ -1590,7 +1590,7 @@ sciFiCreator.prototype = {
 	calculate: function() {
 
 
-		if( this.selectedSize && this.selectedSize.size_label ) {
+		if( this.selectedSize && this.selectedSize.sizeLabel ) {
 			// Flush Stats for recalulation
 			this.strength = 0;
 
@@ -2128,7 +2128,7 @@ sciFiCreator.prototype = {
 					if(  this.selectedSize.size == this.availableSizes[sizeCount].size )
 						isSelected = " selected='selected'";
 				selectOptions += "<option value='" + this.availableSizes[sizeCount].size + "'" + isSelected + ">";
-				selectOptions += this.availableSizes[sizeCount].size_label + " - Size " + this.availableSizes[sizeCount].size;
+				selectOptions += this.availableSizes[sizeCount].sizeLabel + " - Size " + this.availableSizes[sizeCount].size;
 				if( this.availableSizes[sizeCount].examples )
 					selectOptions += " - " + this.availableSizes[sizeCount].examples;
 				selectOptions += "</option>";
@@ -2675,7 +2675,7 @@ angular.module("baseApp").controller(
 
 
 			$scope.init = function() {
-				$scope.creatorObj = new sciFiCreator();
+				$scope.creatorObj = new scifiCreator();
 
 
 
@@ -2720,7 +2720,7 @@ angular.module("baseApp").controller(
 
 						$rootScope.title_tag = translation.INDEX_BUTTON_SCIFI_POWER + " | " + translation.APP_TITLE;
 						$rootScope.subtitle_tag = translation.INDEX_BUTTON_SCIFI_POWER;
-						$scope.size_label  = translation.CREATOR_SIZE;
+						$scope.sizeLabel  = translation.CREATOR_SIZE;
 
 						$scope.fixed_options = Array(
 							{
@@ -2904,17 +2904,44 @@ angular.module("baseApp").controller(
 
 			}
 
+
+			$scope.closeConfirmDialog = function( ) {
+				$scope.showConfirmDialog = false;
+				// reset confirm to nothing...
+				$scope.cofirmDialogYes = function() {
+					$scope.showConfirmDialog = false;
+				}
+			}
+
+			$scope.cofirmDialogYes = function() {
+				// empty to be replaced...
+				$scope.showConfirmDialog = false;
+			}
+
+			$scope.confirmDialogQuestion = "";
+
+			$scope.confirmDialog = function( confirmationMessage, onYes ) {
+				$scope.confirmDialogQuestion = confirmationMessage;
+				$scope.showConfirmDialog = true;
+				$scope.cofirmDialogYes = onYes;
+			}
+
+
 			$scope.removeSavedItem = function( itemIndex ) {
 
 				$translate([
 					'CREATOR_DELETION_CONFIRMATION'
 				]).then(
 					function (translation) {
-						if( confirm( translation.CREATOR_DELETION_CONFIRMATION ) ) {
-							$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-							$scope.saved_items.splice( itemIndex, 1);
-							localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
-						}
+						$scope.confirmDialog(
+							translation.CREATOR_DELETION_CONFIRMATION,
+							function() {
+								$scope.showConfirmDialog = false;
+								$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+								$scope.saved_items.splice( itemIndex, 1);
+								localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
+							}
+						);
 					}
 				);
 			}
@@ -3035,10 +3062,10 @@ angular.module("baseApp").controller(
 						};
 						$scope.size_options.push( default_size_object );
 						for(sizec = 0; sizec < savageWorldsSciFiSizes[itemType].length; sizec++) {
-							if( savageWorldsSciFiSizes[itemType][sizec].size_label[localStorage["users_preferred_language"]])
-								display_label = savageWorldsSciFiSizes[itemType][sizec].size_label[localStorage["users_preferred_language"]] + " - " + $scope.size_label + " " + savageWorldsSciFiSizes[itemType][sizec].size;
+							if( savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]])
+								display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
 							else
-								display_label = savageWorldsSciFiSizes[itemType][sizec].size_label["en-US"] + " - " + $scope.size_label + " " + savageWorldsSciFiSizes[itemType][sizec].size;
+								display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel["en-US"] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
 
 							push_object = {
 								id: savageWorldsSciFiSizes[itemType][sizec].size,
@@ -3251,7 +3278,7 @@ angular.module("baseApp").controller(
 
 
 			$scope.init = function() {
-				$scope.creatorObj = new sciFiCreator();
+				$scope.creatorObj = new scifiCreator();
 
 
 
@@ -3296,7 +3323,7 @@ angular.module("baseApp").controller(
 
 						$rootScope.title_tag = translation.INDEX_BUTTON_SCIFI_STARSHIP + " | " + translation.APP_TITLE;
 						$rootScope.subtitle_tag = translation.INDEX_BUTTON_SCIFI_STARSHIP;
-						$scope.size_label  = translation.CREATOR_SIZE;
+						$scope.sizeLabel  = translation.CREATOR_SIZE;
 
 						$scope.fixed_options = Array(
 							{
@@ -3480,17 +3507,44 @@ angular.module("baseApp").controller(
 
 			}
 
+
+			$scope.closeConfirmDialog = function( ) {
+				$scope.showConfirmDialog = false;
+				// reset confirm to nothing...
+				$scope.cofirmDialogYes = function() {
+					$scope.showConfirmDialog = false;
+				}
+			}
+
+			$scope.cofirmDialogYes = function() {
+				// empty to be replaced...
+				$scope.showConfirmDialog = false;
+			}
+
+			$scope.confirmDialogQuestion = "";
+
+			$scope.confirmDialog = function( confirmationMessage, onYes ) {
+				$scope.confirmDialogQuestion = confirmationMessage;
+				$scope.showConfirmDialog = true;
+				$scope.cofirmDialogYes = onYes;
+			}
+
+
 			$scope.removeSavedItem = function( itemIndex ) {
 
 				$translate([
 					'CREATOR_DELETION_CONFIRMATION'
 				]).then(
 					function (translation) {
-						if( confirm( translation.CREATOR_DELETION_CONFIRMATION ) ) {
-							$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-							$scope.saved_items.splice( itemIndex, 1);
-							localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
-						}
+						$scope.confirmDialog(
+							translation.CREATOR_DELETION_CONFIRMATION,
+							function() {
+								$scope.showConfirmDialog = false;
+								$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+								$scope.saved_items.splice( itemIndex, 1);
+								localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
+							}
+						);
 					}
 				);
 			}
@@ -3610,10 +3664,10 @@ angular.module("baseApp").controller(
 						};
 						$scope.size_options.push( default_size_object );
 						for(sizec = 0; sizec < savageWorldsSciFiSizes[itemType].length; sizec++) {
-							if( savageWorldsSciFiSizes[itemType][sizec].size_label[localStorage["users_preferred_language"]])
-								display_label = savageWorldsSciFiSizes[itemType][sizec].size_label[localStorage["users_preferred_language"]] + " - " + $scope.size_label + " " + savageWorldsSciFiSizes[itemType][sizec].size;
+							if( savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]])
+								display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
 							else
-								display_label = savageWorldsSciFiSizes[itemType][sizec].size_label["en-US"] + " - " + $scope.size_label + " " + savageWorldsSciFiSizes[itemType][sizec].size;
+								display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel["en-US"] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
 
 							push_object = {
 								id: savageWorldsSciFiSizes[itemType][sizec].size,
@@ -3820,7 +3874,7 @@ angular.module("baseApp").controller(
 
 
 			$scope.init = function() {
-				$scope.creatorObj = new sciFiCreator();
+				$scope.creatorObj = new scifiCreator();
 
 
 
@@ -3865,7 +3919,7 @@ angular.module("baseApp").controller(
 
 						$rootScope.title_tag = translation.INDEX_BUTTON_SCIFI_VEHICLE + " | " + translation.APP_TITLE;
 						$rootScope.subtitle_tag = translation.INDEX_BUTTON_SCIFI_VEHICLE;
-						$scope.size_label  = translation.CREATOR_SIZE;
+						$scope.sizeLabel  = translation.CREATOR_SIZE;
 
 						$scope.fixed_options = Array(
 							{
@@ -4049,17 +4103,44 @@ angular.module("baseApp").controller(
 
 			}
 
+
+			$scope.closeConfirmDialog = function( ) {
+				$scope.showConfirmDialog = false;
+				// reset confirm to nothing...
+				$scope.cofirmDialogYes = function() {
+					$scope.showConfirmDialog = false;
+				}
+			}
+
+			$scope.cofirmDialogYes = function() {
+				// empty to be replaced...
+				$scope.showConfirmDialog = false;
+			}
+
+			$scope.confirmDialogQuestion = "";
+
+			$scope.confirmDialog = function( confirmationMessage, onYes ) {
+				$scope.confirmDialogQuestion = confirmationMessage;
+				$scope.showConfirmDialog = true;
+				$scope.cofirmDialogYes = onYes;
+			}
+
+
 			$scope.removeSavedItem = function( itemIndex ) {
 
 				$translate([
 					'CREATOR_DELETION_CONFIRMATION'
 				]).then(
 					function (translation) {
-						if( confirm( translation.CREATOR_DELETION_CONFIRMATION ) ) {
-							$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-							$scope.saved_items.splice( itemIndex, 1);
-							localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
-						}
+						$scope.confirmDialog(
+							translation.CREATOR_DELETION_CONFIRMATION,
+							function() {
+								$scope.showConfirmDialog = false;
+								$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+								$scope.saved_items.splice( itemIndex, 1);
+								localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
+							}
+						);
 					}
 				);
 			}
@@ -4179,10 +4260,10 @@ angular.module("baseApp").controller(
 						};
 						$scope.size_options.push( default_size_object );
 						for(sizec = 0; sizec < savageWorldsSciFiSizes[itemType].length; sizec++) {
-							if( savageWorldsSciFiSizes[itemType][sizec].size_label[localStorage["users_preferred_language"]])
-								display_label = savageWorldsSciFiSizes[itemType][sizec].size_label[localStorage["users_preferred_language"]] + " - " + $scope.size_label + " " + savageWorldsSciFiSizes[itemType][sizec].size;
+							if( savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]])
+								display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
 							else
-								display_label = savageWorldsSciFiSizes[itemType][sizec].size_label["en-US"] + " - " + $scope.size_label + " " + savageWorldsSciFiSizes[itemType][sizec].size;
+								display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel["en-US"] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
 
 							push_object = {
 								id: savageWorldsSciFiSizes[itemType][sizec].size,
@@ -4389,7 +4470,7 @@ angular.module("baseApp").controller(
 
 
 			$scope.init = function() {
-				$scope.creatorObj = new sciFiCreator();
+				$scope.creatorObj = new scifiCreator();
 
 
 
@@ -4434,7 +4515,7 @@ angular.module("baseApp").controller(
 
 						$rootScope.title_tag = translation.INDEX_BUTTON_SCIFI_WALKER + " | " + translation.APP_TITLE;
 						$rootScope.subtitle_tag = translation.INDEX_BUTTON_SCIFI_WALKER;
-						$scope.size_label  = translation.CREATOR_SIZE;
+						$scope.sizeLabel  = translation.CREATOR_SIZE;
 
 						$scope.fixed_options = Array(
 							{
@@ -4618,17 +4699,42 @@ angular.module("baseApp").controller(
 
 			}
 
+			$scope.closeConfirmDialog = function( ) {
+				$scope.showConfirmDialog = false;
+				// reset confirm to nothing...
+				$scope.cofirmDialogYes = function() {
+					$scope.showConfirmDialog = false;
+				}
+			}
+
+			$scope.cofirmDialogYes = function() {
+				// empty to be replaced...
+				$scope.showConfirmDialog = false;
+			}
+
+			$scope.confirmDialogQuestion = "";
+
+			$scope.confirmDialog = function( confirmationMessage, onYes ) {
+				$scope.confirmDialogQuestion = confirmationMessage;
+				$scope.showConfirmDialog = true;
+				$scope.cofirmDialogYes = onYes;
+			}
+
 			$scope.removeSavedItem = function( itemIndex ) {
 
 				$translate([
 					'CREATOR_DELETION_CONFIRMATION'
 				]).then(
 					function (translation) {
-						if( confirm( translation.CREATOR_DELETION_CONFIRMATION ) ) {
-							$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-							$scope.saved_items.splice( itemIndex, 1);
-							localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
-						}
+						$scope.confirmDialog(
+							translation.CREATOR_DELETION_CONFIRMATION,
+							function() {
+								$scope.showConfirmDialog = false;
+								$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+								$scope.saved_items.splice( itemIndex, 1);
+								localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
+							}
+						);
 					}
 				);
 			}
@@ -4748,10 +4854,10 @@ angular.module("baseApp").controller(
 						};
 						$scope.size_options.push( default_size_object );
 						for(sizec = 0; sizec < savageWorldsSciFiSizes[itemType].length; sizec++) {
-							if( savageWorldsSciFiSizes[itemType][sizec].size_label[localStorage["users_preferred_language"]])
-								display_label = savageWorldsSciFiSizes[itemType][sizec].size_label[localStorage["users_preferred_language"]] + " - " + $scope.size_label + " " + savageWorldsSciFiSizes[itemType][sizec].size;
+							if( savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]])
+								display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
 							else
-								display_label = savageWorldsSciFiSizes[itemType][sizec].size_label["en-US"] + " - " + $scope.size_label + " " + savageWorldsSciFiSizes[itemType][sizec].size;
+								display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel["en-US"] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
 
 							push_object = {
 								id: savageWorldsSciFiSizes[itemType][sizec].size,
@@ -14840,7 +14946,7 @@ savageWorldsSciFiOptions['power_armor'] = Array(
 );
 savageWorldsSciFiSizes['power_armor'] = Array(
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Light Power Armor',
 		 'pt-BR': 'pg-Light Power Armor',
 		 'de-DE': 'de-Light Power Armor',
@@ -14867,7 +14973,7 @@ savageWorldsSciFiSizes['power_armor'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Medium Power Armor',
 		 'pt-BR': 'pg-Medium Power Armor',
 		 'de-DE': 'de-Medium Power Armor',
@@ -14894,7 +15000,7 @@ savageWorldsSciFiSizes['power_armor'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Heavy Power Armor',
 		 'pt-BR': 'pg-Heavy Power Armor',
 		 'de-DE': 'de-Heavy Power Armor',
@@ -15513,7 +15619,7 @@ savageWorldsSciFiOptions['starship'] = Array(
 );
 savageWorldsSciFiSizes['starship'] = Array(
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Small',
 	},
 	 examples: {
@@ -15536,7 +15642,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Medium',
 	},
 	 examples: {
@@ -15559,7 +15665,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Large',
 	},
 	 examples: {
@@ -15582,7 +15688,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Huge',
 	},
 	 examples: {
@@ -15605,7 +15711,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Giant',
 	},
 	 examples: {
@@ -15628,7 +15734,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Gargantuan',
 	},
 	 examples: {
@@ -15651,7 +15757,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Behemoth',
 	},
 	 examples: {
@@ -15674,7 +15780,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Leviathan',
 	},
 	 examples: {
@@ -15697,7 +15803,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'World Killer',
 	},
 	 examples: {
@@ -16473,7 +16579,7 @@ savageWorldsSciFiOptions['vehicle'] = Array(
 );
 savageWorldsSciFiSizes['vehicle'] = Array(
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Ultralight',
 	},
 	 examples: {
@@ -16496,7 +16602,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Light',
 	},
 	 examples: {
@@ -16519,7 +16625,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Medium',
 	},
 	 examples: {
@@ -16542,7 +16648,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Large',
 	},
 	 examples: {
@@ -16565,7 +16671,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Heavy',
 	},
 	 examples: {
@@ -16588,7 +16694,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Super Heavy',
 	},
 	 examples: {
@@ -16611,7 +16717,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Titan',
 	},
 	 examples: {
@@ -16634,7 +16740,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Colossus',
 	},
 	 examples: {
@@ -16657,7 +16763,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Goliath',
 	},
 	 examples: {
@@ -17411,7 +17517,7 @@ savageWorldsSciFiOptions['walker'] = Array(
 );
 savageWorldsSciFiSizes['walker'] = Array(
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Ultralight (unofficial)',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -17438,7 +17544,7 @@ savageWorldsSciFiSizes['walker'] = Array(
 	 showWithOption: 'ultra-light',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Light',
 	},
 	 examples: {
@@ -17461,7 +17567,7 @@ savageWorldsSciFiSizes['walker'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Medium',
 	},
 	 examples: {
@@ -17484,7 +17590,7 @@ savageWorldsSciFiSizes['walker'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Heavy',
 	},
 	 examples: {
@@ -17507,7 +17613,7 @@ savageWorldsSciFiSizes['walker'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Super Heavy',
 	},
 	 examples: {
@@ -17530,7 +17636,7 @@ savageWorldsSciFiSizes['walker'] = Array(
 	 showWithOption: '',
 },
 {
-	 size_label: {
+	 sizeLabel: {
 		 'en-US': 'Titan',
 		 'pt-BR': '',
 		 'de-DE': '',
