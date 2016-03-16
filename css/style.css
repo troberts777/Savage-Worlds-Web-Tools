@@ -295,11 +295,15 @@ button.round, .button.round {
     .modal-container .reveal label {
       color: #333; }
 
-/* line 321, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+/* line 322, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+.even-modaler {
+  z-index: 2000 !important; }
+
+/* line 325, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
 .no-wrap {
   white-space: nowrap; }
 
-/* line 324, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+/* line 328, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
 .language-select {
   outline: none;
   border: solid 1px #999;

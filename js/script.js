@@ -2388,6 +2388,8 @@ angular.module("baseApp").controller(
 
 			if( typeof(localStorage["com.jdg.swwt2.extras.active_books"]) != "undefined"  && localStorage["com.jdg.swwt2.extras.active_books"] != "") {
 				$scope.active_books = JSON.parse(localStorage["com.jdg.swwt2.extras.active_books"]);
+			} else {
+				$scope.active_books[0] = true;
 			}
 
 			$translate(['APP_TITLE', 'INDEX_BUTTON_CORE_EXTRAS','EXTRAS_SEARCH', 'EXTRAS_LIBRARIES', 'EXTRAS_RESULTS', 'EXTRAS_RESULTS_INTRO', 'EXTRAS_NO_RESULTS' ]).then(function (translation) {
@@ -2463,8 +2465,19 @@ angular.module("baseApp").controller(
 
 					entry_object.local_book = get_book_by_id( entry_object.book );
 
-					entry_object.parsed_attributes = JSON.parse( entry_object.attributes );
-					parsed_skills = JSON.parse( entry_object.skills );
+					try {
+						entry_object.parsed_attributes = JSON.parse( entry_object.attributes );
+					}
+					catch(e) {
+						entry_object.parsed_attributes = {};
+					}
+
+					try {
+						parsed_skills = JSON.parse( entry_object.skills );
+					}
+					catch(e) {
+						parsed_skills = {};
+					}
 //					console.log("parsed_skills", parsed_skills);
 					entry_object.display_skills = "";
 					for( skill_key in parsed_skills ) {
@@ -2515,31 +2528,58 @@ angular.module("baseApp").controller(
 				return entry_object;
 			}
 
-			$scope.is_found = function( entry_object ) {
-				returnValue = false;
-
-				var search_term = $scope.input_extras_search;
-				search_term = search_term.toLowerCase().trim();
-
+			$scope.has_search_term = function( entry_object, search_term ) {
+				search_term = search_term.trim();
+				return_value = false;
 				if( entry_object.name[ localStorage["users_preferred_language"] ] ) {
 					if( entry_object.name[ localStorage["users_preferred_language"] ].toLowerCase().indexOf( search_term ) > -1 )
-						returnValue = true;
+						return_value =  true;
 				} else {
 					if( entry_object.name[ "en-US" ].toLowerCase().indexOf( search_term )  > -1 )
-						returnValue = true;
+						return_value =  true;
 				}
 
 				if( entry_object.tags[ localStorage["users_preferred_language"] ] ) {
 					if( entry_object.tags[ localStorage["users_preferred_language"] ].toLowerCase().indexOf( search_term + "," ) > -1 )
-						returnValue = true;
+						return_value =  true;
 				} else {
 					if( entry_object.tags[ "en-US" ].toLowerCase().indexOf( search_term + ",")  > -1 )
-						returnValue = true;
+						return_value =  true;
 				}
 				if( $scope.active_books[ entry_object.book - 1 ] == false )
-					returnValue = false;
+					return_value =  false;
 
-				return returnValue;
+				return return_value;
+			}
+
+			$scope.is_found = function( entry_object ) {
+				returnValue = false;
+
+				if( $scope.input_extras_search.indexOf(",") < 0 ) {
+
+					var search_term = $scope.input_extras_search;
+					search_term = search_term.toLowerCase().trim();
+
+					return $scope.has_search_term( entry_object, search_term );
+
+				} else {
+
+					search_terms = $scope.input_extras_search.split(",");
+
+					for( var stc = 0; stc < search_terms.length; stc++) {
+
+						if(
+							search_terms[stc].trim() != ""
+								&&
+								$scope.has_search_term( entry_object, search_terms[stc] )
+						) {
+							return true;
+						}
+
+					}
+
+					return false;
+				}
 			}
 
 
@@ -2547,6 +2587,8 @@ angular.module("baseApp").controller(
 		}
 	]
 );
+
+
 
 
 angular.module("baseApp").controller(
