@@ -1,0 +1,11 @@
+<div class="modal-container" ng-show="showConfirmDialog == true">
+	<div class="reveal">
+
+	  <p class="lead" ng-bind-html="confirmDialogQuestion">Confirmation Delete</p>
+
+	  <div class="text-right">
+	  	<button class="button small secondary" ng-click="closeConfirmDialog()"  type="button" translate="GENERAL_CANCEL"></button>
+	  	<button class="button small primary" ng-click="cofirmDialogYes()" type="button" translate="GENERAL_YES"></button>
+	  </div>
+	</div>
+</div>
