@@ -30,6 +30,7 @@ savageWorldsBooksList[0] = {
 
 	},
 	year: "2011",
+	uses_sanity: 0,
 	copyright: {
 		"en-US": "2011 Pinnacle Entertainment Group",
 		"de-DE": "2011 Pinnacle Entertainment Group",
@@ -56,6 +57,7 @@ savageWorldsBooksList[1] = {
 
 	},
 	year: "2012",
+	uses_sanity: 0,
 	copyright: {
 		"en-US": "2012 Pinnacle Entertainment Group",
 		"pt-BR": "",
@@ -78,6 +80,7 @@ savageWorldsBooksList[2] = {
 
 	},
 	year: "2012",
+	uses_sanity: 1,
 	copyright: {
 		"en-US": "2012 Pinnacle Entertainment Group",
 
@@ -98,6 +101,7 @@ savageWorldsBooksList[3] = {
 
 	},
 	year: "2014",
+	uses_sanity: 0,
 	copyright: {
 		"en-US": "2014 Pinnacle Entertainment Group",
 
@@ -118,6 +122,7 @@ savageWorldsBooksList[4] = {
 
 	},
 	year: "2014",
+	uses_sanity: 0,
 	copyright: {
 		"en-US": "2014 Pinnacle Entertainment Group",
 
@@ -138,6 +143,7 @@ savageWorldsBooksList[5] = {
 
 	},
 	year: "",
+	uses_sanity: 0,
 	copyright: {
 		"en-US": "Butch Curry, Open?",
 
@@ -158,6 +164,7 @@ savageWorldsBooksList[6] = {
 
 	},
 	year: "2015",
+	uses_sanity: 0,
 	copyright: {
 		"en-US": "2015 Pinnacle Entertainment Group, Trademarks of the Estate of Fritz Leiber.",
 
@@ -178,6 +185,7 @@ savageWorldsBooksList[7] = {
 
 	},
 	year: "2015",
+	uses_sanity: 0,
 	copyright: {
 		"en-US": "2015 Pinnacle Enterainment Group",
 
@@ -198,6 +206,7 @@ savageWorldsBooksList[8] = {
 
 	},
 	year: "",
+	uses_sanity: 0,
 	copyright: {
 		"en-US": "Adamant Entertainment",
 

@@ -3,12 +3,12 @@
 
 	  <h3 class="lead" translate="CREATOR_IMPORT_DATA">Import Dialog</h3>
 	  	<h4 translate="GENERAL_JSON">json</h4>
-	  	<textarea rows="10" ng-model="import_json" ng-keyup="updateImportData(import_json)"></textarea>
+	  	<textarea rows="10" ng-model="importJSON" ng-keyup="updateImportData(importJSON)"></textarea>
 
 	  <div class="text-right">
 	  <div translate="CREATOR_IMPORT_WARNING">Import Warning</div>
 	  	<button class="button small secondary" ng-click="closeDialogs()"  type="button" translate="GENERAL_CANCEL"></button>
-	  	<button class="button small primary" ng-click="importData(import_json)" type="button" translate="CREATOR_IMPORT"></button>
+	  	<button class="button small primary" ng-click="importData(importJSON)" type="button" translate="CREATOR_IMPORT"></button>
 	  </div>
 	</div>
 </div>

@@ -30,18 +30,18 @@
 			<fieldset class="fieldset">
 				<legend translate="CREATOR_BASIC"></legend>
 			<label>
-				<span translate="CREATOR_ARMOR_NAME">Starship Name</span><br />
+				<span translate="CREATOR_STARSHIP_NAME">Starship Name</span><br />
 				<input type="text" ng-keyup="updatePage()" ng-model="creatorObj.itemName" />
 			</label>
 
 			<label>
-				<span translate="CREATOR_ARMOR_DESCRIPTION">Starship Description</span><br />
+				<span translate="CREATOR_STARSHIP_DESCRIPTION">Starship Description</span><br />
 				<textarea rows="4" ng-keyup="updatePage()" ng-model="creatorObj.objectDescription"></textarea>
 			</label>
 
 
 			<label>
-				<span translate="CREATOR_ARMOR_SIZE">Size</span><br />
+				<span translate="CREATOR_STARSHIP_SIZE">Size</span><br />
 				<select ng-options="item.label for item in size_options track by item.id" ng-change="updateSize()" ng-model="size_selected">
 				</select>
 			</label>

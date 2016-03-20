@@ -197,6 +197,58 @@ function get_book_by_id( book_id, language ) {
 	return null;
 }
 
+function get_book_by_tag( book_tag, language ) {
+	if( language )
+		language = localStorage["users_preferred_language"];
+
+	for( bookcount = 0; bookcount < savageWorldsBooksList.length; bookcount++) {
+		if( savageWorldsBooksList[bookcount].short_name == book_tag ) {
+			if( savageWorldsBooksList[bookcount].name[ language ])
+				savageWorldsBooksList[bookcount].local_name = savageWorldsBooksList[bookcount].name[ language ];
+			else
+				savageWorldsBooksList[bookcount].local_name = savageWorldsBooksList[bookcount].name[ "en-US" ];
+
+			if( savageWorldsBooksList[bookcount].publisher[ language ])
+				savageWorldsBooksList[bookcount].local_publisher = savageWorldsBooksList[bookcount].publisher[ language ];
+			else
+				savageWorldsBooksList[bookcount].local_publisher = savageWorldsBooksList[bookcount].publisher[ "en-US" ];
+
+			if( savageWorldsBooksList[bookcount].copyright[ language ])
+				savageWorldsBooksList[bookcount].local_copyright = savageWorldsBooksList[bookcount].copyright[ language ];
+			else
+				savageWorldsBooksList[bookcount].local_copyright = savageWorldsBooksList[bookcount].copyright[ "en-US" ];
+
+			return  savageWorldsBooksList[bookcount];
+		}
+	}
+
+	return null;
+}
+
+function get_race_by_id( race_id, language ) {
+	if( language )
+		language = localStorage["users_preferred_language"];
+
+	for( var racecount = 0; racecount < savageWorldsRaces.length; racecount++) {
+		if( savageWorldsRaces[racecount].id == race_id ) {
+			if( savageWorldsRaces[racecount].name[ language ])
+				savageWorldsRaces[racecount].local_name = savageWorldsRaces[racecount].name[ language ];
+			else
+				savageWorldsRaces[racecount].local_name = savageWorldsRaces[racecount].name[ "en-US" ];
+
+			if( savageWorldsRaces[racecount].description[ language ])
+				savageWorldsRaces[racecount].local_description = savageWorldsRaces[racecount].description[ language ];
+			else
+				savageWorldsRaces[racecount].local_description = savageWorldsRaces[racecount].description[ "en-US" ];
+
+
+			savageWorldsRaces[racecount].bookObj = get_book_by_id( savageWorldsRaces[racecount].book, language);
+			return  savageWorldsRaces[racecount];
+		}
+	}
+	return null;
+}
+
 function localizeDiceValues() {
 	for( var ldcv = 0 ; ldcv < globalDiceValues.length; ldcv++) {
 		if( typeof(globalDiceValues[ldcv].label[ localStorage["users_preferred_language"] ] ) != "undefined") {
@@ -714,130 +766,168 @@ classDice.prototype = {
 var globalDiceValues = Array(
 	{
 		id: 0,
+		value: 0,
 		label: {
 			"en-US" : "n/a"
 		}
 	},
 	{
 		id: 1,
+		value: 4,
 		label: {
 			"en-US" : "d4"
 		}
 	},
 	{
 		id: 2,
+		value: 6,
 		label: {
 			"en-US" : "d6"
 		}
 	},
 	{
 		id: 3,
+		value: 8,
 		label: {
 			"en-US" : "d8"
 		}
 	},
 	{
 		id: 4,
+		value: 10,
 		label: {
 			"en-US" : "d10"
 		}
 	},
 	{
 		id: 5,
+		value: 12,
 		label: {
 			"en-US" : "d12"
 		}
 	},
 	{
 		id: 6,
+		value: 13,
 		label: {
 			"en-US" : "d12+1"
 		}
 	},
 	{
 		id: 7,
+		value: 14,
 		label: {
 			"en-US" : "d12+2"
 		}
 	},
 	{
 		id: 8,
+		value: 15,
 		label: {
 			"en-US" : "d12+3"
 		}
 	},
 	{
 		id: 9,
+		value: 16,
 		label: {
 			"en-US" : "d12+4"
 		}
 	},
 	{
 		id: 10,
+		value: 17,
 		label: {
 			"en-US" : "d12+5"
 		}
 	},
 	{
 		id: 11,
+		value: 18,
 		label: {
 			"en-US" : "d12+6"
 		}
 	},
 	{
 		id: 12,
+		value: 19,
 		label: {
 			"en-US" : "d12+7"
 		}
 	},
 	{
 		id: 13,
+		value: 20,
 		label: {
 			"en-US" : "d12+8"
 		}
 	},
 	{
 		id: 14,
+		value: 21,
 		label: {
 			"en-US" : "d12+9"
 		}
 	},
 	{
 		id: 15,
+		value: 22,
 		label: {
 			"en-US" : "d12+10"
 		}
 	},
 	{
 		id: 16,
+		value: 23,
 		label: {
 			"en-US" : "d12+11"
 		}
 	},
 	{
 		id: 17,
+		value: 24,
 		label: {
 			"en-US" : "d12+12"
 		}
 	},
 	{
 		id: 18,
+		value: 25,
 		label: {
 			"en-US" : "d12+13"
 		}
 	},
 	{
 		id: 19,
+		value: 26,
 		label: {
 			"en-US" : "d12+14"
 		}
 	}
 );
 
-function getDiceValue( diceID ) {
+function localizeDice( language ) {
+	if( !language )
+		language = localStorage["users_preferred_language"];
 	for( var gdv = 0 ; gdv < globalDiceValues.length; gdv++) {
-		if( diceID == globalDiceValues[gdv].id )
+		if( globalDiceValues[gdv].label[language] ) {
+			globalDiceValues[gdv].local_label = globalDiceValues[gdv].label[language];
+		} else {
+			globalDiceValues[gdv].local_label = globalDiceValues[gdv].label["en-US"];
+		}
+	}
+}
+function getDiceValue( diceID, language ) {
+
+	for( var gdv = 0 ; gdv < globalDiceValues.length; gdv++) {
+		if( diceID == globalDiceValues[gdv].id ) {
+			if( globalDiceValues[gdv].label[language] ) {
+				globalDiceValues[gdv].local_label = globalDiceValues[gdv].label[language];
+			} else {
+				globalDiceValues[gdv].local_label = globalDiceValues[gdv].label["en-US"];
+			}
 			return globalDiceValues[gdv];
+		}
 	}
 	return false;
 }
@@ -851,10 +941,16 @@ function savageCharacter (useLang) {
 
 	this.options = Array();
 
-	// SWD is /always/ available.
-	this.books = Array(
-		savageWorldsBooksList[0]
-	);
+	this.usesSanity = false;
+
+	this.books = Array();
+	for( bookCounter = 0; bookCounter < savageWorldsBooksList.length; bookCounter++ ) {
+		this.books[bookCounter] = get_book_by_id( savageWorldsBooksList[bookCounter].id );
+		if( this.books[bookCounter].id == 1 )
+			this.books[bookCounter].inUse = true;
+		else
+			this.books[bookCounter].inUse = false;
+	}
 
 	// base attributes...
 	this.attributes = {
@@ -881,6 +977,9 @@ function savageCharacter (useLang) {
 		this.useLang = localStorage["users_preferred_language"];
 	else
 		this.useLang = "en-US";
+
+	localizeDice( this.useLang);
+
 	// character creation perks....
 	this.perks = Array();
 
@@ -895,6 +994,22 @@ function savageCharacter (useLang) {
 
 	// gear list...
 	this.gear = Array();
+
+	this.race = {};
+
+	this.raceOptions = Array();
+
+	for( var raceCount = 0; raceCount < savageWorldsRaces.length; raceCount++ ) {
+		if( this.bookInUse( savageWorldsRaces[raceCount].book ) ) {
+			var newItem = {}
+			angular.extend(newItem, get_race_by_id( savageWorldsRaces[raceCount].id, this.useLang ));
+
+			this.raceOptions.push( newItem );
+		}
+
+	}
+	this.race = this.getRace(1);
+
 
 	this.genderOptions = Array(
 		{
@@ -911,12 +1026,120 @@ function savageCharacter (useLang) {
 		}
 	);
 	this.gender = this.genderOptions[0];
+
+	this.skillValues = {};
+
+	this.refreshAvailable();
+	this.validate();
+
+}
+
+savageCharacter.prototype.refreshAvailable = function( ) {
+
+	this.agilitySkills = Array();
+	this.smartsSkills = Array();
+	this.spiritSkills = Array();
+	this.strengthSkills = Array();
+
+	this.usesSanity = false;
+
+	for( skillCounter = 0; skillCounter < savageWorldsSkillList.length; skillCounter++ ) {
+		var showSkill = true;
+		if( savageWorldsSkillList[skillCounter].name[ this.useLang ] ) {
+			savageWorldsSkillList[skillCounter].local_name = savageWorldsSkillList[skillCounter].name[ this.useLang ];
+		} else {
+			savageWorldsSkillList[skillCounter].local_name = savageWorldsSkillList[skillCounter].name[ "en-US" ];
+		}
+		if( !savageWorldsSkillList[skillCounter].value )
+			savageWorldsSkillList[skillCounter].value = 0;
+		if( !savageWorldsSkillList[skillCounter].spec )
+			savageWorldsSkillList[skillCounter].spec = "";
+		if( !savageWorldsSkillList[skillCounter].specialties )
+			savageWorldsSkillList[skillCounter].specialties = Array();
+
+		savageWorldsSkillList[skillCounter].display_value = "";
+		if( savageWorldsSkillList[skillCounter].value  > 0 ) {
+			diceValue = getDiceValue( savageWorldsSkillList[skillCounter].value );
+			savageWorldsSkillList[skillCounter].display_value = diceValue.local_label;
+		}
+
+		for( specialtyCounter = 0; specialtyCounter < savageWorldsSkillList[skillCounter].specialties.length; specialtyCounter++) {
+			savageWorldsSkillList[skillCounter].specialties[specialtyCounter].display_value = "";
+			if( savageWorldsSkillList[skillCounter].specialties[specialtyCounter].value  > 0 ) {
+				diceValue = getDiceValue( savageWorldsSkillList[skillCounter].specialties[specialtyCounter].value );
+				savageWorldsSkillList[skillCounter].specialties[specialtyCounter].display_value = diceValue.local_label;
+			}
+		}
+
+		if( !this.bookInUse( savageWorldsSkillList[skillCounter].book) )
+			showSkill = false;
+
+		if(  savageWorldsSkillList[skillCounter].for_arcane ) {
+			if( !this.hasArcane( savageWorldsSkillList[skillCounter].for_arcane ))
+				showSkill = false;
+		}
+
+		if( this.skillValues[ savageWorldsSkillList[skillCounter].id ] ) {
+			savageWorldsSkillList[skillCounter].value = this.skillValues[ savageWorldsSkillList[skillCounter].short_name ];
+
+		}
+
+
+
+		if( showSkill && savageWorldsSkillList[skillCounter].attribute == "agility" ) {
+			this.agilitySkills.push( savageWorldsSkillList[skillCounter] );
+		}
+		if( showSkill && savageWorldsSkillList[skillCounter].attribute == "smarts" ) {
+			this.smartsSkills.push( savageWorldsSkillList[skillCounter] );
+		}
+		if( showSkill && savageWorldsSkillList[skillCounter].attribute == "spirit" ) {
+			this.spiritSkills.push( savageWorldsSkillList[skillCounter] );
+		}
+		if( showSkill && savageWorldsSkillList[skillCounter].attribute == "strength" ) {
+			this.strengthSkills.push( savageWorldsSkillList[skillCounter] );
+		}
+	}
+
+	this.raceOptions = Array();
+	for( var raceCount = 0; raceCount < savageWorldsRaces.length; raceCount++ ) {
+
+		if( this.bookInUse( savageWorldsRaces[raceCount].book ) ) {
+			var newItem = {}
+			angular.extend(newItem, get_race_by_id( savageWorldsRaces[raceCount].id, this.useLang ));
+
+			this.raceOptions.push( newItem );
+		}
+
+	}
+
+
 }
 
 savageCharacter.prototype.setGender = function( genderID ) {
 	for(var gc = 0; gc < this.genderOptions.length; gc++) {
 		if( genderID == this.genderOptions[gc].id ) {
 			this.gender = this.genderOptions[gc];
+			return true;
+		}
+	}
+	return false;
+}
+
+savageCharacter.prototype.getRace = function( raceID ) {
+
+	for(var gc = 0; gc < this.raceOptions.length; gc++) {
+
+		if( raceID == this.raceOptions[gc].id ) {
+			return  this.raceOptions[gc];
+		}
+	}
+	return null;
+}
+
+savageCharacter.prototype.setRace = function( raceID ) {
+	for(var gc = 0; gc < this.raceOptions.length; gc++) {
+		if( raceID == this.raceOptions[gc].id ) {
+			this.race = this.raceOptions[gc];
 			return true;
 		}
 	}
@@ -961,9 +1184,112 @@ savageCharacter.prototype.removeGear = function(indexNumber) {
 
 // Validate does both calculation and validation of the character as per the base rules and settings
 savageCharacter.prototype.validate = function() {
+	this.isValid = true;
+	this.validationReport = Array();
+	this.skillPointsAvailable = 15;
+	this.skillPointsUsed = 0;
+
+	this.attributePointsAvailable = 5;
+	this.attributePointsUsed = 0;
+
+	// Calc init derived stats
+	this.derived.toughness = Math.floor(this.attributes.vigor.value / 2) + 2;
+	this.derived.armor = 0;
+	fightingSkill = this.getSkill("SKILL_FIGHTING");
+	this.parry = 2;
+	if( fightingSkill.value > 0 ) {
+		fightingValue = getDiceValue( fightingSkill.value );
+		this.derived.parry = Math.floor(fightingValue.value / 2) + 2;
+	}
+	this.derived.pace = 6;
+	this.derived.charisma = 0;
+	this.derived.sanity = Math.floor(this.attributes.spirit.value / 2) + 2;
+
+	// Calculate used skill points
+	for( skillCounter = 0; skillCounter < savageWorldsSkillList.length; skillCounter++) {
+		if( savageWorldsSkillList[skillCounter].value ) {
+
+			if( savageWorldsSkillList[skillCounter].value > this.attributes[savageWorldsSkillList[skillCounter].attribute].id ) {
+				regularCost = this.attributes[savageWorldsSkillList[skillCounter].attribute].id;
+				doubleCost = savageWorldsSkillList[skillCounter].value - this.attributes[savageWorldsSkillList[skillCounter].attribute].id;
+				this.skillPointsUsed += regularCost + doubleCost * 2;
+				
+			} else {
+				this.skillPointsUsed += savageWorldsSkillList[skillCounter].value;
+			}
+		}
+		
+		for( specialtyCounter = 0; specialtyCounter < savageWorldsSkillList[skillCounter].specialties.length; specialtyCounter++ ) {
+			if( savageWorldsSkillList[skillCounter].specialties[specialtyCounter].value ) {
+				if( savageWorldsSkillList[skillCounter].specialties[specialtyCounter].value > this.attributes[savageWorldsSkillList[skillCounter].attribute].id ) {
+					regularCost = this.attributes[savageWorldsSkillList[skillCounter].attribute].id;
+					doubleCost = savageWorldsSkillList[skillCounter].specialties[specialtyCounter].value - this.attributes[savageWorldsSkillList[skillCounter].attribute].id;
+					this.skillPointsUsed += regularCost + doubleCost * 2;				
+				} else {
+					this.skillPointsUsed += savageWorldsSkillList[skillCounter].specialties[specialtyCounter].value;
+				}
+			}
+		}
+	}
+
+	// Calculate used attribute points
+	this.attributePointsUsed += this.attributes.agility.id - 1;
+	this.attributePointsUsed += this.attributes.smarts.id - 1;
+	this.attributePointsUsed += this.attributes.spirit.id - 1;
+	this.attributePointsUsed += this.attributes.strength.id - 1;
+	this.attributePointsUsed += this.attributes.vigor.id - 1;
+
+
+	// this.attributePointsAvailable = this.attributePointsAvailable - this.attributePointsUsed;
+	// this.skillPointsAvailable = this.skillPointsAvailable - this.skillPointsUsed;
+
+	if( this.attributePointsUsed > this.attributePointsAvailable ) {
+		this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_ATTRIBUTES") );
+		this.isValid = false;
+	}
+
+	if( this.skillPointsUsed > this.skillPointsAvailable ) {
+		this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_SKILLS") );
+		this.isValid = false;
+	}
+	
+	// Process Hindrances
+	
+	// Process Selected Hindrances
+	// TODO
+	
+	// Process Available Hindrances
+	// TODO
+	
+	// Process Edges
+	// Process Selected Edges
+	// TODO
+	
+
+	// Apply Arcane Background
+	// TODO	
+	
+	// Process Available Edges
+	// TODO	
+
+
+		
+	// Calculate Perks Available
+	// TODO
+	
+	// Process Selected Perks
+	// TODO
+	
+
+
+	this.refreshAvailable();
 }
 
-savageCharacter.prototype.loadJSON = function( jsonString ) {
+savageCharacter.prototype.exportBBCode = function() {
+	return "TODO";
+}
+
+savageCharacter.prototype.importJSON = function( jsonString ) {
 	if( jsonString ) {
 		importObject = JSON.parse(jsonString);
 		if( importObject ) {
@@ -974,12 +1300,40 @@ savageCharacter.prototype.loadJSON = function( jsonString ) {
 				if( importObject.attributes[ attribute ] ) {
 					attribute = attribute.toLowerCase().trim();
 					if( this.attributes[attribute] )
-						this.attributes[attribute] = getDiceValue( importObject.attributes[ attribute ] );					
+						this.attributes[attribute] = getDiceValue( importObject.attributes[ attribute ] );
 				}
 			}
 
 			if( importObject.gender )
 				this.setGender( importObject.gender  );
+
+			if( importObject.race )
+				this.setRace( importObject.race  );
+
+			if( importObject.books ) {
+				for( var importCounter = 0; importCounter < importObject.books.length; importCounter++ ) {
+					for( var bookCounter = 0; bookCounter < this.books.length; bookCounter++ ) {
+						if ( importObject.books[importCounter] == this.books[bookCounter].short_name ) {
+							this.books[bookCounter].inUse = true;
+						}
+					}
+				}
+			}
+			if( importObject.skills ) {
+				for( var importCounter = 0; importCounter < importObject.skills.length; importCounter++ ) {
+					this.setSkill(
+						importObject.skills[importCounter].id,
+						importObject.skills[importCounter].value
+					);
+
+					if( importObject.skills[importCounter].specialties ) {
+						this.setSpecialties(
+							importObject.skills[importCounter].id,
+							importObject.skills[importCounter].specialties
+						);
+					}
+				}
+			}
 
 			this.validate();
 			return true;
@@ -989,8 +1343,13 @@ savageCharacter.prototype.loadJSON = function( jsonString ) {
 	return false;
 }
 
+savageCharacter.prototype.addBook = function( bookObject ) {
 
-savageCharacter.prototype.saveJSON = function() {
+}
+
+
+savageCharacter.prototype.exportJSON = function() {
+
 	exportObject = {};
 	exportObject.name = this.name;
 	exportObject.background = this.background;
@@ -998,6 +1357,7 @@ savageCharacter.prototype.saveJSON = function() {
 
 	exportObject.xp = this.xp;
 	exportObject.gender = this.gender.id;
+	exportObject.race = this.race.id;
 
 	exportObject.attributes = {
 		agility: this.attributes.agility.id,
@@ -1006,6 +1366,41 @@ savageCharacter.prototype.saveJSON = function() {
 		strength: this.attributes.strength.id,
 		vigor: this.attributes.vigor.id,
 	}
+
+	exportObject.books = Array();
+
+	for( var bookCounter = 0; bookCounter < this.books.length; bookCounter++ ) {
+		if ( this.books[bookCounter].inUse  )
+			exportObject.books.push( this.books[bookCounter].short_name );
+	}
+
+	exportObject.skills = Array();
+	for( var skillCounter = 0; skillCounter < savageWorldsSkillList.length; skillCounter++ ) {
+		if(
+			savageWorldsSkillList[skillCounter].value > 0
+			||
+			savageWorldsSkillList[skillCounter].specialties.length > 0
+		) {
+			if(savageWorldsSkillList[skillCounter].specialties.length > 0 ) {
+				exportObject.skills.push(
+					{
+						id: savageWorldsSkillList[skillCounter].id,
+						value: savageWorldsSkillList[skillCounter].value,
+						specialties: savageWorldsSkillList[skillCounter].specialties
+					}
+				);
+			} else {
+				exportObject.skills.push(
+					{
+						id: savageWorldsSkillList[skillCounter].id,
+						value: savageWorldsSkillList[skillCounter].value
+					}
+				);
+			}
+		}
+
+	}
+
 
 	return JSON.stringify( exportObject );
 }
@@ -1024,13 +1419,174 @@ savageCharacter.prototype.getTranslation = function(langKey) {
 	return langKey;
 }
 
-
-savageCharacter.prototype.getLocalName = function( incoming_string_array ) {
-		if( incoming_string_array[ this.useLang] ) {
-			return incoming_string_array[ this.useLang];
-		} else {
-			return incoming_string_array[ "en-US" ];
+savageCharacter.prototype.bookInUse = function( bookID ) {
+	for( var bookCounter = 0; bookCounter < this.books.length; bookCounter++) {
+		if( this.books[bookCounter].id == bookID ) {
+			if( this.books[bookCounter].inUse == true ){
+				if( this.books[bookCounter].uses_sanity > 0)
+					this.usesSanity = true;
+				return true;
+			}
 		}
+	}
+	return false;
+}
+
+savageCharacter.prototype.hasArcane = function( arcaneTag ) {
+
+	return false;
+}
+
+savageCharacter.prototype.getLocalName = function( incomingStringArray ) {
+		if( incomingStringArray[ this.useLang] ) {
+			return incomingStringArray[ this.useLang];
+		} else {
+			return incomingStringArray[ "en-US" ];
+		}
+}
+
+savageCharacter.prototype.incrementSkill = function( skillID ) {
+	for( var skillCounter = 0; skillCounter < savageWorldsSkillList.length; skillCounter++ ) {
+		if( savageWorldsSkillList[skillCounter].id == skillID ) {
+			savageWorldsSkillList[skillCounter].value++;
+			if( savageWorldsSkillList[skillCounter].value > 5)
+				savageWorldsSkillList[skillCounter].value = 5;
+
+			return true;
+		}
+
+	}
+	return false;
+}
+
+savageCharacter.prototype.decrementSkill = function( skillID ) {
+	for( var skillCounter = 0; skillCounter < savageWorldsSkillList.length; skillCounter++ ) {
+		if( savageWorldsSkillList[skillCounter].id == skillID ) {
+			savageWorldsSkillList[skillCounter].value--;
+			if( savageWorldsSkillList[skillCounter].value < 0)
+				savageWorldsSkillList[skillCounter].value = 0;
+
+			return true;
+		}
+
+	}
+	return false;
+}
+
+savageCharacter.prototype.addSpecialtySkill = function( skillID ) {
+	for( var skillCounter = 0; skillCounter < savageWorldsSkillList.length; skillCounter++ ) {
+		if( savageWorldsSkillList[skillCounter].id == skillID ) {
+			savageWorldsSkillList[skillCounter].specialties.push(
+				{
+					name: "",
+					value: 1 // d4
+				}
+			);
+
+		}
+
+	}
+	return false;
+}
+
+savageCharacter.prototype.setSkill = function( skillID, skillValue ) {
+	for( var skillCounter = 0; skillCounter < savageWorldsSkillList.length; skillCounter++ ) {
+		if( savageWorldsSkillList[skillCounter].id == skillID ) {
+			savageWorldsSkillList[skillCounter].value = skillValue;
+			return true;
+		}
+
+	}
+	return false;
+}
+
+savageCharacter.prototype.getSkill = function( skillID ) {
+	for( var skillCounter = 0; skillCounter < savageWorldsSkillList.length; skillCounter++ ) {
+		if( savageWorldsSkillList[skillCounter].id == skillID ) {
+			return savageWorldsSkillList[skillCounter];
+		}
+
+	}
+	return null;
+}
+
+savageCharacter.prototype.setSpecialties = function( skillID, specialtiesValue ) {
+	for( var skillCounter = 0; skillCounter < savageWorldsSkillList.length; skillCounter++ ) {
+		if( savageWorldsSkillList[skillCounter].id == skillID ) {
+			savageWorldsSkillList[skillCounter].specialties = specialtiesValue;
+			return true;
+		}
+
+	}
+	return false;
+}
+
+
+savageCharacter.prototype.incrementSpecialtySkill = function( skillID, specialtyIndex ) {
+	for( var skillCounter = 0; skillCounter < savageWorldsSkillList.length; skillCounter++ ) {
+		if( savageWorldsSkillList[skillCounter].id == skillID ) {
+			if( savageWorldsSkillList[skillCounter].specialties[ specialtyIndex] ) {
+				savageWorldsSkillList[skillCounter].specialties[ specialtyIndex].value++;
+				if( savageWorldsSkillList[skillCounter].specialties[ specialtyIndex].value < 0)
+					savageWorldsSkillList[skillCounter].specialties[ specialtyIndex].value = 0;
+				return true;
+			}
+		}
+
+	}
+	return false;
+}
+
+savageCharacter.prototype.decrementSpecialtySkill = function( skillID, specialtyIndex ) {
+	for( var skillCounter = 0; skillCounter < savageWorldsSkillList.length; skillCounter++ ) {
+		if( savageWorldsSkillList[skillCounter].id == skillID ) {
+			if( savageWorldsSkillList[skillCounter].specialties[ specialtyIndex] ) {
+
+				if( savageWorldsSkillList[skillCounter].specialties[ specialtyIndex].value < 2) {
+					//savageWorldsSkillList[skillCounter].specialties[ specialtyIndex].value = 0;
+					if( savageWorldsSkillList[skillCounter].specialties.length == 1){
+						savageWorldsSkillList[skillCounter].specialties = Array();
+						return true;
+					} else {
+						this.removeSpecialtyAtIndex( skillID, specialtyIndex);
+						return true;
+					}
+				} else {
+					savageWorldsSkillList[skillCounter].specialties[ specialtyIndex].value--;
+					return true;
+				}
+
+			}
+		}
+
+	}
+	return false;
+}
+
+savageCharacter.prototype.updateSpecialtySkillName = function( skillID, specialtyIndex, updatedName ) {
+	for( var skillCounter = 0; skillCounter < savageWorldsSkillList.length; skillCounter++ ) {
+		if( savageWorldsSkillList[skillCounter].id == skillID ) {
+			if( savageWorldsSkillList[skillCounter].specialties[ specialtyIndex] ) {
+				savageWorldsSkillList[skillCounter].specialties[ specialtyIndex].name = updatedName;
+				return true;
+			}
+		}
+
+	}
+	return false;
+}
+
+savageCharacter.prototype.removeSpecialtyAtIndex = function( skillID, specialtyIndex ) {
+	for( var skillCounter = 0; skillCounter < savageWorldsSkillList.length; skillCounter++ ) {
+		if( savageWorldsSkillList[skillCounter].id == skillID ) {
+			if( savageWorldsSkillList[skillCounter].specialties[ specialtyIndex] ) {
+				savageWorldsSkillList[skillCounter].specialties.splice(specialtyIndex, 1);
+				return true;
+			}
+		}
+
+	}
+	return false;
 }
 
 /*
@@ -2149,46 +2705,265 @@ angular.module("baseApp").controller(
 			var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_chargen";
 			var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.chargen";
 			var optionsLocalStorageVariable = "com.jdg.swwt2.options.chargen";
-			var itemType = "chargen";
-			var itemName = "Character";
+			var itemType = "character";
 
 
 
-			$translate([
-				'APP_TITLE', 'INDEX_BUTTON_CORE_CHAR'
-			]).then(
-				function (translation) {
+			$scope.init = function() {
+				$translate([
+					'APP_TITLE', 'INDEX_BUTTON_CORE_CHAR', 'CHARGEN_SPECIALIZATION_PLACEHOLDER'
+				]).then(
+					function (translation) {
 
-					$rootScope.title_tag = translation.INDEX_BUTTON_CORE_CHAR + " | " + translation.APP_TITLE;
-					$rootScope.subtitle_tag = translation.INDEX_BUTTON_CORE_CHAR;
+						$rootScope.title_tag = translation.INDEX_BUTTON_CORE_CHAR + " | " + translation.APP_TITLE;
+						$rootScope.subtitle_tag = translation.INDEX_BUTTON_CORE_CHAR;
+						$scope.specializionPlaceholder = translation.CHARGEN_SPECIALIZATION_PLACEHOLDER;
+					}
+				);
+
+				localizeDiceValues();
+
+
+				$scope.diceValues = Array();
+
+				for(gdvc = 0; gdvc < globalDiceValues.length; gdvc++) {
+					if( 0 < globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id < 6 )
+						$scope.diceValues.push( globalDiceValues[gdvc] );
 				}
-			);
 
-			localizeDiceValues();
+				$scope.savageCharacter = new savageCharacter( localStorage["users_preferred_language"] );
 
-			$scope.diceValues = Array();
+				if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
+					$scope.savageCharacter.importJSON( localStorage[ currentItemLocalStorageVariable ] );
+				}
 
-			for(gdvc = 0; gdvc < globalDiceValues.length; gdvc++) {
-				if( 0 < globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id < 6 )
-					$scope.diceValues.push( globalDiceValues[gdvc] );
+
+				$scope.charGenAttributes = $scope.savageCharacter.attributes;
 			}
 
-			$scope.savageCharacter = new savageCharacter( localStorage["users_preferred_language"] );
+			$scope.init();
 
-			if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
-				$scope.savageCharacter.loadJSON( localStorage[ currentItemLocalStorageVariable ] );
-			}
-
-
-
-			$scope.charGenAttributes = $scope.savageCharacter.attributes;
 			$scope.validateAndSave = function() {
 				$scope.savageCharacter.validate();
-				localStorage[currentItemLocalStorageVariable] = $scope.savageCharacter.saveJSON();
+				localStorage[currentItemLocalStorageVariable] = $scope.savageCharacter.exportJSON();
 			}
 			$scope.justSave = function() {
-				localStorage[currentItemLocalStorageVariable] = $scope.savageCharacter.saveJSON();
+				localStorage[currentItemLocalStorageVariable] = $scope.savageCharacter.exportJSON();
 			}
+
+
+			$scope.closeDialogs = function() {
+				$scope.newDialogOpen = false;
+				$scope.loadDialogOpen = false;
+				$scope.saveDialogOpen = false;
+				$scope.importDialogOpen = false;
+				$scope.exportDialogOpen = false;
+				$scope.optionsDialogOpen = false;
+				$scope.validationDialogOpen = false;
+			}
+
+			$scope.newDialog = function() {
+
+				$scope.closeDialogs();
+				$scope.newDialogOpen = true;
+			}
+
+			$scope.loadDialog = function() {
+
+				if( !localStorage[ savedItemsLocalStorageVariable ])
+					localStorage[ savedItemsLocalStorageVariable ] = "[]";
+
+				$scope.load_item = 0;
+				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+				for( sic = 0; sic < $scope.saved_items.length; sic++) {
+					$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
+				}
+
+				$scope.closeDialogs();
+
+				$scope.closeDialogs();
+				$scope.loadDialogOpen = true;
+			}
+			$scope.saveDialog = function() {
+				if( !localStorage[ savedItemsLocalStorageVariable ])
+					localStorage[ savedItemsLocalStorageVariable ] = "[]";
+
+				$scope.save_over = -1;
+				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+				for( sic = 0; sic < $scope.saved_items.length; sic++) {
+					$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
+				}
+
+				$scope.closeDialogs();
+				$scope.save_as_name = $scope.savageCharacter.name;
+				$scope.saveDialogOpen = true;
+			}
+			$scope.importDialog = function() {
+				$scope.importJSON = "";
+				$scope.closeDialogs();
+				$scope.importDialogOpen = true;
+			}
+
+			$scope.updateImportData = function(importJSON) {
+				$scope.importJSON = importJSON;
+			}
+
+			$scope.importData = function(importJSON) {
+
+				localStorage[ currentItemLocalStorageVariable ] = $scope.importJSON;
+				$scope.closeDialogs();
+				$scope.init();
+			}
+
+			$scope.exportDialog = function() {
+				$scope.exportBBCode = $scope.savageCharacter.exportBBCode();
+				$scope.exportJSON = $scope.savageCharacter.exportJSON();
+				$scope.closeDialogs();
+				$scope.exportDialogOpen = true;
+			}
+			$scope.optionsDialog = function() {
+				$scope.closeDialogs();
+				$scope.optionsDialogOpen = true;
+			}
+
+			$scope.loadItem = function( load_item ) {
+				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+				if( $scope.saved_items[ load_item ] )
+					localStorage[ currentItemLocalStorageVariable ] = $scope.saved_items[ load_item ].data;
+
+				$scope.closeDialogs();
+				$scope.init();
+			}
+
+			$scope.clearCurrent = function(  ) {
+
+				localStorage[ currentItemLocalStorageVariable ] = "";
+				$scope.closeDialogs();
+				$scope.init();
+			}
+
+			$scope.updateLoad = function( load_item ) {
+				$scope.load_item = load_item;
+			}
+
+			$scope.updateSave = function( save_over ) {
+				$scope.save_over = save_over;
+
+			}
+
+			$scope.updateBook = function( book_id ) {
+				$scope.validateAndSave();
+			}
+
+
+			$scope.closeConfirmDialog = function( ) {
+				$scope.showConfirmDialog = false;
+				// reset confirm to nothing...
+				$scope.cofirmDialogYes = function() {
+					$scope.showConfirmDialog = false;
+				}
+			}
+
+			$scope.cofirmDialogYes = function() {
+				// empty to be replaced...
+				$scope.showConfirmDialog = false;
+			}
+
+			$scope.confirmDialogQuestion = "";
+
+			$scope.confirmDialog = function( confirmationMessage, onYes ) {
+				$scope.confirmDialogQuestion = confirmationMessage;
+				$scope.showConfirmDialog = true;
+				$scope.cofirmDialogYes = onYes;
+			}
+
+			$scope.showValidationReport = function() {
+				$scope.closeDialogs();
+				$scope.validationDialogOpen = true;
+			}
+
+			$scope.removeSavedItem = function( itemIndex ) {
+				console.log("removeSavedItem", "called");
+				$translate([
+					'CREATOR_DELETION_CONFIRMATION'
+				]).then(
+					function (translation) {
+						$scope.confirmDialog(
+							translation.CREATOR_DELETION_CONFIRMATION,
+							function() {
+								$scope.showConfirmDialog = false;
+								$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+								$scope.saved_items.splice( itemIndex, 1);
+								localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
+							}
+						);
+					}
+				);
+			}
+
+			$scope.saveItem = function( save_over, saveName ) {
+
+				if( !localStorage[ savedItemsLocalStorageVariable ])
+					localStorage[ savedItemsLocalStorageVariable ] = "[]";
+
+				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+
+				if( save_over > -1 ) {
+					$scope.saved_items[ save_over ] = $scope.makeSaveObject( saveName );
+				} else {
+					$scope.saved_items.push( $scope.makeSaveObject( saveName ));
+				}
+				localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
+
+				$scope.closeDialogs();
+			}
+
+			$scope.makeSaveObject = function( saveName ) {
+				save_object = {
+					name: saveName,
+					datetime: Date(),
+					type: itemType,
+					data:  $scope.savageCharacter.exportJSON()
+				};
+				return save_object;
+			}
+
+			$scope.incrementSkill = function( skillID ) {
+				$scope.savageCharacter.incrementSkill( skillID );
+				$scope.validateAndSave();
+			}
+
+			$scope.decrementSkill = function( skillID ) {
+				$scope.savageCharacter.decrementSkill( skillID );
+				$scope.validateAndSave();
+			}
+			$scope.addSpecialtySkill = function( skillID ) {
+				$scope.savageCharacter.addSpecialtySkill( skillID );
+				$scope.validateAndSave();
+			}
+
+			$scope.incrementSpecialtySkill = function( skillID, specialtyIndex ) {
+				$scope.savageCharacter.incrementSpecialtySkill( skillID, specialtyIndex );
+				$scope.validateAndSave();
+			}
+
+			$scope.decrementSpecialtySkill = function( skillID, specialtyIndex ) {
+				$scope.savageCharacter.decrementSpecialtySkill( skillID, specialtyIndex );
+				$scope.validateAndSave();
+			}
+
+			$scope.updateSpecialtySkillName = function( skillID, specialtyIndex, updatedName ) {
+				// console.log( "updateSpecialtySkillName", skillID, specialtyIndex, updatedName );
+				$scope.savageCharacter.updateSpecialtySkillName( skillID, specialtyIndex, updatedName );
+				$scope.validateAndSave();
+			}
+
+			// $scope.removeSpecialtyAtIndex = function( skillID, specialtyIndex ) {
+			// 	console.log( "removeSpecialtyAtIndex", skillID, specialtyIndex );
+			// 	$scope.savageCharacter.removeSpecialtyAtIndex( skillID, specialtyIndex );
+			// 	$scope.validateAndSave();
+			// }
+
 		}
 	]
 );
@@ -5113,6 +5888,359 @@ angular.module("baseApp").controller(
 
 /*
 
+	Data here is NOT Licensed under the Creative Commons and is owned by Pinnacle Entertainment Group.
+
+	This product references the Savage Worlds game system, available from Pinnacle Entertainment Group at www.peginc.com.
+	Savage Worlds and all associated logos and trademarks are copyrights of Pinnacle Entertainment Group. Used with permission.
+	Pinnacle makes no representation or warranty as to the quality, viability, or suitability for purpose of this product.
+
+	The entries in this file are from Savage Worlds Role Playing Game and are owned by Pinnacle Entertainment Group.
+
+	DEVELOPERS: Do Not Edit or Pull Request this file, it is auto generated from a rudimentary admin area!
+	*/
+
+savageWorldsEdges = Array(
+{
+	 name: {
+		 'en-US': 'Extra Edge',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': 'This edge gives an extra edge...',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'extra-edge',
+	 racial: 1,
+	 book: 1,
+
+},
+{
+	 name: {
+		 'en-US': 'Flight',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': 'Angels can materialize great feathery wings when they so choose. This gives them Flight of 24” with a Climb of 2.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'angel-flight',
+	 racial: 1,
+	 book: 1,
+
+},
+{
+	 name: {
+		 'en-US': 'Programming',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': 'Androids begin with a free d6 in one skill, representing their original programmed role.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'android-programming',
+	 racial: 1,
+	 book: 1,
+charEffect: function( characterObject ) {
+	// TODO kludge
+	characterObject.skillPoints = characterObject.skillPoints + 2;
+},
+},
+{
+	 name: {
+		 'en-US': 'Unnatural',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': 'Arcane powers, both detrimental and beneficial, suffer a –2 penalty to affect androids. This has no effect on damaging powers, which affect them normally.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'android-unnatural',
+	 racial: 1,
+	 book: 1,
+
+},
+{
+	 name: {
+		 'en-US': 'Armor of the Lord',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': 'Angels are protected by a mystical aura that grants them +4 Toughness. It cannot be negated by Armor Piercing weapons.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'angel-armor-of-the-lord',
+	 racial: 1,
+	 book: 3,
+				charEffect: function( characterObject) {
+					characterObject.derived.toughness += 4;
+				}
+},
+{
+	 name: {
+		 'en-US': 'Divine Strength',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': 'Angels start with a d12 as their Strength.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'angel-divine-strength',
+	 racial: 1,
+	 book: 3,
+				charEffect: function( characterObject) {
+					characterObject.race.attributes.strength = 4;
+				}
+},
+{
+	 name: {
+		 'en-US': 'Faith',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': 'Angels start with a d6 in Faith for free.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'angel-faith',
+	 racial: 1,
+	 book: 3,
+				charEffect: function( characterObject) {
+					characterObject.race.skills = Array(
+						Array("faith", 1)
+					);
+				}
+},
+{
+	 name: {
+		 'en-US': 'Healing',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': 'The touch of an angel can heal a number of wounds equal to its Faith roll. It may do this once every seven days per individual.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'angel-healing',
+	 racial: 1,
+	 book: 3,
+
+}
+);
+
+/*
+
+	Data here is NOT Licensed under the Creative Commons and is owned by Pinnacle Entertainment Group.
+
+	This product references the Savage Worlds game system, available from Pinnacle Entertainment Group at www.peginc.com.
+	Savage Worlds and all associated logos and trademarks are copyrights of Pinnacle Entertainment Group. Used with permission.
+	Pinnacle makes no representation or warranty as to the quality, viability, or suitability for purpose of this product.
+
+	The entries in this file are from Savage Worlds Role Playing Game and are owned by Pinnacle Entertainment Group.
+
+	DEVELOPERS: Do Not Edit or Pull Request this file, it is auto generated from a rudimentary admin area!
+	*/
+
+savageWorldsHindrances = Array(
+{
+	 name: {
+		 'en-US': 'All Thumbs',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': 'Elves have an inbred dislike of mechanical objects, and thus have the All Thumbs Hindrance. They shun most mechanical items and designs.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'elf-all-thumbs',
+	 racial: 1,
+	 book: 1,
+
+},
+{
+	 name: {
+		 'en-US': 'Asimov Circuits',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': 'The android cannot harm, or by inaction bring harm to sentient beings. This gives him the Pacifist Hindrance (Major).',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'android-asimov-circuits',
+	 racial: 1,
+	 book: 1,
+
+},
+{
+	 name: {
+		 'en-US': 'Construct',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': 'Androids add +2 to recover from being Shaken, don’t suffer wound modifers, and are immune to poison and disease. Androids cannot heal naturally. To heal an android requires the Repair skill—which is used like the Healing skill only with no “Golden Hour.”',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'android-construct',
+	 racial: 1,
+	 book: 1,
+
+},
+{
+	 name: {
+		 'en-US': 'Outsider',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': 'Organic races often mistrust or misunderstand androids. They subtract 2 from their Charisma when dealing with races other than their own.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'android-outsider',
+	 racial: 1,
+	 book: 1,
+
+},
+{
+	 name: {
+		 'en-US': 'Recharge',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': 'During character creation, the player must determine the android’s power source. If the android cannot access his power source at least once per day, he’s automatically Fatigued each day until he’s Incapacitated. The day after that, he goes “off-line” and must be revived with a Repair roll and a four-hour charge of energy. The power source replaces the need for food and water, unless they are the chosen power source.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'android-recharge',
+	 racial: 1,
+	 book: 1,
+
+},
+{
+	 name: {
+		 'en-US': 'Slow',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': 'Dwarves have a Pace of 5”.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'dwarf-slow',
+	 racial: 1,
+	 book: 1,
+
+},
+{
+	 name: {
+		 'en-US': 'Warriors of Heaven',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': 'Angels receive commands from a distant and mysterious God. They have no one to question should they dislike such an order. If they disobey, they are stripped of their powers and become mortal.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'angel-warriors-of-heaven',
+	 racial: 1,
+	 book: 3,
+
+}
+);
+
+/*
+
+	Data here is NOT Licensed under the Creative Commons and is owned by Pinnacle Entertainment Group.
+
+	This product references the Savage Worlds game system, available from Pinnacle Entertainment Group at www.peginc.com.
+	Savage Worlds and all associated logos and trademarks are copyrights of Pinnacle Entertainment Group. Used with permission.
+	Pinnacle makes no representation or warranty as to the quality, viability, or suitability for purpose of this product.
+
+	The entries in this file are from Savage Worlds Role Playing Game and are owned by Pinnacle Entertainment Group.
+
+	DEVELOPERS: Do Not Edit or Pull Request this file, it is auto generated from a rudimentary admin area!
+	*/
+
+savageWorldsRaces = Array(
+{
+	 id: 2,
+	 name: {
+		 'en-US': 'Android',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': 'Androids are sentient machines with a variety of appearances depending on the setting. Some appear almost human, some are purely mechanical. The android presented here is a basic version with normal human knowledge and emotions. Particular settings may alter, remove, or add other abilities based on their role and function in that world.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: '',
+	 page: '',
+	 book: 1,
+	 edges: '["android-programming","android-unnatural"]',
+	 hindrances: '["android-asimov-circuits","android-construct","android-outsider","android-recharge"]',
+},
+{
+	 id: 1,
+	 name: {
+		 'en-US': 'Human',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: '',
+	 page: '',
+	 book: 1,
+	 edges: '["extra-edge"]',
+	 hindrances: 'null',
+},
+{
+	 id: 3,
+	 name: {
+		 'en-US': 'Angel',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': 'Angels are servants of powerful deities who sometimes help the “primitive” races far below. They also serve as avengers of their master—destroying entire towns or cities to purge them of their wickedness.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: '',
+	 page: '',
+	 book: 3,
+	 edges: '["angel-flight","angel-armor-of-the-lord","angel-divine-strength","angel-faith","angel-healing"]',
+	 hindrances: '["angel-warriors-of-heaven"]',
+}
+);
+
+/*
+
 Data here is NOT Licensed under the Creative Commons and is owned by Pinnacle Entertainment Group.
 
 This product references the Savage Worlds game system, available from Pinnacle Entertainment Group at www.peginc.com.
@@ -5143,6 +6271,7 @@ savageWorldsBooksList[0] = {
 
 	},
 	year: "2011",
+	uses_sanity: 0,
 	copyright: {
 		"en-US": "2011 Pinnacle Entertainment Group",
 		"de-DE": "2011 Pinnacle Entertainment Group",
@@ -5169,6 +6298,7 @@ savageWorldsBooksList[1] = {
 
 	},
 	year: "2012",
+	uses_sanity: 0,
 	copyright: {
 		"en-US": "2012 Pinnacle Entertainment Group",
 		"pt-BR": "",
@@ -5191,6 +6321,7 @@ savageWorldsBooksList[2] = {
 
 	},
 	year: "2012",
+	uses_sanity: 1,
 	copyright: {
 		"en-US": "2012 Pinnacle Entertainment Group",
 
@@ -5211,6 +6342,7 @@ savageWorldsBooksList[3] = {
 
 	},
 	year: "2014",
+	uses_sanity: 0,
 	copyright: {
 		"en-US": "2014 Pinnacle Entertainment Group",
 
@@ -5231,6 +6363,7 @@ savageWorldsBooksList[4] = {
 
 	},
 	year: "2014",
+	uses_sanity: 0,
 	copyright: {
 		"en-US": "2014 Pinnacle Entertainment Group",
 
@@ -5251,6 +6384,7 @@ savageWorldsBooksList[5] = {
 
 	},
 	year: "",
+	uses_sanity: 0,
 	copyright: {
 		"en-US": "Butch Curry, Open?",
 
@@ -5271,6 +6405,7 @@ savageWorldsBooksList[6] = {
 
 	},
 	year: "2015",
+	uses_sanity: 0,
 	copyright: {
 		"en-US": "2015 Pinnacle Entertainment Group, Trademarks of the Estate of Fritz Leiber.",
 
@@ -5291,6 +6426,7 @@ savageWorldsBooksList[7] = {
 
 	},
 	year: "2015",
+	uses_sanity: 0,
 	copyright: {
 		"en-US": "2015 Pinnacle Enterainment Group",
 
@@ -5311,6 +6447,7 @@ savageWorldsBooksList[8] = {
 
 	},
 	year: "",
+	uses_sanity: 0,
 	copyright: {
 		"en-US": "Adamant Entertainment",
 
@@ -5338,8 +6475,8 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_BOATING',
 	 name: {
 		 'en-US': 'Boating',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'pt-BR': 'Passeios de barco',
+		 'de-DE': 'Bootfahren',
 	},
 	 description: {
 		 'en-US': 'Boating',
@@ -5347,7 +6484,7 @@ savageWorldsBooksList[8] = {
 		 'de-DE': '',
 	},
 		 'book': '1',
-		 'attribute': 'smarts',
+		 'attribute': 'agility',
 		 'for_arcane': '',
 		 'specify': 0
 },
@@ -5355,8 +6492,8 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_CLIMBING',
 	 name: {
 		 'en-US': 'Climbing',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'pt-BR': 'Escalada',
+		 'de-DE': 'Kletterei',
 	},
 	 description: {
 		 'en-US': 'Climbing',
@@ -5372,8 +6509,8 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_DRIVING',
 	 name: {
 		 'en-US': 'Driving',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'pt-BR': 'Dirigindo',
+		 'de-DE': 'Fahren',
 	},
 	 description: {
 		 'en-US': '',
@@ -5389,8 +6526,8 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_FAITH',
 	 name: {
 		 'en-US': 'Faith',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'pt-BR': 'Fé',
+		 'de-DE': 'Glauben',
 	},
 	 description: {
 		 'en-US': '',
@@ -5406,8 +6543,8 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_FIGHTING',
 	 name: {
 		 'en-US': 'Fighting',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'pt-BR': 'Combate',
+		 'de-DE': 'Kampf',
 	},
 	 description: {
 		 'en-US': '',
@@ -5423,8 +6560,8 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_GAMBLING',
 	 name: {
 		 'en-US': 'Gambling',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'pt-BR': 'Jogos de azar',
+		 'de-DE': 'Spiel',
 	},
 	 description: {
 		 'en-US': '',
@@ -5440,8 +6577,8 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_HEALING',
 	 name: {
 		 'en-US': 'Healing',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'pt-BR': 'Cura',
+		 'de-DE': 'Heilung',
 	},
 	 description: {
 		 'en-US': '',
@@ -5457,8 +6594,8 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_INTIMIDATION',
 	 name: {
 		 'en-US': 'Intimidation',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'pt-BR': 'Intimidação',
+		 'de-DE': 'Einschüchterung',
 	},
 	 description: {
 		 'en-US': '',
@@ -5474,8 +6611,8 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_INVESTIGATION',
 	 name: {
 		 'en-US': 'Investigation',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'pt-BR': 'Investigação',
+		 'de-DE': 'Untersuchung',
 	},
 	 description: {
 		 'en-US': '',
@@ -5491,8 +6628,8 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_KNOWLEDGE',
 	 name: {
 		 'en-US': 'Knowledge',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'pt-BR': 'Conhecimento',
+		 'de-DE': 'Wissen',
 	},
 	 description: {
 		 'en-US': '',
@@ -5509,7 +6646,7 @@ savageWorldsBooksList[8] = {
 	 name: {
 		 'en-US': 'Lockpicking',
 		 'pt-BR': '',
-		 'de-DE': '',
+		 'de-DE': 'Schlösserknacken',
 	},
 	 description: {
 		 'en-US': '',
@@ -5525,8 +6662,8 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_NOTICE',
 	 name: {
 		 'en-US': 'Notice',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'pt-BR': 'Aviso prévio',
+		 'de-DE': 'Beachten',
 	},
 	 description: {
 		 'en-US': '',
@@ -5542,8 +6679,8 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_PERSUASION',
 	 name: {
 		 'en-US': 'Persuasion',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'pt-BR': 'Persuasão',
+		 'de-DE': ' Überzeugung',
 	},
 	 description: {
 		 'en-US': '',
@@ -5559,8 +6696,8 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_PILOTING',
 	 name: {
 		 'en-US': 'Piloting',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'pt-BR': 'Pilotar',
+		 'de-DE': 'Steuerung',
 	},
 	 description: {
 		 'en-US': '',
@@ -5593,8 +6730,8 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_REPAIR',
 	 name: {
 		 'en-US': 'Repair',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'pt-BR': 'Reparar',
+		 'de-DE': 'Reparieren',
 	},
 	 description: {
 		 'en-US': '',
@@ -5610,8 +6747,8 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_RIDING',
 	 name: {
 		 'en-US': 'Riding',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'pt-BR': 'Equitação',
+		 'de-DE': 'Reiten',
 	},
 	 description: {
 		 'en-US': '',
@@ -5627,8 +6764,8 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_SHOOTING',
 	 name: {
 		 'en-US': 'Shooting',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'pt-BR': 'Tiroteio',
+		 'de-DE': 'Schießen',
 	},
 	 description: {
 		 'en-US': '',
@@ -5661,8 +6798,8 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_STEALTH',
 	 name: {
 		 'en-US': 'Stealth',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'pt-BR': 'Furtividade',
+		 'de-DE': 'List',
 	},
 	 description: {
 		 'en-US': '',
@@ -5695,8 +6832,8 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_SURVIVAL',
 	 name: {
 		 'en-US': 'Survival',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'pt-BR': 'Sobrevivência',
+		 'de-DE': 'Überleben',
 	},
 	 description: {
 		 'en-US': '',
@@ -5712,8 +6849,8 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_SWIMMING',
 	 name: {
 		 'en-US': 'Swimming',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'pt-BR': 'Natação',
+		 'de-DE': 'Schwimmen',
 	},
 	 description: {
 		 'en-US': '',
@@ -5729,8 +6866,8 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_TAUNT',
 	 name: {
 		 'en-US': 'Taunt',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'pt-BR': 'Insulto',
+		 'de-DE': 'Spott',
 	},
 	 description: {
 		 'en-US': '',
@@ -5746,8 +6883,8 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_THROWING',
 	 name: {
 		 'en-US': 'Throwing',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'pt-BR': 'Jogando',
+		 'de-DE': 'Wurf',
 	},
 	 description: {
 		 'en-US': '',
@@ -5763,8 +6900,8 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_TRACKING',
 	 name: {
 		 'en-US': 'Tracking',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'pt-BR': 'Rastreamento',
+		 'de-DE': 'Verfolgung',
 	},
 	 description: {
 		 'en-US': '',
@@ -14736,6 +15873,19 @@ availableLanguages.push ({
 	translations: {
 			BUTTON_LANG_EN: 'English',
 			BUTTON_LANG_BR: 'German',
+			GENERAL_ATTRIBUTES: 'Attribute',
+			ATTRIBUTE_AGILITY: 'Geschicklichkeit',
+			ATTRIBUTE_SMARTS: 'Verstand',
+			ATTRIBUTE_SPIRIT: 'Willenskraft',
+			ATTRIBUTE_STRENGTH: 'Stärke',
+			ATTRIBUTE_VIGOR: 'Konstitution',
+			GENERAL_SKILLS: 'Fertigkeiten',
+			GENERAL_TOUGHNESS: 'Robustheit',
+			GENERAL_PACE: 'Bewegungsweite',
+			GENERAL_CHARISMA: 'Charisma',
+			GENERAL_PARRY: 'Parade',
+			GENERAL_HINDRANCES: 'Handicaps',
+			GENERAL_EDGES: 'Talente',
 
 	}
 
@@ -14786,6 +15936,8 @@ availableLanguages.push ({
 			GENERAL_REMOVE: 'Remove',
 			GENERAL_DELETE: 'Delete',
 			GENERAL_ADD: 'Add',
+			GENERAL_SANITY: 'Sanity',
+			GENERAL_DERIVED: 'Derived',
 			GENERAL_MALE: 'Male',
 			GENERAL_FEMALE: 'Female',
 			GENERAL_OTHER: 'Other',
@@ -14797,22 +15949,25 @@ availableLanguages.push ({
 			ATTRIBUTE_SPIRIT: 'Spirit',
 			ATTRIBUTE_STRENGTH: 'Strength',
 			ATTRIBUTE_VIGOR: 'Vigor',
-			EXTRAS_SKILLS: 'Skills',
+			GENERAL_SKILLS: 'Skills',
 			EXTRAS_H4_ABILITIES: 'Abilities',
 			EXTRAS_BUY_BOOK: 'Buy this book',
 			GENERAL_TOUGHNESS: 'Toughness',
 			GENERAL_PACE: 'Pace',
 			GENERAL_CHARISMA: 'Charisma',
 			GENERAL_PARRY: 'Parry',
-			GENERAL_HINDARANCES: 'Hindrances',
+			GENERAL_HINDRANCES: 'Hindrances',
 			GENERAL_EDGES: 'Edges',
+			GENERAL_PERKS: 'Perks',
 			GENERAL_GEAR: 'Gear',
-			CHARGEN_ATTRIBUTES_AND_SKILLS: 'Attributes & Skills',
 			CHARGEN_CHARACTER_INFORMATION: 'Character Information',
-			CHARGEN_AGILITY_SKILLS: 'Agility Skills',
-			CHARGEN_SMARTS_SKILLS: 'Smarts Skills',
-			CHARGEN_SPIRIT_SKILLS: 'Spirit Skills',
-			CHARGEN_STRENGTH_SKILLS: 'Strength Skills',
+			CHARGEN_ATTRIBUTES_AND_SKILLS: 'Attributes & Skills',
+			CHARGEN_BOOKS_DIALOG: 'Books in Use',
+			CHARGEN_SPECIALIZATION_PLACEHOLDER: 'Skill Name',
+			CHARGEN_SPECIALIZATIONS: 'Specializations',
+			CHARGEN_SKILL_POINTS: 'Skill Points (used/availble)',
+			CHARGEN_ATTRIBUTE_POINTS: 'Attribute Points (used/availble)',
+			CHARGEN_VALIDATION_REPORT: 'Validation Report',
 			DICE_TITLE_TAG: 'Flexible Dice Roller | Savage Worlds Web Tools',
 			DICE_H3_DICE: 'Dice',
 			DICE_H3_ROLL_TYPE: 'Roll Type',
@@ -14882,6 +16037,15 @@ availableLanguages.push ({
 			CREATOR_ARMOR_NAME: 'Power Armor Name',
 			CREATOR_ARMOR_DESCRIPTION: 'Power Armor Description',
 			CREATOR_ARMOR_SIZE: 'Power Armor Size',
+			CREATOR_VEHICLE_NAME: 'Vehicle Name',
+			CREATOR_VEHICLE_DESCRIPTION: 'Vehicle Description',
+			CREATOR_VEHICLE_SIZE: 'Vehicle Size',
+			CREATOR_STARSHIP_NAME: 'Starship Name',
+			CREATOR_STARSHIP_DESCRIPTION: 'Starship Description',
+			CREATOR_STARSHIP_SIZE: 'Starship Size',
+			CREATOR_WALKER_NAME: 'Walker Name',
+			CREATOR_WALKER_DESCRIPTION: 'Walker Description',
+			CREATOR_WALKER_SIZE: 'Walker Size',
 			CREATOR_MOD_COST: 'Mod Cost',
 			CREATOR_MOD_NAME: 'Name',
 			CREATOR_USED_MAX: 'Used/Max',
@@ -14931,6 +16095,7 @@ availableLanguages.push ({
 	translations: {
 			BUTTON_LANG_EN: 'English',
 			BUTTON_LANG_DE: 'German',
+			GENERAL_ATTRIBUTES: 'Atributos',
 
 	}
 
