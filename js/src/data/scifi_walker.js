@@ -308,9 +308,13 @@ selectedObject.hasMissileLauncher = 1;
 {
 	 name: {
 		 'en-US': 'Pace',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Increases the mech&apos;s Pace by +4. (This cannot be taken with Speed Reduction.)',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 tag: 'pace',
 getMax: function(selectedObject) { return 3 },
@@ -322,6 +326,9 @@ return 4000 * selectedObject.size;
 },
 getModEffect: function(selectedObject) {
 selectedObject.pace = selectedObject.pace + 4;
+},
+isAvailable: function(selectedObject) {
+return !selectedObject.hasMod("speed-reduction");
 }
 },
 {
@@ -410,9 +417,13 @@ return 5000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Speed Reduction',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'The walker sacrifices speed for additional room. Subtract 2 from Pace and add half its Size in Mod slots (round down).',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 tag: 'speed-reduction',
 getMax: function(selectedObject) { return 3 },
@@ -425,6 +436,9 @@ return 20000 * selectedObject.size;
 getModEffect: function(selectedObject) {
 selectedObject.pace -=  2;
 selectedObject.mods += selectedObject.size / 2;
+},
+isAvailable: function(selectedObject) {
+return !selectedObject.hasMod("pace");
 }
 },
 {

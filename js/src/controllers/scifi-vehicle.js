@@ -8,7 +8,6 @@ angular.module("baseApp").controller(
 
 			var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_vehicle";
 			var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.vehicle";
-			var optionsLocalStorageVariable = "com.jdg.swwt2.options.vehicle";
 			var itemType = "vehicle";
 			var itemName = "Vehicle";
 
@@ -19,13 +18,6 @@ angular.module("baseApp").controller(
 
 
 				$scope.creatorObj.init(itemType, itemName, savageWorldsSciFiSizes[itemType], savageWorldsSciFiMods[itemType], savageWorldsSciFiOptions[ itemType ]);
-
-
-				if( typeof(localStorage[ optionsLocalStorageVariable ]) != "undefined" ) {
-					$scope.user_options = localStorage[ optionsLocalStorageVariable ];
-				} else {
-					$scope.user_options = "";
-				}
 
 				if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
 					$scope.creatorObj.importJSON( localStorage[ currentItemLocalStorageVariable ] );
@@ -209,7 +201,7 @@ angular.module("baseApp").controller(
 
 			$scope.exportDialog = function() {
 				$scope.exportBBCode = $scope.creatorObj.exportBBCode();
-				$scope.exportJSON = $scope.creatorObj.exportJSON();
+				$scope.exportJSON = $scope.creatorObj.exportJSON(true);
 				$scope.closeDialogs();
 				$scope.exportDialogOpen = true;
 			}

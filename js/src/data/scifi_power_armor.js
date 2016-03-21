@@ -455,9 +455,13 @@ return 0;
 {
 	 name: {
 		 'en-US': 'Pace',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Powerful motors in the leg joints combine with gyroscopic stabilizers to increase Pace by +2 and the running die to d10. Each enhancement after the first only increases Pace by +2.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 tag: 'pace',
 getMax: function(selectedObject) { return 3 },
@@ -473,6 +477,9 @@ selectedObject.pace++;
 },
 getWeight: function(selectedObject) {
 return 0;
+},
+isAvailable: function(selectedObject) {
+return !selectedObject.hasMod("speed-reduction");
 }
 },
 {

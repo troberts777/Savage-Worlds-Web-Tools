@@ -639,9 +639,13 @@ return 5000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Speed Reduction',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'The ship trades power and speed for additional room. Each time this is taken, reduce Acc by 5 and Top Speed by 50 to gain half the ship’s Size in Mod slots.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 tag: 'speed-reduction',
 getMax: function(selectedObject) { return 3 },
@@ -655,6 +659,9 @@ getModEffect: function(selectedObject) {
 selectedObject.ts -=  50;
 selectedObject.acc -=  5;
 selectedObject.mods += selectedObject.size / 2;
+},
+isAvailable: function(selectedObject) {
+return !selectedObject.hasMod("speed");
 }
 },
 {
@@ -675,6 +682,9 @@ return 100000 * selectedObject.size;
 getModEffect: function(selectedObject) {
 selectedObject.ts +=  50;
 selectedObject.acc +=  5;
+},
+isAvailable: function(selectedObject) {
+return !selectedObject.hasMod("speed-reduction");
 }
 },
 {

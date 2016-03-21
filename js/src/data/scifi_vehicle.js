@@ -793,9 +793,13 @@ return 3000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Speed Reduction',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'The vehicle trades power and speed for additional room. Each time this is taken, reduce Acc by 5 and Top Speed by 50 to gain half the vehicle’s Size in Mod slots.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 tag: 'speed-reduction',
 getMax: function(selectedObject) { return 3 },
@@ -809,14 +813,21 @@ getModEffect: function(selectedObject) {
 selectedObject.ts -=  2;
 selectedObject.acc -=  1;
 selectedObject.mods += selectedObject.size / 2;
+},
+isAvailable: function(selectedObject) {
+return !selectedObject.hasMod("speed");
 }
 },
 {
 	 name: {
 		 'en-US': 'Speed',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Each purchase increases the vehicle’s Acc by 5 and Top Speed by 50. (This cannot be taken with Speed Reduction.)',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 tag: 'speed',
 getMax: function(selectedObject) { return "u" },
@@ -829,6 +840,9 @@ return 1000 * selectedObject.size;
 getModEffect: function(selectedObject) {
 selectedObject.ts +=  10;
 selectedObject.acc +=  5;
+},
+isAvailable: function(selectedObject) {
+return !selectedObject.hasMod("speed-reduction");
 }
 },
 {

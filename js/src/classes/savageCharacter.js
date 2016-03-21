@@ -1,10 +1,23 @@
 function savageCharacter (useLang) {
+
+	if( useLang )
+		this.useLang = useLang;
+	else if( localStorage["users_preferred_language"] )
+		this.useLang = localStorage["users_preferred_language"];
+	else
+		this.useLang = "en-US";
+
+}
+
+savageCharacter.prototype.init = function(){
 	this.name = "";
 	this.background = "";
 
 	this.description = "";
 
 	this.XP = 0;
+
+	this.uuid = this.makeUUID();
 
 	this.options = Array();
 
@@ -38,12 +51,7 @@ function savageCharacter (useLang) {
 		sanity: 0
 	};
 
-	if( useLang )
-		this.useLang = useLang;
-	else if( localStorage["users_preferred_language"] )
-		this.useLang = localStorage["users_preferred_language"];
-	else
-		this.useLang = "en-US";
+
 
 	localizeDice( this.useLang);
 
@@ -98,8 +106,20 @@ function savageCharacter (useLang) {
 
 	this.refreshAvailable();
 	this.validate();
-
 }
+
+savageCharacter.prototype.makeUUID = function(){
+	var d = new Date().getTime();
+	if(window.performance && typeof window.performance.now === "function"){
+		d += performance.now(); //use high-precision timer if available
+	}
+	var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+		var r = (d + Math.random()*16)%16 | 0;
+		d = Math.floor(d/16);
+		return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+	});
+	return uuid;
+};
 
 savageCharacter.prototype.refreshAvailable = function( ) {
 
@@ -280,18 +300,18 @@ savageCharacter.prototype.validate = function() {
 				regularCost = this.attributes[savageWorldsSkillList[skillCounter].attribute].id;
 				doubleCost = savageWorldsSkillList[skillCounter].value - this.attributes[savageWorldsSkillList[skillCounter].attribute].id;
 				this.skillPointsUsed += regularCost + doubleCost * 2;
-				
+
 			} else {
 				this.skillPointsUsed += savageWorldsSkillList[skillCounter].value;
 			}
 		}
-		
+
 		for( specialtyCounter = 0; specialtyCounter < savageWorldsSkillList[skillCounter].specialties.length; specialtyCounter++ ) {
 			if( savageWorldsSkillList[skillCounter].specialties[specialtyCounter].value ) {
 				if( savageWorldsSkillList[skillCounter].specialties[specialtyCounter].value > this.attributes[savageWorldsSkillList[skillCounter].attribute].id ) {
 					regularCost = this.attributes[savageWorldsSkillList[skillCounter].attribute].id;
 					doubleCost = savageWorldsSkillList[skillCounter].specialties[specialtyCounter].value - this.attributes[savageWorldsSkillList[skillCounter].attribute].id;
-					this.skillPointsUsed += regularCost + doubleCost * 2;				
+					this.skillPointsUsed += regularCost + doubleCost * 2;
 				} else {
 					this.skillPointsUsed += savageWorldsSkillList[skillCounter].specialties[specialtyCounter].value;
 				}
@@ -319,34 +339,39 @@ savageCharacter.prototype.validate = function() {
 		this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_SKILLS") );
 		this.isValid = false;
 	}
-	
+
+	// Process Racial Hindrances
+	// TODO
+	// Process Racial Edges
+	// TODO
+
 	// Process Hindrances
-	
+
 	// Process Selected Hindrances
 	// TODO
-	
+
 	// Process Available Hindrances
 	// TODO
-	
+
 	// Process Edges
 	// Process Selected Edges
 	// TODO
-	
+
 
 	// Apply Arcane Background
-	// TODO	
-	
+	// TODO
+
 	// Process Available Edges
-	// TODO	
+	// TODO
 
 
-		
+
 	// Calculate Perks Available
 	// TODO
-	
+
 	// Process Selected Perks
 	// TODO
-	
+
 
 
 	this.refreshAvailable();
@@ -362,6 +387,8 @@ savageCharacter.prototype.importJSON = function( jsonString ) {
 		if( importObject ) {
 			this.name = importObject.name;
 			this.background = importObject.background;
+			if( importObject.uuid )
+				this.uuid = importObject.uuid;
 			this.description = importObject.description;
 			for( attribute in this.attributes ) {
 				if( importObject.attributes[ attribute ] ) {
@@ -415,12 +442,15 @@ savageCharacter.prototype.addBook = function( bookObject ) {
 }
 
 
-savageCharacter.prototype.exportJSON = function() {
+savageCharacter.prototype.exportJSON = function(noUUID) {
 
 	exportObject = {};
 	exportObject.name = this.name;
 	exportObject.background = this.background;
 	exportObject.description = this.description;
+
+	if(!noUUID)
+		exportObject.uuid = this.uuid;
 
 	exportObject.xp = this.xp;
 	exportObject.gender = this.gender.id;

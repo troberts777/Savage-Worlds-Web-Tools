@@ -8,7 +8,7 @@
 <td>
 <button class="tiny radius button no-bottom-margin primary" ng-click="addWeapon(weapon.tag)" ng-show="weapon.can_add">+</button>
 </td>
-<td>{{weapon.local_name}}</td>
+<td>{{weapon.local_name}} <span ng-show="weapon.missiles_per > 1">({{weapon.missiles_per}})</span></td>
 <td>{{weapon.mods}}</td>
 <td>{{weapon.local_cost}}</td>
 </tr>

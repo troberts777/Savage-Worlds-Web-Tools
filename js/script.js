@@ -932,12 +932,25 @@ function getDiceValue( diceID, language ) {
 	return false;
 }
 function savageCharacter (useLang) {
+
+	if( useLang )
+		this.useLang = useLang;
+	else if( localStorage["users_preferred_language"] )
+		this.useLang = localStorage["users_preferred_language"];
+	else
+		this.useLang = "en-US";
+
+}
+
+savageCharacter.prototype.init = function(){
 	this.name = "";
 	this.background = "";
 
 	this.description = "";
 
 	this.XP = 0;
+
+	this.uuid = this.makeUUID();
 
 	this.options = Array();
 
@@ -971,12 +984,7 @@ function savageCharacter (useLang) {
 		sanity: 0
 	};
 
-	if( useLang )
-		this.useLang = useLang;
-	else if( localStorage["users_preferred_language"] )
-		this.useLang = localStorage["users_preferred_language"];
-	else
-		this.useLang = "en-US";
+
 
 	localizeDice( this.useLang);
 
@@ -1031,8 +1039,20 @@ function savageCharacter (useLang) {
 
 	this.refreshAvailable();
 	this.validate();
-
 }
+
+savageCharacter.prototype.makeUUID = function(){
+	var d = new Date().getTime();
+	if(window.performance && typeof window.performance.now === "function"){
+		d += performance.now(); //use high-precision timer if available
+	}
+	var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+		var r = (d + Math.random()*16)%16 | 0;
+		d = Math.floor(d/16);
+		return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+	});
+	return uuid;
+};
 
 savageCharacter.prototype.refreshAvailable = function( ) {
 
@@ -1213,18 +1233,18 @@ savageCharacter.prototype.validate = function() {
 				regularCost = this.attributes[savageWorldsSkillList[skillCounter].attribute].id;
 				doubleCost = savageWorldsSkillList[skillCounter].value - this.attributes[savageWorldsSkillList[skillCounter].attribute].id;
 				this.skillPointsUsed += regularCost + doubleCost * 2;
-				
+
 			} else {
 				this.skillPointsUsed += savageWorldsSkillList[skillCounter].value;
 			}
 		}
-		
+
 		for( specialtyCounter = 0; specialtyCounter < savageWorldsSkillList[skillCounter].specialties.length; specialtyCounter++ ) {
 			if( savageWorldsSkillList[skillCounter].specialties[specialtyCounter].value ) {
 				if( savageWorldsSkillList[skillCounter].specialties[specialtyCounter].value > this.attributes[savageWorldsSkillList[skillCounter].attribute].id ) {
 					regularCost = this.attributes[savageWorldsSkillList[skillCounter].attribute].id;
 					doubleCost = savageWorldsSkillList[skillCounter].specialties[specialtyCounter].value - this.attributes[savageWorldsSkillList[skillCounter].attribute].id;
-					this.skillPointsUsed += regularCost + doubleCost * 2;				
+					this.skillPointsUsed += regularCost + doubleCost * 2;
 				} else {
 					this.skillPointsUsed += savageWorldsSkillList[skillCounter].specialties[specialtyCounter].value;
 				}
@@ -1252,34 +1272,39 @@ savageCharacter.prototype.validate = function() {
 		this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_SKILLS") );
 		this.isValid = false;
 	}
-	
+
+	// Process Racial Hindrances
+	// TODO
+	// Process Racial Edges
+	// TODO
+
 	// Process Hindrances
-	
+
 	// Process Selected Hindrances
 	// TODO
-	
+
 	// Process Available Hindrances
 	// TODO
-	
+
 	// Process Edges
 	// Process Selected Edges
 	// TODO
-	
+
 
 	// Apply Arcane Background
-	// TODO	
-	
+	// TODO
+
 	// Process Available Edges
-	// TODO	
+	// TODO
 
 
-		
+
 	// Calculate Perks Available
 	// TODO
-	
+
 	// Process Selected Perks
 	// TODO
-	
+
 
 
 	this.refreshAvailable();
@@ -1295,6 +1320,8 @@ savageCharacter.prototype.importJSON = function( jsonString ) {
 		if( importObject ) {
 			this.name = importObject.name;
 			this.background = importObject.background;
+			if( importObject.uuid )
+				this.uuid = importObject.uuid;
 			this.description = importObject.description;
 			for( attribute in this.attributes ) {
 				if( importObject.attributes[ attribute ] ) {
@@ -1348,12 +1375,15 @@ savageCharacter.prototype.addBook = function( bookObject ) {
 }
 
 
-savageCharacter.prototype.exportJSON = function() {
+savageCharacter.prototype.exportJSON = function(noUUID) {
 
 	exportObject = {};
 	exportObject.name = this.name;
 	exportObject.background = this.background;
 	exportObject.description = this.description;
+
+	if(!noUUID)
+		exportObject.uuid = this.uuid;
 
 	exportObject.xp = this.xp;
 	exportObject.gender = this.gender.id;
@@ -1594,11 +1624,12 @@ savageCharacter.prototype.removeSpecialtyAtIndex = function( skillID, specialtyI
 	Creative Commons Attribution 4.0 International License.
 */
 
-var scifiCreator = function() {};
-scifiCreator.prototype = {
+var scifiCreator = function(objectType, objectLabel, availableSizes, availableMods, availableOptions) {
+	this.init(objectType, objectLabel, availableSizes, availableMods, availableOptions);
+};
 
-	init: function(objectType, objectLabel, availableSizes, availableMods, availableOptions) {
-		this.itemName = "";
+scifiCreator.prototype.init = function(objectType, objectLabel, availableSizes, availableMods, availableOptions){
+	this.itemName = "";
 		this.objectDescription = "";
 		this.useLang = "en-US";
 
@@ -1670,1029 +1701,959 @@ scifiCreator.prototype = {
 			this.requiresMountPoint = 0;
 			this.hasWeaponMounts = 0;
 		}
-	},
+};
 
-	makeUUID: function(){
-	    var d = new Date().getTime();
-	    if(window.performance && typeof window.performance.now === "function"){
-	        d += performance.now(); //use high-precision timer if available
-	    }
-	    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-	        var r = (d + Math.random()*16)%16 | 0;
-	        d = Math.floor(d/16);
-	        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
-	    });
-	    return uuid;
-	},
+scifiCreator.prototype.makeUUID = function(){
+    var d = new Date().getTime();
+    if(window.performance && typeof window.performance.now === "function"){
+        d += performance.now(); //use high-precision timer if available
+    }
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (d + Math.random()*16)%16 | 0;
+        d = Math.floor(d/16);
+        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+    });
+    return uuid;
+};
 
-	reset: function() {
-		this.init(this.objectType, this.objectLabel, this.availableSizes, this.availableMods, this.availableOptions);
-	},
+scifiCreator.prototype.reset = function() {
+	this.init(this.objectType, this.objectLabel, this.availableSizes, this.availableMods, this.availableOptions);
+};
 
-	setSizes: function(availableSizes) {
-		this.availableSizes = availableSizes
-	},
+scifiCreator.prototype.setSizes = function(availableSizes) {
+	this.availableSizes = availableSizes
+};
 
-	exportHTML: function() {
-		return this.createStatesBlock();
-	},
+scifiCreator.prototype.exportHTML = function() {
+	return this.createStatesBlock();
+};
 
-	getModName: function( modTag ) {
-		// search through available mods to see if function exists
-
-		for(getModCount = 0; getModCount < this.availableMods.length; getModCount++) {
-			if( this.availableMods[getModCount].tag == modTag ) {
-				return this.getLocalName( this.availableMods[getModCount].name );
-			}
+scifiCreator.prototype.getModName = function( modTag ) {
+	// search through available mods to see if function exists
+	for(getModCount = 0; getModCount < this.availableMods.length; getModCount++) {
+		if( this.availableMods[getModCount].tag == modTag ) {
+			return this.getLocalName( this.availableMods[getModCount].name );
 		}
+	}
 
-		return "Error: getModName - Not Found !";
-	},
+	return "Error: getModName - Not Found !";
+};
 
-	getTranslation: function(langKey) {
-		// console.log("getTranslation", this.useLang + " / " + langKey);
-		for( lang_count = 0; lang_count < availableLanguages.length; lang_count++ ) {
-			if( availableLanguages[lang_count].short_code == this.useLang ) {
+scifiCreator.prototype.getTranslation = function(langKey) {
+	for( lang_count = 0; lang_count < availableLanguages.length; lang_count++ ) {
+		if( availableLanguages[lang_count].short_code == this.useLang ) {
 
-				if(availableLanguages[lang_count].translations[langKey] ) {
-					return availableLanguages[lang_count].translations[langKey];
-				} else {
-					return langKey;
-				}
-			}
-		}
-		return langKey;
-	},
-
-
-	simplify_cost: function (input_price) {
-		if(input_price > 1000000000) {
-			// it's a billion+
-			return input_price / 1000000000 + 'B';
-		} else if(input_price > 1000000) {
-			// it's a million+
-			return input_price / 1000000 + 'M';
-		} else if(input_price > 1000){
-			// it's a thousand+
-			return input_price / 1000 + 'K';
-		} else {
-			return input_price;
-		}
-	},
-
-	getLocalName: function( incoming_string_array ) {
-		if( incoming_string_array[ this.useLang] ) {
-			return incoming_string_array[ this.useLang];
-		} else {
-			return incoming_string_array[ "en-US" ];
-		}
-	},
-
-	formatMoney: function(n, decPlaces, thouSeparator, decSeparator) {
-	    var
-	        decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
-	        decSeparator = decSeparator == undefined ? "." : decSeparator,
-	        thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
-	        sign = n < 0 ? "-" : "",
-	        i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
-	        j = (j = i.length) > 3 ? j % 3 : 0;
-	    return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
-	},
-
-	createStatesBlock: function(jquery_selector) {
-		html_return = "";
-
-		html_return += "<h3>" + this.itemName + "</h3>";
-		html_return += "<p>";
-
-		html_return += this.objectDescription + "</p><br />";
-
-		if(this.selectedSize && this.selectedSize.size > 0) {
-			html_return += "<strong>" + this.getLocalName(this.selectedSize.sizeLabel)  + "</strong>: ";
-			html_return += this.getTranslation("CREATOR_SIZE") + " " + this.size + ", ";
-			if(this.acc > 0)
-				html_return += this.getTranslation("CREATOR_ACC_TS") + " " +  this.acc + "/" + this.formatPaceRealWorld(this.ts) + ", ";
-			if(this.aircraft)
-				html_return += this.getTranslation("CREATOR_CLIMB") + " " + this.climb + ", ";
-			if(this.flyingPace > 0)
-				html_return += this.getTranslation("CREATOR_FLYPACE") + " " +  this.formatPaceRealWorld(this.flyingPace) + ", ";
-			if(this.toughness > 0) {
-				if( this.frontArmor > 0 ) {
-					html_return += this.getTranslation("CREATOR_TOUGHNESS") + " " + this.toughness + " (<span title='" + this.getTranslation("CREATOR_FASARA")  + ")'>" + this.frontArmor + "/" + this.sideArmor + "/" +  this.rearArmor + "</span>), ";
-				} else {
-					html_return += this.getTranslation("CREATOR_TOUGHNESS") + " " + this.toughness + " (" + this.armor + "), ";
-				}
-
+			if(availableLanguages[lang_count].translations[langKey] ) {
+				return availableLanguages[lang_count].translations[langKey];
 			} else {
-				if(this.armor) {
-					html_return += this.getTranslation("CREATOR_ARMOR") + " +"  + this.armor + ", ";
-				}
-			}
-
-			if(this.pace > 0)
-				html_return += this.getTranslation("CREATOR_PACE") + " "  + this.formatPaceRealWorld(this.pace) + ", ";
-			if(this.crew > 0)
-				html_return += this.getTranslation("CREATOR_CREW") + " "  + this.crew + ", ";
-
-			if(this.strength > 0 && this.objectType != "power_armor")
-				html_return += this.getTranslation("CREATOR_STRENGTH") + " "  + this.getLocalName(  this.getStrengthLabel( this.strength ).label ) + ", ";
-
-			html_return += this.getTranslation("CREATOR_COST") + " C$" + this.formatMoney(this.cost, 0) + ", ";
-			html_return += this.getTranslation("CREATOR_REMAINING_MODS") + " "  + this.mods_available + "<br />";
-
-
-			//html_return += "<strong>Mods Available</strong>: " + this.mods_available + "<br />";
-			if( this.hasWeaponMounts )
-				html_return += "<strong>" + this.getTranslation("CREATOR_WEAPON_MODS_AVAILABLE")  + "</strong>: " + this.vehicleWeaponModPoints + "<br />";
-
-			html_return += "<strong>" + this.getTranslation("CREATOR_NOTES")  + "</strong>: ";
-
-			this.sortSelectedModificationsList();
-			var mod_count = 0;
-
-			for(var modTag in this.selectedModifications_list){
-
-				if( mod_count > 0)
-					html_return += ", ";
-				if(this.selectedModifications_list[modTag] > 1)
-  					html_return += this.selectedModifications_list[modTag] + "x "
-
-  				modName = this.getModName(modTag);
-  				html_return += modName;
-
-  				mod_count++;
-			}
-			if( mod_count == 0)
-				html_return += this.getTranslation("CREATOR_NONE");
-
-			html_return += "<br />";
-
-			html_return += "<strong>" + this.getTranslation("CREATOR_WEAPONS")  + "</strong>: ";
-			//this.sort_selectedWeaponsList();
-			html_return += "<ul>";
-			var weapon_count = 0;
-//			console.log("this.selectedWeaponsList",this.selectedWeaponsList);
-			for(var weaponName in this.selectedWeaponsList){
-				html_return += "<li>";
-				if(this.selectedWeaponsList[weaponName].count > 1)
-  					html_return += this.selectedWeaponsList[weaponName].count + "x ";
-  				//this.selectedWeaponsList[weaponName].obj = this.updateWeaponDisplayName( this.selectedWeaponsList[weaponName] );
-  				html_return += this.selectedWeaponsList[weaponName].obj.display_name;
-  				html_return += this.makeWeaponStatHTML( this.selectedWeaponsList[weaponName].obj );
-  				html_return += "</li>";
-  				weapon_count++;
-			}
-			if( weapon_count == 0 )
-				html_return += "<li>" + this.getTranslation("CREATOR_NONE")  + "</li>";
-			html_return += "</ul>";
-
-			if( this.getModificationCount("Shields") > 0) {
-				html_return += "<strong>" + this.getTranslation("CREATOR_SHIELDS")  + "</strong>: ";
-				html_return += this.size * 10;
-				may_recover = this.getTranslation("CREATOR_MAY_RECOVER").replace("{value}", this.size);
-				html_return += " - " + may_recover + "<br />";
-			}
-
-			if(this.energyCapacity > 0)
-				html_return += "<strong>" + this.getTranslation("CREATOR_ENERGY_CAPACITY")  + "</strong>: " + this.energyCapacity + "<br />";
-
-			if( this.extraNotes != "" ) {
-				html_return += "<strong>" + this.getTranslation("CREATOR_EXTRA_NOTES")  + "</strong>: ";
-				html_return += this.extraNotes;
-			}
-		} else {
-			html_return += this.getTranslation("CREATOR_SIZE_MUST_BE_SELECTED");
-		}
-		if(jquery_selector)
-			$(jquery_selector).html(html_return);
-
-		return html_return;
-	},
-
-	makeWeaponStatHTML: function( weapon_object ) {
-		return_val = " (";
-		return_val += weapon_object.range + ", ";
-		return_val += weapon_object.damage;
-		if( weapon_object.count >= 4)
-			return_val += " +2";
-		else if( weapon_object.count >= 3)
-			return_val += " +1";
-		else if( weapon_object.count >= 2)
-			return_val += " +1";
-
-		return_val += ", ";
-		notes = this.getLocalName( weapon_object.notes );
-		if( notes != "")
-			return_val += notes + ", ";
-		return_val = return_val.substring(0, return_val.length - 2);
-		return_val += ")";
-		return return_val;
-	},
-
-	exportBBCode: function(jquery_selector) {
-		html_return = "";
-
-		html_return += "[b][size=150]" + this.itemName + "[/size][/b]\n";
-		if(this.objectDescription)
-			html_return += "" + this.objectDescription + "\n\n";
-		else
-			html_return += "\n";
-
-		if(this.selectedSize && this.selectedSize.sizeLabel) {
-			html_return += "[b]" + this.getLocalName(this.selectedSize.sizeLabel) + "[/b]: ";
-			html_return += this.getTranslation("CREATOR_SIZE") + " " + this.size + ", ";
-			if(this.acc > 0)
-				html_return += this.getTranslation("CREATOR_ACC_TS") + " " + this.acc + "/" + this.formatPaceRealWorld(this.ts) + ", ";
-			if(this.aircraft)
-				html_return += this.getTranslation("CREATOR_CLIMB") + " " + this.climb + ", ";
-			if(this.flyingPace > 0)
-				html_return += this.getTranslation("CREATOR_FLYPACE") + " " + this.formatPaceRealWorld(this.flyingPace) + ", ";
-			if(this.toughness > 0) {
-				html_return += this.getTranslation("CREATOR_TOUGHNESS") + " " + this.toughness + " (" + this.armor + "), ";
-			} else {
-				if(this.armor) {
-					html_return += this.getTranslation("CREATOR_ARMOR") + "  +" + this.armor + ", ";
-				}
-			}
-
-			if(this.pace > 0)
-				html_return += this.getTranslation("CREATOR_PACE") + "  " + this.formatPaceRealWorld(this.pace) + ", ";
-			if(this.crew > 0)
-				html_return += this.getTranslation("CREATOR_CREW") + "  " + this.crew + ", ";
-
-			if(this.strength > 0 && this.objectType != "power_armor")
-				html_return += this.getTranslation("CREATOR_STRENGTH") + " "  + this.getLocalName(  this.getStrengthLabel( this.strength ).label ) + ", ";
-
-			html_return += this.getTranslation("CREATOR_COST") + " C$" + this.simplify_cost(this.cost) + ", ";
-			html_return += this.getTranslation("CREATOR_REMAINING_MODS") + " " + this.mods_available + "\n";
-
-			html_return += "[b]" + this.getTranslation("CREATOR_NOTES") + "[/b]: ";
-
-			var mod_count = 0;
-			for(var modName in this.selectedModifications_list){
-				if( mod_count > 0)
-					html_return += ", ";
-				if(this.selectedModifications_list[modName] > 1)
-  					html_return += this.selectedModifications_list[modName] + "x ";
-				html_return += modName;
-				mod_count++;
-			}
-			if(mod_count == 0)
-				html_return += this.getTranslation("CREATOR_NONE");
-
-			html_return += "\n";
-
-			html_return += "[b]" + this.getTranslation("CREATOR_WEAPONS") + "[/b]: ";
-			html_return += "[list]";
-			//this.sort_selectedWeaponsList();
-			var weapon_count = 0;
-			var weapon_count = 0;
-			// console.log("this.selectedWeaponsList",this.selectedWeaponsList);
-			for(var weaponName in this.selectedWeaponsList){
-				html_return += "[*]";
-				if(this.selectedWeaponsList[weaponName].count > 1)
-  					html_return += this.selectedWeaponsList[weaponName].count + "x ";
-  				//this.selectedWeaponsList[weaponName].obj = this.updateWeaponDisplayName( this.selectedWeaponsList[weaponName] );
-  				html_return += this.selectedWeaponsList[weaponName].obj.display_name;
-  				html_return += this.makeWeaponStatHTML( this.selectedWeaponsList[weaponName].obj );
-  				html_return += "\n";
-  				weapon_count++;
-			}
-			if( weapon_count == 0 )
-				html_return += "[*]" + this.getTranslation("CREATOR_NONE") + ".\n";
-			html_return += "[/list]";
-
-			html_return += "\n";
-
-			if( this.getModificationCount("Shields") > 0) {
-				html_return += "[b]" + this.getTranslation("CREATOR_SHIELDS") + "[/b]: ";
-				html_return += this.size * 10;
-				may_recover = this.getTranslation("CREATOR_MAY_RECOVER").replace("{value}", this.size);
-				html_return += " - " + may_recover + "\n";
-			}
-
-
-			if(this.energyCapacity > 0)
-				html_return += "[b]" + this.getTranslation("CREATOR_ENERGY_CAPACITY") + "[/b]: " + this.energyCapacity + "\n";
-		} else {
-			html_return += this.getTranslation("CREATOR_SIZE_MUST_BE_SELECTED");
-		}
-
-
-
-		for(removeHideCounter = 1; removeHideCounter < 31; removeHideCounter++) {
-			html_return = html_return.replace("<span class='hide'>" + removeHideCounter + "</span>", "");
-
-			// fix for bb code sunglasses when posting some vehicles and walkers to a bb forum.
-			html_return = html_return.replace("8)", " 8 )");
-		}
-
-
-
-		if(jquery_selector)
-			$(jquery_selector).val(html_return);
-
-		return html_return;
-	},
-
-	exportJSON: function(jquery_selector) {
-		exportObject = {};
-		exportObject.size = this.size;
-		exportObject.objectType = this.objectType;
-		exportObject.itemName = this.itemName;
-		exportObject.uuid = this.uuid;
-		exportObject.objectDescription = this.objectDescription;
-		exportObject.mods = Array();
-		exportObject.options = this.creatorOptions;
-		for(modCounter = 0; modCounter < this.selectedModifications.length; modCounter++)
-			exportObject.mods = exportObject.mods.concat( this.selectedModifications[modCounter].tag );
-		exportObject.weapons = Array();
-		for(local_weapon_counter = 0; local_weapon_counter < this.selected_weapons.length; local_weapon_counter++) {
-			weapon_item = {
-				tag: this.selected_weapons[local_weapon_counter].tag,
-				fixed: this.selected_weapons[local_weapon_counter].fixed,
-				count: this.selected_weapons[local_weapon_counter].count
-			};
-			exportObject.weapons = exportObject.weapons.concat( weapon_item );
-		}
-
-		export_string = JSON.stringify(exportObject);
-		if(jquery_selector)
-			$(jquery_selector).val(export_string);
-
-		return export_string;
-
-	},
-
-	stripslashes: function(str) {
-		return (str + '').replace(/\\(.?)/g, function (s, n1) {
-		switch (n1) {
-		case '\\':
-		  return '\\';
-		case '0':
-		  return '\u0000';
-		case '':
-		  return '';
-		default:
-		  return n1;
-		}
-		});
-	},
-
-	importJSON: function(importedObjectString) {
-		try {
-			importedObjectString = this.stripslashes(importedObjectString);
-			importedObj= JSON.parse(importedObjectString);
-		}
-		catch(e) {
-			// JSON Import error
-			// console.log("JSON import error for '" + importedObjectString + "'");
-			// console.log("error object", e);
-			return false;
-		}
-
-		if(typeof importedObj =='object') {
-			this.reset();
-			this.setSize(importedObj.size);
-			this.setName(importedObj.itemName);
-			if( typeof(importedObj.objectDescription) != "undefined")
-				this.setDescription(importedObj.objectDescription);
-
-
-
-			if( typeof(importedObj.uuid) != "undefined")
-				this.uuid = importedObj.uuid;
-
-			// legacy version description checks
-			if( typeof(importedObj.ship_description) != "undefined")
-				this.setDescription(importedObj.ship_description);
-			if( typeof(importedObj.power_armor_description) != "undefined")
-				this.setDescription(importedObj.power_armor_description);
-			if( typeof(importedObj.walker_description) != "undefined")
-				this.setDescription(importedObj.walker_description);
-			if( typeof(importedObj.vehicle_description) != "undefined")
-				this.setDescription(importedObj.vehicle_description);
-			if( typeof(importedObj.object_description) != "undefined")
-				this.setDescription(importedObj.object_description);
-			if( typeof(importedObj.item_name) != "undefined")
-				this.setName(importedObj.item_name);
-
-			if( importedObj.options )
-				this.creatorOptions = importedObj.options;
-
-			for(modCounter = 0; modCounter < importedObj.mods.length; modCounter++)
-				this.addMod( importedObj.mods[modCounter] );
-
-			for(local_weapon_counter = 0; local_weapon_counter < importedObj.weapons.length; local_weapon_counter++) {
-				if( importedObj.weapons[local_weapon_counter].tag)
-					this.addWeapon( importedObj.weapons[local_weapon_counter].tag );
-				else
-					this.addWeapon( importedObj.weapons[local_weapon_counter].name );
-
-				if( typeof(importedObj.weapons[local_weapon_counter].fixed) != "undefined" && importedObj.weapons[local_weapon_counter].fixed != "")
-					this.fixWeapon( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].fixed );
-
-				if( typeof(importedObj.weapons[local_weapon_counter].count) != "undefined" && importedObj.weapons[local_weapon_counter].count > 0)
-					this.setWeaponCount( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].count );
-
-				if( typeof(importedObj.weapons[local_weapon_counter].linked) != "undefined" && importedObj.weapons[local_weapon_counter].linked > 0)
-					this.linkWeapon( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].linked);
-
-			}
-			this.calculate();
-			return true;
-		}
-		// Wasn't an object (or was empty)
-		// console.log("Import is not object");
-		return false;
-	},
-
-	sortSelectedModificationsList: function() {
-		var keyList = Object.keys(this.selectedModifications_list);
-
-		keyList.sort();
-
-		var newList = {};
-
-		for (var keyCount = 0; keyCount < keyList.length; keyCount++) {
-			keyName = keyList[keyCount];
-			newList[keyName] = this.selectedModifications_list[keyName];
-		}
-		this.selectedModifications_list = newList;
-	},
-
-	// sort_selectedWeaponsList: function() {
-	//  	 Do nothing as the main should handle this now
-	// },
-
-	sortWeaponList: function() {
-
-		this.selected_weapons.sort(function(a, b){
-			if( a.linkable < b.linkable ) return 1;
-			if( a.linkable > b.linkable ) return -1;
-			if(a.mods > b.mods) return -1;
-			if(a.mods < b.mods) return 1;
-			return 0;
-		});
-	},
-
-	appendExtraNotes: function( note ) {
-		if(this.extraNotes != "")
-			this.extraNotes += ", ";
-		this.extraNotes += note;
-		return note;
-	},
-
-	calculate: function() {
-
-
-		if( this.selectedSize && this.selectedSize.sizeLabel ) {
-			// Flush Stats for recalulation
-			this.strength = 0;
-
-			this.strengthBonus = 0;
-			this.aircraft = 0;
-			this.watercraft = 0;
-			this.flyingPace = 0;
-			this.hasWeaponMounts = 0;
-			this.vehicleWeaponModPoints = 0;
-
-			this.hasTorpedoTube = 0;
-			this.hasMissileLauncher = 0;
-
-			this.examples = this.selectedSize.examples;
-			this.size = this.selectedSize.size;
-			this.acc = this.selectedSize.acc;
-			this.ts = this.selectedSize.ts;
-			this.aircraft = 0;
-			this.strengthBonus = 0;
-			this.climb = this.selectedSize.climb;
-			if(this.selectedSize.strength)
-				this.strength = this.selectedSize.strength;
-			this.toughness = this.selectedSize.toughness;
-			this.baseToughness = this.selectedSize.toughness;
-			this.armor = this.selectedSize.armor;
-			this.mods = this.selectedSize.mods;
-			this.baseMods = this.selectedSize.mods;
-			this.crew = this.selectedSize.crew;
-			this.cost = this.selectedSize.cost;
-			this.baseCost =  this.selectedSize.cost;
-			this.energyCapacity = this.selectedSize.energyCapacity;
-			this.baseEnergyCapacity = this.selectedSize.energyCapacity;
-			this.provisions = this.selectedSize.provisions;
-			this.weight = this.selectedSize.weight;
-			this.pace = this.selectedSize.pace;
-			this.basePace = this.selectedSize.pace;
-
-			this.extraNotes = "";
-
-			this.mods_available = this.mods;
-
-			// Starship is always an aircraft for these purposes ;)
-			if(this.objectType == "starship")
-				this.aircraft = 1;
-
-			if( this.selectedSize && this.selectedSize.strength )
-				this.strength = this.selectedSize.strength;
-			// Go through Mods for availability, calculation and listings
-			this.selectedModifications.sort( this.sortMods );
-			// Sort mods
-			this.selectedModifications_list = {};
-			for(calcModCount = 0; calcModCount < this.selectedModifications.length; calcModCount++) {
-				//this.selectedModifications_list += "<li>" + this.selectedModifications[modCount].name + "</li>";
-				this.mods = this.mods - this.selectedModifications[calcModCount].getModCost(this);
-				this.cost += this.selectedModifications[calcModCount].getCost(this);
-
-				// attempt to see if mod is still availble - remove if it's not.
-				if( this.selectedModifications[calcModCount].isAvailable ) {
-					if(this.selectedModifications[calcModCount].isAvailable(this) == false) {
-						this.removeMod(this.selectedModifications[calcModCount].tag);
-						this.calculate();
-						// stop all processing as the page is recalcuating anyways
-						return;
-					}
-				}
-
-				// console.log( this.selectedModifications[calcModCount].name + "/" + this.selectedModifications[calcModCount].getModCost(this) + "/" + this.mods );
-
-				if( this.selectedModifications[calcModCount].getWeight )
-					this.weight += this.selectedModifications[calcModCount].getWeight(this);
-
-				if( this.selectedModifications[calcModCount].getModEffect )
-					this.selectedModifications[calcModCount].getModEffect(this);
-
-				// Linked weapons are displayed elsewhere...
-				if(this.selectedModifications[calcModCount].tag != "linked") {
-					if( typeof(this.selectedModifications_list[this.selectedModifications[calcModCount].tag]) == "undefined")
-						this.selectedModifications_list[this.selectedModifications[calcModCount].tag] = 1;
-					else
-						this.selectedModifications_list[this.selectedModifications[calcModCount].tag]++;
-				}
-			}
-
-			// Go through Weapons for availability, calculation and listings
-			// Sort weapons
-			//this.selected_weapons.sort( sortMods );
-			this.sortWeaponList();
-
-			this.selectedWeaponsList = {};
-			fixedWeaponModUsage = 0;
-			linkedWeaponModUsage = Array();
-			otherWeaponModUsage = 0;
-			for(calcModCount = 0; calcModCount < this.selected_weapons.length; calcModCount++) {
-
-				// attempt to see if weapon is still availble - remove if it's not.
-				if( this.selected_weapons[calcModCount].isAvailable ) {
-					if(this.selected_weapons[calcModCount].isAvailable(this) == false) {
-						this.removeWeapon(calcModCount);
-						this.calculate();
-						// stop all processing as the page is recalcuating anyways
-						return;
-					}
-				}
-
-				this.selected_weapons[calcModCount] = this.updateWeaponDisplayName( this.selected_weapons[calcModCount] );
-				// Continue on....
-				weaponModCost = this.selected_weapons[calcModCount].mods;
-
-				if( typeof(this.selected_weapons[calcModCount].current_mod_cost) != "undefined") {
-					weaponModCost = this.selected_weapons[calcModCount].current_mod_cost;
-				}
-
-				if(this.selected_weapons[calcModCount].fixed != 0 && this.selected_weapons[calcModCount].fixed != "")
-					weaponModCost = weaponModCost / 2;
-
-				// if(this.selected_weapons[calcModCount].count > 1) {
-				// 	console.log(weaponModCost, this.selected_weapons[calcModCount].count);
-				// 	weaponModCost = (this.selected_weapons[calcModCount].count * weaponModCost) / 2;
-				// 	console.log(weaponModCost);
-				// }
-				//this.vehicleWeaponModPoints = this.vehicleWeaponModPoints - weaponModCost;
-
-
-				if(this.requiresMountPoint > 0)
-					this.vehicleWeaponModPoints -= weaponModCost;
-				else
-					this.mods -= weaponModCost;
-
-				// console.log( this.selected_weapons[calcModCount].name + "(" + this.selected_weapons[calcModCount].count + ")/" + weaponModCost + "/" + this.mods );
-
-				if( this.selected_weapons[calcModCount].getWeight )
-					this.weight += this.selected_weapons[calcModCount].getWeight(this);
-
-				if( this.selected_weapons[calcModCount].count > 1) {
-					this.cost += this.selected_weapons[calcModCount].cost / 1 * this.selected_weapons[calcModCount].count;
-				} else {
-					this.cost += this.selected_weapons[calcModCount].cost / 1;
-				}
-
-
-				weaponListName = this.selected_weapons[calcModCount].display_name;
-				//console.log("*",this.selected_weapons[calcModCount].fixed.toLowerCase().trim());
-				if(
-					this.selected_weapons[calcModCount].fixed != 0
-					&&
-					this.selected_weapons[calcModCount].fixed != '0'
-					&&
-					this.selected_weapons[calcModCount].fixed != ""
-				) {
-
-					switch( this.selected_weapons[calcModCount].fixed.toLowerCase().trim() ) {
-						case "bow":
-							fixedLabel = this.getTranslation("CREATOR_FIXED_BOW_FRONT");
-						//	console.log("bow",this.selected_weapons[calcModCount].fixed.toLowerCase().trim());
-							break;
-						case "port":
-							fixedLabel = this.getTranslation("CREATOR_FIXED_PORT_LEFT");
-							break;
-						case "starboard":
-							fixedLabel = this.getTranslation("CREATOR_FIXED_STARBOARD_RIGHT");
-							break;
-						case "stern":
-							fixedLabel = this.getTranslation("CREATOR_FIXED_STERN_REAR");
-							break;
-						default:
-							fixedLabel = this.getTranslation("CREATOR_FIXED");
-							break;
-					}
-
-					weaponListName = weaponListName + " (" + fixedLabel + ")";
-					this.selected_weapons[calcModCount].display_name = weaponListName;
-
-				} else {
-					if(this.selected_weapons[calcModCount].linked) {
-						weaponListName = weaponListName + " (linked<span class='hide'>" + this.selected_weapons[calcModCount].linked + "</span>)";
-					}
-				}
-				// console.log("weaponListName", weaponListName);
-				// console.log("this.selectedWeaponsList[weaponListName]", this.selectedWeaponsList[weaponListName]);
-				if( typeof(this.selectedWeaponsList[weaponListName]) == "undefined" || this.selectedWeaponsList[weaponListName] == "0") {
-					if( this.selected_weapons[calcModCount].missiles_per > 0)
-						this.selectedWeaponsList[weaponListName] = {
-							obj: this.selected_weapons[calcModCount],
-							count: this.selected_weapons[calcModCount].missiles_per
-						};
-					else
-						this.selectedWeaponsList[weaponListName] = {
-							obj: this.selected_weapons[calcModCount],
-							count: 1
-						};
-
-				} else {
-					if( this.selected_weapons[calcModCount].missiles_per > 0 )
-						this.selectedWeaponsList[weaponListName].count = (this.selectedWeaponsList[weaponListName].count / 1) + (this.selected_weapons[calcModCount].missiles_per / 1);
-					else
-						this.selectedWeaponsList[weaponListName].count++;
-				}
-			}
-
-			this.mods_available = this.mods; // - sortSelectedModificationsList.length;
-			if(this.requiresMountPoint == 0) {
-				this.vehicleWeaponModPoints = this.mods_available; // - sortSelectedModificationsList.length;
-			}
-
-
-		}
-	},
-
-	setName: function(newValue) {
-		this.itemName = newValue;
-	},
-
-	setOption: function( short_tag, value ) {
-//		console.log("setOption called: " + this.getOptionLSName(short_tag) + ", " + value);
-		localStorage.setItem( this.getOptionLSName(short_tag), value.toString() );
-	},
-
-	getOptionLSName: function( short_tag) {
-		return "com.jdg.swwt.settings." + current_selectedObject.objectType + "." + short_tag;
-	},
-
-	getAvailableOptions: function() {
-//		console.log("getAvailableOptions called");
-		if(this.availableOptions) {
-			// put current values into system
-			for(localSettingCount = 0; localSettingCount < this.availableOptions.length; localSettingCount++) {
-				if( typeof(this.availableOptions[localSettingCount].desciption) == "undefined") {
-					this.availableOptions[localSettingCount].desciption = "";
-				}
-
-				this.availableOptions[localSettingCount].value = localStorage.getItem( this.getOptionLSName( this.availableOptions[localSettingCount].short_tag ) );
-//				console.log(this.getOptionLSName( this.availableOptions[localSettingCount].short_tag ) + " - " + this.availableOptions[localSettingCount].value);
-				if(this.availableOptions[localSettingCount].value == "1")
-					this.availableOptions[localSettingCount].value = this.availableOptions[localSettingCount].value / 1;
-			}
-			return this.availableOptions;
-
-		} else {
-//			console.log("No settings?");
-			return Array();
-		}
-	},
-
-	formatPaceRealWorld: function(pace_value) {
-		// never take things at pace value. /groan
-		return pace_value + " (" + Math.floor(pace_value * 2.4)+ " mph, " + Math.floor(pace_value * 3.862416) + " kph)";
-	},
-
-	setDescription: function(newValue) {
-		this.objectDescription = newValue;
-	},
-
-	addMod: function(modName) {
-		return_value = 0;
-		if( !modName ) {
-			return false;
-		}
-		for(addModCount = 0; addModCount < this.availableMods.length; addModCount++) {
-			if(
-				modName.toLowerCase() == this.availableMods[addModCount].tag.toLowerCase()
-				||
-				modName.toLowerCase() == this.availableMods[addModCount].name["en-US"].toLowerCase()
-			) {
-				//newMod = jQuery.extend({}, this.availableMods[addModCount]);
-				var newMod = {};
-				angular.extend(newMod, this.availableMods[addModCount]);
-				this.selectedModifications = this.selectedModifications.concat( newMod  );
-				return;
+				return langKey;
 			}
 		}
+	}
+	return langKey;
+};
 
-		return return_value;
-	},
 
-	getStrengthLabel: function( strength_value ) {
-		return getDiceValue( strength_value );
-		// strength_value = strength_value / 1;
-		// if( attribute_labels[strength_value] )
-		// 	return attribute_labels[strength_value];
-		// else
-		// 	return "UNKNOWN VALUE";
-	},
+scifiCreator.prototype.simplify_cost = function (input_price) {
+	if(input_price > 1000000000) {
+		// it's a billion+
+		return input_price / 1000000000 + 'B';
+	} else if(input_price > 1000000) {
+		// it's a million+
+		return input_price / 1000000 + 'M';
+	} else if(input_price > 1000){
+		// it's a thousand+
+		return input_price / 1000 + 'K';
+	} else {
+		return input_price;
+	}
+},
 
-	addWeapon: function(weaponName) {
-		return_value = 0;
-		for(addlocal_weapon_count = 0; addlocal_weapon_count < savageWorldsVehicleWeapons.length; addlocal_weapon_count++) {
-			if(
-				(
-					weaponName.toLowerCase() == savageWorldsVehicleWeapons[addlocal_weapon_count].tag.toLowerCase()
-				)
-					||
-				(
-					typeof(savageWorldsVehicleWeapons[addlocal_weapon_count].name_old) != "undefined"
-						&&
-					weaponName.toLowerCase() == savageWorldsVehicleWeapons[addlocal_weapon_count].name_old["en-US"].toLowerCase()
-				)
-					||
-				(
-					typeof(savageWorldsVehicleWeapons[addlocal_weapon_count].name) != "undefined"
-						&&
-					weaponName.toLowerCase() == savageWorldsVehicleWeapons[addlocal_weapon_count].name["en-US"].toLowerCase()
-
-				)
-			) {
-//				newWeapon = new savageWorldsVehicleWeapons[addlocal_weapon_count];
-				//newWeapon = jQuery.extend({}, savageWorldsVehicleWeapons[addlocal_weapon_count]);
-				var newWeapon = {};
-				angular.extend(newWeapon, savageWorldsVehicleWeapons[addlocal_weapon_count]);
-				newWeapon.linked = 0;
-				newWeapon.count = 1;
-				newWeapon.fixed = 0;
-				this.selected_weapons = this.selected_weapons.concat( newWeapon );
-				return;
-			}
-		}
-
-		return return_value;
-	},
-
-	updateWeaponDisplayName: function( weaponObject ) {
-		weaponObject.count = weaponObject.count / 1;
-		weaponObject.mods = weaponObject.mods / 1;
-
-		if( weaponObject.count == 1 ){
-			weaponObject.display_name = this.getLocalName(weaponObject.name);
-		}
-		if( weaponObject.count == 2 ){
-			linkedTranslation = this.getTranslation("CREATOR_DUAL_LINKED");
-			weaponObject.display_name = linkedTranslation.replace("{name}",this.getLocalName(weaponObject.name_plural) );
-		}
-		if( weaponObject.count == 3 ){
-			linkedTranslation = this.getTranslation("CREATOR_TRI_LINKED");
-			weaponObject.display_name = linkedTranslation.replace("{name}",this.getLocalName(weaponObject.name_plural) );
-		}
-		if( weaponObject.count == 4 ){
-			linkedTranslation = this.getTranslation("CREATOR_QUAD_LINKED");
-			weaponObject.display_name = linkedTranslation.replace("{name}",this.getLocalName(weaponObject.name_plural) );
-		}
-
-		if( weaponObject.count > 1 ) {
-			weaponObject.current_mod_cost = (weaponObject.mods * weaponObject.count) / 2;
-		} else {
-			weaponObject.current_mod_cost = weaponObject.mods;
-		}
-
-		return weaponObject;
-	},
-
-	incrementWeaponCount: function( weaponIndex ) {
-		weaponIndex = weaponIndex / 1;
-		this.selected_weapons[weaponIndex].count++;
-		if( this.selected_weapons[weaponIndex].count > 4)
-			this.selected_weapons[weaponIndex].count = 4;
-
-	},
-
-	setWeaponCount: function( weaponIndex, newCount ) {
-		weaponIndex = weaponIndex / 1;
-		if( this.selected_weapons[weaponIndex] ) {
-			this.selected_weapons[weaponIndex].count = newCount;
-			if( this.selected_weapons[weaponIndex].count < 1)
-				this.selected_weapons[weaponIndex].count = 1;
-			if( this.selected_weapons[weaponIndex].count > 4)
-				this.selected_weapons[weaponIndex].count = 4;
-		}
-	},
-
-	decrementWeaponCount: function( weaponIndex ) {
-		weaponIndex = weaponIndex / 1;
-		this.selected_weapons[weaponIndex].count--;
-		if( this.selected_weapons[weaponIndex].count < 1)
-			this.selected_weapons[weaponIndex].count = 1;
-	},
-
-	removeMod: function(modName) {
-		for(removeModCount = 0; removeModCount < this.selectedModifications.length; removeModCount++) {
-			if(modName.toLowerCase() == this.selectedModifications[removeModCount].tag.toLowerCase()) {
-				this.selectedModifications.splice(removeModCount, 1);
-				return;
-			}
-		}
-	},
-
-	removeWeapon: function(weaponIndex) {
-		weaponIndex = weaponIndex / 1;
-		this.selected_weapons.splice(weaponIndex, 1);
-	},
-
-	linkWeapon: function(weaponIndex, linkIndex) {
-		weaponIndex = weaponIndex / 1;
-
-		this.selected_weapons[weaponIndex].linked = (linkIndex / 1);
-	},
-
-	fixWeapon: function(weaponIndex, fixedValue) {
-		weaponIndex = weaponIndex / 1;
-
-		this.selected_weapons[weaponIndex].fixed = (fixedValue);
-	},
-
-	getLinkedWeapons: function() {
-		numberOfLinks = this.getModificationCount("Linked");
-		returnVal = Array();
-		if( numberOfLinks > 0 ){
-
-			for(linked_weapon_count = 0; linked_weapon_count < this.selected_weapons.length; linked_weapon_count++) {
-				if(this.selected_weapons[linked_weapon_count].linked > 0) {
-					// unset any links that were removed...
-					if(this.selected_weapons[linked_weapon_count].linked > numberOfLinks)
-						this.selected_weapons[linked_weapon_count].linked  = 0;
-					else
-						returnVal[this.selected_weapons[linked_weapon_count].linked] = this.selected_weapons[linked_weapon_count].name;
-				}
-			}
-			while(returnVal.length < numberOfLinks + 1) {
-				for(linked_weapon_count = returnVal.length; linked_weapon_count < numberOfLinks + 1; linked_weapon_count++) {
-					returnVal[linked_weapon_count] = "";
-				}
-			}
-		} else {
-			// unlink all weapons as all links have disappeared
-			for(linked_weapon_count = 0; linked_weapon_count < this.selected_weapons.length; linked_weapon_count++) {
-				this.selected_weapons[linked_weapon_count].linked  = 0;
-			}
-			returnVal = Array();
-		}
-
-		return returnVal;
-
-	},
-
-	getModificationCount: function(modName) {
-		return_value = 0;
-		for(modCount = 0; modCount < this.selectedModifications.length; modCount++) {
-			if(modName.toLowerCase() == this.selectedModifications[modCount].tag.toLowerCase())
-				return_value++;
-		}
-
-		return return_value;
-	},
-
-	setSize: function(sizeNumber) {
-		for(sizeCount = 0; sizeCount < this.availableSizes.length; sizeCount++) {
-			if(sizeNumber == this.availableSizes[sizeCount].size) {
-				this.selectedSize = this.availableSizes[sizeCount];
-				this.size = this.availableSizes[sizeCount].size;
-				return true;
-			}
-		}
-		return false;
-	},
-
-	sortMods: function(a,b) {
-		if( typeof(a.calcWeight) == "undefined")
-			a.calcWeight = 5;
-		if( typeof(b.calcWeight) == "undefined")
-			b.calcWeight = 5;
-
-		if (a.calcWeight < b.calcWeight){
-			return -1;
-		} else {
-			if (a.calcWeight > b.calcWeight) {
-				return 1;
-			} else {
-				return a.name > b.name;
-			}
-		}
-	},
-	optionActive: function( short_tag ) {
-		value = localStorage.getItem( this.getOptionLSName( short_tag) );
-		value = value / 1;
-		if( value > 0 )
-			return true;
-		else
-			return false;
-	},
-
-	addOption: function(option_tag) {
-	//	console.log("addOption", option_tag);
-	//	if( this.creatorOptions && !this.creatorOptions.contains( option_tag ) ) {
-	//		this.creatorOptions.push( option_tag ) ;
-	//	}
-		var push_it = false;
-		for( var opt_c = this.creatorOptions.length - 1; opt_c >= 0; opt_c--) {
-			if( this.creatorOptions[opt_c] == option_tag )
-				return false;
-		}
-		this.creatorOptions.push( option_tag ) ;
-
-	},
-
-	removeOption: function(option_tag) {
-	//	console.log("removeOption", option_tag);
-		for( var opt_c = this.creatorOptions.length - 1; opt_c >= 0; opt_c--) {
-			if( this.creatorOptions[opt_c] == option_tag )
-				this.creatorOptions.splice( opt_c, 1);
-
-		}
-	},
-
-	hasOption: function(option_tag) {
-
-		for( var opt_c = this.creatorOptions.length - 1; opt_c >= 0; opt_c--) {
-			if( this.creatorOptions[opt_c] == option_tag )
-				return true;
-		}
-		return false;
-	},
-
-	propogateSizeSelect: function(jquery_selector) {
-		if(jquery_selector)
-			jquery_selector = ".js-select-size";
-		selectOptions = "<option value=''>- Select Size -</option>";
-		for(sizeCount = 0; sizeCount < this.availableSizes.length; sizeCount++) {
-			isSelected = "";
-			display_option = true;
-			if( typeof(this.availableSizes[sizeCount].showWithOption) != "undefined" ) {
-				if( this.optionActive( this.availableSizes[sizeCount].showWithOption ) ) {
-					display_option = true;
-				} else {
-					display_option = false;
-				}
-			}
-
-			if( typeof(this.availableSizes[sizeCount].hideWithOption) != "undefined" ) {
-				if( this.optionActive( this.availableSizes[sizeCount].hideWithOption ) ) {
-					display_option = false;
-				} else {
-					display_option = true;
-				}
-			}
-
-			if( display_option ) {
-				if( this.selectedSize && this.selectedSize.size )
-					if(  this.selectedSize.size == this.availableSizes[sizeCount].size )
-						isSelected = " selected='selected'";
-				selectOptions += "<option value='" + this.availableSizes[sizeCount].size + "'" + isSelected + ">";
-				selectOptions += this.availableSizes[sizeCount].sizeLabel + " - Size " + this.availableSizes[sizeCount].size;
-				if( this.availableSizes[sizeCount].examples )
-					selectOptions += " - " + this.availableSizes[sizeCount].examples;
-				selectOptions += "</option>";
-			}
-		}
-		$(jquery_selector).html(selectOptions);
+scifiCreator.prototype.getLocalName = function( incoming_string_array ) {
+	if( incoming_string_array[ this.useLang] ) {
+		return incoming_string_array[ this.useLang];
+	} else {
+		return incoming_string_array[ "en-US" ];
 	}
 };
+
+scifiCreator.prototype.formatMoney = function(n, decPlaces, thouSeparator, decSeparator) {
+    var
+        decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
+        decSeparator = decSeparator == undefined ? "." : decSeparator,
+        thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
+        sign = n < 0 ? "-" : "",
+        i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
+        j = (j = i.length) > 3 ? j % 3 : 0;
+    return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
+};
+
+scifiCreator.prototype.createStatesBlock = function() {
+	html_return = "";
+
+	html_return += "<h3>" + this.itemName + "</h3>";
+	html_return += "<p>";
+
+	html_return += this.objectDescription + "</p><br />";
+
+	if(this.selectedSize && this.selectedSize.size > 0) {
+		html_return += "<strong>" + this.getLocalName(this.selectedSize.sizeLabel)  + "</strong>: ";
+		html_return += this.getTranslation("CREATOR_SIZE") + " " + this.size + ", ";
+		if(this.acc > 0)
+			html_return += this.getTranslation("CREATOR_ACC_TS") + " " +  this.acc + "/" + this.formatPaceRealWorld(this.ts) + ", ";
+		if(this.aircraft)
+			html_return += this.getTranslation("CREATOR_CLIMB") + " " + this.climb + ", ";
+		if(this.flyingPace > 0)
+			html_return += this.getTranslation("CREATOR_FLYPACE") + " " +  this.formatPaceRealWorld(this.flyingPace) + ", ";
+		if(this.toughness > 0) {
+			if( this.frontArmor > 0 ) {
+				html_return += this.getTranslation("CREATOR_TOUGHNESS") + " " + this.toughness + " (<span title='" + this.getTranslation("CREATOR_FASARA")  + ")'>" + this.frontArmor + "/" + this.sideArmor + "/" +  this.rearArmor + "</span>), ";
+			} else {
+				html_return += this.getTranslation("CREATOR_TOUGHNESS") + " " + this.toughness + " (" + this.armor + "), ";
+			}
+
+		} else {
+			if(this.armor) {
+				html_return += this.getTranslation("CREATOR_ARMOR") + " +"  + this.armor + ", ";
+			}
+		}
+
+		if(this.pace > 0)
+			html_return += this.getTranslation("CREATOR_PACE") + " "  + this.formatPaceRealWorld(this.pace) + ", ";
+		if(this.crew > 0)
+			html_return += this.getTranslation("CREATOR_CREW") + " "  + this.crew + ", ";
+
+		if(this.strength > 0 && this.objectType != "power_armor")
+			html_return += this.getTranslation("CREATOR_STRENGTH") + " "  + this.getLocalName(  this.getStrengthLabel( this.strength ).label ) + ", ";
+
+		html_return += this.getTranslation("CREATOR_COST") + " C$" + this.formatMoney(this.cost, 0) + ", ";
+		html_return += this.getTranslation("CREATOR_REMAINING_MODS") + " "  + this.mods_available + "<br />";
+
+
+		//html_return += "<strong>Mods Available</strong>: " + this.mods_available + "<br />";
+		if( this.hasWeaponMounts )
+			html_return += "<strong>" + this.getTranslation("CREATOR_WEAPON_MODS_AVAILABLE")  + "</strong>: " + this.vehicleWeaponModPoints + "<br />";
+
+		html_return += "<strong>" + this.getTranslation("CREATOR_NOTES")  + "</strong>: ";
+
+		this.sortSelectedModificationsList();
+		var mod_count = 0;
+
+		for(var modTag in this.selectedModifications_list){
+
+			if( mod_count > 0)
+				html_return += ", ";
+			if(this.selectedModifications_list[modTag] > 1)
+					html_return += this.selectedModifications_list[modTag] + "x "
+
+				modName = this.getModName(modTag);
+				html_return += modName;
+
+				mod_count++;
+		}
+		if( mod_count == 0)
+			html_return += this.getTranslation("CREATOR_NONE");
+
+		html_return += "<br />";
+
+		html_return += "<strong>" + this.getTranslation("CREATOR_WEAPONS")  + "</strong>: ";
+		//this.sort_selectedWeaponsList();
+		html_return += "<ul>";
+		var weapon_count = 0;
+//			console.log("this.selectedWeaponsList",this.selectedWeaponsList);
+		for(var weaponName in this.selectedWeaponsList){
+			html_return += "<li>";
+			if(this.selectedWeaponsList[weaponName].count > 1)
+					html_return += this.selectedWeaponsList[weaponName].count + "x ";
+				//this.selectedWeaponsList[weaponName].obj = this.updateWeaponDisplayName( this.selectedWeaponsList[weaponName] );
+				html_return += this.selectedWeaponsList[weaponName].obj.display_name;
+				html_return += this.makeWeaponStatHTML( this.selectedWeaponsList[weaponName].obj );
+				html_return += "</li>";
+				weapon_count++;
+		}
+		if( weapon_count == 0 )
+			html_return += "<li>" + this.getTranslation("CREATOR_NONE")  + "</li>";
+		html_return += "</ul>";
+
+		if( this.getModificationCount("Shields") > 0) {
+			html_return += "<strong>" + this.getTranslation("CREATOR_SHIELDS")  + "</strong>: ";
+			html_return += this.size * 10;
+			may_recover = this.getTranslation("CREATOR_MAY_RECOVER").replace("{value}", this.size);
+			html_return += " - " + may_recover + "<br />";
+		}
+
+		if(this.energyCapacity > 0)
+			html_return += "<strong>" + this.getTranslation("CREATOR_ENERGY_CAPACITY")  + "</strong>: " + this.energyCapacity + "<br />";
+
+		if( this.extraNotes != "" ) {
+			html_return += "<strong>" + this.getTranslation("CREATOR_EXTRA_NOTES")  + "</strong>: ";
+			html_return += this.extraNotes;
+		}
+	} else {
+		html_return += this.getTranslation("CREATOR_SIZE_MUST_BE_SELECTED");
+	}
+
+	return html_return;
+};
+
+scifiCreator.prototype.makeWeaponStatHTML = function( weapon_object ) {
+	return_val = " (";
+	return_val += weapon_object.range + ", ";
+	return_val += weapon_object.damage;
+	if( weapon_object.count >= 4)
+		return_val += " +2";
+	else if( weapon_object.count >= 3)
+		return_val += " +1";
+	else if( weapon_object.count >= 2)
+		return_val += " +1";
+
+	return_val += ", ";
+	notes = this.getLocalName( weapon_object.notes );
+	if( notes != "")
+		return_val += notes + ", ";
+	return_val = return_val.substring(0, return_val.length - 2);
+	return_val += ")";
+	return return_val;
+};
+
+scifiCreator.prototype.exportBBCode = function() {
+	html_return = "";
+
+	html_return += "[b][size=150]" + this.itemName + "[/size][/b]\n";
+	if(this.objectDescription)
+		html_return += "" + this.objectDescription + "\n\n";
+	else
+		html_return += "\n";
+
+	if(this.selectedSize && this.selectedSize.sizeLabel) {
+		html_return += "[b]" + this.getLocalName(this.selectedSize.sizeLabel) + "[/b]: ";
+		html_return += this.getTranslation("CREATOR_SIZE") + " " + this.size + ", ";
+		if(this.acc > 0)
+			html_return += this.getTranslation("CREATOR_ACC_TS") + " " + this.acc + "/" + this.formatPaceRealWorld(this.ts) + ", ";
+		if(this.aircraft)
+			html_return += this.getTranslation("CREATOR_CLIMB") + " " + this.climb + ", ";
+		if(this.flyingPace > 0)
+			html_return += this.getTranslation("CREATOR_FLYPACE") + " " + this.formatPaceRealWorld(this.flyingPace) + ", ";
+		if(this.toughness > 0) {
+			html_return += this.getTranslation("CREATOR_TOUGHNESS") + " " + this.toughness + " (" + this.armor + "), ";
+		} else {
+			if(this.armor) {
+				html_return += this.getTranslation("CREATOR_ARMOR") + "  +" + this.armor + ", ";
+			}
+		}
+
+		if(this.pace > 0)
+			html_return += this.getTranslation("CREATOR_PACE") + "  " + this.formatPaceRealWorld(this.pace) + ", ";
+		if(this.crew > 0)
+			html_return += this.getTranslation("CREATOR_CREW") + "  " + this.crew + ", ";
+
+		if(this.strength > 0 && this.objectType != "power_armor")
+			html_return += this.getTranslation("CREATOR_STRENGTH") + " "  + this.getLocalName(  this.getStrengthLabel( this.strength ).label ) + ", ";
+
+		html_return += this.getTranslation("CREATOR_COST") + " C$" + this.simplify_cost(this.cost) + ", ";
+		html_return += this.getTranslation("CREATOR_REMAINING_MODS") + " " + this.mods_available + "\n";
+
+		html_return += "[b]" + this.getTranslation("CREATOR_NOTES") + "[/b]: ";
+
+		var mod_count = 0;
+		for(var modName in this.selectedModifications_list){
+			if( mod_count > 0)
+				html_return += ", ";
+			if(this.selectedModifications_list[modName] > 1)
+					html_return += this.selectedModifications_list[modName] + "x ";
+			html_return += modName;
+			mod_count++;
+		}
+		if(mod_count == 0)
+			html_return += this.getTranslation("CREATOR_NONE");
+
+		html_return += "\n";
+
+		html_return += "[b]" + this.getTranslation("CREATOR_WEAPONS") + "[/b]: ";
+		html_return += "[list]";
+
+		var weapon_count = 0;
+		var weapon_count = 0;
+
+		for(var weaponName in this.selectedWeaponsList){
+			html_return += "[*]";
+			if(this.selectedWeaponsList[weaponName].count > 1)
+					html_return += this.selectedWeaponsList[weaponName].count + "x ";
+
+				html_return += this.selectedWeaponsList[weaponName].obj.display_name;
+				html_return += this.makeWeaponStatHTML( this.selectedWeaponsList[weaponName].obj );
+				html_return += "\n";
+				weapon_count++;
+		}
+		if( weapon_count == 0 )
+			html_return += "[*]" + this.getTranslation("CREATOR_NONE") + ".\n";
+		html_return += "[/list]";
+
+		html_return += "\n";
+
+		if( this.getModificationCount("Shields") > 0) {
+			html_return += "[b]" + this.getTranslation("CREATOR_SHIELDS") + "[/b]: ";
+			html_return += this.size * 10;
+			may_recover = this.getTranslation("CREATOR_MAY_RECOVER").replace("{value}", this.size);
+			html_return += " - " + may_recover + "\n";
+		}
+
+
+		if(this.energyCapacity > 0)
+			html_return += "[b]" + this.getTranslation("CREATOR_ENERGY_CAPACITY") + "[/b]: " + this.energyCapacity + "\n";
+	} else {
+		html_return += this.getTranslation("CREATOR_SIZE_MUST_BE_SELECTED");
+	}
+
+
+
+	for(removeHideCounter = 1; removeHideCounter < 31; removeHideCounter++) {
+		html_return = html_return.replace("<span class='hide'>" + removeHideCounter + "</span>", "");
+
+		// fix for bb code sunglasses when posting some vehicles and walkers to a bb forum.
+		html_return = html_return.replace("8)", " 8 )");
+	}
+
+
+	return html_return;
+};
+
+scifiCreator.prototype.exportJSON = function(noUUID) {
+	exportObject = {};
+	exportObject.size = this.size;
+	exportObject.objectType = this.objectType;
+	exportObject.itemName = this.itemName;
+	if( !noUUID )
+		exportObject.uuid = this.uuid;
+	exportObject.objectDescription = this.objectDescription;
+	exportObject.mods = Array();
+	exportObject.options = this.creatorOptions;
+	for(modCounter = 0; modCounter < this.selectedModifications.length; modCounter++)
+		exportObject.mods = exportObject.mods.concat( this.selectedModifications[modCounter].tag );
+	exportObject.weapons = Array();
+	for(local_weapon_counter = 0; local_weapon_counter < this.selected_weapons.length; local_weapon_counter++) {
+		weapon_item = {
+			tag: this.selected_weapons[local_weapon_counter].tag,
+			fixed: this.selected_weapons[local_weapon_counter].fixed,
+			count: this.selected_weapons[local_weapon_counter].count
+		};
+		exportObject.weapons = exportObject.weapons.concat( weapon_item );
+	}
+
+	export_string = JSON.stringify(exportObject);
+
+
+	return export_string;
+
+};
+
+scifiCreator.prototype.stripslashes = function(str) {
+	return (str + '').replace(/\\(.?)/g, function (s, n1) {
+	switch (n1) {
+	case '\\':
+	  return '\\';
+	case '0':
+	  return '\u0000';
+	case '':
+	  return '';
+	default:
+	  return n1;
+	}
+	});
+};
+
+scifiCreator.prototype.importJSON = function(importedObjectString) {
+	try {
+		importedObjectString = this.stripslashes(importedObjectString);
+		importedObj= JSON.parse(importedObjectString);
+	}
+	catch(e) {
+		// JSON Import error
+		return false;
+	}
+
+	if(typeof importedObj =='object') {
+		this.reset();
+		this.setSize(importedObj.size);
+		this.setName(importedObj.itemName);
+		if( typeof(importedObj.objectDescription) != "undefined")
+			this.setDescription(importedObj.objectDescription);
+
+
+
+		if( typeof(importedObj.uuid) != "undefined")
+			this.uuid = importedObj.uuid;
+
+		// legacy version description checks
+		if( typeof(importedObj.ship_description) != "undefined")
+			this.setDescription(importedObj.ship_description);
+		if( typeof(importedObj.power_armor_description) != "undefined")
+			this.setDescription(importedObj.power_armor_description);
+		if( typeof(importedObj.walker_description) != "undefined")
+			this.setDescription(importedObj.walker_description);
+		if( typeof(importedObj.vehicle_description) != "undefined")
+			this.setDescription(importedObj.vehicle_description);
+		if( typeof(importedObj.object_description) != "undefined")
+			this.setDescription(importedObj.object_description);
+		if( typeof(importedObj.item_name) != "undefined")
+			this.setName(importedObj.item_name);
+
+		if( importedObj.options )
+			this.creatorOptions = importedObj.options;
+
+		for(modCounter = 0; modCounter < importedObj.mods.length; modCounter++)
+			this.addMod( importedObj.mods[modCounter] );
+
+		for(local_weapon_counter = 0; local_weapon_counter < importedObj.weapons.length; local_weapon_counter++) {
+			if( importedObj.weapons[local_weapon_counter].tag)
+				this.addWeapon( importedObj.weapons[local_weapon_counter].tag );
+			else
+				this.addWeapon( importedObj.weapons[local_weapon_counter].name );
+
+			if( typeof(importedObj.weapons[local_weapon_counter].fixed) != "undefined" && importedObj.weapons[local_weapon_counter].fixed != "")
+				this.fixWeapon( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].fixed );
+
+			if( typeof(importedObj.weapons[local_weapon_counter].count) != "undefined" && importedObj.weapons[local_weapon_counter].count > 0)
+				this.setWeaponCount( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].count );
+
+			if( typeof(importedObj.weapons[local_weapon_counter].linked) != "undefined" && importedObj.weapons[local_weapon_counter].linked > 0)
+				this.linkWeapon( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].linked);
+
+		}
+		this.calculate();
+		return true;
+	}
+	// Wasn't an object (or was empty)
+	return false;
+};
+
+scifiCreator.prototype.sortSelectedModificationsList = function() {
+	var keyList = Object.keys(this.selectedModifications_list);
+
+	keyList.sort();
+
+	var newList = {};
+
+	for (var keyCount = 0; keyCount < keyList.length; keyCount++) {
+		keyName = keyList[keyCount];
+		newList[keyName] = this.selectedModifications_list[keyName];
+	}
+	this.selectedModifications_list = newList;
+};
+
+scifiCreator.prototype.sortWeaponList = function() {
+
+	this.selected_weapons.sort(function(a, b){
+		if( a.linkable < b.linkable ) return 1;
+		if( a.linkable > b.linkable ) return -1;
+		if(a.mods > b.mods) return -1;
+		if(a.mods < b.mods) return 1;
+		return 0;
+	});
+};
+
+scifiCreator.prototype.appendExtraNotes = function( note ) {
+	if(this.extraNotes != "")
+		this.extraNotes += ", ";
+	this.extraNotes += note;
+	return note;
+};
+
+scifiCreator.prototype.calculate = function() {
+
+
+	if( this.selectedSize && this.selectedSize.sizeLabel ) {
+		// Flush Stats for recalulation
+		this.strength = 0;
+
+		this.strengthBonus = 0;
+		this.aircraft = 0;
+		this.watercraft = 0;
+		this.flyingPace = 0;
+		this.hasWeaponMounts = 0;
+		this.vehicleWeaponModPoints = 0;
+
+		this.hasTorpedoTube = 0;
+		this.hasMissileLauncher = 0;
+
+		this.examples = this.selectedSize.examples;
+		this.size = this.selectedSize.size;
+		this.acc = this.selectedSize.acc;
+		this.ts = this.selectedSize.ts;
+		this.aircraft = 0;
+		this.strengthBonus = 0;
+		this.climb = this.selectedSize.climb;
+		if(this.selectedSize.strength)
+			this.strength = this.selectedSize.strength;
+		this.toughness = this.selectedSize.toughness;
+		this.baseToughness = this.selectedSize.toughness;
+		this.armor = this.selectedSize.armor;
+		this.mods = this.selectedSize.mods;
+		this.baseMods = this.selectedSize.mods;
+		this.crew = this.selectedSize.crew;
+		this.cost = this.selectedSize.cost;
+		this.baseCost =  this.selectedSize.cost;
+		this.energyCapacity = this.selectedSize.energyCapacity;
+		this.baseEnergyCapacity = this.selectedSize.energyCapacity;
+		this.provisions = this.selectedSize.provisions;
+		this.weight = this.selectedSize.weight;
+		this.pace = this.selectedSize.pace;
+		this.basePace = this.selectedSize.pace;
+
+		this.extraNotes = "";
+
+		this.mods_available = this.mods;
+
+		// Starship is always an aircraft for these purposes ;)
+		if(this.objectType == "starship")
+			this.aircraft = 1;
+
+		if( this.selectedSize && this.selectedSize.strength )
+			this.strength = this.selectedSize.strength;
+		// Go through Mods for availability, calculation and listings
+		this.selectedModifications.sort( this.sortMods );
+		// Sort mods
+		this.selectedModifications_list = {};
+		for(calcModCount = 0; calcModCount < this.selectedModifications.length; calcModCount++) {
+			//this.selectedModifications_list += "<li>" + this.selectedModifications[modCount].name + "</li>";
+			this.mods = this.mods - this.selectedModifications[calcModCount].getModCost(this);
+			this.cost += this.selectedModifications[calcModCount].getCost(this);
+
+			// attempt to see if mod is still availble - remove if it's not.
+			if( this.selectedModifications[calcModCount].isAvailable ) {
+				if(this.selectedModifications[calcModCount].isAvailable(this) == false) {
+					this.removeMod(this.selectedModifications[calcModCount].tag);
+					this.calculate();
+					// stop all processing as the page is recalcuating anyways
+					return;
+				}
+			}
+
+			if( this.selectedModifications[calcModCount].getWeight )
+				this.weight += this.selectedModifications[calcModCount].getWeight(this);
+
+			if( this.selectedModifications[calcModCount].getModEffect )
+				this.selectedModifications[calcModCount].getModEffect(this);
+
+			// Linked weapons are displayed elsewhere...
+			if(this.selectedModifications[calcModCount].tag != "linked") {
+				if( typeof(this.selectedModifications_list[this.selectedModifications[calcModCount].tag]) == "undefined")
+					this.selectedModifications_list[this.selectedModifications[calcModCount].tag] = 1;
+				else
+					this.selectedModifications_list[this.selectedModifications[calcModCount].tag]++;
+			}
+		}
+
+		// Go through Weapons for availability, calculation and listings
+		// Sort weapons
+		//this.selected_weapons.sort( sortMods );
+		this.sortWeaponList();
+
+		this.selectedWeaponsList = {};
+		fixedWeaponModUsage = 0;
+		linkedWeaponModUsage = Array();
+		otherWeaponModUsage = 0;
+		for(calcModCount = 0; calcModCount < this.selected_weapons.length; calcModCount++) {
+
+			// attempt to see if weapon is still availble - remove if it's not.
+			if( this.selected_weapons[calcModCount].isAvailable ) {
+				if(this.selected_weapons[calcModCount].isAvailable(this) == false) {
+					this.removeWeapon(calcModCount);
+					this.calculate();
+					// stop all processing as the page is recalcuating anyways
+					return;
+				}
+			}
+
+			this.selected_weapons[calcModCount] = this.updateWeaponDisplayName( this.selected_weapons[calcModCount] );
+			// Continue on....
+			weaponModCost = this.selected_weapons[calcModCount].mods;
+
+			if( typeof(this.selected_weapons[calcModCount].current_mod_cost) != "undefined") {
+				weaponModCost = this.selected_weapons[calcModCount].current_mod_cost;
+			}
+
+			if(this.selected_weapons[calcModCount].fixed != 0 && this.selected_weapons[calcModCount].fixed != "")
+				weaponModCost = weaponModCost / 2;
+
+			if(this.requiresMountPoint > 0)
+				this.vehicleWeaponModPoints -= weaponModCost;
+			else
+				this.mods -= weaponModCost;
+
+			if( this.selected_weapons[calcModCount].getWeight )
+				this.weight += this.selected_weapons[calcModCount].getWeight(this);
+
+			if( this.selected_weapons[calcModCount].count > 1) {
+				this.cost += this.selected_weapons[calcModCount].cost / 1 * this.selected_weapons[calcModCount].count;
+			} else {
+				this.cost += this.selected_weapons[calcModCount].cost / 1;
+			}
+
+
+
+			weaponListName = this.selected_weapons[calcModCount].display_name;
+
+			if(
+				this.selected_weapons[calcModCount].fixed != 0
+				&&
+				this.selected_weapons[calcModCount].fixed != '0'
+				&&
+				this.selected_weapons[calcModCount].fixed != ""
+			) {
+
+				switch( this.selected_weapons[calcModCount].fixed.toLowerCase().trim() ) {
+					case "bow":
+						fixedLabel = this.getTranslation("CREATOR_FIXED_BOW_FRONT");
+					//	console.log("bow",this.selected_weapons[calcModCount].fixed.toLowerCase().trim());
+						break;
+					case "port":
+						fixedLabel = this.getTranslation("CREATOR_FIXED_PORT_LEFT");
+						break;
+					case "starboard":
+						fixedLabel = this.getTranslation("CREATOR_FIXED_STARBOARD_RIGHT");
+						break;
+					case "stern":
+						fixedLabel = this.getTranslation("CREATOR_FIXED_STERN_REAR");
+						break;
+					default:
+						fixedLabel = this.getTranslation("CREATOR_FIXED");
+						break;
+				}
+
+				weaponListName = weaponListName + " (" + fixedLabel + ")";
+				this.selected_weapons[calcModCount].display_name = weaponListName;
+
+			} else {
+				if(this.selected_weapons[calcModCount].linked) {
+					weaponListName = weaponListName + " (linked<span class='hide'>" + this.selected_weapons[calcModCount].linked + "</span>)";
+				}
+			}
+
+			if( typeof(this.selectedWeaponsList[weaponListName]) == "undefined" || this.selectedWeaponsList[weaponListName] == "0") {
+				if( this.selected_weapons[calcModCount].missiles_per > 0)
+					this.selectedWeaponsList[weaponListName] = {
+						obj: this.selected_weapons[calcModCount],
+						count: this.selected_weapons[calcModCount].missiles_per
+					};
+				else
+					this.selectedWeaponsList[weaponListName] = {
+						obj: this.selected_weapons[calcModCount],
+						count: 1
+					};
+
+			} else {
+				if( this.selected_weapons[calcModCount].missiles_per > 0 )
+					this.selectedWeaponsList[weaponListName].count = (this.selectedWeaponsList[weaponListName].count / 1) + (this.selected_weapons[calcModCount].missiles_per / 1);
+				else
+					this.selectedWeaponsList[weaponListName].count++;
+			}
+		}
+
+		this.mods_available = this.mods; // - sortSelectedModificationsList.length;
+		if(this.requiresMountPoint == 0) {
+			this.vehicleWeaponModPoints = this.mods_available; // - sortSelectedModificationsList.length;
+		}
+
+
+	}
+};
+
+scifiCreator.prototype.setName = function(newValue) {
+	this.itemName = newValue;
+};
+
+scifiCreator.prototype.setOption = function( short_tag, value ) {
+	localStorage.setItem( this.getOptionLSName(short_tag), value.toString() );
+};
+
+scifiCreator.prototype.getOptionLSName = function( short_tag) {
+	return "com.jdg.swwt.settings." + current_selectedObject.objectType + "." + short_tag;
+};
+
+scifiCreator.prototype.getAvailableOptions = function() {
+	if(this.availableOptions) {
+		// put current values into system
+		for(localSettingCount = 0; localSettingCount < this.availableOptions.length; localSettingCount++) {
+			if( typeof(this.availableOptions[localSettingCount].desciption) == "undefined") {
+				this.availableOptions[localSettingCount].desciption = "";
+			}
+
+			this.availableOptions[localSettingCount].value = localStorage.getItem( this.getOptionLSName( this.availableOptions[localSettingCount].short_tag ) );
+			if(this.availableOptions[localSettingCount].value == "1")
+				this.availableOptions[localSettingCount].value = this.availableOptions[localSettingCount].value / 1;
+		}
+		return this.availableOptions;
+
+	} else {
+		return Array();
+	}
+};
+
+scifiCreator.prototype.formatPaceRealWorld = function(pace_value) {
+	// never take things at pace value. /groan
+	return pace_value + " (" + Math.floor(pace_value * 2.4)+ " mph, " + Math.floor(pace_value * 3.862416) + " kph)";
+},
+
+scifiCreator.prototype.setDescription = function(newValue) {
+	this.objectDescription = newValue;
+};
+
+scifiCreator.prototype.addMod = function(modName) {
+	return_value = 0;
+	if( !modName ) {
+		return false;
+	}
+	for(addModCount = 0; addModCount < this.availableMods.length; addModCount++) {
+		if(
+			modName.toLowerCase() == this.availableMods[addModCount].tag.toLowerCase()
+			||
+			modName.toLowerCase() == this.availableMods[addModCount].name["en-US"].toLowerCase()
+		) {
+			//newMod = jQuery.extend({}, this.availableMods[addModCount]);
+			var newMod = {};
+			angular.extend(newMod, this.availableMods[addModCount]);
+			this.selectedModifications = this.selectedModifications.concat( newMod  );
+			return;
+		}
+	}
+
+	return return_value;
+};
+
+scifiCreator.prototype.getStrengthLabel = function( strength_value ) {
+	return getDiceValue( strength_value );
+};
+
+scifiCreator.prototype.addWeapon = function(weaponName) {
+	return_value = 0;
+	for(addlocal_weapon_count = 0; addlocal_weapon_count < savageWorldsVehicleWeapons.length; addlocal_weapon_count++) {
+		if(
+			(
+				weaponName.toLowerCase() == savageWorldsVehicleWeapons[addlocal_weapon_count].tag.toLowerCase()
+			)
+				||
+			(
+				typeof(savageWorldsVehicleWeapons[addlocal_weapon_count].name_old) != "undefined"
+					&&
+				weaponName.toLowerCase() == savageWorldsVehicleWeapons[addlocal_weapon_count].name_old["en-US"].toLowerCase()
+			)
+				||
+			(
+				typeof(savageWorldsVehicleWeapons[addlocal_weapon_count].name) != "undefined"
+					&&
+				weaponName.toLowerCase() == savageWorldsVehicleWeapons[addlocal_weapon_count].name["en-US"].toLowerCase()
+
+			)
+		) {
+			var newWeapon = {};
+			angular.extend(newWeapon, savageWorldsVehicleWeapons[addlocal_weapon_count]);
+			newWeapon.linked = 0;
+			newWeapon.count = 1;
+			newWeapon.fixed = 0;
+			this.selected_weapons = this.selected_weapons.concat( newWeapon );
+			return;
+		}
+	}
+
+	return return_value;
+};
+
+scifiCreator.prototype.updateWeaponDisplayName = function( weaponObject ) {
+	weaponObject.count = weaponObject.count / 1;
+	weaponObject.mods = weaponObject.mods / 1;
+
+	if( weaponObject.count == 1 ){
+		weaponObject.display_name = this.getLocalName(weaponObject.name);
+	}
+	if( weaponObject.count == 2 ){
+		linkedTranslation = this.getTranslation("CREATOR_DUAL_LINKED");
+		weaponObject.display_name = linkedTranslation.replace("{name}",this.getLocalName(weaponObject.name_plural) );
+	}
+	if( weaponObject.count == 3 ){
+		linkedTranslation = this.getTranslation("CREATOR_TRI_LINKED");
+		weaponObject.display_name = linkedTranslation.replace("{name}",this.getLocalName(weaponObject.name_plural) );
+	}
+	if( weaponObject.count == 4 ){
+		linkedTranslation = this.getTranslation("CREATOR_QUAD_LINKED");
+		weaponObject.display_name = linkedTranslation.replace("{name}",this.getLocalName(weaponObject.name_plural) );
+	}
+
+	if( weaponObject.count > 1 ) {
+		weaponObject.current_mod_cost = (weaponObject.mods * weaponObject.count) / 2;
+	} else {
+		weaponObject.current_mod_cost = weaponObject.mods;
+	}
+
+	return weaponObject;
+};
+
+scifiCreator.prototype.incrementWeaponCount = function( weaponIndex ) {
+	weaponIndex = weaponIndex / 1;
+	this.selected_weapons[weaponIndex].count++;
+	if( this.selected_weapons[weaponIndex].count > 4)
+		this.selected_weapons[weaponIndex].count = 4;
+
+};
+
+scifiCreator.prototype.setWeaponCount = function( weaponIndex, newCount ) {
+	weaponIndex = weaponIndex / 1;
+	if( this.selected_weapons[weaponIndex] ) {
+		this.selected_weapons[weaponIndex].count = newCount;
+		if( this.selected_weapons[weaponIndex].count < 1)
+			this.selected_weapons[weaponIndex].count = 1;
+		if( this.selected_weapons[weaponIndex].count > 4)
+			this.selected_weapons[weaponIndex].count = 4;
+	}
+};
+
+scifiCreator.prototype.decrementWeaponCount = function( weaponIndex ) {
+	weaponIndex = weaponIndex / 1;
+	this.selected_weapons[weaponIndex].count--;
+	if( this.selected_weapons[weaponIndex].count < 1)
+		this.selected_weapons[weaponIndex].count = 1;
+};
+
+scifiCreator.prototype.removeMod = function(modName) {
+	for(removeModCount = 0; removeModCount < this.selectedModifications.length; removeModCount++) {
+		if(modName.toLowerCase() == this.selectedModifications[removeModCount].tag.toLowerCase()) {
+			this.selectedModifications.splice(removeModCount, 1);
+			return;
+		}
+	}
+};
+
+scifiCreator.prototype.hasMod = function(modName) {
+	for(removeModCount = 0; removeModCount < this.selectedModifications.length; removeModCount++) {
+		if(modName.toLowerCase() == this.selectedModifications[removeModCount].tag.toLowerCase()) {
+			return true;
+		}
+	}
+	return false;
+};
+
+scifiCreator.prototype.removeWeapon = function(weaponIndex) {
+	weaponIndex = weaponIndex / 1;
+	this.selected_weapons.splice(weaponIndex, 1);
+};
+
+scifiCreator.prototype.linkWeapon = function(weaponIndex, linkIndex) {
+	weaponIndex = weaponIndex / 1;
+
+	this.selected_weapons[weaponIndex].linked = (linkIndex / 1);
+};
+
+scifiCreator.prototype.fixWeapon = function(weaponIndex, fixedValue) {
+	weaponIndex = weaponIndex / 1;
+
+	this.selected_weapons[weaponIndex].fixed = (fixedValue);
+};
+
+scifiCreator.prototype.getLinkedWeapons = function() {
+	numberOfLinks = this.getModificationCount("Linked");
+	returnVal = Array();
+	if( numberOfLinks > 0 ){
+
+		for(linked_weapon_count = 0; linked_weapon_count < this.selected_weapons.length; linked_weapon_count++) {
+			if(this.selected_weapons[linked_weapon_count].linked > 0) {
+				// unset any links that were removed...
+				if(this.selected_weapons[linked_weapon_count].linked > numberOfLinks)
+					this.selected_weapons[linked_weapon_count].linked  = 0;
+				else
+					returnVal[this.selected_weapons[linked_weapon_count].linked] = this.selected_weapons[linked_weapon_count].name;
+			}
+		}
+		while(returnVal.length < numberOfLinks + 1) {
+			for(linked_weapon_count = returnVal.length; linked_weapon_count < numberOfLinks + 1; linked_weapon_count++) {
+				returnVal[linked_weapon_count] = "";
+			}
+		}
+	} else {
+		// unlink all weapons as all links have disappeared
+		for(linked_weapon_count = 0; linked_weapon_count < this.selected_weapons.length; linked_weapon_count++) {
+			this.selected_weapons[linked_weapon_count].linked  = 0;
+		}
+		returnVal = Array();
+	}
+
+	return returnVal;
+
+};
+
+scifiCreator.prototype.getModificationCount = function(modName) {
+	return_value = 0;
+	for(modCount = 0; modCount < this.selectedModifications.length; modCount++) {
+		if(modName.toLowerCase() == this.selectedModifications[modCount].tag.toLowerCase())
+			return_value++;
+	}
+
+	return return_value;
+};
+
+scifiCreator.prototype.setSize = function(sizeNumber) {
+	for(sizeCount = 0; sizeCount < this.availableSizes.length; sizeCount++) {
+		if(sizeNumber == this.availableSizes[sizeCount].size) {
+			this.selectedSize = this.availableSizes[sizeCount];
+			this.size = this.availableSizes[sizeCount].size;
+			return true;
+		}
+	}
+	return false;
+};
+
+scifiCreator.prototype.sortMods = function(a,b) {
+	if( typeof(a.calcWeight) == "undefined")
+		a.calcWeight = 5;
+	if( typeof(b.calcWeight) == "undefined")
+		b.calcWeight = 5;
+
+	if (a.calcWeight < b.calcWeight){
+		return -1;
+	} else {
+		if (a.calcWeight > b.calcWeight) {
+			return 1;
+		} else {
+			return a.name > b.name;
+		}
+	}
+};
+
+scifiCreator.prototype.optionActive = function( short_tag ) {
+	value = localStorage.getItem( this.getOptionLSName( short_tag) );
+	value = value / 1;
+	if( value > 0 )
+		return true;
+	else
+		return false;
+};
+
+scifiCreator.prototype.addOption = function(option_tag) {
+	var push_it = false;
+	for( var opt_c = this.creatorOptions.length - 1; opt_c >= 0; opt_c--) {
+		if( this.creatorOptions[opt_c] == option_tag )
+			return false;
+	}
+	this.creatorOptions.push( option_tag ) ;
+
+};
+
+scifiCreator.prototype.removeOption = function(option_tag) {
+	for( var opt_c = this.creatorOptions.length - 1; opt_c >= 0; opt_c--) {
+		if( this.creatorOptions[opt_c] == option_tag )
+			this.creatorOptions.splice( opt_c, 1);
+
+	}
+};
+
+scifiCreator.prototype.hasOption = function(option_tag) {
+	for( var opt_c = this.creatorOptions.length - 1; opt_c >= 0; opt_c--) {
+		if( this.creatorOptions[opt_c] == option_tag )
+			return true;
+	}
+	return false;
+};
+
+
 
 angular.module("baseApp").controller(
 	"coreChargenController",
@@ -2817,7 +2778,7 @@ angular.module("baseApp").controller(
 
 			$scope.exportDialog = function() {
 				$scope.exportBBCode = $scope.savageCharacter.exportBBCode();
-				$scope.exportJSON = $scope.savageCharacter.exportJSON();
+				$scope.exportJSON = $scope.savageCharacter.exportJSON(true);
 				$scope.closeDialogs();
 				$scope.exportDialogOpen = true;
 			}
@@ -3486,7 +3447,6 @@ angular.module("baseApp").controller(
 
 			var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_power_armor";
 			var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.power_armor";
-			var optionsLocalStorageVariable = "com.jdg.swwt2.options.power_armor";
 			var itemType = "power_armor";
 			var itemName = "Power Armor";
 
@@ -3494,16 +3454,7 @@ angular.module("baseApp").controller(
 			$scope.init = function() {
 				$scope.creatorObj = new scifiCreator();
 
-
-
 				$scope.creatorObj.init(itemType, itemName, savageWorldsSciFiSizes[itemType], savageWorldsSciFiMods[itemType], savageWorldsSciFiOptions[ itemType ]);
-
-
-				if( typeof(localStorage[ optionsLocalStorageVariable ]) != "undefined" ) {
-					$scope.user_options = localStorage[ optionsLocalStorageVariable ];
-				} else {
-					$scope.user_options = "";
-				}
 
 				if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
 					$scope.creatorObj.importJSON( localStorage[ currentItemLocalStorageVariable ] );
@@ -3687,7 +3638,7 @@ angular.module("baseApp").controller(
 
 			$scope.exportDialog = function() {
 				$scope.exportBBCode = $scope.creatorObj.exportBBCode();
-				$scope.exportJSON = $scope.creatorObj.exportJSON();
+				$scope.exportJSON = $scope.creatorObj.exportJSON(true);
 				$scope.closeDialogs();
 				$scope.exportDialogOpen = true;
 			}
@@ -4089,7 +4040,6 @@ angular.module("baseApp").controller(
 
 			var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_starship";
 			var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.starship";
-			var optionsLocalStorageVariable = "com.jdg.swwt2.options.starship";
 			var itemType = "starship";
 			var itemName = "Starship";
 
@@ -4100,13 +4050,6 @@ angular.module("baseApp").controller(
 
 
 				$scope.creatorObj.init(itemType, itemName, savageWorldsSciFiSizes[itemType], savageWorldsSciFiMods[itemType], savageWorldsSciFiOptions[ itemType ]);
-
-
-				if( typeof(localStorage[ optionsLocalStorageVariable ]) != "undefined" ) {
-					$scope.user_options = localStorage[ optionsLocalStorageVariable ];
-				} else {
-					$scope.user_options = "";
-				}
 
 				if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
 					$scope.creatorObj.importJSON( localStorage[ currentItemLocalStorageVariable ] );
@@ -4290,7 +4233,7 @@ angular.module("baseApp").controller(
 
 			$scope.exportDialog = function() {
 				$scope.exportBBCode = $scope.creatorObj.exportBBCode();
-				$scope.exportJSON = $scope.creatorObj.exportJSON();
+				$scope.exportJSON = $scope.creatorObj.exportJSON(true);
 				$scope.closeDialogs();
 				$scope.exportDialogOpen = true;
 			}
@@ -4685,7 +4628,6 @@ angular.module("baseApp").controller(
 
 			var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_vehicle";
 			var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.vehicle";
-			var optionsLocalStorageVariable = "com.jdg.swwt2.options.vehicle";
 			var itemType = "vehicle";
 			var itemName = "Vehicle";
 
@@ -4696,13 +4638,6 @@ angular.module("baseApp").controller(
 
 
 				$scope.creatorObj.init(itemType, itemName, savageWorldsSciFiSizes[itemType], savageWorldsSciFiMods[itemType], savageWorldsSciFiOptions[ itemType ]);
-
-
-				if( typeof(localStorage[ optionsLocalStorageVariable ]) != "undefined" ) {
-					$scope.user_options = localStorage[ optionsLocalStorageVariable ];
-				} else {
-					$scope.user_options = "";
-				}
 
 				if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
 					$scope.creatorObj.importJSON( localStorage[ currentItemLocalStorageVariable ] );
@@ -4886,7 +4821,7 @@ angular.module("baseApp").controller(
 
 			$scope.exportDialog = function() {
 				$scope.exportBBCode = $scope.creatorObj.exportBBCode();
-				$scope.exportJSON = $scope.creatorObj.exportJSON();
+				$scope.exportJSON = $scope.creatorObj.exportJSON(true);
 				$scope.closeDialogs();
 				$scope.exportDialogOpen = true;
 			}
@@ -5281,7 +5216,6 @@ angular.module("baseApp").controller(
 
 			var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_walker";
 			var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.walker";
-			var optionsLocalStorageVariable = "com.jdg.swwt2.options.walker";
 			var itemType = "walker";
 			var itemName = "Walker";
 
@@ -5294,11 +5228,7 @@ angular.module("baseApp").controller(
 				$scope.creatorObj.init(itemType, itemName, savageWorldsSciFiSizes[itemType], savageWorldsSciFiMods[itemType], savageWorldsSciFiOptions[ itemType ]);
 
 
-				if( typeof(localStorage[ optionsLocalStorageVariable ]) != "undefined" ) {
-					$scope.user_options = localStorage[ optionsLocalStorageVariable ];
-				} else {
-					$scope.user_options = "";
-				}
+
 
 				if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
 					$scope.creatorObj.importJSON( localStorage[ currentItemLocalStorageVariable ] );
@@ -5482,7 +5412,7 @@ angular.module("baseApp").controller(
 
 			$scope.exportDialog = function() {
 				$scope.exportBBCode = $scope.creatorObj.exportBBCode();
-				$scope.exportJSON = $scope.creatorObj.exportJSON();
+				$scope.exportJSON = $scope.creatorObj.exportJSON(true);
 				$scope.closeDialogs();
 				$scope.exportDialogOpen = true;
 			}
@@ -16557,9 +16487,13 @@ return 0;
 {
 	 name: {
 		 'en-US': 'Pace',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Powerful motors in the leg joints combine with gyroscopic stabilizers to increase Pace by +2 and the running die to d10. Each enhancement after the first only increases Pace by +2.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 tag: 'pace',
 getMax: function(selectedObject) { return 3 },
@@ -16575,6 +16509,9 @@ selectedObject.pace++;
 },
 getWeight: function(selectedObject) {
 return 0;
+},
+isAvailable: function(selectedObject) {
+return !selectedObject.hasMod("speed-reduction");
 }
 },
 {
@@ -17441,9 +17378,13 @@ return 5000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Speed Reduction',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'The ship trades power and speed for additional room. Each time this is taken, reduce Acc by 5 and Top Speed by 50 to gain half the ship’s Size in Mod slots.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 tag: 'speed-reduction',
 getMax: function(selectedObject) { return 3 },
@@ -17457,6 +17398,9 @@ getModEffect: function(selectedObject) {
 selectedObject.ts -=  50;
 selectedObject.acc -=  5;
 selectedObject.mods += selectedObject.size / 2;
+},
+isAvailable: function(selectedObject) {
+return !selectedObject.hasMod("speed");
 }
 },
 {
@@ -17477,6 +17421,9 @@ return 100000 * selectedObject.size;
 getModEffect: function(selectedObject) {
 selectedObject.ts +=  50;
 selectedObject.acc +=  5;
+},
+isAvailable: function(selectedObject) {
+return !selectedObject.hasMod("speed-reduction");
 }
 },
 {
@@ -18542,9 +18489,13 @@ return 3000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Speed Reduction',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'The vehicle trades power and speed for additional room. Each time this is taken, reduce Acc by 5 and Top Speed by 50 to gain half the vehicle’s Size in Mod slots.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 tag: 'speed-reduction',
 getMax: function(selectedObject) { return 3 },
@@ -18558,14 +18509,21 @@ getModEffect: function(selectedObject) {
 selectedObject.ts -=  2;
 selectedObject.acc -=  1;
 selectedObject.mods += selectedObject.size / 2;
+},
+isAvailable: function(selectedObject) {
+return !selectedObject.hasMod("speed");
 }
 },
 {
 	 name: {
 		 'en-US': 'Speed',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Each purchase increases the vehicle’s Acc by 5 and Top Speed by 50. (This cannot be taken with Speed Reduction.)',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 tag: 'speed',
 getMax: function(selectedObject) { return "u" },
@@ -18578,6 +18536,9 @@ return 1000 * selectedObject.size;
 getModEffect: function(selectedObject) {
 selectedObject.ts +=  10;
 selectedObject.acc +=  5;
+},
+isAvailable: function(selectedObject) {
+return !selectedObject.hasMod("speed-reduction");
 }
 },
 {
@@ -18995,9 +18956,13 @@ selectedObject.hasMissileLauncher = 1;
 {
 	 name: {
 		 'en-US': 'Pace',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Increases the mech&apos;s Pace by +4. (This cannot be taken with Speed Reduction.)',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 tag: 'pace',
 getMax: function(selectedObject) { return 3 },
@@ -19009,6 +18974,9 @@ return 4000 * selectedObject.size;
 },
 getModEffect: function(selectedObject) {
 selectedObject.pace = selectedObject.pace + 4;
+},
+isAvailable: function(selectedObject) {
+return !selectedObject.hasMod("speed-reduction");
 }
 },
 {
@@ -19097,9 +19065,13 @@ return 5000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Speed Reduction',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'The walker sacrifices speed for additional room. Subtract 2 from Pace and add half its Size in Mod slots (round down).',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 tag: 'speed-reduction',
 getMax: function(selectedObject) { return 3 },
@@ -19112,6 +19084,9 @@ return 20000 * selectedObject.size;
 getModEffect: function(selectedObject) {
 selectedObject.pace -=  2;
 selectedObject.mods += selectedObject.size / 2;
+},
+isAvailable: function(selectedObject) {
+return !selectedObject.hasMod("pace");
 }
 },
 {
@@ -19209,7 +19184,7 @@ return 10000  * selectedObject.size;
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 50, HW, MBT.',
+		 'en-US': 'AP 20, HW, MBT.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -19232,18 +19207,28 @@ return false;
 {
 	 name: {
 		 'en-US': 'Block Buster Bomb',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Block Buster Bombs',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM’s call) or other factors that might interfere with the bomb’s targeting systems inflicts a –2 penalty.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Bombs',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
 		 'en-US': 'AP 40, HW, 30” radius. 1001 to 4000 lb. bombs.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': 'Dropped',
 		 'damage': '10d10',
@@ -19264,18 +19249,28 @@ return false;
 {
 	 name: {
 		 'en-US': 'City Buster Bomb',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'City Buster Bombs',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM’s call) or other factors that might interfere with the bomb’s targeting systems inflicts a –2 penalty.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Bombs',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
 		 'en-US': 'AP 40, HW, 50” radius. 4001 to 8000 lb. bombs.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': 'Dropped',
 		 'damage': '10d10',
@@ -19323,18 +19318,28 @@ return false;
 {
 	 name: {
 		 'en-US': 'Heavy Autocannon',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Heavy Autocannons',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Auto-cannons (also called chain guns) are powered weapons that fire bursts of chemically- propelled metal slugs at the target. They are primarily used by aircraft to destroy ground targets, or as point-defense weapons for starships. Ammo costs are for a full load.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Auto-cannons',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
 		 'en-US': 'AP 8, Auto, HW. Covers 31 to 50mm rounds',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '75/150/300',
 		 'damage': '4d8',
@@ -19350,18 +19355,28 @@ return false;
 {
 	 name: {
 		 'en-US': 'Heavy Cannon',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Heavy Cannons',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Cannons fire large, chemically-propelled, explosive shells. The shells listed below are the most common. High explsive versions reduce the damage die type to d8 and halve AP but increase the Burst Template to Large ot 10” radius if already Large. Ammo costs are per full load',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Cannons',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
 		 'en-US': 'AP 30, HW, MBT, Up to 80mm',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '100/200/400',
 		 'damage': '5d10',
@@ -19404,18 +19419,28 @@ return false;
 {
 	 name: {
 		 'en-US': 'Heavy Laser',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Heavy Lasers',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don’t use the rules for personal lasers listed on page 20.)',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Lasers (Vehicular)',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
 		 'en-US': 'AP 15, HW.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '150/300/600',
 		 'damage': '4d10',
@@ -19431,18 +19456,28 @@ return false;
 {
 	 name: {
 		 'en-US': 'Heavy MG (2)',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Heavy MG (2)',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Slugthrowers are traditional firearms firing chemically-propelled rounds.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Slugthrowers',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
 		 'en-US': 'AP 4, Auto, HW. A 200 round belt of ammo costs $500 and weighs 20 pounds.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '50/100/200',
 		 'damage': '2d10',
@@ -19457,7 +19492,49 @@ return false;
 },
 {
 	 name: {
-		 'en-US': 'Heavy Missile',
+		 'en-US': 'Heavy Torpedo',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 name_plural: {
+		 'en-US': 'Heavy Torpedoes',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 description: {
+		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship—if a ship gets a lock, it may fire all the missiles or torpedoes it’s allowed.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 classification: {
+		 'en-US': 'Missiles & Torpedoes',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 80, HW, LBT. Space or watercraft only. Half Range in water.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'range': '300/600/1200',
+		 'damage': '10d12',
+		 'rof': '1',
+		 'shots': '1',
+		 'missiles_per': '4',
+		 'linkable': '0',
+		 'mods': '1',
+		 'tag': 'heavy-torpedo',
+		 'cost': '1000000',
+		 'flying_only': '0',
+isAvailable: function(selectedObject) {
+if(selectedObject.hasTorpedoTube > 0 && ( selectedObject.aircraft > 0 || selectedObject.watercraft > 0 ) )
+return true;
+else
+return false;
+},},
+{
+	 name: {
+		 'en-US': 'Heavy/AT Missile',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -19477,7 +19554,7 @@ return false;
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 12, HW, MBT.',
+		 'en-US': 'AP 15, HW, MBT.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -19499,51 +19576,29 @@ return false;
 },},
 {
 	 name: {
-		 'en-US': 'Heavy Torpedo',
-	},
-	 name_plural: {
-		 'en-US': 'Heavy Torpedoes',
-	},
-	 description: {
-		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship—if a ship gets a lock, it may fire all the missiles or torpedoes it’s allowed.',
-	},
-	 classification: {
-		 'en-US': 'Missiles & Torpedoes',
-	},
-	 notes: {
-		 'en-US': 'AP 50, HW, LBT. Space or watercraft only. Half Range in water.',
-	},
-		 'range': '300/600/1200',
-		 'damage': '8d12',
-		 'rof': '1',
-		 'shots': '1',
-		 'missiles_per': '4',
-		 'linkable': '0',
-		 'mods': '1',
-		 'tag': 'heavy-torpedo',
-		 'cost': '1000000',
-		 'flying_only': '0',
-isAvailable: function(selectedObject) {
-if(selectedObject.hasTorpedoTube > 0 && ( selectedObject.aircraft > 0 || selectedObject.watercraft > 0 ) )
-return true;
-else
-return false;
-},},
-{
-	 name: {
 		 'en-US': 'Large Bomb',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Large Bombs',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM’s call) or other factors that might interfere with the bomb’s targeting systems inflicts a –2 penalty.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Bombs',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
 		 'en-US': 'AP 30, HW, 20” radius. 501 to 1000 lb. bombs.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': 'Dropped',
 		 'damage': '10d10',
@@ -19564,18 +19619,28 @@ return false;
 {
 	 name: {
 		 'en-US': 'Light Autocannon',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Light Autocannons',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Auto-cannons (also called chain guns) are powered weapons that fire bursts of chemically- propelled metal slugs at the target. They are primarily used by aircraft to destroy ground targets, or as point-defense weapons for starships. Ammo costs are for a full load.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Auto-cannons',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
 		 'en-US': 'AP 4, Auto, HW, Reaction Fire. Up to 20mm rounds.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '50/100/200',
 		 'damage': '2d12',
@@ -19618,18 +19683,28 @@ return false;
 {
 	 name: {
 		 'en-US': 'Light Laser',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Light Lasers',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don’t use the rules for personal lasers listed on page 20.)',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Lasers (Vehicular)',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
 		 'en-US': 'AP 5, HW, Reaction Fire.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '150/300/600',
 		 'damage': '2d10',
@@ -19645,21 +19720,31 @@ return false;
 {
 	 name: {
 		 'en-US': 'Light Missile',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Light Missiles',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship—if a ship gets a lock, it may fire all the missiles or torpedoes it’s allowed.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Missiles & Torpedoes',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 6, HW, SBT.',
+		 'en-US': 'AP 8, HW, SBT.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '200/400/800',
-		 'damage': '5d6',
+		 'damage': '6d6',
 		 'rof': '1',
 		 'shots': '1',
 		 'missiles_per': '12',
@@ -19677,21 +19762,31 @@ return false;
 {
 	 name: {
 		 'en-US': 'Light Torpedo',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Light Torpedoes',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship—if a ship gets a lock, it may fire all the missiles or torpedoes it’s allowed.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Missiles & Torpedoes',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 50, HW, LBT. Space or watercraft only. Half Range in water.',
+		 'en-US': 'AP 40, HW, LBT. Space or watercraft only. Half Range in water.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '300/600/1200',
-		 'damage': '5d12',
+		 'damage': '8d12',
 		 'rof': '1',
 		 'shots': '1',
 		 'missiles_per': '8',
@@ -19709,18 +19804,28 @@ return false;
 {
 	 name: {
 		 'en-US': 'Mass Driver 1',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Mass Driver 1',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
 		 'en-US': 'Hw. Projectiles are 10 pound spheres that cost $100 each.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '100/200/400 (tripled in space)',
 		 'damage': '1d12',
@@ -20199,18 +20304,28 @@ return false;
 {
 	 name: {
 		 'en-US': 'Medium Autocannon',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Medium Autocannons',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Auto-cannons (also called chain guns) are powered weapons that fire bursts of chemically- propelled metal slugs at the target. They are primarily used by aircraft to destroy ground targets, or as point-defense weapons for starships. Ammo costs are for a full load.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Auto-cannons',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
 		 'en-US': 'AP 6, Auto, HW. Covers 21 to 30mm rounds.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '50/100/200',
 		 'damage': '3d8',
@@ -20226,18 +20341,28 @@ return false;
 {
 	 name: {
 		 'en-US': 'Medium Bomb',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Medium Bombs',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM’s call) or other factors that might interfere with the bomb’s targeting systems inflicts a –2 penalty.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Bombs',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
 		 'en-US': 'AP 20, HW, 10” radius. 251 to 500 lb. bombs.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': 'Dropped',
 		 'damage': '8d10',
@@ -20258,18 +20383,28 @@ return false;
 {
 	 name: {
 		 'en-US': 'Medium Cannon',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Medium Cannons',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Cannons fire large, chemically-propelled, explosive shells. The shells listed below are the most common. High explsive versions reduce the damage die type to d8 and halve AP but increase the Burst Template to Large ot 10” radius if already Large. Ammo costs are per full load',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Cannons',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
 		 'en-US': 'AP 20, HW, MBT, Up to 60mm',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '75/150/300',
 		 'damage': '4d10',
@@ -20285,18 +20420,28 @@ return false;
 {
 	 name: {
 		 'en-US': 'Medium Laser',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Medium Lasers',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don’t use the rules for personal lasers listed on page 20.)',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Lasers (Vehicular)',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
 		 'en-US': 'AP 10, HW.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '150/300/600',
 		 'damage': '3d10',
@@ -20312,18 +20457,28 @@ return false;
 {
 	 name: {
 		 'en-US': 'Medium MG (2)',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Medium MG (2)',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Slugthrowers are traditional firearms firing chemically-propelled rounds.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Slugthrowers',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 2, Auto. A 200 round belt of ammo costs $400 and weighs 15 pounds.',
+		 'en-US': 'AP 3, Auto. A 200 round belt of ammo costs $400 and weighs 15 pounds.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '30/60/120',
 		 'damage': '2d8+1',
@@ -20358,7 +20513,7 @@ return false;
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 25, HW.',
+		 'en-US': 'AP 50, HW.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -20381,18 +20536,28 @@ return false;
 {
 	 name: {
 		 'en-US': 'Minigun',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Miniguns',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Slugthrowers are traditional firearms firing chemically-propelled rounds.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Slugthrowers',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
 		 'en-US': 'AP 3, Auto, HW. An additional 1000 round drum of ammunition weighs 20 pounds and costs $1000.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '24/48/96',
 		 'damage': '2d8+4',
@@ -20408,23 +20573,33 @@ return false;
 {
 	 name: {
 		 'en-US': 'Particle Accelerator, Heavy',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Particle Accelerators, Heavy',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Vehicular blasters fire a stream of charged particles (ions). Because the weapon fires a stream, a raise on the attack roll causes +2d6 damage instead of the usual 1d6.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Particle Accelerators',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 20, HW',
+		 'en-US': 'AP 20, HW, Reaction Fire',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '100/200/400',
 		 'damage': '6d8+2',
 		 'rof': '1',
-		 'shots': 'U',
+		 'shots': '',
 		 'missiles_per': '0',
 		 'linkable': '1',
 		 'mods': '6',
@@ -20435,23 +20610,33 @@ return false;
 {
 	 name: {
 		 'en-US': 'Particle Accelerator, Light',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Particle Accelerators, Light',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Vehicular blasters fire a stream of charged particles (ions). Because the weapon fires a stream, a raise on the attack roll causes +2d6 damage instead of the usual 1d6.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Particle Accelerators',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 20, HW',
+		 'en-US': 'AP 5, HW, Reaction Fire',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '100/200/400',
 		 'damage': '3d8+2',
 		 'rof': '1',
-		 'shots': 'U',
+		 'shots': '',
 		 'missiles_per': '0',
 		 'linkable': '1',
 		 'mods': '3',
@@ -20462,23 +20647,33 @@ return false;
 {
 	 name: {
 		 'en-US': 'Particle Accelerator, Medium',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Particle Accelerators, Medium',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Vehicular blasters fire a stream of charged particles (ions). Because the weapon fires a stream, a raise on the attack roll causes +2d6 damage instead of the usual 1d6.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Particle Accelerators',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 20, HW',
+		 'en-US': 'AP 10, HW, Reaction Fire',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '100/200/400',
 		 'damage': '4d8+2',
 		 'rof': '1',
-		 'shots': 'U',
+		 'shots': '',
 		 'missiles_per': '0',
 		 'linkable': '1',
 		 'mods': '4',
@@ -20489,18 +20684,28 @@ return false;
 {
 	 name: {
 		 'en-US': 'Small Bomb',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Small Bombs',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM’s call) or other factors that might interfere with the bomb’s targeting systems inflicts a –2 penalty.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Bombs',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
 		 'en-US': 'AP 10, HW, LBT. Up to 250 lb. bombs.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': 'Dropped',
 		 'damage': '6d10',
@@ -20521,18 +20726,28 @@ return false;
 {
 	 name: {
 		 'en-US': 'Small Cannon',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Small Cannons',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Cannons fire large, chemically-propelled, explosive shells. The shells listed below are the most common. High explsive versions reduce the damage die type to d8 and halve AP but increase the Burst Template to Large ot 10” radius if already Large. Ammo costs are per full load',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Cannons',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
 		 'en-US': 'AP 10, HW, MBT, Up to 40mm',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '50/100/200',
 		 'damage': '3d10',
@@ -20548,18 +20763,28 @@ return false;
 {
 	 name: {
 		 'en-US': 'Super-Heavy Cannon',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Super-Heavy Cannons',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Cannons fire large, chemically-propelled, explosive shells. The shells listed below are the most common. High explsive versions reduce the damage die type to d8 and halve AP but increase the Burst Template to Large ot 10” radius if already Large. Ammo costs are per full load',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Cannons',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
 		 'en-US': 'AP 40, HW, MBT, Up to 200mm',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '150/300/600',
 		 'damage': '6d10',
@@ -20575,21 +20800,31 @@ return false;
 {
 	 name: {
 		 'en-US': 'Super-Heavy Laser',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Super-Heavy Lasers',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 description: {
 		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don’t use the rules for personal lasers listed on page 20.)',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Lasers (Vehicular)',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 notes: {
 		 'en-US': 'AP 20, HW.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'range': '150/300/600',
-		 'damage': '5d10',
+		 'damage': '6d10',
 		 'rof': '1',
 		 'shots': '100',
 		 'missiles_per': '0',
@@ -20598,11 +20833,6 @@ return false;
 		 'tag': 'super-heavy-laser',
 		 'cost': '2000000',
 		 'flying_only': '0',
-isAvailable: function(selectedObject) {
-if( selectedObject.size >= 14  )
-return true;
-else
-return false;
-}}
+}
 );
 

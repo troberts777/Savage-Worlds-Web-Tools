@@ -121,7 +121,7 @@ angular.module("baseApp").controller(
 
 			$scope.exportDialog = function() {
 				$scope.exportBBCode = $scope.savageCharacter.exportBBCode();
-				$scope.exportJSON = $scope.savageCharacter.exportJSON();
+				$scope.exportJSON = $scope.savageCharacter.exportJSON(true);
 				$scope.closeDialogs();
 				$scope.exportDialogOpen = true;
 			}
