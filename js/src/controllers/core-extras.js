@@ -5,7 +5,8 @@ angular.module("baseApp").controller(
 		'$translate',
 		'$scope',
 		function ($rootScope, $translate, $scope) {
-
+			$rootScope.showSciFiCreatorMenu = false;
+			$rootScope.showChargenMenu = false;
 			var extras_default_results = "";
 			var extras_no_results_found = "";
 			$scope.current_books = Array();

@@ -26,7 +26,7 @@
 		 'de-DE': '',
 	},
 	 description: {
-		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship—if a ship gets a lock, it may fire all the missiles or torpedoes it’s allowed.',
+		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship�"if a ship gets a lock, it may fire all the missiles or torpedoes it\'s allowed.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -68,7 +68,7 @@ return false;
 		 'de-DE': '',
 	},
 	 description: {
-		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM’s call) or other factors that might interfere with the bomb’s targeting systems inflicts a –2 penalty.',
+		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM\'s call) or other factors that might interfere with the bomb\'s targeting systems inflicts a �"2 penalty.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -110,7 +110,7 @@ return false;
 		 'de-DE': '',
 	},
 	 description: {
-		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM’s call) or other factors that might interfere with the bomb’s targeting systems inflicts a –2 penalty.',
+		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM\'s call) or other factors that might interfere with the bomb\'s targeting systems inflicts a �"2 penalty.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -249,13 +249,13 @@ return false;
 		 'en-US': 'Heavy Flamethrowers',
 	},
 	 description: {
-		 'en-US': 'Flamethrowers use liquid or vapor fuel to burn targets. They’re often used to dig opponents out of caves or other tight places. The ones listed here are more powerful, lighter, and carry more propellant than older versions (such as those found in Savage Worlds).',
+		 'en-US': 'Flamethrowers use liquid or vapor fuel to burn targets. They\'re often used to dig opponents out of caves or other tight places. The ones listed here are more powerful, lighter, and carry more propellant than older versions (such as those found in Savage Worlds).',
 	},
 	 classification: {
 		 'en-US': 'Flame Weapons',
 	},
 	 notes: {
-		 'en-US': 'HW, targets may catch fire. Can be fired in a Cone Template or a Medium Burst Template up to 18” distant. Affects target’s least Armored area.',
+		 'en-US': 'HW, targets may catch fire. Can be fired in a Cone Template or a Medium Burst Template up to 18” distant. Affects target\'s least Armored area.',
 	},
 		 'range': 'Cone',
 		 'damage': '3d12',
@@ -280,7 +280,7 @@ return false;
 		 'de-DE': '',
 	},
 	 description: {
-		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don’t use the rules for personal lasers listed on page 20.)',
+		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don\'t use the rules for personal lasers listed on page 20.)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -354,7 +354,7 @@ return false;
 		 'de-DE': '',
 	},
 	 description: {
-		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship—if a ship gets a lock, it may fire all the missiles or torpedoes it’s allowed.',
+		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship�"if a ship gets a lock, it may fire all the missiles or torpedoes it\'s allowed.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -396,7 +396,7 @@ return false;
 		 'de-DE': '',
 	},
 	 description: {
-		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship—if a ship gets a lock, it may fire all the missiles or torpedoes it’s allowed.',
+		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship�"if a ship gets a lock, it may fire all the missiles or torpedoes it\'s allowed.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -438,7 +438,7 @@ return false;
 		 'de-DE': '',
 	},
 	 description: {
-		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM’s call) or other factors that might interfere with the bomb’s targeting systems inflicts a –2 penalty.',
+		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM\'s call) or other factors that might interfere with the bomb\'s targeting systems inflicts a �"2 penalty.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -513,13 +513,13 @@ return false;
 		 'en-US': 'Light Flamethrowers',
 	},
 	 description: {
-		 'en-US': 'Flamethrowers use liquid or vapor fuel to burn targets. They’re often used to dig opponents out of caves or other tight places. The ones listed here are more powerful, lighter, and carry more propellant than older versions (such as those found in Savage Worlds).',
+		 'en-US': 'Flamethrowers use liquid or vapor fuel to burn targets. They\'re often used to dig opponents out of caves or other tight places. The ones listed here are more powerful, lighter, and carry more propellant than older versions (such as those found in Savage Worlds).',
 	},
 	 classification: {
 		 'en-US': 'Flame Weapons',
 	},
 	 notes: {
-		 'en-US': 'HW, Cone Template, targets may catch fire. Affects target’s least Armored area.',
+		 'en-US': 'HW, Cone Template, targets may catch fire. Affects target\'s least Armored area.',
 	},
 		 'range': 'Cone',
 		 'damage': '2d12',
@@ -544,7 +544,7 @@ return false;
 		 'de-DE': '',
 	},
 	 description: {
-		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don’t use the rules for personal lasers listed on page 20.)',
+		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don\'t use the rules for personal lasers listed on page 20.)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -581,7 +581,7 @@ return false;
 		 'de-DE': '',
 	},
 	 description: {
-		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship—if a ship gets a lock, it may fire all the missiles or torpedoes it’s allowed.',
+		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship�"if a ship gets a lock, it may fire all the missiles or torpedoes it\'s allowed.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -623,7 +623,7 @@ return false;
 		 'de-DE': '',
 	},
 	 description: {
-		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship—if a ship gets a lock, it may fire all the missiles or torpedoes it’s allowed.',
+		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship�"if a ship gets a lock, it may fire all the missiles or torpedoes it\'s allowed.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1123,7 +1123,7 @@ return false;
 		 'de-DE': '',
 	},
 	 description: {
-		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don’t use the rules for personal lasers listed on page 20.)',
+		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don\'t use the rules for personal lasers listed on page 20.)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1202,7 +1202,7 @@ return false;
 		 'de-DE': '',
 	},
 	 description: {
-		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM’s call) or other factors that might interfere with the bomb’s targeting systems inflicts a –2 penalty.',
+		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM\'s call) or other factors that might interfere with the bomb\'s targeting systems inflicts a �"2 penalty.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1281,7 +1281,7 @@ return false;
 		 'de-DE': '',
 	},
 	 description: {
-		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don’t use the rules for personal lasers listed on page 20.)',
+		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don\'t use the rules for personal lasers listed on page 20.)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1355,7 +1355,7 @@ return false;
 		 'de-DE': '',
 	},
 	 description: {
-		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don’t use the rules for personal lasers listed on page 20.)',
+		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don\'t use the rules for personal lasers listed on page 20.)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1545,7 +1545,7 @@ return false;
 		 'de-DE': '',
 	},
 	 description: {
-		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM’s call) or other factors that might interfere with the bomb’s targeting systems inflicts a –2 penalty.',
+		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM\'s call) or other factors that might interfere with the bomb\'s targeting systems inflicts a �"2 penalty.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1661,7 +1661,7 @@ return false;
 		 'de-DE': '',
 	},
 	 description: {
-		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don’t use the rules for personal lasers listed on page 20.)',
+		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don\'t use the rules for personal lasers listed on page 20.)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},

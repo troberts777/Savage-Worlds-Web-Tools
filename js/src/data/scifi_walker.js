@@ -27,7 +27,7 @@ savageWorldsSciFiOptions['walker'] = Array(
 		 'de-DE': '',
 	},
 	 description: {
-		 'en-US': 'This is a proposed walker size for 12-15 foot tall, Heavy Gear sized, Walkers. <a href=\'http://www.peginc.com/forum/viewtopic.php?t=45126\'>The discussion is here</a>.',
+		 'en-US': 'This is a proposed walker size for 12-15 foot tall, Heavy Gear sized, Walkers. <a href=\'http://www.peginc.com/forum/viewtopic.php?t=45126\'>The discussion is here</a>.\n',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -38,7 +38,7 @@ savageWorldsSciFiOptions['walker'] = Array(
 savageWorldsSciFiSizes['walker'] = Array(
 {
 	 sizeLabel: {
-		 'en-US': 'Ultralight (unofficial)',
+		 'en-US': 'Ultralight Walker (unofficial)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -65,10 +65,14 @@ savageWorldsSciFiSizes['walker'] = Array(
 },
 {
 	 sizeLabel: {
-		 'en-US': 'Light',
+		 'en-US': 'Light Walker',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': '20 feet tall',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 size: 6,
 	 strength: 9,
@@ -88,10 +92,14 @@ savageWorldsSciFiSizes['walker'] = Array(
 },
 {
 	 sizeLabel: {
-		 'en-US': 'Medium',
+		 'en-US': 'Medium Walker',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': '30 feet tall',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 size: 8,
 	 strength: 11,
@@ -111,10 +119,14 @@ savageWorldsSciFiSizes['walker'] = Array(
 },
 {
 	 sizeLabel: {
-		 'en-US': 'Heavy',
+		 'en-US': 'Heavy Walker',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': '50 feet tall',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 size: 10,
 	 strength: 13,
@@ -134,10 +146,14 @@ savageWorldsSciFiSizes['walker'] = Array(
 },
 {
 	 sizeLabel: {
-		 'en-US': 'Super Heavy',
+		 'en-US': 'Super Heavy Walker',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': '80 feet tall',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 size: 12,
 	 strength: 15,
@@ -157,7 +173,7 @@ savageWorldsSciFiSizes['walker'] = Array(
 },
 {
 	 sizeLabel: {
-		 'en-US': 'Titan',
+		 'en-US': 'Titan Walker',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -243,7 +259,7 @@ return 75000;
 		 'en-US': 'Deflector Screens',
 	},
 	 description: {
-		 'en-US': 'The vessel is protected by an energy field that deflects incoming ballistic attacks (it has no effect against lasers). Attackers must subtract ‚Äì2 from their Shooting rolls. Mod cost is 2 for Small to Large walkers, and 3 for Huge to Gargantuan vessels.',
+		 'en-US': 'The vessel is protected by an energy field that deflects incoming ballistic attacks (it has no effect against lasers). Attackers must subtract ‚Ä"2 from their Shooting rolls. Mod cost is 2 for Small to Large walkers, and 3 for Huge to Gargantuan vessels.',
 	},
 	 tag: 'deflector-screens',
 getMax: function(selectedObject) { return 1 },
@@ -275,7 +291,7 @@ return 5000 * selectedObject.size;
 		 'en-US': 'Jump Jets',
 	},
 	 description: {
-		 'en-US': 'Powerful rockets give walkers the ability to propel themselves high in the air‚Äîto clear obstacles or perform ‚Äúdeath from above‚Äù attacks on foes. To jump, the pilot uses an action to make a Piloting roll to both maneuver his walker and manage his power reserves. Each round spent jumping increases his height 50 feet for Light walkers, 30 feet for Mediums, and 20 feet for Heavies. Each subsequent round spent jumping (essentially flying) afterwards inflicts a ‚Äì2 to the Piloting roll, cumulative to a maximum of ‚Äì6. Failure means the walker descends immediately (a critical failure results in a fall‚Äîsee Falling, page 59).',
+		 'en-US': 'Powerful rockets give walkers the ability to propel themselves high in the air‚Ä"to clear obstacles or perform ‚Äúdeath from above‚Äù attacks on foes. To jump, the pilot uses an action to make a Piloting roll to both maneuver his walker and manage his power reserves. Each round spent jumping increases his height 50 feet for Light walkers, 30 feet for Mediums, and 20 feet for Heavies. Each subsequent round spent jumping (essentially flying) afterwards inflicts a ‚Ä"2 to the Piloting roll, cumulative to a maximum of ‚Ä"6. Failure means the walker descends immediately (a critical failure results in a fall‚Ä"see Falling, page 59).',
 	},
 	 tag: 'jump-jets',
 getMax: function(selectedObject) { return 1 },
@@ -387,7 +403,7 @@ return 50000;
 		 'en-US': 'Shields',
 	},
 	 description: {
-		 'en-US': 'The walker is protected by an ablative energy field that absorbs 10√óSize points of damage before it&apos;s depleted. Apply all damage to the shield first, then any left over to the mech (AP counts as usual). Active shields detonate missiles and torpedoes before they hit, reducing their damage total by half. A walker may regenerate its Size in shield points if it makes no attacks in a round.',
+		 'en-US': 'The walker is protected by an ablative energy field that absorbs 10√-Size points of damage before it&apos;s depleted. Apply all damage to the shield first, then any left over to the mech (AP counts as usual). Active shields detonate missiles and torpedoes before they hit, reducing their damage total by half. A walker may regenerate its Size in shield points if it makes no attacks in a round.',
 	},
 	 tag: 'shields',
 getMax: function(selectedObject) { return 1 },
@@ -403,7 +419,7 @@ return 50000 * selectedObject.size;
 		 'en-US': 'Sloped Armor',
 	},
 	 description: {
-		 'en-US': 'Non-energy, ballistic attacks against this vessel suffer a ‚Äì2 penalty. It has no effect on energy attacks.',
+		 'en-US': 'Non-energy, ballistic attacks against this vessel suffer a ‚Ä"2 penalty. It has no effect on energy attacks.',
 	},
 	 tag: 'sloped-armor',
 getMax: function(selectedObject) { return 1 },

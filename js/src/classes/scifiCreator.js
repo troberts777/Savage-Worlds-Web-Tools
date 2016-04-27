@@ -8,6 +8,8 @@ var scifiCreator = function(objectType, objectLabel, availableSizes, availableMo
 };
 
 scifiCreator.prototype.init = function(objectType, objectLabel, availableSizes, availableMods, availableOptions){
+	this.appVersion = "2016040101";
+
 	this.itemName = "";
 		this.objectDescription = "";
 		this.useLang = "en-US";

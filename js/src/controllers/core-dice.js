@@ -6,7 +6,8 @@ angular.module("baseApp").controller(
 		'$scope',
 		function ($rootScope, $translate, $scope) {
 			// Set Page Title Tag
-
+			$rootScope.showSciFiCreatorMenu = false;
+			$rootScope.showChargenMenu = false;
 			var dice_object = new classDice();
 			dice_object.init();
 			dice_object.setAlwaysExplodingDice(true);
@@ -17,7 +18,7 @@ angular.module("baseApp").controller(
 			if( localStorage["com.jdg.swwt2.dice.input_parse_dice"] )
 				$scope.input_parse_dice = localStorage["com.jdg.swwt2.dice.input_parse_dice"];
 			else
-				$scope.input_parse_dice = "d8 + 4";
+				$scope.input_parse_dice = "d8* + 1";
 
 
 			if( localStorage["com.jdg.swwt2.dice.select_roll_type"] )

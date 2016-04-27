@@ -16,6 +16,8 @@ var savageWorldsBooksList = Array();
 savageWorldsBooksList[0] = {
 	id: 1,
 	core: true,
+	usesGutsSkill: false,
+
 	name: {
 		"en-US": "Savage Worlds Deluxe",
 		"de-DE": "German Savage Worlds",
@@ -43,6 +45,8 @@ savageWorldsBooksList[0] = {
 savageWorldsBooksList[1] = {
 	id: 2,
 	core: false,
+	usesGutsSkill: false,
+
 	name: {
 		"en-US": "Fantasy Companion",
 		"pt-BR": "Brazilian Fantasy",
@@ -70,6 +74,8 @@ savageWorldsBooksList[1] = {
 savageWorldsBooksList[2] = {
 	id: 3,
 	core: false,
+	usesGutsSkill: false,
+
 	name: {
 		"en-US": "Horror Companion",
 	},
@@ -91,6 +97,8 @@ savageWorldsBooksList[2] = {
 savageWorldsBooksList[3] = {
 	id: 4,
 	core: false,
+	usesGutsSkill: false,
+
 	name: {
 		"en-US": "Science Fiction Companion",
 	},
@@ -112,6 +120,8 @@ savageWorldsBooksList[3] = {
 savageWorldsBooksList[4] = {
 	id: 5,
 	core: false,
+	usesGutsSkill: false,
+
 	name: {
 		"en-US": "Super Powers Companion",
 	},
@@ -133,6 +143,8 @@ savageWorldsBooksList[4] = {
 savageWorldsBooksList[5] = {
 	id: 6,
 	core: false,
+	usesGutsSkill: false,
+
 	name: {
 		"en-US": "Savage Free Bestiary",
 	},
@@ -154,6 +166,8 @@ savageWorldsBooksList[5] = {
 savageWorldsBooksList[6] = {
 	id: 7,
 	core: false,
+	usesGutsSkill: false,
+
 	name: {
 		"en-US": "Lankhmar",
 	},
@@ -175,6 +189,8 @@ savageWorldsBooksList[6] = {
 savageWorldsBooksList[7] = {
 	id: 8,
 	core: false,
+	usesGutsSkill: false,
+
 	name: {
 		"en-US": "The Last Parsec",
 	},
@@ -196,6 +212,8 @@ savageWorldsBooksList[7] = {
 savageWorldsBooksList[8] = {
 	id: 13,
 	core: false,
+	usesGutsSkill: false,
+
 	name: {
 		"en-US": "Thrilling Tales (2nd Edition)",
 	},

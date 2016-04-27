@@ -6,7 +6,8 @@ angular.module("baseApp").controller(
 		'$scope',
 		function ($rootScope, $translate, $scope) {
 			// Set Page Title Tag
-
+			$rootScope.showSciFiCreatorMenu = false;
+			$rootScope.showChargenMenu = false;
 			var dice_object = new classDice();
 			dice_object.init();
 

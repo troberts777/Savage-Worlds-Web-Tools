@@ -1,0 +1,14 @@
+<div class="main-content">
+	<div class="row">
+		<div class="columns small-12 text-left">
+			<fieldset class="fieldset">
+				<legend translate="GENERAL_SETTINGS">Settings</legend>
+				<label>
+					<span translate="GENERAL_SELECT_LANGUAGE">Language Selection</span>: <br />
+					<select ng-style="{'background-image': background_image_url }" class="language-select" ng-options="lang.label for lang in available_languages track by lang.id" ng-change="updateLanguage(users_language)" ng-model="users_language">
+					</select>
+				</label>
+			</fieldset>
+		</div>
+	</div>
+</div>

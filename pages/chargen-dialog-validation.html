@@ -1,0 +1,18 @@
+<div class="modal-container" ng-show="validationDialogOpen == true">
+	<div class="reveal">
+
+	<h3 translate="CHARGEN_VALIDATION_REPORT">Validation Report</h3>
+	<ul>
+		<li ng-repeat="item in savageCharacter.validationReport">{{item}}</li>
+	</ul>
+
+	<h3 translate="CHARGEN_VALIDATION_WARNINGS">Warnings</h3>
+	<ul>
+		<li ng-repeat="item in savageCharacter.warningReport">{{item}}</li>
+	</ul>
+
+	<div class="text-right">
+	  	<button class="button small secondary" ng-click="closeDialogs()"  type="button" translate="GENERAL_CLOSE"></button>
+	  </div>
+	</div>
+</div>

@@ -25,10 +25,14 @@ savageWorldsSciFiOptions['starship'] = Array(
 savageWorldsSciFiSizes['starship'] = Array(
 {
 	 sizeLabel: {
-		 'en-US': 'Small',
+		 'en-US': 'Small Starship',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': 'Fighters, shuttles',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 size: 6,
 	 strength: 0,
@@ -48,10 +52,14 @@ savageWorldsSciFiSizes['starship'] = Array(
 },
 {
 	 sizeLabel: {
-		 'en-US': 'Medium',
+		 'en-US': 'Medium Starship',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': 'Bombers, large shuttles, scout ships',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 size: 8,
 	 strength: 0,
@@ -71,10 +79,14 @@ savageWorldsSciFiSizes['starship'] = Array(
 },
 {
 	 sizeLabel: {
-		 'en-US': 'Large',
+		 'en-US': 'Large Starship',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': 'Freighters, corvettes, scientific exploration vessels',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 size: 12,
 	 strength: 0,
@@ -94,10 +106,14 @@ savageWorldsSciFiSizes['starship'] = Array(
 },
 {
 	 sizeLabel: {
-		 'en-US': 'Huge',
+		 'en-US': 'Huge Starship',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': 'Destroyers, bulk freighters, light cruisers',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 size: 16,
 	 strength: 0,
@@ -117,10 +133,14 @@ savageWorldsSciFiSizes['starship'] = Array(
 },
 {
 	 sizeLabel: {
-		 'en-US': 'Giant',
+		 'en-US': 'Giant Starship',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': 'Cruisers, small battleships or carriers',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 size: 20,
 	 strength: 0,
@@ -140,10 +160,14 @@ savageWorldsSciFiSizes['starship'] = Array(
 },
 {
 	 sizeLabel: {
-		 'en-US': 'Gargantuan',
+		 'en-US': 'Gargantuan Starship',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': 'Battleships, carriers',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 size: 24,
 	 strength: 0,
@@ -163,10 +187,14 @@ savageWorldsSciFiSizes['starship'] = Array(
 },
 {
 	 sizeLabel: {
-		 'en-US': 'Behemoth',
+		 'en-US': 'Behemoth Starship',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': 'Dreadnoughts, invasion carriers.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 size: 28,
 	 strength: 0,
@@ -186,10 +214,14 @@ savageWorldsSciFiSizes['starship'] = Array(
 },
 {
 	 sizeLabel: {
-		 'en-US': 'Leviathan',
+		 'en-US': 'Leviathan Starship',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': 'Super dreadnoughts, super carriers, settlement ships.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 size: 32,
 	 strength: 0,
@@ -209,10 +241,14 @@ savageWorldsSciFiSizes['starship'] = Array(
 },
 {
 	 sizeLabel: {
-		 'en-US': 'World Killer',
+		 'en-US': 'World Killer Starship',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': 'Mega dreadnoughts, mega carriers, colony ships.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 size: 40,
 	 strength: 0,
@@ -289,7 +325,7 @@ return 0;
 		 'en-US': 'Armor',
 	},
 	 description: {
-		 'en-US': 'Increases a ship’s Armor value by +2. Due to the nature of space and the size and shape of starships, all Armor is considered Heavy Armor.',
+		 'en-US': 'Increases a ship\'s Armor value by +2. Due to the nature of space and the size and shape of starships, all Armor is considered Heavy Armor.',
 	},
 	 tag: 'armor',
 getMax: function(selectedObject) {  return selectedObject.size },
@@ -311,7 +347,7 @@ selectedObject.toughness++;
 		 'en-US': 'Artificial Intelligence',
 	},
 	 description: {
-		 'en-US': 'The ship’s AI can operate all systems — from locomotion to weapons to opening or closing hatches. It has a skill level of d10 in these tasks, but is an “Extra” and does not receive a Wild Die. The AI does not suffer from multi-action penalties if given simultaneous tasks. In combat, the AI acts on the captain’s Action Card. Giving the AI a short verbal command is a free action.',
+		 'en-US': 'The ship\'s AI can operate all systems �" from locomotion to weapons to opening or closing hatches. It has a skill level of d10 in these tasks, but is an “Extra” and does not receive a Wild Die. The AI does not suffer from multi-action penalties if given simultaneous tasks. In combat, the AI acts on the captain\'s Action Card. Giving the AI a short verbal command is a free action.',
 	},
 	 tag: 'artificial-intelligence',
 getMax: function(selectedObject) { return 1 },
@@ -359,7 +395,7 @@ return 50000;
 		 'en-US': 'Crew Reduction',
 	},
 	 description: {
-		 'en-US': 'Reduces living space, quarters, and facilities for personnel equal to 20% of the listed Crew for the vessel’s Size, granting Size/4 Mods. If this reduces the Crew to 0, the ship is a fully automated drone',
+		 'en-US': 'Reduces living space, quarters, and facilities for personnel equal to 20% of the listed Crew for the vessel\'s Size, granting Size/4 Mods. If this reduces the Crew to 0, the ship is a fully automated drone',
 	},
 	 tag: 'crew-reduction',
 getMax: function(selectedObject) { return "u" },
@@ -379,7 +415,7 @@ selectedObject.crew -= selectedObject.selectedSize.crew / 5;
 		 'en-US': 'Crew Space',
 	},
 	 description: {
-		 'en-US': 'Enough space and facilities for more personnel equal to 20% of the listed Crew for the vessel’s Size. To accommodate even more passengers, use Superstructures instead.',
+		 'en-US': 'Enough space and facilities for more personnel equal to 20% of the listed Crew for the vessel\'s Size. To accommodate even more passengers, use Superstructures instead.',
 	},
 	 tag: 'crew-space',
 getMax: function(selectedObject) { return "u" },
@@ -398,7 +434,7 @@ selectedObject.crew += selectedObject.selectedSize.crew / 5;
 		 'en-US': 'Deflector Screens',
 	},
 	 description: {
-		 'en-US': 'The vessel is protected by an energy field that deflects incoming ballistic attacks (it has no effect against lasers). Attackers must subtract –2 from their Shooting rolls. Mod cost is 2 for Small to Large ships, and 3 for Huge to Gargantuan vessels.',
+		 'en-US': 'The vessel is protected by an energy field that deflects incoming ballistic attacks (it has no effect against lasers). Attackers must subtract �"2 from their Shooting rolls. Mod cost is 2 for Small to Large ships, and 3 for Huge to Gargantuan vessels.',
 	},
 	 tag: 'deflector-screens',
 getMax: function(selectedObject) { return 1 },
@@ -419,7 +455,7 @@ return 10000 * selectedObject.size;
 		 'en-US': 'Electromagnetic Shielding',
 	},
 	 description: {
-		 'en-US': 'Adds +6 to the ship’s effective Toughness from EMP missiles (see page 25).',
+		 'en-US': 'Adds +6 to the ship\'s effective Toughness from EMP missiles (see page 25).',
 	},
 	 tag: 'electromagnetic-shielding',
 getMax: function(selectedObject) { return "u" },
@@ -451,7 +487,7 @@ return 2000000 * selectedObject.size;
 		 'en-US': 'FTL Drive, Kalian',
 	},
 	 description: {
-		 'en-US': 'Kalian superluminal drives are considered the most finely crafted faster-than-light drives in the known worlds. They are high-end drives known for durability and dependability. They add +2 to Knowledge (Astrogation) rolls when traveling via “hyperspace.” For more information, see Space Travel on page 69. In addition, if a Kalian FTL system is damaged with a starship critical hit during combat, the Repair roll is only –1 per wound instead of the normal –2.',
+		 'en-US': 'Kalian superluminal drives are considered the most finely crafted faster-than-light drives in the known worlds. They are high-end drives known for durability and dependability. They add +2 to Knowledge (Astrogation) rolls when traveling via “hyperspace.” For more information, see Space Travel on page 69. In addition, if a Kalian FTL system is damaged with a starship critical hit during combat, the Repair roll is only �"1 per wound instead of the normal �"2.',
 	},
 	 tag: 'ftl-drive-kalian',
 showWithOption: "the-last-parsec",
@@ -468,7 +504,7 @@ return 4000000 * selectedObject.size;
 		 'en-US': 'Fuel Pods',
 	},
 	 description: {
-		 'en-US': 'Each fuel pod increases the vessel’s energy capacity by 50%',
+		 'en-US': 'Each fuel pod increases the vessel\'s energy capacity by 50%',
 	},
 	 tag: 'fuel-pods',
 getMax: function(selectedObject) { return "u" },
@@ -503,7 +539,7 @@ return 1000000;
 		 'en-US': 'Mercantile',
 	},
 	 description: {
-		 'en-US': 'Found only on Huge and Gargantuan ships, this might be a restaurant, commissary, or speciality store. Each generates Size+$1d4K a month for the ship (and the same for the mercantile’s owner). The store has 300 square feet of space. Each additional Mod adds roughly 100 square feet and +$1d4K to revenue.',
+		 'en-US': 'Found only on Huge and Gargantuan ships, this might be a restaurant, commissary, or speciality store. Each generates Size+$1d4K a month for the ship (and the same for the mercantile\'s owner). The store has 300 square feet of space. Each additional Mod adds roughly 100 square feet and +$1d4K to revenue.',
 	},
 	 tag: 'mercantile',
 getMax: function(selectedObject) { return "u" },
@@ -577,7 +613,7 @@ return 1000000 * selectedObject.size;
 		 'en-US': 'Sensor Suite (Galactic)',
 	},
 	 description: {
-		 'en-US': 'Light, chemical, motion, and other active sensors allow detection of targets up to one light year away with a Knowledge (Electronics) roll. Within 10K miles, the sensors add +2 to the roll. Illumination penalties are ignored. Targets don’t have to be in direct line of sight, but asteroid or powerful energy fields may cause inaccurate or false readings at the GM’s discretion.',
+		 'en-US': 'Light, chemical, motion, and other active sensors allow detection of targets up to one light year away with a Knowledge (Electronics) roll. Within 10K miles, the sensors add +2 to the roll. Illumination penalties are ignored. Targets don\'t have to be in direct line of sight, but asteroid or powerful energy fields may cause inaccurate or false readings at the GM\'s discretion.',
 	},
 	 tag: 'sensor-suite-galactic',
 getMax: function(selectedObject) { return 1 },
@@ -609,7 +645,7 @@ return 50000;
 		 'en-US': 'Shields',
 	},
 	 description: {
-		 'en-US': 'The craft is protected by an ablative energy field that absorbs 10×Size points of damage before it’s depleted. Apply all damage to the shield first, then any left over to the ship (AP counts as usual). Active shields detonate missiles and torpedoes before they hit, reducing their damage total by half. A craft may regenerate its Size in shield points if it makes no attacks in a round.',
+		 'en-US': 'The craft is protected by an ablative energy field that absorbs 10�-Size points of damage before it\'s depleted. Apply all damage to the shield first, then any left over to the ship (AP counts as usual). Active shields detonate missiles and torpedoes before they hit, reducing their damage total by half. A craft may regenerate its Size in shield points if it makes no attacks in a round.',
 	},
 	 tag: 'shields',
 getMax: function(selectedObject) { return 1 },
@@ -625,7 +661,7 @@ return 25000 * selectedObject.size;
 		 'en-US': 'Sloped Armor',
 	},
 	 description: {
-		 'en-US': 'Non-energy, ballistic attacks against this vessel suffer a –2 penalty. It has no effect on energy attacks.',
+		 'en-US': 'Non-energy, ballistic attacks against this vessel suffer a �"2 penalty. It has no effect on energy attacks.',
 	},
 	 tag: 'sloped-armor',
 getMax: function(selectedObject) { return 1 },
@@ -643,7 +679,7 @@ return 5000 * selectedObject.size;
 		 'de-DE': '',
 	},
 	 description: {
-		 'en-US': 'The ship trades power and speed for additional room. Each time this is taken, reduce Acc by 5 and Top Speed by 50 to gain half the ship’s Size in Mod slots.',
+		 'en-US': 'The ship trades power and speed for additional room. Each time this is taken, reduce Acc by 5 and Top Speed by 50 to gain half the ship\'s Size in Mod slots.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -669,7 +705,7 @@ return !selectedObject.hasMod("speed");
 		 'en-US': 'Speed',
 	},
 	 description: {
-		 'en-US': 'Each purchase increases the ship’s Acc by 5 and Top Speed by 50. (This cannot be taken with Speed Reduction.)',
+		 'en-US': 'Each purchase increases the ship\'s Acc by 5 and Top Speed by 50. (This cannot be taken with Speed Reduction.)',
 	},
 	 tag: 'speed',
 getMax: function(selectedObject) { return "u" },
@@ -734,7 +770,7 @@ selectedObject.crew += 100;
 		 'en-US': 'Superstructure (Factory)',
 	},
 	 description: {
-		 'en-US': 'The ship contains processing and manufacturing facilities that can take in raw materials and create new goods (usually those necessary for extended voyages, military operations, or colony survival). This adds 100 Crew. The vessel must also have at least one shuttle per Factory Superstructure to take in raw goods. Each factory can generate 2d6×$100K in goods, supplies, or raw materials a week in an average environment (such as an asteroid field or small planet). Add or subtract a d6 for a sparse / rich find.) Materials can be used to fuel and resupply the ship (and other ships as well).',
+		 'en-US': 'The ship contains processing and manufacturing facilities that can take in raw materials and create new goods (usually those necessary for extended voyages, military operations, or colony survival). This adds 100 Crew. The vessel must also have at least one shuttle per Factory Superstructure to take in raw goods. Each factory can generate 2d6�-$100K in goods, supplies, or raw materials a week in an average environment (such as an asteroid field or small planet). Add or subtract a d6 for a sparse / rich find.) Materials can be used to fuel and resupply the ship (and other ships as well).',
 	},
 	 tag: 'superstructure-factory',
 getMax: function(selectedObject) { return "u" },
@@ -760,7 +796,7 @@ selectedObject.crew += 100;
 		 'en-US': 'Superstructure (Hangar)',
 	},
 	 description: {
-		 'en-US': 'A large, dedicated flight bay that holds up to 24 Size points of vehicles, walkers, or Small or Medium ships (Large and greater ships won’t fit due to logarithmic scaling). This includes additional fuel storage, maintenance bays, training rooms, and briefing areas, and adds 50 additional crew members.',
+		 'en-US': 'A large, dedicated flight bay that holds up to 24 Size points of vehicles, walkers, or Small or Medium ships (Large and greater ships won\'t fit due to logarithmic scaling). This includes additional fuel storage, maintenance bays, training rooms, and briefing areas, and adds 50 additional crew members.',
 	},
 	 tag: 'superstructure-hangar',
 getMax: function(selectedObject) { return "u" },
@@ -861,7 +897,7 @@ selectedObject.toughness = selectedObject.toughness - 1;
 		 'en-US': 'Superstructure',
 	},
 	 description: {
-		 'en-US': 'Superstructures are large sections that add great amounts of space to large ships, typically to accommodate more passengers or cargo. Each superstructure adds one to the fuel used per day, consumes 10 regular Mods, and subtracts 1 from the ship’s base Toughness (not Armor) as it reduces overall structural integrity. Choose the type of superstructure from the sidebar below.',
+		 'en-US': 'Superstructures are large sections that add great amounts of space to large ships, typically to accommodate more passengers or cargo. Each superstructure adds one to the fuel used per day, consumes 10 regular Mods, and subtracts 1 from the ship\'s base Toughness (not Armor) as it reduces overall structural integrity. Choose the type of superstructure from the sidebar below.',
 	},
 	 tag: 'superstructure',
 hidden: 1,
@@ -887,7 +923,7 @@ selectedObject.toughness = selectedObject.toughness - 1;
 		 'en-US': 'Targeting System',
 	},
 	 description: {
-		 'en-US': 'The ship’s internal sensors and computers are linked to all attached weapons. This compensates for movement, range, multi-actions, and the like, negating up to two points of Shooting penalties.',
+		 'en-US': 'The ship\'s internal sensors and computers are linked to all attached weapons. This compensates for movement, range, multi-actions, and the like, negating up to two points of Shooting penalties.',
 	},
 	 tag: 'targeting-system',
 getMax: function(selectedObject) { return 1 },
@@ -940,7 +976,7 @@ selectedObject.hasTorpedoTube = 1;
 		 'de-DE': '',
 	},
 	 description: {
-		 'en-US': 'Tractor beams are specialized starship weapons designed to hold an enemy ship in place and pull it to the “attacker.” Ships can only affect vessels of smaller Size. Their range is quite short (about 1000 yards), so they must get a Short Range result on the Chase table to use the weapon. This is an opposed Knowledge (Electronics) roll at –4 vs the defender’s Piloting (or Knowledge (Electronics) in Large or larger ships). If the attacker is successful, the enemy ship is caught and pulled into contact in 2d6 rounds. A captive’s ship’s life support systems remain active, but all locomotion and weapons are shut down.',
+		 'en-US': 'Tractor beams are specialized starship weapons designed to hold an enemy ship in place and pull it to the “attacker.” Ships can only affect vessels of smaller Size. Their range is quite short (about 1000 yards), so they must get a Short Range result on the Chase table to use the weapon. This is an opposed Knowledge (Electronics) roll at �"4 vs the defender\'s Piloting (or Knowledge (Electronics) in Large or larger ships). If the attacker is successful, the enemy ship is caught and pulled into contact in 2d6 rounds. A captive\'s ship\'s life support systems remain active, but all locomotion and weapons are shut down.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},

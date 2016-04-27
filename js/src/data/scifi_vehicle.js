@@ -38,10 +38,14 @@ savageWorldsSciFiOptions['vehicle'] = Array(
 savageWorldsSciFiSizes['vehicle'] = Array(
 {
 	 sizeLabel: {
-		 'en-US': 'Ultralight',
+		 'en-US': 'Ultralight Vehicle',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 size: 1,
 	 strength: 0,
@@ -61,10 +65,14 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 },
 {
 	 sizeLabel: {
-		 'en-US': 'Light',
+		 'en-US': 'Light Vehicle',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': 'Motorcycles',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 size: 2,
 	 strength: 0,
@@ -84,10 +92,14 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 },
 {
 	 sizeLabel: {
-		 'en-US': 'Medium',
+		 'en-US': 'Medium Vehicle',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': 'Cars',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 size: 3,
 	 strength: 0,
@@ -107,10 +119,14 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 },
 {
 	 sizeLabel: {
-		 'en-US': 'Large',
+		 'en-US': 'Large Vehicle',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': 'SUVs, Pickups',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 size: 4,
 	 strength: 0,
@@ -130,10 +146,14 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 },
 {
 	 sizeLabel: {
-		 'en-US': 'Heavy',
+		 'en-US': 'Heavy Vehicle',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': 'APCs, Light tanks',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 size: 6,
 	 strength: 0,
@@ -153,10 +173,14 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 },
 {
 	 sizeLabel: {
-		 'en-US': 'Super Heavy',
+		 'en-US': 'Super Heavy Vehicle',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': 'Tanks',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 size: 8,
 	 strength: 0,
@@ -176,10 +200,14 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 },
 {
 	 sizeLabel: {
-		 'en-US': 'Titan',
+		 'en-US': 'Titan Vehicle',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': 'Tanks',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 size: 10,
 	 strength: 0,
@@ -199,10 +227,14 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 },
 {
 	 sizeLabel: {
-		 'en-US': 'Colossus',
+		 'en-US': 'Colossus Vehicle',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': 'Tanks',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 size: 12,
 	 strength: 0,
@@ -222,10 +254,14 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 },
 {
 	 sizeLabel: {
-		 'en-US': 'Goliath',
+		 'en-US': 'Goliath Vehicle',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': 'Battle Platforms',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 size: 14,
 	 strength: 0,
@@ -273,7 +309,7 @@ calcWeight: 1 // one of the first things to be calculated
 		 'en-US': 'Aircraft, Helicopter',
 	},
 	 description: {
-		 'en-US': 'The vehicle is a helicopter. It can hover or fly, and has a Acc/TS 10/80 and a Climb of –1.',
+		 'en-US': 'The vehicle is a helicopter. It can hover or fly, and has a Acc/TS 10/80 and a Climb of �"1.',
 	},
 	 tag: 'aircraft-helicopter',
 getMax: function(selectedObject) { return 1 },
@@ -374,7 +410,7 @@ return 1000 * selectedObject.size;
 		 'en-US': 'Armor',
 	},
 	 description: {
-		 'en-US': 'Increases a vehicle’s Armor value by +2. Armor +4 and higher is considered Heavy Armor. Vehicular Armor can also be front-loaded if desired. If so, Armor’s maximum becomes 2x Size and each level increases the front armor by +3, side and top armor by +2, and rear and bottom Armor by +1. In the Chase rules, an attacker with Advantage and a Jack or higher can target the side armor, and one with a King or higher can target the rear.',
+		 'en-US': 'Increases a vehicle\'s Armor value by +2. Armor +4 and higher is considered Heavy Armor. Vehicular Armor can also be front-loaded if desired. If so, Armor\'s maximum becomes 2x Size and each level increases the front armor by +3, side and top armor by +2, and rear and bottom Armor by +1. In the Chase rules, an attacker with Advantage and a Jack or higher can target the side armor, and one with a King or higher can target the rear.',
 	},
 	 tag: 'armor',
 getMax: function(selectedObject) { return selectedObject.size },
@@ -396,7 +432,7 @@ selectedObject.toughness++;
 		 'en-US': 'Armor, Front Loaded',
 	},
 	 description: {
-		 'en-US': 'Increases a vehicle’s Armor value by +2. Armor +4 and higher is considered Heavy Armor. Vehicular Armor can also be front-loaded if desired. If so, Armor’s maximum becomes 2x Size and each level increases the front armor by +3, side and top armor by +2, and rear and bottom Armor by +1. In the Chase rules, an attacker with Advantage and a Jack or higher can target the side armor, and one with a King or higher can target the rear.',
+		 'en-US': 'Increases a vehicle\'s Armor value by +2. Armor +4 and higher is considered Heavy Armor. Vehicular Armor can also be front-loaded if desired. If so, Armor\'s maximum becomes 2x Size and each level increases the front armor by +3, side and top armor by +2, and rear and bottom Armor by +1. In the Chase rules, an attacker with Advantage and a Jack or higher can target the side armor, and one with a King or higher can target the rear.',
 	},
 	 tag: 'armor-front-loaded',
 getMax: function(selectedObject) { return selectedObject.size },
@@ -422,7 +458,7 @@ selectedObject.toughness++;
 		 'en-US': 'Artificial Intelligence',
 	},
 	 description: {
-		 'en-US': 'The vehicle’s AI can operate all systems — from locomotion to weapons to opening or closing hatches. It has a skill level of d10 in these tasks, but is an “Extra” and does not receive a Wild Die. The AI does not suffer from multi-action penalties if given simultaneous tasks. In combat, the AI acts on the captain’s Action Card. Giving the AI a short verbal command is a free action.',
+		 'en-US': 'The vehicle\'s AI can operate all systems �" from locomotion to weapons to opening or closing hatches. It has a skill level of d10 in these tasks, but is an “Extra” and does not receive a Wild Die. The AI does not suffer from multi-action penalties if given simultaneous tasks. In combat, the AI acts on the captain\'s Action Card. Giving the AI a short verbal command is a free action.',
 	},
 	 tag: 'artificial-intelligence',
 getMax: function(selectedObject) { return 1 },
@@ -438,7 +474,7 @@ return 10000 * selectedObject.size;
 		 'en-US': 'Boosters',
 	},
 	 description: {
-		 'en-US': 'Nitrous oxide or other propellants double a vehicle’s Acceleration and Top Speed for a round. Each booster has six uses before it must be replaced. Their effects do not stack. Refills cost $100 per booster.',
+		 'en-US': 'Nitrous oxide or other propellants double a vehicle\'s Acceleration and Top Speed for a round. Each booster has six uses before it must be replaced. Their effects do not stack. Refills cost $100 per booster.',
 	},
 	 tag: 'boosters',
 getMax: function(selectedObject) { return "u" },
@@ -454,7 +490,7 @@ return 1000 * selectedObject.size;
 		 'en-US': 'Climb',
 	},
 	 description: {
-		 'en-US': 'Aircraft only. The vehicle’s Climb is increased by 1.',
+		 'en-US': 'Aircraft only. The vehicle\'s Climb is increased by 1.',
 	},
 	 tag: 'climb',
 getMax: function(selectedObject) { return 5 },
@@ -512,7 +548,7 @@ selectedObject.crew += 4;
 		 'en-US': 'Deflector Screens',
 	},
 	 description: {
-		 'en-US': 'The vessel is protected by an energy field that deflects incoming ballistic attacks (it has no effect against lasers). Attackers must subtract –2 from their Shooting rolls. Mod cost is 2 for Small to Large vehicles, and 3 for Huge to Gargantuan vessels.',
+		 'en-US': 'The vessel is protected by an energy field that deflects incoming ballistic attacks (it has no effect against lasers). Attackers must subtract �"2 from their Shooting rolls. Mod cost is 2 for Small to Large vehicles, and 3 for Huge to Gargantuan vessels.',
 	},
 	 tag: 'deflector-screens',
 getMax: function(selectedObject) { return 1 },
@@ -528,7 +564,7 @@ return 10000 * selectedObject.size;
 		 'en-US': 'Ejection System',
 	},
 	 description: {
-		 'en-US': 'Should a vehicle suffer a Wrecked result, crew members may make Agility rolls at –4 (or no penalty if an individual was on Hold or hasn’t acted yet that round). Failure results in damage as usual and failure to eject that round. Those who succeed are launched into the air and descend safely via parachute. The system covers all passengers and crew.',
+		 'en-US': 'Should a vehicle suffer a Wrecked result, crew members may make Agility rolls at �"4 (or no penalty if an individual was on Hold or hasn\'t acted yet that round). Failure results in damage as usual and failure to eject that round. Those who succeed are launched into the air and descend safely via parachute. The system covers all passengers and crew.',
 	},
 	 tag: 'ejection-system',
 getMax: function(selectedObject) { return "u" },
@@ -544,7 +580,7 @@ return 5000 * selectedObject.size;
 		 'en-US': 'Electromagnetic Shielding',
 	},
 	 description: {
-		 'en-US': 'Adds +6 to the vehicle’s effective Toughness from EMP missiles (see page 25).',
+		 'en-US': 'Adds +6 to the vehicle\'s effective Toughness from EMP missiles (see page 25).',
 	},
 	 tag: 'electromagnetic-shielding',
 getMax: function(selectedObject) { return "u" },
@@ -626,7 +662,7 @@ return 5000 * selectedObject.size;
 		 'de-DE': '',
 	},
 	 description: {
-		 'en-US': 'Large or greater vehicles only. The vehicle has an extended superstructure with bunk beds, personal storage bins for up to four individuals, and one shared bathroom and kitchenette (regardless of how many times this is taken) for long- term travel. The superstructure decreases overall Toughness by 1 each time it’s taken. The limit is half the vehicle’s base Toughness.',
+		 'en-US': 'Large or greater vehicles only. The vehicle has an extended superstructure with bunk beds, personal storage bins for up to four individuals, and one shared bathroom and kitchenette (regardless of how many times this is taken) for long- term travel. The superstructure decreases overall Toughness by 1 each time it\'s taken. The limit is half the vehicle\'s base Toughness.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -747,7 +783,7 @@ selectedObject.toughness = selectedObject.toughness + 1;
 		 'en-US': 'Sensor Suite',
 	},
 	 description: {
-		 'en-US': 'Light, chemical, motion, and other active sensors allow detection of targets up to one light year away with a Knowledge (Electronics) roll. Within 10K miles, the sensors add +2 to the roll. Illumination penalties are ignored. Targets don’t have to be in direct line of sight, but asteroid or powerful energy fields may cause inaccurate or false readings at the GM’s discretion.',
+		 'en-US': 'Light, chemical, motion, and other active sensors allow detection of targets up to one light year away with a Knowledge (Electronics) roll. Within 10K miles, the sensors add +2 to the roll. Illumination penalties are ignored. Targets don\'t have to be in direct line of sight, but asteroid or powerful energy fields may cause inaccurate or false readings at the GM\'s discretion.',
 	},
 	 tag: 'sensor-suite',
 getMax: function(selectedObject) { return 1 },
@@ -763,7 +799,7 @@ return 50000;
 		 'en-US': 'Shields',
 	},
 	 description: {
-		 'en-US': 'The craft is protected by an ablative energy field that absorbs 10×Size points of damage before it’s depleted. Apply all damage to the shield first, then any left over to the vehicle (AP counts as usual). Active shields detonate missiles and torpedoes before they hit, reducing their damage total by half. A craft may regenerate its Size in shield points if it makes no attacks in a round.',
+		 'en-US': 'The craft is protected by an ablative energy field that absorbs 10�-Size points of damage before it\'s depleted. Apply all damage to the shield first, then any left over to the vehicle (AP counts as usual). Active shields detonate missiles and torpedoes before they hit, reducing their damage total by half. A craft may regenerate its Size in shield points if it makes no attacks in a round.',
 	},
 	 tag: 'shields',
 getMax: function(selectedObject) { return 1 },
@@ -779,7 +815,7 @@ return 25000 * selectedObject.size;
 		 'en-US': 'Sloped Armor',
 	},
 	 description: {
-		 'en-US': 'Non-energy, ballistic attacks against this vessel suffer a –2 penalty. It has no effect on energy attacks.',
+		 'en-US': 'Non-energy, ballistic attacks against this vessel suffer a �"2 penalty. It has no effect on energy attacks.',
 	},
 	 tag: 'sloped-armor',
 getMax: function(selectedObject) { return 1 },
@@ -797,7 +833,7 @@ return 3000 * selectedObject.size;
 		 'de-DE': '',
 	},
 	 description: {
-		 'en-US': 'The vehicle trades power and speed for additional room. Each time this is taken, reduce Acc by 5 and Top Speed by 50 to gain half the vehicle’s Size in Mod slots.',
+		 'en-US': 'The vehicle trades power and speed for additional room. Each time this is taken, reduce Acc by 5 and Top Speed by 50 to gain half the vehicle\'s Size in Mod slots.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -825,7 +861,7 @@ return !selectedObject.hasMod("speed");
 		 'de-DE': '',
 	},
 	 description: {
-		 'en-US': 'Each purchase increases the vehicle’s Acc by 5 and Top Speed by 50. (This cannot be taken with Speed Reduction.)',
+		 'en-US': 'Each purchase increases the vehicle\'s Acc by 5 and Top Speed by 50. (This cannot be taken with Speed Reduction.)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -866,7 +902,7 @@ return 10000 * selectedObject.size;
 		 'en-US': 'Targeting System',
 	},
 	 description: {
-		 'en-US': 'The vehicle’s internal sensors and computers are linked to all attached weapons. This compensates for movement, range, multi-actions, and the like, negating up to two points of Shooting penalties.',
+		 'en-US': 'The vehicle\'s internal sensors and computers are linked to all attached weapons. This compensates for movement, range, multi-actions, and the like, negating up to two points of Shooting penalties.',
 	},
 	 tag: 'targeting-system',
 getMax: function(selectedObject) { return 1 },
@@ -930,7 +966,7 @@ selectedObject.mods += selectedObject.baseMods / 2;
 		 'de-DE': '',
 	},
 	 description: {
-		 'en-US': 'The vehicle is a boat or ship. It’s base Acceleration and Top Speed are halved (round up). Speed Modifications increase Acc by 3 and TS by 5. For larger vessels such as naval vessels or cruise ships, use the Starship rules for Size, Toughness, and Crew, and add any enhancements that aren’t specifically designed for space such as FTL drives. If a Modification is listed under Vehicles, use that instead. Ships may have Torpedo Tubes.',
+		 'en-US': 'The vehicle is a boat or ship. It\'s base Acceleration and Top Speed are halved (round up). Speed Modifications increase Acc by 3 and TS by 5. For larger vessels such as naval vessels or cruise ships, use the Starship rules for Size, Toughness, and Crew, and add any enhancements that aren\'t specifically designed for space such as FTL drives. If a Modification is listed under Vehicles, use that instead. Ships may have Torpedo Tubes.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},

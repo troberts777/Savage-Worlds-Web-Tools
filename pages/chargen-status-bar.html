@@ -1,0 +1,26 @@
+<div class="status-bar">
+	<div class="row">
+		<div class="column small-12">
+			<button class="button tiny radius alert" ng-hide="savageCharacter.isValid" ng-click="showValidationReport()">!</button>
+			<button class="button tiny radius warning" ng-hide="savageCharacter.warningReport.length == 0" ng-click="showValidationReport()">!</button>
+			<span translate="CHARGEN_STATUS_SKILL_POINTS">Skill Points (used/availble)</span>: <span ng-bind="savageCharacter.skillPointsUsed"></span> / <span ng-bind="savageCharacter.skillPointsAvailable"></span>
+			<span class="separator">|</span>
+			<span translate="CHARGEN_STATUS_ATTRIBUTE_POINTS">Attribute Points (used/availble)</span>: <span ng-bind="savageCharacter.attributePointsUsed"></span> / <span ng-bind="savageCharacter.attributePointsAvailable"></span>
+
+			<span ng-show="savageCharacter.selectedArcaneBackground.tag != ''">
+			<span class="separator">|</span>
+				<span translate="CHARGEN_STATUS_POWERS">Powers (used/availble)</span>: <span ng-bind="savageCharacter.selectedPowers.length"></span> / <span ng-bind="savageCharacter.selectedArcaneBackground.powers"></span>
+			</span>
+
+			<span ng-show="savageCharacter.XP.value >= 5">
+			<span class="separator">|</span>
+				<span translate="CHARGEN_STATUS_ADVANCEMENTS">Advancements (used/availble)</span>: <span ng-bind="savageCharacter.selectedAdvancements.length"></span> / <span ng-bind="savageCharacter.availableAdvancements"></span>
+			</span>
+
+			<span class="separator">|</span>
+				<span translate="CHARGEN_CURRENT_FUNDS">Current Funds</span>: $<span ng-bind="savageCharacter.currentFunds"></span>
+			</span>
+		</div>
+	</div>
+
+</div>

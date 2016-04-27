@@ -8,7 +8,6 @@ baseApp = angular.module(
 		'$translateProvider',
 		function ($routeProvider, $translateProvider, $scope, $http) {
 
-
 			users_preferred_language = "en-US";
 			if( localStorage && localStorage["users_preferred_language"] ) {
 				users_preferred_language = localStorage["users_preferred_language"];
@@ -43,6 +42,12 @@ baseApp = angular.module(
 				controller  : 'creditsController'
 			})
 
+			// route for the credits page
+			.when('/settings', {
+				templateUrl : 'pages/settings.html',
+				controller  : 'settingsController'
+			})
+
 			// route for the core about page
 			.when('/core/dice', {
 				templateUrl : 'pages/core-dice.html',
@@ -56,9 +61,52 @@ baseApp = angular.module(
 			})
 
 			// route for the core character maker page
-			.when('/core/character-maker', {
-				templateUrl : 'pages/core-character-maker.html',
-				controller  : 'coreChargenController'
+			.when('/core/character-maker-char-info', {
+				templateUrl : 'pages/core-character-maker-char-info.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-char-info'
+			})
+
+			// route for the core character maker page traits
+			.when('/core/character-maker-traits', {
+				templateUrl : 'pages/core-character-maker-traits.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-traits'
+			})
+
+			// route for the core character maker page skills
+			.when('/core/character-maker-skills', {
+				templateUrl : 'pages/core-character-maker-skills.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-skills'
+			})
+
+			// route for the core character maker page edges and hindrances
+			.when('/core/character-maker-hindrances-and-edges', {
+				templateUrl : 'pages/core-character-maker-hindrances-and-edges.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-hindrances-and-edges'
+			})
+
+			// route for the core character maker gear page
+			.when('/core/character-maker-gear', {
+				templateUrl : 'pages/core-character-maker-gear.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-gear'
+			})
+
+			// route for the core character maker powers page
+			.when('/core/character-maker-powers', {
+				templateUrl : 'pages/core-character-maker-powers.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-powers'
+			})
+
+			// route for the core character maker advancements page
+			.when('/core/character-maker-advancements', {
+				templateUrl : 'pages/core-character-maker-advancements.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-advancements'
 			})
 
 			// route for the core mass batles page
@@ -114,54 +162,3 @@ baseApp = angular.module(
 	]
 );
 
-angular.module('baseApp').controller(
-	'select_language',
-	[
-		'$translate',
-		'$scope',
-		'$route',
-		function ($translate, $scope, $route) {
-
-			$scope.available_languages = Array();
-			$scope.users_language = {};
-			for( lang_count = 0; lang_count < availableLanguages.length; lang_count++) {
-				if( availableLanguages[lang_count].active ) {
-					language_object = {
-						id: availableLanguages[lang_count].short_code,
-						label: availableLanguages[lang_count].native_name
-					};
-					$scope.available_languages.push(
-						language_object
-					);
-					if(localStorage["users_preferred_language"] == availableLanguages[lang_count].short_code ) {
-						$scope.users_language = language_object;
-						$scope.background_image_url = "url(images/flags/64/" + availableLanguages[lang_count].icon_file + ")";
-					}
-				}
-			}
-
-			$scope.updateLanguage = function( language_selected ) {
-
-				$translate.use($scope.users_language.id);
-				localStorage["users_preferred_language"] = $scope.users_language.id;
-				for( lang_count = 0; lang_count < availableLanguages.length; lang_count++) {
-					if( availableLanguages[lang_count].active ) {
-						if(localStorage["users_preferred_language"] == availableLanguages[lang_count].short_code ) {
-							$scope.background_image_url = "url(images/flags/64/" + availableLanguages[lang_count].icon_file + ")";
-						}
-					}
-				}
-
-				$route.reload();
-			}
-
-			// $scope.change_language = function (key) {
-			// 	$translate.use(key);
-			// 	localStorage["users_preferred_language"] = key;
-
-			// 	$route.reload();
-			// };
-
-		}
-	]
-);

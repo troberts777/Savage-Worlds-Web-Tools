@@ -16,22 +16,26 @@
 		<link rel="manifest" href="./manifest.json">
 
 
-		<link href='https://fonts.googleapis.com/css?family=Ubuntu:400,500,700,400italic' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.1.2/foundation.min.css">
+		<link rel="stylesheet" href="./css/font-awesome-4.6.1/css/font-awesome.min.css">
+		<link rel="stylesheet" href="./css/foundation-6.2.0.min.css">
 		<link rel="stylesheet" href="./css/style.min.css">
 	</head>
 	<body>
 		<div class="ng-hide"><br />Loading...</div>
 		<div class="ng-cloak">
 			<header>
-				<div ng-controller="select_language" class="float-right tiny button-group">
-					<select ng-style="{'background-image': background_image_url }" class="language-select" ng-options="lang.label for lang in available_languages track by lang.id" ng-change="updateLanguage(users_language)" ng-model="users_language">
-					</select>
+				<div class="row">
+					<div class="columns small-12 medium-3 text-left ">
+						<a href="#/"><i class="fa fa-home"></i></a>
+						<a href="#/settings/"><i class="fa fa-gear"></i></a>
+						<a href="#/credits/"><i class="fa fa-question"></i></a>
+
+					</div>
+					<div class="columns small-12 medium-9 medium-text-right small-text-left">
+						<div ng-show="showSciFiCreatorMenu" ng-include="'pages/scifi-creator-menu.html'"></div>
+						<div ng-show="showChargenMenu" ng-include="'pages/chargen-menu.html'"></div>
+					</div>
 				</div>
-				<img class="float-left" style=" margin-right: 10px;height: 55px;margin-top: 10px;" src="images/sw_fan.png" alt="Savage Worlds Fan License" />
-				<h1><a href="#/" translate="APP_TITLE">Savage Worlds Web Tools</a></h1>
-				<h2 ng-bind="subtitle_tag">Welcome</h2>
 			</header>
 
 			<div>
@@ -42,11 +46,12 @@
 			</footer> -->
 		</div>
 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-sanitize.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-resource.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-route.js"></script>
+		<script src="./js/angular-1.5.3/angular.js"></script>
+		<script src="./js/angular-1.5.3/angular-sanitize.js"></script>
+		<script src="./js/angular-1.5.3/angular-resource.js"></script>
+		<script src="./js/angular-1.5.3/angular-route.js"></script>
 		<script src="./js/angular-translate.min.js"></script>
+		<script src="./js/jspdf.min.js"></script>
 		<script src="./js/script.js"></script>
 
 	</body>

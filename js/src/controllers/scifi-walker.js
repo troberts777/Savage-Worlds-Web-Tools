@@ -5,7 +5,7 @@ angular.module("baseApp").controller(
 		'$translate',
 		'$scope',
 		function ($rootScope, $translate, $scope) {
-
+			$rootScope.showSciFiCreatorMenu = true;
 			var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_walker";
 			var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.walker";
 			var itemType = "walker";
@@ -140,22 +140,22 @@ angular.module("baseApp").controller(
 				$scope.updatePage();
 			}
 
-			$scope.closeDialogs = function() {
-				$scope.newDialogOpen = false;
-				$scope.loadDialogOpen = false;
-				$scope.saveDialogOpen = false;
-				$scope.importDialogOpen = false;
-				$scope.exportDialogOpen = false;
-				$scope.optionsDialogOpen = false;
+			$rootScope.closeDialogs = function() {
+				$rootScope.newDialogOpen = false;
+				$rootScope.loadDialogOpen = false;
+				$rootScope.saveDialogOpen = false;
+				$rootScope.importDialogOpen = false;
+				$rootScope.exportDialogOpen = false;
+				$rootScope.optionsDialogOpen = false;
 			}
 
-			$scope.newDialog = function() {
+			$rootScope.newDialog = function() {
 
-				$scope.closeDialogs();
-				$scope.newDialogOpen = true;
+				$rootScope.closeDialogs();
+				$rootScope.newDialogOpen = true;
 			}
 
-			$scope.loadDialog = function() {
+			$rootScope.loadDialog = function() {
 
 				if( !localStorage[ savedItemsLocalStorageVariable ])
 					localStorage[ savedItemsLocalStorageVariable ] = "[]";
@@ -166,12 +166,12 @@ angular.module("baseApp").controller(
 					$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
 				}
 
-				$scope.closeDialogs();
+				$rootScope.closeDialogs();
 
-				$scope.closeDialogs();
-				$scope.loadDialogOpen = true;
+				$rootScope.closeDialogs();
+				$rootScope.loadDialogOpen = true;
 			}
-			$scope.saveDialog = function() {
+			$rootScope.saveDialog = function() {
 				if( !localStorage[ savedItemsLocalStorageVariable ])
 					localStorage[ savedItemsLocalStorageVariable ] = "[]";
 
@@ -181,14 +181,14 @@ angular.module("baseApp").controller(
 					$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
 				}
 
-				$scope.closeDialogs();
+				$rootScope.closeDialogs();
 				$scope.save_as_name = $scope.creatorObj.itemName;
-				$scope.saveDialogOpen = true;
+				$rootScope.saveDialogOpen = true;
 			}
-			$scope.importDialog = function() {
+			$rootScope.importDialog = function() {
 				$scope.importJSON = "";
-				$scope.closeDialogs();
-				$scope.importDialogOpen = true;
+				$rootScope.closeDialogs();
+				$rootScope.importDialogOpen = true;
 			}
 
 			$scope.updateImportData = function(importJSON) {
@@ -198,19 +198,19 @@ angular.module("baseApp").controller(
 			$scope.importData = function(importJSON) {
 
 				localStorage[ currentItemLocalStorageVariable ] = $scope.importJSON;
-				$scope.closeDialogs();
+				$rootScope.closeDialogs();
 				$scope.init();
 			}
 
-			$scope.exportDialog = function() {
+			$rootScope.exportDialog = function() {
 				$scope.exportBBCode = $scope.creatorObj.exportBBCode();
 				$scope.exportJSON = $scope.creatorObj.exportJSON(true);
-				$scope.closeDialogs();
-				$scope.exportDialogOpen = true;
+				$rootScope.closeDialogs();
+				$rootScope.exportDialogOpen = true;
 			}
-			$scope.optionsDialog = function() {
-				$scope.closeDialogs();
-				$scope.optionsDialogOpen = true;
+			$rootScope.optionsDialog = function() {
+				$rootScope.closeDialogs();
+				$rootScope.optionsDialogOpen = true;
 			}
 
 			$scope.loadItem = function( load_item ) {
@@ -218,14 +218,14 @@ angular.module("baseApp").controller(
 				if( $scope.saved_items[ load_item ] )
 					localStorage[ currentItemLocalStorageVariable ] = $scope.saved_items[ load_item ].data;
 
-				$scope.closeDialogs();
+				$rootScope.closeDialogs();
 				$scope.init();
 			}
 
 			$scope.clearCurrent = function(  ) {
 
 				localStorage[ currentItemLocalStorageVariable ] = "";
-				$scope.closeDialogs();
+				$rootScope.closeDialogs();
 				$scope.init();
 			}
 
@@ -241,12 +241,12 @@ angular.module("baseApp").controller(
 			$scope.closeConfirmDialog = function( ) {
 				$scope.showConfirmDialog = false;
 				// reset confirm to nothing...
-				$scope.cofirmDialogYes = function() {
+				$scope.confirmDialogYes = function() {
 					$scope.showConfirmDialog = false;
 				}
 			}
 
-			$scope.cofirmDialogYes = function() {
+			$scope.confirmDialogYes = function() {
 				// empty to be replaced...
 				$scope.showConfirmDialog = false;
 			}
@@ -256,7 +256,7 @@ angular.module("baseApp").controller(
 			$scope.confirmDialog = function( confirmationMessage, onYes ) {
 				$scope.confirmDialogQuestion = confirmationMessage;
 				$scope.showConfirmDialog = true;
-				$scope.cofirmDialogYes = onYes;
+				$scope.confirmDialogYes = onYes;
 			}
 
 			$scope.removeSavedItem = function( itemIndex ) {
@@ -292,7 +292,7 @@ angular.module("baseApp").controller(
 				}
 				localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
 
-				$scope.closeDialogs();
+				$rootScope.closeDialogs();
 			}
 
 			$scope.makeSaveObject = function( saveName ) {

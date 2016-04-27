@@ -1,0 +1,35 @@
+<div class="modal-container" ng-show="addEditPowerDialogOpen == true">
+	<div class="reveal">
+
+	  <h3 class="lead" translate="CHARGEN_ADD_POWER">Add Power</h3>
+	  	<div class="row">
+	  		<div class="small-12 columns">
+			  	<label>
+			  		<span translate="CHARGEN_STEP1_SELECT_POWER_REQUIRED"></span>
+			  		<select ng-options="powerItem as powerItem.local_name group by powerItem.bookObj.local_name disable when powerItem.selectable == false for powerItem in savageCharacter.availablePowers track by powerItem.tag" ng-model="editingPower"></select>
+			  	</label>
+
+			  	<label>
+			  		<span translate="CHARGEN_STEP2_SELECT_TRAPPING_REQUIRED"></span>
+			  		<select ng-options="trappingItem as trappingItem.local_name group by trappingItem.bookObj.local_name for trappingItem in savageCharacter.availableTrappings track by trappingItem.tag" ng-model="editingPower.trapping"></select>
+			  	</label>
+
+			  	<label>
+			  		<span translate="CHARGEN_STEP3_NAME_POWER_RECOMMENDED"></span>
+			  		<input type="text" ng-model="editingPower.customName">
+			  	</label>
+
+	  		</div>
+
+	  	</div>
+
+	  <div class="text-right">
+
+
+	  	<button class="button small primary" ng-click="closeDialogs()"  type="button" translate="GENERAL_CANCEL"></button>
+	  	<button ng-show="editingPowerIndex == -1" class="button small primary" ng-click="addPower(editingPower)"  type="button" translate="GENERAL_ADD"></button>
+	  	<button ng-show="editingPowerIndex > -1" class="button small secondary" ng-click="savePower( editingPower, editingPowerIndex)"  type="button" translate="GENERAL_SAVE"></button>
+	  </div>
+
+	</div>
+</div>

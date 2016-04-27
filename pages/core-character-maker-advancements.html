@@ -1,0 +1,36 @@
+
+<div ng-include="'pages/chargen-dialog-new.html'"></div>
+<div ng-include="'pages/chargen-dialog-load.html'"></div>
+<div ng-include="'pages/chargen-dialog-save.html'"></div>
+<div ng-include="'pages/chargen-dialog-import.html'"></div>
+<div ng-include="'pages/chargen-dialog-export.html'"></div>
+<div ng-include="'pages/chargen-dialog-books.html'"></div>
+<div ng-include="'pages/chargen-dialog-validation.html'"></div>
+<div ng-include="'pages/dialog-confirm.html'"></div>
+
+<div ng-include="'pages/chargen-status-bar.html'"></div>
+<div class="main-content">
+	<div class="row">
+		<div class="column small-12">
+			<div ng-include="'pages/chargen-nav-menu.html'"></div>
+			<fieldset class="fieldset">
+				<legend translate="GENERAL_ADVANCEMENTS">Advancements</legend>
+				<div class="row">
+					<div class="column small-4">
+						<label>
+							<span translate="CHARGEN_XP">XP</span>:<br />
+							<select ng-options="xpItem as xpItem.label group by xpItem.rankName for xpItem in savageCharacter.xpOptions track by xpItem.value" ng-model="savageCharacter.XP" ng-change="setXP(savageCharacter.XP)"></select>
+						</label>
+						<div ng-bind-html="savageCharacter.XP.rankName"></div>
+					</div>
+					<div class="column small-8">
+						TODO: Advancement Slots..
+					</div>
+				</div>
+
+			</fieldset>
+		</div>
+
+
+	</div>
+</div>

@@ -1,0 +1,97 @@
+
+<div ng-include="'pages/chargen-dialog-new.html'"></div>
+<div ng-include="'pages/chargen-dialog-load.html'"></div>
+<div ng-include="'pages/chargen-dialog-save.html'"></div>
+<div ng-include="'pages/chargen-dialog-import.html'"></div>
+<div ng-include="'pages/chargen-dialog-export.html'"></div>
+<div ng-include="'pages/chargen-dialog-books.html'"></div>
+<div ng-include="'pages/chargen-dialog-validation.html'"></div>
+<div ng-include="'pages/dialog-confirm.html'"></div>
+<div ng-include="'pages/chargen-dialog-add-edit-power.html'"></div>
+
+
+<div ng-include="'pages/chargen-status-bar.html'"></div>
+<div class="main-content">
+
+
+	<div class="row">
+		<div class="column small-12 medium-12">
+			<div ng-include="'pages/chargen-nav-menu.html'"></div>
+			<fieldset class="fieldset">
+				<legend translate="GENERAL_EDGES_AND_HINDRANCES">Edges and Hindrances</legend>
+					<div class="row">
+						<div class="column small-12 medium-4">
+							<fieldset class="fieldset">
+								<legend translate="GENERAL_HINDRANCES">Hindrances</legend>
+
+									<select ng-model="addHindranceTag" ng-options="hindrance as hindrance.select_option_name group by hindrance.bookObj.local_name disable when hindrance.selectable == false for hindrance in savageCharacter.availableHindrances track by hindrance.tag"></select>
+
+									<div class="text-center" ng-show="savageCharacter.totalPerkPoints == 4" translate="CHARGEN_HINDRANCES_OPTIMIZED">
+										You have optimized your hindrances. Selecting more will not advance the character.
+									</div>
+									<button class="button tiny expanded primary" ng-click="addHindrance()" translate="CHARGEN_ADD_HINDRANCE">Add Hindrance</button>
+
+									<ul class="edges-hindrances">
+										<li ng-repeat="hindrance in savageCharacter.installedHindrances">
+											<button ng-hide="hindrance.racial > 0" ng-click="removeHindranceByTag(hindrance.tag)" class="primary button tiny" translate="GENERAL_REMOVE">Remove</button>
+
+											<span class="racial" ng-show="hindrance.racial > 0" translate="CHARGEN_RACIAL_PARENTHETICAL">(racial)</span>
+
+											<span class="item-label">{{hindrance.select_option_name}}</span>
+											<input type="text" placeholder="{{hindranceSpecificationPlaceholder}}" ng-keyup="justSave()" ng-show="hindrance.specify > 0" ng-model="hindrance.specifyField" />
+										</li>
+									</ul>
+
+							</fieldset>
+						</div>
+						<div class="column small-12 medium-4">
+							<fieldset class="fieldset">
+								<legend translate="GENERAL_PERKS">Perks</legend>
+								<div ng-show="savageCharacter.availablePerkPoints > 0">
+									<span translate="CHARGEN_PERK_POINTS">Perk Points</span>: <span ng-bind="savageCharacter.availablePerkPoints">X</span>
+									<select ng-model="addPerkTag" ng-options="perk as perk.label disable when perk.cost > savageCharacter.availablePerkPoints for perk in savageCharacter.perkOptions track by perk.tag"></select>
+									<button class="button tiny primary expanded" ng-click="addPerk()" translate="CHARGEN_ADD_PERK">Add Perk</button>
+								</div>
+
+								<div ng-show="savageCharacter.availablePerkPoints == 0" translate="CHARGEN_NO_PERK_POINTS">
+								</div>
+
+								<ul class="edges-hindrances">
+									<li ng-repeat="perk in savageCharacter.selectedPerks track by $index ">
+										<button ng-click="removePerkByTag(perk.tag)" class="primary button tiny" translate="GENERAL_REMOVE">Remove</button>
+
+										<span class="item-label">{{perk.label}}</span>
+									</li>
+								</ul>
+
+							</fieldset>
+						</div>
+						<div class="column small-12 medium-4">
+							<fieldset class="fieldset">
+								<legend translate="GENERAL_EDGES">Edges</legend>
+									<div ng-show="savageCharacter.availableEdgePoints > 0">
+										<select ng-model="addEdgeTag" ng-options="edge as edge.select_option_name group by edge.bookObj.local_name disable when edge.selectable == false for edge in savageCharacter.availableEdges track by edge.tag"></select>
+										<button class="button tiny primary expanded" ng-click="addEdge()" translate="CHARGEN_ADD_EDGE">Add Edge</button>
+									</div>
+									<div class="no-edges-available" ng-show="savageCharacter.availableEdgePoints == 0" translate="CHARGEN_NO_EDGES_AVAILABLE"></div>
+
+									<ul class="edges-hindrances">
+										<li ng-repeat="edge in savageCharacter.installedEdges">
+											<button ng-hide="edge.racial > 0" ng-click="removeEdgeByTag(edge.tag)" class="primary button tiny" translate="GENERAL_REMOVE">Remove</button>
+
+											<span class="racial" ng-show="edge.racial > 0" translate="CHARGEN_RACIAL_PARENTHETICAL">(racial)</span>
+
+											<span class="item-label">{{edge.local_name}}</span>
+										</li>
+									</ul>
+
+							</fieldset>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+
+
+	<div class="bottom-status-padding">&nbsp;</div>
+</div>

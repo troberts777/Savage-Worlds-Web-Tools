@@ -1,0 +1,59 @@
+
+<div ng-include="'pages/chargen-dialog-new.html'"></div>
+<div ng-include="'pages/chargen-dialog-load.html'"></div>
+<div ng-include="'pages/chargen-dialog-save.html'"></div>
+<div ng-include="'pages/chargen-dialog-import.html'"></div>
+<div ng-include="'pages/chargen-dialog-export.html'"></div>
+<div ng-include="'pages/chargen-dialog-books.html'"></div>
+<div ng-include="'pages/chargen-dialog-validation.html'"></div>
+<div ng-include="'pages/dialog-confirm.html'"></div>
+<div ng-include="'pages/chargen-dialog-add-edit-power.html'"></div>
+
+
+<div ng-include="'pages/chargen-status-bar.html'"></div>
+<div class="main-content">
+	<div class="row">
+		<div class="column small-12">
+<!-- 			<h2 translate="INDEX_BUTTON_CORE_CHAR">Character Creator</h2> -->
+<!-- 			<div class="creator-preview" ng-bind-html="creator_preview"></div> -->
+		<div ng-include="'pages/chargen-nav-menu.html'"></div>
+		<fieldset class="fieldset">
+			<legend translate="CHARGEN_CHARACTER_INFORMATION">Character Information</legend>
+
+			<div class="row">
+
+			  	<div class="small-12 columns">
+			  		<label><span translate="GENERAL_NAME">Name</span>:
+			  			<input type="text" ng-model="savageCharacter.name" ng-keyup="justSave()" />
+			  		</label>
+			  	</div>
+			</div>
+			<div class="row">
+
+			  	<div class="small-12 medium-6 columns">
+
+
+			  		<label><span translate="GENERAL_RACE">Race</span>:
+			  			<select ng-options="raceItem as raceItem.local_name group by raceItem.bookObj.local_name for raceItem in savageCharacter.raceOptions track by raceItem.id" ng-model="savageCharacter.race" ng-change="validateAndSave()"></select>
+			  		</label>
+			  		<label><span translate="GENERAL_DESCRIPTION">Description</span>:
+			  			<textarea rows=4 ng-model="savageCharacter.description" ng-keyup="justSave()"></textarea>
+			  		</label>
+			  	</div>
+
+			  	<div class="small-12 medium-6 columns">
+			  		<label><span translate="GENERAL_GENDER">Gender</span>:
+			  			<select ng-options="genderItem as genderItem.label for genderItem in savageCharacter.genderOptions track by genderItem.id" ng-model="savageCharacter.gender" ng-change="justSave()"></select>
+			  		</label>
+
+			  		<label><span translate="GENERAL_BACKGROUND">Background</span>:
+			  			<textarea rows=4 ng-model="savageCharacter.background" ng-keyup="justSave()"></textarea>
+			  		</label>
+			  	</div>
+			</div>
+			</fieldset>
+		</div>
+	</div>
+
+	<div class="bottom-status-padding">&nbsp;</div>
+</div>

@@ -119,3 +119,30 @@ function get_local_skill_name( skill_id ) {
 	}
 	return skill_id;
 }
+
+function get_gear_general_by_id( class_id ) {
+	for( var ldcv = 0 ; ldcv < savageWorldsGearGeneral.length; ldcv++) {
+		if( savageWorldsGearGeneral[ldcv].id == class_id ) {
+			return savageWorldsGearGeneral[ldcv];
+		}
+	}
+	return null;
+}
+
+function get_gear_type_by_id( class_id ) {
+	for( var ldcv = 0 ; ldcv < savageWorldsGearTypes.length; ldcv++) {
+		if( savageWorldsGearTypes[ldcv].id == class_id ) {
+			return savageWorldsGearTypes[ldcv];
+		}
+	}
+	return null;
+}
+
+function get_gear_class_by_id( class_id ) {
+	for( var ldcv = 0 ; ldcv < savageWorldsGearClasses.length; ldcv++) {
+		if( savageWorldsGearClasses[ldcv].id == class_id ) {
+			return savageWorldsGearClasses[ldcv];
+		}
+	}
+	return null;
+}

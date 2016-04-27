@@ -1,20 +1,47 @@
+@import 'ubuntu-font';
 @import 'foundation6-5-cols';
 
-$fontColor: #fdfde3;
+$fontColor: #eee;
 $fontSize: 14px;
 $headerFooterBackground: #111;
 $subMenuBackground: #222;
 $bodyBackground: #333;
 
-$primaryBG: #7b5e25;
-$primaryBGHover: #86734a;
+$primaryBG: #999;
+$primaryBGHover: #ccc;
 $primaryTextColor: #fff;
 
-$secondaryBG: #c7c4b2;
-$secondaryBGHover: #d4d1c7;
+// Gross...
+// $primaryBG: #e27100;
+// $primaryBGHover: #f7a34f;
+// $primaryTextColor: #fff;
+
+$secondaryBG: #666;
+$secondaryBGHover: #777;
+$secondaryTextColor: #fff;
+
+// Gross...
+// $secondaryBG: #cccb85;
+// $secondaryBGHover: #e4e39d;
+// $secondaryTextColor: #000;
+
+$lightBG: #ededed;
+
+$fontColor: #fdfde3;
+$headerFooterBackground: #111;
+$bodyBackground: #333;
+
+$primaryBG: #dfab2d;
+$primaryBGHover: #b48a25;
+$primaryTextColor: #fff;
+
+$darkenedBG: rgba( 0, 0, 0, .25);
+$darkenedGreenBG: rgba( 0, 33, 0, .25);
+
+$secondaryBG: #fdfde3;
+$secondaryBGHover: #e4e4ce;
 $secondaryTextColor: #333;
 
-$lightBG: #efefef;
 
 body {
 	background: $bodyBackground;
@@ -31,9 +58,27 @@ body {
 			color: $primaryBGHover;
 		}
 	}
+	h1 {
+		font-size: 2rem;
+	}
+	h2 {
+		font-size: 1.7rem;
+	}
+	h3 {
+		font-size: 1.5rem;
+	}
+	h4 {
+		font-size: 1.2rem;
+	}
+	h5 {
+		font-size: 1.1rem;
+	}
+	h6 {
+		font-size: 1rem;
+	}
 	table {
-		background: $secondaryBG;
-		color: $secondaryTextColor;
+		background: $headerFooterBackground;
+		color: $primaryTextColor;
 		width: 100%;
 
 		border: none;
@@ -50,9 +95,10 @@ body {
 		tr {
 			td, th {
 				margin: 0;
-				padding: 1px 3px;
-				background: $secondaryBG;
-				color: $secondaryTextColor;
+				padding: 2px 3px;
+				background: $bodyBackground;
+				border-bottom: 1px solid $headerFooterBackground;
+				color: $primaryTextColor;
 				text-align: left;
 			}
 			th {
@@ -76,18 +122,92 @@ body {
 				margin: 0;
 				padding: 0;
 				tr {
-					border: 1px solid #000;
-					background: $secondaryBG;
-					color: $secondaryTextColor;
-					margin: 0 0 3px 0;
+					padding: .25rem;
+					border: 1px solid $primaryBG;
+					background: $bodyBackground;
+					color: $fontColor;
 				}
 			}
 
 		}
+		&.gear-list {
+			background: transparent;
+			tbody {
+				margin: 0;
+				padding: 0;
+				tr {
+					border-bottom: 3px solid $bodyBackground;
+					background: $headerFooterBackground;
+					color: #fff;
+					margin: 0 0 3px 0;
+					td {
+						background: transparent !important;
+						color: #fff;
+						.equip-message {
+							font-style: italic;
+							color: $fontColor;
+						}
+					}
+
+					&.no-bottom-border {
+						border-bottom: 0 !important;
+					}
+				}
+			}
+		}
 	}
+
 	.main-content {
 		margin: 1rem 0;
 	}
+	.attribute-select {
+		h4 {
+			display: inline-block;
+			width: 50%;
+		}
+		select {
+			display: inline-block;
+			width: 40%;
+			text-align: center;
+			margin: 0 0 5px 5px;
+
+		}
+	}
+
+	.sub-nav-tab {
+		border-bottom: 2px solid $primaryBG;
+		margin: 0 0 2px 0;
+		list-style: none;
+		display: block;
+		overflow: hidden;
+		li {
+			list-style: none;
+			float: left;
+			margin: 0;
+			padding: 0;
+			a {
+				display: inline-block;
+				padding: .25rem 1rem;
+				margin: 0;
+				color: $primaryTextColor;
+				border-top-right-radius: 5px;
+				border-top-left-radius: 5px;
+
+			}
+			&.active {
+				a {
+					background-color: $primaryBG;
+					color: $primaryTextColor;
+				}
+			}
+		}
+	}
+
+
+	.trait-fieldset {
+		min-height: 275px;
+	}
+
 
 	.status-bar {
 		position: fixed;
@@ -98,6 +218,10 @@ body {
 		color: #fff;
 		width: 100%;
 		padding: 2px 0;
+		.separator {
+			color: $primaryBG;
+			font-weight: bold;
+		}
 	}
 
 	.button {
@@ -162,10 +286,11 @@ body {
 
 	header {
 		background: $headerFooterBackground;
-		padding: 0 1rem .5rem 1rem;
 		color: $fontColor;
-
+		font-size: 2rem;
 		margin: 0;
+		padding: 1rem 0 0 0;
+		overflow: hidden;
 		h1 {
 			a {
 				color: $fontColor;
@@ -182,11 +307,16 @@ body {
 			padding: 0;
 			margin: 0;
 		}
-	}
-	.sub-menu {
-		background: $headerFooterBackground;
-    	padding-bottom: 2px;
-		border-bottom: 2px solid $primaryBG;
+		.sub-menu {
+			float: right;
+			text-align: right;
+		}
+		.app-menu {
+			float: left;
+			text-align: left;
+			margin-right: .5rem;
+			padding-top: .25rem;
+		}
 	}
 
 	footer {
@@ -202,16 +332,40 @@ body {
 		color: $fontColor;
 		padding: 0 1.25rem 1.25rem 1.25rem;
 		margin: 0 0 1.25rem 0;
+		border-radius: 5px;
+		border-color: $primaryBG;
 		legend {
 			background: $bodyBackground;
-			color: $fontColor;
+			color: $primaryBG;
 			padding: 0 .5rem;
 			font-size: 1.4rem;
 			font-weight: 500;
 			white-space: nowrap;
 		}
+		&.regular-padding {
+			padding: 1.25rem;
+		}
 
 	}
+
+/*
+	.fieldset {
+		color: $fontColor;
+		border-color: $primaryBG;
+		legend {
+			background: $bodyBackground;
+			color: $primaryBG;
+			padding: 0 1rem;
+			font-size: 1.1rem;
+			font-weight: 500;
+		}
+
+	}
+	strong {
+		color: $primaryBG;
+	}
+*/
+
 	.small-text {
 		font-size: .7em;
 	}
@@ -229,6 +383,11 @@ body {
 				}
 			}
 		}
+	}
+	.checkbox-spacer {
+		display: inline-block;
+		width: 20px;
+		margin: 0 0 10px 0;
 	}
 	.mech-status-bar {
 		text-align: right;
@@ -257,13 +416,61 @@ body {
 			margin: 0 !important;
 		}
 	}
+	.no-edges-available {
+		margin-bottom: 10px;
+	}
+	.edges-hindrances {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		li {
+			background: $subMenuBackground;
+			overflow: hidden;
+			list-style: none;
+			border-radius: 3px;
+			margin: 0 0 2px 0;
+			padding: 0;
+			.item-label {
+				margin: 3px 0 0 5px;
+				display: block;
+			}
+			.racial {
+				float: right;
+				margin: 3px 5px 0 0;
+			}
+			button {
+				float: right;
+				margin: 0;
+				outline: none;
+				&.edit-button {
+					float: left;
+					margin-right: 3px;
+				}
+			}
+		}
+	}
+}
+
+.xp-label {
+	margin: 0 0 10px 0;
+	select {
+		display: inline-block;
+		width: auto;
+		margin: 0 10px 0 0;
+	}
+	h4 {
+		display: inline-block;
+		width: auto;
+		margin: 0 10px 0 0;
+		padding: 0;
+	}
 }
 
 .skill-entry {
 	overflow: hidden;
 	margin: 0 0 2px 0;
 	border-radius: 3px;
-	background: #222;
+	background: $subMenuBackground;
 	span {
 		padding: 3px 5px;
 		display: inline-block;
@@ -346,15 +553,18 @@ button.round, .button.round {
 	background: rgba(0,0,0,.7);
 	z-index: 1000;
 	.reveal {
-		color: $bodyBackground;
-		background: $lightBG;
-		width: 500px;
+		color: $fontColor;
+		background: $headerFooterBackground;
+		border: 2px solid $primaryBG;
+		border-radius: 1rem;
+		width: 80%;
+		// max-width: 100%;
 		display: block;
 		top: 10px;
 		left: 50%;
-		margin-left: -250px;
+		margin-left: -40%;
 		label {
-			color: $bodyBackground;
+			color: $fontColor;
 		}
 	}
 }
@@ -370,6 +580,7 @@ button.round, .button.round {
 	border: solid 1px #999;
 	background: #666;
 	color: $lightBG;
+	width: auto;
 	padding: 0 25px 0 50px;
 	background-repeat: no-repeat;
 	background-position: center left;
