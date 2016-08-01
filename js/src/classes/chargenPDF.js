@@ -401,7 +401,8 @@ chargenPDF.prototype.createWeaponTable = function( label, cols, left, top, numli
 	this.currentDoc.text(cols[6], top + 10, "Shots");
 	this.currentDoc.setFontStyle("normal");
 
-	currentWeapons = this.currentCharacter.selectedWeapons;
+	currentWeapons = this.currentCharacter.selectedHandWeapons;
+	currentWeapons = currentWeapons.concat(this.currentCharacter.selectedRangedWeapons);
 	for(w_counter = 0; w_counter < numlines; w_counter++) {
 
 		if(currentWeapons[w_counter]) {
