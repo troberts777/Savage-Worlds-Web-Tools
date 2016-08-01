@@ -16,8 +16,6 @@ var savageWorldsBooksList = Array();
 savageWorldsBooksList[0] = {
 	id: 1,
 	core: true,
-	usesGutsSkill: false,
-
 	name: {
 		"en-US": "Savage Worlds Deluxe",
 		"de-DE": "German Savage Worlds",
@@ -25,6 +23,8 @@ savageWorldsBooksList[0] = {
 	},
 	short_name: "peg_swd_ee",
 	abbrev: "SWD:EE",
+	imagename: "savage-worlds-deluxe.jpg",
+	char_creator: 1,
 	publisher: {
 		"en-US": "Pinnacle Entertainment Group",
 		"de-DE": "Pinnacle Entertainment Group",
@@ -32,7 +32,6 @@ savageWorldsBooksList[0] = {
 
 	},
 	year: "2011",
-	uses_sanity: 0,
 	copyright: {
 		"en-US": "2011 Pinnacle Entertainment Group",
 		"de-DE": "2011 Pinnacle Entertainment Group",
@@ -45,8 +44,6 @@ savageWorldsBooksList[0] = {
 savageWorldsBooksList[1] = {
 	id: 2,
 	core: false,
-	usesGutsSkill: false,
-
 	name: {
 		"en-US": "Fantasy Companion",
 		"pt-BR": "Brazilian Fantasy",
@@ -54,6 +51,8 @@ savageWorldsBooksList[1] = {
 	},
 	short_name: "peg_swfc",
 	abbrev: "FC",
+	imagename: "fantasy-companion.jpg",
+	char_creator: 1,
 	publisher: {
 		"en-US": "Pinnacle Entertainment Group",
 		"pt-BR": "Pinnacle Entertainment Group",
@@ -61,7 +60,6 @@ savageWorldsBooksList[1] = {
 
 	},
 	year: "2012",
-	uses_sanity: 0,
 	copyright: {
 		"en-US": "2012 Pinnacle Entertainment Group",
 		"pt-BR": "",
@@ -74,19 +72,18 @@ savageWorldsBooksList[1] = {
 savageWorldsBooksList[2] = {
 	id: 3,
 	core: false,
-	usesGutsSkill: false,
-
 	name: {
 		"en-US": "Horror Companion",
 	},
 	short_name: "peg_swhc",
 	abbrev: "HC",
+	imagename: "horror-companion.jpg",
+	char_creator: 1,
 	publisher: {
 		"en-US": "Pinnacle Entertainment Group",
 
 	},
 	year: "2012",
-	uses_sanity: 1,
 	copyright: {
 		"en-US": "2012 Pinnacle Entertainment Group",
 
@@ -97,19 +94,18 @@ savageWorldsBooksList[2] = {
 savageWorldsBooksList[3] = {
 	id: 4,
 	core: false,
-	usesGutsSkill: false,
-
 	name: {
 		"en-US": "Science Fiction Companion",
 	},
 	short_name: "peg_sfc",
 	abbrev: "SFC",
+	imagename: "science-fiction-companion.jpg",
+	char_creator: 1,
 	publisher: {
 		"en-US": "Pinnacle Entertainment Group",
 
 	},
 	year: "2014",
-	uses_sanity: 0,
 	copyright: {
 		"en-US": "2014 Pinnacle Entertainment Group",
 
@@ -120,19 +116,18 @@ savageWorldsBooksList[3] = {
 savageWorldsBooksList[4] = {
 	id: 5,
 	core: false,
-	usesGutsSkill: false,
-
 	name: {
 		"en-US": "Super Powers Companion",
 	},
 	short_name: "peg_spc2",
 	abbrev: "SPC",
+	imagename: "super-powers-companion.jpg",
+	char_creator: 1,
 	publisher: {
 		"en-US": "Pinnacle Entertainment Group",
 
 	},
 	year: "2014",
-	uses_sanity: 0,
 	copyright: {
 		"en-US": "2014 Pinnacle Entertainment Group",
 
@@ -143,19 +138,18 @@ savageWorldsBooksList[4] = {
 savageWorldsBooksList[5] = {
 	id: 6,
 	core: false,
-	usesGutsSkill: false,
-
 	name: {
 		"en-US": "Savage Free Bestiary",
 	},
 	short_name: "sfb",
 	abbrev: "SFB",
+	imagename: "",
+	char_creator: 0,
 	publisher: {
 		"en-US": "(Unknown) Pinnacle Enterainment Group, Butch Curry, Andrea “Lord Lance” Parducci and probably others",
 
 	},
 	year: "",
-	uses_sanity: 0,
 	copyright: {
 		"en-US": "Butch Curry, Open?",
 
@@ -166,19 +160,18 @@ savageWorldsBooksList[5] = {
 savageWorldsBooksList[6] = {
 	id: 7,
 	core: false,
-	usesGutsSkill: false,
-
 	name: {
 		"en-US": "Lankhmar",
 	},
 	short_name: "peg_lank",
 	abbrev: "LANK",
+	imagename: "",
+	char_creator: 0,
 	publisher: {
 		"en-US": "Pinnacle Enterainment Group",
 
 	},
 	year: "2015",
-	uses_sanity: 0,
 	copyright: {
 		"en-US": "2015 Pinnacle Entertainment Group, Trademarks of the Estate of Fritz Leiber.",
 
@@ -189,19 +182,18 @@ savageWorldsBooksList[6] = {
 savageWorldsBooksList[7] = {
 	id: 8,
 	core: false,
-	usesGutsSkill: false,
-
 	name: {
 		"en-US": "The Last Parsec",
 	},
 	short_name: "peg_tlp",
 	abbrev: "TLP",
+	imagename: "",
+	char_creator: 0,
 	publisher: {
 		"en-US": "Pinnacle Enterainment Group",
 
 	},
 	year: "2015",
-	uses_sanity: 0,
 	copyright: {
 		"en-US": "2015 Pinnacle Enterainment Group",
 
@@ -212,21 +204,42 @@ savageWorldsBooksList[7] = {
 savageWorldsBooksList[8] = {
 	id: 13,
 	core: false,
-	usesGutsSkill: false,
-
 	name: {
 		"en-US": "Thrilling Tales (2nd Edition)",
 	},
 	short_name: "ad_tt",
 	abbrev: "TALES",
+	imagename: "",
+	char_creator: 0,
 	publisher: {
 		"en-US": "Adamant Entertainment",
 
 	},
 	year: "",
-	uses_sanity: 0,
 	copyright: {
 		"en-US": "Adamant Entertainment",
+
+	},
+	buyme: ""
+}
+
+savageWorldsBooksList[9] = {
+	id: 14,
+	core: false,
+	name: {
+		"en-US": "RiftsÂ® The Tomorrow Legion Player's Guide",
+	},
+	short_name: "rifts-tomorrow-legion",
+	abbrev: "RiftsÂ® Th",
+	imagename: "rifts-tomorrow-legion-players-handbook.jpg",
+	char_creator: 0,
+	publisher: {
+		"en-US": "Pinnacle Entertainment Group",
+
+	},
+	year: "2016",
+	copyright: {
+		"en-US": "Palladium Books and Pinnacle Entertainment Group",
 
 	},
 	buyme: ""

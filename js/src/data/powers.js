@@ -25,11 +25,6 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Armor creates a field of magical protection around a character or an actual shell of some sort, effectively giving the target Armor. Success grants the recipient 2 points of Armor. A raise grants 4 points of Armor.\nWhether the armor is visible or not depends largely on the trapping.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p125',
@@ -48,11 +43,6 @@ var savageWorldsPowers = Array(
 	},
 	 duration: {
 		 'en-US': 'Instant',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Whether ghosts, elementals, or demons, banish removes them all. This power can affect any creature that is not native to the current plane of existence (GM\'s determination).\nThis spell is an opposed roll of the caster\'s arcane skill versus the target\'s Spirit. On a success, the target is Shaken. On a raise, it is sent to its proper plane of existence.\nIf the target is a Wild Card, each casting of banish causes a wound instead. If the target already has three wounds, it is then banished to its native plane‚Ä"but it is not slain.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -77,11 +67,6 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Barrier creates a solid, immobile wall to protect the user against attack or to entrap an opponent. Regardless of what the barrier is made of (ice, thorns, stone, energy, etc.), it has a Toughness of 10. Every Power Point spent creates a 1‚Äù wide section of wall. The barrier ranges in thickness from a few ‚Äúreal world‚Äù inches for stone or other hard materials up to a foot for things like bones or ice. (If you\'re using a gridded mat to play, draw the barrier between the squares directly along the grid-lines.) The exact placement of each section is de ned by the caster, but each section must be connected to at least one other section after the first.\nWhen the spell expires or a section is broken, it crumbles to dust or dissipates. Trappings are never left behind.\nEach section of the barrier may be destroyed by an attack that equals its Toughness of 10. Physical walls are treated exactly like inanimate objects; they are considered to have a Parry of 2 (ranged attacks work as normal), but raises on the attack roll do not grant bonus damage nor do damage dice Ace. Opponents may climb the barrier at ‚Ä"2 to their Climbing roll if it is made of something solid. Fiery versions of the barrier cause 2d4 damage to anyone who wishes to leap through instead.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'rank': 1,
 		 'book': 1,
 		 'page': 'p125',
@@ -100,11 +85,6 @@ var savageWorldsPowers = Array(
 	},
 	 duration: {
 		 'en-US': '10 minutes',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'This spell allows mages to speak with and guide the actions of nature\'s beasts. It works only on creatures with animal intelligence, not humanoids. Nor does it work on conjured, magical, or otherwise ‚Äúunnatural‚Äù animals.\nThe target must be within the sorcerer\'s range ‚Ä" it is not conjured.\nThe cost to control a creature depends on its Size. The base cost is 3, plus twice its Size for creatures with a Size greater than 0. A great white shark (Size +4) costs 3 plus 8 (2x4), or 11 points. A roc (Size +8) costs 19 Power Points to control.\nSwarms may also be controlled. Small swarms cost 3, Mediums 5, and Large 8. Thus a single rat costs 3 to control, as does a small swarm of the creatures.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -132,11 +112,6 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Blast is an area effect power that can put down many opponents at once. The caster first picks where he wants to center the blast, then makes the appropriate skill roll. Normal ranged attack modifiers apply.\nThe area of effect is a Medium Burst Template. If the roll is failed, the blast deviates as a launched projectile.\nTargets within the blast suffer 2d6 damage. Blast counts as a Heavy Weapon.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'rank': 1,
 		 'book': 1,
 		 'page': 'p126',
@@ -158,11 +133,6 @@ var savageWorldsPowers = Array(
 	},
 	 duration: {
 		 'en-US': 'Instant',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'This power temporarily blinds a target or targets. Those affected must make an Agility roll at ‚Ä"2 to avert their gaze and avoid the effect (at ‚Ä"4 if the caster got a raise on the attack roll). On a failure, victims are Shaken and ‚Ä"2 to Parry until their next action. If the target rolls a 1 on his Agility die (regardless of the Wild Die), he\'s Shaken and fully blind until he recovers from being Shaken. Blinded victims suffer a ‚Ä"6 penalty to all Trait rolls that require vision and have their Parry reduced to 2.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -190,11 +160,6 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Bolt is a standard attack power of wizards, and can also be used for ray guns, bursts of energy, streaks of holy light, and other ranged attacks. The damage of the bolt is 2d6.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p126',
@@ -216,11 +181,6 @@ var savageWorldsPowers = Array(
 	},
 	 duration: {
 		 'en-US': '3 (1/round)',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'This power allows a character to increase any of a target\'s Traits by one die type for a standard success, or by two with a raise. The affected Trait can exceed d12. Each step over d12 adds +1 to his Trait total. For example, a raise on someone who already has a d12 in the affected Trait grants him d12+2 for the duration of the power.\nThe power can also be used to lower an opponent\'s Trait. This is an opposed roll against the victim\'s Spirit. Success lowers any Trait of the caster\'s choice one step, a raise lowers it two steps. A Trait cannot be lowered below a d4. Multiple castings stack, though the caster must keep track of when each casting expires as usual.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -248,11 +208,6 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Burrow allows a mage standing on raw earth to meld into it. He can remain underground if he wants in a sort of ‚Äúlimbo‚Äù or burrow to anywhere with a Pace equal to the power\'s Range. A mage with a Smarts of d8 could therefore move up to 16‚Äù (32 yards) on the first round, then maintain the spell and stay submerged for the second and move another 16‚Äù.\nA burrowing earth mage can attempt to surprise a foe (even one who saw him burrow) by making an opposed Stealth versus Notice roll. If the mage wins, he gains +2 to attack and damage that round, or +4 with a raise. Targets on Hold may attempt to interrupt the attack as usual.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p127',
@@ -260,6 +215,1134 @@ var savageWorldsPowers = Array(
 		 'cost_per_round': '2',
 		 'range': 'Smarts x 2',
 		 'tag': 'burrow'
+},
+{
+	 name: {
+		 'en-US': 'Burst',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p127',
+		 'cost': '2',
+		 'cost_per_round': '0',
+		 'range': 'Cone Template',
+		 'tag': 'burst'
+},
+{
+	 name: {
+		 'en-US': 'Confusion',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': 'Additional Targets: The character may affect up to five targets by spending a like amount of additional Power Points.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p128',
+		 'cost': '1',
+		 'cost_per_round': '0',
+		 'range': 'Smarts x 2',
+		 'tag': 'confusion'
+},
+{
+	 name: {
+		 'en-US': 'Damage Field',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (2/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': 'p128',
+		 'cost': '4',
+		 'cost_per_round': '2',
+		 'range': 'Touch',
+		 'tag': 'damage-field'
+},
+{
+	 name: {
+		 'en-US': 'Darksight',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': 'AdditionalTargets: The character may affect up to  five targets by spending a like amount of additional Power Points.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '1 hour (1/hour)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p128',
+		 'cost': '1',
+		 'cost_per_round': '1',
+		 'range': 'Touch',
+		 'tag': 'darksight'
+},
+{
+	 name: {
+		 'en-US': 'Deflection',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p128',
+		 'cost': '3',
+		 'cost_per_round': '1',
+		 'range': 'Touch',
+		 'tag': 'delfection'
+},
+{
+	 name: {
+		 'en-US': 'Detect/Conceal Arcana',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p128',
+		 'cost': '3',
+		 'cost_per_round': '1',
+		 'range': 'Sight',
+		 'tag': 'detect-conceal-arcana'
+},
+{
+	 name: {
+		 'en-US': 'Disguise',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '',
+		 'pt-BR': '10 minutes (1/10 minutes)',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': 'p129',
+		 'cost': '3-5',
+		 'cost_per_round': '1',
+		 'range': 'Touch',
+		 'tag': 'disguise'
+},
+{
+	 name: {
+		 'en-US': 'Dispel',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': 'p129',
+		 'cost': '3',
+		 'cost_per_round': '0',
+		 'range': 'Smarts',
+		 'tag': 'dispel'
+},
+{
+	 name: {
+		 'en-US': 'Divination',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '1 minute',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 3,
+		 'book': 1,
+		 'page': 'p129',
+		 'cost': '5',
+		 'cost_per_round': '0',
+		 'range': 'Self',
+		 'tag': 'divination'
+},
+{
+	 name: {
+		 'en-US': 'Drain Power Points',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 3,
+		 'book': 1,
+		 'page': 'p130',
+		 'cost': '3',
+		 'cost_per_round': '0',
+		 'range': 'Smarts',
+		 'tag': 'drain-power-points'
+},
+{
+	 name: {
+		 'en-US': 'Elemental Manipulation',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p130',
+		 'cost': '3',
+		 'cost_per_round': '1',
+		 'range': 'Smarts x 2',
+		 'tag': 'elemental-manipulation'
+},
+{
+	 name: {
+		 'en-US': 'Entangle',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Special',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p130',
+		 'cost': '2-4',
+		 'cost_per_round': '0',
+		 'range': 'Smarts',
+		 'tag': 'entangle'
+},
+{
+	 name: {
+		 'en-US': 'Environmental Protection',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': 'Additional Targets: The character may affect up to  ve targets by spending a like amount of additional Power Points.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '1 hour (1/hour)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p130',
+		 'cost': '2',
+		 'cost_per_round': '1',
+		 'range': 'Touch',
+		 'tag': 'environmental-protection'
+},
+{
+	 name: {
+		 'en-US': 'Farsight',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': 'p131',
+		 'cost': '3',
+		 'cost_per_round': '1',
+		 'range': 'Touch',
+		 'tag': 'farsight'
+},
+{
+	 name: {
+		 'en-US': 'Fear',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p131',
+		 'cost': '2',
+		 'cost_per_round': '0',
+		 'range': 'Smarts x 2',
+		 'tag': 'fear'
+},
+{
+	 name: {
+		 'en-US': 'Fly',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': 'Additional Targets: The character may affect up to  ve targets by spending a like amount of additional Power Points.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 2,
+		 'book': 1,
+		 'page': 'p131',
+		 'cost': '3',
+		 'cost_per_round': '1',
+		 'range': 'Touch',
+		 'tag': 'fly'
+},
+{
+	 name: {
+		 'en-US': 'Greater Healing',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 2,
+		 'book': 1,
+		 'page': 'p131',
+		 'cost': '10/20',
+		 'cost_per_round': '0',
+		 'range': 'Touch',
+		 'tag': 'greater-healing'
+},
+{
+	 name: {
+		 'en-US': 'Growth/Shrink',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (2/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': 'p132',
+		 'cost': '2+',
+		 'cost_per_round': '2',
+		 'range': 'Smarts',
+		 'tag': 'growth-shrink'
+},
+{
+	 name: {
+		 'en-US': 'Havoc',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': 'Additional Effects: For double the Power Points, havoc affects a Large Burst Template.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': 'p132',
+		 'cost': '2-4',
+		 'cost_per_round': '0',
+		 'range': 'Smarts x 2',
+		 'tag': 'havoc'
+},
+{
+	 name: {
+		 'en-US': 'Healing',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p133',
+		 'cost': '3',
+		 'cost_per_round': '0',
+		 'range': 'Touch',
+		 'tag': 'healing'
+},
+{
+	 name: {
+		 'en-US': 'Intangibility',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (2/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 3,
+		 'book': 1,
+		 'page': 'p133',
+		 'cost': '5',
+		 'cost_per_round': '2',
+		 'range': 'Touch',
+		 'tag': 'intangibility'
+},
+{
+	 name: {
+		 'en-US': 'Invisibility',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': 'AdditionalTargets:Thecharactermayaffect up to  ve targets by spending a like amount of additional Power Points.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': 'p133',
+		 'cost': '5',
+		 'cost_per_round': '1',
+		 'range': 'Self',
+		 'tag': 'invisibility'
+},
+{
+	 name: {
+		 'en-US': 'Light/Obscure',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '30 minutes (1/10 minutes) or 3 (1/ round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p133',
+		 'cost': '2',
+		 'cost_per_round': '1',
+		 'range': 'Smarts',
+		 'tag': 'light-obscure'
+},
+{
+	 name: {
+		 'en-US': 'Mind Reading',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '1',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p133',
+		 'cost': '3',
+		 'cost_per_round': '0',
+		 'range': 'Smarts',
+		 'tag': 'mind-reading'
+},
+{
+	 name: {
+		 'en-US': 'Pummel',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': 'p134',
+		 'cost': '2',
+		 'cost_per_round': '0',
+		 'range': 'Cone Template',
+		 'tag': 'pummel'
+},
+{
+	 name: {
+		 'en-US': 'Puppet',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 2,
+		 'book': 1,
+		 'page': 'p134',
+		 'cost': '3',
+		 'cost_per_round': '1',
+		 'range': 'Smarts',
+		 'tag': 'puppet'
+},
+{
+	 name: {
+		 'en-US': 'Quickness',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (2/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': 'p134',
+		 'cost': '4',
+		 'cost_per_round': '2',
+		 'range': 'Touch',
+		 'tag': 'quickness'
+},
+{
+	 name: {
+		 'en-US': 'Shape Change',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '1 minute (1/minute)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p134',
+		 'cost': '3+',
+		 'cost_per_round': '1',
+		 'range': 'Self',
+		 'tag': 'shape-change'
+},
+{
+	 name: {
+		 'en-US': 'Slow',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': 'AdditionalTargets:Thecharactermayaffect up to  ve targets by spending a like amount of additional Power Points.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (2/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': 'p135',
+		 'cost': '1',
+		 'cost_per_round': '2',
+		 'range': 'Smarts x 2',
+		 'tag': 'slow'
+},
+{
+	 name: {
+		 'en-US': 'Slumber',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '1 minute (1/minute)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': 'p135',
+		 'cost': '2',
+		 'cost_per_round': '1',
+		 'range': 'Smarts x 2',
+		 'tag': 'slumber'
+},
+{
+	 name: {
+		 'en-US': 'Smite',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': 'Additional Targets: The character may affect up to  ve targets by spending a like amount of additional Power Points.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p135',
+		 'cost': '2',
+		 'cost_per_round': '1',
+		 'range': 'Touch',
+		 'tag': 'smite'
+},
+{
+	 name: {
+		 'en-US': 'Speak Language',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': 'This power allows a character to speak, read, and write a language other than his own. The language must be of an advanced form ‚Ä" not animalistic. A raise on the arcane skill roll allows the user to project a particular dialect as well.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '10 minutes',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': '136',
+		 'cost': '1',
+		 'cost_per_round': '1',
+		 'range': 'Touch',
+		 'tag': 'speak-language'
+},
+{
+	 name: {
+		 'en-US': 'Stun',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Special',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': '136',
+		 'cost': '2',
+		 'cost_per_round': '0',
+		 'range': '12/24/48',
+		 'tag': 'stun'
+},
+{
+	 name: {
+		 'en-US': 'Succor',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': '136',
+		 'cost': '1',
+		 'cost_per_round': '0',
+		 'range': 'Touch',
+		 'tag': 'succor'
+},
+{
+	 name: {
+		 'en-US': 'Summon Ally',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': '137',
+		 'cost': '3+',
+		 'cost_per_round': '0',
+		 'range': 'Smarts',
+		 'tag': 'summon-ally'
+},
+{
+	 name: {
+		 'en-US': 'Teleport',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': 'Carrying Others: The hero can carry other beings with him at the cost of a level of Fatigue per additional ‚Äúrider.‚Äù More than two may be carried at once, but causes instant Incapacitation. One Fatigue level is regained for each full hour of rest.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': '137',
+		 'cost': '3+',
+		 'cost_per_round': '0',
+		 'range': 'Special',
+		 'tag': 'teleport'
+},
+{
+	 name: {
+		 'en-US': 'Wall Walker',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': 'Additional Targets: The character may affect up to  ve targets by spending a like amount of additional Power Points.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p138',
+		 'cost': '2',
+		 'cost_per_round': '1',
+		 'range': 'Touch',
+		 'tag': 'wall-walker'
+},
+{
+	 name: {
+		 'en-US': 'Warrior\'s Gift',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': '139',
+		 'cost': '4',
+		 'cost_per_round': '1',
+		 'range': 'Touch',
+		 'tag': 'warriors-gift'
+},
+{
+	 name: {
+		 'en-US': 'Zombie',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Special',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 2,
+		 'book': 1,
+		 'page': 'p140',
+		 'cost': '3/corpse',
+		 'cost_per_round': '0',
+		 'range': 'Smarts',
+		 'tag': 'zombie'
+},
+{
+	 name: {
+		 'en-US': 'Analyze Foe',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 2,
+		 'page': 'p28',
+		 'cost': '1-2',
+		 'cost_per_round': '1',
+		 'range': 'Smarts x 2',
+		 'tag': 'analyze-foe'
+},
+{
+	 name: {
+		 'en-US': 'Bless/Curse',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (2/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 2,
+		 'page': 'p30',
+		 'cost': '4-6',
+		 'cost_per_round': '2',
+		 'range': 'Smarts x 2',
+		 'tag': 'bless-curse'
+},
+{
+	 name: {
+		 'en-US': 'Concentrate',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (2/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 2,
+		 'page': 'p32',
+		 'cost': '4',
+		 'cost_per_round': '2',
+		 'range': 'Self',
+		 'tag': 'concentrate'
+},
+{
+	 name: {
+		 'en-US': 'Draining Touch',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 2,
+		 'page': 'p35',
+		 'cost': '3',
+		 'cost_per_round': '1',
+		 'range': 'Self',
+		 'tag': 'draining-touch'
+},
+{
+	 name: {
+		 'en-US': 'Jet',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 2,
+		 'page': 'p39',
+		 'cost': '2',
+		 'cost_per_round': '0',
+		 'range': '12"',
+		 'tag': 'jet'
+},
+{
+	 name: {
+		 'en-US': 'Legerdemain',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 2,
+		 'page': 'p39',
+		 'cost': '1',
+		 'cost_per_round': '0',
+		 'range': 'Smarts',
+		 'tag': 'legerdemain'
+},
+{
+	 name: {
+		 'en-US': 'Speed',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 2,
+		 'page': 'p42',
+		 'cost': '3',
+		 'cost_per_round': '1',
+		 'range': 'Touch',
+		 'tag': 'speed'
+},
+{
+	 name: {
+		 'en-US': 'Telekinesis',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 2,
+		 'page': 'p44',
+		 'cost': '3',
+		 'cost_per_round': '1',
+		 'range': 'Smarts',
+		 'tag': 'telekinesis'
 }
 );
 

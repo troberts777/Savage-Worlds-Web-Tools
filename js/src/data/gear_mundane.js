@@ -38,6 +38,30 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Alchemists\' trunk',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'alchemists-trunk',
+		 'book': 2,
+		 'page': 'p9',
+		 'class': 0,
+		 'general': 6,
+		 'type': 15,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 15,
+		 'cost': 1000
+},
+{
+	 name: {
 		 'en-US': 'Arrow (man-killer)',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -131,6 +155,30 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 2,
 		 'cost': 50
+},
+{
+	 name: {
+		 'en-US': 'Battery',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'battery',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 1,
+		 'cost': 10
 },
 {
 	 name: {
@@ -446,6 +494,78 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Crossbow, mini-quarrels',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'crossbow-miniquarrels',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 5,
+		 'type': 0,
+		 'is_ammo': 1,
+		 'is_container': 0,
+		 'weight_per': 10,
+		 'cost_per': 10,
+		 'weight': 1,
+		 'cost': 1
+},
+{
+	 name: {
+		 'en-US': 'Crossbow, Repeating',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP2; holds 36 quarrels',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'crossbow-repeating',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 5,
+		 'type': 0,
+		 'is_ammo': 1,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 6,
+		 'cost': 75
+},
+{
+	 name: {
+		 'en-US': 'Crossbow, Winch',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 2',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'crossbow-winch',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 5,
+		 'type': 0,
+		 'is_ammo': 1,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 1,
+		 'cost': 10
+},
+{
+	 name: {
 		 'en-US': 'Crowbar',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -467,6 +587,30 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 2,
 		 'cost': 10
+},
+{
+	 name: {
+		 'en-US': 'Crucifix/religious symbol',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'crucifixreligious-symbol',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 5,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 0,
+		 'cost': 20
 },
 {
 	 name: {
@@ -542,6 +686,30 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Film, 24 exposure',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Kirlian camera',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'film-24-exposure',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 0,
+		 'cost': 10
+},
+{
+	 name: {
 		 'en-US': 'Flashlight',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -590,6 +758,30 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Flask (metal)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'flask-metal',
+		 'book': 2,
+		 'page': 'p9',
+		 'class': 0,
+		 'general': 6,
+		 'type': 15,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 1,
+		 'cost': 10
+},
+{
+	 name: {
 		 'en-US': 'Flint and Steel',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -634,6 +826,54 @@ var savageWorldsGearMundane = Array(
 		 'weight_per': 0,
 		 'cost_per': 0,
 		 'weight': 0,
+		 'cost': 200
+},
+{
+	 name: {
+		 'en-US': 'Formal clothing',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'formal-clothing',
+		 'book': 2,
+		 'page': 'p9',
+		 'class': 0,
+		 'general': 6,
+		 'type': 16,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 0,
+		 'cost': 60
+},
+{
+	 name: {
+		 'en-US': 'Ghost trap',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'ghost-trap',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 5,
 		 'cost': 200
 },
 {
@@ -806,6 +1046,78 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Kirlian camera, still',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'kirlian-camera-still',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 3,
+		 'cost': 260
+},
+{
+	 name: {
+		 'en-US': 'Kirlian camera, video',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'kirlian-camera-video',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 6,
+		 'cost': 600
+},
+{
+	 name: {
+		 'en-US': 'Kirlian goggles',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'kirlian-goggles',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 2,
+		 'cost': 1400
+},
+{
+	 name: {
 		 'en-US': 'Lantern',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -950,6 +1262,54 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Mirror',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'mirror',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 2,
+		 'cost': 25
+},
+{
+	 name: {
+		 'en-US': 'Motion tracker',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'motion-tracker',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 4,
+		 'cost': 650
+},
+{
+	 name: {
 		 'en-US': 'MRE (Meal Ready to Eat)',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -974,6 +1334,54 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Neck protector, leather',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'neck-protector-leather',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 1,
+		 'cost': 30
+},
+{
+	 name: {
+		 'en-US': 'Neck protector, metal',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'neck-protector-metal',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 3,
+		 'cost': 120
+},
+{
+	 name: {
 		 'en-US': 'Normal Clothing',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -995,6 +1403,30 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 0,
 		 'cost': 20
+},
+{
+	 name: {
+		 'en-US': 'Normal clothing',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'normal-clothing',
+		 'book': 2,
+		 'page': 'p9',
+		 'class': 0,
+		 'general': 6,
+		 'type': 16,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 20,
+		 'cost': 0
 },
 {
 	 name: {
@@ -1043,6 +1475,30 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 4,
 		 'cost': 750
+},
+{
+	 name: {
+		 'en-US': 'Parchment (per sheet)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'parchment-per-sheet',
+		 'book': 2,
+		 'page': 'p9',
+		 'class': 0,
+		 'general': 6,
+		 'type': 15,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 1,
+		 'cost': 1
 },
 {
 	 name: {
@@ -1262,6 +1718,54 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Spike',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'spike',
+		 'book': 2,
+		 'page': 'p9',
+		 'class': 0,
+		 'general': 6,
+		 'type': 15,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 1,
+		 'cost': 1
+},
+{
+	 name: {
+		 'en-US': 'Tailored clothing',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'tailored-clothing',
+		 'book': 2,
+		 'page': 'p9',
+		 'class': 0,
+		 'general': 6,
+		 'type': 16,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 0,
+		 'cost': 100
+},
+{
+	 name: {
 		 'en-US': 'Telephone Tap',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -1406,6 +1910,54 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'UV  Flashlight',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'uv--flashlight',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 4,
+		 'cost': 65
+},
+{
+	 name: {
+		 'en-US': 'Video tape, 4-hours',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Kirlian camera, video',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'video-tape-4hours',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 0,
+		 'cost': 20
+},
+{
+	 name: {
 		 'en-US': 'War Horse Barding',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -1451,6 +2003,30 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 0,
 		 'cost': 750
+},
+{
+	 name: {
+		 'en-US': 'Warding Material',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'warding-material',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 1,
+		 'cost': 5
 },
 {
 	 name: {
@@ -1523,6 +2099,30 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 1,
 		 'cost': 100
+},
+{
+	 name: {
+		 'en-US': 'Winter clothes',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'winter-clothes',
+		 'book': 2,
+		 'page': 'p9',
+		 'class': 0,
+		 'general': 6,
+		 'type': 16,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 3,
+		 'cost': 35
 },
 {
 	 name: {

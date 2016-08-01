@@ -1,0 +1,85 @@
+<div class="main-content">
+	<div class="row">
+		<div class="columns small-12 text-center">
+			<fieldset class="fieldset regular-padding">
+				<legend translate="INDEX_RAISE_TRAINER">Raise Trainer</legend>
+				<div ng-show="showWelcome">
+					<p>Are you tired of not getting how many raises or whether a roll is a raise or not? This app will help train you!</p>
+					<button type="button" class="button primary" ng-click="startTest()" translate="GENERAL_START_TEST">Start Test</button>
+				</div>
+				<div ng-show="showTest">
+					<div class="row">
+						<div class="columns small-12 text-center">
+							<h2><span translate="GENERAL_CURRENT_QUESTION">Current Question</span>: <span ng-bind="currentQuestionDisplay">XX</span></h2>
+						</div>
+					</div>
+					<div class="row">
+						<div class="columns small-5 text-right">
+							<fieldset>
+								<legend translate="RAISE_ROLL">Roll</legend>
+								<h1 ng-bind="testRollNumber">0</h1>
+							</fieldset>
+
+						</div>
+						<div class="columns small-2 text-center">
+							<h2 translate="GENERAL_VERSUS_ABBR">vs</h2>
+						</div>
+						<div class="columns small-5 text-left">
+							<fieldset>
+								<legend translate="DICE_TARGET_NUMBER">Target Number</legend>
+								<h1 ng-bind="testTargetNumber">0</h1>
+							</fieldset>
+						</div>
+					</div>
+					<div class="row">
+						<div class="columns small-6 medium-3 text-center">
+							<button class="button primary expanded" ng-click="clickFailure()" translate="GENERAL_FAIL">Failure</button>
+						</div>
+						<div class="columns small-6 medium-3 text-center">
+							<button class="button primary expanded" ng-click="clickSuccess()" translate="GENERAL_SUCCESS">Success</button>
+						</div>
+						<div class="columns small-6 medium-3 text-center">
+							<button class="button primary expanded" ng-click="clickSuccessRaise()" translate="GENERAL_SUCCESS_1_RAISE">Success with a Raise</button>
+						</div>
+						<div class="columns small-6 medium-3 text-center">
+							<button class="button primary expanded" ng-click="clickSuccess2Raises()" translate="GENERAL_SUCCESS_2_RAISES_OR_MORE">Success with 2 Raise</button>
+						</div>
+					</div>
+				</div>
+				<div ng-show="showResults">
+					<div class="row">
+						<div class="columns small-12 medium-4">
+							<label><span translate="TRAINER_CORRECT_ANSWERS">Correct Answers</span>: <span ng-bind="resultsCorrect"></span></label>
+							<label><span translate="TRAINER_TOTAL_QUESTIONS">Total Questions</span>: <span ng-bind="numberOfQuestions"></span></label>
+							<label><span translate="GENERAL_PERCENTAGE">Percentage</span>: <span ng-bind="resultsPercentage"></span></label>
+							<label><span translate="GENERAL_AVERAGE_ANSWER_TIME">Average Answer Time</span>: <span ng-bind="averageAnswerTime"></span> <span translate="GENERAL_SECONDS">Seconds</span></label>
+							<button type="button" class="button primary" ng-click="startTest()" translate="GENERAL_TRY_AGAIN">Try Again</button>
+						</div>
+						<div class="columns small-12 medium-8">
+							<table>
+								<tr>
+									<th>Question</th>
+									<th>Roll</th>
+									<th>Target</th>
+									<th>Answer</td>
+									<th>Correct</th>
+									<th>Time</th>
+								</tr>
+								<tr ng-repeat="question in testQuestions" ng-class="rowClass(question)">
+									<td>{{ $index + 1 }}</td>
+									<td>{{ question.roll }}</td>
+									<td>{{ question.target }}</td>
+									<td>{{ question.answer }}</td>
+									<td>{{ question.correct }}</td>
+									<td>{{ question.answerTime }}</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</fieldset>
+		</div>
+
+		</div>
+	</div>
+</div>

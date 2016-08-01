@@ -7,15 +7,13 @@
 <div ng-include="'pages/chargen-dialog-books.html'"></div>
 <div ng-include="'pages/chargen-dialog-validation.html'"></div>
 <div ng-include="'pages/dialog-confirm.html'"></div>
+<div ng-include="'pages/dialog-notify.html'"></div>
 <div ng-include="'pages/chargen-dialog-add-edit-power.html'"></div>
-
 
 <div ng-include="'pages/chargen-status-bar.html'"></div>
 <div class="main-content">
 	<div class="row">
 		<div class="column small-12">
-<!-- 			<h2 translate="INDEX_BUTTON_CORE_CHAR">Character Creator</h2> -->
-<!-- 			<div class="creator-preview" ng-bind-html="creator_preview"></div> -->
 		<div ng-include="'pages/chargen-nav-menu.html'"></div>
 		<fieldset class="fieldset">
 			<legend translate="CHARGEN_CHARACTER_INFORMATION">Character Information</legend>
@@ -52,6 +50,25 @@
 			  	</div>
 			</div>
 			</fieldset>
+		</div>
+	</div>
+	<div class="row">
+
+	  	<div class="small-12 medium-12 columns">
+			<div ng-show="savageCharacter.multipleLanguages">
+				<fieldset class="fieldset">
+					<legend translate="CHARGEN_KNOWN_LANGUAGES">Known Languages</legend>
+					<label>
+						<span translate="CHARGEN_CULT_NAT_LANG">Cultural/National Language</span>
+						<input type="text" ng-model="savageCharacter.knownLanguages[0]" ng-keyup="justSave()" />
+					</label>
+					<h4><span translate="CHARGEN_ADDITIONAL_LANGS">Additional Languages</span> ({{savageCharacter.knownLanguagesLimit - 1}})</h4>
+
+					<div ng-repeat="langNumber in makeRange(1, savageCharacter.knownLanguagesLimit - 1)">
+						<input type="text" ng-model="savageCharacter.knownLanguages[ langNumber ]" ng-keyup="justSave()" />
+					</div>
+				</fieldset>
+			</div>
 		</div>
 	</div>
 

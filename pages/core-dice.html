@@ -2,10 +2,19 @@
 	<div class="row">
 		<div class="columns small-12 medium-6">
 			<fieldset class="fieldset">
+				<legend translate="DICE_H3_RESULTS">Results</legend>
+				<div ng-bind-html="dice_results"></div>
+
+				<br />
+				<br /><div translate="DICE_YOU_MAY_LINK_URL"></div>
+			</fieldset>
+		</div>
+		<div class="columns small-12 medium-6">
+			<fieldset class="fieldset">
 				<legend translate="DICE_H3_DICE">Dice</legend>
 				<label>
 					<span translate="DICE_H3_DICE">Dice</span>:<br />
-					<input ng-model="input_parse_dice" type="text" id="dice-roll" value="d8+2">
+					<input ng-blur="updateLinkURL()" ng-model="input_parse_dice" type="text" id="dice-roll" value="d8+2">
 				</label>
 				<div translate="DICE_WILD_DIE_NOTE">Putting a * after the d4 will roll a wild die as well</div>
 				<hr />
@@ -21,34 +30,26 @@
 				<fieldset ng-show="show_trait_options" class="fieldset">
 					<legend translate="DICE_TRAIT_OPTIONS">Trait Options</legend>
 					<label><span translate="DICE_TARGET_NUMBER">Target Number</span>:
-						<input type="number" ng-model="input_target_number" value="4" />
+						<input ng-blur="updateLinkURL()" type="number" ng-model="input_target_number" value="4" />
 					</label>
 				</fieldset>
 				<fieldset ng-show="show_damage_options" class="fieldset">
 					<legend translate="DICE_DAMAGE_OPTIONS">Damage Options</legend>
 					<label><span translate="DICE_BASE_TOUGHNESS">Target's Toughness</span>:
-						<input type="number" ng-model="input_base_toughness" value="5" />
+						<input ng-blur="updateLinkURL()" type="number" ng-model="input_base_toughness" value="5" />
 					</label>
 					<label><span translate="DICE_ARMOR">Armor</span>:
-						<input type="number" ng-model="input_armor" value="5" />
+						<input ng-blur="updateLinkURL()" type="number" ng-model="input_armor" value="5" />
 					</label>
 					<label><span translate="DICE_WEAPON_AP">Weapons AP</span>:
-						<input type="number" ng-model="input_weapons_ap" value="5" />
+						<input ng-blur="updateLinkURL()" type="number" ng-model="input_weapons_ap" value="5" />
+					</label>
+					<label>
+						<input ng-change="updateLinkURL()" ng-model="input_half_damage"  ng-true-value="1" ng-false-value="0" type="checkbox" id="half-damage" value="0"> <span translate="WEAPON_HALF_DAMAGE">Only does half damage</span><br />
 					</label>
 				</fieldset>
 			</fieldset>
-
-
 		</div>
-
-		<div class="columns small-12 medium-6">
-			<fieldset class="fieldset">
-				<legend translate="DICE_H3_RESULTS">Results</legend>
-				<div ng-bind-html="dice_results"></div>
-			</fieldset>
-
-		</div>
-
 	</div>
 
 </div>

@@ -7,6 +7,7 @@
 <div ng-include="'pages/chargen-dialog-books.html'"></div>
 <div ng-include="'pages/chargen-dialog-validation.html'"></div>
 <div ng-include="'pages/dialog-confirm.html'"></div>
+<div ng-include="'pages/dialog-notify.html'"></div>
 <div ng-include="'pages/chargen-dialog-add-edit-power.html'"></div>
 
 
@@ -130,7 +131,39 @@
 						</fieldset>
 					</div>
 
+			</div>
+			<fieldset class="fieldset">
+				<legend translate="GENERAL_SKILLS">Skills</legend>
 
+				<div class="row">
+					<div class="small-12 medium-6 large-6 columns">
+						<fieldset class="fieldset">
+							<legend translate="ATTRIBUTE_AGILITY">Agility Skills</legend>
+							<div ng-repeat="skill in savageCharacter.agilitySkills" ng-include="'pages/chargen-skill-item.html'"></div>
+						</fieldset>
+					</div>
+					<div class="small-12 medium-6 large-6 columns">
+						<fieldset class="fieldset">
+							<legend translate="ATTRIBUTE_SMARTS">Smarts Skills</legend>
+							<div ng-repeat="skill in savageCharacter.smartsSkills" ng-include="'pages/chargen-skill-item.html'"></div>
+						</fieldset>
+					</div>
+					<div class="small-12 medium-6 large-6 columns">
+						<fieldset class="fieldset">
+							<legend translate="ATTRIBUTE_SPIRIT">Spirit Skills</legend>
+							<div ng-repeat="skill in savageCharacter.spiritSkills" ng-include="'pages/chargen-skill-item.html'"></div>
+						</fieldset>
+					</div>
+					<div class="small-12 medium-6 large-6 columns">
+						<fieldset class="fieldset">
+							<legend translate="ATTRIBUTE_STRENGTH">Strength Skills</legend>
+							<div ng-repeat="skill in savageCharacter.strengthSkills" ng-include="'pages/chargen-skill-item.html'"></div>
+						</fieldset>
+					</div>
+				</div>
+
+			</fieldset>
+		</fieldset>
 
 
 

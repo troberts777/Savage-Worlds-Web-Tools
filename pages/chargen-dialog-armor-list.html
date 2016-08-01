@@ -1,0 +1,64 @@
+<div class="modal-container" ng-show="armorDialogOpen == true">
+	<div class="reveal">
+	<button class="no-bottom-margin float-right button small primary" ng-click="closeDialogs()"  type="button" translate="GENERAL_CLOSE"></button>
+	  	<h3 class="lead" translate="CHARGEN_ADD_GEAR">Add Gear</h3>
+
+	  	<div class="row">
+	  		<div class="small-12 columns">
+
+
+				<fieldset class="fieldset">
+					<legend translate="CHARGEN_FILTER_GEAR">Armor</legend>
+					<input type="text"  ng-model="gearSearch.local_name" />
+				</fieldset>
+
+				<table class="gear-list">
+					<thead>
+						<tr>
+							<th translate="GENERAL_NAME"></th>
+							<th translate="GENERAL_COST"></th>
+							<th translate="GENERAL_WEIGHT"></th>
+							<th></th>
+						</tr>
+					</thead>
+					<thead>
+						<tr>
+							<th colspan="4"><h4 translate="CHARGEN_ARMOR">Armor</h4></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="gearItem in filteredArmor = ( savageCharacter.availableArmor | filter:gearSearch )">
+							<td>{{gearItem.local_name}}</td>
+							<td>${{gearItem.cost}}</td>
+							<td>{{gearItem.weight}}</td>
+							<td class="text-right">
+								<button class="button secondary tiny radius no-bottom-margin" ng-click="buyArmor(gearItem.book, gearItem.tag, true);" translate="GENERAL_BUY_FREE">Buy Free</button>
+								<button class="button primary tiny radius no-bottom-margin" ng-click="buyArmor(gearItem.book, gearItem.tag, false);" translate="GENERAL_BUY">Buy</button>
+							</td>
+						</tr>
+					</tbody>
+
+					<thead>
+						<tr>
+							<th colspan="4"><h4 translate="CHARGEN_SHIELDS">Shields</h4></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="gearItem in filteredShields = ( savageCharacter.availableShields | filter:gearSearch )">
+							<td>{{gearItem.local_name}}</td>
+							<td>${{gearItem.cost}}</td>
+							<td>{{gearItem.weight}}</td>
+							<td class="text-right">
+								<button class="button secondary tiny radius no-bottom-margin" ng-click="buyShield(gearItem.book, gearItem.tag, true);" translate="GENERAL_BUY_FREE">Buy Free</button>
+								<button class="button primary tiny radius no-bottom-margin" ng-click="buyShield(gearItem.book, gearItem.tag, false);" translate="GENERAL_BUY">Buy</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+	  	</div>
+
+
+
+	</div>
+</div>

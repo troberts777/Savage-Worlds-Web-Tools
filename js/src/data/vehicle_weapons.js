@@ -25,11 +25,6 @@
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship‚Ä"if a ship gets a lock, it may fire all the missiles or torpedoes it\'s allowed.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Missiles & Torpedoes',
 		 'pt-BR': '',
@@ -64,11 +59,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Block Buster Bombs',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM\'s call) or other factors that might interfere with the bomb\'s targeting systems inflicts a ‚Ä"2 penalty.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -109,11 +99,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM\'s call) or other factors that might interfere with the bomb\'s targeting systems inflicts a ‚Ä"2 penalty.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Bombs',
 		 'pt-BR': '',
@@ -147,9 +132,6 @@ return false;
 	 name_plural: {
 		 'en-US': 'Grenade Launchers',
 	},
-	 description: {
-		 'en-US': 'Futuristic grenades are smaller, lighter, and pack a bit more punch than their predecessors. Grenade launchers may also use the grenades found on page 20.',
-	},
 	 classification: {
 		 'en-US': 'Grenade Launcher',
 	},
@@ -175,11 +157,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Heavy Autocannons',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Auto-cannons (also called chain guns) are powered weapons that fire bursts of chemically- propelled metal slugs at the target. They are primarily used by aircraft to destroy ground targets, or as point-defense weapons for starships. Ammo costs are for a full load.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -215,11 +192,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Cannons fire large, chemically-propelled, explosive shells. The shells listed below are the most common. High explsive versions reduce the damage die type to d8 and halve AP but increase the Burst Template to Large ot 10‚Äù radius if already Large. Ammo costs are per full load',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Cannons',
 		 'pt-BR': '',
@@ -248,9 +220,6 @@ return false;
 	 name_plural: {
 		 'en-US': 'Heavy Flamethrowers',
 	},
-	 description: {
-		 'en-US': 'Flamethrowers use liquid or vapor fuel to burn targets. They\'re often used to dig opponents out of caves or other tight places. The ones listed here are more powerful, lighter, and carry more propellant than older versions (such as those found in Savage Worlds).',
-	},
 	 classification: {
 		 'en-US': 'Flame Weapons',
 	},
@@ -276,11 +245,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Heavy Lasers',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don\'t use the rules for personal lasers listed on page 20.)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -316,11 +280,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Slugthrowers are traditional firearms firing chemically-propelled rounds.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Slugthrowers',
 		 'pt-BR': '',
@@ -350,11 +309,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Heavy Torpedoes',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship‚Ä"if a ship gets a lock, it may fire all the missiles or torpedoes it\'s allowed.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -395,11 +349,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship‚Ä"if a ship gets a lock, it may fire all the missiles or torpedoes it\'s allowed.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Missiles & Torpedoes',
 		 'pt-BR': '',
@@ -434,11 +383,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Large Bombs',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM\'s call) or other factors that might interfere with the bomb\'s targeting systems inflicts a ‚Ä"2 penalty.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -479,11 +423,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Auto-cannons (also called chain guns) are powered weapons that fire bursts of chemically- propelled metal slugs at the target. They are primarily used by aircraft to destroy ground targets, or as point-defense weapons for starships. Ammo costs are for a full load.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Auto-cannons',
 		 'pt-BR': '',
@@ -512,9 +451,6 @@ return false;
 	 name_plural: {
 		 'en-US': 'Light Flamethrowers',
 	},
-	 description: {
-		 'en-US': 'Flamethrowers use liquid or vapor fuel to burn targets. They\'re often used to dig opponents out of caves or other tight places. The ones listed here are more powerful, lighter, and carry more propellant than older versions (such as those found in Savage Worlds).',
-	},
 	 classification: {
 		 'en-US': 'Flame Weapons',
 	},
@@ -540,11 +476,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Light Lasers',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don\'t use the rules for personal lasers listed on page 20.)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -577,11 +508,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Light Missiles',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship‚Ä"if a ship gets a lock, it may fire all the missiles or torpedoes it\'s allowed.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -622,11 +548,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship‚Ä"if a ship gets a lock, it may fire all the missiles or torpedoes it\'s allowed.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Missiles & Torpedoes',
 		 'pt-BR': '',
@@ -664,11 +585,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
 		 'pt-BR': '',
@@ -702,9 +618,6 @@ return false;
 	 name_plural: {
 		 'en-US': 'Mass Driver 10',
 	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
-	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
 	},
@@ -733,9 +646,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Mass Driver 11',
-	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
 	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
@@ -766,9 +676,6 @@ return false;
 	 name_plural: {
 		 'en-US': 'Mass Driver 12',
 	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
-	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
 	},
@@ -797,9 +704,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Mass Driver 13',
-	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
 	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
@@ -830,9 +734,6 @@ return false;
 	 name_plural: {
 		 'en-US': 'Mass Driver 14',
 	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
-	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
 	},
@@ -861,9 +762,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Mass Driver 2',
-	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
 	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
@@ -894,9 +792,6 @@ return false;
 	 name_plural: {
 		 'en-US': 'Mass Driver 3',
 	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
-	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
 	},
@@ -925,9 +820,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Mass Driver 4',
-	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
 	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
@@ -958,9 +850,6 @@ return false;
 	 name_plural: {
 		 'en-US': 'Mass Driver 5',
 	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
-	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
 	},
@@ -989,9 +878,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Mass Driver 6',
-	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
 	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
@@ -1022,9 +908,6 @@ return false;
 	 name_plural: {
 		 'en-US': 'Mass Driver 7',
 	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
-	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
 	},
@@ -1054,9 +937,6 @@ return false;
 	 name_plural: {
 		 'en-US': 'Mass Driver 8',
 	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
-	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
 	},
@@ -1085,9 +965,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Mass Driver 9',
-	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
 	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
@@ -1119,11 +996,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Massive Lasers',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don\'t use the rules for personal lasers listed on page 20.)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1164,11 +1036,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Auto-cannons (also called chain guns) are powered weapons that fire bursts of chemically- propelled metal slugs at the target. They are primarily used by aircraft to destroy ground targets, or as point-defense weapons for starships. Ammo costs are for a full load.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Auto-cannons',
 		 'pt-BR': '',
@@ -1198,11 +1065,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Medium Bombs',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM\'s call) or other factors that might interfere with the bomb\'s targeting systems inflicts a ‚Ä"2 penalty.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1243,11 +1105,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Cannons fire large, chemically-propelled, explosive shells. The shells listed below are the most common. High explsive versions reduce the damage die type to d8 and halve AP but increase the Burst Template to Large ot 10‚Äù radius if already Large. Ammo costs are per full load',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Cannons',
 		 'pt-BR': '',
@@ -1277,11 +1134,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Medium Lasers',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don\'t use the rules for personal lasers listed on page 20.)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1317,11 +1169,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Slugthrowers are traditional firearms firing chemically-propelled rounds.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Slugthrowers',
 		 'pt-BR': '',
@@ -1351,11 +1198,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Mega Lasers',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don\'t use the rules for personal lasers listed on page 20.)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1396,11 +1238,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Slugthrowers are traditional firearms firing chemically-propelled rounds.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Slugthrowers',
 		 'pt-BR': '',
@@ -1430,11 +1267,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Particle Accelerators, Heavy',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Vehicular blasters fire a stream of charged particles (ions). Because the weapon fires a stream, a raise on the attack roll causes +2d6 damage instead of the usual 1d6.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1470,11 +1302,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Vehicular blasters fire a stream of charged particles (ions). Because the weapon fires a stream, a raise on the attack roll causes +2d6 damage instead of the usual 1d6.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Particle Accelerators',
 		 'pt-BR': '',
@@ -1507,11 +1334,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Vehicular blasters fire a stream of charged particles (ions). Because the weapon fires a stream, a raise on the attack roll causes +2d6 damage instead of the usual 1d6.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Particle Accelerators',
 		 'pt-BR': '',
@@ -1541,11 +1363,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Small Bombs',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM\'s call) or other factors that might interfere with the bomb\'s targeting systems inflicts a ‚Ä"2 penalty.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1586,11 +1403,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Cannons fire large, chemically-propelled, explosive shells. The shells listed below are the most common. High explsive versions reduce the damage die type to d8 and halve AP but increase the Burst Template to Large ot 10‚Äù radius if already Large. Ammo costs are per full load',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Cannons',
 		 'pt-BR': '',
@@ -1623,11 +1435,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Cannons fire large, chemically-propelled, explosive shells. The shells listed below are the most common. High explsive versions reduce the damage die type to d8 and halve AP but increase the Burst Template to Large ot 10‚Äù radius if already Large. Ammo costs are per full load',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Cannons',
 		 'pt-BR': '',
@@ -1657,11 +1464,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Super-Heavy Lasers',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don\'t use the rules for personal lasers listed on page 20.)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},

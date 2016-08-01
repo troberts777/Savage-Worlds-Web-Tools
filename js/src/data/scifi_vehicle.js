@@ -26,11 +26,6 @@ savageWorldsSciFiOptions['vehicle'] = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Various options from The Last Parsec Sourcebooks vehicle options',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 type: 'bool',
 	 short_tag: 'the-last-parsec',
 }
@@ -285,9 +280,6 @@ savageWorldsSciFiMods['vehicle'] = Array(
 	 name: {
 		 'en-US': 'Aircraft, Anti-Grav',
 	},
-	 description: {
-		 'en-US': 'Ultra Tech. The vehicle is an aircraft powered by anti-gravitic propulsion. It can hover or fly, and has a Acc/TS of 30/100 and Climb of 2.',
-	},
 	 tag: 'aircraft-anti-grav',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -307,9 +299,6 @@ calcWeight: 1 // one of the first things to be calculated
 {
 	 name: {
 		 'en-US': 'Aircraft, Helicopter',
-	},
-	 description: {
-		 'en-US': 'The vehicle is a helicopter. It can hover or fly, and has a Acc/TS 10/80 and a Climb of ‚Ä"1.',
 	},
 	 tag: 'aircraft-helicopter',
 getMax: function(selectedObject) { return 1 },
@@ -331,9 +320,6 @@ calcWeight: 1 // one of the first things to be calculated
 	 name: {
 		 'en-US': 'Aircraft, Jet Plane',
 	},
-	 description: {
-		 'en-US': 'Jet planes are Acc/TS 50/600, Climb 2. They must move at least half their Top Speed each round or go Out of Control (they stall). The Speed Mod increases Acc by 10 instead of 5 and Top Speed by 100 instead of 10.',
-	},
 	 tag: 'aircraft-jet-plane',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -353,9 +339,6 @@ calcWeight: 1 // one of the first things to be calculated
 {
 	 name: {
 		 'en-US': 'Aircraft, Propeller Plane',
-	},
-	 description: {
-		 'en-US': 'A traditional prop plane. Acc/TS 20/150, Climb 1. Planes must move at least half their Top Speed each round or go Out of Control (they stall). The Speed Mod increases Top Speed by 50 instead of 10.',
 	},
 	 tag: 'aircraft-propeller-plane',
 getMax: function(selectedObject) { return 1 },
@@ -377,9 +360,6 @@ calcWeight: 1 // one of the first things to be calculated
 	 name: {
 		 'en-US': 'AMCM',
 	},
-	 description: {
-		 'en-US': 'Anti-Missile Counter Measures are integrated jammers and decoys. They add +2 to Driving, Piloting or Knowledge (Electronics) rolls made to evade missile attacks.',
-	},
 	 tag: 'amcm',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -393,9 +373,6 @@ return 5000 * selectedObject.size;
 	 name: {
 		 'en-US': 'Amphibious',
 	},
-	 description: {
-		 'en-US': 'The vehicle may move at half Acc/Top Speed while in water.',
-	},
 	 tag: 'amphibious',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -408,9 +385,6 @@ return 1000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Armor',
-	},
-	 description: {
-		 'en-US': 'Increases a vehicle\'s Armor value by +2. Armor +4 and higher is considered Heavy Armor. Vehicular Armor can also be front-loaded if desired. If so, Armor\'s maximum becomes 2x Size and each level increases the front armor by +3, side and top armor by +2, and rear and bottom Armor by +1. In the Chase rules, an attacker with Advantage and a Jack or higher can target the side armor, and one with a King or higher can target the rear.',
 	},
 	 tag: 'armor',
 getMax: function(selectedObject) { return selectedObject.size },
@@ -430,9 +404,6 @@ selectedObject.toughness++;
 {
 	 name: {
 		 'en-US': 'Armor, Front Loaded',
-	},
-	 description: {
-		 'en-US': 'Increases a vehicle\'s Armor value by +2. Armor +4 and higher is considered Heavy Armor. Vehicular Armor can also be front-loaded if desired. If so, Armor\'s maximum becomes 2x Size and each level increases the front armor by +3, side and top armor by +2, and rear and bottom Armor by +1. In the Chase rules, an attacker with Advantage and a Jack or higher can target the side armor, and one with a King or higher can target the rear.',
 	},
 	 tag: 'armor-front-loaded',
 getMax: function(selectedObject) { return selectedObject.size },
@@ -457,9 +428,6 @@ selectedObject.toughness++;
 	 name: {
 		 'en-US': 'Artificial Intelligence',
 	},
-	 description: {
-		 'en-US': 'The vehicle\'s AI can operate all systems ‚Ä" from locomotion to weapons to opening or closing hatches. It has a skill level of d10 in these tasks, but is an ‚ÄúExtra‚Äù and does not receive a Wild Die. The AI does not suffer from multi-action penalties if given simultaneous tasks. In combat, the AI acts on the captain\'s Action Card. Giving the AI a short verbal command is a free action.',
-	},
 	 tag: 'artificial-intelligence',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -473,9 +441,6 @@ return 10000 * selectedObject.size;
 	 name: {
 		 'en-US': 'Boosters',
 	},
-	 description: {
-		 'en-US': 'Nitrous oxide or other propellants double a vehicle\'s Acceleration and Top Speed for a round. Each booster has six uses before it must be replaced. Their effects do not stack. Refills cost $100 per booster.',
-	},
 	 tag: 'boosters',
 getMax: function(selectedObject) { return "u" },
 getModCost: function(selectedObject) {
@@ -488,9 +453,6 @@ return 1000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Climb',
-	},
-	 description: {
-		 'en-US': 'Aircraft only. The vehicle\'s Climb is increased by 1.',
 	},
 	 tag: 'climb',
 getMax: function(selectedObject) { return 5 },
@@ -507,9 +469,6 @@ selectedObject.climb = selectedObject.climb + 1;
 {
 	 name: {
 		 'en-US': 'Crew Reduction',
-	},
-	 description: {
-		 'en-US': 'Add 1 Mod slot for every four crewman deducted (round up).',
 	},
 	 tag: 'crew-reduction',
 getMax: function(selectedObject) { return "u" },
@@ -528,9 +487,6 @@ selectedObject.mods ++;
 	 name: {
 		 'en-US': 'Crew Space',
 	},
-	 description: {
-		 'en-US': 'Space for four permanent crew members.',
-	},
 	 tag: 'crew-space',
 getMax: function(selectedObject) { return "u" },
 getModCost: function(selectedObject) {
@@ -547,9 +503,6 @@ selectedObject.crew += 4;
 	 name: {
 		 'en-US': 'Deflector Screens',
 	},
-	 description: {
-		 'en-US': 'The vessel is protected by an energy field that deflects incoming ballistic attacks (it has no effect against lasers). Attackers must subtract ‚Ä"2 from their Shooting rolls. Mod cost is 2 for Small to Large vehicles, and 3 for Huge to Gargantuan vessels.',
-	},
 	 tag: 'deflector-screens',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -562,9 +515,6 @@ return 10000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Ejection System',
-	},
-	 description: {
-		 'en-US': 'Should a vehicle suffer a Wrecked result, crew members may make Agility rolls at ‚Ä"4 (or no penalty if an individual was on Hold or hasn\'t acted yet that round). Failure results in damage as usual and failure to eject that round. Those who succeed are launched into the air and descend safely via parachute. The system covers all passengers and crew.',
 	},
 	 tag: 'ejection-system',
 getMax: function(selectedObject) { return "u" },
@@ -579,9 +529,6 @@ return 5000 * selectedObject.size;
 	 name: {
 		 'en-US': 'Electromagnetic Shielding',
 	},
-	 description: {
-		 'en-US': 'Adds +6 to the vehicle\'s effective Toughness from EMP missiles (see page 25).',
-	},
 	 tag: 'electromagnetic-shielding',
 getMax: function(selectedObject) { return "u" },
 getModCost: function(selectedObject) {
@@ -594,9 +541,6 @@ return 5000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Exposed Crew',
-	},
-	 description: {
-		 'en-US': 'Motorcycles and other ‚Äúridden‚Äù vehicles offer no protection for their passengers. Crew get no Armor bonus should it sustain a Crew critical hit.',
 	},
 	 tag: 'exposed-crew',
 getMax:  function(selectedObject) { return 1 },
@@ -611,9 +555,6 @@ return  (selectedObject.baseCost / 2 ) * -1;
 	 name: {
 		 'en-US': 'Four Wheel Drive',
 	},
-	 description: {
-		 'en-US': 'Up to four direct-fire weapons of the same type may be linked and fired as one, increasing the damage by +2 per weapon and reducing the total number of Mods required. Total all Linked weapons in a set first, then halve their required Mods. (If Linking Fixed weapons, halve the total.)',
-	},
 	 tag: 'four-wheel-drive',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -626,9 +567,6 @@ return 1000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Handling',
-	},
-	 description: {
-		 'en-US': 'The vehicle is precision crafted and very maneuverable. This adds +1 to Driving rolls per level.',
 	},
 	 tag: 'handling',
 getMax: function(selectedObject) { return 3 },
@@ -643,9 +581,6 @@ return 5000 * selectedObject.size;
 	 name: {
 		 'en-US': 'Hover Vehicle',
 	},
-	 description: {
-		 'en-US': 'The vehicle uses hover fans instead of wheels. It ignores difficult terrain modifiers and obstacles less than a yard tall. Round Mod cost up. The Ultra Tech version uses anti-grav. It doubles the cost but halves the Mod cost.',
-	},
 	 tag: 'hover-vehicle',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -658,11 +593,6 @@ return 5000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Living Space',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Large or greater vehicles only. The vehicle has an extended superstructure with bunk beds, personal storage bins for up to four individuals, and one shared bathroom and kitchenette (regardless of how many times this is taken) for long- term travel. The superstructure decreases overall Toughness by 1 each time it\'s taken. The limit is half the vehicle\'s base Toughness.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -684,11 +614,6 @@ return 5000 * selectedObject.size;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Typically reserved for civilian vehicles, luxury features include music systems, minibars, video screens, and other comforts. The larger the vehicle, the more extravagant the features.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: 'luxury-features',
 		getMax: function(selectedObject) { return 1 },
 		getModCost: function(selectedObject) {
@@ -701,9 +626,6 @@ return 5000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Missile Launcher',
-	},
-	 description: {
-		 'en-US': 'Allows up to four Light or two Heavy (or AT) missiles to be fired at once.',
 	},
 	 tag: 'missile-launcher',
 getMax: function(selectedObject) { return "u" },
@@ -720,11 +642,6 @@ selectedObject.hasMissileLauncher = 1;
 {
 	 name: {
 		 'en-US': 'Multi-Legged',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'The vehicle has legs instead of wheels or tracks and can climb over small obstacles. Each time this Mod is taken increase Acc by 5 and TS by 10. The vehicle gains four legs and an additional pair each time this Mod is taken. Ignore driving penalties for difficult terrain and treat each inch of difficult terrain as 1.5‚Äù instead of 2‚Äù. On Super Heavy and Titan vehicles this modifier must be taken twice and on Colossus and Goliath taken three times for eight legs total. Vehicles with legs may not take the Speed modifier but may still take Speed Reduction.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -763,9 +680,6 @@ return "Multi-Legged (" + selectedObject.numberOfLegs + " legs)";
 	 name: {
 		 'en-US': 'Reinforced Chassis',
 	},
-	 description: {
-		 'en-US': 'Increases Toughness of the chassis by +1.',
-	},
 	 tag: 'reinforced-chassis',
 getMax: function(selectedObject) { return 3 },
 getModCost: function(selectedObject) {
@@ -782,9 +696,6 @@ selectedObject.toughness = selectedObject.toughness + 1;
 	 name: {
 		 'en-US': 'Sensor Suite',
 	},
-	 description: {
-		 'en-US': 'Light, chemical, motion, and other active sensors allow detection of targets up to one light year away with a Knowledge (Electronics) roll. Within 10K miles, the sensors add +2 to the roll. Illumination penalties are ignored. Targets don\'t have to be in direct line of sight, but asteroid or powerful energy fields may cause inaccurate or false readings at the GM\'s discretion.',
-	},
 	 tag: 'sensor-suite',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -797,9 +708,6 @@ return 50000;
 {
 	 name: {
 		 'en-US': 'Shields',
-	},
-	 description: {
-		 'en-US': 'The craft is protected by an ablative energy field that absorbs 10√-Size points of damage before it\'s depleted. Apply all damage to the shield first, then any left over to the vehicle (AP counts as usual). Active shields detonate missiles and torpedoes before they hit, reducing their damage total by half. A craft may regenerate its Size in shield points if it makes no attacks in a round.',
 	},
 	 tag: 'shields',
 getMax: function(selectedObject) { return 1 },
@@ -814,9 +722,6 @@ return 25000 * selectedObject.size;
 	 name: {
 		 'en-US': 'Sloped Armor',
 	},
-	 description: {
-		 'en-US': 'Non-energy, ballistic attacks against this vessel suffer a ‚Ä"2 penalty. It has no effect on energy attacks.',
-	},
 	 tag: 'sloped-armor',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -829,11 +734,6 @@ return 3000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Speed Reduction',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'The vehicle trades power and speed for additional room. Each time this is taken, reduce Acc by 5 and Top Speed by 50 to gain half the vehicle\'s Size in Mod slots.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -860,11 +760,6 @@ return !selectedObject.hasMod("speed");
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Each purchase increases the vehicle\'s Acc by 5 and Top Speed by 50. (This cannot be taken with Speed Reduction.)',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: 'speed',
 getMax: function(selectedObject) { return "u" },
 getModCost: function(selectedObject) {
@@ -885,9 +780,6 @@ return !selectedObject.hasMod("speed-reduction");
 	 name: {
 		 'en-US': 'Stealth System',
 	},
-	 description: {
-		 'en-US': 'Radar-absorbing paint, heat baffles, scramblers, and other devices make the vehicle difficult to detect by vision or sensors. Those trying to spot, attack, (or lock on to) the vehicle subtract 4 from their rolls. The effect is triggered as a free action, but is negated any round in which the vehicle fires a weapon or emits some other non- cloakable signal such as radio signal or active sensor search.',
-	},
 	 tag: 'stealth-system',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -901,9 +793,6 @@ return 10000 * selectedObject.size;
 	 name: {
 		 'en-US': 'Targeting System',
 	},
-	 description: {
-		 'en-US': 'The vehicle\'s internal sensors and computers are linked to all attached weapons. This compensates for movement, range, multi-actions, and the like, negating up to two points of Shooting penalties.',
-	},
 	 tag: 'targeting-system',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -916,9 +805,6 @@ return 10000  * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Torpedo Tube',
-	},
-	 description: {
-		 'en-US': 'Each tube allows up to two Light or one Heavy torpedo to be fired at once (at one or two targets, as desired).',
 	},
 	 tag: 'torpedo-tube',
 getMax: function(selectedObject) { return "u" },
@@ -942,9 +828,6 @@ return false;
 	 name: {
 		 'en-US': 'Tracked',
 	},
-	 description: {
-		 'en-US': 'The vehicle has tracks instead of wheels and can climb over small obstacles. This reduces Acc by 2 and TS by 5, and ignores Driving penalties for difficult terrain. On the table-top, every inch of movement is treated as 1.5‚Äù.',
-	},
 	 tag: 'tracked',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -962,11 +845,6 @@ selectedObject.mods += selectedObject.baseMods / 2;
 {
 	 name: {
 		 'en-US': 'Watercraft',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'The vehicle is a boat or ship. It\'s base Acceleration and Top Speed are halved (round up). Speed Modifications increase Acc by 3 and TS by 5. For larger vessels such as naval vessels or cruise ships, use the Starship rules for Size, Toughness, and Crew, and add any enhancements that aren\'t specifically designed for space such as FTL drives. If a Modification is listed under Vehicles, use that instead. Ships may have Torpedo Tubes.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},

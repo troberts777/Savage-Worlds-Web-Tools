@@ -7,6 +7,7 @@
 <div ng-include="'pages/chargen-dialog-books.html'"></div>
 <div ng-include="'pages/chargen-dialog-validation.html'"></div>
 <div ng-include="'pages/dialog-confirm.html'"></div>
+<div ng-include="'pages/dialog-notify.html'"></div>
 <div ng-include="'pages/chargen-dialog-add-edit-power.html'"></div>
 
 
@@ -29,11 +30,11 @@
 									<div class="text-center" ng-show="savageCharacter.totalPerkPoints == 4" translate="CHARGEN_HINDRANCES_OPTIMIZED">
 										You have optimized your hindrances. Selecting more will not advance the character.
 									</div>
-									<button class="button tiny expanded primary" ng-click="addHindrance()" translate="CHARGEN_ADD_HINDRANCE">Add Hindrance</button>
+									<button ng-hide="savageCharacter.XP.value > 0" class="button tiny expanded primary" ng-click="addHindrance()" translate="CHARGEN_ADD_HINDRANCE">Add Hindrance</button>
 
 									<ul class="edges-hindrances">
 										<li ng-repeat="hindrance in savageCharacter.installedHindrances">
-											<button ng-hide="hindrance.racial > 0" ng-click="removeHindranceByTag(hindrance.tag)" class="primary button tiny" translate="GENERAL_REMOVE">Remove</button>
+											<button ng-hide="hindrance.racial > 0 || savageCharacter.XP.value > 0" ng-click="removeHindranceByTag(hindrance.tag)" class="primary button tiny" translate="GENERAL_REMOVE">Remove</button>
 
 											<span class="racial" ng-show="hindrance.racial > 0" translate="CHARGEN_RACIAL_PARENTHETICAL">(racial)</span>
 
@@ -58,7 +59,7 @@
 
 								<ul class="edges-hindrances">
 									<li ng-repeat="perk in savageCharacter.selectedPerks track by $index ">
-										<button ng-click="removePerkByTag(perk.tag)" class="primary button tiny" translate="GENERAL_REMOVE">Remove</button>
+										<button ng-hide="savageCharacter.XP.value > 0" ng-click="removePerkByTag(perk.tag)" class="primary button tiny" translate="GENERAL_REMOVE">Remove</button>
 
 										<span class="item-label">{{perk.label}}</span>
 									</li>
@@ -76,8 +77,11 @@
 									<div class="no-edges-available" ng-show="savageCharacter.availableEdgePoints == 0" translate="CHARGEN_NO_EDGES_AVAILABLE"></div>
 
 									<ul class="edges-hindrances">
+										<li ng-show="savageCharacter.usesSPCCreation">
+											<span translate="CHARGEN_SPC_AB">Arcane Background (Super Powers, Setting Rule)</span>
+										</li>
 										<li ng-repeat="edge in savageCharacter.installedEdges">
-											<button ng-hide="edge.racial > 0" ng-click="removeEdgeByTag(edge.tag)" class="primary button tiny" translate="GENERAL_REMOVE">Remove</button>
+											<button ng-hide="edge.racial > 0 || savageCharacter.XP.value > 0" ng-click="removeEdgeByTag(edge.tag)" class="primary button tiny" translate="GENERAL_REMOVE">Remove</button>
 
 											<span class="racial" ng-show="edge.racial > 0" translate="CHARGEN_RACIAL_PARENTHETICAL">(racial)</span>
 

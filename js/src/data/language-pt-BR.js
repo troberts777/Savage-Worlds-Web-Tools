@@ -6,9 +6,6 @@ availableLanguages.push ({
 	active: true,
 
 	translations: {
-			BUTTON_LANG_EN: 'English',
-			BUTTON_LANG_DE: 'German',
-			GENERAL_ATTRIBUTES: 'Atributos',
 
 	}
 

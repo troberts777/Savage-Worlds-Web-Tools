@@ -1,34 +1,14 @@
 @import 'ubuntu-font';
 @import 'foundation6-5-cols';
 
-$fontColor: #eee;
+
 $fontSize: 14px;
-$headerFooterBackground: #111;
-$subMenuBackground: #222;
-$bodyBackground: #333;
-
-$primaryBG: #999;
-$primaryBGHover: #ccc;
-$primaryTextColor: #fff;
-
-// Gross...
-// $primaryBG: #e27100;
-// $primaryBGHover: #f7a34f;
-// $primaryTextColor: #fff;
-
-$secondaryBG: #666;
-$secondaryBGHover: #777;
-$secondaryTextColor: #fff;
-
-// Gross...
-// $secondaryBG: #cccb85;
-// $secondaryBGHover: #e4e39d;
-// $secondaryTextColor: #000;
 
 $lightBG: #ededed;
 
 $fontColor: #fdfde3;
 $headerFooterBackground: #111;
+$subMenuBackground: #222;
 $bodyBackground: #333;
 
 $primaryBG: #dfab2d;
@@ -48,6 +28,8 @@ body {
 	color: $fontColor;
 	font-size: $fontSize;
 	font-family: 'Ubuntu', sans-serif !important;
+	outline-color: invert !important;
+	outline-color: $primaryBG !important;
 	a {
 		color: $primaryBG;
 		&:active,
@@ -57,6 +39,8 @@ body {
 		&:hover {
 			color: $primaryBGHover;
 		}
+		outline-color: invert !important;
+		outline-color: $primaryBG !important;
 	}
 	h1 {
 		font-size: 2rem;
@@ -115,10 +99,27 @@ body {
 					}
 				}
 			}
+			&.right-answer {
+				background: #090;
+				color: #fff;
+				td {
+					background: #090;
+					color: #fff;
+				}
+			}
+			&.wrong-answer {
+				background: #900;
+				color: #fff;
+				td {
+					background: #900;
+					color: #fff;
+				}
+			}
 		}
 		&.installed-weapons {
 			background: transparent;
 			tbody {
+				background: transparent;
 				margin: 0;
 				padding: 0;
 				tr {
@@ -126,6 +127,10 @@ body {
 					border: 1px solid $primaryBG;
 					background: $bodyBackground;
 					color: $fontColor;
+					margin-bottom: .25em !important;
+					td {
+						border: none;
+					}
 				}
 			}
 
@@ -175,24 +180,31 @@ body {
 	}
 
 	.sub-nav-tab {
-		border-bottom: 2px solid $primaryBG;
-		margin: 0 0 2px 0;
+		text-align: center;
+		//border-bottom: 2px solid $primaryBG;
+		margin: 0 auto 2px auto;
 		list-style: none;
-		display: block;
+		display: inline-block;
+		vertical-align: top;
 		overflow: hidden;
 		li {
 			list-style: none;
-			float: left;
+			display: inline-block;
 			margin: 0;
 			padding: 0;
+			vertical-align: top;
 			a {
 				display: inline-block;
-				padding: .25rem 1rem;
+				vertical-align: top;
+				width: 64px;
+				padding: .25rem .5rem;
 				margin: 0;
 				color: $primaryTextColor;
-				border-top-right-radius: 5px;
-				border-top-left-radius: 5px;
-
+				font-size: .7em;
+				border-radius: 5px;
+				i {
+					font-size: 3.5em;
+				}
 			}
 			&.active {
 				a {
@@ -237,15 +249,19 @@ body {
 		// 	background-color: $primaryBGHover;
 		// 	color: $primaryTextColor;
 		// }
+
 		&.primary {
 			background-color: $primaryBG;
 			color: $primaryTextColor;
+			outline-color: invert !important;
+			outline-color: $secondaryBG !important;
 
 			&:active,
 			&:visited {
 				background-color: $primaryBG;
 				color: $primaryTextColor;
 			}
+			&:focus,
 			&:hover {
 				background-color: $primaryBGHover;
 				color: $primaryTextColor;
@@ -254,14 +270,18 @@ body {
 		&.secondary {
 			background-color: $secondaryBG;
 			color: $secondaryTextColor;
+			outline-color: invert !important;
+			outline-color: $primaryBG !important;
 			&:active,
 			&:visited {
 				background-color: $secondaryBG;
 				color: $secondaryTextColor;
 			}
+			&:focus,
 			&:hover {
 				background-color: $secondaryBGHover;
 				color: $secondaryTextColor;
+
 			}
 		}
 	}
@@ -272,6 +292,10 @@ body {
 		background-color: $lightBG;
 		resize: none;
 	}
+	option[disabled], option:disabled {
+		color: #aaa;
+	}
+
 
 
 	.creator-preview {
@@ -289,8 +313,10 @@ body {
 		color: $fontColor;
 		font-size: 2rem;
 		margin: 0;
-		padding: 1rem 0 0 0;
 		overflow: hidden;
+		&.cordova {
+			padding: 1rem 0 0 0;
+		}
 		h1 {
 			a {
 				color: $fontColor;
@@ -307,15 +333,17 @@ body {
 			padding: 0;
 			margin: 0;
 		}
+
 		.sub-menu {
-			float: right;
-			text-align: right;
 		}
 		.app-menu {
-			float: left;
-			text-align: left;
-			margin-right: .5rem;
-			padding-top: .25rem;
+
+			a {
+				color: $secondaryBG;
+				&:hover {
+					color: $primaryBG;
+				}
+			}
 		}
 	}
 
@@ -347,24 +375,6 @@ body {
 		}
 
 	}
-
-/*
-	.fieldset {
-		color: $fontColor;
-		border-color: $primaryBG;
-		legend {
-			background: $bodyBackground;
-			color: $primaryBG;
-			padding: 0 1rem;
-			font-size: 1.1rem;
-			font-weight: 500;
-		}
-
-	}
-	strong {
-		color: $primaryBG;
-	}
-*/
 
 	.small-text {
 		font-size: .7em;
@@ -466,6 +476,11 @@ body {
 	}
 }
 
+.inline-block {
+	display: inline-block;
+	width: auto;
+}
+
 .skill-entry {
 	overflow: hidden;
 	margin: 0 0 2px 0;
@@ -540,6 +555,7 @@ button.round, .button.round {
 .overflow-hidden {
 	overflow: hidden;
 }
+
 .plus-minus-placeholder {
 	width: 27px;
 	height: 27px;
@@ -552,6 +568,8 @@ button.round, .button.round {
 	height: 100%;
 	background: rgba(0,0,0,.7);
 	z-index: 1000;
+	overflow-x: hidden;
+	overflow-y: scroll;
 	.reveal {
 		color: $fontColor;
 		background: $headerFooterBackground;
@@ -560,13 +578,17 @@ button.round, .button.round {
 		width: 80%;
 		// max-width: 100%;
 		display: block;
-		top: 10px;
+		top: 30px;
 		left: 50%;
 		margin-left: -40%;
+		margin-bottom: 30px;
 		label {
 			color: $fontColor;
 		}
 	}
+}
+.reveal-modal{
+    position : fixed;
 }
 // yeah, yeah bad pun is punny
 .even-modaler {
@@ -587,3 +609,4 @@ button.round, .button.round {
     background-size: 25% auto;
     background-position-x: 5%;
 }
+

@@ -1,0 +1,54 @@
+<div ng-include="'pages/chargen-dialog-new.html'"></div>
+<div ng-include="'pages/chargen-dialog-load.html'"></div>
+<div ng-include="'pages/chargen-dialog-save.html'"></div>
+<div ng-include="'pages/chargen-dialog-import.html'"></div>
+<div ng-include="'pages/chargen-dialog-export.html'"></div>
+<div ng-include="'pages/chargen-dialog-books.html'"></div>
+<div ng-include="'pages/chargen-dialog-validation.html'"></div>
+<div ng-include="'pages/dialog-confirm.html'"></div>
+<div ng-include="'pages/dialog-notify.html'"></div>
+<div ng-include="'pages/chargen-dialog-add-edit-power.html'"></div>
+
+
+<div ng-include="'pages/chargen-status-bar.html'"></div>
+<div class="main-content">
+	<div class="row">
+		<div class="columns small-12 medium-12 large-12">
+			<div ng-include="'pages/chargen-nav-menu.html'"></div>
+				<div class="row">
+					<div class="columns small-6 medium-6 large-6">
+						<fieldset class="fieldset text-left">
+
+							<legend translate="SPC_CAMPAIGN_POWER_LEVEL">Campaign Power Level</legend>
+							<label><input ng-change="validateAndSave()" class="no-bottom-margin" value="0" ng-model="savageCharacter.SPCSelectedPowerLevel" type="radio" name="select-power-level"> {{savageCharacter.SPCPowerLevels[0].name}}</label>
+							<label><input ng-change="validateAndSave()" class="no-bottom-margin" value="1" ng-model="savageCharacter.SPCSelectedPowerLevel" type="radio" name="select-power-level"> {{savageCharacter.SPCPowerLevels[1].name}}</label>
+							<label><input ng-change="validateAndSave()" class="no-bottom-margin" value="2" ng-model="savageCharacter.SPCSelectedPowerLevel" type="radio" name="select-power-level"> {{savageCharacter.SPCPowerLevels[2].name}}</label>
+							<label><input ng-change="validateAndSave()" class="no-bottom-margin" value="3" ng-model="savageCharacter.SPCSelectedPowerLevel" type="radio" name="select-power-level"> {{savageCharacter.SPCPowerLevels[3].name}}</label>
+							<label><input ng-change="validateAndSave()" class="no-bottom-margin" value="4" ng-model="savageCharacter.SPCSelectedPowerLevel" type="radio" name="select-power-level"> {{savageCharacter.SPCPowerLevels[4].name}}</label>
+							<br />
+							<label><input type="checkbox" class="no-bottom-margin" ng-model="savageCharacter.SPCRisingStars" ng-change="validateAndSave()"> <span translate="SPC_RISING_STARS"></span></label>
+						</fieldset>
+					</div>
+					<div class="columns small-6 medium-6 large-6">
+						<fieldset class="fieldset text-center">
+							<legend translate="SPC_CURRENT_PP">Current Power Points</legend>
+							<h2 class="no-bottom-margin">{{savageCharacter.SPCCurrentPowerPoints}}</h2>
+						</fieldset>
+
+						<fieldset class="fieldset text-center">
+							<legend translate="SPC_POWER_LIMIT">Power Limit</legend>
+							<h2 class="no-bottom-margin">{{savageCharacter.SPCPowerLimit}}</h2>
+						</fieldset>
+					</div>
+				</div>
+				<div class="row">
+					<div class="columns small-12 medium-12 large-12">
+						<fieldset class="fieldset text-center">
+							<legend translate="GENERAL_POWERS">Powers</legend>
+							<button class="button expanded primary small" translate="CHARGEN_ADD_POWER">Add Power</button>
+						</fieldset>
+					</div>
+				</div>
+		</div>
+	</div>
+</div>

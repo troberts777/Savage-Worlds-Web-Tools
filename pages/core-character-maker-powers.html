@@ -7,6 +7,7 @@
 <div ng-include="'pages/chargen-dialog-books.html'"></div>
 <div ng-include="'pages/chargen-dialog-validation.html'"></div>
 <div ng-include="'pages/dialog-confirm.html'"></div>
+<div ng-include="'pages/dialog-notify.html'"></div>
 <div ng-include="'pages/chargen-dialog-add-edit-power.html'"></div>
 
 <div ng-include="'pages/chargen-status-bar.html'"></div>
@@ -17,11 +18,67 @@
 			<fieldset class="fieldset">
 				<legend translate="GENERAL_POWERS">Powers</legend>
 				<div class="row">
-					<div class="column small-4">
+					<div class="column medium-5">
+						<fieldset class="fieldset">
+							<legend translate="CHARGEN_ARCANE_BACKGROUND">Arcane Background</legend>
+							<div ng-hide="savageCharacter.hasArcaneBackground" translate="CHARGEN_NO_ARCANE_EDGE">No arcane edge</div>
+							<div ng-show="savageCharacter.hasArcaneBackground">
+								<select ng-options="abItem as abItem.local_name group by abItem.bookObj.local_name disable when abItem.selectable == false for abItem in savageCharacter.availableArcaneBackgrounds track by abItem.tag" ng-model="savageCharacter.selectedArcaneBackground" ng-change="setArcaneBackground(savageCharacter.selectedArcaneBackground)"></select>
 
+								<div ng-show="savageCharacter.selectedArcaneBackground.powers > 0">
+									<span translage="CHARGEN_POWERS_AVAILABLE">Available Powers</span>: {{savageCharacter.selectedArcaneBackground.powers}}
+								</div>
+
+								<div ng-show="savageCharacter.selectedPowers.length > 0">
+									<span translage="CHARGEN_POWERS_USED">Selected Powers</span>: {{savageCharacter.selectedPowers.length}}
+								</div>
+
+								<div ng-show="savageCharacter.powerPointsAvailable > 0">
+									<span translage="CHARGEN_POWER_POINTS">Power Points</span>: {{savageCharacter.powerPointsAvailable}}
+								</div>
+
+							</div>
+						</fieldset>
 					</div>
-					<div class="column small-8">
+					<div class="column medium-7">
+						<fieldset class="fieldset">
+							<legend translate="CHARGEN_SELECTED_POWERS">Selected Powers</legend>
+							<div ng-hide="savageCharacter.selectedArcaneBackground.powers > 0" translate="CHARGEN_NO_POWERS_SELECTED">No powers selected</div>
+							<div ng-show="savageCharacter.selectedArcaneBackground.powers > 0">
+								<div ng-show="savageCharacter.selectedArcaneBackground.powers > savageCharacter.selectedPowers.length" class="text-right">
+									<button class="button primary small" translate="CHARGEN_ADD_POWER" ng-click="newPowerDialog();">Add Power</button>
+								</div>
 
+								<ul class="edges-hindrances">
+									<div ng-show="savageCharacter.selectedArcaneBackground.freePower != null">
+										<li>
+											<span class="item-label">
+												{{savageCharacter.selectedArcaneBackground.freePower.local_name}} (<span translate="GENERAL_FREE"></span>)
+											</span>
+										</li>
+									</div>
+									<li ng-repeat="powerItem in savageCharacter.selectedPowers">
+
+
+										<button class="button primary tiny no-bottom-margin" ng-click="removePower($index);" translate="GENERAL_REMOVE">Remove</button>
+										<button class="button secondary tiny no-bottom-margin" ng-click="editPowerDialog($index);" translate="GENERAL_EDIT">Edit</button>
+
+										<span class="item-label">
+											{{powerItem.customName}}
+
+											<span ng-show="powerItem.trapping && powerItem.trapping.tag != ''">
+												( <span ng-show="powerItem.local_name != ''">{{powerItem.local_name}}, {{powerItem.trapping.local_name}}</span> )
+											</span>
+											<span ng-show="powerItem.trapping && powerItem.trapping.tag == ''">
+												( <span ng-show="powerItem.local_name != ''">{{powerItem.local_name}}</span> )
+											</span>
+										</span>
+									</li>
+								</ul>
+
+
+							</div>
+						</fieldset>
 					</div>
 				</div>
 			</fieldset>

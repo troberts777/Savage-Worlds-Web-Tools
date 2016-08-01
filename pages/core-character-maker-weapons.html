@@ -1,0 +1,152 @@
+
+<div ng-include="'pages/chargen-dialog-new.html'"></div>
+<div ng-include="'pages/chargen-dialog-load.html'"></div>
+<div ng-include="'pages/chargen-dialog-save.html'"></div>
+<div ng-include="'pages/chargen-dialog-import.html'"></div>
+<div ng-include="'pages/chargen-dialog-export.html'"></div>
+<div ng-include="'pages/chargen-dialog-books.html'"></div>
+<div ng-include="'pages/chargen-dialog-validation.html'"></div>
+<div ng-include="'pages/dialog-confirm.html'"></div>
+<div ng-include="'pages/dialog-notify.html'"></div>
+
+<div ng-include="'pages/chargen-dialog-hand-weapons-list.html'"></div>
+<div ng-include="'pages/chargen-dialog-ranged-weapons-list.html'"></div>
+
+<div ng-include="'pages/chargen-status-bar.html'"></div>
+<div class="main-content">
+	<div class="row">
+		<div class="column small-12">
+	 		<div ng-include="'pages/chargen-nav-menu.html'"></div>
+			<fieldset class="fieldset">
+				<legend translate="CHARGEN_HAND_WEAPONS">Hand Weapons</legend>
+					<button class="button tiny radius expanded primary" ng-click="handWeaponDialog()" translate="CHARGEN_ADD_HAND_WEAPON">Add Hand Weapon</button>
+					<div ng-show="savageCharacter.selectedHandWeapons.length > 0">
+						<table class="gear-list">
+							<thead>
+								<tr>
+									<th></th>
+									<th></th>
+									<th></th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<tr class="no-bottom-border" ng-repeat-start="gearItem in savageCharacter.selectedHandWeapons">
+									<td>{{gearItem.local_name}}</td>
+									<td>
+										<div ng-show="gearItem.purchaseCost != gearItem.cost">
+											<div ng-show="gearItem.purchaseCost == 0">
+												<span class="alert label" translate="GENERAL_PURCHASED_FREE"></span>
+											</div>
+											<div ng-show="gearItem.purchaseCost != 0">
+												${{gearItem.purchaseCost}} <span class="alert label" translate="GENERAL_REDUCED"></span>
+											</div>
+										</div>
+										<div ng-show="gearItem.purchaseCost == gearItem.cost">
+											${{gearItem.purchaseCost}}
+										</div>
+									</td>
+									<td>{{gearItem.weight}}</td>
+									<td class="text-right">
+										<button class="button primary tiny radius no-bottom-margin" ng-click="removeHandWeapon($index);" translate="GENERAL_REMOVE">Remove</button>
+									</td>
+								</tr>
+
+								<tr ng-class="{'no-bottom-border':gearItem.readiedLocation == ''}" ng-repeat-end>
+									<td colspan="2" class="text-left">
+
+										<span class="equip-message" ng-show="gearItem.requires_2_hands > 0 && gearItem.readiedLocation == 'primary'" translate="CREATOR_EQUIPPED_BOTH_HANDS">Equipped in Both Hands</span>
+
+										<span class="equip-message" ng-show="gearItem.requires_2_hands == 0 && gearItem.readiedLocation == 'primary'" translate="CREATOR_EQUIPPED_PRIMARY">Equipped in Primary Hand</span>
+										<span class="equip-message" ng-show="gearItem.requires_2_hands == 0 && gearItem.readiedLocation == 'secondary'" translate="CREATOR_EQUIPPED_OFF">Equipped in Off Hand</span>
+
+									</td>
+									<td colspan="2" class="text-right">
+										<span ng-show="gearItem.requires_2_hands > 0">
+											<button ng-show="gearItem.readiedLocation != 'primary'" class="button primary tiny radius no-bottom-margin" ng-click="equipPrimaryHandWeapon($index);" translate="GENERAL_EQUIP">Equip</button>
+										</span>
+										<span ng-hide="gearItem.requires_2_hands > 0">
+											<button ng-show="gearItem.readiedLocation != 'primary'" class="button primary tiny radius no-bottom-margin" ng-click="equipPrimaryHandWeapon($index);" translate="GENERAL_EQUIP_PRIMARY">Equip Primary</button>
+											<button ng-show="gearItem.readiedLocation != 'secondary'" class="button primary tiny radius no-bottom-margin" ng-click="equipSecondaryHandWeapon($index);" translate="GENERAL_EQUIP_SECONDARY">Equip Secondary</button>
+										</span>
+										<button ng-show="gearItem.readiedLocation != ''" class="button primary tiny radius no-bottom-margin" ng-click="unequipHandWeapon($index);" translate="GENERAL_UNEQUIP">Unequip</button>
+									</td>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+
+				</fieldset>
+
+				<fieldset class="fieldset">
+				<legend translate="CHARGEN_RANGED_WEAPONS">Ranged Weapons</legend>
+					<button class="button tiny radius expanded primary" ng-click="rangedWeaponDialog()" translate="CHARGEN_ADD_RANGED_WEAPON">Add Ranged Weapon</button>
+					<div ng-show="savageCharacter.selectedRangedWeapons.length > 0">
+						<table class="gear-list">
+							<thead>
+								<tr>
+									<th></th>
+									<th></th>
+									<th></th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<tr class="no-bottom-border" ng-repeat-start="gearItem in savageCharacter.selectedRangedWeapons">
+									<td>{{gearItem.local_name}}</td>
+									<td>
+										<div ng-show="gearItem.purchaseCost != gearItem.cost">
+											<div ng-show="gearItem.purchaseCost == 0">
+												<span class="alert label" translate="GENERAL_PURCHASED_FREE"></span>
+											</div>
+											<div ng-show="gearItem.purchaseCost != 0">
+												${{gearItem.purchaseCost}} <span class="alert label" translate="GENERAL_REDUCED"></span>
+											</div>
+										</div>
+										<div ng-show="gearItem.purchaseCost == gearItem.cost">
+											${{gearItem.purchaseCost}}
+										</div>
+									</td>
+									<td>{{gearItem.weight}}</td>
+									<td class="text-right">
+										<button class="button primary tiny radius no-bottom-margin" ng-click="removeRangedWeapon($index);" translate="GENERAL_REMOVE">Remove</button>
+									</td>
+								</tr>
+
+								<tr ng-class="{'no-bottom-border':gearItem.readiedLocation == ''}" ng-repeat-end>
+									<td colspan="2" class="text-left">
+
+										<span class="equip-message" ng-show="gearItem.requires_2_hands > 0 && gearItem.readiedLocation == 'primary'" translate="CREATOR_EQUIPPED_BOTH_HANDS">Equipped in Both Hands</span>
+
+										<span class="equip-message" ng-show="gearItem.requires_2_hands == 0 && gearItem.readiedLocation == 'primary'" translate="CREATOR_EQUIPPED_PRIMARY">Equipped in Primary Hand</span>
+										<span class="equip-message" ng-show="gearItem.requires_2_hands == 0 && gearItem.readiedLocation == 'secondary'" translate="CREATOR_EQUIPPED_OFF">Equipped in Off Hand</span>
+
+									</td>
+									<td colspan="2" class="text-right">
+										<span ng-show="gearItem.requires_2_hands > 0">
+											<button ng-show="gearItem.readiedLocation != 'primary'" class="button primary tiny radius no-bottom-margin" ng-click="equipPrimaryRangedWeapon($index);" translate="GENERAL_EQUIP">Equip</button>
+										</span>
+										<span ng-hide="gearItem.requires_2_hands > 0">
+											<button ng-show="gearItem.readiedLocation != 'primary'" class="button primary tiny radius no-bottom-margin" ng-click="equipPrimaryRangedWeapon($index);" translate="GENERAL_EQUIP_PRIMARY">Equip Primary</button>
+											<button ng-show="gearItem.readiedLocation != 'secondary'" class="button primary tiny radius no-bottom-margin" ng-click="equipSecondaryRangedWeapon($index);" translate="GENERAL_EQUIP_SECONDARY">Equip Secondary</button>
+										</span>
+										<button ng-show="gearItem.readiedLocation != ''" class="button primary tiny radius no-bottom-margin" ng-click="unequipRangedWeapon($index);" translate="GENERAL_UNEQUIP">Unequip</button>
+									</td>
+								</tr>
+
+							</tbody>
+						</table>
+					</div>
+
+				</fieldset>
+			</div>
+
+		</div>
+
+
+	</div>
+	<div class="bottom-status-padding">&nbsp;</div>
+</div>

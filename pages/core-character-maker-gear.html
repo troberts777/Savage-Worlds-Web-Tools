@@ -7,6 +7,9 @@
 <div ng-include="'pages/chargen-dialog-books.html'"></div>
 <div ng-include="'pages/chargen-dialog-validation.html'"></div>
 <div ng-include="'pages/dialog-confirm.html'"></div>
+<div ng-include="'pages/dialog-notify.html'"></div>
+
+<div ng-include="'pages/chargen-dialog-gear-list.html'"></div>
 
 <div ng-include="'pages/chargen-status-bar.html'"></div>
 <div class="main-content">
@@ -15,310 +18,53 @@
 	 		<div ng-include="'pages/chargen-nav-menu.html'"></div>
 			<fieldset class="fieldset">
 				<legend translate="GENERAL_GEAR">Gear</legend>
-					<div class="row">
-						<div class="column small-6">
+					<button class="button tiny radius expanded primary" ng-click="gearDialog()" translate="CHARGEN_ADD_GEAR">Add Gear</button>
+					<div ng-show="savageCharacter.selectedMundaneGear.length > 0">
+						<table class="gear-list">
+							<thead>
+								<tr>
+									<th></th>
+									<th></th>
+									<th></th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="no-bottom-border" ng-repeat-start="gearItem in savageCharacter.selectedMundaneGear">
+									<td>{{gearItem.local_name}}<span ng-show="gearItem.count > 1"> (x{{gearItem.count}})</span></td>
+									<td>
+										<div ng-show="gearItem.purchaseCost != gearItem.cost">
+											<div ng-show="gearItem.purchaseCost == 0">
+												<span class="alert label" translate="GENERAL_PURCHASED_FREE"></span>
+											</div>
+											<div ng-show="gearItem.purchaseCost != 0">
+												${{gearItem.totalPurchaseCost}}
+												<span ng-show="gearItem.purchaseCost != gearItem.totalPurchaseCost"> (${{gearItem.purchaseCost}} <span translate="GENERAL_EACH">each</span>)</span>  <span class="alert label" translate="GENERAL_REDUCED"></span>
+											</div>
+										</div>
+										<div ng-show="gearItem.purchaseCost == gearItem.cost">
+											${{gearItem.totalPurchaseCost}}
+											<span ng-show="gearItem.purchaseCost != gearItem.totalPurchaseCost"> (${{gearItem.purchaseCost}} <span translate="GENERAL_EACH">each</span>)</span>
+										</div>
+									</td>
+									<td>
 
-
-							<fieldset class="fieldset">
-								<legend translate="CHARGEN_WEAPONS">Weapons</legend>
-								<table class="gear-list">
-									<thead>
-										<tr>
-											<th></th>
-											<th></th>
-											<th></th>
-											<th></th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr ng-repeat="gearItem in savageCharacter.availableWeapons">
-											<td>{{gearItem.local_name}}</td>
-											<td>${{gearItem.cost}}</td>
-											<td>{{gearItem.weight}}</td>
-											<td class="text-right">
-												<button class="button secondary tiny radius no-bottom-margin" ng-click="buyWeapon(gearItem.book, gearItem.tag, true);" translate="GENERAL_BUY_FREE">Buy Free</button>
-												<button class="button primary tiny radius no-bottom-margin" ng-click="buyWeapon(gearItem.book, gearItem.tag, false);" translate="GENERAL_BUY">Buy</button>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-
-							</fieldset>
-
-							<fieldset class="fieldset">
-								<legend translate="CHARGEN_ARMOR">Armor</legend>
-								<table class="gear-list">
-									<thead>
-										<tr>
-											<th></th>
-											<th></th>
-											<th></th>
-											<th></th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr ng-repeat="gearItem in savageCharacter.availableArmor">
-											<td>{{gearItem.local_name}}</td>
-											<td>${{gearItem.cost}}</td>
-											<td>{{gearItem.weight}}</td>
-											<td class="text-right">
-												<button class="button secondary tiny radius no-bottom-margin" ng-click="buyArmor(gearItem.book, gearItem.tag, true);" translate="GENERAL_BUY_FREE">Buy Free</button>
-												<button class="button primary tiny radius no-bottom-margin" ng-click="buyArmor(gearItem.book, gearItem.tag, false);" translate="GENERAL_BUY">Buy</button>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</fieldset>
-
-							<fieldset class="fieldset">
-								<legend translate="CHARGEN_SHIELDS">Shields</legend>
-								<table class="gear-list">
-									<thead>
-										<tr>
-											<th></th>
-											<th></th>
-											<th></th>
-											<th></th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr ng-repeat="gearItem in savageCharacter.availableShields">
-											<td>{{gearItem.local_name}}</td>
-											<td>${{gearItem.cost}}</td>
-											<td>{{gearItem.weight}}</td>
-											<td class="text-right">
-												<button class="button secondary tiny radius no-bottom-margin" ng-click="buyShield(gearItem.book, gearItem.tag, true);" translate="GENERAL_BUY_FREE">Buy Free</button>
-												<button class="button primary tiny radius no-bottom-margin" ng-click="buyShield(gearItem.book, gearItem.tag, false);" translate="GENERAL_BUY">Buy</button>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-
-							</fieldset>
-
-							<fieldset class="fieldset">
-								<legend translate="CHARGEN_MUNDANE_GEAR">Mundane Gear</legend>
-								<table class="gear-list">
-									<thead>
-										<tr>
-											<th></th>
-											<th></th>
-											<th></th>
-											<th></th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr ng-repeat="gearItem in savageCharacter.availableMundaneGear">
-											<td>{{gearItem.local_name}}</td>
-											<td>${{gearItem.cost}}</td>
-											<td>{{gearItem.weight}}</td>
-											<td class="text-right">
-												<button class="button secondary tiny radius no-bottom-margin" ng-click="buyMundane(gearItem.book, gearItem.tag, true);" translate="GENERAL_BUY_FREE">Buy Free</button>
-												<button class="button primary tiny radius no-bottom-margin" ng-click="buyMundane(gearItem.book, gearItem.tag, false);" translate="GENERAL_BUY">Buy</button>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-
-							</fieldset>
-
-						</div>
-						<div class="column small-6">
-							<fieldset class="fieldset">
-								<legend translate="CHARGEN_ADDED_GEAR">Added Gear</legend>
-
-								<div ng-show="savageCharacter.selectedWeapons.length > 0">
-									<h4 translate="CHARGEN_WEAPONS">Weapons</h4>
-									<table class="gear-list">
-										<thead>
-											<tr>
-												<th></th>
-												<th></th>
-												<th></th>
-												<th></th>
-											</tr>
-										</thead>
-										<tbody>
-
-												<tr class="no-bottom-border" ng-repeat-start="gearItem in savageCharacter.selectedWeapons">
-													<td>{{gearItem.local_name}}</td>
-													<td>
-														<div ng-show="gearItem.purchaseCost != gearItem.cost">
-															<div ng-show="gearItem.purchaseCost == 0">
-																<span class="alert label" translate="GENERAL_PURCHASED_FREE"></span>
-															</div>
-															<div ng-show="gearItem.purchaseCost != 0">
-																${{gearItem.purchaseCost}} <span class="alert label" translate="GENERAL_REDUCED"></span>
-															</div>
-														</div>
-														<div ng-show="gearItem.purchaseCost == gearItem.cost">
-															${{gearItem.purchaseCost}}
-														</div>
-													</td>
-													<td>{{gearItem.weight}}</td>
-													<td class="text-right">
-														<button class="button primary tiny radius no-bottom-margin" ng-click="removeWeapon($index);" translate="GENERAL_REMOVE">Remove</button>
-													</td>
-												</tr>
-
-												<tr ng-repeat-end>
-													<td colspan="2" class="text-left">
-														<span class="equip-message" ng-show="gearItem.readiedLocation == 'primary'" translate="CREATOR_EQUIPPED_PRIMARY">Equipped in Primary Hand</span>
-														<span class="equip-message" ng-show="gearItem.readiedLocation == 'secondary'" translate="CREATOR_EQUIPPED_OFF">Equipped in Off Hand</span>
-													</td>
-													<td colspan="2" class="text-right">
-														<button ng-show="gearItem.readiedLocation != 'primary'" class="button primary tiny radius no-bottom-margin" ng-click="equipPrimaryWeapon($index);" translate="GENERAL_EQUIP_PRIMARY">Equip Primary</button>
-														<button ng-show="gearItem.readiedLocation != 'secondary'" class="button primary tiny radius no-bottom-margin" ng-click="equipSecondaryWeapon($index);" translate="GENERAL_EQUIP_SECONDARY">Equip Secondary</button>
-														<button ng-show="gearItem.readiedLocation != ''" class="button primary tiny radius no-bottom-margin" ng-click="unequipWeapon($index);" translate="GENERAL_UNEQUIP">Unequip</button>
-													</td>
-												</tr>
-
-										</tbody>
-									</table>
-								</div>
-								<div ng-show="savageCharacter.selectedArmor.length > 0">
-									<h4 translate="CHARGEN_ARMOR">Armor</h4>
-									<table class="gear-list">
-										<thead>
-											<tr>
-												<th></th>
-												<th></th>
-												<th></th>
-												<th></th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr ng-repeat-start="gearItem in savageCharacter.selectedArmor">
-												<td>{{gearItem.local_name}}</td>
-												<td>
-													<div ng-show="gearItem.purchaseCost != gearItem.cost">
-														<div ng-show="gearItem.purchaseCost == 0">
-															<span class="alert label" translate="GENERAL_PURCHASED_FREE"></span>
-														</div>
-														<div ng-show="gearItem.purchaseCost != 0">
-															${{gearItem.purchaseCost}} <span class="alert label" translate="GENERAL_REDUCED"></span>
-														</div>
-													</div>
-													<div ng-show="gearItem.purchaseCost == gearItem.cost">
-														${{gearItem.purchaseCost}}
-													</div>
-												</td>
-												<td>{{gearItem.weight}}</td>
-												<td class="text-right">
-													<button class="button primary tiny radius no-bottom-margin" ng-click="removeArmor($index);" translate="GENERAL_REMOVE">Remove</button>
-												</td>
-											</tr>
-												<tr ng-repeat-end>
-													<td colspan="2" class="text-left">
-														<span class="equip-message" ng-show="gearItem.isReadied" translate="CREATOR_ARMOR_WORN">Worn</span>
-													</td>
-													<td colspan="2" class="text-right">
-														<button ng-show="gearItem.isReadied == false" class="button primary tiny radius no-bottom-margin" ng-click="equipArmor($index);" translate="GENERAL_EQUIP">Equip</button>
-														<button ng-show="gearItem.isReadied == true" class="button primary tiny radius no-bottom-margin" ng-click="unequipArmor($index);" translate="GENERAL_UNEQUIP">Unequip</button>
-													</td>
-												</tr>
-										</tbody>
-									</table>
-								</div>
-
-								<div ng-show="savageCharacter.selectedShields.length > 0">
-									<h4 translate="CHARGEN_SHIELDS">Shields</h4>
-									<table class="gear-list">
-										<thead>
-											<tr>
-												<th></th>
-												<th></th>
-												<th></th>
-												<th></th>
-											</tr>
-										</thead>
-										<tbody>
-
-												<tr class="no-bottom-border" ng-repeat-start="gearItem in savageCharacter.selectedShields">
-													<td>{{gearItem.local_name}}</td>
-													<td>
-														<div ng-show="gearItem.purchaseCost != gearItem.cost">
-															<div ng-show="gearItem.purchaseCost == 0">
-																<span class="alert label" translate="GENERAL_PURCHASED_FREE"></span>
-															</div>
-															<div ng-show="gearItem.purchaseCost != 0">
-																${{gearItem.purchaseCost}} <span class="alert label" translate="GENERAL_REDUCED"></span>
-															</div>
-														</div>
-														<div ng-show="gearItem.purchaseCost == gearItem.cost">
-															${{gearItem.purchaseCost}}
-														</div>
-													</td>
-													<td>{{gearItem.weight}}</td>
-													<td class="text-right">
-														<button class="button primary tiny radius no-bottom-margin" ng-click="removeShield($index);" translate="GENERAL_REMOVE">Remove</button>
-													</td>
-												</tr>
-
-												<tr ng-repeat-end>
-													<td colspan="2" class="text-left">
-														<span class="equip-message" ng-show="gearItem.readiedLocation == 'primary'" translate="CREATOR_EQUIPPED_PRIMARY">Equipped in Primary Hand</span>
-														<span class="equip-message" ng-show="gearItem.readiedLocation == 'secondary'" translate="CREATOR_EQUIPPED_OFF">Equipped in Off Hand</span>
-													</td>
-													<td colspan="2" class="text-right">
-														<button ng-show="gearItem.readiedLocation != 'primary'" class="button primary tiny radius no-bottom-margin" ng-click="equipPrimaryShield($index);" translate="GENERAL_EQUIP_PRIMARY">Equip Primary</button>
-														<button ng-show="gearItem.readiedLocation != 'secondary'" class="button primary tiny radius no-bottom-margin" ng-click="equipSecondaryShield($index);" translate="GENERAL_EQUIP_SECONDARY">Equip Secondary</button>
-														<button ng-show="gearItem.readiedLocation != ''" class="button primary tiny radius no-bottom-margin" ng-click="unequipShield($index);" translate="GENERAL_UNEQUIP">Unequip</button>
-													</td>
-												</tr>
-
-										</tbody>
-									</table>
-								</div>
-
-								<div ng-show="savageCharacter.selectedMundaneGear.length > 0">
-									<h4 translate="CHARGEN_MUNDANE_GEAR">Mundane Gear</h4>
-									<table class="gear-list">
-										<thead>
-											<tr>
-												<th></th>
-												<th></th>
-												<th></th>
-												<th></th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr class="no-bottom-border" ng-repeat-start="gearItem in savageCharacter.selectedMundaneGear">
-												<td>{{gearItem.local_name}}</td>
-												<td>
-													<div ng-show="gearItem.purchaseCost != gearItem.cost">
-														<div ng-show="gearItem.purchaseCost == 0">
-															<span class="alert label" translate="GENERAL_PURCHASED_FREE"></span>
-														</div>
-														<div ng-show="gearItem.purchaseCost != 0">
-															${{gearItem.purchaseCost}} <span class="alert label" translate="GENERAL_REDUCED"></span>
-														</div>
-													</div>
-													<div ng-show="gearItem.purchaseCost == gearItem.cost">
-														${{gearItem.purchaseCost}}
-													</div>
-												</td>
-												<td>{{gearItem.weight}}</td>
-												<td class="text-right">
-													<button class="button primary tiny radius no-bottom-margin" ng-click="removeMundane($index);" translate="GENERAL_REMOVE">Remove</button>
-												</td>
-											</tr>
-												<tr ng-repeat-end>
-													<td colspan="4" class="text-left">
-														<label><input type="checkbox" ng-change="setDroppedDuringCombat('gear', $index,gearItem.droppedDuringCombat)"  ng-model="gearItem.droppedDuringCombat" /> <span translate="CHARGEN_DROP_ITEM_COMBAT">Drop item while in combat</span></label>
-													</td>
-												</tr>
-										</tbody>
-									</table>
-								</div>
-
-
-
-
-
-							</fieldset>
-						</div>
+										${{gearItem.totalWeight}}
+											<span ng-show="gearItem.weight != gearItem.totalWeight"> ({{gearItem.weight}} <span translate="GENERAL_EACH">each</span>)</span>
+									</td>
+									<td class="text-right">
+										<button class="button primary tiny radius no-bottom-margin" ng-click="removeMundane($index);" translate="GENERAL_REMOVE">Remove</button>
+									</td>
+								</tr>
+									<tr ng-repeat-end>
+										<td colspan="4" class="text-left">
+											<label><input type="checkbox" ng-change="setDroppedDuringCombat('gear', $index,gearItem.droppedDuringCombat)"  ng-model="gearItem.droppedDuringCombat" /> <span translate="CHARGEN_DROP_ITEM_COMBAT">Drop item while in combat</span></label>
+										</td>
+									</tr>
+							</tbody>
+						</table>
 					</div>
+
 				</fieldset>
 			</div>
 

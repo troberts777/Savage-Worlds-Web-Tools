@@ -26,11 +26,6 @@ savageWorldsSciFiOptions['walker'] = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'This is a proposed walker size for 12-15 foot tall, Heavy Gear sized, Walkers. <a href=\'http://www.peginc.com/forum/viewtopic.php?t=45126\'>The discussion is here</a>.\n',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 type: 'bool',
 	 short_tag: 'ultra-light',
 }
@@ -53,7 +48,7 @@ savageWorldsSciFiSizes['walker'] = Array(
 	 ts: 0,
 	 climb: 0,
 	 pace: 30,
-	 toughness: 0,
+	 toughness: 15,
 	 armor: 4,
 	 mods: 15,
 	 crew: 1,
@@ -204,9 +199,6 @@ savageWorldsSciFiMods['walker'] = Array(
 	 name: {
 		 'en-US': 'AMCM',
 	},
-	 description: {
-		 'en-US': 'Anti-Missile Counter Measures are integrated jammers and decoys. They add +2 to Driving, Piloting or Knowledge (Electronics) rolls made to evade missile attacks.',
-	},
 	 tag: 'amcm',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -219,9 +211,6 @@ return 5000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Armor',
-	},
-	 description: {
-		 'en-US': 'Increases a walker&apos;s Armor value by +2. All walker Armor is considered Heavy Armor.',
 	},
 	 tag: 'armor',
 getMax: function(selectedObject) { return selectedObject.size },
@@ -242,9 +231,6 @@ selectedObject.toughness++;
 	 name: {
 		 'en-US': 'Close Combat Weapon',
 	},
-	 description: {
-		 'en-US': 'Some walkers are equipped with chain- blades or swords designed to cut through the hard armor of rival mechs, buildings, or enemy tanks. They have AP equal to the mech&apos;s Size and cause Str+2d10 damage (Heavy Weapon). The pilot uses the lower of his Fighting or Piloting to hit. The TN to hit an enemy mech or vehicle is 4, plus or minus normal speed or Size modifiers. Walkers aren&apos;t subject to all the normal rules of close combat, but GMs can use those as the basis for situational modifiers based on specific circumstances (such as multiple mechs ganging up on a foe).',
-	},
 	 tag: 'close-combat-weapon',
 getMax: function(selectedObject) { return 2 },
 getModCost: function(selectedObject) {
@@ -257,9 +243,6 @@ return 75000;
 {
 	 name: {
 		 'en-US': 'Deflector Screens',
-	},
-	 description: {
-		 'en-US': 'The vessel is protected by an energy field that deflects incoming ballistic attacks (it has no effect against lasers). Attackers must subtract ‚Ä"2 from their Shooting rolls. Mod cost is 2 for Small to Large walkers, and 3 for Huge to Gargantuan vessels.',
 	},
 	 tag: 'deflector-screens',
 getMax: function(selectedObject) { return 1 },
@@ -274,9 +257,6 @@ return 10000 * selectedObject.size;
 	 name: {
 		 'en-US': 'Electromagnetic Shielding',
 	},
-	 description: {
-		 'en-US': 'Adds +6 to the walker&apos;s effective Toughness from EMP missiles (see page 25).',
-	},
 	 tag: 'electromagnetic-shielding',
 getMax: function(selectedObject) { return "u" },
 getModCost: function(selectedObject) {
@@ -290,9 +270,6 @@ return 5000 * selectedObject.size;
 	 name: {
 		 'en-US': 'Jump Jets',
 	},
-	 description: {
-		 'en-US': 'Powerful rockets give walkers the ability to propel themselves high in the air‚Ä"to clear obstacles or perform ‚Äúdeath from above‚Äù attacks on foes. To jump, the pilot uses an action to make a Piloting roll to both maneuver his walker and manage his power reserves. Each round spent jumping increases his height 50 feet for Light walkers, 30 feet for Mediums, and 20 feet for Heavies. Each subsequent round spent jumping (essentially flying) afterwards inflicts a ‚Ä"2 to the Piloting roll, cumulative to a maximum of ‚Ä"6. Failure means the walker descends immediately (a critical failure results in a fall‚Ä"see Falling, page 59).',
-	},
 	 tag: 'jump-jets',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -305,9 +282,6 @@ return selectedObject.size / 2;
 {
 	 name: {
 		 'en-US': 'Missile Launcher',
-	},
-	 description: {
-		 'en-US': 'Allows up to four Light or two Heavy (or AT) missiles to be fired at once.',
 	},
 	 tag: 'missile-launcher',
 getMax: function(selectedObject) { return "u" },
@@ -324,11 +298,6 @@ selectedObject.hasMissileLauncher = 1;
 {
 	 name: {
 		 'en-US': 'Pace',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Increases the mech&apos;s Pace by +4. (This cannot be taken with Speed Reduction.)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -351,9 +320,6 @@ return !selectedObject.hasMod("speed-reduction");
 	 name: {
 		 'en-US': 'Passenger Compartment',
 	},
-	 description: {
-		 'en-US': 'Cramped space for four passengers. Rescue mechs often use this Modification.',
-	},
 	 tag: 'passenger-compartment',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -366,9 +332,6 @@ return 5000;
 {
 	 name: {
 		 'en-US': 'Reinforced Frame',
-	},
-	 description: {
-		 'en-US': 'Increases Toughness of the chassis by +2.',
 	},
 	 tag: 'reinforced-frame',
 getMax: function(selectedObject) { return 3 },
@@ -386,9 +349,6 @@ selectedObject.toughness = selectedObject.toughness + 2;
 	 name: {
 		 'en-US': 'Sensor Suite',
 	},
-	 description: {
-		 'en-US': '+4 Notice vs sound, motion, strong chemicals, radiation, or electrical fields up to 1000 yards.',
-	},
 	 tag: 'sensor-suite',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -401,9 +361,6 @@ return 50000;
 {
 	 name: {
 		 'en-US': 'Shields',
-	},
-	 description: {
-		 'en-US': 'The walker is protected by an ablative energy field that absorbs 10√-Size points of damage before it&apos;s depleted. Apply all damage to the shield first, then any left over to the mech (AP counts as usual). Active shields detonate missiles and torpedoes before they hit, reducing their damage total by half. A walker may regenerate its Size in shield points if it makes no attacks in a round.',
 	},
 	 tag: 'shields',
 getMax: function(selectedObject) { return 1 },
@@ -418,9 +375,6 @@ return 50000 * selectedObject.size;
 	 name: {
 		 'en-US': 'Sloped Armor',
 	},
-	 description: {
-		 'en-US': 'Non-energy, ballistic attacks against this vessel suffer a ‚Ä"2 penalty. It has no effect on energy attacks.',
-	},
 	 tag: 'sloped-armor',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -433,11 +387,6 @@ return 5000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Speed Reduction',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'The walker sacrifices speed for additional room. Subtract 2 from Pace and add half its Size in Mod slots (round down).',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -461,9 +410,6 @@ return !selectedObject.hasMod("pace");
 	 name: {
 		 'en-US': 'Stealth System',
 	},
-	 description: {
-		 'en-US': 'Radar-absorbing paint, heat baffles, scramblers, and other devices make the walker difficult to detect by vision or sensors. Those trying to attack or spot the mech subtract 4 from their rolls. The effect is triggered as a free action, but is negated any round in which the walker fires a weapon or emits some other non- cloakable signal such as radio signal or active sensor search.',
-	},
 	 tag: 'stealth-system',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -476,9 +422,6 @@ return 50000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Strength Enhancement',
-	},
-	 description: {
-		 'en-US': 'Add +2 to the walker&apos;s Strength.',
 	},
 	 tag: 'strength-enhancement',
 getMax: function(selectedObject) { return 1 },
@@ -495,11 +438,6 @@ selectedObject.strength +=  2;
 {
 	 name: {
 		 'en-US': 'Targeting System',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'The walker&apos;s internal sensors and computers are linked to all attached weapons. This compensates for movement, range, multi-actions, and the like, negating up to two points of Shooting penalties.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},

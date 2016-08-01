@@ -1,23 +1,44 @@
+<div class="text-center">
 <ul class="sub-nav-tab">
+	<li ng-class="{active: $route.current.activetab == 'chargen-char-welcome'}">
+		<a href="#/core/character-maker-welcome"><i class="fa fa-cogs"></i><br /><span translate="CREATOR_OPTIONS_DIALOG">Options</span></a>
+	</li>
 	<li ng-class="{active: $route.current.activetab == 'chargen-char-info'}">
-		<a href="#/core/character-maker-char-info" translate="CHARGEN_CHARACTER_INFORMATION">Info</a>
+		<a href="#/core/character-maker-char-info"><i class="fa fa-info-circle"></i><br /><span translate="CHARGEN_CHARACTER_INFORMATION">Info</span></a>
+	</li>
+	<li ng-show="savageCharacter.usesRiftsCreation" ng-class="{active: $route.current.activetab == 'chargen-iconic-frameworks'}">
+		<a href="#/core/character-maker-iconic-frameworks"><i class="fa fa-gear"></i><br /><span translate="GENERAL_ICONIC_FRAMEWORKS">Iconic Frameworks</span></a>
 	</li>
 	<li ng-class="{active: $route.current.activetab == 'chargen-traits'}">
-		<a href="#/core/character-maker-traits" translate="GENERAL_TRAITS">Traits</a>
+		<a href="#/core/character-maker-traits"><i class="fa fa-user"></i><br /><span translate="GENERAL_TRAITS">Traits</span></a>
 	</li>
-	<li ng-class="{active: $route.current.activetab == 'chargen-skills'}">
+<!-- 	<li ng-class="{active: $route.current.activetab == 'chargen-skills'}">
 		<a href="#/core/character-maker-skills" translate="GENERAL_SKILLS">Skills</a>
-	</li>
+	</li> -->
 	<li ng-class="{active: $route.current.activetab == 'chargen-hindrances-and-edges'}">
-		<a href="#/core/character-maker-hindrances-and-edges" translate="GENERAL_EDGES_AND_HINDRANCES">Edges/Hindrances</a>
+		<a href="#/core/character-maker-hindrances-and-edges"><i class="fa fa-heart"></i><br /><span translate="GENERAL_EDGES_AND_HINDRANCES">Edges/Hindrances</span></a>
+	</li>
+	<li ng-class="{active: $route.current.activetab == 'chargen-weapons'}" >
+		<a href="#/core/character-maker-weapons"><i class="fa fa-gavel"></i><br /><span translate="CHARGEN_WEAPONS">Weapons</span></a>
+	</li>
+	<li ng-class="{active: $route.current.activetab == 'chargen-armor'}" >
+		<a href="#/core/character-maker-armor"><i class="fa fa-shield"></i><br /><span translate="CHARGEN_ARMOR">Armor</span></a>
 	</li>
 	<li ng-class="{active: $route.current.activetab == 'chargen-gear'}" >
-		<a href="#/core/character-maker-gear" translate="GENERAL_GEAR">Gear</a>
+		<a href="#/core/character-maker-gear"><i class="fa fa-shopping-bag"></i><br /><span translate="GENERAL_GEAR">Gear</span></a>
 	</li>
-	<li ng-class="{active: $route.current.activetab == 'chargen-powers'}">
-		<a href="#/core/character-maker-powers" translate="GENERAL_POWERS">Powers</a>
+	<li ng-show="savageCharacter.usesStrain" ng-class="{active: $route.current.activetab == 'chargen-cyberware'}" >
+		<a href="#/core/character-maker-cyberware"><i class="fa fa-usb"></i><br /><span translate="GENERAL_CYBERWARE">Cyberware</span></a>
+	</li>
+	<li ng-show="savageCharacter.hasArcaneBackground" ng-class="{active: $route.current.activetab == 'chargen-powers'}">
+		<a href="#/core/character-maker-powers"><i class="fa fa-magic"></i><br /><span translate="GENERAL_POWERS">Powers</span></a>
+	</li>
+
+	<li ng-show="savageCharacter.usesSPCCreation" ng-class="{active: $route.current.activetab == 'chargen-spc-powers'}">
+		<a href="#/core/character-maker-spc-powers"><i class="fa fa-star"></i><br /><span translate="GENERAL_SUPER_POWERS">Super Powers</span></a>
 	</li>
 	<li ng-class="{active: $route.current.activetab == 'chargen-advancements'}">
-		<a href="#/core/character-maker-advancements" translate="GENERAL_ADVANCEMENTS">Advancement</a>
+		<a href="#/core/character-maker-advancements"><i class="fa fa-line-chart"></i><br /><span translate="GENERAL_ADVANCES">Advances</span></a>
 	</li>
 </ul>
+</div>

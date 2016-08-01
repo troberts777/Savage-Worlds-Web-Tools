@@ -7,6 +7,7 @@
 <div ng-include="'pages/chargen-dialog-books.html'"></div>
 <div ng-include="'pages/chargen-dialog-validation.html'"></div>
 <div ng-include="'pages/dialog-confirm.html'"></div>
+<div ng-include="'pages/dialog-notify.html'"></div>
 
 <div ng-include="'pages/chargen-status-bar.html'"></div>
 <div class="main-content">
@@ -16,15 +17,108 @@
 			<fieldset class="fieldset">
 				<legend translate="GENERAL_ADVANCEMENTS">Advancements</legend>
 				<div class="row">
-					<div class="column small-4">
-						<label>
-							<span translate="CHARGEN_XP">XP</span>:<br />
-							<select ng-options="xpItem as xpItem.label group by xpItem.rankName for xpItem in savageCharacter.xpOptions track by xpItem.value" ng-model="savageCharacter.XP" ng-change="setXP(savageCharacter.XP)"></select>
+					<div class="column small-12 text-left">
+						<label class="inline-block">
+							<span translate="CHARGEN_XP">XP</span>:
+							<select class="no-bottom-margin inline-block " ng-options="xpItem as xpItem.label group by xpItem.rankName for xpItem in savageCharacter.xpOptions track by xpItem.value" ng-model="savageCharacter.XP" ng-change="setXP(savageCharacter.XP)"></select>
 						</label>
-						<div ng-bind-html="savageCharacter.XP.rankName"></div>
+						&nbsp;
+						<span translate="CHARGEN_SELECTED_RANK">Rank</span>: <span ng-bind="savageCharacter.XP.rankName"></span>
+
 					</div>
-					<div class="column small-8">
-						TODO: Advancement Slots..
+				</div>
+			</fieldset>
+			<fieldset class="fieldset">
+				<legend translate="GENERAL_ADVANCEMENT_SELECTIONS">Advancements</legend>
+					<div class="column small-12">
+						<div ng-show="savageCharacter.availableAdvancements == 0" translate="CHARGEN_NO_ADVANCEMENT_SLOTS_AVAILABLE"></div>
+						<div ng-hide="savageCharacter.availableAdvancements == 0">
+
+							<ul class="edges-hindrances">
+								<div ng-repeat="advancementItem in savageCharacter.selectedAdvancements track by $index">
+								<h3 ng-show="$index == 0" translate="CHARGEN_RANK_NOVICE">Novice</h3>
+								<h3 ng-show="$index == 3" translate="CHARGEN_RANK_SEASONED">Seasoned</h3>
+								<h3 ng-show="$index == 7" translate="CHARGEN_RANK_VETERAN">Veteran</h3>
+								<h3 ng-show="$index == 11" translate="CHARGEN_RANK_HEROIC">Heroic</h3>
+								<h3 ng-show="$index == 15" translate="CHARGEN_RANK_LEGENDARY">Legendary</h3>
+								<li>
+									<select class="no-bottom-margin inline-block pad-right" ng-options="advItem as advItem.label for advItem in savageCharacter.advancementTypes track by advItem.tag" ng-model="advancementItem" ng-change="setAdvancementType($index, advancementItem.tag)"></select>
+
+									<span ng-show="advancementItem.tag != ''">
+										&nbsp;<i class="fa fa-arrow-circle-right"></i>&nbsp;
+									</span>
+									<span ng-show="advancementItem.tag == 'attribute'">
+										<select ng-change="setAdvancementOption1($index, advancementItem.option1)" ng-model="advancementItem.option1" class="no-bottom-margin inline-block pad-right" >
+											<option value="" translate="GENERAL_SELECT">-Select-</option>
+											<option ng-disabled="advancementItem.option1 != 'agility' && savageCharacter.displayAttributes.agility.value >= 12" value="agility" translate="ATTRIBUTE_AGILITY">Agility</option>
+											<option ng-disabled="advancementItem.option1 != 'smarts' && savageCharacter.displayAttributes.smarts.value >= 12" value="smarts" translate="ATTRIBUTE_SMARTS">Smarts</option>
+											<option ng-disabled="advancementItem.option1 != 'spirit' && savageCharacter.displayAttributes.spirit.value >= 12" value="spirit" translate="ATTRIBUTE_SPIRIT">Spirit</option>
+											<option ng-disabled="advancementItem.option1 != 'strength' && savageCharacter.displayAttributes.strength.value >= 12" value="strength" translate="ATTRIBUTE_STRENGTH">Strength</option>
+											<option ng-disabled="advancementItem.option1 != 'vigor' && savageCharacter.displayAttributes.vigor.value >= 12" value="vigor" translate="ATTRIBUTE_VIGOR">Vigor</option>
+										</select>
+									</span>
+
+									<span ng-show="advancementItem.tag == 'skill'">
+										<select
+											class="no-bottom-margin inline-block pad-right"
+											ng-model="advancementItem.option1"
+
+											ng-options="skillItem as skillItem.local_name for skillItem in savageCharacter.allSkills  | filter:filterNewSkill(advancementItem.option1) track by skillItem.id"
+
+											ng-change="setAdvancementOption1($index, advancementItem.option1)"
+										></select>
+										<span ng-show="advancementItem.option1.specify > 0">
+											&nbsp;<strong>:</strong>&nbsp;
+											<input class="inline-block no-bottom-margin" placeholder="{{specializionPlaceholder}}" ng-model="advancementItem.option2"
+											ng-change="setAdvancementOption2($index, advancementItem.option2)" type="text">
+										</span>
+
+									</span>
+
+									<span ng-show="advancementItem.tag == 'incskill'">
+										<select
+											class="no-bottom-margin inline-block pad-right"
+											ng-model="advancementItem.option1"
+
+											ng-options="skillItem as skillItem.local_name for skillItem in savageCharacter.allSkills | filter:filterRaiseSkill(advancementItem.option1) track by skillItem.id"
+
+											ng-change="setAdvancementOption1($index, advancementItem.option1)"
+										></select>
+									</span>
+
+									<span ng-show="advancementItem.tag == 'inc2skills'">
+										<select
+											class="no-bottom-margin inline-block pad-right"
+											ng-model="advancementItem.option1"
+
+											ng-options="skillItem as skillItem.local_name for skillItem in savageCharacter.allSkills | filter:filterLowerSkill(advancementItem.option1, advancementItem.option2) track by skillItem.id"
+
+											ng-change="setAdvancementOption1($index, advancementItem.option1)"
+										></select>
+
+										&nbsp;<strong>&amp;</strong>&nbsp;
+
+										<select
+											class="no-bottom-margin inline-block pad-right"
+											ng-model="advancementItem.option2"
+
+											ng-options="skillItem as skillItem.local_name for skillItem in savageCharacter.allSkills | filter:filterLowerSkill(advancementItem.option2, advancementItem.option1) track by skillItem.id"
+
+											ng-change="setAdvancementOption2($index, advancementItem.option2)"
+										></select>
+									</span>
+
+									<span ng-show="advancementItem.tag == 'edge'">
+										<select
+											ng-change="setAdvancementOption1($index, advancementItem.option1.tag, advancementItem.option1.book)" class="no-bottom-margin inline-block pad-right"
+											ng-model="advancementItem.option1"
+											ng-options="edge as edge.select_option_name group by edge.bookObj.local_name disable when edge.selectable == false && advancementItem.option1.tag != edge.tag for edge in savageCharacter.availableEdges track by edge.tag"
+										></select>
+									</span>
+								</li>
+								</div>
+							</ul>
+						</div>
 					</div>
 				</div>
 

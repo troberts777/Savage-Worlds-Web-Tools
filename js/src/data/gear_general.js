@@ -51,6 +51,14 @@ var savageWorldsGearGeneral = Array(
 		 'de-DE': '',
 	},
 		 'id': 3
+},
+{
+	 name: {
+		 'en-US': 'Services',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'id': 7
 }
 );
 

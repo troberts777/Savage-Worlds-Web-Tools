@@ -1,9 +1,9 @@
 <!doctype html>
-<html ng-app="baseApp" class="no-js ng-scope" lang="en-US">
+<html ng-app="webApp" class="no-js ng-scope" lang="en-US">
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
-		<title ng-bind="title_tag">Savage Worlds Web Tools</title>
+		<title ng-bind="title_tag">Savage Tools</title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
@@ -25,13 +25,13 @@
 		<div class="ng-cloak">
 			<header>
 				<div class="row">
-					<div class="columns small-12 medium-3 text-left ">
+					<div class="columns small-12 medium-3 text-left app-menu">
 						<a href="#/"><i class="fa fa-home"></i></a>
 						<a href="#/settings/"><i class="fa fa-gear"></i></a>
 						<a href="#/credits/"><i class="fa fa-question"></i></a>
 
 					</div>
-					<div class="columns small-12 medium-9 medium-text-right small-text-left">
+					<div class="columns small-12 medium-9 medium-text-right small-text-left sub-menu">
 						<div ng-show="showSciFiCreatorMenu" ng-include="'pages/scifi-creator-menu.html'"></div>
 						<div ng-show="showChargenMenu" ng-include="'pages/chargen-menu.html'"></div>
 					</div>
@@ -41,9 +41,6 @@
 			<div>
 				<div ng-view></div>
 			</div>
-<!-- 			<footer>
-				Footer....
-			</footer> -->
 		</div>
 
 		<script src="./js/angular-1.5.3/angular.js"></script>

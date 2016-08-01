@@ -18,11 +18,6 @@ var savageWorldsArcaneTrappings = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'No trappings specified',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'page': '',
 		 'book': 1,
 		 'tag': ''
@@ -30,11 +25,6 @@ var savageWorldsArcaneTrappings = Array(
 {
 	 name: {
 		 'en-US': 'Acid',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': '',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -48,11 +38,6 @@ var savageWorldsArcaneTrappings = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'page': 'p122',
 		 'book': 1,
 		 'tag': 'cold'
@@ -60,11 +45,6 @@ var savageWorldsArcaneTrappings = Array(
 {
 	 name: {
 		 'en-US': 'Darkness',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': '',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -78,11 +58,6 @@ var savageWorldsArcaneTrappings = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'page': 'p122',
 		 'book': 1,
 		 'tag': 'electricity'
@@ -90,11 +65,6 @@ var savageWorldsArcaneTrappings = Array(
 {
 	 name: {
 		 'en-US': 'Fire/Heat',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': '',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -108,11 +78,6 @@ var savageWorldsArcaneTrappings = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'page': 'p123',
 		 'book': 1,
 		 'tag': 'light'
@@ -123,11 +88,6 @@ var savageWorldsArcaneTrappings = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'page': 'p123',
 		 'book': 1,
 		 'tag': 'necromantic'
@@ -135,11 +95,6 @@ var savageWorldsArcaneTrappings = Array(
 {
 	 name: {
 		 'en-US': 'Sound',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': '',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},

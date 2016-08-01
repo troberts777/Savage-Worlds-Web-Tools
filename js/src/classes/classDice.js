@@ -56,6 +56,14 @@ classDice.prototype = {
 			total_roll += roll;
 
 		}
+		if( !this.rollSetCountRolls[ this.rollSetCount ] ) {
+			this.rollSetCountRolls[ this.rollSetCount ] = {
+				base_rolls: Array(),
+				base_roll_sides: Array(),
+				wild_die_rolls: Array(),
+			};
+		}
+
 
 		this.rollSetCountRolls[ this.rollSetCount ].base_rolls.push( display_roll );
 		this.rollSetCountRolls[ this.rollSetCount ].base_roll_sides.push(number_of_sides);
@@ -261,8 +269,13 @@ classDice.prototype = {
 		return total;
 	},
 
-	displayResults: function (for_trait, for_damage) {
+	displayResults: function (for_trait, for_damage, half_damage) {
 		html = "";
+		if( half_damage && half_damage > 0)
+			half_damage = true;
+		else
+			half_damage = false;
+
 		for( results_set_count = 0; results_set_count < this.rollSetCount; results_set_count++ ) {
 			if( this.rollSetCount > 1 ) {
 				if( results_set_count > 0) {
@@ -271,14 +284,20 @@ classDice.prototype = {
 				html += "<h4>" + this.labelRollSetNumber + (results_set_count + 1) + "</h4>";
 			}
 
-
-			html += "<h5>" + this.labelTotalRoll + ": " + this.rollSetCountRolls[ results_set_count ].total_roll + "</h5>"
+			if( half_damage )
+				html += "<h5>" + this.labelTotalRoll + ": " + this.rollSetCountRolls[ results_set_count ].total_roll + " (half at " + Math.floor(this.rollSetCountRolls[ results_set_count ].total_roll / 2) + ")</h5>"
+			else
+				html += "<h5>" + this.labelTotalRoll + ": " + this.rollSetCountRolls[ results_set_count ].total_roll + "</h5>"
 
 			if( for_trait )
 				html += this.traitSuccessMargin( this.rollSetCountRolls[ results_set_count ].total_roll, null, results_set_count ) + "<br />";
 
-			if( for_damage )
-				html += this.damageSuccessMargin( this.rollSetCountRolls[ results_set_count ].total_roll ) + "<br />";
+			if( for_damage ){
+				total_roll = this.rollSetCountRolls[ results_set_count ].total_roll;
+				if( half_damage )
+					total_roll = Math.floor(total_roll / 2);
+				html += this.damageSuccessMargin( total_roll ) + "<br />";
+			}
 
 			for(current_roll = 0; current_roll < this.rollSetCountRolls[ results_set_count ].total_rolled_dice; current_roll++) {
 				// each die roll section

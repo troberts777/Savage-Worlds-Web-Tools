@@ -1,0 +1,61 @@
+
+<div ng-include="'pages/chargen-dialog-new.html'"></div>
+<div ng-include="'pages/chargen-dialog-load.html'"></div>
+<div ng-include="'pages/chargen-dialog-save.html'"></div>
+<div ng-include="'pages/chargen-dialog-import.html'"></div>
+<div ng-include="'pages/chargen-dialog-export.html'"></div>
+<div ng-include="'pages/chargen-dialog-books.html'"></div>
+<div ng-include="'pages/chargen-dialog-validation.html'"></div>
+<div ng-include="'pages/dialog-confirm.html'"></div>
+<div ng-include="'pages/dialog-notify.html'"></div>
+<div ng-include="'pages/chargen-dialog-add-edit-power.html'"></div>
+
+<div ng-include="'pages/chargen-status-bar.html'"></div>
+
+<div class="main-content">
+	<div class="row">
+		<div class="columns small-12 medium-12">
+			<div ng-include="'pages/chargen-nav-menu.html'"></div>
+			<fieldset class="fieldset hide-for-small-only">
+				<legend translate="CHARGEN_INTRO_MAKE_PC">Let's make a Player Character</legend>
+				<p translate="CHARGEN_INTRO_NOT_FOR_NPCS">Remember, this tool is meant for making PCs as per Savage Worlds Core and the various settings of rulebooks not for making NPCs. NPCs can be made at the GM's whim and aren't limited like a PC is during creation.</p>
+				<p translate="CHARGEN_INTRO_NOT_FOR_NPCS2"> This isn't to say that a GM can't use this tool as a guideline, but it could be more time consuming and unnecessary.</p>
+			</fieldset>
+		</div>
+	</div>
+	<div class="row">
+		<div class="columns small-12 medium-12 text-center">
+			<strong>This area now works - however some Setting Rules may not do anything yet (namely No Power Points, Cyberware and the SPC powers are being worked on).</strong>
+		</div>
+	</div>
+	<div class="row">
+		<div class="columns small-12 medium-6">
+			<fieldset class="fieldset">
+				<legend translate="CHARGEN_INTRO_BOOKS" class="text-right">Books</legend>
+				<div class="text-center" >
+
+					<label ng-repeat="book in savageCharacter.books track by $index" ng-show="book.char_creator > 0" title="{{book.local_name}}" style="width: 25%;display: inline-block;margin: 0 3% 3% 0">
+						<div style="white-space:nowrap"><input ng-disabled="book.id == 1" type="checkbox" style="margin: 0 5px 0 0; display: inline-block;width: auto" ng-model="book.inUse" ng-change="updateBook($index)" /> <span translate="GENERAL_IN_USE">In Use</span></div>
+						<img ng-show="book.imagepath != ''" ng-src="{{book.imagepath}}" style="width: 100%" />
+					</label>
+
+				</div>
+			</fieldset>
+		</div>
+
+		<div class="columns small-12 medium-6">
+			<fieldset class="fieldset">
+				<legend translate="CHARGEN_INTRO_SETTING_RULES" class="text-left">Settings</legend>
+					<div ng-repeat="book in savageCharacter.books track by $index" ng-show="book.char_creator > 0">
+						<div ng-show="book.setting_rules.length > 0 && book.inUse">
+							<h4>{{book.local_name}}</h4>
+							<label ng-repeat="settingrule in book.setting_rules track by $index" ng-title="settingrule.local_name" style="display: block;margin: 0">
+								<input ng-change="updateSettingRule( settingrule.tag )" ng-model="settingrule.inUse" type="checkbox" style="margin: 0 5px 0 0; display: inline-block;width: auto" /> {{settingrule.local_name}}
+							</label>
+							<br />
+						</div>
+					</div>
+			</fieldset>
+		</div>
+	</div>
+</div>

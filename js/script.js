@@ -1,8 +1,8 @@
 var availableLanguages = [];
 
-baseApp = angular.module(
-	'baseApp',
-	['ngRoute', 'ngResource', 'ngSanitize','pascalprecht.translate'],
+cordovaApp = angular.module(
+	'cordovaApp',
+	['ngCordova', 'ngRoute', 'ngResource', 'ngSanitize','pascalprecht.translate'],
 	[
 		'$routeProvider',
 		'$translateProvider',
@@ -13,6 +13,13 @@ baseApp = angular.module(
 				users_preferred_language = localStorage["users_preferred_language"];
 			} else {
 				localStorage["users_preferred_language"] = users_preferred_language;
+			}
+
+			users_chargen_pdf_layout = "portrait";
+			if( localStorage && localStorage["users_chargen_pdf_layout"] ) {
+				users_chargen_pdf_layout = localStorage["users_chargen_pdf_layout"];
+			} else {
+				localStorage["users_chargen_pdf_layout"] = "portrait";
 			}
 
 			for( lang_count = 0; lang_count < availableLanguages.length; lang_count++) {
@@ -43,6 +50,12 @@ baseApp = angular.module(
 			})
 
 			// route for the credits page
+			.when('/core/raise-trainer', {
+				templateUrl : 'pages/core-raise-trainer.html',
+				controller  : 'raiseTrainerController'
+			})
+
+			// route for the credits page
 			.when('/settings', {
 				templateUrl : 'pages/settings.html',
 				controller  : 'settingsController'
@@ -58,6 +71,13 @@ baseApp = angular.module(
 			.when('/core/extras', {
 				templateUrl : 'pages/core-extras.html',
 				controller  : 'coreExtrasController'
+			})
+
+			// route for the core character maker page
+			.when('/core/character-maker-welcome', {
+				templateUrl : 'pages/core-character-maker-welcome.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-char-welcome'
 			})
 
 			// route for the core character maker page
@@ -81,6 +101,20 @@ baseApp = angular.module(
 				activetab: 'chargen-skills'
 			})
 
+			// route for the core character maker page Rifts® Iconic frameworks
+			.when('/core/character-maker-iconic-frameworks', {
+				templateUrl : 'pages/core-character-maker-iconic-frameworks.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-iconic-frameworks'
+			})
+
+			// route for the core character maker page super power companion powers
+			.when('/core/character-maker-spc-powers', {
+				templateUrl : 'pages/core-character-maker-spc-powers.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-spc-powers'
+			})
+
 			// route for the core character maker page edges and hindrances
 			.when('/core/character-maker-hindrances-and-edges', {
 				templateUrl : 'pages/core-character-maker-hindrances-and-edges.html',
@@ -93,6 +127,233 @@ baseApp = angular.module(
 				templateUrl : 'pages/core-character-maker-gear.html',
 				controller  : 'coreChargenController',
 				activetab: 'chargen-gear'
+			})
+
+			// route for the core character maker weapons page
+			.when('/core/character-maker-weapons', {
+				templateUrl : 'pages/core-character-maker-weapons.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-weapons'
+			})
+
+			// route for the core character maker armor page
+			.when('/core/character-maker-armor', {
+				templateUrl : 'pages/core-character-maker-armor.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-armor'
+			})
+
+			// route for the core character maker powers page
+			.when('/core/character-maker-powers', {
+				templateUrl : 'pages/core-character-maker-powers.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-powers'
+			})
+
+			// route for the core character maker advancements page
+			.when('/core/character-maker-advancements', {
+				templateUrl : 'pages/core-character-maker-advancements.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-advancements'
+			})
+
+			// route for the core mass batles page
+			.when('/core/mass-battles', {
+				templateUrl : 'pages/core-mass-battles.html',
+				controller  : 'coreMassbattlesController'
+			})
+
+			// route for the core mass bartles page
+			.when('/core/raise-calculator', {
+				templateUrl : 'pages/core-raise-calculator.html',
+				controller  : 'coreRaiseCalcController'
+			})
+
+			// route for the scifi power armor maker page
+			.when('/scifi/power-armor-maker', {
+				templateUrl : 'pages/scifi-power-armor-maker.html',
+				controller  : 'scifiPowerarmorController'
+			})
+
+			// route for the scifi robot maker page
+			.when('/scifi/robot-maker', {
+				templateUrl : 'pages/scifi-robot-maker.html',
+				controller  : 'scifiRobotController'
+			})
+
+			// route for the scifi starship maker page
+			.when('/scifi/starship-maker', {
+				templateUrl : 'pages/scifi-starship-maker.html',
+				controller  : 'scifiStarshipController'
+			})
+
+			// route for the scifi vehicle page
+			.when('/scifi/vehicle-maker', {
+				templateUrl : 'pages/scifi-vehicle-maker.html',
+				controller  : 'scifiVehicleController'
+			})
+
+			// route for the scifi walker maker page
+			.when('/scifi/walker-maker', {
+				templateUrl : 'pages/scifi-walker-maker.html',
+				controller  : 'scifiWalkerController'
+			})
+
+			// route for the scifi world maker page
+			.when('/scifi/world-maker', {
+				templateUrl : 'pages/scifi-world-maker.html',
+				controller  : 'scifiWorldController'
+			})
+
+			;
+		}
+	]
+);
+
+
+var availableLanguages = [];
+
+webApp = angular.module(
+	'webApp',
+	['ngRoute', 'ngResource', 'ngSanitize','pascalprecht.translate'],
+	[
+		'$routeProvider',
+		'$translateProvider',
+		function ($routeProvider, $translateProvider, $scope, $http) {
+
+			users_preferred_language = "en-US";
+			if( localStorage && localStorage["users_preferred_language"] ) {
+				users_preferred_language = localStorage["users_preferred_language"];
+			} else {
+				localStorage["users_preferred_language"] = users_preferred_language;
+			}
+
+			users_chargen_pdf_layout = "portrait";
+			if( localStorage && localStorage["users_chargen_pdf_layout"] ) {
+				users_chargen_pdf_layout = localStorage["users_chargen_pdf_layout"];
+			} else {
+				localStorage["users_chargen_pdf_layout"] = "portrait";
+			}
+
+			for( lang_count = 0; lang_count < availableLanguages.length; lang_count++) {
+				if( availableLanguages[lang_count].active ) {
+					$translateProvider.translations(
+						availableLanguages[lang_count].short_code ,
+						availableLanguages[lang_count].translations
+					);
+				}
+			}
+
+			$translateProvider.useSanitizeValueStrategy('sanitize');
+
+			$translateProvider.preferredLanguage(users_preferred_language);
+
+			$routeProvider
+
+			// route for the home/welcome page
+			.when('/', {
+				templateUrl : 'pages/welcome.html',
+				controller  : 'welcomeController'
+			})
+
+			// route for the credits page
+			.when('/credits', {
+				templateUrl : 'pages/credits.html',
+				controller  : 'creditsController'
+			})
+
+			// route for the credits page
+			.when('/core/raise-trainer', {
+				templateUrl : 'pages/core-raise-trainer.html',
+				controller  : 'raiseTrainerController'
+			})
+
+			// route for the credits page
+			.when('/settings', {
+				templateUrl : 'pages/settings.html',
+				controller  : 'settingsController'
+			})
+
+			// route for the core about page
+			.when('/core/dice', {
+				templateUrl : 'pages/core-dice.html',
+				controller  : 'coreDiceController'
+			})
+
+			// route for the core extras page
+			.when('/core/extras', {
+				templateUrl : 'pages/core-extras.html',
+				controller  : 'coreExtrasController'
+			})
+
+			// route for the core character maker page
+			.when('/core/character-maker-welcome', {
+				templateUrl : 'pages/core-character-maker-welcome.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-char-welcome'
+			})
+
+			// route for the core character maker page
+			.when('/core/character-maker-char-info', {
+				templateUrl : 'pages/core-character-maker-char-info.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-char-info'
+			})
+
+			// route for the core character maker page traits
+			.when('/core/character-maker-traits', {
+				templateUrl : 'pages/core-character-maker-traits.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-traits'
+			})
+
+			// route for the core character maker page skills
+			.when('/core/character-maker-skills', {
+				templateUrl : 'pages/core-character-maker-skills.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-skills'
+			})
+
+			// route for the core character maker page Rifts® Iconic frameworks
+			.when('/core/character-maker-iconic-frameworks', {
+				templateUrl : 'pages/core-character-maker-iconic-frameworks.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-iconic-frameworks'
+			})
+
+			// route for the core character maker page super power companion powers
+			.when('/core/character-maker-spc-powers', {
+				templateUrl : 'pages/core-character-maker-spc-powers.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-spc-powers'
+			})
+
+			// route for the core character maker page edges and hindrances
+			.when('/core/character-maker-hindrances-and-edges', {
+				templateUrl : 'pages/core-character-maker-hindrances-and-edges.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-hindrances-and-edges'
+			})
+
+			// route for the core character maker gear page
+			.when('/core/character-maker-gear', {
+				templateUrl : 'pages/core-character-maker-gear.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-gear'
+			})
+
+			// route for the core character maker weapons page
+			.when('/core/character-maker-weapons', {
+				templateUrl : 'pages/core-character-maker-weapons.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-weapons'
+			})
+
+			// route for the core character maker armor page
+			.when('/core/character-maker-armor', {
+				templateUrl : 'pages/core-character-maker-armor.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-armor'
 			})
 
 			// route for the core character maker powers page
@@ -168,11 +429,12 @@ baseApp = angular.module(
 
 
 function get_book_by_id( book_id, language ) {
-	if( language )
+	if( !language )
 		language = localStorage["users_preferred_language"];
 
 	for( bookcount = 0; bookcount < savageWorldsBooksList.length; bookcount++) {
 		if( savageWorldsBooksList[bookcount].id == book_id ) {
+
 			if( savageWorldsBooksList[bookcount].name[ language ])
 				savageWorldsBooksList[bookcount].local_name = savageWorldsBooksList[bookcount].name[ language ];
 			else
@@ -188,6 +450,13 @@ function get_book_by_id( book_id, language ) {
 			else
 				savageWorldsBooksList[bookcount].local_copyright = savageWorldsBooksList[bookcount].copyright[ "en-US" ];
 
+			savageWorldsBooksList[bookcount].imagepath = "";
+			if( savageWorldsBooksList[bookcount].imagename && savageWorldsBooksList[bookcount].imagename != ""  && savageWorldsBooksList[bookcount].imagename != "undefined")
+				savageWorldsBooksList[bookcount].imagepath = "./images/books/" + savageWorldsBooksList[bookcount].imagename;
+
+			if( typeof(savageWorldsBooksList[bookcount].setting_rules) == "undefined" )
+				savageWorldsBooksList[bookcount].setting_rules = get_setting_rules_by_book_id( savageWorldsBooksList[bookcount].id );
+
 			return  savageWorldsBooksList[bookcount];
 		}
 	}
@@ -196,7 +465,7 @@ function get_book_by_id( book_id, language ) {
 }
 
 function get_book_by_tag( book_tag, language ) {
-	if( language )
+	if( !language )
 		language = localStorage["users_preferred_language"];
 
 	for( bookcount = 0; bookcount < savageWorldsBooksList.length; bookcount++) {
@@ -216,11 +485,48 @@ function get_book_by_tag( book_tag, language ) {
 			else
 				savageWorldsBooksList[bookcount].local_copyright = savageWorldsBooksList[bookcount].copyright[ "en-US" ];
 
+			savageWorldsBooksList[bookcount].imagepath = "";
+			if( savageWorldsBooksList[bookcount].imagename && savageWorldsBooksList[bookcount].imagename != ""  && savageWorldsBooksList[bookcount].imagename != "undefined")
+				savageWorldsBooksList[bookcount].imagepath = "/images/books/" + savageWorldsBooksList[bookcount].imagename;
+
+			if( typeof(savageWorldsBooksList[bookcount].setting_rules) == "undefined" )
+				savageWorldsBooksList[bookcount].setting_rules = get_setting_rules_by_book_id( savageWorldsBooksList[bookcount].id, language );
 			return  savageWorldsBooksList[bookcount];
 		}
 	}
 
 	return null;
+}
+
+function get_setting_rules_by_book_id( book_id, language ) {
+	if( !language )
+		language = localStorage["users_preferred_language"];
+
+	var return_array = Array();
+	if( savageWorldsSettingRules ) {
+		for( var setting_count = 0; setting_count < savageWorldsSettingRules.length; setting_count++) {
+			if( savageWorldsSettingRules[setting_count].book == book_id ) {
+
+				var return_item = {
+					name: savageWorldsSettingRules[setting_count].name,
+					tag: savageWorldsSettingRules[setting_count].tag,
+					page: savageWorldsSettingRules[setting_count].page,
+					char_creator: savageWorldsSettingRules[setting_count].char_creator,
+					inUse: false
+				}
+
+				if( return_item.name[ language ])
+					return_item.local_name = return_item.name[ language ];
+				else
+					return_item.local_name = return_item.name[ "en-US" ];
+
+				if( return_item.char_creator )
+					return_array.push( return_item );
+			}
+		}
+	}
+
+	return return_array;
 }
 
 function get_race_by_id( race_id, language ) {
@@ -234,10 +540,10 @@ function get_race_by_id( race_id, language ) {
 			else
 				savageWorldsRaces[racecount].local_name = savageWorldsRaces[racecount].name[ "en-US" ];
 
-			if( savageWorldsRaces[racecount].description[ language ])
-				savageWorldsRaces[racecount].local_description = savageWorldsRaces[racecount].description[ language ];
-			else
-				savageWorldsRaces[racecount].local_description = savageWorldsRaces[racecount].description[ "en-US" ];
+			// if( savageWorldsRaces[racecount].description[ language ])
+			// 	savageWorldsRaces[racecount].local_description = savageWorldsRaces[racecount].description[ language ];
+			// else
+			// 	savageWorldsRaces[racecount].local_description = savageWorldsRaces[racecount].description[ "en-US" ];
 
 
 			savageWorldsRaces[racecount].bookObj = get_book_by_id( savageWorldsRaces[racecount].book, language);
@@ -265,11 +571,11 @@ function localizeSkills() {
 			savageWorldsSkillList.local_name = savageWorldsSkillList[ldcv].name[ "en-US" ];
 		}
 
-		if( typeof(savageWorldsSkillList[ldcv].description[ localStorage["users_preferred_language"] ] ) != "undefined") {
-			savageWorldsSkillList[ldcv].local_description = savageWorldsSkillList[ldcv].description[ localStorage["users_preferred_language"] ];
-		} else {
-			savageWorldsSkillList.local_description = savageWorldsSkillList[ldcv].description[ "en-US" ];
-		}
+		// if( typeof(savageWorldsSkillList[ldcv].description[ localStorage["users_preferred_language"] ] ) != "undefined") {
+		// 	savageWorldsSkillList[ldcv].local_description = savageWorldsSkillList[ldcv].description[ localStorage["users_preferred_language"] ];
+		// } else {
+		// 	savageWorldsSkillList.local_description = savageWorldsSkillList[ldcv].description[ "en-US" ];
+		// }
 	}
 }
 
@@ -315,6 +621,11 @@ function get_gear_class_by_id( class_id ) {
 	}
 	return null;
 }
+
+function selectAll(theField) {
+	theField.select()
+}
+
 /*
 	Savage Worlds Web Tools by Jeffrey Gordon is licensed under a
 	Creative Commons Attribution 4.0 International License.
@@ -500,7 +811,7 @@ chargenPDF.prototype.createEdgesAdvancementTrack = function( left, top, width, s
 	advLineHeight = 4;
 	for( novice_slot = 0; novice_slot <= this.currentCharacter.selectedEdges.length; novice_slot++) {
 		if(this.currentCharacter.selectedEdges[novice_slot])
-			this.currentDoc.text(left + 2, advLineLocation + novice_slot * advLineHeight, this.currentCharacter.selectedEdges[novice_slot].local_name + "");
+			this.currentDoc.text(left + 2, advLineLocation + novice_slot * advLineHeight, this.currentCharacter.selectedEdges[novice_slot].local_name + " (" + this.currentCharacter.selectedEdges[novice_slot].bookObj.abbrev + " " + this.currentCharacter.selectedEdges[novice_slot].page + ")" );
 		else
 			this.currentDoc.text(left + 2, advLineLocation + novice_slot * advLineHeight, "");
 	}
@@ -550,22 +861,22 @@ chargenPDF.prototype.createEdgesAdvancementTrack = function( left, top, width, s
 
 		advancement_slot = 0;
 		if( selectedAdvancement) {
-			if(selectedAdvancement.short_name == "increase-attribute") {
-				this.currentDoc.text(left + 2, advLineLocation, current_xp + ": " + uc_words(selectedAdvancement.applies_to1) + "++");
-			} else if(selectedAdvancement.short_name == "add-skill") {
-				this.currentDoc.text(left + 2, advLineLocation, current_xp + ": +Skill - " + selectedAdvancement.applies_to1);
-			} else if(selectedAdvancement.short_name == "gain-edge") {
+			if(selectedAdvancement.tag == "attribute") {
+				this.currentDoc.text(left + 2, advLineLocation, current_xp + ": " + uc_words(selectedAdvancement.option1.local_name) + "++");
+			} else if(selectedAdvancement.tag == "skill") {
+				this.currentDoc.text(left + 2, advLineLocation, current_xp + ": +Skill - " + selectedAdvancement.option1.local_name);
+			} else if(selectedAdvancement.tag == "edge") {
 				this.currentDoc.setFontStyle("bold");
-				this.currentDoc.text(left + 2, advLineLocation, current_xp + ": +Edge - " + selectedAdvancement.applies_to1);
+				this.currentDoc.text(left + 2, advLineLocation, current_xp + ": +Edge - " + selectedAdvancement.option1.local_name);
 				this.currentDoc.setFontStyle("normal");
 			} else {
-				if(selectedAdvancement.applies_to2 && selectedAdvancement.applies_to1 ) {
-					this.currentDoc.text(left + 2, advLineLocation, current_xp + ": " + selectedAdvancement.applies_to1 + "++, " + selectedAdvancement.applies_to2  + "++");
+				if(selectedAdvancement.option2.local_name && selectedAdvancement.option1.local_name ) {
+					this.currentDoc.text(left + 2, advLineLocation, current_xp + ": " + selectedAdvancement.option1 + "++, " + selectedAdvancement.option2.local_name  + "++");
 				} else {
-					if(selectedAdvancement.applies_to2 ) {
-						this.currentDoc.text(left + 2, advLineLocation, current_xp + ": " + selectedAdvancement.applies_to2 + "++");
+					if(selectedAdvancement.option2 ) {
+						this.currentDoc.text(left + 2, advLineLocation, current_xp + ": " + selectedAdvancement.option2.local_name + "++");
 					} else {
-						this.currentDoc.text(left + 2, advLineLocation, current_xp + ": " + selectedAdvancement.applies_to1 + "++");
+						this.currentDoc.text(left + 2, advLineLocation, current_xp + ": " + selectedAdvancement.option1.local_name + "++");
 					}
 				}
 			}
@@ -807,10 +1118,15 @@ chargenPDF.prototype.createHindrancesTable = function(label, left, top, width, h
 	this.currentDoc.setFontStyle("normal");
 	this.currentDoc.setFontSize(smallFontSize);
 	for(hind_counter = 0; hind_counter < this.currentCharacter.selectedHindrances.length; hind_counter++) {
+		majorMinor = "";
+		if( this.currentCharacter.selectedHindrances[hind_counter].severity == "major")
+			majorMinor = "major, ";
+		if( this.currentCharacter.selectedHindrances[hind_counter].severity == "minor")
+			majorMinor = "minor, ";
 		if(this.currentCharacter.selectedHindrances[hind_counter].specify_text && this.currentCharacter.selectedHindrances[hind_counter].specifyField != "")
-			this.currentDoc.text(left + 5, top + 10 + hind_counter * Math.floor(smallFontSize / 2) -1 , this.currentCharacter.selectedHindrances[hind_counter].local_name + " (" + this.currentCharacter.selectedHindrances[hind_counter].specifyField + ")" );
+			this.currentDoc.text(left + 5, top + 10 + hind_counter * Math.floor(smallFontSize / 2) -1 , this.currentCharacter.selectedHindrances[hind_counter].local_name + ": " + this.currentCharacter.selectedHindrances[hind_counter].specifyField + " (" + majorMinor + this.currentCharacter.selectedHindrances[hind_counter].bookObj.abbrev + " " + this.currentCharacter.selectedHindrances[hind_counter].page + ")" );
 		else
-			this.currentDoc.text(left + 5, top + 10 + hind_counter * Math.floor(smallFontSize / 2) -1 , this.currentCharacter.selectedHindrances[hind_counter].local_name );
+			this.currentDoc.text(left + 5, top + 10 + hind_counter * Math.floor(smallFontSize / 2) -1 , this.currentCharacter.selectedHindrances[hind_counter].local_name + " (" + majorMinor + this.currentCharacter.selectedHindrances[hind_counter].bookObj.abbrev + " " + this.currentCharacter.selectedHindrances[hind_counter].page + ")" );
 	}
 	this.currentDoc.setFontSize(10);
 }
@@ -1004,6 +1320,14 @@ classDice.prototype = {
 			total_roll += roll;
 
 		}
+		if( !this.rollSetCountRolls[ this.rollSetCount ] ) {
+			this.rollSetCountRolls[ this.rollSetCount ] = {
+				base_rolls: Array(),
+				base_roll_sides: Array(),
+				wild_die_rolls: Array(),
+			};
+		}
+
 
 		this.rollSetCountRolls[ this.rollSetCount ].base_rolls.push( display_roll );
 		this.rollSetCountRolls[ this.rollSetCount ].base_roll_sides.push(number_of_sides);
@@ -1209,8 +1533,13 @@ classDice.prototype = {
 		return total;
 	},
 
-	displayResults: function (for_trait, for_damage) {
+	displayResults: function (for_trait, for_damage, half_damage) {
 		html = "";
+		if( half_damage && half_damage > 0)
+			half_damage = true;
+		else
+			half_damage = false;
+
 		for( results_set_count = 0; results_set_count < this.rollSetCount; results_set_count++ ) {
 			if( this.rollSetCount > 1 ) {
 				if( results_set_count > 0) {
@@ -1219,14 +1548,20 @@ classDice.prototype = {
 				html += "<h4>" + this.labelRollSetNumber + (results_set_count + 1) + "</h4>";
 			}
 
-
-			html += "<h5>" + this.labelTotalRoll + ": " + this.rollSetCountRolls[ results_set_count ].total_roll + "</h5>"
+			if( half_damage )
+				html += "<h5>" + this.labelTotalRoll + ": " + this.rollSetCountRolls[ results_set_count ].total_roll + " (half at " + Math.floor(this.rollSetCountRolls[ results_set_count ].total_roll / 2) + ")</h5>"
+			else
+				html += "<h5>" + this.labelTotalRoll + ": " + this.rollSetCountRolls[ results_set_count ].total_roll + "</h5>"
 
 			if( for_trait )
 				html += this.traitSuccessMargin( this.rollSetCountRolls[ results_set_count ].total_roll, null, results_set_count ) + "<br />";
 
-			if( for_damage )
-				html += this.damageSuccessMargin( this.rollSetCountRolls[ results_set_count ].total_roll ) + "<br />";
+			if( for_damage ){
+				total_roll = this.rollSetCountRolls[ results_set_count ].total_roll;
+				if( half_damage )
+					total_roll = Math.floor(total_roll / 2);
+				html += this.damageSuccessMargin( total_roll ) + "<br />";
+			}
 
 			for(current_roll = 0; current_roll < this.rollSetCountRolls[ results_set_count ].total_rolled_dice; current_roll++) {
 				// each die roll section
@@ -1594,9 +1929,33 @@ function savageCharacter (useLang) {
 
 }
 
+savageCharacter.prototype.calcSPC = function() {
+	this.SPCPowerLimit = 0;
+	if( this.usesSPCCreation ) {
+		if( this.SPCRisingStars ) {
+			this.SPCCurrentPowerPoints = this.SPCPowerLevels[ this.SPCSelectedPowerLevel ].rising_stars_power_points;
+			this.SPCCurrentPowerPoints += this.spcExtraPowerPoints;
+			this.SPCPowerLimit = this.SPCCurrentPowerPoints;
+		} else {
+			this.SPCCurrentPowerPoints = this.SPCPowerLevels[ this.SPCSelectedPowerLevel ].power_points;
+			this.SPCCurrentPowerPoints += this.spcExtraPowerPoints;
+			this.SPCPowerLimit = Math.ceil( this.SPCCurrentPowerPoints / 3 );
+		}
+		if( this.hasEdge("the-best-there-is"))  {
+			if( !this.SPCRisingStars ) {
+				this.SPCPowerLimit = Math.ceil( this.SPCCurrentPowerPoints / 2 );
+			} else {
+				this.SPCPowerLimit = Math.ceil( this.SPCCurrentPowerPoints / 2 );
+				if( this.SPCPowerLimit < this.SPCCurrentPowerPoints)
+					this.SPCPowerLimit = this.SPCCurrentPowerPoints;
+			}
+		}
+	}
+}
+
 savageCharacter.prototype.init = function(useLang){
 
-	this.appVersion = "2016040101";
+	this.appVersion = "2016050101";
 
 	if( useLang )
 		this.useLang = useLang;
@@ -1610,10 +1969,20 @@ savageCharacter.prototype.init = function(useLang){
 
 	this.description = "";
 
-	this.selectedAdvancements = Array();
-
 	this.startingFunds = 500;
 	this.currentFunds = 500;
+
+	this.naturalWeapons = false;
+
+	this.isNew = true;
+	this.multipleLanguages = false;
+	this.usesStrain = false;
+
+	this.spcExtraPowerPoints = 0;
+
+	this.knownLanguages = Array();
+
+	this.knownLanguagesLimit = 0;
 
 	this.xpOptions = Array();
 	for( var optCounter = 0; optCounter <= 100; optCounter++) {
@@ -1658,9 +2027,43 @@ savageCharacter.prototype.init = function(useLang){
 	this.usesSanity = false;
 	this.usesGutsSkill = false;
 
+	this.usesRiftsCreation = false;
+
+	this.usesSPCCreation = false;
+	this.SPCRisingStars = false;
+	this.SPCCurrentPowerPoints = 0;
+	this.SPCPowerLevels = Array();
+	this.SPCSelectedPowerLevel = 0;
+	this.SPCPowerLevels[0] = {
+		power_points: 15,
+		rising_stars_power_points: 5,
+		name: this.getTranslation("SPC_PULP_HEROES")
+	};
+	this.SPCPowerLevels[1] = {
+		power_points: 30,
+		rising_stars_power_points: 10,
+		name: this.getTranslation("SPC_STREET_FIGHTERS")
+	};
+	this.SPCPowerLevels[2] = {
+		power_points: 45,
+		rising_stars_power_points: 20,
+		name: this.getTranslation("SPC_FOUR_COLOR")
+	};
+	this.SPCPowerLevels[3] = {
+		power_points: 60,
+		rising_stars_power_points: 30,
+		name: this.getTranslation("SPC_HEAVY_HITTERS")
+	};
+	this.SPCPowerLevels[4] = {
+		power_points: 75,
+		rising_stars_power_points: 50,
+		name: this.getTranslation("SPC_COSMIC")
+	};
+
 	this.selectedArmor = Array();
 	this.selectedMundaneGear = Array();
-	this.selectedWeapons = Array();
+	this.selectedRangedWeapons = Array();
+	this.selectedHandWeapons = Array();
 	this.selectedShields = Array();
 
 	this.books = Array();
@@ -1671,6 +2074,9 @@ savageCharacter.prototype.init = function(useLang){
 			this.books[bookCounter].inUse = true;
 		} else {
 			this.books[bookCounter].inUse = false;
+		}
+		for( var setting_c = 0; setting_c < this.books[bookCounter].setting_rules.length; setting_c++) {
+			this.books[bookCounter].setting_rules[setting_c].inUse = false;
 		}
 	}
 
@@ -1688,7 +2094,7 @@ savageCharacter.prototype.init = function(useLang){
 		}
 
 
-		savageWorldsEdges[edgeCounter].local_description = this.getLocalName( savageWorldsEdges[edgeCounter].description );
+		//savageWorldsEdges[edgeCounter].local_description = this.getLocalName( savageWorldsEdges[edgeCounter].description );
 		savageWorldsEdges[edgeCounter].bookObj = get_book_by_id( savageWorldsEdges[edgeCounter].book );
 	}
 
@@ -1701,7 +2107,7 @@ savageCharacter.prototype.init = function(useLang){
 		else if( savageWorldsHindrances[hindranceCounter].severity == "minor")
 			savageWorldsHindrances[hindranceCounter].select_option_name = savageWorldsHindrances[hindranceCounter].local_name  + " (" + this.getTranslation("CHARGEN_MINOR_HINDRANCE") + ")";
 
-		savageWorldsHindrances[hindranceCounter].local_description = this.getLocalName( savageWorldsHindrances[hindranceCounter].description );
+//		savageWorldsHindrances[hindranceCounter].local_description = this.getLocalName( savageWorldsHindrances[hindranceCounter].description );
 		savageWorldsHindrances[hindranceCounter].bookObj = get_book_by_id( savageWorldsHindrances[hindranceCounter].book );
 	}
 
@@ -1712,7 +2118,7 @@ savageCharacter.prototype.init = function(useLang){
 		savageWorldsArcaneBackgrounds[abCounter].local_name = this.getLocalName( savageWorldsArcaneBackgrounds[abCounter].name );
 		savageWorldsArcaneBackgrounds[abCounter].select_option_name = savageWorldsArcaneBackgrounds[abCounter].local_name;
 		savageWorldsArcaneBackgrounds[abCounter].local_backlash = this.getLocalName( savageWorldsArcaneBackgrounds[abCounter].backlash );
-		savageWorldsArcaneBackgrounds[abCounter].local_description = this.getLocalName( savageWorldsArcaneBackgrounds[abCounter].description );
+//		savageWorldsArcaneBackgrounds[abCounter].local_description = this.getLocalName( savageWorldsArcaneBackgrounds[abCounter].description );
 		savageWorldsArcaneBackgrounds[abCounter].bookObj = get_book_by_id( savageWorldsArcaneBackgrounds[abCounter].book );
 	}
 
@@ -1720,7 +2126,7 @@ savageCharacter.prototype.init = function(useLang){
 	for( var abCounter = 0; abCounter < savageWorldsArcaneTrappings.length; abCounter++ ) {
 		savageWorldsArcaneTrappings[abCounter].local_name = this.getLocalName( savageWorldsArcaneTrappings[abCounter].name );
 		savageWorldsArcaneTrappings[abCounter].select_option_name = savageWorldsArcaneTrappings[abCounter].local_name;
-		savageWorldsArcaneTrappings[abCounter].local_description = this.getLocalName( savageWorldsArcaneTrappings[abCounter].description );
+//		savageWorldsArcaneTrappings[abCounter].local_description = this.getLocalName( savageWorldsArcaneTrappings[abCounter].description );
 		savageWorldsArcaneTrappings[abCounter].bookObj = get_book_by_id( savageWorldsArcaneTrappings[abCounter].book );
 	}
 
@@ -1728,7 +2134,7 @@ savageCharacter.prototype.init = function(useLang){
 	for( var abCounter = 0; abCounter < savageWorldsPowers.length; abCounter++ ) {
 		savageWorldsPowers[abCounter].local_name = this.getLocalName( savageWorldsPowers[abCounter].name );
 		savageWorldsPowers[abCounter].select_option_name = savageWorldsPowers[abCounter].local_name;
-		savageWorldsPowers[abCounter].local_description = this.getLocalName( savageWorldsPowers[abCounter].description );
+	//	savageWorldsPowers[abCounter].local_description = this.getLocalName( savageWorldsPowers[abCounter].description );
 		savageWorldsPowers[abCounter].local_duration = this.getLocalName( savageWorldsPowers[abCounter].duration );
 		savageWorldsPowers[abCounter].local_additional_effects = this.getLocalName( savageWorldsPowers[abCounter].additional_effects );
 		savageWorldsPowers[abCounter].bookObj = get_book_by_id( savageWorldsPowers[abCounter].book );
@@ -1795,16 +2201,28 @@ savageCharacter.prototype.init = function(useLang){
 			savageWorldsGearShields[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearShields[eqCounter].type );
 		}
 
-		// Localize Weapons
-		for( var eqCounter = 0; eqCounter < savageWorldsGearWeapons.length; eqCounter++ ) {
-			savageWorldsGearWeapons[eqCounter].local_name = this.getLocalName( savageWorldsGearWeapons[eqCounter].name );
-			savageWorldsGearWeapons[eqCounter].select_option_name = savageWorldsGearWeapons[eqCounter].local_name;
+		// Localize Hand Weapons
+		for( var eqCounter = 0; eqCounter < savageWorldsGearHandWeapons.length; eqCounter++ ) {
+			savageWorldsGearHandWeapons[eqCounter].local_name = this.getLocalName( savageWorldsGearHandWeapons[eqCounter].name );
+			savageWorldsGearHandWeapons[eqCounter].select_option_name = savageWorldsGearHandWeapons[eqCounter].local_name;
 
-			savageWorldsGearWeapons[eqCounter].local_notes = this.getLocalName( savageWorldsGearWeapons[eqCounter].notes );
+			savageWorldsGearHandWeapons[eqCounter].local_notes = this.getLocalName( savageWorldsGearHandWeapons[eqCounter].notes );
 
-			savageWorldsGearWeapons[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearWeapons[eqCounter].general );
-			savageWorldsGearWeapons[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearWeapons[eqCounter].type );
+			savageWorldsGearHandWeapons[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearHandWeapons[eqCounter].general );
+			savageWorldsGearHandWeapons[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearHandWeapons[eqCounter].type );
 		}
+
+		// Localize Ranged Weapons
+		for( var eqCounter = 0; eqCounter < savageWorldsGearRangedWeapons.length; eqCounter++ ) {
+			savageWorldsGearRangedWeapons[eqCounter].local_name = this.getLocalName( savageWorldsGearRangedWeapons[eqCounter].name );
+			savageWorldsGearRangedWeapons[eqCounter].select_option_name = savageWorldsGearRangedWeapons[eqCounter].local_name;
+
+			savageWorldsGearRangedWeapons[eqCounter].local_notes = this.getLocalName( savageWorldsGearRangedWeapons[eqCounter].notes );
+
+			savageWorldsGearRangedWeapons[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearRangedWeapons[eqCounter].general );
+			savageWorldsGearRangedWeapons[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearRangedWeapons[eqCounter].type );
+		}
+
 
 	this.attributes = {
 		agility: 1,
@@ -1937,6 +2355,7 @@ savageCharacter.prototype.init = function(useLang){
 		angular.extend( this.skillList[skillCounter], savageWorldsSkillList[skillCounter]);
 	}
 
+
 	this.gender = this.genderOptions[0];
 
 	this.skillValues = {};
@@ -1947,8 +2366,68 @@ savageCharacter.prototype.init = function(useLang){
 	this.installedHindrances = Array();
 	this.installedEdges = Array();
 
+
+	this.bornAHero = false;
+
 	this.refreshAvailable();
 	this.validate();
+
+		// Localize Advancement Types
+		this.advancementTypes = Array();
+		this.advancementTypes.push ( {
+				tag: "none",
+				takenAt: -1,
+				label: this.getTranslation("CHARGEN_ADVANCEMENT_NOT_SELECTED"),
+				option1: "",
+				option2: "",
+			}
+		);
+
+		this.advancementTypes.push ( {
+				tag: "edge",
+				takenAt: -1,
+				label: this.getTranslation("CHARGEN_ADVANCEMENT_NEW_EDGE"),
+				option1: this.availableEdges[0],
+				option2: "",
+			}
+		);
+
+		this.advancementTypes.push ( {
+				tag: "incskill",
+				takenAt: -1,
+				label: this.getTranslation("CHARGEN_ADVANCEMENT_INCREASE_SKILL"),
+				option1: "",
+				option2: "",
+			}
+		);
+
+		this.advancementTypes.push ( {
+				tag: "inc2skills",
+				takenAt: -1,
+				label: this.getTranslation("CHARGEN_ADVANCEMENT_INCREASE_2_SKILLS"),
+				option1: "",
+				option2: "",
+			}
+		);
+
+		this.advancementTypes.push ( {
+				tag: "skill",
+				takenAt: -1,
+				label: this.getTranslation("CHARGEN_ADVANCEMENT_NEW_SKILL"),
+				option1: "",
+				option2: "",
+			}
+		);
+
+		this.advancementTypes.push ( {
+				tag: "attribute",
+				takenAt: -1,
+				label: this.getTranslation("CHARGEN_ADVANCEMENT_INCREASE_ATTRIBUTE"),
+				option1: "",
+				option2: "",
+			}
+		);
+
 }
 
 savageCharacter.prototype.makeUUID = function(){
@@ -1967,13 +2446,12 @@ savageCharacter.prototype.makeUUID = function(){
 savageCharacter.prototype.refreshAvailable = function( ) {
 
 	this.agilitySkills = Array();
+	this.allSkills = Array();
 	this.smartsSkills = Array();
 	this.spiritSkills = Array();
 	this.strengthSkills = Array();
 	this.vigorSkills = Array(); // I'm not aware of any vigor skills, but I' m prepared on the backend ;)
 
-	this.usesSanity = false;
-	this.usesGutsSkill = false;
 
 	for( skillCounter = 0; skillCounter < this.skillList.length; skillCounter++ ) {
 		var showSkill = true;
@@ -2003,9 +2481,6 @@ savageCharacter.prototype.refreshAvailable = function( ) {
 			}
 		}
 
-
-
-
 		this.skillList[skillCounter].showSkill = true;
 		if( !this.bookInUse( this.skillList[skillCounter].book) ) {
 			this.skillList[skillCounter].showSkill = false;
@@ -2017,6 +2492,7 @@ savageCharacter.prototype.refreshAvailable = function( ) {
 			if( !this.hasArcane( this.skillList[skillCounter].for_arcane )) {
 				this.skillList[skillCounter].showSkill = false;
 				this.skillValues[ this.skillList[skillCounter].short_name ] = 0;
+				this.skillList[skillCounter].value = 0;
 			}
 		}
 
@@ -2048,17 +2524,21 @@ savageCharacter.prototype.refreshAvailable = function( ) {
 		if( this.skillList[skillCounter].showSkill && this.skillList[skillCounter].attribute == "vigor" ) {
 			this.vigorSkills.push( this.skillList[skillCounter] );
 		}
+		this.allSkills.push( this.skillList[skillCounter] );
+
+		for( skc = 0; skc < this.skillList[skillCounter].specialties.length; skc++ ) {
+			this.skillList[skillCounter].specialties[skc].is_specialty = this.skillList[skillCounter].id
+			this.skillList[skillCounter].specialties[skc].local_name = this.skillList[skillCounter].local_name + ": " + this.skillList[skillCounter].specialties[skc].name;
+			this.skillList[skillCounter].specialties[skc].id = this.skillList[skillCounter].id
+			this.skillList[skillCounter].specialties[skc].specify_name = this.skillList[skillCounter].specialties[skc].name
+			this.skillList[skillCounter].specialties[skc].attribute = this.skillList[skillCounter].attribute
+			if( !this.skillList[skillCounter].specialties[skc].boost )
+				this.skillList[skillCounter].specialties[skc].boost = 0;
+			this.allSkills.push( this.skillList[skillCounter].specialties[skc] );
+		}
 	}
 
-
-	// base attributes...
-	// this.attributes = {
-	// 	agility: getDiceValue(this.attributesAllocated.agility + this.attributeBoost.agility),
-	// 	smarts: getDiceValue(this.attributesAllocated.smarts + this.attributeBoost.smarts),
-	// 	spirit: getDiceValue(this.attributesAllocated.spirit + this.attributeBoost.spirit),
-	// 	strength: getDiceValue(this.attributesAllocated.strength + this.attributeBoost.strength),
-	// 	vigor: getDiceValue(this.attributesAllocated.vigor + this.attributeBoost.vigor)
-	// };
+	this.allSkills.unshift( {id: 'undefined',local_name: this.getTranslation('GENERAL_SELECT')} );
 
 	this.raceOptions = Array();
 	for( var raceCount = 0; raceCount < savageWorldsRaces.length; raceCount++ ) {
@@ -2069,7 +2549,6 @@ savageCharacter.prototype.refreshAvailable = function( ) {
 
 			this.raceOptions.push( newItem );
 		}
-
 	}
 
 
@@ -2107,9 +2586,9 @@ savageCharacter.prototype.getRace = function( raceID ) {
 }
 
 savageCharacter.prototype.setRace = function( raceID ) {
-	for(var gc = 0; gc < this.raceOptions.length; gc++) {
-		if( raceID == this.raceOptions[gc].id ) {
-			this.race = this.raceOptions[gc];
+	for(var gc = 0; gc < savageWorldsRaces.length; gc++) {
+		if( raceID == savageWorldsRaces[gc].id ) {
+			this.race = savageWorldsRaces[gc];
 			return true;
 		}
 	}
@@ -2150,7 +2629,10 @@ savageCharacter.prototype.addPower = function(powerBookID, powerTag, trappingBoo
 					newPower.trapping = savageWorldsArcaneTrappings[trappingCounter];
 				}
 			}
-			newPower.customName = powerName;
+			if( powerName )
+				newPower.customName = powerName;
+			else
+				newPower.customName = newPower.local_name;
 
 			this.selectedPowers.push( newPower );
 			return true;
@@ -2250,6 +2732,8 @@ savageCharacter.prototype.validate = function() {
 	this.skillPointsAvailable = 15;
 	this.skillPointsUsed = 0;
 
+	this.spcExtraPowerPoints = 0;
+
 	this.attributePointsAvailable = 5;
 	this.attributePointsUsed = 0;
 
@@ -2262,9 +2746,52 @@ savageCharacter.prototype.validate = function() {
 
 	this.startingFunds = 500;
 
+	this.usesSanity = false;
+	this.usesGutsSkill = false;
+
+	this.usesRiftsCreation = false;
+	this.usesSPCCreation = false;
+
+	// for( key in this.books ) {
+	// 	if( this.books[key].inUse ) {
+	// 		if( this.books[key].uses_rifts_creation > 0 )
+	// 			this.usesRiftsCreation = true;
+	// 		if( this.books[key].uses_spc_creation > 0 )
+	// 			this.usesSPCCreation = true;
+	// 		if( this.books[key].usesGutsSkill > 0 )
+	// 			this.usesGutsSkill = true;
+	// 		if( this.books[key].uses_sanity > 0)
+	// 			this.usesSanity = true;
+	// 	}
+	// }
+	// console.log( "this.usesSPCCreation", this.usesSPCCreation);
+	// console.log( "this.usesGutsSkill", this.usesGutsSkill);
+	// console.log( "this.usesRiftsCreation", this.usesRiftsCreation);
+	// console.log( "this.usesSanity", this.usesSanity);
 	// Savage Worlds Deluxe is ALWAYS in use.
 	swDeluxe = get_book_by_id( 1 ) ;
 	swDeluxe.inUse = true;
+
+
+	this.bornAHero = false;
+	if( this.isSettingRuleEnabled( "born-a-hero") )
+		this.bornAHero = true;
+
+	this.usesSPCCreation = false;
+	if( this.isSettingRuleEnabled( "super-hero") )
+		this.usesSPCCreation = true;
+
+	this.multipleLanguages = false;
+	if( this.isSettingRuleEnabled( "multiple-languages") )
+		this.multipleLanguages = true;
+
+	this.usesSanity = false;
+	if( this.isSettingRuleEnabled( "sanity") )
+		this.usesSanity = true;
+
+	this.usesStrain = false;
+	if( this.isSettingRuleEnabled( "cyberware-strain") )
+		this.usesStrain = true;
 
 	this.diceValues = {
 		agility: Array(),
@@ -2274,10 +2801,12 @@ savageCharacter.prototype.validate = function() {
 		vigor: Array(),
 	}
 
-	if(  this.selectedArcaneBackground && this.selectedArcaneBackground.power_points )
+	if(  this.selectedArcaneBackground && this.selectedArcaneBackground.power_points ) {
 		this.powerPointsAvailable = this.selectedArcaneBackground.power_points;
+	}
 
 
+	// for( lBookCounter = 0; lBookCounter.u)
 
 	this.attributeBoost = {
 		agility: 0,
@@ -2302,7 +2831,7 @@ savageCharacter.prototype.validate = function() {
 	this.derived.currentLoad = 0;
 	this.derived.combatLoad = 0;
 	fightingSkill = this.getSkill("SKILL_FIGHTING");
-	this.parry = 2;
+	this.derived.parry = 2;
 	if( fightingSkill.value > 0 ) {
 		fightingValue = getDiceValue( fightingSkill.value );
 		this.derived.parry = Math.floor(fightingValue.value / 2) + 2;
@@ -2391,10 +2920,11 @@ savageCharacter.prototype.validate = function() {
 					if ( regularCost < 0)
 						regularCost = 0;
 				}
-
-				this.skillPointsUsed += regularCost + doubleCost * 2;
+				if( !this.skillList[skillCounter].advskill || this.skillList[skillCounter].advskill == 0)
+					this.skillPointsUsed += regularCost + doubleCost * 2;
 			} else {
-				this.skillPointsUsed += this.skillList[skillCounter].value;
+				if( !this.skillList[skillCounter].advskill || this.skillList[skillCounter].advskill == 0)
+					this.skillPointsUsed += this.skillList[skillCounter].value;
 			}
 		}
 
@@ -2404,9 +2934,11 @@ savageCharacter.prototype.validate = function() {
 				if( this.skillList[skillCounter].specialties[specialtyCounter].value + this.skillList[skillCounter].specialties[specialtyCounter].boost > this.displayAttributes[this.skillList[skillCounter].attribute].id ) {
 					regularCost = this.displayAttributes[this.skillList[skillCounter].attribute].id;
 					doubleCost = this.skillList[skillCounter].specialties[specialtyCounter].value - this.displayAttributes[this.skillList[skillCounter].attribute].id;
-					this.skillPointsUsed += regularCost + doubleCost * 2;
+					if(  !this.skillList[skillCounter].advskill || this.skillList[skillCounter].advskill == 0)
+						this.skillPointsUsed += regularCost + doubleCost * 2;
 				} else {
-					this.skillPointsUsed += this.skillList[skillCounter].specialties[specialtyCounter].value;
+					if(  !this.skillList[skillCounter].advskill || this.skillList[skillCounter].advskill == 0)
+						this.skillPointsUsed += this.skillList[skillCounter].specialties[specialtyCounter].value;
 				}
 			}
 		}
@@ -2548,18 +3080,29 @@ savageCharacter.prototype.validate = function() {
 		}
 	);
 
+
 	if( this.hasArcaneBackground ) {
+		this.selectedArcaneBackground.freePower = null;
 		for( var abCounter = 0 ; abCounter < savageWorldsArcaneBackgrounds.length ; abCounter++)
 			this.availableArcaneBackgrounds.push( savageWorldsArcaneBackgrounds[abCounter] );
 
 		for( var abCounter = 0 ; abCounter < savageWorldsPowers.length ; abCounter++) {
 
-			if( savageWorldsPowers[abCounter].rank <= this.XP.rankValue )
+			if( savageWorldsPowers[abCounter].rank <= this.XP.rankValue  )
 				 savageWorldsPowers[abCounter].selectable = true;
 			else
 				 savageWorldsPowers[abCounter].selectable = false;
 
+			if( this.selectedArcaneBackground && this.selectedArcaneBackground.power_list && this.selectedArcaneBackground.power_list.length > 0 ) {
+				if( this.selectedArcaneBackground.power_list.indexOf( savageWorldsPowers[abCounter].tag ) < 0 ) {
+					savageWorldsPowers[abCounter].selectable = false;
+				}
+			}
+
 			this.availablePowers.push( savageWorldsPowers[abCounter] );
+			if( this.selectedArcaneBackground.free_power != "" && this.selectedArcaneBackground.free_power == savageWorldsPowers[abCounter].tag) {
+				this.selectedArcaneBackground.freePower = savageWorldsPowers[abCounter];
+			}
 		}
 		for( var abCounter = 0 ; abCounter < savageWorldsArcaneTrappings.length ; abCounter++)
 			this.availableTrappings.push( savageWorldsArcaneTrappings[abCounter] );
@@ -2586,10 +3129,17 @@ savageCharacter.prototype.validate = function() {
 		}
 	}
 
-	this.availableWeapons = Array();
-	for( var gearCounter = 0; gearCounter < savageWorldsGearWeapons.length; gearCounter++) {
-		if( this.bookInUse( savageWorldsGearWeapons[gearCounter].book ) ) {
-			this.availableWeapons.push( savageWorldsGearWeapons[gearCounter] );
+	this.availableHandWeapons = Array();
+	for( var gearCounter = 0; gearCounter < savageWorldsGearHandWeapons.length; gearCounter++) {
+		if( this.bookInUse( savageWorldsGearHandWeapons[gearCounter].book ) ) {
+			this.availableHandWeapons.push( savageWorldsGearHandWeapons[gearCounter] );
+		}
+	}
+
+	this.availableRangedWeapons = Array();
+	for( var gearCounter = 0; gearCounter < savageWorldsGearRangedWeapons.length; gearCounter++) {
+		if( this.bookInUse( savageWorldsGearRangedWeapons[gearCounter].book ) ) {
+			this.availableRangedWeapons.push( savageWorldsGearRangedWeapons[gearCounter] );
 		}
 	}
 
@@ -2619,14 +3169,11 @@ savageCharacter.prototype.validate = function() {
 			if( this.bookInUse( savageWorldsHindrances[hindranceCounter].book ) ) {
 				savageWorldsHindrances[hindranceCounter].selectable = true;
 
-
-
-				// if( typeof(savageWorldsHindrances[hindranceCounter].requires) == "function" ) {
-				// 	savageWorldsHindrances[hindranceCounter].selectable = savageWorldsHindrances[hindranceCounter].requires( this );
-				// }
+				if( typeof(savageWorldsHindrances[hindranceCounter].requires) == "function" ) {
+					savageWorldsHindrances[hindranceCounter].selectable = savageWorldsHindrances[hindranceCounter].requires( this );
+				}
 
 				if( savageWorldsHindrances[hindranceCounter].conflicts_edge != "" ) {
-//					console.log( savageWorldsHindrances[hindranceCounter].tag, savageWorldsHindrances[hindranceCounter].conflicts_edge);
 					if( this.hasEdge( savageWorldsHindrances[hindranceCounter].conflicts_edge ))
 						savageWorldsHindrances[hindranceCounter].selectable = false;
 				}
@@ -2667,37 +3214,86 @@ savageCharacter.prototype.validate = function() {
 
 				if( typeof(savageWorldsEdges[edgeCounter].requires) == "function" ) {
 					savageWorldsEdges[edgeCounter].selectable = savageWorldsEdges[edgeCounter].requires( this );
-					//console.log( savageWorldsEdges[edgeCounter].tag + " unselectable edge attributes: " + savageWorldsEdges[edgeCounter].tag);
 				}
 
 				if( savageWorldsEdges[edgeCounter].required_edge != ""  ) {
 					if( !this.hasEdge( savageWorldsEdges[edgeCounter].required_edge )) {
-						//console.log( savageWorldsEdges[edgeCounter].tag + " unselectable requires edge: " + savageWorldsEdges[edgeCounter].required_edge);
 						savageWorldsEdges[edgeCounter].selectable = false;
 					}
 				}
 
 				if( savageWorldsEdges[edgeCounter].conflicts_edge != "" ) {
 					if( this.hasEdge( savageWorldsEdges[edgeCounter].conflicts_edge )) {
-						//console.log( savageWorldsEdges[edgeCounter].tag + " unselectable conflicts edge: " + savageWorldsEdges[edgeCounter].conflicts_edge);
 						savageWorldsEdges[edgeCounter].selectable = false;
 
 					}
 				}
 
 				if( savageWorldsEdges[edgeCounter].required_rank > this.XP.rankValue ) {
-						savageWorldsEdges[edgeCounter].selectable = false;
+					if(
+						( this.bornAHero == false )
+							||
+						(	this.bornAHero == true && this.isMARS() == false && this.XP.value > 0 )
+							||
+						(	this.bornAHero == true && this.isMARS() == true && this.XP.value > 20 )
+
+					) {
+							savageWorldsEdges[edgeCounter].selectable = false;
+					}
 				}
 
 				if( savageWorldsEdges[edgeCounter].conflicts_hindrance != ""  ) {
 					if( this.hasHindrance( savageWorldsEdges[edgeCounter].conflicts_hindrance )) {
-						//console.log( savageWorldsEdges[edgeCounter].tag + " unselectable conflicts hindrance: " + savageWorldsEdges[edgeCounter].conflicts_hindrance);
 						savageWorldsEdges[edgeCounter].selectable = false;
 					}
 				}
 				if( savageWorldsEdges[edgeCounter].reselectable == 0 && this.hasEdge( savageWorldsEdges[edgeCounter].tag ) ) {
-					//console.log( savageWorldsEdges[edgeCounter].tag + " unselectable has edge: " + savageWorldsEdges[edgeCounter].tag);
 					savageWorldsEdges[edgeCounter].selectable = false;
+				}
+
+				if(
+					this.usesSPCCreation == true  &&
+					(
+						savageWorldsEdges[edgeCounter].tag == "arcane-background"
+							||
+						savageWorldsEdges[edgeCounter].tag == "arcane-resistance"
+							||
+						savageWorldsEdges[edgeCounter].tag == "arcane-resistance-improved"
+							||
+						savageWorldsEdges[edgeCounter].tag == "holy-warrior"
+							||
+						savageWorldsEdges[edgeCounter].tag == "gadgeteer"
+							||
+						savageWorldsEdges[edgeCounter].tag == "unholy-warrior"
+							||
+						savageWorldsEdges[edgeCounter].tag == "unholy-warrior"
+							||
+						savageWorldsEdges[edgeCounter].tag == "holy-warrior"
+							||
+						savageWorldsEdges[edgeCounter].tag == "holy-unholy-warrior"
+							||
+						savageWorldsEdges[edgeCounter].tag == "new-power"
+							||
+						savageWorldsEdges[edgeCounter].tag == "no-mercy"
+							||
+						savageWorldsEdges[edgeCounter].tag == "power-points"
+							||
+						savageWorldsEdges[edgeCounter].tag == "rapid-recharge"
+							||
+						savageWorldsEdges[edgeCounter].tag == "soul-drain"
+							||
+						savageWorldsEdges[edgeCounter].tag == "wizard"
+					)
+				) {
+					if(
+						savageWorldsEdges[edgeCounter].tag == "power-points"
+							&&
+						this.SPCRisingStars == true
+					) {
+						savageWorldsEdges[edgeCounter].selectable = true;
+					} else {
+						savageWorldsEdges[edgeCounter].selectable = false;
+					}
 				}
 
 				this.availableEdges.push( savageWorldsEdges[edgeCounter] );
@@ -2708,14 +3304,23 @@ savageCharacter.prototype.validate = function() {
 	// Advancements...
 	this.availableAdvancements = Math.floor(this.XP.value / 5);
 
+	this.allocateAdvancementSlots();
 
-	if( this.selectedAdvancements > this.availableAdvancements) {
+	// clear out advancement skill specialties
+	for( var skillCounter = 0; skillCounter < this.skillList.length; skillCounter++ ) {
+		for(var specialtyCounter = this.skillList[skillCounter].specialties - 1; specialtyCounter >= 0; specialtyCounter++) {
+			if( this.skillList[skillCounter].specialties[specialtyCounter].advskill > 0 ) {
+				this.skillList[skillCounter].specialties = this.skillList[skillCounter].specialties.splice(specialtyCounter, 1);
+			}
+		}
+	}
+
+	if( this.selectedAdvancements.length > this.availableAdvancements) {
 		this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_ADVANCEMENTS") );
 		this.isValid = false;
 	}
 
 	// check to make sure a requirement wasn't removed from edges...
-
 	for( edgeCounter = 0; edgeCounter < this.selectedEdges.length; edgeCounter++) {
 
 
@@ -2728,9 +3333,7 @@ savageCharacter.prototype.validate = function() {
 
 		if( this.selectedEdges[edgeCounter].required_edge != ""  ) {
 			if( !this.hasEdge( this.selectedEdges[edgeCounter].required_edge )) {
-			//	console.log( savageWorldsEdges[edgeCounter].tag + " unselectable requires edge: " + savageWorldsEdges[edgeCounter].required_edge);
 				theEdge = this.getEdge( this.selectedEdges[edgeCounter].required_edge  );
-			//	console.log("*1", theEdge );
 				this.validationReport.push( this.selectedEdges[edgeCounter].local_name + ": " + this.getTranslation("CHARGEN_VALIDATION_REQUIRES_EDGE").replace( "{value}", theEdge.local_name) );
 				this.isValid = false;
 			}
@@ -2738,10 +3341,9 @@ savageCharacter.prototype.validate = function() {
 
 		if( this.selectedEdges[edgeCounter].conflicts_edge != "" ) {
 			if( this.hasEdge( this.selectedEdges[edgeCounter].conflicts_edge )) {
-			//	console.log( savageWorldsEdges[edgeCounter].tag + " unselectable conflicts edge: " + savageWorldsEdges[edgeCounter].conflicts_edge);
-			theEdge = this.getEdge( this.selectedEdges[edgeCounter].conflicts_edge  );
-		//	console.log("*2", theEdge );
-			this.validationReport.push( this.selectedEdges[edgeCounter].local_name + ": " + this.getTranslation("CHARGEN_VALIDATION_CONFLICTS_EDGE").replace( "{value}", theEdge.local_name) );
+
+				theEdge = this.getEdge( this.selectedEdges[edgeCounter].conflicts_edge  );
+				this.validationReport.push( this.selectedEdges[edgeCounter].local_name + ": " + this.getTranslation("CHARGEN_VALIDATION_CONFLICTS_EDGE").replace( "{value}", theEdge.local_name) );
 				this.isValid = false;
 
 			}
@@ -2749,7 +3351,6 @@ savageCharacter.prototype.validate = function() {
 
 		if( this.selectedEdges[edgeCounter].conflicts_hindrance != ""  ) {
 			if( hindranceTag = this.hasHindrance( this.selectedEdges[edgeCounter].conflicts_hindrance ) ) {
-			//	console.log( savageWorldsEdges[edgeCounter].tag + " unselectable conflicts hindrance: " + savageWorldsEdges[edgeCounter].conflicts_hindrance);
 				theHindrance = this.getHindrance( hindranceTag  );
 				this.validationReport.push( this.selectedEdges[edgeCounter].local_name + ": " + this.getTranslation("CHARGEN_VALIDATION_CONFLICTS_HINDRANCE").replace( "{value}", theHindrance.local_name) );
 				this.isValid = false;
@@ -2769,53 +3370,247 @@ savageCharacter.prototype.validate = function() {
 
  	}
 
- 	this.refreshAvailable();
+
+
+ 	var attributeIncreaseNovice = false;
+ 	var attributeIncreaseSeasoned = false;
+ 	var attributeIncreaseVeteran = false;
+ 	var attributeIncreaseHeroic = false;
+
+ 	for( advCounter = 0; advCounter < this.selectedAdvancements.length; advCounter++) {
+ 		// Edge Advancement
+ 		if( this.selectedAdvancements[advCounter].tag == "edge" ) {
+ 			if(
+ 				this.selectedAdvancements[advCounter].option1
+ 					&&
+ 				typeof( this.selectedAdvancements[advCounter].option1.charEffect) == "function"
+ 			) {
+ 				this.selectedAdvancements[advCounter].option1.charEffect(this);
+ 			}
+
+			if(
+				this.selectedAdvancements[advCounter].option1
+					&&
+				typeof( this.selectedAdvancements[advCounter].option1.requires) == "function"
+			) {
+				if( !this.selectedAdvancements[advCounter].option1.requires(this) ) {
+					invalidMessage = this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_INVALID_EDGE");
+					invalidMessage = invalidMessage.replace("{value}", this.selectedAdvancements[advCounter].option1.local_name );
+					this.validationReport.push( invalidMessage );
+					this.isValid = false;
+				}
+			}
+
+			if(
+				this.selectedAdvancements[advCounter].option1
+					&&
+				this.selectedAdvancements[advCounter].option1.required_edge
+			) {
+				if( !this.hasEdge( this.selectedAdvancements[advCounter].option1.required_edge, advCounter ) ) {
+					invalidMessage = this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_INVALID_EDGE");
+					invalidMessage = invalidMessage.replace("{value}", this.selectedAdvancements[advCounter].option1.local_name );
+					this.validationReport.push( invalidMessage );
+					this.isValid = false;
+				}
+			}
+
+
+ 		}
+ 		// End of Edge Advancement
+
+ 		// Attribute Advancement
+ 		if( this.selectedAdvancements[advCounter].tag == "attribute" ) {
+ 			this.boostAttribute( this.selectedAdvancements[advCounter].option1 );
+
+ 			if( advCounter < 3 ) {
+ 				if( attributeIncreaseNovice ) {
+ 					this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_NOVICE") );
+ 					this.isValid = false;
+ 				}
+ 				attributeIncreaseNovice = true;
+ 			} else if( advCounter < 7 ) {
+ 				if( attributeIncreaseSeasoned ) {
+ 					this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_SEASONED") );
+ 					this.isValid = false;
+ 				}
+ 				attributeIncreaseSeasoned = true;
+ 			} else if( advCounter < 11 ) {
+
+ 				if( attributeIncreaseVeteran ) {
+ 					this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_VETERAN") );
+ 					this.isValid = false;
+ 				}
+ 				attributeIncreaseVeteran = true;
+ 			} else if( advCounter < 15 ) {
+ 				if( attributeIncreaseHeroic ) {
+ 					this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_HEROIC") );
+ 					this.isValid = false;
+ 				}
+ 				attributeIncreaseHeroic = true;
+ 			} else {
+ 				// Legendary can have an attribute increase every other advance
+ 				if(
+ 					advCounter != 15 // just in case someone chose it at advance #15.
+ 						&&
+ 					this.selectedAdvancements[advCounter - 1].tag != "attribute"
+ 				) {
+ 					this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_LEGENDARY") );
+ 					this.isValid = false;
+ 				}
+ 			}
+ 		}
+ 		// End of Attribute Advancement
+
+ 		// Skill Increase Advancement
+ 		if( this.selectedAdvancements[advCounter].tag == "incskill" ) {
+ 			// TODO
+ 			if( this.selectedAdvancements[advCounter].option1 )
+ 				this.boostSkill( this.selectedAdvancements[advCounter].option1.id );
+
+
+ 		}
+ 		// End of Skill Increase Advancement
+
+ 		// 2 Skills Increase Advancement
+ 		if( this.selectedAdvancements[advCounter].tag == "inc2skills" ) {
+ 			// TODO
+ 			if( this.selectedAdvancements[advCounter].option1 )
+ 				this.boostSkill( this.selectedAdvancements[advCounter].option1.id );
+ 			if( this.selectedAdvancements[advCounter].option2 )
+ 				this.boostSkill( this.selectedAdvancements[advCounter].option2.id );
+ 		}
+ 		// End of 2 Skills Increase Advancement
+
+ 		// New Skill Advancement
+ 		if( this.selectedAdvancements[advCounter].tag == "skill" ) {
+ 			if(
+ 				this.selectedAdvancements[advCounter].option1
+ 				&& this.selectedAdvancements[advCounter].option1.specify
+ 				&& this.selectedAdvancements[advCounter].option1.specify > 0
+ 			) {
+ 				this.addSpecialtySkill(
+ 					this.selectedAdvancements[advCounter].option1,
+ 					this.selectedAdvancements[advCounter].option2,
+ 					1,
+ 					1
+ 				);
+ 				//this.refreshAvailable();
+ 			} else {
+ 				this.selectedAdvancements[advCounter].option2 = null;
+ 				if( this.selectedAdvancements[advCounter].option1 ) {
+ 					if( this.selectedAdvancements[advCounter].option1.id )
+ 						this.boostSkill( this.selectedAdvancements[advCounter].option1.id );
+ 					else
+ 						this.boostSkill( this.selectedAdvancements[advCounter].option1 );
+ 				} else {
+ 					this.selectedAdvancements[advCounter].option1 = this.allSkills[0];
+ 				}
+ 			}
+ 		}
+ 		// End of New Skill Advancement
+
+	}
+
+	this.calcSPC();
+
+	this.refreshAvailable();
+
+ 	// recalculate attributes from advancement boosts
+	this.displayAttributes = {
+		agility: getDiceValue( this.attributes.agility + this.attributeBoost.agility ),
+		smarts: getDiceValue( this.attributes.smarts + this.attributeBoost.smarts ),
+		spirit: getDiceValue( this.attributes.spirit + this.attributeBoost.spirit ),
+		strength: getDiceValue( this.attributes.strength + this.attributeBoost.strength ),
+		vigor: getDiceValue( this.attributes.vigor + this.attributeBoost.vigor ),
+	};
+
+	// recalc derived toughness
+//	this.derived.toughness = Math.floor(this.displayAttributes.vigor.value / 2) + 2;
+	this.derived.toughness += this.attributeBoost.vigor / 2;
 
  	this.currentFunds = this.startingFunds;
  	this.currentLoad = 0;
  	this.combatLoad = 0;
  	// subtract gear costs....
- 	for( var gearCounter = 0; gearCounter < this.selectedWeapons.length; gearCounter++) {
- 		this.currentFunds -= this.selectedWeapons[gearCounter].purchaseCost;
- 		this.currentLoad += this.selectedWeapons[gearCounter].weight;
- 		if( this.selectedWeapons[gearCounter].droppedDuringCombat == false )
- 			this.combatLoad += this.selectedWeapons[gearCounter].weight;
- 		this.selectedWeapons[gearCounter].toHitRollModifier = 0;
- 		this.selectedWeapons[gearCounter].currentParry = this.selectedWeapons[gearCounter].parry;
-		if( this.selectedWeapons[gearCounter].min_str > this.displayAttributes.strength.value ) {
+ 	for( var gearCounter = 0; gearCounter < this.selectedHandWeapons.length; gearCounter++) {
+ 		this.currentFunds -= this.selectedHandWeapons[gearCounter].purchaseCost;
+ 		this.currentLoad += this.selectedHandWeapons[gearCounter].weight;
+ 		if( this.selectedHandWeapons[gearCounter].droppedDuringCombat == false )
+ 			this.combatLoad += this.selectedHandWeapons[gearCounter].weight;
+ 		this.selectedHandWeapons[gearCounter].toHitRollModifier = 0;
+ 		this.selectedHandWeapons[gearCounter].currentParry = this.selectedHandWeapons[gearCounter].parry;
+
+		if( this.selectedHandWeapons[gearCounter].readiedLocation && this.selectedHandWeapons[gearCounter].min_str > this.displayAttributes.strength.value ) {
 			this.warningReport.push( this.getTranslation("CHARGEN_BELOW_STR_WEAPON") );
 
-			if( this.selectedWeapons[gearCounter].damage_strength > 0) {
-				var damageBit = this.selectedWeapons[gearCounter].damage;
+			if( this.selectedHandWeapons[gearCounter].damage_strength > 0) {
+				var damageBit = this.selectedHandWeapons[gearCounter].damage;
 
 				damageBit = this.setCharAt( damageBit, 1, this.displayAttributes.strength.value);
 
-				if( this.selectedWeapons[gearCounter].currentParry > 0 )
-					this.selectedWeapons[gearCounter].currentParry = 0;
+				if( this.selectedHandWeapons[gearCounter].currentParry > 0 )
+					this.selectedHandWeapons[gearCounter].currentParry = 0;
 
-				this.selectedWeapons[gearCounter].displayDamage = this.displayAttributes.strength.local_label + " + " +  damageBit;
+				this.selectedHandWeapons[gearCounter].displayDamage = this.displayAttributes.strength.local_label + " + " +  damageBit;
 			} else {
-				this.selectedWeapons[gearCounter].displayDamage = this.selectedWeapons[gearCounter].damage;
-				this.selectedWeapons[gearCounter].toHitRollModifier = -1;
+				this.selectedHandWeapons[gearCounter].displayDamage = this.selectedHandWeapons[gearCounter].damage;
+				this.selectedHandWeapons[gearCounter].toHitRollModifier = -1;
 			}
 		} else {
-			if( this.selectedWeapons[gearCounter].damage_strength > 0) {
-				this.selectedWeapons[gearCounter].displayDamage = this.displayAttributes.strength.local_label + " + " + this.selectedWeapons[gearCounter].damage;
+			if( this.selectedHandWeapons[gearCounter].damage_strength > 0) {
+				this.selectedHandWeapons[gearCounter].displayDamage = this.displayAttributes.strength.local_label + " + " + this.selectedHandWeapons[gearCounter].damage;
 			} else {
-				this.selectedWeapons[gearCounter].displayDamage = this.selectedWeapons[gearCounter].damage;
+				this.selectedHandWeapons[gearCounter].displayDamage = this.selectedHandWeapons[gearCounter].damage;
 			}
 		}
 
-		if( this.selectedWeapons[gearCounter].readiedLocation != "")
-			this.derived.parry += this.selectedWeapons[gearCounter].parry_modifier;
+		if( this.selectedHandWeapons[gearCounter].readiedLocation != "")
+			this.derived.parry += this.selectedHandWeapons[gearCounter].parry_modifier;
+ 	}
+	for( var gearCounter = 0; gearCounter < this.selectedRangedWeapons.length; gearCounter++) {
+ 		this.currentFunds -= this.selectedRangedWeapons[gearCounter].purchaseCost;
+ 		this.currentLoad += this.selectedRangedWeapons[gearCounter].weight;
+ 		if( this.selectedRangedWeapons[gearCounter].droppedDuringCombat == false )
+ 			this.combatLoad += this.selectedRangedWeapons[gearCounter].weight;
+ 		this.selectedRangedWeapons[gearCounter].toHitRollModifier = 0;
+ 		this.selectedRangedWeapons[gearCounter].currentParry = this.selectedRangedWeapons[gearCounter].parry;
+
+		if( this.selectedRangedWeapons[gearCounter].readiedLocation && this.selectedRangedWeapons[gearCounter].min_str > this.displayAttributes.strength.value ) {
+			this.warningReport.push( this.getTranslation("CHARGEN_BELOW_STR_WEAPON") );
+
+			if( this.selectedHandWeapons[gearCounter].damage_strength > 0) {
+				var damageBit = this.selectedRangedWeapons[gearCounter].damage;
+
+				damageBit = this.setCharAt( damageBit, 1, this.displayAttributes.strength.value);
+
+				if( this.selectedRangedWeapons[gearCounter].currentParry > 0 )
+					this.selectedRangedWeapons[gearCounter].currentParry = 0;
+
+				this.selectedRangedWeapons[gearCounter].displayDamage = this.displayAttributes.strength.local_label + " + " +  damageBit;
+			} else {
+				this.selectedRangedWeapons[gearCounter].displayDamage = this.selectedRangedWeapons[gearCounter].damage;
+				this.selectedRangedWeapons[gearCounter].toHitRollModifier = -1;
+			}
+		} else {
+			if( this.selectedRangedWeapons[gearCounter].damage_strength > 0) {
+				this.selectedRangedWeapons[gearCounter].displayDamage = this.displayAttributes.strength.local_label + " + " + this.selectedRangedWeapons[gearCounter].damage;
+			} else {
+				this.selectedRangedWeapons[gearCounter].displayDamage = this.selectedRangedWeapons[gearCounter].damage;
+			}
+		}
+
+		if( this.selectedRangedWeapons[gearCounter].readiedLocation != "")
+			this.derived.parry += this.selectedRangedWeapons[gearCounter].parry_modifier;
  	}
  	for( var gearCounter = 0; gearCounter < this.selectedArmor.length; gearCounter++) {
  		this.currentFunds -= this.selectedArmor[gearCounter].purchaseCost;
- 		if( this.selectedArmor[gearCounter].covers_torso > 0 ) {
- 			if( this.selectedArmor[gearCounter].armor > this.derived.armor ) {
- 				this.derived.armor = this.selectedArmor[gearCounter].armor;
- 			}
- 		}
+ 		if( this.selectedArmor[gearCounter].isReadied ) {
+	 		if( this.selectedArmor[gearCounter].covers_torso > 0 ) {
+	 			if( this.selectedArmor[gearCounter].armor > this.derived.armor ) {
+	 				this.derived.armor = this.selectedArmor[gearCounter].armor;
+	 			}
+	 		}
+	 	}
  		this.currentLoad += this.selectedArmor[gearCounter].weight;
  		if( this.selectedArmor[gearCounter].droppedDuringCombat == false )
  			this.combatLoad += this.selectedArmor[gearCounter].weight;
@@ -2823,16 +3618,18 @@ savageCharacter.prototype.validate = function() {
  	for( var gearCounter = 0; gearCounter < this.selectedShields.length; gearCounter++) {
  		this.currentFunds -= this.selectedShields[gearCounter].purchaseCost;
  		this.currentLoad += this.selectedShields[gearCounter].weight;
-		if( this.selectedShields[gearCounter].isReadied != "")
+		if( this.selectedShields[gearCounter].readiedLocation && this.selectedShields[gearCounter].readiedLocation != "")
 			this.derived.parry += this.selectedShields[gearCounter].parry;
  		if( this.selectedShields[gearCounter].droppedDuringCombat == false )
  			this.combatLoad += this.selectedShields[gearCounter].weight;
  	}
  	for( var gearCounter = 0; gearCounter < this.selectedMundaneGear.length; gearCounter++) {
- 		this.currentFunds -= this.selectedMundaneGear[gearCounter].purchaseCost;
- 		this.currentLoad += this.selectedMundaneGear[gearCounter].weight;
+ 		this.currentFunds -= this.selectedMundaneGear[gearCounter].purchaseCost * this.selectedMundaneGear[gearCounter].count;
+ 		this.selectedMundaneGear[gearCounter].totalWeight = this.selectedMundaneGear[gearCounter].weight * this.selectedMundaneGear[gearCounter].count;
+ 		this.selectedMundaneGear[gearCounter].totalPurchaseCost = this.selectedMundaneGear[gearCounter].purchaseCost * this.selectedMundaneGear[gearCounter].count;
+ 		this.currentLoad += this.selectedMundaneGear[gearCounter].weight * this.selectedMundaneGear[gearCounter].count;
  		if( this.selectedMundaneGear[gearCounter].droppedDuringCombat == false )
- 			this.combatLoad += this.selectedMundaneGear[gearCounter].weight;
+ 			this.combatLoad += this.selectedMundaneGear[gearCounter].weight * this.selectedMundaneGear[gearCounter].count;
  	}
 
 	if( this.currentFunds < 0 ) {
@@ -2840,14 +3637,22 @@ savageCharacter.prototype.validate = function() {
 		this.isValid = false;
 	}
 
-	if( this.armor > 0 ) {
+	if( this.usesSPCCreation ) {
+		if( this.hasEdge("arcane-background") ) {
+			var invalidMessage = this.getTranslation("CHARGEN_SPC_CANNOT_HAVE_AB");
+			this.validationReport.push( invalidMessage );
+			this.isValid = false;
+		}
+	}
+
+	if( this.derived.armor == 0) {
 		this.derived.toughnessAndArmor = this.derived.toughness;
 	} else {
 		this.derived.toughnessAndArmor = ( this.derived.toughness + this.derived.armor ) + " (" + this.derived.armor + ")";
 	}
 
 	this.loadLimit = this.displayAttributes.strength.value * 5;
-	//console.log( getDiceValue this.attributes.strength );
+
 	if( this.loadLimit > 0 ) {
 		this.loadModifier = Math.floor( this.currentLoad / this.loadLimit ) * -1 ;
 		this.combatLoadModifier = Math.floor( this.combatLoad / this.loadLimit ) * -1 ;
@@ -2859,11 +3664,16 @@ savageCharacter.prototype.validate = function() {
 		this.warningReport.push( this.getTranslation("CHARGEN_CHARACTER_OVERLOADED") );
 	}
 
-	for( var gearCounter = 0; gearCounter < this.selectedWeapons.length; gearCounter++) {
-		this.selectedWeapons[gearCounter].toHitRollModifier += this.loadModifier;
+	for( var gearCounter = 0; gearCounter < this.selectedHandWeapons.length; gearCounter++) {
+		this.selectedHandWeapons[gearCounter].toHitRollModifier -= this.loadModifier;
 	}
 
-
+	this.knownLanguagesLimit = this.displayAttributes.smarts.value / 2 + 1;
+	//console.log( "this.knownLanguagesLimit", this.knownLanguagesLimit );
+	for( langCounter = 0; langCounter < this.knownLanguagesLimit; langCounter++ ) {
+		if( typeof(this.knownLanguages[ langCounter]) == "undefined")
+			this.knownLanguages[ langCounter ] = "";
+	}
 }
 
 savageCharacter.prototype.setCharAt = function(str,index,chr) {
@@ -2880,7 +3690,8 @@ savageCharacter.prototype.getEdge = function( edgeTag ) {
 	return null;
 }
 
-savageCharacter.prototype.getHindrance = function( hindranceTag ) {
+savageCharacter.prototype.getHindrance = function( hindranceTag  ) {
+
 	for( var hindranceCounter = 0; hindranceCounter < savageWorldsHindrances.length; hindranceCounter++ ) {
 		if( savageWorldsHindrances[hindranceCounter].tag == hindranceTag ) {
 			return savageWorldsHindrances[hindranceCounter];
@@ -2891,6 +3702,59 @@ savageCharacter.prototype.getHindrance = function( hindranceTag ) {
 
 savageCharacter.prototype.exportBBCode = function() {
 	return "TODO";
+}
+
+savageCharacter.prototype.enableSettingRule = function(settingTag) {
+//	console.log( "enableSettingRule", settingTag);
+	for(var bookCounter = 0; bookCounter < savageWorldsBooksList.length; bookCounter++ ) {
+		for( var settingCounter = 0 ; settingCounter < savageWorldsBooksList[bookCounter].setting_rules.length; settingCounter++ ) {
+			if( settingTag == savageWorldsBooksList[bookCounter].setting_rules[ settingCounter].tag ) {
+				savageWorldsBooksList[bookCounter].setting_rules[ settingCounter].inUse = true;
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+savageCharacter.prototype.disableSettingRule = function(settingTag) {
+//	console.log( "enableSettingRule", settingTag);
+	for(var bookCounter = 0; bookCounter < savageWorldsBooksList.length; bookCounter++ ) {
+		for( var settingCounter = 0 ; settingCounter < savageWorldsBooksList[bookCounter].setting_rules.length; settingCounter++ ) {
+			if( settingTag == savageWorldsBooksList[bookCounter].setting_rules[ settingCounter].tag ) {
+				savageWorldsBooksList[bookCounter].setting_rules[ settingCounter].inUse = false;
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+savageCharacter.prototype.isSettingRuleEnabled = function( settingTag ) {
+//	console.log( "isSettingRuleEnabled", settingTag);
+	for(var bookCounter = 0; bookCounter < savageWorldsBooksList.length; bookCounter++ ) {
+		for( var settingCounter = 0 ; settingCounter < savageWorldsBooksList[bookCounter].setting_rules.length; settingCounter++ ) {
+			if(
+				settingTag
+				&&
+				settingTag != ""
+				&&
+				savageWorldsBooksList[bookCounter].setting_rules[ settingCounter ]
+				&&
+				savageWorldsBooksList[bookCounter].setting_rules[ settingCounter ].tag
+				&&
+				settingTag == savageWorldsBooksList[bookCounter].setting_rules[ settingCounter ].tag
+			) {
+				if( savageWorldsBooksList[bookCounter].inUse == true ) {
+					return savageWorldsBooksList[bookCounter].setting_rules[ settingCounter].inUse;
+				} else {
+					// book is disabled, so setting rule is too.
+					return false;
+				}
+			}
+		}
+	}
+	return false;
 }
 
 savageCharacter.prototype.importJSON = function( jsonString ) {
@@ -2904,6 +3768,24 @@ savageCharacter.prototype.importJSON = function( jsonString ) {
 			if( importObject.uuid )
 				this.uuid = importObject.uuid;
 			this.description = importObject.description;
+
+			if( importObject.books ) {
+				for( var importCounter = 0; importCounter < importObject.books.length; importCounter++ ) {
+					for( var bookCounter = 0; bookCounter < this.books.length; bookCounter++ ) {
+						//this.books[bookCounter].inUse = false;
+						if ( importObject.books[importCounter] == this.books[bookCounter].short_name ) {
+							this.books[bookCounter].inUse = true;
+						}
+					}
+				}
+			}
+
+			if( importObject.settingRules ) {
+				for( var importCounter = 0; importCounter < importObject.settingRules.length; importCounter++ ) {
+					this.enableSettingRule( importObject.settingRules[importCounter] );
+				}
+			}
+
 			for( attribute in this.attributes ) {
 				if( importObject.attributes[ attribute ] ) {
 					attribute = attribute.toLowerCase().trim();
@@ -2912,24 +3794,21 @@ savageCharacter.prototype.importJSON = function( jsonString ) {
 				}
 			}
 
+			if( importObject.knownLanguages ) {
+				this.knownLanguages = importObject.knownLanguages;
+			}
+
 			if( importObject.gender )
 				this.setGender( importObject.gender  );
 
 			if( importObject.xp )
 				this.setXP( importObject.xp  );
 
-			if( importObject.race )
+			if( importObject.race ){
 				this.setRace( importObject.race  );
-
-			if( importObject.books ) {
-				for( var importCounter = 0; importCounter < importObject.books.length; importCounter++ ) {
-					for( var bookCounter = 0; bookCounter < this.books.length; bookCounter++ ) {
-						if ( importObject.books[importCounter] == this.books[bookCounter].short_name ) {
-							this.books[bookCounter].inUse = true;
-						}
-					}
-				}
 			}
+
+
 			if( importObject.skills ) {
 				for( var importCounter = 0; importCounter < importObject.skills.length; importCounter++ ) {
 					this.setSkill(
@@ -2996,11 +3875,15 @@ savageCharacter.prototype.importJSON = function( jsonString ) {
 			if( importObject.gearMundane ) {
 				this.selectedMundaneGear = Array();
 				for( var importCounter = 0; importCounter < importObject.gearMundane.length; importCounter++ ) {
+					itemCount = 1;
+					if( importObject.gearMundane[importCounter].count )
+						itemCount = importObject.gearMundane[importCounter].count;
 					this.addGearMundane(
 						importObject.gearMundane[importCounter].book,
 						importObject.gearMundane[importCounter].tag,
 						importObject.gearMundane[importCounter].cost,
-						importObject.gearMundane[importCounter].dropped
+						importObject.gearMundane[importCounter].dropped,
+						itemCount
 					);
 				}
 			}
@@ -3018,15 +3901,28 @@ savageCharacter.prototype.importJSON = function( jsonString ) {
 				}
 			}
 
-			if( importObject.gearWeapons ) {
-				this.selectedWeapons = Array();
-				for( var importCounter = 0; importCounter < importObject.gearWeapons.length; importCounter++ ) {
-					this.addGearWeapon(
-						importObject.gearWeapons[importCounter].book,
-						importObject.gearWeapons[importCounter].tag,
-						importObject.gearWeapons[importCounter].cost,
-						importObject.gearWeapons[importCounter].loc,
-						importObject.gearWeapons[importCounter].dropped
+			if( importObject.gearHandWeapons ) {
+				this.selectedHandWeapons = Array();
+				for( var importCounter = 0; importCounter < importObject.gearHandWeapons.length; importCounter++ ) {
+					this.addGearHandWeapon(
+						importObject.gearHandWeapons[importCounter].book,
+						importObject.gearHandWeapons[importCounter].tag,
+						importObject.gearHandWeapons[importCounter].cost,
+						importObject.gearHandWeapons[importCounter].loc,
+						importObject.gearHandWeapons[importCounter].dropped
+					);
+				}
+			}
+
+			if( importObject.gearRangedWeapons ) {
+				this.selectedRangedWeapons = Array();
+				for( var importCounter = 0; importCounter < importObject.gearRangedWeapons.length; importCounter++ ) {
+					this.addGearRangedWeapon(
+						importObject.gearRangedWeapons[importCounter].book,
+						importObject.gearRangedWeapons[importCounter].tag,
+						importObject.gearRangedWeapons[importCounter].cost,
+						importObject.gearRangedWeapons[importCounter].loc,
+						importObject.gearRangedWeapons[importCounter].dropped
 					);
 				}
 			}
@@ -3044,6 +3940,75 @@ savageCharacter.prototype.importJSON = function( jsonString ) {
 				}
 			}
 
+
+			if(importObject.spcpowerlevel)
+				this.SPCSelectedPowerLevel = importObject.spcpowerlevel;
+
+			if(
+				importObject.risingstars
+					&&
+				(
+					importObject.risingstars > 1 || importObject.risingstars == "1"
+				)
+			){
+				this.SPCRisingStars = true;
+			} else {
+				this.SPCRisingStars = false;
+			}
+
+			if( importObject.advancements ) {
+				this.selectedAdvancements = Array();
+				this.validate();
+				for( var importCounter = 0; importCounter < importObject.advancements.length; importCounter++ ) {
+					this.setAdvancementType(
+						importObject.advancements[importCounter].takenAt,
+						importObject.advancements[importCounter].tag
+					);
+
+					if( importObject.advancements[importCounter].option1 ) {
+						option1name = null;
+						if( importObject.advancements[importCounter].option1name )
+							option1name = importObject.advancements[importCounter].option1name;
+
+						if( importObject.advancements[importCounter].option1book ){
+							this.setAdvancementOption1(
+								importObject.advancements[importCounter].takenAt,
+								importObject.advancements[importCounter].option1,
+								option1name,
+								importObject.advancements[importCounter].option1book
+							 );
+						} else {
+							this.setAdvancementOption1(
+								importObject.advancements[importCounter].takenAt,
+								importObject.advancements[importCounter].option1,
+								option1name
+							);
+						}
+					}
+
+					if( importObject.advancements[importCounter].option2 ) {
+						option2name = null;
+						if( importObject.advancements[importCounter].option2name )
+							option2name = importObject.advancements[importCounter].option2name;
+						if( importObject.advancements[importCounter].option2book ){
+							this.setAdvancementOption2(
+								importObject.advancements[importCounter].takenAt,
+								importObject.advancements[importCounter].option2,
+								option2name,
+								importObject.advancements[importCounter].option2book
+							 );
+						} else {
+
+							this.setAdvancementOption2(
+								importObject.advancements[importCounter].takenAt,
+								importObject.advancements[importCounter].option2,
+								option2name
+							);
+						}
+					}
+				}
+			}
+			this.isNew = false;
 			this.validate();
 			return true;
 		}
@@ -3052,14 +4017,110 @@ savageCharacter.prototype.importJSON = function( jsonString ) {
 	return false;
 }
 
+
+savageCharacter.prototype.setAdvancementOption1 = function( advIndex, optionItem, specifyName, bookID ) {
+
+	if( optionItem && this.selectedAdvancements[advIndex] ) {
+		if( this.selectedAdvancements[advIndex].tag == "edge" ) {
+			this.selectedAdvancements[advIndex].option1 = this.getEdge( optionItem );
+		} else {
+
+			if(
+				this.selectedAdvancements[advIndex].tag == "incskill"
+					||
+				this.selectedAdvancements[advIndex].tag == "inc2skills"
+					||
+				this.selectedAdvancements[advIndex].tag == "skill"
+			) {
+				//console.log( "setAdvancementOption1", advIndex, optionItem)
+				if( optionItem.id ) {
+					this.selectedAdvancements[advIndex].option1 = optionItem;
+				} else {
+					this.selectedAdvancements[advIndex].option1 = this.getSkill( optionItem , specifyName);
+				}
+			} else {
+				this.selectedAdvancements[advIndex].option1 = optionItem;
+			}
+
+
+		}
+		if( bookID )
+			this.selectedAdvancements[advIndex].option1book = bookID;
+	}
+	//console.log( "option 1 this.selectedAdvancements[advIndex]", this.selectedAdvancements[advIndex]);
+}
+
+savageCharacter.prototype.setAdvancementOption2 = function( advIndex, optionItem, specifyName, bookID ) {
+	//console.log( "setAdvancementOption2", advIndex, optionItem, specifyName, bookID);
+	if( optionItem && this.selectedAdvancements[advIndex] ) {
+		if(
+			this.selectedAdvancements[advIndex].tag == "skill"
+
+		) {
+			//if( optionItem.id ) {
+				this.selectedAdvancements[advIndex].option2 = specifyName;
+			//} else {
+			//	this.selectedAdvancements[advIndex].option2 = this.getSkill( optionItem , specifyName);
+			//}
+		} else {
+			if(
+				this.selectedAdvancements[advIndex].tag == "incskill"
+					||
+				this.selectedAdvancements[advIndex].tag == "inc2skills"
+			) {
+				if( optionItem.id ) {
+					this.selectedAdvancements[advIndex].option2 = optionItem;
+				} else {
+					this.selectedAdvancements[advIndex].option2 = this.getSkill( optionItem , specifyName);
+				}
+
+			} else {
+				this.selectedAdvancements[advIndex].option2 = optionItem;
+			}
+
+		}
+		if( bookID )
+			this.selectedAdvancements[advIndex].option2book = bookID;
+	}
+}
+
+savageCharacter.prototype.setAdvancementType = function( advIndex, advTag ) {
+	if( advTag && this.selectedAdvancements[advIndex] ) {
+		for( advCounter = 0; advCounter < this.advancementTypes.length; advCounter++ ) {
+			if( advTag == this.advancementTypes[advCounter].tag) {
+				var advItem = {};
+				angular.extend( advItem, this.advancementTypes[advCounter] );
+				advItem.takenAt = advIndex;
+				this.selectedAdvancements[advIndex] = advItem;
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 savageCharacter.prototype.addBook = function( bookObject ) {
 
 }
 
+savageCharacter.prototype.allocateAdvancementSlots = function () {
+	if( this.selectedAdvancements.length < this.availableAdvancements ) {
+		for( advCounter = this.selectedAdvancements.length; advCounter < this.availableAdvancements; advCounter++ ) {
+			var advItem = {};
+			angular.extend( advItem, this.advancementTypes[0] );
+			advItem.takenAt = advCounter;
+			this.selectedAdvancements[advCounter] = advItem;
+		}
+	}
+
+	if( this.selectedAdvancements.length > this.availableAdvancements ) {
+		this.selectedAdvancements = this.selectedAdvancements.slice(0, this.availableAdvancements);
+	}
+}
 
 savageCharacter.prototype.exportJSON = function(noUUID) {
 
-	exportObject = {};
+	var exportObject = {};
 	exportObject.name = this.name;
 	exportObject.background = this.background;
 	exportObject.description = this.description;
@@ -3091,29 +4152,33 @@ savageCharacter.prototype.exportJSON = function(noUUID) {
 		exportObject.perks.push( this.selectedPerks[perkCounter].tag );
 	}
 
+
 	exportObject.skills = Array();
+
 	for( var skillCounter = 0; skillCounter < this.skillList.length; skillCounter++ ) {
 		if(
 			this.skillList[skillCounter].value > 0
 			||
 			this.skillList[skillCounter].specialties.length > 0
 		) {
-			if(this.skillList[skillCounter].specialties.length > 0 ) {
-				exportObject.skills.push(
-					{
-						id: this.skillList[skillCounter].id,
-						value: this.skillList[skillCounter].value,
-						specialties: this.skillList[skillCounter].specialties
+			var skillObj = {
+				id: this.skillList[skillCounter].id,
+				value: this.skillList[skillCounter].value
+			};
+
+			if( this.skillList[skillCounter].specialties.length > 0 ) {
+				skillObj.specialties = Array();
+
+				for(var specCounter = 0; specCounter < this.skillList[skillCounter].specialties.length; specCounter++ ) {
+					if( this.skillList[skillCounter].specialties[specCounter].advskill == 0 ) {
+						skillObj.specialties.push(
+							this.skillList[skillCounter].specialties[specCounter]
+						);
 					}
-				);
-			} else {
-				exportObject.skills.push(
-					{
-						id: this.skillList[skillCounter].id,
-						value: this.skillList[skillCounter].value
-					}
-				);
+
+				}
 			}
+			exportObject.skills.push( skillObj );
 		}
 		exportObject.edges = Array();
 		for( var edgeCounter = 0; edgeCounter < this.selectedEdges.length; edgeCounter++ ) {
@@ -3155,6 +4220,7 @@ savageCharacter.prototype.exportJSON = function(noUUID) {
 				book: this.selectedMundaneGear[gearCounter].book,
 				tag: this.selectedMundaneGear[gearCounter].tag,
 				cost: this.selectedMundaneGear[gearCounter].purchaseCost,
+				count: this.selectedMundaneGear[gearCounter].count,
 				dropped: this.selectedMundaneGear[gearCounter].droppedDuringCombat
 			});
 		}
@@ -3170,14 +4236,25 @@ savageCharacter.prototype.exportJSON = function(noUUID) {
 			});
 		}
 
-		exportObject.gearWeapons = Array();
-		for( var gearCounter = 0; gearCounter < this.selectedWeapons.length; gearCounter++ ) {
-			exportObject.gearWeapons.push( {
-				book: this.selectedWeapons[gearCounter].book,
-				tag: this.selectedWeapons[gearCounter].tag,
-				cost: this.selectedWeapons[gearCounter].purchaseCost,
-				loc: this.selectedWeapons[gearCounter].readiedLocation,
-				dropped: this.selectedWeapons[gearCounter].droppedDuringCombat
+		exportObject.gearHandWeapons = Array();
+		for( var gearCounter = 0; gearCounter < this.selectedHandWeapons.length; gearCounter++ ) {
+			exportObject.gearHandWeapons.push( {
+				book: this.selectedHandWeapons[gearCounter].book,
+				tag: this.selectedHandWeapons[gearCounter].tag,
+				cost: this.selectedHandWeapons[gearCounter].purchaseCost,
+				loc: this.selectedHandWeapons[gearCounter].readiedLocation,
+				dropped: this.selectedHandWeapons[gearCounter].droppedDuringCombat
+			});
+		}
+
+		exportObject.gearRangedWeapons = Array();
+		for( var gearCounter = 0; gearCounter < this.selectedRangedWeapons.length; gearCounter++ ) {
+			exportObject.gearRangedWeapons.push( {
+				book: this.selectedRangedWeapons[gearCounter].book,
+				tag: this.selectedRangedWeapons[gearCounter].tag,
+				cost: this.selectedRangedWeapons[gearCounter].purchaseCost,
+				loc: this.selectedRangedWeapons[gearCounter].readiedLocation,
+				dropped: this.selectedRangedWeapons[gearCounter].droppedDuringCombat
 			});
 		}
 
@@ -3192,7 +4269,80 @@ savageCharacter.prototype.exportJSON = function(noUUID) {
 			});
 		}
 
+		exportObject.settingRules = Array();
+		for( var bookCounter = 0; bookCounter < savageWorldsBooksList.length; bookCounter++ ) {
+			for( var settingCounter = 0; settingCounter < savageWorldsBooksList[bookCounter].setting_rules.length; settingCounter++ ) {
+				if( savageWorldsBooksList[bookCounter].inUse && savageWorldsBooksList[bookCounter].setting_rules[settingCounter].inUse ) {
+					exportObject.settingRules.push( savageWorldsBooksList[bookCounter].setting_rules[settingCounter].tag );
+				}
+			}
 
+		}
+
+		exportObject.spcpowerlevel = this.SPCSelectedPowerLevel;
+		if(this.SPCRisingStars )
+			exportObject.risingstars = 1;
+		else
+			exportObject.risingstars = 0;
+
+		exportObject.knownLanguages = Array();
+		for( var langCounter = 0; langCounter < this.knownLanguagesLimit + 1; langCounter++ ) {
+			exportObject.knownLanguages.push( this.knownLanguages[langCounter] );
+		}
+
+		exportObject.advancements = Array();
+		for( var advCounter = 0; advCounter < this.selectedAdvancements.length; advCounter++ ) {
+			if( this.selectedAdvancements[advCounter].tag != "none") {
+				var exportItem = {
+					tag: this.selectedAdvancements[advCounter].tag,
+					takenAt: this.selectedAdvancements[advCounter].takenAt
+				}
+
+				if( this.selectedAdvancements[advCounter].option1 ) {
+
+					if( this.selectedAdvancements[advCounter].option1.tag ) {
+						exportItem.option1 = this.selectedAdvancements[advCounter].option1.tag;
+					} else {
+						if( this.selectedAdvancements[advCounter].option1.id ) {
+							exportItem.option1 = this.selectedAdvancements[advCounter].option1.id;
+						} else {
+							exportItem.option1 = this.selectedAdvancements[advCounter].option1;
+						}
+					}
+					if( typeof(this.selectedAdvancements[advCounter].option1.specify_name) == "string" ) {
+						exportItem.option1name = this.selectedAdvancements[advCounter].option1.specify_name;
+					}
+				}
+
+				if( this.selectedAdvancements[advCounter].option1book ) {
+					exportItem.option1book = this.selectedAdvancements[advCounter].option1book;
+				}
+
+				if( this.selectedAdvancements[advCounter].option2 ) {
+					if( this.selectedAdvancements[advCounter].option2.tag ) {
+						exportItem.option2 = this.selectedAdvancements[advCounter].option2.tag;
+					} else {
+						if( this.selectedAdvancements[advCounter].option2.id ) {
+							exportItem.option2 = this.selectedAdvancements[advCounter].option2.id;
+						} else {
+							exportItem.option2 = this.selectedAdvancements[advCounter].option2;
+						}
+					}
+
+					if( typeof(this.selectedAdvancements[advCounter].option2.specify_name) == "string" ) {
+						exportItem.option2name = this.selectedAdvancements[advCounter].option2.specify_name;
+					}
+				}
+
+				if( this.selectedAdvancements[advCounter].option2book ) {
+					exportItem.option2book = this.selectedAdvancements[advCounter].option2book;
+				}
+
+				exportObject.advancements.push(
+					exportItem
+				)
+			}
+		}
 	}
 
 
@@ -3214,13 +4364,10 @@ savageCharacter.prototype.getTranslation = function(langKey) {
 }
 
 savageCharacter.prototype.bookInUse = function( bookID ) {
+	// console.log(this.books);
 	for( var bookCounter = 0; bookCounter < this.books.length; bookCounter++) {
 		if( this.books[bookCounter].id == bookID ) {
 			if( this.books[bookCounter].inUse == true ){
-				if( this.books[bookCounter].usesGutsSkill )
-					this.usesGutsSkill = true;
-				if( this.books[bookCounter].uses_sanity > 0)
-					this.usesSanity = true;
 				return true;
 			}
 		}
@@ -3229,7 +4376,8 @@ savageCharacter.prototype.bookInUse = function( bookID ) {
 }
 
 savageCharacter.prototype.hasArcane = function( arcaneTag ) {
-
+	if( this.selectedArcaneBackground && this.selectedArcaneBackground.tag == arcaneTag)
+		return true;
 	return false;
 }
 
@@ -3269,13 +4417,28 @@ savageCharacter.prototype.decrementSkill = function( skillID ) {
 	return false;
 }
 
-savageCharacter.prototype.addSpecialtySkill = function( skillID ) {
+savageCharacter.prototype.addSpecialtySkill = function( skillItem, specialtyName, specialtyValue, advancementSkill ) {
+	if( !specialtyName )
+		specialtyName = '';
+	if( !specialtyValue )
+		specialtyValue = 1;  // d4
+	if( !advancementSkill )
+		advancementSkill = 0;
 	for( var skillCounter = 0; skillCounter < this.skillList.length; skillCounter++ ) {
-		if( this.skillList[skillCounter].id == skillID ) {
+		if(
+			(
+				this.skillList[skillCounter].id == skillItem
+					||
+				this.skillList[skillCounter].id == skillItem.id
+			)
+				&&
+			!this.skillList[skillCounter].is_specialty
+		) {
 			this.skillList[skillCounter].specialties.push(
 				{
-					name: "",
-					value: 1 // d4
+					name: specialtyName,
+					value: specialtyValue,
+					advskill: advancementSkill
 				}
 			);
 		}
@@ -3287,6 +4450,7 @@ savageCharacter.prototype.setSkill = function( skillID, skillValue ) {
 	for( var skillCounter = 0; skillCounter < this.skillList.length; skillCounter++ ) {
 		if( this.skillList[skillCounter].id == skillID ) {
 			this.skillList[skillCounter].value = skillValue;
+			this.skillList[skillCounter].advskill = 0;
 			return true;
 		}
 
@@ -3298,23 +4462,47 @@ savageCharacter.prototype.addRacialSkill = function( skillID, skillValue ) {
 	for( var skillCounter = 0; skillCounter < this.skillList.length; skillCounter++ ) {
 		if( this.skillList[skillCounter].id == skillID ) {
 			this.skillList[skillCounter].boost = skillValue;
-
-		//	console.log( this.displayAttributes[this.skillList[skillCounter].attribute] );
-			// check for d4 in related ability, bonus 3 to if it only a 4, oherwise just bonus 2
-			// if( this.displayAttributes[this.skillList[skillCounter].attribute].id == 1 )
-			// 	this.skillPointsUsed = this.skillPointsUsed - 3;
-			// else
-			// 	this.skillPointsUsed = this.skillPointsUsed - 2;
+			this.skillList[skillCounter].advskill = 0;
 			return true;
 		}
 	}
 	return false;
 }
 
-savageCharacter.prototype.getSkill = function( skillID ) {
-	for( var skillCounter = 0; skillCounter < this.skillList.length; skillCounter++ ) {
-		if( this.skillList[skillCounter].id == skillID ) {
-			return this.skillList[skillCounter];
+savageCharacter.prototype.getSkill = function( skillID, specifyName ) {
+	for( var skillCounter = 0; skillCounter < this.allSkills.length; skillCounter++ ) {
+		if(
+			this.allSkills[skillCounter].id == skillID
+				||
+			this.allSkills[skillCounter] == skillID
+				||
+			(
+				skillID.id
+					&&
+				(
+					this.allSkills[skillCounter].id == skillID.id
+						||
+					this.allSkills[skillCounter] == skillID.id
+				)
+			)
+		) {
+			if( specifyName ) {
+				if( specifyName ) {
+					if( this.allSkills[skillCounter].specialties ) {
+
+						for( var specC = 0; specC < this.allSkills[skillCounter].specialties.length; specC++ ) {
+
+							if( this.allSkills[skillCounter].specialties[specC].name.trim().toLowerCase() == specifyName.trim().toLowerCase() ) {
+								return this.allSkills[skillCounter].specialties[specC];
+							}
+						}
+					}
+					return null;
+				}
+			} else {
+				return this.allSkills[skillCounter];
+			}
+
 		}
 
 	}
@@ -3387,19 +4575,34 @@ savageCharacter.prototype.updateSpecialtySkillName = function( skillID, specialt
 	return false;
 }
 
-savageCharacter.prototype.hasEdge = function( edgeTag ) {
+savageCharacter.prototype.hasEdge = function( edgeTag, maxCount ) {
+	if( !maxCount )
+		maxCount = -1;
 	for( var edgeCounter = 0; edgeCounter < this.selectedEdges.length; edgeCounter++ ) {
 
 		if( this.selectedEdges[edgeCounter].tag == edgeTag) {
-//			console.log("hasEdge", edgeTag);
 			return true;
 		}
 	}
 
 	for( var edgeCounter = 0; edgeCounter < this.race.edges.length; edgeCounter++ ) {
 		if( this.race.edges[edgeCounter].tag == edgeTag){
-//			console.log("hasRacialEdge", edgeTag);
-			return this.race.edges[edgeCounter].tag;
+			return true;
+		}
+	}
+
+	for( var edgeCounter = 0; edgeCounter < this.selectedAdvancements.length; edgeCounter++ ) {
+		if(
+			this.selectedAdvancements[edgeCounter].tag == "edge"
+				&&
+		 	this.selectedAdvancements[edgeCounter].option1
+		 		&&
+		 	this.selectedAdvancements[edgeCounter].option1.tag
+		 		&&
+		 	this.selectedAdvancements[edgeCounter].option1.tag == edgeTag
+		){
+			if( maxCount == -1 || maxCount >= edgeCounter )
+		 		return true;
 		}
 	}
 	return false;
@@ -3462,7 +4665,6 @@ savageCharacter.prototype.removePerk = function( perkTag ) {
 	return false;
 }
 savageCharacter.prototype.setAttribute = function( attributeName, diceID ) {
-//	console.log("savageCharacter.prototype.setAttribute", attributeName, diceID)
 	this.attributes[attributeName] = diceID - this.attributeBoost[attributeName];
 }
 
@@ -3471,6 +4673,29 @@ savageCharacter.prototype.boostAttribute = function( attributeName, boostNumber 
 		boostNumber = 1;
 	this.attributeBoost[attributeName] += boostNumber;
 }
+
+savageCharacter.prototype.boostSkill = function( skillID, specialtyName, boostNumber ) {
+
+	if( !boostNumber )
+		boostNumber = 1;
+	for( var skillCounter = 0; skillCounter < this.skillList.length; skillCounter++ ) {
+		if( this.skillList[skillCounter].id == skillID ) {
+			if( specialtyName ) {
+				for( var skillCounter2 = 0; skillCounter2 < this.skillList[skillCounter].specialties.length; skillCounter2++ ) {
+					if(  this.skillList[skillCounter].specialties[skillCounter2].name == specialtyName ) {
+						this.skillList[skillCounter].specialties[skillCounter2].boost += boostNumber;
+						return true;
+					}
+				}
+			} else {
+				this.skillList[skillCounter].boost += boostNumber;
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 
 savageCharacter.prototype.setArcaneBackground = function( abTag ) {
 	for( abCounter = 0; abCounter < savageWorldsArcaneBackgrounds.length; abCounter++) {
@@ -3482,7 +4707,9 @@ savageCharacter.prototype.setArcaneBackground = function( abTag ) {
 	return false;
 }
 
-savageCharacter.prototype.addGearMundane = function( fromBook, gearTag, itemCost, droppedDuringCombat ) {
+savageCharacter.prototype.addGearMundane = function( fromBook, gearTag, itemCost, droppedDuringCombat, itemCount ) {
+	if( !itemCount )
+		itemCount = 1;
 	if(!droppedDuringCombat)
 		droppedDuringCombat = false;
 	for( var gearCounter = 0; gearCounter < this.availableMundaneGear.length; gearCounter++ ) {
@@ -3491,32 +4718,51 @@ savageCharacter.prototype.addGearMundane = function( fromBook, gearTag, itemCost
 				&&
 			fromBook == this.availableMundaneGear[gearCounter].book
 		) {
-			pushedItem = {};
-			angular.extend( pushedItem, this.availableMundaneGear[gearCounter]);
-			pushedItem.droppedDuringCombat = droppedDuringCombat;
-			if( itemCost > -1 ) {
-				pushedItem.purchaseCost = itemCost;
+			mundaneGearIndex = this.getMundaneGear( gearTag );
+			if( mundaneGearIndex > -1 ) {
+				this.selectedMundaneGear[mundaneGearIndex].count++;
+				return true;
 			} else {
-				pushedItem.purchaseCost = pushedItem.cost;
+
+
+				var pushedItem = {};
+				angular.extend( pushedItem, this.availableMundaneGear[gearCounter]);
+				pushedItem.droppedDuringCombat = droppedDuringCombat;
+				if( itemCost > -1 ) {
+					pushedItem.purchaseCost = itemCost;
+				} else {
+					pushedItem.purchaseCost = pushedItem.cost;
+				}
+				pushedItem.count = itemCount;
+
+				this.selectedMundaneGear.push( pushedItem );
+				return true;
 			}
-			this.selectedMundaneGear.push( pushedItem );
-			return true;
 		}
 	}
 	return false;
 }
 
-savageCharacter.prototype.addGearWeapon = function( fromBook, gearTag, itemCost, readiedLocation, droppedDuringCombat ) {
+savageCharacter.prototype.getMundaneGear = function( gearTag ) {
+	for( var findCounter = 0; findCounter < this.selectedMundaneGear.length; findCounter++ ) {
+		if( this.selectedMundaneGear[findCounter].tag == gearTag )
+			return findCounter;
+	}
+
+	return -1;
+}
+
+savageCharacter.prototype.addGearRangedWeapon = function( fromBook, gearTag, itemCost, readiedLocation, droppedDuringCombat ) {
 	if(!droppedDuringCombat)
 		droppedDuringCombat = false;
-	for( var gearCounter = 0; gearCounter < this.availableWeapons.length; gearCounter++ ) {
+	for( var gearCounter = 0; gearCounter < this.availableRangedWeapons.length; gearCounter++ ) {
 		if(
-			gearTag == this.availableWeapons[gearCounter].tag
+			gearTag == this.availableRangedWeapons[gearCounter].tag
 				&&
-			fromBook == this.availableWeapons[gearCounter].book
+			fromBook == this.availableRangedWeapons[gearCounter].book
 		) {
-			pushedItem = {};
-			angular.extend( pushedItem, this.availableWeapons[gearCounter]);
+			var pushedItem = {};
+			angular.extend( pushedItem, this.availableRangedWeapons[gearCounter]);
 			pushedItem.droppedDuringCombat = droppedDuringCombat;
 			if( itemCost > -1 ) {
 				pushedItem.purchaseCost = itemCost;
@@ -3528,7 +4774,36 @@ savageCharacter.prototype.addGearWeapon = function( fromBook, gearTag, itemCost,
 			} else {
 				pushedItem.readiedLocation = "";
 			}
-			this.selectedWeapons.push( pushedItem );
+			this.selectedRangedWeapons.push( pushedItem );
+			return true;
+		}
+	}
+	return false;
+}
+
+savageCharacter.prototype.addGearHandWeapon = function( fromBook, gearTag, itemCost, readiedLocation, droppedDuringCombat ) {
+	if(!droppedDuringCombat)
+		droppedDuringCombat = false;
+	for( var gearCounter = 0; gearCounter < this.availableHandWeapons.length; gearCounter++ ) {
+		if(
+			gearTag == this.availableHandWeapons[gearCounter].tag
+				&&
+			fromBook == this.availableHandWeapons[gearCounter].book
+		) {
+			var pushedItem = {};
+			angular.extend( pushedItem, this.availableHandWeapons[gearCounter]);
+			pushedItem.droppedDuringCombat = droppedDuringCombat;
+			if( itemCost > -1 ) {
+				pushedItem.purchaseCost = itemCost;
+			} else {
+				pushedItem.purchaseCost = pushedItem.cost;
+			}
+			if( readiedLocation ) {
+				pushedItem.readiedLocation = readiedLocation;
+			} else {
+				pushedItem.readiedLocation = "";
+			}
+			this.selectedHandWeapons.push( pushedItem );
 			return true;
 		}
 	}
@@ -3544,7 +4819,7 @@ savageCharacter.prototype.addGearShield = function( fromBook, gearTag, itemCost,
 				&&
 			fromBook == this.availableShields[gearCounter].book
 		) {
-			pushedItem = {};
+			var pushedItem = {};
 			angular.extend( pushedItem, this.availableShields[gearCounter]);
 			pushedItem.droppedDuringCombat = droppedDuringCombat;
 			if( itemCost > -1 ) {
@@ -3573,7 +4848,7 @@ savageCharacter.prototype.addGearArmor = function( fromBook, gearTag, itemCost, 
 				&&
 			fromBook == this.availableArmor[gearCounter].book
 		) {
-			pushedItem = {};
+			var pushedItem = {};
 			angular.extend( pushedItem, this.availableArmor[gearCounter]);
 			pushedItem.droppedDuringCombat = droppedDuringCombat;
 			if( itemCost > -1 ) {
@@ -3594,50 +4869,138 @@ savageCharacter.prototype.addGearArmor = function( fromBook, gearTag, itemCost, 
 }
 
 savageCharacter.prototype.removeMundane = function( gearIndex ) {
-	this.selectedMundaneGear.splice( gearIndex, 1);
+	if( this.selectedMundaneGear[gearIndex].count > 1)
+		this.selectedMundaneGear[gearIndex].count--;
+	else
+		this.selectedMundaneGear.splice( gearIndex, 1);
 }
 
 savageCharacter.prototype.removeArmor = function( gearIndex ) {
 	this.selectedArmor.splice( gearIndex, 1);
 }
-savageCharacter.prototype.removeWeapon = function( gearIndex ) {
-	this.selectedWeapons.splice( gearIndex, 1);
+savageCharacter.prototype.removeHandWeapon = function( gearIndex ) {
+	this.selectedHandWeapons.splice( gearIndex, 1);
 }
+
+savageCharacter.prototype.removeRangedWeapon = function( gearIndex ) {
+	this.selectedRangedWeapons.splice( gearIndex, 1);
+}
+
 savageCharacter.prototype.removeShield = function( gearIndex ) {
 	this.selectedShields.splice( gearIndex, 1);
 }
 
-savageCharacter.prototype.equipPrimaryWeapon = function( gearIndex ) {
+savageCharacter.prototype.equipPrimaryHandWeapon = function( gearIndex ) {
 	// unequip all items in primary hand....
 	for( var gearCounter = 0; gearCounter < this.selectedShields.length; gearCounter++ ) {
 		if( this.selectedShields[gearCounter].readiedLocation == "primary" )
 			this.selectedShields[gearCounter].readiedLocation = "";
+		if( this.selectedHandWeapons[gearIndex].requires_2_hands > 0 ) {
+			if( this.selectedShields[gearCounter].readiedLocation == "secondary" )
+				this.selectedShields[gearCounter].readiedLocation = "";
+		}
 	}
 
-	for( var gearCounter = 0; gearCounter < this.selectedWeapons.length; gearCounter++ ) {
-		if( this.selectedWeapons[gearCounter].readiedLocation == "primary" )
-			this.selectedWeapons[gearCounter].readiedLocation = "";
+	for( var gearCounter = 0; gearCounter < this.selectedHandWeapons.length; gearCounter++ ) {
+		if( this.selectedHandWeapons[gearCounter].readiedLocation == "primary" )
+			this.selectedHandWeapons[gearCounter].readiedLocation = "";
+		if( this.selectedHandWeapons[gearIndex].requires_2_hands > 0 ) {
+			if( this.selectedHandWeapons[gearCounter].readiedLocation == "secondary" )
+				this.selectedHandWeapons[gearCounter].readiedLocation = "";
+		}
 	}
 
-	this.selectedWeapons[gearIndex].readiedLocation = "primary";
+	for( var gearCounter = 0; gearCounter < this.selectedRangedWeapons.length; gearCounter++ ) {
+		if( this.selectedRangedWeapons[gearCounter].readiedLocation == "primary" )
+			this.selectedRangedWeapons[gearCounter].readiedLocation = "";
+		if( this.selectedRangedWeapons[gearIndex].requires_2_hands > 0 ) {
+			if( this.selectedRangedWeapons[gearCounter].readiedLocation == "secondary" )
+				this.selectedRangedWeapons[gearCounter].readiedLocation = "";
+		}
+	}
+
+	this.selectedHandWeapons[gearIndex].droppedDuringCombat = false;
+	this.selectedHandWeapons[gearIndex].readiedLocation = "primary";
+
+}
+
+savageCharacter.prototype.equipPrimaryRangedWeapon = function( gearIndex ) {
+	// unequip all items in primary hand....
+	for( var gearCounter = 0; gearCounter < this.selectedShields.length; gearCounter++ ) {
+		if( this.selectedShields[gearCounter].readiedLocation == "primary" )
+			this.selectedShields[gearCounter].readiedLocation = "";
+		if( this.selectedHandWeapons[gearIndex].requires_2_hands > 0 ) {
+			if( this.selectedShields[gearCounter].readiedLocation == "secondary" )
+				this.selectedShields[gearCounter].readiedLocation = "";
+		}
+	}
+
+	for( var gearCounter = 0; gearCounter < this.selectedHandWeapons.length; gearCounter++ ) {
+		if( this.selectedHandWeapons[gearCounter].readiedLocation == "primary" )
+			this.selectedHandWeapons[gearCounter].readiedLocation = "";
+		if( this.selectedHandWeapons[gearIndex].requires_2_hands > 0 ) {
+			if( this.selectedHandWeapons[gearCounter].readiedLocation == "secondary" )
+				this.selectedHandWeapons[gearCounter].readiedLocation = "";
+		}
+	}
+
+	for( var gearCounter = 0; gearCounter < this.selectedRangedWeapons.length; gearCounter++ ) {
+		if( this.selectedRangedWeapons[gearCounter].readiedLocation == "primary" )
+			this.selectedRangedWeapons[gearCounter].readiedLocation = "";
+		if( this.selectedRangedWeapons[gearIndex].requires_2_hands > 0 ) {
+			if( this.selectedRangedWeapons[gearCounter].readiedLocation == "secondary" )
+				this.selectedRangedWeapons[gearCounter].readiedLocation = "";
+		}
+	}
+
+	this.selectedRangedWeapons[gearIndex].droppedDuringCombat = false;
+	this.selectedRangedWeapons[gearIndex].readiedLocation = "primary";
 
 }
 
 
-savageCharacter.prototype.equipSecondaryWeapon = function( gearIndex ) {
+savageCharacter.prototype.equipSecondaryHandWeapon = function( gearIndex ) {
 	// unequip all items in primary hand....
 	for( var gearCounter = 0; gearCounter < this.selectedShields.length; gearCounter++ ) {
 		if( this.selectedShields[gearCounter].readiedLocation == "secondary" )
 			this.selectedShields[gearCounter].readiedLocation = "";
 	}
 
-	for( var gearCounter = 0; gearCounter < this.selectedWeapons.length; gearCounter++ ) {
-		if( this.selectedWeapons[gearCounter].readiedLocation == "secondary" )
-			this.selectedWeapons[gearCounter].readiedLocation = "";
+	for( var gearCounter = 0; gearCounter < this.selectedHandWeapons.length; gearCounter++ ) {
+		if( this.selectedHandWeapons[gearCounter].readiedLocation == "secondary" )
+			this.selectedHandWeapons[gearCounter].readiedLocation = "";
 	}
 
-	this.selectedWeapons[gearIndex].readiedLocation = "secondary";
+	for( var gearCounter = 0; gearCounter < this.selectedRangedWeapons.length; gearCounter++ ) {
+		if( this.selectedRangedWeapons[gearCounter].readiedLocation == "secondary" )
+			this.selectedRangedWeapons[gearCounter].readiedLocation = "";
+	}
 
+
+	this.selectedHandWeapons[gearIndex].readiedLocation = "secondary";
+	this.selectedHandWeapons[gearIndex].droppedDuringCombat = false;
+}
+
+savageCharacter.prototype.equipSecondaryRangedWeapon = function( gearIndex ) {
+	// unequip all items in primary hand....
+	for( var gearCounter = 0; gearCounter < this.selectedShields.length; gearCounter++ ) {
+		if( this.selectedShields[gearCounter].readiedLocation == "secondary" )
+			this.selectedShields[gearCounter].readiedLocation = "";
+	}
+
+	for( var gearCounter = 0; gearCounter < this.selectedHandWeapons.length; gearCounter++ ) {
+		if( this.selectedHandWeapons[gearCounter].readiedLocation == "secondary" )
+			this.selectedHandWeapons[gearCounter].readiedLocation = "";
+	}
+
+	for( var gearCounter = 0; gearCounter < this.selectedRangedWeapons.length; gearCounter++ ) {
+		if( this.selectedRangedWeapons[gearCounter].readiedLocation == "secondary" )
+			this.selectedRangedWeapons[gearCounter].readiedLocation = "";
+	}
+
+
+	this.selectedRangedWeapons[gearIndex].readiedLocation = "secondary";
+	this.selectedRangedWeapons[gearIndex].droppedDuringCombat = false;
 }
 
 
@@ -3648,13 +5011,18 @@ savageCharacter.prototype.equipPrimaryShield = function( gearIndex ) {
 			this.selectedShields[gearCounter].readiedLocation = "";
 	}
 
-	for( var gearCounter = 0; gearCounter < this.selectedWeapons.length; gearCounter++ ) {
-		if( this.selectedWeapons[gearCounter].readiedLocation == "primary" )
-			this.selectedWeapons[gearCounter].readiedLocation = "";
+	for( var gearCounter = 0; gearCounter < this.selectedHandWeapons.length; gearCounter++ ) {
+		if( this.selectedHandWeapons[gearCounter].readiedLocation == "secondary" )
+			this.selectedHandWeapons[gearCounter].readiedLocation = "";
+	}
+
+	for( var gearCounter = 0; gearCounter < this.selectedRangedWeapons.length; gearCounter++ ) {
+		if( this.selectedRangedWeapons[gearCounter].readiedLocation == "secondary" )
+			this.selectedRangedWeapons[gearCounter].readiedLocation = "";
 	}
 
 	this.selectedShields[gearIndex].readiedLocation = "primary";
-
+	this.selectedShields[gearIndex].droppedDuringCombat = false;
 }
 
 
@@ -3665,25 +5033,35 @@ savageCharacter.prototype.equipSecondaryShield = function( gearIndex ) {
 			this.selectedShields[gearCounter].readiedLocation = "";
 	}
 
-	for( var gearCounter = 0; gearCounter < this.selectedWeapons.length; gearCounter++ ) {
-		if( this.selectedWeapons[gearCounter].readiedLocation == "secondary" )
-			this.selectedWeapons[gearCounter].readiedLocation = "";
+	for( var gearCounter = 0; gearCounter < this.selectedHandWeapons.length; gearCounter++ ) {
+		if( this.selectedHandWeapons[gearCounter].readiedLocation == "secondary" )
+			this.selectedHandWeapons[gearCounter].readiedLocation = "";
+	}
+
+	for( var gearCounter = 0; gearCounter < this.selectedRangedWeapons.length; gearCounter++ ) {
+		if( this.selectedRangedWeapons[gearCounter].readiedLocation == "secondary" )
+			this.selectedRangedWeapons[gearCounter].readiedLocation = "";
 	}
 
 	this.selectedShields[gearIndex].readiedLocation = "secondary";
-
+	this.selectedShields[gearIndex].droppedDuringCombat = false;
 }
 
 savageCharacter.prototype.unequipShield = function( gearIndex ) {
 	this.selectedShields[gearIndex].readiedLocation = "";
 }
 
-savageCharacter.prototype.unequipWeapon = function( gearIndex ) {
-	this.selectedWeapons[gearIndex].readiedLocation = "";
+savageCharacter.prototype.unequipHandWeapon = function( gearIndex ) {
+	this.selectedHandWeapons[gearIndex].readiedLocation = "";
+}
+
+savageCharacter.prototype.unequipRangedWeapon = function( gearIndex ) {
+	this.selectedRangedWeapons[gearIndex].readiedLocation = "";
 }
 
 savageCharacter.prototype.equipArmor = function( gearIndex ) {
 	this.selectedArmor[gearIndex].isReadied = true;
+	this.selectedArmor[gearIndex].droppedDuringCombat = false;
 }
 
 savageCharacter.prototype.unequipArmor = function( gearIndex ) {
@@ -3693,8 +5071,10 @@ savageCharacter.prototype.unequipArmor = function( gearIndex ) {
 savageCharacter.prototype.setDroppedDuringCombat = function( itemType, gearIndex ) {
 	if( itemType == "armor")
 		this.selectedArmor[gearIndex].droppedDuringCombat = true;
-	if( itemType == "weapon")
-		this.selectedWeapons[gearIndex].droppedDuringCombat = true;
+	if( itemType == "handweapon")
+		this.selectedHandWeapons[gearIndex].droppedDuringCombat = true;
+	if( itemType == "rangedweapon")
+		this.selectedRangedWeapons[gearIndex].droppedDuringCombat = true;
 	if( itemType == "shield")
 		this.selectedShields[gearIndex].droppedDuringCombat = true;
 	if( itemType == "gear")
@@ -3704,13 +5084,22 @@ savageCharacter.prototype.setDroppedDuringCombat = function( itemType, gearIndex
 savageCharacter.prototype.setUsedDuringCombat = function( itemType, gearIndex ) {
 	if( itemType == "armor")
 		this.selectedArmor[gearIndex].droppedDuringCombat = false;
-	if( itemType == "weapon")
-		this.selectedWeapons[gearIndex].droppedDuringCombat = false;
+	if( itemType == "handweapon")
+		this.selectedHandWeapons[gearIndex].droppedDuringCombat = false;
+	if( itemType == "handweapon")
+		this.selectedRangedWeapons[gearIndex].droppedDuringCombat = false;
 	if( itemType == "shield")
 		this.selectedShields[gearIndex].droppedDuringCombat = false;
 	if( itemType == "gear")
 		this.selectedMundaneGear[gearIndex].droppedDuringCombat = false;
 }
+
+/* Extensions to  the savageCharacter class for Savage Rifts® exceptions and code */
+
+// mainly for Born a Hero checks
+savageCharacter.prototype.isMARS = function() {
+	return false;
+};
 /*
 	Savage Worlds Web Tools by Jeffrey Gordon is licensed under a
 	Creative Commons Attribution 4.0 International License.
@@ -4749,7 +6138,857 @@ scifiCreator.prototype.hasOption = function(option_tag) {
 
 
 
-angular.module("baseApp").controller(
+var corechargenFunctions = function ($rootScope, $translate, $scope, $location, $route, $cordovaFile) {
+		$rootScope.showChargenMenu = true;
+		var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_chargen";
+		var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.chargen";
+		var optionsLocalStorageVariable = "com.jdg.swwt2.options.chargen";
+		var itemType = "character";
+
+		$scope.$route = $route;
+
+		$scope.init = function() {
+			$translate([
+				'APP_TITLE', 'INDEX_BUTTON_CORE_CHAR', 'CHARGEN_SPECIALIZATION_PLACEHOLDER', 'CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER'
+			]).then(
+				function (translation) {
+
+					$rootScope.title_tag = translation.INDEX_BUTTON_CORE_CHAR + " | " + translation.APP_TITLE;
+					$rootScope.subtitle_tag = translation.INDEX_BUTTON_CORE_CHAR;
+					$scope.specializionPlaceholder = translation.CHARGEN_SPECIALIZATION_PLACEHOLDER;
+					$scope.hindranceSpecificationPlaceholder = translation.CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER;
+
+
+				}
+			);
+
+			localizeDiceValues();
+
+
+			$scope.savageCharacter = new savageCharacter( localStorage["users_preferred_language"] );
+
+			if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
+				$scope.savageCharacter.importJSON( localStorage[ currentItemLocalStorageVariable ] );
+			}
+
+			$scope.charGenAttributes = $scope.savageCharacter.attributes;
+
+			$scope.addEdgeTag = $scope.savageCharacter.availableEdges[0];
+			$scope.addHindranceTag = $scope.savageCharacter.availableHindrances[0];
+			$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
+
+		}
+
+		$scope.init();
+
+		$scope.validateAndSave = function() {
+			$scope.savageCharacter.validate();
+			localStorage[currentItemLocalStorageVariable] = $scope.savageCharacter.exportJSON();
+		}
+		$scope.justSave = function() {
+			localStorage[currentItemLocalStorageVariable] = $scope.savageCharacter.exportJSON();
+		}
+
+		$scope.newPowerDialog = function() {
+			$scope.propogatePowerDialog(-1);
+			$rootScope.closeDialogs();
+			$scope.propogatePowerDialog(-1);
+			$scope.addEditPowerDialogOpen = true;
+		}
+
+
+		$scope.makeRange = function(min, max, step) {
+			step = step || 1;
+			var input = [];
+			for (var i = min; i <= max; i += step) {
+			    input.push(i);
+			}
+			return input;
+		};
+		$scope.editPowerDialog = function(powerIndex) {
+
+			$scope.propogatePowerDialog(powerIndex);
+			$rootScope.closeDialogs();
+			$scope.propogatePowerDialog(powerIndex);
+			$scope.addEditPowerDialogOpen = true;
+		}
+
+
+		$scope.propogatePowerDialog = function (indexNumber) {
+
+			if( indexNumber > -1 ) {
+				$scope.editingPowerIndex = indexNumber;
+				$scope.editingPower = $scope.savageCharacter.selectedPowers[indexNumber];
+
+			} else {
+				for( availablePowersC = 0; availablePowersC < $scope.savageCharacter.availablePowers.length; availablePowersC++) {
+					$scope.savageCharacter.availablePowers[ availablePowersC ].trapping = $scope.savageCharacter.availableTrappings[0];
+					$scope.savageCharacter.availablePowers[ availablePowersC ].customName = "";
+				}
+
+				$scope.editingPowerIndex = -1;
+				$scope.editingPower = $scope.savageCharacter.availablePowers[0];
+			}
+
+		}
+
+		$scope.updateSettingRule = function( settingTag ) {
+			// settingTag is not really used, but it's nice to know what's clicked for debugging.
+			// console.log( "updateSettingRule", settingTag );
+			$scope.validateAndSave();
+		}
+
+		$scope.addPower = function( editPower ) {
+			$scope.savageCharacter.addPower(
+				editPower.bookObj.id,
+				editPower.tag,
+				editPower.trapping.bookObj.id,
+				editPower.trapping.tag,
+				editPower.customName
+			);
+
+			$scope.validateAndSave();
+			$rootScope.closeDialogs();
+		}
+
+		$scope.savePower = function( editPower ) {
+
+			$scope.savageCharacter.selectedPowers[ $scope.editingPowerIndex ] = editPower;
+
+			$scope.validateAndSave();
+			$rootScope.closeDialogs();
+
+		}
+
+
+		$scope.removePower = function(powerIndex) {
+			$translate([
+				'CREATOR_DELETE_POWER_CONFIRMATION'
+			]).then(
+				function (translation) {
+					$scope.confirmDialog(
+						translation.CREATOR_DELETE_POWER_CONFIRMATION,
+						function() {
+							$scope.showConfirmDialog = false;
+							$scope.savageCharacter.removePower(powerIndex);
+							$scope.validateAndSave();
+						}
+					);
+				}
+			);
+
+
+		}
+
+		$rootScope.closeDialogs = function() {
+			$rootScope.newDialogOpen = false;
+			$rootScope.loadDialogOpen = false;
+			$rootScope.saveDialogOpen = false;
+			$rootScope.importDialogOpen = false;
+			$scope.addEditPowerDialogOpen = false;
+			$rootScope.exportDialogOpen = false;
+			$rootScope.optionsDialogOpen = false;
+			$scope.validationDialogOpen = false;
+			$scope.gearDialogOpen = false;
+			$scope.armorDialogOpen = false;
+			$scope.rangedWeaponDialogOpen = false;
+			$scope.handWeaponDialogOpen = false;
+			$scope.showNotifyDialog = false;
+		}
+
+		$rootScope.rangedWeaponDialog = function() {
+
+			$rootScope.closeDialogs();
+			$scope.rangedWeaponDialogOpen = true;
+		}
+
+		$rootScope.handWeaponDialog = function() {
+
+			$rootScope.closeDialogs();
+			$scope.handWeaponDialogOpen = true;
+		}
+
+		$rootScope.armorDialog = function() {
+
+			$rootScope.closeDialogs();
+			$scope.armorDialogOpen = true;
+		}
+
+		$rootScope.gearDialog = function() {
+
+			$rootScope.closeDialogs();
+			$scope.gearDialogOpen = true;
+		}
+
+		$rootScope.newDialog = function() {
+
+			$rootScope.closeDialogs();
+			$rootScope.newDialogOpen = true;
+		}
+
+		$rootScope.loadDialog = function() {
+
+			if( !localStorage[ savedItemsLocalStorageVariable ])
+				localStorage[ savedItemsLocalStorageVariable ] = "[]";
+
+			$scope.load_item = 0;
+			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+			for( sic = 0; sic < $scope.saved_items.length; sic++) {
+				$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
+			}
+
+			$rootScope.closeDialogs();
+
+			$rootScope.closeDialogs();
+			$rootScope.loadDialogOpen = true;
+		}
+		$rootScope.saveDialog = function() {
+			if( !localStorage[ savedItemsLocalStorageVariable ])
+				localStorage[ savedItemsLocalStorageVariable ] = "[]";
+
+			$scope.save_over = -1;
+			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+			for( sic = 0; sic < $scope.saved_items.length; sic++) {
+				$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
+			}
+
+			$rootScope.closeDialogs();
+			$scope.save_as_name = $scope.savageCharacter.name;
+			$rootScope.saveDialogOpen = true;
+		}
+		$rootScope.importDialog = function() {
+			$scope.importJSON = "";
+			$rootScope.closeDialogs();
+			$rootScope.importDialogOpen = true;
+		}
+
+		$scope.updateImportData = function(importJSON) {
+			$scope.importJSON = importJSON;
+		}
+
+		$scope.importData = function(importJSON) {
+
+			localStorage[ currentItemLocalStorageVariable ] = $scope.importJSON;
+			$rootScope.closeDialogs();
+			$location.path( "core/character-maker-char-info" );
+			$scope.init();
+		}
+
+		$rootScope.exportDialog = function() {
+			$scope.exportBBCode = $scope.savageCharacter.exportBBCode();
+			$scope.exportJSON = $scope.savageCharacter.exportJSON(true);
+			$rootScope.closeDialogs();
+			$rootScope.exportDialogOpen = true;
+		}
+
+		$rootScope.optionsDialog = function() {
+			$rootScope.closeDialogs();
+			$rootScope.optionsDialogOpen = true;
+		}
+
+		$rootScope.makePDF = function() {
+
+			console.log( "makePDF called");
+			chargenPDFObject = new chargenPDF( $scope.savageCharacter );
+
+			// if a cordova Application
+			document.addEventListener('deviceready', function () {
+				if( $scope.savageCharacter.name  != "" )
+					fileName = $scope.savageCharacter.name + ".SWT.pdf";
+				else
+					fileName = "Nameless.SWT.pdf";
+				if( $cordovaFile) {
+
+					if( localStorage["users_chargen_pdf_layout"] == "landscape")
+						chargenPDFObject.createBasicLandscapePDF();
+					else
+						chargenPDFObject.createBasicPortraitPDF();
+
+					var pdfOutput = chargenPDFObject.currentDoc.output();
+					if( cordova.file ) {
+						if( cordova.file.documentsDirectory )
+							saveDirectory = cordova.file.documentsDirectory; 	// iOS, OS/X, Probably Windows
+						else if( cordova.file.syncedDataDirectory )
+							saveDirectory = cordova.file.syncedDataDirectory;	// Possibly Windows
+						else
+							saveDirectory = cordova.file.externalDataDirectory;	// Android....
+
+
+						$cordovaFile.writeFile(saveDirectory, fileName, pdfOutput, true)
+						.then(function (success) {
+							// console.log( "Saved file successfully.");
+							console.log( "saveDirectory:" +  saveDirectory);
+							console.log( "fileName: " + fileName);
+							if( cordova.plugins && cordova.plugins.fileOpener2 ) {
+								try {
+									cordova.plugins.fileOpener2.open(
+									    saveDirectory + fileName,
+									    'application/pdf',
+									    {
+									        error : function(e) {
+									            console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
+												console.log( "Could not open file - no default PDF viewer?");
+												$scope.notificationDialog( "Your file has been saved at '" + saveDirectory.replace("file://", "") + fileName + "'");
+									        },
+									        success : function () {
+									          //  console.log('file opened successfully');
+									        }
+									    }
+									);
+								}
+								catch( e ) {
+						            console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
+									console.log( "Could not open file - no default PDF viewer?");
+									$scope.notificationDialog( "Your file has been saved at '" + saveDirectory.replace("file://", "") + fileName + "'");
+								}
+							} else {
+								console.log( "cordova.plugins.fileOpener2 was not found" );
+								$scope.notificationDialog( "Your file has been saved at '" + saveDirectory.replace("file://", "") + fileName + "'");
+							}
+						}, function (error) {
+						// error
+							console.log( "Could not save file.");
+							console.log( "saveDirectory:" +  saveDirectory);
+							console.log( "fileName: " + fileName);
+						});
+					} else {
+						console.log( "ERROR: cordova.file is not defined!!");
+					}
+				}
+
+
+			});
+
+			// if just a standard browser
+			if( !$cordovaFile) {
+				if( localStorage["users_chargen_pdf_layout"] == "landscape")
+					chargenPDFObject.createBasicLandscapePDF();
+				else
+					chargenPDFObject.createBasicPortraitPDF();
+				chargenPDFObject.currentDoc.output('dataurlnewwindow');
+				//chargenPDFObject.currentDoc.output('save', $scope.savageCharacter.name + '.pdf');
+			}
+
+			console.log( "makePDF ended");
+		}
+
+
+		$scope.loadItem = function( load_item ) {
+			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+			if( $scope.saved_items[ load_item ] )
+				localStorage[ currentItemLocalStorageVariable ] = $scope.saved_items[ load_item ].data;
+			$location.path( "core/character-maker-char-info" );
+			$rootScope.closeDialogs();
+			$scope.init();
+		}
+
+		$scope.clearCurrent = function(  ) {
+
+			localStorage[ currentItemLocalStorageVariable ] = "";
+			$rootScope.closeDialogs();
+			$location.path( "core/character-maker-welcome" );
+			$scope.init();
+		}
+
+		$scope.goToCharInfo = function(  ) {
+
+			localStorage[ currentItemLocalStorageVariable ] = "";
+			$rootScope.closeDialogs();
+			$location.path( "core/character-maker-char-info" );
+			$scope.init();
+		}
+
+		$scope.updateLoad = function( load_item ) {
+			$scope.load_item = load_item;
+		}
+
+		$scope.updateSave = function( save_over ) {
+			$scope.save_over = save_over;
+
+		}
+
+		$scope.updateBook = function( book_id ) {
+			$scope.validateAndSave();
+		}
+
+
+		$scope.closeConfirmDialog = function( ) {
+			$scope.showConfirmDialog = false;
+			// reset confirm to nothing...
+			$scope.confirmDialogYes = function() {
+				$scope.showConfirmDialog = false;
+			}
+		}
+
+		$scope.confirmDialogYes = function() {
+			// empty to be replaced...
+			$scope.showConfirmDialog = false;
+		}
+
+		$scope.confirmDialogQuestion = "";
+
+		$scope.confirmDialog = function( confirmationMessage, onYes ) {
+			$scope.confirmDialogQuestion = confirmationMessage;
+			$scope.showConfirmDialog = true;
+			$scope.confirmDialogYes = onYes;
+		}
+
+		$scope.dialogMessage = "";
+		$scope.notificationDialog = function( dialogMessage ) {
+			$scope.dialogMessage = dialogMessage;
+			$scope.showNotifyDialog = true;
+		}
+
+		$scope.showValidationReport = function() {
+			$rootScope.closeDialogs();
+			$scope.validationDialogOpen = true;
+		}
+
+		$scope.removeSavedItem = function( itemIndex ) {
+			$translate([
+				'CREATOR_DELETION_CONFIRMATION'
+			]).then(
+				function (translation) {
+					$scope.confirmDialog(
+						translation.CREATOR_DELETION_CONFIRMATION,
+						function() {
+							$scope.showConfirmDialog = false;
+							$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+							$scope.saved_items.splice( itemIndex, 1);
+							localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
+						}
+					);
+				}
+			);
+		}
+
+		$scope.setAttribute = function( attributeName, diceID) {
+
+			$scope.savageCharacter.setAttribute(attributeName, diceID);
+			$scope.validateAndSave();
+		}
+
+		$scope.saveItem = function( save_over, saveName ) {
+
+			if( !localStorage[ savedItemsLocalStorageVariable ])
+				localStorage[ savedItemsLocalStorageVariable ] = "[]";
+
+			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+
+			if( save_over > -1 ) {
+				$scope.saved_items[ save_over ] = $scope.makeSaveObject( saveName );
+			} else {
+				$scope.saved_items.push( $scope.makeSaveObject( saveName ));
+			}
+			localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
+
+			$rootScope.closeDialogs();
+		}
+
+		$scope.makeSaveObject = function( saveName ) {
+			save_object = {
+				name: saveName,
+				datetime: Date(),
+				type: itemType,
+				data:  $scope.savageCharacter.exportJSON()
+			};
+			return save_object;
+		}
+
+		$scope.incrementSkill = function( skillID ) {
+			$scope.savageCharacter.incrementSkill( skillID );
+			$scope.validateAndSave();
+		}
+
+		$scope.decrementSkill = function( skillID ) {
+			$scope.savageCharacter.decrementSkill( skillID );
+			$scope.validateAndSave();
+		}
+		$scope.addSpecialtySkill = function( skillID ) {
+			$scope.savageCharacter.addSpecialtySkill( skillID );
+			$scope.validateAndSave();
+		}
+
+		$scope.incrementSpecialtySkill = function( skillID, specialtyIndex ) {
+			$scope.savageCharacter.incrementSpecialtySkill( skillID, specialtyIndex );
+			$scope.validateAndSave();
+		}
+
+		$scope.decrementSpecialtySkill = function( skillID, specialtyIndex ) {
+			$scope.savageCharacter.decrementSpecialtySkill( skillID, specialtyIndex );
+			$scope.validateAndSave();
+		}
+
+		$scope.updateSpecialtySkillName = function( skillID, specialtyIndex, updatedName ) {
+			$scope.savageCharacter.updateSpecialtySkillName( skillID, specialtyIndex, updatedName );
+			//$scope.validateAndSave();
+		}
+
+		$scope.addEdge = function( ){
+			if( $scope.addEdgeTag.tag ) {
+				$scope.savageCharacter.addEdge( $scope.addEdgeTag.book, $scope.addEdgeTag.tag);
+				$scope.validateAndSave();
+				$scope.addEdgeTag = $scope.savageCharacter.availableEdges[0];
+				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
+			}
+
+		}
+
+		$scope.addHindrance = function( ){
+			if( $scope.addHindranceTag.tag ) {
+				$scope.savageCharacter.addHindrance( $scope.addHindranceTag.book, $scope.addHindranceTag.tag);
+				$scope.validateAndSave();
+
+				$scope.addHindranceTag = $scope.savageCharacter.availableHindrances[0];
+				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
+			}
+
+
+		}
+
+		$scope.removeEdgeByTag = function( edgeTag ){
+			if( edgeTag ) {
+				$scope.savageCharacter.removeEdgeByTag( edgeTag );
+				$scope.validateAndSave();
+				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
+			}
+		}
+
+		$scope.removeHindranceByTag = function( hindranceTag ){
+			if( hindranceTag ) {
+				$scope.savageCharacter.removeHindranceByTag( hindranceTag );
+				$scope.validateAndSave();
+				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
+			}
+		}
+
+		$scope.addPerk = function( ){
+			if( $scope.addPerkTag.tag != "null" ) {
+				$scope.savageCharacter.addPerk( $scope.addPerkTag.tag);
+				$scope.validateAndSave();
+				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
+			}
+
+		}
+
+		$scope.removePerkByTag = function( perkTag ){
+			if( perkTag ) {
+				$scope.savageCharacter.removePerk( perkTag );
+				$scope.validateAndSave();
+			}
+		}
+
+		$scope.setArcaneBackground = function(abTag) {
+			$scope.savageCharacter.setArcaneBackground(abTag.tag);
+			$scope.validateAndSave();
+			$scope.validateAndSave();
+		}
+
+
+		// $scope.openGearDialog = function() {
+		// 	$location.path( "/core/character-maker-gear" );
+		// }
+
+		// $scope.openGearDialog = function() {
+		// 	$location.path( "/core/character-maker-weapons" );
+		// }
+
+		// $scope.openGearDialog = function() {
+		// 	$location.path( "/core/character-maker-armor" );
+		// }
+
+		$scope.openAdvancementsDialog = function() {
+			$location.path( "/core/character-maker-advancements" );
+		}
+
+		$scope.closePageDialog = function() {
+			$location.path( "/core/character-maker" );
+		}
+
+		$scope.setXP = function(xpValue) {
+			$scope.savageCharacter.setXP(xpValue.value);
+			$scope.validateAndSave();
+		}
+
+		$scope.setAdvancementType = function(advIndex, advTag ) {
+			$scope.savageCharacter.setAdvancementType(advIndex, advTag);
+			$scope.validateAndSave();
+		}
+
+		$scope.filterNewSkill = function( currentItem ) {
+
+			return function( skillItem ) {
+				if(
+					(
+						!skillItem.is_specialty
+							&&
+						skillItem.showSkill
+					)
+						&&
+					(
+						skillItem.value + skillItem.boost == 0
+							||
+						skillItem.specify > 0
+					)
+						||
+					skillItem.id == 'undefined'
+						||
+					(
+						currentItem
+							&&
+						currentItem.id == skillItem.id
+						 	&&
+						!skillItem.is_specialty
+					)
+				) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+
+		$scope.filterRaiseSkill = function( currentItem ) {
+			return function (skillItem) {
+				if(
+					skillItem
+						&&
+					currentItem
+						&&
+					currentItem.id == skillItem.id
+						||
+					skillItem.id == 'undefined'
+						||
+					(
+						!skillItem.specify
+							&&
+						skillItem.value + skillItem.boost
+							&&
+						skillItem.value + skillItem.boost >= $scope.savageCharacter.attributes[ skillItem.attribute ]
+					)
+
+				) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+
+		$scope.filterLowerSkill = function( currentItem, otherOption ) {
+			return function (skillItem) {
+				if(
+					skillItem
+						&&
+					currentItem
+						&&
+					currentItem.id == skillItem.id
+						||
+					skillItem.id == 'undefined'
+						||
+					(
+						!skillItem.specify
+							&&
+						skillItem.value + skillItem.boost > 0
+							&&
+						skillItem.value + skillItem.boost < $scope.savageCharacter.attributes[ skillItem.attribute ]
+						// 	&&
+						// skillItem.id != otherOption.id
+					)
+					// 	||
+					// (
+					// 	skillItem.specify
+					// 		&&
+					// 	skillItem.value + skillItem.boost > 0
+					// 		&&
+					// 	skillItem.value + skillItem.boost < $scope.savageCharacter.attributes[ skillItem.attribute ]
+					// 		&&
+					// 	skillItem.specify != otherOption.specify
+					// )
+
+				) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+
+		$scope.setAdvancementOption1 = function(advIndex, advTag, advBook ) {
+			specifyName = null;
+			if( advTag && advTag.name )
+				specifyName = advTag.name;
+			//console.log( "setAdvancementOption1 = function(" , advIndex, advTag, specifyName, advBook );
+			$scope.savageCharacter.setAdvancementOption1(advIndex, advTag, specifyName, advBook);
+			$scope.validateAndSave();
+		}
+
+		$scope.setAdvancementOption2 = function(advIndex, advTag, advBook ) {
+			specifyName = null;
+			if( advTag && advTag.name )
+				specifyName = advTag.name;
+			else
+				if( advTag )
+					specifyName = advTag;
+			$scope.savageCharacter.setAdvancementOption2(advIndex, advTag, specifyName, advBook);
+			$scope.validateAndSave();
+		}
+
+
+		$scope.buyMundane = function( bookID, gearTag, forFree) {
+			if( forFree == true)
+				itemCost = 0;
+			else
+				itemCost = -1;
+			$scope.savageCharacter.addGearMundane( bookID, gearTag, itemCost );
+			$scope.validateAndSave();
+		}
+
+		$scope.removeMundane = function( indexItem ) {
+			$scope.savageCharacter.removeMundane( indexItem );
+			$scope.validateAndSave();
+		}
+
+
+		$scope.buyArmor = function( bookID, gearTag, forFree) {
+			if( forFree == true)
+				itemCost = 0;
+			else
+				itemCost = -1;
+			$scope.savageCharacter.addGearArmor( bookID, gearTag, itemCost );
+			$scope.validateAndSave();
+		}
+
+		$scope.removeArmor = function( indexItem ) {
+			$scope.savageCharacter.removeArmor( indexItem );
+			$scope.validateAndSave();
+		}
+
+		$scope.buyHandWeapon = function( bookID, gearTag, forFree) {
+			if( forFree == true)
+				itemCost = 0;
+			else
+				itemCost = -1;
+			$scope.savageCharacter.addGearHandWeapon( bookID, gearTag, itemCost );
+			$scope.validateAndSave();
+		}
+
+
+		$scope.buyRangedWeapon = function( bookID, gearTag, forFree) {
+			if( forFree == true)
+				itemCost = 0;
+			else
+				itemCost = -1;
+			$scope.savageCharacter.addGearRangedWeapon( bookID, gearTag, itemCost );
+			$scope.validateAndSave();
+		}
+
+		$scope.removeHandWeapon = function( indexItem ) {
+			$scope.savageCharacter.removeHandWeapon( indexItem );
+			$scope.validateAndSave();
+		}
+
+		$scope.removeRangedWeapon = function( indexItem ) {
+			$scope.savageCharacter.removeRangedWeapon( indexItem );
+			$scope.validateAndSave();
+		}
+
+		$scope.equipPrimaryHandWeapon = function( indexItem ) {
+
+			$scope.savageCharacter.equipPrimaryHandWeapon( indexItem );
+			$scope.validateAndSave();
+		}
+
+		$scope.equipPrimaryRangedWeapon = function( indexItem ) {
+
+			$scope.savageCharacter.equipPrimaryRangedWeapon( indexItem );
+			$scope.validateAndSave();
+		}
+
+		$scope.equipSecondaryHandWeapon = function( indexItem ) {
+
+			$scope.savageCharacter.equipSecondaryHandWeapon( indexItem );
+			$scope.validateAndSave();
+		}
+
+		$scope.equipSecondaryRangedWeapon = function( indexItem ) {
+
+			$scope.savageCharacter.equipSecondaryRangedWeapon( indexItem );
+			$scope.validateAndSave();
+		}
+
+		$scope.unequipHandWeapon = function( indexItem ) {
+
+			$scope.savageCharacter.unequipHandWeapon( indexItem );
+			$scope.validateAndSave();
+		}
+
+		$scope.unequipRangedWeapon = function( indexItem ) {
+
+			$scope.savageCharacter.unequipRangedWeapon( indexItem );
+			$scope.validateAndSave();
+		}
+
+		$scope.buyShield = function( bookID, gearTag, forFree) {
+			if( forFree == true)
+				itemCost = 0;
+			else
+				itemCost = -1;
+			$scope.savageCharacter.addGearShield( bookID, gearTag, itemCost );
+			$scope.validateAndSave();
+		}
+
+		$scope.removeShield = function( indexItem ) {
+			$scope.savageCharacter.removeShield( indexItem );
+			$scope.validateAndSave();
+		}
+
+
+		$scope.equipPrimaryShield = function( indexItem ) {
+
+			$scope.savageCharacter.equipPrimaryShield( indexItem );
+			$scope.validateAndSave();
+		}
+
+		$scope.equipSecondaryShield = function( indexItem ) {
+
+			$scope.savageCharacter.equipSecondaryShield( indexItem );
+			$scope.validateAndSave();
+		}
+
+		$scope.unequipShield = function( indexItem ) {
+
+			$scope.savageCharacter.unequipShield( indexItem );
+			$scope.validateAndSave();
+		}
+
+		$scope.unequipArmor = function( indexItem ) {
+			$scope.savageCharacter.unequipArmor( indexItem );
+			$scope.validateAndSave();
+		}
+
+		$scope.equipArmor = function( indexItem ) {
+			$scope.savageCharacter.equipArmor( indexItem );
+			$scope.validateAndSave();
+		}
+
+		$scope.setDroppedDuringCombat = function( itemType, indexItem, setValue ) {
+			if( setValue )
+				$scope.savageCharacter.setDroppedDuringCombat( itemType, indexItem );
+			else
+				$scope.savageCharacter.setUsedDuringCombat( itemType, indexItem );
+			$scope.validateAndSave();
+		}
+
+
+
+	}
+;
+// var cordovachargenArray = Array();
+// angular.extend( cordovachargenArray, corechargenArray );
+// cordovachargenArray.unshift('$cordovaFile');
+
+angular.module("webApp").controller(
 	"coreChargenController",
 	[
 		'$rootScope',
@@ -4757,621 +6996,226 @@ angular.module("baseApp").controller(
 		'$scope',
 		'$location',
 		'$route',
-		function ($rootScope, $translate, $scope, $location, $route) {
-			$rootScope.showChargenMenu = true;
-			var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_chargen";
-			var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.chargen";
-			var optionsLocalStorageVariable = "com.jdg.swwt2.options.chargen";
-			var itemType = "character";
-
-			$scope.$route = $route;
-
-			$scope.init = function() {
-				$translate([
-					'APP_TITLE', 'INDEX_BUTTON_CORE_CHAR', 'CHARGEN_SPECIALIZATION_PLACEHOLDER', 'CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER'
-				]).then(
-					function (translation) {
-
-						$rootScope.title_tag = translation.INDEX_BUTTON_CORE_CHAR + " | " + translation.APP_TITLE;
-						$rootScope.subtitle_tag = translation.INDEX_BUTTON_CORE_CHAR;
-						$scope.specializionPlaceholder = translation.CHARGEN_SPECIALIZATION_PLACEHOLDER;
-						$scope.hindranceSpecificationPlaceholder = translation.CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER;
-
-
-					}
-				);
-
-				localizeDiceValues();
-
-
-				$scope.savageCharacter = new savageCharacter( localStorage["users_preferred_language"] );
-
-				if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
-					$scope.savageCharacter.importJSON( localStorage[ currentItemLocalStorageVariable ] );
-				}
-
-
-				$scope.charGenAttributes = $scope.savageCharacter.attributes;
-
-
-				$scope.addEdgeTag = $scope.savageCharacter.availableEdges[0];
-				$scope.addHindranceTag = $scope.savageCharacter.availableHindrances[0];
-				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
-			}
-
-			$scope.init();
-
-			$scope.validateAndSave = function() {
-				$scope.savageCharacter.validate();
-				localStorage[currentItemLocalStorageVariable] = $scope.savageCharacter.exportJSON();
-			}
-			$scope.justSave = function() {
-				localStorage[currentItemLocalStorageVariable] = $scope.savageCharacter.exportJSON();
-			}
-
-			$scope.newPowerDialog = function() {
-				$scope.propogatePowerDialog(-1);
-				$rootScope.closeDialogs();
-				$scope.propogatePowerDialog(-1);
-				$scope.addEditPowerDialogOpen = true;
-			}
-
-			$scope.editPowerDialog = function(powerIndex) {
-
-				$scope.propogatePowerDialog(powerIndex);
-				$rootScope.closeDialogs();
-				$scope.propogatePowerDialog(powerIndex);
-				$scope.addEditPowerDialogOpen = true;
-			}
-
-
-			$scope.propogatePowerDialog = function (indexNumber) {
-
-				if( indexNumber > -1 ) {
-					$scope.editingPowerIndex = indexNumber;
-					$scope.editingPower = $scope.savageCharacter.selectedPowers[indexNumber];
-
-				} else {
-					for( availablePowersC = 0; availablePowersC < $scope.savageCharacter.availablePowers.length; availablePowersC++) {
-						$scope.savageCharacter.availablePowers[ availablePowersC ].trapping = $scope.savageCharacter.availableTrappings[0];
-						$scope.savageCharacter.availablePowers[ availablePowersC ].customName = "";
-					}
-
-					$scope.editingPowerIndex = -1;
-					$scope.editingPower = $scope.savageCharacter.availablePowers[0];
-				}
-
-			}
-
-			$scope.addPower = function( editPower, editPowerName) {
-				$scope.savageCharacter.addPower(
-					editPower.bookObj.id,
-					editPower.tag,
-					editPower.trapping.bookObj.id,
-					editPower.trapping.tag,
-					editPower.customName
-				);
-
-				$scope.validateAndSave();
-				$rootScope.closeDialogs();
-			}
-
-			$scope.savePower = function(editPowerTrapping, editPower, editPowerName) {
-
-				$scope.validateAndSave();
-				$rootScope.closeDialogs();
-
-			}
-
-
-			$scope.removePower = function(powerIndex) {
-				$translate([
-					'CREATOR_DELETE_POWER_CONFIRMATION'
-				]).then(
-					function (translation) {
-						$scope.confirmDialog(
-							translation.CREATOR_DELETE_POWER_CONFIRMATION,
-							function() {
-								$scope.showConfirmDialog = false;
-								$scope.savageCharacter.removePower(powerIndex);
-								$scope.validateAndSave();
-							}
-						);
-					}
-				);
-
-
-			}
-
-			$rootScope.closeDialogs = function() {
-				$rootScope.newDialogOpen = false;
-				$rootScope.loadDialogOpen = false;
-				$rootScope.saveDialogOpen = false;
-				$rootScope.importDialogOpen = false;
-				$scope.addEditPowerDialogOpen = false;
-				$rootScope.exportDialogOpen = false;
-				$rootScope.optionsDialogOpen = false;
-				$scope.validationDialogOpen = false;
-
-			}
-
-			$rootScope.newDialog = function() {
-
-				$rootScope.closeDialogs();
-				$rootScope.newDialogOpen = true;
-			}
-
-			$rootScope.loadDialog = function() {
-
-				if( !localStorage[ savedItemsLocalStorageVariable ])
-					localStorage[ savedItemsLocalStorageVariable ] = "[]";
-
-				$scope.load_item = 0;
-				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-				for( sic = 0; sic < $scope.saved_items.length; sic++) {
-					$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
-				}
-
-				$rootScope.closeDialogs();
-
-				$rootScope.closeDialogs();
-				$rootScope.loadDialogOpen = true;
-			}
-			$rootScope.saveDialog = function() {
-				if( !localStorage[ savedItemsLocalStorageVariable ])
-					localStorage[ savedItemsLocalStorageVariable ] = "[]";
-
-				$scope.save_over = -1;
-				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-				for( sic = 0; sic < $scope.saved_items.length; sic++) {
-					$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
-				}
-
-				$rootScope.closeDialogs();
-				$scope.save_as_name = $scope.savageCharacter.name;
-				$rootScope.saveDialogOpen = true;
-			}
-			$rootScope.importDialog = function() {
-				$scope.importJSON = "";
-				$rootScope.closeDialogs();
-				$rootScope.importDialogOpen = true;
-			}
-
-			$scope.updateImportData = function(importJSON) {
-				$scope.importJSON = importJSON;
-			}
-
-			$scope.importData = function(importJSON) {
-
-				localStorage[ currentItemLocalStorageVariable ] = $scope.importJSON;
-				$rootScope.closeDialogs();
-				$scope.init();
-			}
-
-			$rootScope.exportDialog = function() {
-				$scope.exportBBCode = $scope.savageCharacter.exportBBCode();
-				$scope.exportJSON = $scope.savageCharacter.exportJSON(true);
-				$rootScope.closeDialogs();
-				$rootScope.exportDialogOpen = true;
-			}
-			$rootScope.optionsDialog = function() {
-				$rootScope.closeDialogs();
-				$rootScope.optionsDialogOpen = true;
-			}
-
-			$rootScope.makePDF = function() {
-				console.log( "makePDF called");
-				chargenPDFObject = new chargenPDF( $scope.savageCharacter);
-				chargenPDFObject.createBasicLandscapePDF();
-				//chargenPDFObject.createBasicPortraitPDF();
-				chargenPDFObject.currentDoc.output('dataurlnewwindow');
-				//chargenPDFObject.currentDoc.output('save', $scope.savageCharacter.name + '.pdf');
-				console.log( "makePDF ended");
-			}
-
-
-			$scope.loadItem = function( load_item ) {
-				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-				if( $scope.saved_items[ load_item ] )
-					localStorage[ currentItemLocalStorageVariable ] = $scope.saved_items[ load_item ].data;
-
-				$rootScope.closeDialogs();
-				$scope.init();
-			}
-
-			$scope.clearCurrent = function(  ) {
-
-				localStorage[ currentItemLocalStorageVariable ] = "";
-				$rootScope.closeDialogs();
-				$scope.init();
-			}
-
-			$scope.updateLoad = function( load_item ) {
-				$scope.load_item = load_item;
-			}
-
-			$scope.updateSave = function( save_over ) {
-				$scope.save_over = save_over;
-
-			}
-
-			$scope.updateBook = function( book_id ) {
-				$scope.validateAndSave();
-			}
-
-
-			$scope.closeConfirmDialog = function( ) {
-				$scope.showConfirmDialog = false;
-				// reset confirm to nothing...
-				$scope.confirmDialogYes = function() {
-					$scope.showConfirmDialog = false;
-				}
-			}
-
-			$scope.confirmDialogYes = function() {
-				// empty to be replaced...
-				$scope.showConfirmDialog = false;
-			}
-
-			$scope.confirmDialogQuestion = "";
-
-			$scope.confirmDialog = function( confirmationMessage, onYes ) {
-				$scope.confirmDialogQuestion = confirmationMessage;
-				$scope.showConfirmDialog = true;
-				$scope.confirmDialogYes = onYes;
-			}
-
-			$scope.showValidationReport = function() {
-				$rootScope.closeDialogs();
-				$scope.validationDialogOpen = true;
-			}
-
-			$scope.removeSavedItem = function( itemIndex ) {
-				console.log("removeSavedItem", "called");
-				$translate([
-					'CREATOR_DELETION_CONFIRMATION'
-				]).then(
-					function (translation) {
-						$scope.confirmDialog(
-							translation.CREATOR_DELETION_CONFIRMATION,
-							function() {
-								$scope.showConfirmDialog = false;
-								$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-								$scope.saved_items.splice( itemIndex, 1);
-								localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
-							}
-						);
-					}
-				);
-			}
-
-			$scope.setAttribute = function( attributeName, diceID) {
-				//console.log( "setAttribute", attributeName, diceID);
-				$scope.savageCharacter.setAttribute(attributeName, diceID);
-				$scope.validateAndSave();
-			}
-
-			$scope.saveItem = function( save_over, saveName ) {
-
-				if( !localStorage[ savedItemsLocalStorageVariable ])
-					localStorage[ savedItemsLocalStorageVariable ] = "[]";
-
-				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-
-				if( save_over > -1 ) {
-					$scope.saved_items[ save_over ] = $scope.makeSaveObject( saveName );
-				} else {
-					$scope.saved_items.push( $scope.makeSaveObject( saveName ));
-				}
-				localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
-
-				$rootScope.closeDialogs();
-			}
-
-			$scope.makeSaveObject = function( saveName ) {
-				save_object = {
-					name: saveName,
-					datetime: Date(),
-					type: itemType,
-					data:  $scope.savageCharacter.exportJSON()
-				};
-				return save_object;
-			}
-
-			$scope.incrementSkill = function( skillID ) {
-				$scope.savageCharacter.incrementSkill( skillID );
-				$scope.validateAndSave();
-			}
-
-			$scope.decrementSkill = function( skillID ) {
-				$scope.savageCharacter.decrementSkill( skillID );
-				$scope.validateAndSave();
-			}
-			$scope.addSpecialtySkill = function( skillID ) {
-				$scope.savageCharacter.addSpecialtySkill( skillID );
-				$scope.validateAndSave();
-			}
-
-			$scope.incrementSpecialtySkill = function( skillID, specialtyIndex ) {
-				$scope.savageCharacter.incrementSpecialtySkill( skillID, specialtyIndex );
-				$scope.validateAndSave();
-			}
-
-			$scope.decrementSpecialtySkill = function( skillID, specialtyIndex ) {
-				$scope.savageCharacter.decrementSpecialtySkill( skillID, specialtyIndex );
-				$scope.validateAndSave();
-			}
-
-			$scope.updateSpecialtySkillName = function( skillID, specialtyIndex, updatedName ) {
-				// console.log( "updateSpecialtySkillName", skillID, specialtyIndex, updatedName );
-				$scope.savageCharacter.updateSpecialtySkillName( skillID, specialtyIndex, updatedName );
-				$scope.validateAndSave();
-			}
-
-			$scope.addEdge = function( ){
-				if( $scope.addEdgeTag.tag ) {
-					$scope.savageCharacter.addEdge( $scope.addEdgeTag.book, $scope.addEdgeTag.tag);
-					$scope.validateAndSave();
-					$scope.addEdgeTag = $scope.savageCharacter.availableEdges[0];
-					$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
-				}
-
-			}
-
-			$scope.addHindrance = function( ){
-				if( $scope.addHindranceTag.tag ) {
-					$scope.savageCharacter.addHindrance( $scope.addHindranceTag.book, $scope.addHindranceTag.tag);
-					$scope.validateAndSave();
-
-					$scope.addHindranceTag = $scope.savageCharacter.availableHindrances[0];
-					$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
-				}
-
-
-			}
-
-			$scope.removeEdgeByTag = function( edgeTag ){
-				if( edgeTag ) {
-					$scope.savageCharacter.removeEdgeByTag( edgeTag );
-					$scope.validateAndSave();
-					$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
-				}
-			}
-
-			$scope.removeHindranceByTag = function( hindranceTag ){
-				if( hindranceTag ) {
-					$scope.savageCharacter.removeHindranceByTag( hindranceTag );
-					$scope.validateAndSave();
-					$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
-				}
-			}
-
-			$scope.addPerk = function( ){
-				if( $scope.addPerkTag.tag != "null" ) {
-					$scope.savageCharacter.addPerk( $scope.addPerkTag.tag);
-					$scope.validateAndSave();
-					$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
-				}
-
-			}
-
-			$scope.removePerkByTag = function( perkTag ){
-				if( perkTag ) {
-					$scope.savageCharacter.removePerk( perkTag );
-					$scope.validateAndSave();
-				}
-			}
-
-			$scope.setArcaneBackground = function(abTag) {
-				$scope.savageCharacter.setArcaneBackground(abTag.tag);
-				$scope.validateAndSave();
-			}
-
-
-			$scope.openGearDialog = function() {
-				$location.path( "/core/character-maker-gear" );
-			}
-
-			$scope.openAdvancementsDialog = function() {
-				console.log("openAdvancementsDialog() called");
-				$location.path( "/core/character-maker-advancements" );
-			}
-
-			$scope.closePageDialog = function() {
-				$location.path( "/core/character-maker" );
-			}
-
-			$scope.setXP = function(xpValue) {
-				console.log( "setXP", xpValue);
-				$scope.savageCharacter.setXP(xpValue.value);
-				$scope.validateAndSave();
-			}
-
-			$scope.buyMundane = function( bookID, gearTag, forFree) {
-			//	console.log( "buyMundane", bookID, gearTag, forFree);
-				if( forFree == true)
-					itemCost = 0;
-				else
-					itemCost = -1;
-				$scope.savageCharacter.addGearMundane( bookID, gearTag, itemCost );
-				$scope.validateAndSave();
-			}
-
-			$scope.removeMundane = function( indexItem ) {
-			//	console.log( "removeMundane", indexItem);
-				$scope.savageCharacter.removeMundane( indexItem );
-				$scope.validateAndSave();
-			}
-
-
-			$scope.buyArmor = function( bookID, gearTag, forFree) {
-			//	console.log( "buyArmor", bookID, gearTag, forFree);
-				if( forFree == true)
-					itemCost = 0;
-				else
-					itemCost = -1;
-				$scope.savageCharacter.addGearArmor( bookID, gearTag, itemCost );
-				$scope.validateAndSave();
-			}
-
-			$scope.removeArmor = function( indexItem ) {
-			//	console.log( "removeArmor", indexItem);
-				$scope.savageCharacter.removeArmor( indexItem );
-				$scope.validateAndSave();
-			}
-
-			$scope.buyWeapon = function( bookID, gearTag, forFree) {
-			//	console.log( "buyWeapon", bookID, gearTag, forFree);
-				if( forFree == true)
-					itemCost = 0;
-				else
-					itemCost = -1;
-				$scope.savageCharacter.addGearWeapon( bookID, gearTag, itemCost );
-				$scope.validateAndSave();
-			}
-
-			$scope.removeWeapon = function( indexItem ) {
-			//	console.log( "removeWeapon", indexItem);
-				$scope.savageCharacter.removeWeapon( indexItem );
-				$scope.validateAndSave();
-			}
-
-			$scope.equipPrimaryWeapon = function( indexItem ) {
-
-				$scope.savageCharacter.equipPrimaryWeapon( indexItem );
-				$scope.validateAndSave();
-			}
-
-			$scope.equipSecondaryWeapon = function( indexItem ) {
-
-				$scope.savageCharacter.equipSecondaryWeapon( indexItem );
-				$scope.validateAndSave();
-			}
-
-			$scope.unequipWeapon = function( indexItem ) {
-
-				$scope.savageCharacter.unequipWeapon( indexItem );
-				$scope.validateAndSave();
-			}
-
-			$scope.buyShield = function( bookID, gearTag, forFree) {
-			//	console.log( "buyShield", bookID, gearTag, forFree);
-				if( forFree == true)
-					itemCost = 0;
-				else
-					itemCost = -1;
-				$scope.savageCharacter.addGearShield( bookID, gearTag, itemCost );
-				$scope.validateAndSave();
-			}
-
-			$scope.removeShield = function( indexItem ) {
-			//	console.log( "removeShield", indexItem);
-				$scope.savageCharacter.removeShield( indexItem );
-				$scope.validateAndSave();
-			}
-
-
-			$scope.equipPrimaryShield = function( indexItem ) {
-
-				$scope.savageCharacter.equipPrimaryShield( indexItem );
-				$scope.validateAndSave();
-			}
-
-			$scope.equipSecondaryShield = function( indexItem ) {
-
-				$scope.savageCharacter.equipSecondaryShield( indexItem );
-				$scope.validateAndSave();
-			}
-
-			$scope.unequipShield = function( indexItem ) {
-
-				$scope.savageCharacter.unequipShield( indexItem );
-				$scope.validateAndSave();
-			}
-
-			$scope.unequipArmor = function( indexItem ) {
-				$scope.savageCharacter.unequipArmor( indexItem );
-				$scope.validateAndSave();
-			}
-
-			$scope.equipArmor = function( indexItem ) {
-				$scope.savageCharacter.equipArmor( indexItem );
-				$scope.validateAndSave();
-			}
-
-			$scope.setDroppedDuringCombat = function( itemType, indexItem, setValue ) {
-				console.log(  "setDroppedDuringCombat", itemType, indexItem, setValue );
-				if( setValue )
-					$scope.savageCharacter.setDroppedDuringCombat( itemType, indexItem );
-				else
-					$scope.savageCharacter.setUsedDuringCombat( itemType, indexItem );
-				$scope.validateAndSave();
-			}
-
-			// $scope.setUsedDuringCombat = function( itemType, indexItem ) {
-
-			// 	$scope.validateAndSave();
-			// }
-
-			// $scope.removeSpecialtyAtIndex = function( skillID, specialtyIndex ) {
-			// 	console.log( "removeSpecialtyAtIndex", skillID, specialtyIndex );
-			// 	$scope.savageCharacter.removeSpecialtyAtIndex( skillID, specialtyIndex );
-			// 	$scope.validateAndSave();
-			// }
-
-		}
+		corechargenFunctions
 	]
 );
 
-angular.module("baseApp").controller(
-	"coreDiceController",
+angular.module("cordovaApp").controller(
+	"coreChargenController",
 	[
 		'$rootScope',
 		'$translate',
 		'$scope',
-		function ($rootScope, $translate, $scope) {
-			// Set Page Title Tag
-			$rootScope.showSciFiCreatorMenu = false;
-			$rootScope.showChargenMenu = false;
-			var dice_object = new classDice();
-			dice_object.init();
-			dice_object.setAlwaysExplodingDice(true);
+		'$location',
+		'$route',
+		'$cordovaFile',
+		corechargenFunctions
+	]
+);
 
+var corediceArray = [
+	'$rootScope',
+	'$translate',
+	'$scope',
+	'$routeParams',
+	'$location',
+	function ($rootScope, $translate, $scope, $routeParams, $location) {
+		// Set Page Title Tag
+		$rootScope.showSciFiCreatorMenu = false;
+		$rootScope.showChargenMenu = false;
+		var dice_object = new classDice();
+		dice_object.init();
+		dice_object.setAlwaysExplodingDice(true);
+
+		$scope.show_trait_options = false;
+		$scope.show_damage_options = false;
+		$scope.half_damage = 0;
+
+		if( localStorage["com.jdg.swwt2.dice.input_parse_dice"] )
+			$scope.input_parse_dice = localStorage["com.jdg.swwt2.dice.input_parse_dice"];
+		else
+			$scope.input_parse_dice = "d8* + 1";
+
+
+		if( localStorage["com.jdg.swwt2.dice.select_roll_type"] )
+			$scope.select_roll_type = localStorage["com.jdg.swwt2.dice.select_roll_type"];
+		else
+			$scope.select_roll_type = "roll";
+
+		if( localStorage["com.jdg.swwt2.dice.input_target_number"] )
+			$scope.input_target_number = localStorage["com.jdg.swwt2.dice.input_target_number"] / 1;
+		else
+			$scope.input_target_number = 4;
+
+		if( localStorage["com.jdg.swwt2.dice.input_base_toughness"] )
+			$scope.input_base_toughness = localStorage["com.jdg.swwt2.dice.input_base_toughness"] / 1;
+		else
+			$scope.input_base_toughness = 5
+
+		if( localStorage["com.jdg.swwt2.dice.input_half_damage"] )
+			if( localStorage["com.jdg.swwt2.dice.input_half_damage"]  > 0 )
+				$scope.input_half_damage = 1
+			else
+				$scope.input_half_damage = 0
+		else
+			$scope.input_half_damage = 0
+
+		if( localStorage["com.jdg.swwt2.dice.input_armor"] )
+			$scope.input_armor = localStorage["com.jdg.swwt2.dice.input_armor"] / 1;
+		else
+			$scope.input_armor = 1
+
+		if( localStorage["com.jdg.swwt2.dice.input_weapons_ap"] )
+			$scope.input_weapons_ap = localStorage["com.jdg.swwt2.dice.input_weapons_ap"] / 1;
+		else
+			$scope.input_weapons_ap  = 0;
+
+		// Check for Overrides ;)
+		if( $routeParams.dice )
+			$scope.input_parse_dice = $routeParams.dice;
+
+		if( $routeParams.type )
+			$scope.select_roll_type = $routeParams.type;
+
+		if( $routeParams.ap )
+			$scope.input_weapons_ap = $routeParams.ap / 1;
+
+		if( $routeParams.armor )
+			$scope.input_armor = $routeParams.armor / 1;
+
+		if( $routeParams.toughness )
+			$scope.input_base_toughness = $routeParams.toughness / 1;
+
+		if( $routeParams.targetnumber )
+			$scope.input_target_number = $routeParams.targetnumber / 1;
+
+		if( $routeParams.halfdamage && $routeParams.halfdamage / 1 > 0)
+			$scope.input_half_damage = 1;
+
+		if( $scope.select_roll_type == "damage" ) {
+			$scope.show_trait_options = false;
+			$scope.show_damage_options = true;
+		} else if( $scope.select_roll_type == "trait" ) {
+			$scope.show_trait_options = true;
+			$scope.show_damage_options = false;
+		} else {
 			$scope.show_trait_options = false;
 			$scope.show_damage_options = false;
+		}
 
-			if( localStorage["com.jdg.swwt2.dice.input_parse_dice"] )
-				$scope.input_parse_dice = localStorage["com.jdg.swwt2.dice.input_parse_dice"];
+		$translate(['APP_TITLE', 'INDEX_BUTTON_CORE_DICE', 'DICE_NO_DICE_THROWN' ]).then(function (translation) {
+			$rootScope.title_tag = translation.INDEX_BUTTON_CORE_DICE + " | " + translation.APP_TITLE;
+			$scope.dice_results = translation.DICE_NO_DICE_THROWN;
+			$total_roll_label = translation.DICE_TOTAL_ROLL;
+			$rootScope.subtitle_tag = translation.INDEX_BUTTON_CORE_DICE;
+		});
+
+		$translate(
+			[
+			'DICE_LABEL_NO_EFFECT', 'DICE_LABEL_SHAKEN', 'DICE_LABEL_SHAKEN_AND_A_WOUND',
+			'DICE_LABEL_SHAKEN_AND_X_WOUNDS', 'DICE_LABEL_CRITICAL_FAILURE', 'DICE_LABEL_FAILURE',
+			'DICE_LABEL_SUCCESS', 'DICE_LABEL_SUCCESS_WITH_A_RAISE', 'DICE_LABEL_SUCCESS_WITH_X_RAISES',
+			'DICE_LABEL_DIE_ROLL_NUMBER', 'DICE_LABEL_WILD_DIE_ROLL_NUMBER', 'DICE_TOTAL_ROLL',
+			'DICE_ROLL_SET_NUM'
+			]
+		).then( function( translation ) {
+
+			dice_object.setLabel("no_effect",  translation.DICE_LABEL_NO_EFFECT);
+			dice_object.setLabel("shaken", translation.DICE_LABEL_SHAKEN);
+			dice_object.setLabel("shaken_and_a_wound", translation.DICE_LABEL_SHAKEN_AND_A_WOUND);
+
+			dice_object.setLabel("shaken_and_x_wounds", translation.DICE_LABEL_SHAKEN_AND_X_WOUNDS);
+			dice_object.setLabel("critical_failure", translation.DICE_LABEL_CRITICAL_FAILURE);
+			dice_object.setLabel("failure", translation.DICE_LABEL_FAILURE);
+
+			dice_object.setLabel("success", translation.DICE_LABEL_SUCCESS);
+			dice_object.setLabel("success_with_a_raise", translation.DICE_LABEL_SUCCESS_WITH_A_RAISE);
+			dice_object.setLabel("success_with_x_raises", translation.DICE_LABEL_SUCCESS_WITH_X_RAISES);
+
+			dice_object.setLabel("die_roll_number", translation.DICE_LABEL_DIE_ROLL_NUMBER);
+			dice_object.setLabel("wild_die_roll_number", translation.DICE_LABEL_WILD_DIE_ROLL_NUMBER);
+			dice_object.setLabel("total_roll",  translation.DICE_TOTAL_ROLL);
+
+
+			dice_object.setLabel("roll_set_number",  translation.DICE_ROLL_SET_NUM);
+		} );
+
+
+
+		$scope.extra_results = "";
+		$scope.total_roll = "";
+
+
+		$scope.updateLinkURL = function() {
+			//var url = $location.absUrl();
+			if( $scope.select_roll_type == "damage" ) {
+				$location.search(
+					{
+						dice: $scope.input_parse_dice,
+						type: $scope.select_roll_type,
+						toughness: $scope.input_base_toughness,
+						ap: $scope.input_weapons_ap,
+						halfdamage: $scope.input_half_damage,
+						armor: $scope.input_armor
+					}
+				);
+			} else if( $scope.select_roll_type == "trait" ) {
+				$location.search(
+					{
+						dice: $scope.input_parse_dice,
+						type: $scope.select_roll_type,
+						targetnumber: $scope.input_target_number
+					}
+				);
+			} else {
+				$location.search(
+					{
+						dice: $scope.input_parse_dice,
+						type: $scope.select_roll_type
+					}
+				);
+			}
+			// $location.path( url );
+			$location.replace();
+
+		}
+
+		$scope.updateLinkURL();
+
+		$scope.rollDice = function () {
+			localStorage["com.jdg.swwt2.dice.input_parse_dice"] = $scope.input_parse_dice;
+			localStorage["com.jdg.swwt2.dice.select_roll_type"] = $scope.select_roll_type;
+			if( $scope.input_half_damage )
+				localStorage["com.jdg.swwt2.dice.input_half_damage"] = 1;
 			else
-				$scope.input_parse_dice = "d8* + 1";
+				localStorage["com.jdg.swwt2.dice.input_half_damage"] = 0;
 
+			localStorage["com.jdg.swwt2.dice.input_target_number"] = $scope.input_target_number;
+			localStorage["com.jdg.swwt2.dice.input_base_toughness"] = $scope.input_base_toughness;
+			localStorage["com.jdg.swwt2.dice.input_roll"] = $scope.input_roll;
+			localStorage["com.jdg.swwt2.dice.input_armor"] = $scope.input_armor;
+			localStorage["com.jdg.swwt2.dice.input_weapons_ap"] = $scope.input_weapons_ap;
 
-			if( localStorage["com.jdg.swwt2.dice.select_roll_type"] )
-				$scope.select_roll_type = localStorage["com.jdg.swwt2.dice.select_roll_type"];
-			else
-				$scope.select_roll_type = "roll";
+			dice_object.setResultMargins(
+			 		$scope.input_target_number,
+			 		$scope.input_base_toughness,
+			 		$scope.input_armor,
+			 		$scope.input_weapons_ap
+			);
+			for_trait = 0;
+			for_damage = 0;
+			if( $scope.select_roll_type == "damage" ) {
+				for_damage = 1;
+			} else if( $scope.select_roll_type == "trait" ) {
+				for_trait = 1;
+			}
 
-			if( localStorage["com.jdg.swwt2.dice.input_target_number"] )
-				$scope.input_target_number = localStorage["com.jdg.swwt2.dice.input_target_number"] / 1;
-			else
-				$scope.input_target_number = 4;
+			$dice_roll = dice_object.parseRoll( $scope.input_parse_dice );
 
-			if( localStorage["com.jdg.swwt2.dice.input_base_toughness"] )
-				$scope.input_base_toughness = localStorage["com.jdg.swwt2.dice.input_base_toughness"] / 1;
-			else
-				$scope.input_base_toughness = 5
+			$scope.dice_results  = dice_object.displayResults(for_trait, for_damage, $scope.input_half_damage);
+		};
 
-			if( localStorage["com.jdg.swwt2.dice.input_armor"] )
-				$scope.input_armor = localStorage["com.jdg.swwt2.dice.input_armor"] / 1;
-			else
-				$scope.input_armor = 1
-
-			if( localStorage["com.jdg.swwt2.dice.input_weapons_ap"] )
-				$scope.input_weapons_ap = localStorage["com.jdg.swwt2.dice.input_weapons_ap"] / 1;
-			else
-				$scope.input_weapons_ap  = 0;
-
-
+		$scope.show_hide_options = function() {
 			if( $scope.select_roll_type == "damage" ) {
 				$scope.show_trait_options = false;
 				$scope.show_damage_options = true;
@@ -5382,2911 +7226,3110 @@ angular.module("baseApp").controller(
 				$scope.show_trait_options = false;
 				$scope.show_damage_options = false;
 			}
-
-			$translate(['APP_TITLE', 'INDEX_BUTTON_CORE_DICE', 'DICE_NO_DICE_THROWN' ]).then(function (translation) {
-				$rootScope.title_tag = translation.INDEX_BUTTON_CORE_DICE + " | " + translation.APP_TITLE;
-				$scope.dice_results = translation.DICE_NO_DICE_THROWN;
-				$total_roll_label = translation.DICE_TOTAL_ROLL;
-				$rootScope.subtitle_tag = translation.INDEX_BUTTON_CORE_DICE;
-			});
-
-			$translate(
-				[
-				'DICE_LABEL_NO_EFFECT', 'DICE_LABEL_SHAKEN', 'DICE_LABEL_SHAKEN_AND_A_WOUND',
-				'DICE_LABEL_SHAKEN_AND_X_WOUNDS', 'DICE_LABEL_CRITICAL_FAILURE', 'DICE_LABEL_FAILURE',
-				'DICE_LABEL_SUCCESS', 'DICE_LABEL_SUCCESS_WITH_A_RAISE', 'DICE_LABEL_SUCCESS_WITH_X_RAISES',
-				'DICE_LABEL_DIE_ROLL_NUMBER', 'DICE_LABEL_WILD_DIE_ROLL_NUMBER', 'DICE_TOTAL_ROLL',
-				'DICE_ROLL_SET_NUM'
-				]
-			).then( function( translation ) {
-
-				dice_object.setLabel("no_effect",  translation.DICE_LABEL_NO_EFFECT);
-				dice_object.setLabel("shaken", translation.DICE_LABEL_SHAKEN);
-				dice_object.setLabel("shaken_and_a_wound", translation.DICE_LABEL_SHAKEN_AND_A_WOUND);
-
-				dice_object.setLabel("shaken_and_x_wounds", translation.DICE_LABEL_SHAKEN_AND_X_WOUNDS);
-				dice_object.setLabel("critical_failure", translation.DICE_LABEL_CRITICAL_FAILURE);
-				dice_object.setLabel("failure", translation.DICE_LABEL_FAILURE);
-
-				dice_object.setLabel("success", translation.DICE_LABEL_SUCCESS);
-				dice_object.setLabel("success_with_a_raise", translation.DICE_LABEL_SUCCESS_WITH_A_RAISE);
-				dice_object.setLabel("success_with_x_raises", translation.DICE_LABEL_SUCCESS_WITH_X_RAISES);
-
-				dice_object.setLabel("die_roll_number", translation.DICE_LABEL_DIE_ROLL_NUMBER);
-				dice_object.setLabel("wild_die_roll_number", translation.DICE_LABEL_WILD_DIE_ROLL_NUMBER);
-				dice_object.setLabel("total_roll",  translation.DICE_TOTAL_ROLL);
-
-
-				dice_object.setLabel("roll_set_number",  translation.DICE_ROLL_SET_NUM);
-			} );
-
-
-
-			$scope.extra_results = "";
-			$scope.total_roll = "";
-
-			$scope.rollDice = function () {
-				localStorage["com.jdg.swwt2.dice.input_parse_dice"] = $scope.input_parse_dice;
-				localStorage["com.jdg.swwt2.dice.select_roll_type"] = $scope.select_roll_type;
-
-				localStorage["com.jdg.swwt2.dice.input_target_number"] = $scope.input_target_number;
-				localStorage["com.jdg.swwt2.dice.input_base_toughness"] = $scope.input_base_toughness;
-				localStorage["com.jdg.swwt2.dice.input_roll"] = $scope.input_roll;
-				localStorage["com.jdg.swwt2.dice.input_armor"] = $scope.input_armor;
-				localStorage["com.jdg.swwt2.dice.input_weapons_ap"] = $scope.input_weapons_ap;
-
-				dice_object.setResultMargins(
-				 		$scope.input_target_number,
-				 		$scope.input_base_toughness,
-				 		$scope.input_armor,
-				 		$scope.input_weapons_ap
-				);
-				for_trait = 0;
-				for_damage = 0;
-				if( $scope.select_roll_type == "damage" ) {
-					for_damage = 1;
-				} else if( $scope.select_roll_type == "trait" ) {
-					for_trait = 1;
-				}
-
-				$dice_roll = dice_object.parseRoll( $scope.input_parse_dice );
-
-				$scope.dice_results  = dice_object.displayResults(for_trait, for_damage);
-			};
-
-			$scope.show_hide_options = function() {
-				if( $scope.select_roll_type == "damage" ) {
-					$scope.show_trait_options = false;
-					$scope.show_damage_options = true;
-				} else if( $scope.select_roll_type == "trait" ) {
-					$scope.show_trait_options = true;
-					$scope.show_damage_options = false;
-				} else {
-					$scope.show_trait_options = false;
-					$scope.show_damage_options = false;
-				}
-				localStorage["com.jdg.swwt2.dice.input_target_number"] = $scope.input_target_number;
-				localStorage["com.jdg.swwt2.dice.input_base_toughness"] = $scope.input_base_toughness;
-				localStorage["com.jdg.swwt2.dice.input_roll"] = $scope.input_roll;
-				localStorage["com.jdg.swwt2.dice.input_armor"] = $scope.input_armor;
-				localStorage["com.jdg.swwt2.dice.input_weapons_ap"] = $scope.input_weapons_ap;
-			}
-
+			localStorage["com.jdg.swwt2.dice.input_target_number"] = $scope.input_target_number;
+			localStorage["com.jdg.swwt2.dice.input_base_toughness"] = $scope.input_base_toughness;
+			localStorage["com.jdg.swwt2.dice.input_roll"] = $scope.input_roll;
+			localStorage["com.jdg.swwt2.dice.input_armor"] = $scope.input_armor;
+			localStorage["com.jdg.swwt2.dice.input_weapons_ap"] = $scope.input_weapons_ap;
+			$scope.updateLinkURL();
 		}
-	]
+
+	}
+];
+
+angular.module("webApp").controller(
+	"coreDiceController",
+	corediceArray
+);
+
+angular.module("cordovaApp").controller(
+	"coreDiceController",
+	corediceArray
 );
 
 
-angular.module("baseApp").controller(
-	"coreExtrasController",
-	[
-		'$rootScope',
-		'$translate',
-		'$scope',
-		function ($rootScope, $translate, $scope) {
-			$rootScope.showSciFiCreatorMenu = false;
-			$rootScope.showChargenMenu = false;
-			var extras_default_results = "";
-			var extras_no_results_found = "";
-			$scope.current_books = Array();
+var coreextrasArray = 	[
+	'$rootScope',
+	'$translate',
+	'$scope',
+	function ($rootScope, $translate, $scope) {
+		$rootScope.showSciFiCreatorMenu = false;
+		$rootScope.showChargenMenu = false;
+		var extras_default_results = "";
+		var extras_no_results_found = "";
+		$scope.current_books = Array();
 
-			if( typeof(localStorage["com.jdg.swwt2.extras.input_extras_search"]) != "undefined" )
-				$scope.input_extras_search = localStorage["com.jdg.swwt2.extras.input_extras_search"];
-			else
-				$scope.input_extras_search = "";
+		if( typeof(localStorage["com.jdg.swwt2.extras.input_extras_search"]) != "undefined" )
+			$scope.input_extras_search = localStorage["com.jdg.swwt2.extras.input_extras_search"];
+		else
+			$scope.input_extras_search = "";
 
-			// init localStorage for book checks...
-			for( swe_bc = 0; swe_bc < savageWorldsExtrasBooksList.length; swe_bc++) {
-				if( typeof(localStorage["com.jdg.swwt2.extras.input_book_check_" + swe_bc]) == "undefined" ) {
-					localStorage["com.jdg.swwt2.extras.input_book_check_" + swe_bc] = 1;
-				}
+		// init localStorage for book checks...
+		for( swe_bc = 0; swe_bc < savageWorldsExtrasBooksList.length; swe_bc++) {
+			if( typeof(localStorage["com.jdg.swwt2.extras.input_book_check_" + swe_bc]) == "undefined" ) {
+				localStorage["com.jdg.swwt2.extras.input_book_check_" + swe_bc] = 1;
+			}
+		}
+
+		$scope.activebooklist = [];
+		$scope.active_books = {};
+
+		// add book checkboxes.
+		for( swe_bc = 0; swe_bc < savageWorldsExtrasBooksList.length; swe_bc++) {
+			book_checked = false;
+			if( typeof(localStorage["com.jdg.swwt2.extras.input_book_check_" + swe_bc]) > 0 ) {
+				book_checked = true;
 			}
 
-			$scope.activebooklist = [];
-			$scope.active_books = {};
+			$scope.active_books[ swe_bc + 1 ] = book_checked;
+			book_checkbox_data = get_book_by_id( savageWorldsExtrasBooksList[swe_bc]["id"], localStorage["users_preferred_language"] );
+			//console.log("book_checkbox_data", book_checkbox_data);
+			//console.log('savageWorldsExtrasBooksList[swe_bc]["id"]', savageWorldsExtrasBooksList[swe_bc]["id"]);
+			$scope.activebooklist.push( book_checkbox_data );
+		}
 
-			// add book checkboxes.
-			for( swe_bc = 0; swe_bc < savageWorldsExtrasBooksList.length; swe_bc++) {
-				book_checked = false;
-				if( typeof(localStorage["com.jdg.swwt2.extras.input_book_check_" + swe_bc]) > 0 ) {
-					book_checked = true;
-				}
+		if( typeof(localStorage["com.jdg.swwt2.extras.active_books"]) != "undefined"  && localStorage["com.jdg.swwt2.extras.active_books"] != "") {
+			$scope.active_books = JSON.parse(localStorage["com.jdg.swwt2.extras.active_books"]);
+		} else {
+			$scope.active_books[0] = true;
+		}
 
-				$scope.active_books[ swe_bc + 1 ] = book_checked;
-				book_checkbox_data = get_book_by_id( savageWorldsExtrasBooksList[swe_bc]["id"], localStorage["users_preferred_language"] );
-				//console.log("book_checkbox_data", book_checkbox_data);
-				//console.log('savageWorldsExtrasBooksList[swe_bc]["id"]', savageWorldsExtrasBooksList[swe_bc]["id"]);
-				$scope.activebooklist.push( book_checkbox_data );
-			}
+		$translate(['APP_TITLE', 'INDEX_BUTTON_CORE_EXTRAS','EXTRAS_SEARCH', 'EXTRAS_LIBRARIES', 'EXTRAS_RESULTS', 'EXTRAS_RESULTS_INTRO', 'EXTRAS_NO_RESULTS' ]).then(function (translation) {
+			$rootScope.title_tag = translation.INDEX_BUTTON_CORE_EXTRAS + " | " + translation.APP_TITLE;
+			$scope.label_search = translation.EXTRAS_SEARCH;
+			$scope.label_libraries = translation.EXTRAS_SEARCH;
+			$scope.label_results = translation.EXTRAS_RESULTS;
+			$total_roll_label = translation.DICE_TOTAL_ROLL;
+			$rootScope.subtitle_tag = translation.INDEX_BUTTON_CORE_EXTRAS;
+			extras_default_results = "<p>" + translation.EXTRAS_RESULTS_INTRO + "</p>";
+			extras_no_results_found = "<p>" + translation.EXTRAS_NO_RESULTS + "</p>";
 
-			if( typeof(localStorage["com.jdg.swwt2.extras.active_books"]) != "undefined"  && localStorage["com.jdg.swwt2.extras.active_books"] != "") {
-				$scope.active_books = JSON.parse(localStorage["com.jdg.swwt2.extras.active_books"]);
-			} else {
-				$scope.active_books[0] = true;
-			}
-
-			$translate(['APP_TITLE', 'INDEX_BUTTON_CORE_EXTRAS','EXTRAS_SEARCH', 'EXTRAS_LIBRARIES', 'EXTRAS_RESULTS', 'EXTRAS_RESULTS_INTRO', 'EXTRAS_NO_RESULTS' ]).then(function (translation) {
-				$rootScope.title_tag = translation.INDEX_BUTTON_CORE_EXTRAS + " | " + translation.APP_TITLE;
-				$scope.label_search = translation.EXTRAS_SEARCH;
-				$scope.label_libraries = translation.EXTRAS_SEARCH;
-				$scope.label_results = translation.EXTRAS_RESULTS;
-				$total_roll_label = translation.DICE_TOTAL_ROLL;
-				$rootScope.subtitle_tag = translation.INDEX_BUTTON_CORE_EXTRAS;
-				extras_default_results = "<p>" + translation.EXTRAS_RESULTS_INTRO + "</p>";
-				extras_no_results_found = "<p>" + translation.EXTRAS_NO_RESULTS + "</p>";
-
-				$scope.update_results_pane();
-			});
+			$scope.update_results_pane();
+		});
 
 
 
-			$scope.update_results_pane = function() {
-				localStorage["com.jdg.swwt2.extras.input_extras_search"] = $scope.input_extras_search;
-				localStorage["com.jdg.swwt2.extras.active_books"] = JSON.stringify($scope.active_books);
+		$scope.update_results_pane = function() {
+			localStorage["com.jdg.swwt2.extras.input_extras_search"] = $scope.input_extras_search;
+			localStorage["com.jdg.swwt2.extras.active_books"] = JSON.stringify($scope.active_books);
 
-				$scope.search_results = [];
-				if( $scope.input_extras_search && $scope.input_extras_search.length >= 3 ) {
-					$scope.show_default_text = false;
+			$scope.search_results = [];
+			if( $scope.input_extras_search && $scope.input_extras_search.length >= 3 ) {
+				$scope.show_default_text = false;
 
-					for( extracount = 0; extracount < savageWorldsExtrasDatabase.length; extracount++) {
-						if(
-							$scope.is_found(  savageWorldsExtrasDatabase[extracount] )
-						) {
-							$scope.search_results.push(  $scope.localize_extra(savageWorldsExtrasDatabase[extracount]) );
-						}
+				for( extracount = 0; extracount < savageWorldsExtrasDatabase.length; extracount++) {
+					if(
+						$scope.is_found(  savageWorldsExtrasDatabase[extracount] )
+					) {
+						$scope.search_results.push(  $scope.localize_extra(savageWorldsExtrasDatabase[extracount]) );
 					}
+				}
 //					console.log("search_results", $scope.search_results);
-					if( $scope.search_results.length == 0)
-						$scope.show_no_results = true;
-					else
-						$scope.show_no_results = false;
-				} else {
-					$scope.show_default_text = true;
-				}
+				if( $scope.search_results.length == 0)
+					$scope.show_no_results = true;
+				else
+					$scope.show_no_results = false;
+			} else {
+				$scope.show_default_text = true;
 			}
+		}
 
-			$scope.localize_extra = function( entry_object ) {
-				$translate([
-					"SKILL_BOATING", "SKILL_CLIMBING",	"SKILL_DRIVING",	"SKILL_FAITH",	"SKILL_FIGHTING",
-					"SKILL_GAMBLING",	"SKILL_GUTS",	"SKILL_HEALING",	"SKILL_INTIMIDATION",	"SKILL_INVESTIGATION",
-					"SKILL_KNOWLEDGE",	"SKILL_LOCKPICKING",	"SKILL_NOTICE",	"SKILL_PERSUASION",	"SKILL_PILOTING",
-					"SKILL_PSIONICS",	"SKILL_REPAIR",	"SKILL_RIDING",	"SKILL_SHOOTING",	"SKILL_SPELLCASTING",
-					"SKILL_STEALTH", 	"SKILL_STREETWISE",	"SKILL_SURVIVAL",	"SKILL_SWIMMING",	"SKILL_TAUNT",
-					"SKILL_THROWING",	"SKILL_TRACKING",	"SKILL_WEIRD_SCIENCE"
-				]).then(function (translation) {
+		$scope.localize_extra = function( entry_object ) {
+			$translate([
+				"SKILL_BOATING", "SKILL_CLIMBING",	"SKILL_DRIVING",	"SKILL_FAITH",	"SKILL_FIGHTING",
+				"SKILL_GAMBLING",	"SKILL_GUTS",	"SKILL_HEALING",	"SKILL_INTIMIDATION",	"SKILL_INVESTIGATION",
+				"SKILL_KNOWLEDGE",	"SKILL_LOCKPICKING",	"SKILL_NOTICE",	"SKILL_PERSUASION",	"SKILL_PILOTING",
+				"SKILL_PSIONICS",	"SKILL_REPAIR",	"SKILL_RIDING",	"SKILL_SHOOTING",	"SKILL_SPELLCASTING",
+				"SKILL_STEALTH", 	"SKILL_STREETWISE",	"SKILL_SURVIVAL",	"SKILL_SWIMMING",	"SKILL_TAUNT",
+				"SKILL_THROWING",	"SKILL_TRACKING",	"SKILL_WEIRD_SCIENCE"
+			]).then(function (translation) {
 
-					if( entry_object.name[ localStorage["users_preferred_language"] ] )
-						 entry_object.local_name = entry_object.name[ localStorage["users_preferred_language"] ] ;
-					else
-						entry_object.local_name = entry_object.name[  "en-US" ];
+				if( entry_object.name[ localStorage["users_preferred_language"] ] )
+					 entry_object.local_name = entry_object.name[ localStorage["users_preferred_language"] ] ;
+				else
+					entry_object.local_name = entry_object.name[  "en-US" ];
 
-					if( entry_object.blurb[ localStorage["users_preferred_language"] ] )
-						 entry_object.local_blurb = entry_object.blurb[ localStorage["users_preferred_language"] ] ;
-					else
-						entry_object.local_blurb = entry_object.blurb[  "en-US" ];
+				if( entry_object.blurb[ localStorage["users_preferred_language"] ] )
+					 entry_object.local_blurb = entry_object.blurb[ localStorage["users_preferred_language"] ] ;
+				else
+					entry_object.local_blurb = entry_object.blurb[  "en-US" ];
 
-					entry_object.local_blurb = "<p>" + entry_object.local_blurb.trim().replace(/\n/g, "</p><p>") + "</p>";
-					if( entry_object.abilities[ localStorage["users_preferred_language"] ] )
-						entry_object.local_abilities = entry_object.abilities[ localStorage["users_preferred_language"] ] ;
-					else
-						entry_object.local_abilities = entry_object.abilities[  "en-US" ];
+				entry_object.local_blurb = "<p>" + entry_object.local_blurb.trim().replace(/\n/g, "</p><p>") + "</p>";
+				if( entry_object.abilities[ localStorage["users_preferred_language"] ] )
+					entry_object.local_abilities = entry_object.abilities[ localStorage["users_preferred_language"] ] ;
+				else
+					entry_object.local_abilities = entry_object.abilities[  "en-US" ];
 
-					if ( entry_object.local_abilities.trim() )
-						entry_object.local_abilities = "<ul><li>" + entry_object.local_abilities.trim().replace(/\n/g, "</li><li>") + "</li></ul>";
-					else
-						entry_object.local_abilities = "";
+				if ( entry_object.local_abilities.trim() )
+					entry_object.local_abilities = "<ul><li>" + entry_object.local_abilities.trim().replace(/\n/g, "</li><li>") + "</li></ul>";
+				else
+					entry_object.local_abilities = "";
 
-					entry_object.local_book = get_book_by_id( entry_object.book );
+				entry_object.local_book = get_book_by_id( entry_object.book );
 
-					try {
-						entry_object.parsed_attributes = JSON.parse( entry_object.attributes );
-					}
-					catch(e) {
-						entry_object.parsed_attributes = {};
-					}
+				try {
+					entry_object.parsed_attributes = JSON.parse( entry_object.attributes );
+				}
+				catch(e) {
+					entry_object.parsed_attributes = {};
+				}
 
-					try {
-						parsed_skills = JSON.parse( entry_object.skills );
-					}
-					catch(e) {
-						parsed_skills = {};
-					}
+				try {
+					parsed_skills = JSON.parse( entry_object.skills );
+				}
+				catch(e) {
+					parsed_skills = {};
+				}
 //					console.log("parsed_skills", parsed_skills);
-					entry_object.display_skills = "";
-					for( skill_key in parsed_skills ) {
-						//console.log("...", skill_key.substring(0, "SKILL_KNOWLEDGE".length));
-						if( skill_key.substring(0, "SKILL_KNOWLEDGE".length) == "SKILL_KNOWLEDGE") {
-							if( parsed_skills[skill_key].special[ localStorage["users_preferred_language"] ] )
-								entry_object.display_skills += get_local_skill_name(skill_key.substring(0, "SKILL_KNOWLEDGE".length)) + " (" + parsed_skills[skill_key].special[ localStorage["users_preferred_language"] ] + "): " + parsed_skills[skill_key].value + ", ";
-							else
-								entry_object.display_skills += get_local_skill_name(skill_key.substring(0, "SKILL_KNOWLEDGE".length)) + " (" + parsed_skills[skill_key].special["en-US"] + "): " + parsed_skills[skill_key].value + ", ";
-						} else if ( skill_key.substring(0, "SKILL_CUSTOM".length) == "SKILL_CUSTOM") {
-							if( parsed_skills[skill_key].special[ localStorage["users_preferred_language"] ] )
-								entry_object.display_skills += parsed_skills[skill_key].special[ localStorage["users_preferred_language"] ] + ": " + parsed_skills[skill_key].value + ", ";
-							else
-								entry_object.display_skills += parsed_skills[skill_key].special["en-US"] + ": " + parsed_skills[skill_key].value + ", ";
-						} else {
-							entry_object.display_skills += get_local_skill_name(skill_key) + ": " + parsed_skills[skill_key].value + ", ";
-						}
+				entry_object.display_skills = "";
+				for( skill_key in parsed_skills ) {
+					//console.log("...", skill_key.substring(0, "SKILL_KNOWLEDGE".length));
+					if( skill_key.substring(0, "SKILL_KNOWLEDGE".length) == "SKILL_KNOWLEDGE") {
+						if( parsed_skills[skill_key].special[ localStorage["users_preferred_language"] ] )
+							entry_object.display_skills += get_local_skill_name(skill_key.substring(0, "SKILL_KNOWLEDGE".length)) + " (" + parsed_skills[skill_key].special[ localStorage["users_preferred_language"] ] + "): " + parsed_skills[skill_key].value + ", ";
+						else
+							entry_object.display_skills += get_local_skill_name(skill_key.substring(0, "SKILL_KNOWLEDGE".length)) + " (" + parsed_skills[skill_key].special["en-US"] + "): " + parsed_skills[skill_key].value + ", ";
+					} else if ( skill_key.substring(0, "SKILL_CUSTOM".length) == "SKILL_CUSTOM") {
+						if( parsed_skills[skill_key].special[ localStorage["users_preferred_language"] ] )
+							entry_object.display_skills += parsed_skills[skill_key].special[ localStorage["users_preferred_language"] ] + ": " + parsed_skills[skill_key].value + ", ";
+						else
+							entry_object.display_skills += parsed_skills[skill_key].special["en-US"] + ": " + parsed_skills[skill_key].value + ", ";
+					} else {
+						entry_object.display_skills += get_local_skill_name(skill_key) + ": " + parsed_skills[skill_key].value + ", ";
 					}
-
-					if( entry_object.display_skills != "")
-						entry_object.display_skills = entry_object.display_skills.substring(0, entry_object.display_skills.length - 2);
-
-					entry_object.display_toughness = entry_object.toughness;
-					if( entry_object.armor > 0)
-						entry_object.display_toughness += "(" + entry_object.armor + ")";
-
-					if( entry_object.gear[ localStorage["users_preferred_language"] ] )
-						entry_object.local_gear = entry_object.gear[ localStorage["users_preferred_language"] ] ;
-					else
-						entry_object.local_gear = entry_object.gear[  "en-US" ];
-
-					if( entry_object.treasure[ localStorage["users_preferred_language"] ] )
-						entry_object.local_treasure = entry_object.treasure[ localStorage["users_preferred_language"] ] ;
-					else
-						entry_object.local_treasure = entry_object.treasure[  "en-US" ];
-
-					if( entry_object.edges[ localStorage["users_preferred_language"] ] )
-						entry_object.local_edges = entry_object.edges[ localStorage["users_preferred_language"] ] ;
-					else
-						entry_object.local_edges = entry_object.edges[  "en-US" ];
-
-					if( entry_object.hindrances[ localStorage["users_preferred_language"] ] )
-						entry_object.local_hindrances = entry_object.hindrances[ localStorage["users_preferred_language"] ] ;
-					else
-						entry_object.local_hindrances = entry_object.hindrances[  "en-US" ];
-					//return entry_object;
-				});
-				return entry_object;
-			}
-
-			$scope.has_search_term = function( entry_object, search_term ) {
-				search_term = search_term.trim();
-				return_value = false;
-				if( entry_object.name[ localStorage["users_preferred_language"] ] ) {
-					if( entry_object.name[ localStorage["users_preferred_language"] ].toLowerCase().indexOf( search_term ) > -1 )
-						return_value =  true;
-				} else {
-					if( entry_object.name[ "en-US" ].toLowerCase().indexOf( search_term )  > -1 )
-						return_value =  true;
 				}
 
-				if( entry_object.tags[ localStorage["users_preferred_language"] ] ) {
-					if( entry_object.tags[ localStorage["users_preferred_language"] ].toLowerCase().indexOf( search_term + "," ) > -1 )
-						return_value =  true;
-				} else {
-					if( entry_object.tags[ "en-US" ].toLowerCase().indexOf( search_term + ",")  > -1 )
-						return_value =  true;
-				}
-				if( $scope.active_books[ entry_object.book - 1 ] == false )
-					return_value =  false;
+				if( entry_object.display_skills != "")
+					entry_object.display_skills = entry_object.display_skills.substring(0, entry_object.display_skills.length - 2);
 
-				return return_value;
-			}
+				entry_object.display_toughness = entry_object.toughness;
+				if( entry_object.armor > 0)
+					entry_object.display_toughness += "(" + entry_object.armor + ")";
 
-			$scope.is_found = function( entry_object ) {
-				returnValue = false;
+				if( entry_object.gear[ localStorage["users_preferred_language"] ] )
+					entry_object.local_gear = entry_object.gear[ localStorage["users_preferred_language"] ] ;
+				else
+					entry_object.local_gear = entry_object.gear[  "en-US" ];
 
-				if( $scope.input_extras_search.indexOf(",") < 0 ) {
+				if( entry_object.treasure[ localStorage["users_preferred_language"] ] )
+					entry_object.local_treasure = entry_object.treasure[ localStorage["users_preferred_language"] ] ;
+				else
+					entry_object.local_treasure = entry_object.treasure[  "en-US" ];
 
-					var search_term = $scope.input_extras_search;
-					search_term = search_term.toLowerCase().trim();
+				if( entry_object.edges[ localStorage["users_preferred_language"] ] )
+					entry_object.local_edges = entry_object.edges[ localStorage["users_preferred_language"] ] ;
+				else
+					entry_object.local_edges = entry_object.edges[  "en-US" ];
 
-					return $scope.has_search_term( entry_object, search_term );
-
-				} else {
-
-					search_terms = $scope.input_extras_search.split(",");
-
-					for( var stc = 0; stc < search_terms.length; stc++) {
-
-						if(
-							search_terms[stc].trim() != ""
-								&&
-								$scope.has_search_term( entry_object, search_terms[stc] )
-						) {
-							return true;
-						}
-
-					}
-
-					return false;
-				}
-			}
-
-
-
+				if( entry_object.hindrances[ localStorage["users_preferred_language"] ] )
+					entry_object.local_hindrances = entry_object.hindrances[ localStorage["users_preferred_language"] ] ;
+				else
+					entry_object.local_hindrances = entry_object.hindrances[  "en-US" ];
+				//return entry_object;
+			});
+			return entry_object;
 		}
-	]
+
+		$scope.has_search_term = function( entry_object, search_term ) {
+			search_term = search_term.trim();
+			return_value = false;
+			if( entry_object.name[ localStorage["users_preferred_language"] ] ) {
+				if( entry_object.name[ localStorage["users_preferred_language"] ].toLowerCase().indexOf( search_term ) > -1 )
+					return_value =  true;
+			} else {
+				if( entry_object.name[ "en-US" ].toLowerCase().indexOf( search_term )  > -1 )
+					return_value =  true;
+			}
+
+			if( entry_object.tags[ localStorage["users_preferred_language"] ] ) {
+				if( entry_object.tags[ localStorage["users_preferred_language"] ].toLowerCase().indexOf( search_term + "," ) > -1 )
+					return_value =  true;
+			} else {
+				if( entry_object.tags[ "en-US" ].toLowerCase().indexOf( search_term + ",")  > -1 )
+					return_value =  true;
+			}
+			if( $scope.active_books[ entry_object.book - 1 ] == false )
+				return_value =  false;
+
+			return return_value;
+		}
+
+		$scope.is_found = function( entry_object ) {
+			returnValue = false;
+
+			if( $scope.input_extras_search.indexOf(",") < 0 ) {
+
+				var search_term = $scope.input_extras_search;
+				search_term = search_term.toLowerCase().trim();
+
+				return $scope.has_search_term( entry_object, search_term );
+
+			} else {
+
+				search_terms = $scope.input_extras_search.split(",");
+
+				for( var stc = 0; stc < search_terms.length; stc++) {
+
+					if(
+						search_terms[stc].trim() != ""
+							&&
+							$scope.has_search_term( entry_object, search_terms[stc] )
+					) {
+						return true;
+					}
+
+				}
+
+				return false;
+			}
+		}
+
+
+
+	}
+];
+
+angular.module("webApp").controller(
+	"coreExtrasController",
+	coreextrasArray
+);
+
+angular.module("cordovaApp").controller(
+	"coreExtrasController",
+	coreextrasArray
 );
 
 
 
 
-angular.module("baseApp").controller(
+
+var massbattlesArray = [
+	function() {
+
+	}
+];
+angular.module("webApp").controller(
 	"coreMassbattlesController",
-	function() {
-
-	}
+	massbattlesArray
 );
-angular.module("baseApp").controller(
+
+angular.module("cordovaApp").controller(
+	"coreMassbattlesController",
+	massbattlesArray
+);
+function getRandomIntInclusive(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+var raiseTrainerArray = 	[
+	'$rootScope',
+	'$translate',
+	'$scope',
+	function ($rootScope, $translate, $scope) {
+
+		$rootScope.showSciFiCreatorMenu = false;
+		$rootScope.showChargenMenu = false;
+		$translate(['APP_TITLE', 'INDEX_RAISE_TRAINER']).then(function (translation) {
+			$rootScope.title_tag = translation.INDEX_RAISE_TRAINER + " | " + translation.APP_TITLE;
+			$rootScope.subtitle_tag = translation.INDEX_RAISE_TRAINER;
+		});
+		$scope.showWelcome = true;
+		$scope.showTest = false;
+		$scope.showResults = false;
+		$scope.numberOfQuestions = 20;
+		$scope.currentQuestion = -1;
+		$scope.currentQuestionDisplay = 0;
+		$scope.testQuestions = Array();
+		var dice_object = new classDice();
+		dice_object.init();
+		dice_object.setAlwaysExplodingDice(true);
+		$scope.startTime = 0;
+
+		$scope.startTest = function() {
+			$scope.makeTestResults();
+			$scope.currentQuestion = -1;
+			$scope.nextQuestion();
+			$scope.showWelcome = false;
+			$scope.showTest = true;
+			$scope.showResults = false;
+			$scope.startTime = window.performance.now();
+		}
+
+		$scope.nextQuestion = function() {
+			$scope.currentQuestion++;
+
+			if( $scope.testQuestions[ $scope.currentQuestion ] ) {
+				$scope.currentQuestionDisplay = $scope.currentQuestion + 1 + "/" + $scope.numberOfQuestions;
+				$scope.testTargetNumber = $scope.testQuestions[ $scope.currentQuestion ].target;
+				$scope.testRollNumber = $scope.testQuestions[ $scope.currentQuestion ].roll;
+
+			} else {
+				$scope.calculateResults();
+				$scope.showWelcome = false;
+				$scope.showTest = false;
+				$scope.showResults = true;
+			}
+		}
+
+		$scope.calculateResults = function() {
+			correctCount = 0;
+			$scope.averageAnswerTime = 0;
+			for(var testCount = 0; testCount < $scope.testQuestions.length; testCount++) {
+				if(
+					$scope.testQuestions[testCount].correct
+						==
+					$scope.testQuestions[testCount].answer
+				) {
+					correctCount++;
+				}
+				if( testCount == 0 ) {
+					$scope.testQuestions[testCount].answerTime = $scope.testQuestions[testCount].time - $scope.startTime;
+				} else {
+					$scope.testQuestions[testCount].answerTime = $scope.testQuestions[testCount].time - $scope.testQuestions[testCount - 1].time;
+				}
+				$scope.averageAnswerTime += $scope.testQuestions[testCount].answerTime;
+				$scope.testQuestions[testCount].answerTime = ($scope.testQuestions[testCount].answerTime / 1000 ).toFixed(3);
+			}
+			$scope.averageAnswerTime = $scope.averageAnswerTime / $scope.testQuestions.length;
+			$scope.averageAnswerTime = ($scope.averageAnswerTime / 1000 ).toFixed(3);
+			$scope.resultsCorrect = correctCount;
+			$scope.resultsPercentage = Math.ceil( correctCount / $scope.numberOfQuestions * 100 ) + "%";
+			console.log( "$scope.startTime", $scope.startTime );
+			console.log( "$scope.testQuestions", $scope.testQuestions );
+		}
+
+		$scope.rowClass = function(answerRow) {
+			if( answerRow.correct ==  answerRow.answer )
+				return "right-answer";
+			else
+				return "wrong-answer";
+		}
+
+		$scope.makeTestResults = function() {
+			$scope.testQuestions = Array();
+			for(var testCount = 0; testCount< $scope.numberOfQuestions; testCount++) {
+				var answer = {
+					roll: dice_object.rollDice("d10*"),
+					target: getRandomIntInclusive(4,15),
+					time: -1,
+					right: false,
+					answer: "",
+					correct: ""
+				};
+
+				if( answer.roll >= answer.target + 8) {
+					answer.correct = "2raises";
+				} else if( answer.roll >= answer.target + 4) {
+					answer.correct = "raise";
+				} else if( answer.roll >= answer.target ) {
+					answer.correct = "success";
+				} else {
+					answer.correct = "fail";
+				}
+
+				$scope.testQuestions.push(
+					answer
+				);
+			}
+
+		}
+
+		$scope.adjustSuccessFails = function( answerObject ) {
+			if( answerObject.correct == answerObject.answer )
+				answerObject.right = true;
+			else
+				answerObject.right = false;
+
+			$scope.nextQuestion();
+			return answerObject;
+		}
+
+		$scope.clickFailure = function() {
+			$scope.testQuestions[ $scope.currentQuestion ].time = window.performance.now();
+			$scope.testQuestions[ $scope.currentQuestion ].answer = "fail";
+			$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
+		}
+		$scope.clickSuccess = function() {
+			$scope.testQuestions[ $scope.currentQuestion ].time = window.performance.now();
+			$scope.testQuestions[ $scope.currentQuestion ].answer = "success";
+			$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
+		}
+		$scope.clickSuccessRaise = function() {
+			$scope.testQuestions[ $scope.currentQuestion ].time = window.performance.now();
+			$scope.testQuestions[ $scope.currentQuestion ].answer = "raise";
+			$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
+		}
+		$scope.clickSuccess2Raises = function() {
+			$scope.testQuestions[ $scope.currentQuestion ].time = window.performance.now();
+			$scope.testQuestions[ $scope.currentQuestion ].answer = "2raises";
+			$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
+
+		}
+	}
+
+];
+
+angular.module("webApp").controller(
+	"raiseTrainerController",
+	raiseTrainerArray
+);
+
+angular.module("cordovaApp").controller(
+	"raiseTrainerController",
+	raiseTrainerArray
+);
+
+var raisecalcArray = [
+	'$rootScope',
+	'$translate',
+	'$scope',
+	function ($rootScope, $translate, $scope) {
+		// Set Page Title Tag
+		$rootScope.showSciFiCreatorMenu = false;
+		$rootScope.showChargenMenu = false;
+		var dice_object = new classDice();
+		dice_object.init();
+
+		$scope.input_half_damage = 0
+
+		if( localStorage["com.jdg.swwt2.raisecalc.input_target_number"] )
+			$scope.input_target_number = localStorage["com.jdg.swwt2.raisecalc.input_target_number"] / 1;
+		else
+			$scope.input_target_number = 4;
+
+		if( localStorage["com.jdg.swwt2.raisecalc.input_roll"] )
+			$scope.input_roll = localStorage["com.jdg.swwt2.raisecalc.input_roll"] / 1;
+		else
+			$scope.input_roll = 5
+
+		if( localStorage["com.jdg.swwt2.raisecalc.input_armor"] )
+			$scope.input_armor = localStorage["com.jdg.swwt2.raisecalc.input_armor"] / 1;
+		else
+			$scope.input_armor = 1
+
+		if( localStorage["com.jdg.swwt2.raisecalc.input_weapons_ap"] )
+			$scope.input_weapons_ap = localStorage["com.jdg.swwt2.raisecalc.input_weapons_ap"] / 1;
+		else
+			$scope.input_weapons_ap  = 0;
+
+		if( localStorage["com.jdg.swwt2.raisecalc.input_half_damage"] )
+			if( localStorage["com.jdg.swwt2.raisecalc.input_half_damage"]  > 0 )
+				$scope.input_half_damage = 1
+			else
+				$scope.input_half_damage = 0
+		else
+			$scope.input_half_damage = 0
+
+		$translate(['APP_TITLE', 'INDEX_BUTTON_CORE_RAISE', 'DICE_NO_DICE_THROWN', 'DICE_TOTAL_ROLL']).then(function (translation) {
+			$rootScope.title_tag = translation.INDEX_BUTTON_CORE_RAISE + " | " + translation.APP_TITLE;
+			$scope.dice_results = translation.DICE_NO_DICE_THROWN;
+			$total_roll_label = translation.DICE_TOTAL_ROLL;
+			$rootScope.subtitle_tag = translation.INDEX_BUTTON_CORE_RAISE;
+		});
+
+		$translate(
+			[
+			'DICE_LABEL_NO_EFFECT', 'DICE_LABEL_SHAKEN', 'DICE_LABEL_SHAKEN_AND_A_WOUND',
+			'DICE_LABEL_SHAKEN_AND_X_WOUNDS', 'DICE_LABEL_CRITICAL_FAILURE', 'DICE_LABEL_FAILURE',
+			'DICE_LABEL_SUCCESS', 'DICE_LABEL_SUCCESS_WITH_A_RAISE', 'DICE_LABEL_SUCCESS_WITH_X_RAISES',
+			'DICE_LABEL_DIE_ROLL_NUMBER', 'DICE_LABEL_WILD_DIE_ROLL_NUMBER', 'DICE_TOTAL_ROLL',
+			'DICE_ROLL_SET_NUM'
+			]
+		).then( function( translation ) {
+
+			dice_object.setLabel("no_effect",  translation.DICE_LABEL_NO_EFFECT);
+			dice_object.setLabel("shaken", translation.DICE_LABEL_SHAKEN);
+			dice_object.setLabel("shaken_and_a_wound", translation.DICE_LABEL_SHAKEN_AND_A_WOUND);
+
+			dice_object.setLabel("shaken_and_x_wounds", translation.DICE_LABEL_SHAKEN_AND_X_WOUNDS);
+			dice_object.setLabel("critical_failure", translation.DICE_LABEL_CRITICAL_FAILURE);
+			dice_object.setLabel("failure", translation.DICE_LABEL_FAILURE);
+
+			dice_object.setLabel("success", translation.DICE_LABEL_SUCCESS);
+			dice_object.setLabel("success_with_a_raise", translation.DICE_LABEL_SUCCESS_WITH_A_RAISE);
+			dice_object.setLabel("success_with_x_raises", translation.DICE_LABEL_SUCCESS_WITH_X_RAISES);
+
+			dice_object.setLabel("die_roll_number", translation.DICE_LABEL_DIE_ROLL_NUMBER);
+			dice_object.setLabel("wild_die_roll_number", translation.DICE_LABEL_WILD_DIE_ROLL_NUMBER);
+			dice_object.setLabel("total_roll",  translation.DICE_TOTAL_ROLL);
+
+
+			dice_object.setLabel("roll_set_number",  translation.DICE_ROLL_SET_NUM);
+
+			$scope.damage_results = dice_object.damageSuccessMargin(
+					$scope.input_roll,
+					$scope.input_target_number,
+					$scope.input_armor,
+					$scope.input_weapons_ap
+				);
+			$scope.trait_results  = dice_object.traitSuccessMargin( $scope.input_roll, $scope.input_target_number );
+		} );
+
+
+
+		$scope.update_results = function() {
+			localStorage["com.jdg.swwt2.raisecalc.input_target_number"] = $scope.input_target_number;
+			localStorage["com.jdg.swwt2.raisecalc.input_roll"] = $scope.input_roll;
+			localStorage["com.jdg.swwt2.raisecalc.input_armor"] = $scope.input_armor;
+			localStorage["com.jdg.swwt2.raisecalc.input_weapons_ap"] = $scope.input_weapons_ap;
+
+			if( $scope.input_half_damage )
+				localStorage["com.jdg.swwt2.raisecalc.input_half_damage"] = 1;
+			else
+				localStorage["com.jdg.swwt2.raisecalc.input_half_damage"] = 0;
+
+			damage_total = $scope.input_roll;
+			if( $scope.input_half_damage )
+				damage_total = Math.floor( $scope.input_roll / 2);
+
+			$scope.damage_results = dice_object.damageSuccessMargin(
+					damage_total,
+					$scope.input_target_number,
+					$scope.input_armor,
+					$scope.input_weapons_ap
+				);
+			$scope.trait_results  = "" + dice_object.traitSuccessMargin( $scope.input_roll, $scope.input_target_number );
+		}
+	}
+];
+
+angular.module("webApp").controller(
 	"coreRaiseCalcController",
-	[
-		'$rootScope',
-		'$translate',
-		'$scope',
-		function ($rootScope, $translate, $scope) {
-			// Set Page Title Tag
-			$rootScope.showSciFiCreatorMenu = false;
-			$rootScope.showChargenMenu = false;
-			var dice_object = new classDice();
-			dice_object.init();
-
-			if( localStorage["com.jdg.swwt2.raisecalc.input_target_number"] )
-				$scope.input_target_number = localStorage["com.jdg.swwt2.raisecalc.input_target_number"] / 1;
-			else
-				$scope.input_target_number = 4;
-
-			if( localStorage["com.jdg.swwt2.raisecalc.input_roll"] )
-				$scope.input_roll = localStorage["com.jdg.swwt2.raisecalc.input_roll"] / 1;
-			else
-				$scope.input_roll = 5
-
-			if( localStorage["com.jdg.swwt2.raisecalc.input_armor"] )
-				$scope.input_armor = localStorage["com.jdg.swwt2.raisecalc.input_armor"] / 1;
-			else
-				$scope.input_armor = 1
-
-			if( localStorage["com.jdg.swwt2.raisecalc.input_weapons_ap"] )
-				$scope.input_weapons_ap = localStorage["com.jdg.swwt2.raisecalc.input_weapons_ap"] / 1;
-			else
-				$scope.input_weapons_ap  = 0;
-
-			$translate(['APP_TITLE', 'INDEX_BUTTON_CORE_RAISE', 'DICE_NO_DICE_THROWN', 'DICE_TOTAL_ROLL']).then(function (translation) {
-				$rootScope.title_tag = translation.INDEX_BUTTON_CORE_RAISE + " | " + translation.APP_TITLE;
-				$scope.dice_results = translation.DICE_NO_DICE_THROWN;
-				$total_roll_label = translation.DICE_TOTAL_ROLL;
-				$rootScope.subtitle_tag = translation.INDEX_BUTTON_CORE_RAISE;
-			});
-
-			$translate(
-				[
-				'DICE_LABEL_NO_EFFECT', 'DICE_LABEL_SHAKEN', 'DICE_LABEL_SHAKEN_AND_A_WOUND',
-				'DICE_LABEL_SHAKEN_AND_X_WOUNDS', 'DICE_LABEL_CRITICAL_FAILURE', 'DICE_LABEL_FAILURE',
-				'DICE_LABEL_SUCCESS', 'DICE_LABEL_SUCCESS_WITH_A_RAISE', 'DICE_LABEL_SUCCESS_WITH_X_RAISES',
-				'DICE_LABEL_DIE_ROLL_NUMBER', 'DICE_LABEL_WILD_DIE_ROLL_NUMBER', 'DICE_TOTAL_ROLL',
-				'DICE_ROLL_SET_NUM'
-				]
-			).then( function( translation ) {
-
-				dice_object.setLabel("no_effect",  translation.DICE_LABEL_NO_EFFECT);
-				dice_object.setLabel("shaken", translation.DICE_LABEL_SHAKEN);
-				dice_object.setLabel("shaken_and_a_wound", translation.DICE_LABEL_SHAKEN_AND_A_WOUND);
-
-				dice_object.setLabel("shaken_and_x_wounds", translation.DICE_LABEL_SHAKEN_AND_X_WOUNDS);
-				dice_object.setLabel("critical_failure", translation.DICE_LABEL_CRITICAL_FAILURE);
-				dice_object.setLabel("failure", translation.DICE_LABEL_FAILURE);
-
-				dice_object.setLabel("success", translation.DICE_LABEL_SUCCESS);
-				dice_object.setLabel("success_with_a_raise", translation.DICE_LABEL_SUCCESS_WITH_A_RAISE);
-				dice_object.setLabel("success_with_x_raises", translation.DICE_LABEL_SUCCESS_WITH_X_RAISES);
-
-				dice_object.setLabel("die_roll_number", translation.DICE_LABEL_DIE_ROLL_NUMBER);
-				dice_object.setLabel("wild_die_roll_number", translation.DICE_LABEL_WILD_DIE_ROLL_NUMBER);
-				dice_object.setLabel("total_roll",  translation.DICE_TOTAL_ROLL);
-
-
-				dice_object.setLabel("roll_set_number",  translation.DICE_ROLL_SET_NUM);
-
-				$scope.damage_results = dice_object.damageSuccessMargin(
-						$scope.input_roll,
-						$scope.input_target_number,
-						$scope.input_armor,
-						$scope.input_weapons_ap
-					);
-				$scope.trait_results  = dice_object.traitSuccessMargin( $scope.input_roll, $scope.input_target_number );
-			} );
-
-
-
-			$scope.update_results = function() {
-				localStorage["com.jdg.swwt2.raisecalc.input_target_number"] = $scope.input_target_number;
-				localStorage["com.jdg.swwt2.raisecalc.input_roll"] = $scope.input_roll;
-				localStorage["com.jdg.swwt2.raisecalc.input_armor"] = $scope.input_armor;
-				localStorage["com.jdg.swwt2.raisecalc.input_weapons_ap"] = $scope.input_weapons_ap;
-
-				$scope.damage_results = dice_object.damageSuccessMargin(
-						$scope.input_roll,
-						$scope.input_target_number,
-						$scope.input_armor,
-						$scope.input_weapons_ap
-					);
-				$scope.trait_results  = "" + dice_object.traitSuccessMargin( $scope.input_roll, $scope.input_target_number );
-			}
-		}
-	]
+	raisecalcArray
+);
+angular.module("cordovaApp").controller(
+	"coreRaiseCalcController",
+	raisecalcArray
 );
 
-angular.module("baseApp").controller(
+var creditsArray = 	[
+	'$rootScope',
+	'$translate',
+	'$scope',
+	function ($rootScope, $translate, $scope) {
+
+		$rootScope.showSciFiCreatorMenu = false;
+		$rootScope.showChargenMenu = false;
+		$translate(['APP_TITLE', 'INDEX_CREDITS']).then(function (translation) {
+			$rootScope.title_tag = translation.INDEX_CREDITS + " | " + translation.APP_TITLE;
+			$rootScope.subtitle_tag = translation.INDEX_CREDITS;
+		});
+	}
+];
+
+angular.module("webApp").controller(
 	"creditsController",
-	[
-		'$rootScope',
-		'$translate',
-		'$scope',
-		function ($rootScope, $translate, $scope) {
-
-			$rootScope.showSciFiCreatorMenu = false;
-			$rootScope.showChargenMenu = false;
-			$translate(['APP_TITLE', 'INDEX_CREDITS']).then(function (translation) {
-				$rootScope.title_tag = translation.INDEX_CREDITS + " | " + translation.APP_TITLE;
-				$rootScope.subtitle_tag = translation.INDEX_CREDITS;
-			});
-		}
-	]
+	creditsArray
 );
 
-angular.module("baseApp").controller(
+angular.module("cordovaApp").controller(
+	"creditsController",
+	creditsArray
+);
+
+scifipowerarmorArray = [
+	'$rootScope',
+	'$translate',
+	'$scope',
+	function ($rootScope, $translate, $scope) {
+		$rootScope.showSciFiCreatorMenu = true;
+		var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_power_armor";
+		var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.power_armor";
+		var itemType = "power_armor";
+		var itemName = "Power Armor";
+
+
+		$scope.init = function() {
+			$scope.creatorObj = new scifiCreator();
+
+			$scope.creatorObj.init(itemType, itemName, savageWorldsSciFiSizes[itemType], savageWorldsSciFiMods[itemType], savageWorldsSciFiOptions[ itemType ]);
+
+			if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
+				$scope.creatorObj.importJSON( localStorage[ currentItemLocalStorageVariable ] );
+			}
+
+			$scope.creatorObj.useLang = localStorage["users_preferred_language"];
+
+			$scope.selected_options = Array();
+			$scope.creatorOptions = savageWorldsSciFiOptions[ itemType ];
+			for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
+				if( typeof($scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ] ) != "undefined") {
+					$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ];
+				} else {
+					$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ "en-US" ];
+				}
+
+				// if( typeof($scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ] ) != "undefined") {
+				// 	$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ];
+				// } else {
+				// 	$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ "en-US" ];
+				// }
+				$scope.selected_options[optc] = false;
+			}
+
+			$translate([
+				'APP_TITLE', 'INDEX_BUTTON_SCIFI_POWER', 'CREATOR_SIZE',
+				"CREATOR_FIXED_BOW_FRONT", "CREATOR_FIXED_STARBOARD_RIGHT", "CREATOR_FIXED_PORT_LEFT",
+				"CREATOR_FIXED_STERN_REAR",	"CREATOR_FIXED_TURRETED_NONE", 'CREATOR_SELECT_A_SIZE'
+			]).then(
+				function (translation) {
+
+					$rootScope.title_tag = translation.INDEX_BUTTON_SCIFI_POWER + " | " + translation.APP_TITLE;
+					$rootScope.subtitle_tag = translation.INDEX_BUTTON_SCIFI_POWER;
+					$scope.sizeLabel  = translation.CREATOR_SIZE;
+
+					$scope.fixed_options = Array(
+						{
+							id: '0',
+							label: translation.CREATOR_FIXED_TURRETED_NONE
+						},
+						{
+							id: 'bow',
+							label: translation.CREATOR_FIXED_BOW_FRONT
+						},
+						{
+							id: 'port',
+							label: translation.CREATOR_FIXED_PORT_LEFT
+						},
+						{
+							id: 'starboard',
+							label: translation.CREATOR_FIXED_STARBOARD_RIGHT
+						},
+						{
+							id: 'stern',
+							label: translation.CREATOR_FIXED_STERN_REAR
+						}
+					);
+
+					$scope.updatePage();
+				}
+
+			);
+		}
+
+		$scope.addMod = function( modTag ) {
+			$scope.creatorObj.addMod(modTag);
+			$scope.updatePage();
+		}
+
+		$scope.addWeapon = function( modTag ) {
+			$scope.creatorObj.addWeapon(modTag);
+			$scope.updatePage();
+		}
+
+		$scope.removeMod = function( modTag ) {
+			$scope.creatorObj.removeMod(modTag);
+			$scope.updatePage();
+		}
+
+		$scope.updateSize = function() {
+
+			$scope.creatorObj.setSize( $scope.size_selected.id );
+			$scope.updatePage();
+		}
+
+		$scope.linkWeapon = function(weaponIndex, linkValue) {
+			$scope.creatorObj.incrementWeaponCount( weaponIndex);
+			$scope.updatePage();
+		}
+
+		$scope.setFixed = function(weaponIndex) {
+			newValue = $scope.installed_weapons[weaponIndex].fixed_dd_value.id
+			$scope.creatorObj.fixWeapon( weaponIndex, newValue);
+			$scope.updatePage();
+		}
+
+		$scope.unlinkWeapon = function(weaponIndex, linkValue) {
+			$scope.creatorObj.decrementWeaponCount( weaponIndex);
+			$scope.updatePage();
+		}
+
+		$scope.updateOption = function( option_index ) {
+
+			for(optc = 0; optc < $scope.selected_options.length; optc++ ) {
+				if( $scope.creatorOptions[optc].short_tag ) {
+					if( $scope.selected_options[optc] == 0 )
+						$scope.creatorObj.removeOption( $scope.creatorOptions[optc].short_tag );
+					else
+						$scope.creatorObj.addOption( $scope.creatorOptions[optc].short_tag );
+				}
+			}
+			$scope.updatePage();
+		}
+
+		$scope.removeWeapon = function(weaponIndex) {
+			$scope.creatorObj.removeWeapon( weaponIndex );
+			$scope.updatePage();
+		}
+
+		$rootScope.closeDialogs = function() {
+			$rootScope.newDialogOpen = false;
+			$rootScope.loadDialogOpen = false;
+			$rootScope.saveDialogOpen = false;
+			$rootScope.importDialogOpen = false;
+			$rootScope.exportDialogOpen = false;
+			$rootScope.optionsDialogOpen = false;
+		}
+
+		$rootScope.newDialog = function() {
+
+			$rootScope.closeDialogs();
+			$rootScope.newDialogOpen = true;
+		}
+
+		$rootScope.loadDialog = function() {
+
+			if( !localStorage[ savedItemsLocalStorageVariable ])
+				localStorage[ savedItemsLocalStorageVariable ] = "[]";
+
+			$scope.load_item = 0;
+			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+			for( sic = 0; sic < $scope.saved_items.length; sic++) {
+				$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
+			}
+
+			$rootScope.closeDialogs();
+
+			$rootScope.closeDialogs();
+			$rootScope.loadDialogOpen = true;
+		}
+		$rootScope.saveDialog = function() {
+			if( !localStorage[ savedItemsLocalStorageVariable ])
+				localStorage[ savedItemsLocalStorageVariable ] = "[]";
+
+			$scope.save_over = -1;
+			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+			for( sic = 0; sic < $scope.saved_items.length; sic++) {
+				$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
+			}
+
+			$rootScope.closeDialogs();
+			$scope.save_as_name = $scope.creatorObj.itemName;
+			$rootScope.saveDialogOpen = true;
+		}
+		$rootScope.importDialog = function() {
+			$scope.importJSON = "";
+			$rootScope.closeDialogs();
+			$rootScope.importDialogOpen = true;
+		}
+
+		$scope.updateImportData = function(importJSON) {
+			$scope.importJSON = importJSON;
+		}
+
+		$scope.importData = function(importJSON) {
+
+			localStorage[ currentItemLocalStorageVariable ] = $scope.importJSON;
+			$rootScope.closeDialogs();
+			$scope.init();
+		}
+
+		$rootScope.exportDialog = function() {
+			$scope.exportBBCode = $scope.creatorObj.exportBBCode();
+			$scope.exportJSON = $scope.creatorObj.exportJSON(true);
+			$rootScope.closeDialogs();
+			$rootScope.exportDialogOpen = true;
+		}
+		$rootScope.optionsDialog = function() {
+			$rootScope.closeDialogs();
+			$rootScope.optionsDialogOpen = true;
+		}
+
+		$scope.loadItem = function( load_item ) {
+			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+			if( $scope.saved_items[ load_item ] )
+				localStorage[ currentItemLocalStorageVariable ] = $scope.saved_items[ load_item ].data;
+
+			$rootScope.closeDialogs();
+			$scope.init();
+		}
+
+		$scope.clearCurrent = function(  ) {
+
+			localStorage[ currentItemLocalStorageVariable ] = "";
+			$rootScope.closeDialogs();
+			$scope.init();
+		}
+
+		$scope.updateLoad = function( load_item ) {
+			$scope.load_item = load_item;
+		}
+
+		$scope.updateSave = function( save_over ) {
+			$scope.save_over = save_over;
+
+		}
+
+
+		$scope.closeConfirmDialog = function( ) {
+			$scope.showConfirmDialog = false;
+			// reset confirm to nothing...
+			$scope.confirmDialogYes = function() {
+				$scope.showConfirmDialog = false;
+			}
+		}
+
+		$scope.confirmDialogYes = function() {
+			// empty to be replaced...
+			$scope.showConfirmDialog = false;
+		}
+
+		$scope.confirmDialogQuestion = "";
+
+		$scope.confirmDialog = function( confirmationMessage, onYes ) {
+			$scope.confirmDialogQuestion = confirmationMessage;
+			$scope.showConfirmDialog = true;
+			$scope.confirmDialogYes = onYes;
+		}
+
+
+		$scope.removeSavedItem = function( itemIndex ) {
+
+			$translate([
+				'CREATOR_DELETION_CONFIRMATION'
+			]).then(
+				function (translation) {
+					$scope.confirmDialog(
+						translation.CREATOR_DELETION_CONFIRMATION,
+						function() {
+							$scope.showConfirmDialog = false;
+							$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+							$scope.saved_items.splice( itemIndex, 1);
+							localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
+						}
+					);
+				}
+			);
+		}
+
+		$scope.saveItem = function( save_over, saveName ) {
+
+			if( !localStorage[ savedItemsLocalStorageVariable ])
+				localStorage[ savedItemsLocalStorageVariable ] = "[]";
+
+			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+
+			if( save_over > -1 ) {
+				$scope.saved_items[ save_over ] = $scope.makeSaveObject( saveName );
+			} else {
+				$scope.saved_items.push( $scope.makeSaveObject( saveName ));
+			}
+			localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
+
+			$rootScope.closeDialogs();
+		}
+
+		$scope.makeSaveObject = function( saveName ) {
+			save_object = {
+				name: saveName,
+				datetime: Date(),
+				type: itemType,
+				data:  $scope.creatorObj.exportJSON()
+			};
+			return save_object;
+		}
+
+		$scope.updatePage = function() {
+			$scope.creatorObj.calculate();
+
+			$scope.setSize = $scope.creatorObj.size;
+
+			$scope.creator_preview = $scope.creatorObj.createStatesBlock();
+			localStorage[ currentItemLocalStorageVariable ] = $scope.creatorObj.exportJSON();
+
+			$scope.mod_list = Array();
+			angular.extend(	$scope.mod_list, savageWorldsSciFiMods[ itemType ] );
+
+			for(modc = 0; modc < $scope.mod_list.length; modc++) {
+				if( $scope.mod_list[modc].name[ localStorage["users_preferred_language"] ] ) {
+					$scope.mod_list[modc].local_name = $scope.mod_list[modc].name[ localStorage["users_preferred_language"] ];
+				} else {
+					$scope.mod_list[modc].local_name = $scope.mod_list[modc].name[ "en-US" ];
+				}
+				$scope.mod_list[modc].local_mod_cost = $scope.mod_list[modc].getModCost($scope.creatorObj);
+				$scope.mod_list[modc].local_cost = $scope.creatorObj.simplify_cost($scope.mod_list[modc].getCost($scope.creatorObj));
+				$scope.mod_list[modc].local_max = $scope.mod_list[modc].getMax($scope.creatorObj);
+				$scope.mod_list[modc].currently_added = $scope.creatorObj.getModificationCount( $scope.mod_list[modc].tag );
+				if(
+					( $scope.mod_list[modc].local_max == "u" || $scope.mod_list[modc].currently_added < $scope.mod_list[modc].local_max )
+					&&
+					( $scope.mod_list[modc].local_mod_cost <= $scope.creatorObj.mods_available )
+				) {
+					if( typeof($scope.mod_list[modc].isAvailable) == "function" ) {
+						if ( $scope.mod_list[modc].isAvailable( $scope.creatorObj ) ) {
+							$scope.mod_list[modc].can_add = true;
+						} else {
+							$scope.mod_list[modc].can_add = false;
+						}
+					} else {
+						$scope.mod_list[modc].can_add = true;
+					}
+				} else {
+					$scope.mod_list[modc].can_add = false;
+				}
+
+
+				if( $scope.mod_list[modc].currently_added > 0)
+					$scope.mod_list[modc].can_remove = true;
+				else
+					$scope.mod_list[modc].can_remove = false;
+			}
+
+			// remove mods that aren't enabled or disabled by option
+			for(var modc = $scope.mod_list.length -1; modc >= 0; modc--) {
+				if(
+
+					typeof($scope.mod_list[modc].showWithOption) != "undefined"
+						&&
+					$scope.mod_list[modc].showWithOption != ""
+				) {
+					if( $scope.creatorObj.hasOption( $scope.mod_list[modc].showWithOption ) == false) {
+						$scope.mod_list.splice(modc, 1);
+					}
+
+				}
+
+				if(
+
+					typeof($scope.mod_list[modc].hideWithOption) != "undefined"
+						&&
+					$scope.mod_list[modc].hideWithOption != ""
+				) {
+					if( $scope.creatorObj.hasOption( $scope.mod_list[modc].hideWithOption ) == true ) {
+						$scope.mod_list.splice(modc, 1);
+					}
+
+				}
+			}
+
+			$translate([
+				'CREATOR_SELECT_A_SIZE'
+			]).then(
+				function (translation) {
+
+
+					$scope.size_options = Array();
+					$scope.size_selected = null;
+					$scope.setSize = 0;
+
+					default_size_object = {
+						id: 0,
+						label: "- " + translation.CREATOR_SELECT_A_SIZE + " -"
+					};
+					$scope.size_options.push( default_size_object );
+					for(sizec = 0; sizec < savageWorldsSciFiSizes[itemType].length; sizec++) {
+						if( savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]])
+							display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
+						else
+							display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel["en-US"] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
+
+						push_object = {
+							id: savageWorldsSciFiSizes[itemType][sizec].size,
+							label: display_label
+						};
+						if( savageWorldsSciFiSizes[itemType][sizec].showWithOption )
+							push_object.showWithOption = savageWorldsSciFiSizes[itemType][sizec].showWithOption;
+						if( savageWorldsSciFiSizes[itemType][sizec].hideWithOption )
+							push_object.hideWithOption = savageWorldsSciFiSizes[itemType][sizec].hideWithOption;
+
+						$scope.size_options.push( push_object );
+						if( savageWorldsSciFiSizes[itemType][sizec].size == $scope.creatorObj.size ) {
+							$scope.size_selected = push_object;
+							$scope.setSize = $scope.creatorObj.size;
+						}
+
+
+					}
+					if( $scope.size_selected == null) {
+						$scope.size_selected = default_size_object;
+						$scope.setSize = 0;
+					}
+
+			// remove sizes that aren't enabled or disabled by option
+			for(var sizec = $scope.size_options.length -1; sizec >= 0; sizec--) {
+
+				if(
+
+					typeof($scope.size_options[sizec].showWithOption) != "undefined"
+						&&
+					$scope.size_options[sizec].showWithOption != ""
+				) {
+					if( $scope.creatorObj.hasOption( $scope.size_options[sizec].showWithOption ) == false) {
+
+						$scope.size_options.splice(sizec, 1);
+					}
+
+				}
+
+				if(
+
+					typeof($scope.size_options[sizec].hideWithOption) != "undefined"
+						&&
+					$scope.size_options[sizec].hideWithOption != ""
+				) {
+					if( $scope.creatorObj.hasOption( $scope.size_options[sizec].hideWithOption ) == true ) {
+						$scope.size_options.splice(sizec, 1);
+					}
+
+				}
+			}
+
+			});
+			$scope.available_weapons = Array();
+
+			for( weap_c = 0; weap_c < savageWorldsVehicleWeapons.length; weap_c++) {
+				if( savageWorldsVehicleWeapons[weap_c].name[ localStorage["users_preferred_language"] ] ) {
+					savageWorldsVehicleWeapons[weap_c].local_name = savageWorldsVehicleWeapons[weap_c].name[ localStorage["users_preferred_language"] ];
+				} else {
+					savageWorldsVehicleWeapons[weap_c].local_name = savageWorldsVehicleWeapons[weap_c].name[ "en-US" ];
+				}
+
+				if( savageWorldsVehicleWeapons[weap_c].name_plural[ localStorage["users_preferred_language"] ] ) {
+					savageWorldsVehicleWeapons[weap_c].local_name_plural = savageWorldsVehicleWeapons[weap_c].name_plural[ localStorage["users_preferred_language"] ];
+				} else {
+					savageWorldsVehicleWeapons[weap_c].local_name_plural = savageWorldsVehicleWeapons[weap_c].name_plural[ "en-US" ];
+				}
+
+				// if( savageWorldsVehicleWeapons[weap_c].description[ localStorage["users_preferred_language"] ] ) {
+				// 	savageWorldsVehicleWeapons[weap_c].local_description = savageWorldsVehicleWeapons[weap_c].description[ localStorage["users_preferred_language"] ];
+				// } else {
+				// 	savageWorldsVehicleWeapons[weap_c].local_description = savageWorldsVehicleWeapons[weap_c].description[ "en-US" ];
+				// }
+
+				if( savageWorldsVehicleWeapons[weap_c].classification[ localStorage["users_preferred_language"] ] ) {
+					savageWorldsVehicleWeapons[weap_c].local_classification = savageWorldsVehicleWeapons[weap_c].classification[ localStorage["users_preferred_language"] ];
+				} else {
+					savageWorldsVehicleWeapons[weap_c].local_classification = savageWorldsVehicleWeapons[weap_c].classification[ "en-US" ];
+				}
+
+				savageWorldsVehicleWeapons[weap_c].local_cost = $scope.creatorObj.simplify_cost( savageWorldsVehicleWeapons[weap_c].cost );
+				if( savageWorldsVehicleWeapons[weap_c].notes[ localStorage["users_preferred_language"] ] ) {
+					savageWorldsVehicleWeapons[weap_c].local_notes = savageWorldsVehicleWeapons[weap_c].notes[ localStorage["users_preferred_language"] ];
+				} else {
+					savageWorldsVehicleWeapons[weap_c].local_notes = savageWorldsVehicleWeapons[weap_c].notes[ "en-US" ];
+				}
+
+				savageWorldsVehicleWeapons[weap_c].can_add = true;
+				if( typeof(savageWorldsVehicleWeapons[weap_c].isAvailable) == "function") {
+					if( savageWorldsVehicleWeapons[weap_c].isAvailable( $scope.creatorObj) == false ){
+
+						savageWorldsVehicleWeapons[weap_c].can_add = false;
+					}
+				}
+
+				// change vehicleWeaponModPoints to mods_available for non power armor vehicles ;)
+
+				if( $scope.creatorObj.vehicleWeaponModPoints < parseInt(savageWorldsVehicleWeapons[weap_c].mods) ) {
+
+					savageWorldsVehicleWeapons[weap_c].can_add = false;
+				}
+
+				if( savageWorldsVehicleWeapons[weap_c].can_add ) {
+					$scope.available_weapons.push(savageWorldsVehicleWeapons[weap_c]);
+				}
+			}
+
+			$scope.available_weapons.sort(
+				function(ob1,ob2) {
+					if (ob1.local_classification > ob2.local_classification) {
+						return 1;
+					} else if (ob1.local_classification < ob2.local_classification) {
+						return -1;
+					}
+
+					// Else go to the 2nd item
+					if (ob1.mods < ob2.mods) {
+						return -1;
+					} else if (ob1.mods > ob2.mods) {
+						return 1;
+					}
+
+					// Else go to the 3nd item
+					if (ob1.local_name < ob2.local_name) {
+						return -1;
+					} else if (ob1.local_name > ob2.local_name) {
+						return 1
+					}  else { // nothing to split them
+						return 0;
+					}
+				}
+			);
+
+			$scope.selected_options = Array();
+			angular.extend(	$scope.creatorOptions, savageWorldsSciFiOptions[ itemType ] );
+
+			for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
+				if( $scope.creatorObj.hasOption($scope.creatorOptions[optc].short_tag) )
+					$scope.selected_options[optc] = true;
+				else
+					$scope.selected_options[optc] = false;
+			}
+
+			$scope.installed_weapons = $scope.creatorObj.selected_weapons;
+			for(weap_c = 0; weap_c < $scope.installed_weapons.length; weap_c++) {
+				if( $scope.installed_weapons[weap_c].name[ localStorage["users_preferred_language"] ] ) {
+					$scope.installed_weapons[weap_c].local_name = $scope.installed_weapons[weap_c].name[ localStorage["users_preferred_language"] ];
+				} else {
+					$scope.installed_weapons[weap_c].local_name = $scope.installed_weapons[weap_c].name[ "en-US" ];
+				}
+
+				if( $scope.installed_weapons[weap_c].name_plural[ localStorage["users_preferred_language"] ] ) {
+					$scope.installed_weapons[weap_c].local_name_plural = $scope.installed_weapons[weap_c].name_plural[ localStorage["users_preferred_language"] ];
+				} else {
+					$scope.installed_weapons[weap_c].local_name_plural = $scope.installed_weapons[weap_c].name_plural[ "en-US" ];
+				}
+
+				// if( $scope.installed_weapons[weap_c].description[ localStorage["users_preferred_language"] ] ) {
+				// 	$scope.installed_weapons[weap_c].local_description = $scope.installed_weapons[weap_c].description[ localStorage["users_preferred_language"] ];
+				// } else {
+				// 	$scope.installed_weapons[weap_c].local_description = $scope.installed_weapons[weap_c].description[ "en-US" ];
+				// }
+
+				if( $scope.installed_weapons[weap_c].classification[ localStorage["users_preferred_language"] ] ) {
+					$scope.installed_weapons[weap_c].local_classification = $scope.installed_weapons[weap_c].classification[ localStorage["users_preferred_language"] ];
+				} else {
+					$scope.installed_weapons[weap_c].local_classification = $scope.installed_weapons[weap_c].classification[ "en-US" ];
+				}
+
+
+				found_item = false
+				for(optc = 0;optc < $scope.fixed_options.length; optc++ ) {
+
+					if( $scope.fixed_options[optc].id == $scope.installed_weapons[weap_c].fixed ) {
+						$scope.installed_weapons[weap_c].fixed_dd_value = $scope.fixed_options[optc];
+						found_item = true;
+					}
+				}
+				if(!found_item)
+					$scope.installed_weapons[weap_c].fixed_dd_value = $scope.fixed_options[0];
+			}
+
+		}
+
+		$scope.init();
+	}
+
+];
+angular.module("webApp").controller(
 	"scifiPowerarmorController",
-	[
-		'$rootScope',
-		'$translate',
-		'$scope',
-		function ($rootScope, $translate, $scope) {
-			$rootScope.showSciFiCreatorMenu = true;
-			var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_power_armor";
-			var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.power_armor";
-			var itemType = "power_armor";
-			var itemName = "Power Armor";
-
-
-			$scope.init = function() {
-				$scope.creatorObj = new scifiCreator();
-
-				$scope.creatorObj.init(itemType, itemName, savageWorldsSciFiSizes[itemType], savageWorldsSciFiMods[itemType], savageWorldsSciFiOptions[ itemType ]);
-
-				if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
-					$scope.creatorObj.importJSON( localStorage[ currentItemLocalStorageVariable ] );
-				}
-
-				$scope.creatorObj.useLang = localStorage["users_preferred_language"];
-
-				$scope.selected_options = Array();
-				$scope.creatorOptions = savageWorldsSciFiOptions[ itemType ];
-				for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
-					if( typeof($scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ] ) != "undefined") {
-						$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ "en-US" ];
-					}
-
-					if( typeof($scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ] ) != "undefined") {
-						$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ "en-US" ];
-					}
-					$scope.selected_options[optc] = false;
-				}
-
-				$translate([
-					'APP_TITLE', 'INDEX_BUTTON_SCIFI_POWER', 'CREATOR_SIZE',
-					"CREATOR_FIXED_BOW_FRONT", "CREATOR_FIXED_STARBOARD_RIGHT", "CREATOR_FIXED_PORT_LEFT",
-					"CREATOR_FIXED_STERN_REAR",	"CREATOR_FIXED_TURRETED_NONE", 'CREATOR_SELECT_A_SIZE'
-				]).then(
-					function (translation) {
-
-						$rootScope.title_tag = translation.INDEX_BUTTON_SCIFI_POWER + " | " + translation.APP_TITLE;
-						$rootScope.subtitle_tag = translation.INDEX_BUTTON_SCIFI_POWER;
-						$scope.sizeLabel  = translation.CREATOR_SIZE;
-
-						$scope.fixed_options = Array(
-							{
-								id: '0',
-								label: translation.CREATOR_FIXED_TURRETED_NONE
-							},
-							{
-								id: 'bow',
-								label: translation.CREATOR_FIXED_BOW_FRONT
-							},
-							{
-								id: 'port',
-								label: translation.CREATOR_FIXED_PORT_LEFT
-							},
-							{
-								id: 'starboard',
-								label: translation.CREATOR_FIXED_STARBOARD_RIGHT
-							},
-							{
-								id: 'stern',
-								label: translation.CREATOR_FIXED_STERN_REAR
-							}
-						);
-
-						$scope.updatePage();
-					}
-
-				);
-			}
-
-			$scope.addMod = function( modTag ) {
-				$scope.creatorObj.addMod(modTag);
-				$scope.updatePage();
-			}
-
-			$scope.addWeapon = function( modTag ) {
-				$scope.creatorObj.addWeapon(modTag);
-				$scope.updatePage();
-			}
-
-			$scope.removeMod = function( modTag ) {
-				$scope.creatorObj.removeMod(modTag);
-				$scope.updatePage();
-			}
-
-			$scope.updateSize = function() {
-
-				$scope.creatorObj.setSize( $scope.size_selected.id );
-				$scope.updatePage();
-			}
-
-			$scope.linkWeapon = function(weaponIndex, linkValue) {
-				$scope.creatorObj.incrementWeaponCount( weaponIndex);
-				$scope.updatePage();
-			}
-
-			$scope.setFixed = function(weaponIndex) {
-				newValue = $scope.installed_weapons[weaponIndex].fixed_dd_value.id
-				$scope.creatorObj.fixWeapon( weaponIndex, newValue);
-				$scope.updatePage();
-			}
-
-			$scope.unlinkWeapon = function(weaponIndex, linkValue) {
-				$scope.creatorObj.decrementWeaponCount( weaponIndex);
-				$scope.updatePage();
-			}
-
-			$scope.updateOption = function( option_index ) {
-
-				for(optc = 0; optc < $scope.selected_options.length; optc++ ) {
-					if( $scope.creatorOptions[optc].short_tag ) {
-						if( $scope.selected_options[optc] == 0 )
-							$scope.creatorObj.removeOption( $scope.creatorOptions[optc].short_tag );
-						else
-							$scope.creatorObj.addOption( $scope.creatorOptions[optc].short_tag );
-					}
-				}
-				$scope.updatePage();
-			}
-
-			$scope.removeWeapon = function(weaponIndex) {
-				$scope.creatorObj.removeWeapon( weaponIndex );
-				$scope.updatePage();
-			}
-
-			$rootScope.closeDialogs = function() {
-				$rootScope.newDialogOpen = false;
-				$rootScope.loadDialogOpen = false;
-				$rootScope.saveDialogOpen = false;
-				$rootScope.importDialogOpen = false;
-				$rootScope.exportDialogOpen = false;
-				$rootScope.optionsDialogOpen = false;
-			}
-
-			$rootScope.newDialog = function() {
-
-				$rootScope.closeDialogs();
-				$rootScope.newDialogOpen = true;
-			}
-
-			$rootScope.loadDialog = function() {
-
-				if( !localStorage[ savedItemsLocalStorageVariable ])
-					localStorage[ savedItemsLocalStorageVariable ] = "[]";
-
-				$scope.load_item = 0;
-				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-				for( sic = 0; sic < $scope.saved_items.length; sic++) {
-					$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
-				}
-
-				$rootScope.closeDialogs();
-
-				$rootScope.closeDialogs();
-				$rootScope.loadDialogOpen = true;
-			}
-			$rootScope.saveDialog = function() {
-				if( !localStorage[ savedItemsLocalStorageVariable ])
-					localStorage[ savedItemsLocalStorageVariable ] = "[]";
-
-				$scope.save_over = -1;
-				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-				for( sic = 0; sic < $scope.saved_items.length; sic++) {
-					$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
-				}
-
-				$rootScope.closeDialogs();
-				$scope.save_as_name = $scope.creatorObj.itemName;
-				$rootScope.saveDialogOpen = true;
-			}
-			$rootScope.importDialog = function() {
-				$scope.importJSON = "";
-				$rootScope.closeDialogs();
-				$rootScope.importDialogOpen = true;
-			}
-
-			$scope.updateImportData = function(importJSON) {
-				$scope.importJSON = importJSON;
-			}
-
-			$scope.importData = function(importJSON) {
-
-				localStorage[ currentItemLocalStorageVariable ] = $scope.importJSON;
-				$rootScope.closeDialogs();
-				$scope.init();
-			}
-
-			$rootScope.exportDialog = function() {
-				$scope.exportBBCode = $scope.creatorObj.exportBBCode();
-				$scope.exportJSON = $scope.creatorObj.exportJSON(true);
-				$rootScope.closeDialogs();
-				$rootScope.exportDialogOpen = true;
-			}
-			$rootScope.optionsDialog = function() {
-				$rootScope.closeDialogs();
-				$rootScope.optionsDialogOpen = true;
-			}
-
-			$scope.loadItem = function( load_item ) {
-				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-				if( $scope.saved_items[ load_item ] )
-					localStorage[ currentItemLocalStorageVariable ] = $scope.saved_items[ load_item ].data;
-
-				$rootScope.closeDialogs();
-				$scope.init();
-			}
-
-			$scope.clearCurrent = function(  ) {
-
-				localStorage[ currentItemLocalStorageVariable ] = "";
-				$rootScope.closeDialogs();
-				$scope.init();
-			}
-
-			$scope.updateLoad = function( load_item ) {
-				$scope.load_item = load_item;
-			}
-
-			$scope.updateSave = function( save_over ) {
-				$scope.save_over = save_over;
-
-			}
-
-
-			$scope.closeConfirmDialog = function( ) {
-				$scope.showConfirmDialog = false;
-				// reset confirm to nothing...
-				$scope.confirmDialogYes = function() {
-					$scope.showConfirmDialog = false;
-				}
-			}
-
-			$scope.confirmDialogYes = function() {
-				// empty to be replaced...
-				$scope.showConfirmDialog = false;
-			}
-
-			$scope.confirmDialogQuestion = "";
-
-			$scope.confirmDialog = function( confirmationMessage, onYes ) {
-				$scope.confirmDialogQuestion = confirmationMessage;
-				$scope.showConfirmDialog = true;
-				$scope.confirmDialogYes = onYes;
-			}
-
-
-			$scope.removeSavedItem = function( itemIndex ) {
-
-				$translate([
-					'CREATOR_DELETION_CONFIRMATION'
-				]).then(
-					function (translation) {
-						$scope.confirmDialog(
-							translation.CREATOR_DELETION_CONFIRMATION,
-							function() {
-								$scope.showConfirmDialog = false;
-								$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-								$scope.saved_items.splice( itemIndex, 1);
-								localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
-							}
-						);
-					}
-				);
-			}
-
-			$scope.saveItem = function( save_over, saveName ) {
-
-				if( !localStorage[ savedItemsLocalStorageVariable ])
-					localStorage[ savedItemsLocalStorageVariable ] = "[]";
-
-				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-
-				if( save_over > -1 ) {
-					$scope.saved_items[ save_over ] = $scope.makeSaveObject( saveName );
-				} else {
-					$scope.saved_items.push( $scope.makeSaveObject( saveName ));
-				}
-				localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
-
-				$rootScope.closeDialogs();
-			}
-
-			$scope.makeSaveObject = function( saveName ) {
-				save_object = {
-					name: saveName,
-					datetime: Date(),
-					type: itemType,
-					data:  $scope.creatorObj.exportJSON()
-				};
-				return save_object;
-			}
-
-			$scope.updatePage = function() {
-				$scope.creatorObj.calculate();
-
-				$scope.setSize = $scope.creatorObj.size;
-
-				$scope.creator_preview = $scope.creatorObj.createStatesBlock();
-				localStorage[ currentItemLocalStorageVariable ] = $scope.creatorObj.exportJSON();
-
-				$scope.mod_list = Array();
-				angular.extend(	$scope.mod_list, savageWorldsSciFiMods[ itemType ] );
-
-				for(modc = 0; modc < $scope.mod_list.length; modc++) {
-					if( $scope.mod_list[modc].name[ localStorage["users_preferred_language"] ] ) {
-						$scope.mod_list[modc].local_name = $scope.mod_list[modc].name[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.mod_list[modc].local_name = $scope.mod_list[modc].name[ "en-US" ];
-					}
-					$scope.mod_list[modc].local_mod_cost = $scope.mod_list[modc].getModCost($scope.creatorObj);
-					$scope.mod_list[modc].local_cost = $scope.creatorObj.simplify_cost($scope.mod_list[modc].getCost($scope.creatorObj));
-					$scope.mod_list[modc].local_max = $scope.mod_list[modc].getMax($scope.creatorObj);
-					$scope.mod_list[modc].currently_added = $scope.creatorObj.getModificationCount( $scope.mod_list[modc].tag );
-					if(
-						( $scope.mod_list[modc].local_max == "u" || $scope.mod_list[modc].currently_added < $scope.mod_list[modc].local_max )
-						&&
-						( $scope.mod_list[modc].local_mod_cost <= $scope.creatorObj.mods_available )
-					) {
-						if( typeof($scope.mod_list[modc].isAvailable) == "function" ) {
-							if ( $scope.mod_list[modc].isAvailable( $scope.creatorObj ) ) {
-								$scope.mod_list[modc].can_add = true;
-							} else {
-								$scope.mod_list[modc].can_add = false;
-							}
-						} else {
-							$scope.mod_list[modc].can_add = true;
-						}
-					} else {
-						$scope.mod_list[modc].can_add = false;
-					}
-
-
-					if( $scope.mod_list[modc].currently_added > 0)
-						$scope.mod_list[modc].can_remove = true;
-					else
-						$scope.mod_list[modc].can_remove = false;
-				}
-
-				// remove mods that aren't enabled or disabled by option
-				for(var modc = $scope.mod_list.length -1; modc >= 0; modc--) {
-					if(
-
-						typeof($scope.mod_list[modc].showWithOption) != "undefined"
-							&&
-						$scope.mod_list[modc].showWithOption != ""
-					) {
-						if( $scope.creatorObj.hasOption( $scope.mod_list[modc].showWithOption ) == false) {
-							$scope.mod_list.splice(modc, 1);
-						}
-
-					}
-
-					if(
-
-						typeof($scope.mod_list[modc].hideWithOption) != "undefined"
-							&&
-						$scope.mod_list[modc].hideWithOption != ""
-					) {
-						if( $scope.creatorObj.hasOption( $scope.mod_list[modc].hideWithOption ) == true ) {
-							$scope.mod_list.splice(modc, 1);
-						}
-
-					}
-				}
-
-				$translate([
-					'CREATOR_SELECT_A_SIZE'
-				]).then(
-					function (translation) {
-
-
-						$scope.size_options = Array();
-						$scope.size_selected = null;
-						$scope.setSize = 0;
-
-						default_size_object = {
-							id: 0,
-							label: "- " + translation.CREATOR_SELECT_A_SIZE + " -"
-						};
-						$scope.size_options.push( default_size_object );
-						for(sizec = 0; sizec < savageWorldsSciFiSizes[itemType].length; sizec++) {
-							if( savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]])
-								display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
-							else
-								display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel["en-US"] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
-
-							push_object = {
-								id: savageWorldsSciFiSizes[itemType][sizec].size,
-								label: display_label
-							};
-							if( savageWorldsSciFiSizes[itemType][sizec].showWithOption )
-								push_object.showWithOption = savageWorldsSciFiSizes[itemType][sizec].showWithOption;
-							if( savageWorldsSciFiSizes[itemType][sizec].hideWithOption )
-								push_object.hideWithOption = savageWorldsSciFiSizes[itemType][sizec].hideWithOption;
-
-							$scope.size_options.push( push_object );
-							if( savageWorldsSciFiSizes[itemType][sizec].size == $scope.creatorObj.size ) {
-								$scope.size_selected = push_object;
-								$scope.setSize = $scope.creatorObj.size;
-							}
-
-
-						}
-						if( $scope.size_selected == null) {
-							$scope.size_selected = default_size_object;
-							$scope.setSize = 0;
-						}
-
-				// remove sizes that aren't enabled or disabled by option
-				for(var sizec = $scope.size_options.length -1; sizec >= 0; sizec--) {
-
-					if(
-
-						typeof($scope.size_options[sizec].showWithOption) != "undefined"
-							&&
-						$scope.size_options[sizec].showWithOption != ""
-					) {
-						if( $scope.creatorObj.hasOption( $scope.size_options[sizec].showWithOption ) == false) {
-
-							$scope.size_options.splice(sizec, 1);
-						}
-
-					}
-
-					if(
-
-						typeof($scope.size_options[sizec].hideWithOption) != "undefined"
-							&&
-						$scope.size_options[sizec].hideWithOption != ""
-					) {
-						if( $scope.creatorObj.hasOption( $scope.size_options[sizec].hideWithOption ) == true ) {
-							$scope.size_options.splice(sizec, 1);
-						}
-
-					}
-				}
-
-				});
-				$scope.available_weapons = Array();
-
-				for( weap_c = 0; weap_c < savageWorldsVehicleWeapons.length; weap_c++) {
-					if( savageWorldsVehicleWeapons[weap_c].name[ localStorage["users_preferred_language"] ] ) {
-						savageWorldsVehicleWeapons[weap_c].local_name = savageWorldsVehicleWeapons[weap_c].name[ localStorage["users_preferred_language"] ];
-					} else {
-						savageWorldsVehicleWeapons[weap_c].local_name = savageWorldsVehicleWeapons[weap_c].name[ "en-US" ];
-					}
-
-					if( savageWorldsVehicleWeapons[weap_c].name_plural[ localStorage["users_preferred_language"] ] ) {
-						savageWorldsVehicleWeapons[weap_c].local_name_plural = savageWorldsVehicleWeapons[weap_c].name_plural[ localStorage["users_preferred_language"] ];
-					} else {
-						savageWorldsVehicleWeapons[weap_c].local_name_plural = savageWorldsVehicleWeapons[weap_c].name_plural[ "en-US" ];
-					}
-
-					if( savageWorldsVehicleWeapons[weap_c].description[ localStorage["users_preferred_language"] ] ) {
-						savageWorldsVehicleWeapons[weap_c].local_description = savageWorldsVehicleWeapons[weap_c].description[ localStorage["users_preferred_language"] ];
-					} else {
-						savageWorldsVehicleWeapons[weap_c].local_description = savageWorldsVehicleWeapons[weap_c].description[ "en-US" ];
-					}
-
-					if( savageWorldsVehicleWeapons[weap_c].classification[ localStorage["users_preferred_language"] ] ) {
-						savageWorldsVehicleWeapons[weap_c].local_classification = savageWorldsVehicleWeapons[weap_c].classification[ localStorage["users_preferred_language"] ];
-					} else {
-						savageWorldsVehicleWeapons[weap_c].local_classification = savageWorldsVehicleWeapons[weap_c].classification[ "en-US" ];
-					}
-
-					savageWorldsVehicleWeapons[weap_c].local_cost = $scope.creatorObj.simplify_cost( savageWorldsVehicleWeapons[weap_c].cost );
-					if( savageWorldsVehicleWeapons[weap_c].notes[ localStorage["users_preferred_language"] ] ) {
-						savageWorldsVehicleWeapons[weap_c].local_notes = savageWorldsVehicleWeapons[weap_c].notes[ localStorage["users_preferred_language"] ];
-					} else {
-						savageWorldsVehicleWeapons[weap_c].local_notes = savageWorldsVehicleWeapons[weap_c].notes[ "en-US" ];
-					}
-
-					savageWorldsVehicleWeapons[weap_c].can_add = true;
-					if( typeof(savageWorldsVehicleWeapons[weap_c].isAvailable) == "function") {
-						if( savageWorldsVehicleWeapons[weap_c].isAvailable( $scope.creatorObj) == false ){
-
-							savageWorldsVehicleWeapons[weap_c].can_add = false;
-						}
-					}
-
-					// change vehicleWeaponModPoints to mods_available for non power armor vehicles ;)
-
-					if( $scope.creatorObj.vehicleWeaponModPoints < parseInt(savageWorldsVehicleWeapons[weap_c].mods) ) {
-
-						savageWorldsVehicleWeapons[weap_c].can_add = false;
-					}
-
-					if( savageWorldsVehicleWeapons[weap_c].can_add ) {
-						$scope.available_weapons.push(savageWorldsVehicleWeapons[weap_c]);
-					}
-				}
-
-				$scope.available_weapons.sort(
-					function(ob1,ob2) {
-						if (ob1.local_classification > ob2.local_classification) {
-							return 1;
-						} else if (ob1.local_classification < ob2.local_classification) {
-							return -1;
-						}
-
-						// Else go to the 2nd item
-						if (ob1.mods < ob2.mods) {
-							return -1;
-						} else if (ob1.mods > ob2.mods) {
-							return 1;
-						}
-
-						// Else go to the 3nd item
-						if (ob1.local_name < ob2.local_name) {
-							return -1;
-						} else if (ob1.local_name > ob2.local_name) {
-							return 1
-						}  else { // nothing to split them
-							return 0;
-						}
-					}
-				);
-
-				$scope.selected_options = Array();
-				angular.extend(	$scope.creatorOptions, savageWorldsSciFiOptions[ itemType ] );
-
-				for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
-					if( $scope.creatorObj.hasOption($scope.creatorOptions[optc].short_tag) )
-						$scope.selected_options[optc] = true;
-					else
-						$scope.selected_options[optc] = false;
-				}
-
-				$scope.installed_weapons = $scope.creatorObj.selected_weapons;
-				for(weap_c = 0; weap_c < $scope.installed_weapons.length; weap_c++) {
-					if( $scope.installed_weapons[weap_c].name[ localStorage["users_preferred_language"] ] ) {
-						$scope.installed_weapons[weap_c].local_name = $scope.installed_weapons[weap_c].name[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.installed_weapons[weap_c].local_name = $scope.installed_weapons[weap_c].name[ "en-US" ];
-					}
-
-					if( $scope.installed_weapons[weap_c].name_plural[ localStorage["users_preferred_language"] ] ) {
-						$scope.installed_weapons[weap_c].local_name_plural = $scope.installed_weapons[weap_c].name_plural[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.installed_weapons[weap_c].local_name_plural = $scope.installed_weapons[weap_c].name_plural[ "en-US" ];
-					}
-
-					if( $scope.installed_weapons[weap_c].description[ localStorage["users_preferred_language"] ] ) {
-						$scope.installed_weapons[weap_c].local_description = $scope.installed_weapons[weap_c].description[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.installed_weapons[weap_c].local_description = $scope.installed_weapons[weap_c].description[ "en-US" ];
-					}
-
-					if( $scope.installed_weapons[weap_c].classification[ localStorage["users_preferred_language"] ] ) {
-						$scope.installed_weapons[weap_c].local_classification = $scope.installed_weapons[weap_c].classification[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.installed_weapons[weap_c].local_classification = $scope.installed_weapons[weap_c].classification[ "en-US" ];
-					}
-
-
-					found_item = false
-					for(optc = 0;optc < $scope.fixed_options.length; optc++ ) {
-
-						if( $scope.fixed_options[optc].id == $scope.installed_weapons[weap_c].fixed ) {
-							$scope.installed_weapons[weap_c].fixed_dd_value = $scope.fixed_options[optc];
-							found_item = true;
-						}
-					}
-					if(!found_item)
-						$scope.installed_weapons[weap_c].fixed_dd_value = $scope.fixed_options[0];
-				}
-
-			}
-
-			$scope.init();
-		}
-
-	]
+	scifipowerarmorArray
 );
 
-angular.module("baseApp").controller(
+angular.module("cordovaApp").controller(
+	"scifiPowerarmorController",
+	scifipowerarmorArray
+);
+
+var scifirobotArray = [
+	function() {
+
+	}
+];
+angular.module("webApp").controller(
 	"scifiRobotController",
-	function() {
-
-	}
+	scifirobotArray
 );
-angular.module("baseApp").controller(
-	"scifiStarshipController",
-	[
-		'$rootScope',
-		'$translate',
-		'$scope',
-		function ($rootScope, $translate, $scope) {
-			$rootScope.showSciFiCreatorMenu = true;
-			var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_starship";
-			var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.starship";
-			var itemType = "starship";
-			var itemName = "Starship";
+
+angular.module("cordovaApp").controller(
+	"scifiRobotController",
+	scifirobotArray
+);
+scifistarshipArray = [
+	'$rootScope',
+	'$translate',
+	'$scope',
+	function ($rootScope, $translate, $scope) {
+		$rootScope.showSciFiCreatorMenu = true;
+		var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_starship";
+		var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.starship";
+		var itemType = "starship";
+		var itemName = "Starship";
 
 
-			$scope.init = function() {
-				$scope.creatorObj = new scifiCreator();
+		$scope.init = function() {
+			$scope.creatorObj = new scifiCreator();
 
 
 
-				$scope.creatorObj.init(itemType, itemName, savageWorldsSciFiSizes[itemType], savageWorldsSciFiMods[itemType], savageWorldsSciFiOptions[ itemType ]);
+			$scope.creatorObj.init(itemType, itemName, savageWorldsSciFiSizes[itemType], savageWorldsSciFiMods[itemType], savageWorldsSciFiOptions[ itemType ]);
 
-				if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
-					$scope.creatorObj.importJSON( localStorage[ currentItemLocalStorageVariable ] );
-				}
-
-				$scope.creatorObj.useLang = localStorage["users_preferred_language"];
-
-				$scope.selected_options = Array();
-				$scope.creatorOptions = savageWorldsSciFiOptions[ itemType ];
-				for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
-					if( typeof($scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ] ) != "undefined") {
-						$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ "en-US" ];
-					}
-
-					if( typeof($scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ] ) != "undefined") {
-						$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ "en-US" ];
-					}
-					$scope.selected_options[optc] = false;
-				}
-
-				$translate([
-					'APP_TITLE', 'INDEX_BUTTON_SCIFI_STARSHIP', 'CREATOR_SIZE',
-					"CREATOR_FIXED_BOW_FRONT", "CREATOR_FIXED_STARBOARD_RIGHT", "CREATOR_FIXED_PORT_LEFT",
-					"CREATOR_FIXED_STERN_REAR",	"CREATOR_FIXED_TURRETED_NONE", 'CREATOR_SELECT_A_SIZE'
-				]).then(
-					function (translation) {
-
-						$rootScope.title_tag = translation.INDEX_BUTTON_SCIFI_STARSHIP + " | " + translation.APP_TITLE;
-						$rootScope.subtitle_tag = translation.INDEX_BUTTON_SCIFI_STARSHIP;
-						$scope.sizeLabel  = translation.CREATOR_SIZE;
-
-						$scope.fixed_options = Array(
-							{
-								id: '0',
-								label: translation.CREATOR_FIXED_TURRETED_NONE
-							},
-							{
-								id: 'bow',
-								label: translation.CREATOR_FIXED_BOW_FRONT
-							},
-							{
-								id: 'port',
-								label: translation.CREATOR_FIXED_PORT_LEFT
-							},
-							{
-								id: 'starboard',
-								label: translation.CREATOR_FIXED_STARBOARD_RIGHT
-							},
-							{
-								id: 'stern',
-								label: translation.CREATOR_FIXED_STERN_REAR
-							}
-						);
-
-						$scope.updatePage();
-					}
-
-				);
+			if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
+				$scope.creatorObj.importJSON( localStorage[ currentItemLocalStorageVariable ] );
 			}
 
-			$scope.addMod = function( modTag ) {
-				$scope.creatorObj.addMod(modTag);
-				$scope.updatePage();
-			}
+			$scope.creatorObj.useLang = localStorage["users_preferred_language"];
 
-			$scope.addWeapon = function( modTag ) {
-				$scope.creatorObj.addWeapon(modTag);
-				$scope.updatePage();
-			}
-
-			$scope.removeMod = function( modTag ) {
-				$scope.creatorObj.removeMod(modTag);
-				$scope.updatePage();
-			}
-
-			$scope.updateSize = function() {
-
-				$scope.creatorObj.setSize( $scope.size_selected.id );
-				$scope.updatePage();
-			}
-
-			$scope.linkWeapon = function(weaponIndex, linkValue) {
-				$scope.creatorObj.incrementWeaponCount( weaponIndex);
-				$scope.updatePage();
-			}
-
-			$scope.setFixed = function(weaponIndex) {
-				newValue = $scope.installed_weapons[weaponIndex].fixed_dd_value.id
-				$scope.creatorObj.fixWeapon( weaponIndex, newValue);
-				$scope.updatePage();
-			}
-
-			$scope.unlinkWeapon = function(weaponIndex, linkValue) {
-				$scope.creatorObj.decrementWeaponCount( weaponIndex);
-				$scope.updatePage();
-			}
-
-			$scope.updateOption = function( option_index ) {
-
-				for(optc = 0; optc < $scope.selected_options.length; optc++ ) {
-					if( $scope.creatorOptions[optc].short_tag ) {
-						if( $scope.selected_options[optc] == 0 )
-							$scope.creatorObj.removeOption( $scope.creatorOptions[optc].short_tag );
-						else
-							$scope.creatorObj.addOption( $scope.creatorOptions[optc].short_tag );
-					}
-				}
-				$scope.updatePage();
-			}
-
-			$scope.removeWeapon = function(weaponIndex) {
-				$scope.creatorObj.removeWeapon( weaponIndex );
-				$scope.updatePage();
-			}
-
-			$rootScope.closeDialogs = function() {
-				$rootScope.newDialogOpen = false;
-				$rootScope.loadDialogOpen = false;
-				$rootScope.saveDialogOpen = false;
-				$rootScope.importDialogOpen = false;
-				$rootScope.exportDialogOpen = false;
-				$rootScope.optionsDialogOpen = false;
-			}
-
-			$rootScope.newDialog = function() {
-
-				$rootScope.closeDialogs();
-				$rootScope.newDialogOpen = true;
-			}
-
-			$rootScope.loadDialog = function() {
-
-				if( !localStorage[ savedItemsLocalStorageVariable ])
-					localStorage[ savedItemsLocalStorageVariable ] = "[]";
-
-				$scope.load_item = 0;
-				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-				for( sic = 0; sic < $scope.saved_items.length; sic++) {
-					$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
-				}
-
-				$rootScope.closeDialogs();
-
-				$rootScope.closeDialogs();
-				$rootScope.loadDialogOpen = true;
-			}
-			$rootScope.saveDialog = function() {
-				if( !localStorage[ savedItemsLocalStorageVariable ])
-					localStorage[ savedItemsLocalStorageVariable ] = "[]";
-
-				$scope.save_over = -1;
-				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-				for( sic = 0; sic < $scope.saved_items.length; sic++) {
-					$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
-				}
-
-				$rootScope.closeDialogs();
-				$scope.save_as_name = $scope.creatorObj.itemName;
-				$rootScope.saveDialogOpen = true;
-			}
-			$rootScope.importDialog = function() {
-				$scope.importJSON = "";
-				$rootScope.closeDialogs();
-				$rootScope.importDialogOpen = true;
-			}
-
-			$scope.updateImportData = function(importJSON) {
-				$scope.importJSON = importJSON;
-			}
-
-			$scope.importData = function(importJSON) {
-
-				localStorage[ currentItemLocalStorageVariable ] = $scope.importJSON;
-				$rootScope.closeDialogs();
-				$scope.init();
-			}
-
-			$rootScope.exportDialog = function() {
-				$scope.exportBBCode = $scope.creatorObj.exportBBCode();
-				$scope.exportJSON = $scope.creatorObj.exportJSON(true);
-				$rootScope.closeDialogs();
-				$rootScope.exportDialogOpen = true;
-			}
-			$rootScope.optionsDialog = function() {
-				$rootScope.closeDialogs();
-				$rootScope.optionsDialogOpen = true;
-			}
-
-			$scope.loadItem = function( load_item ) {
-				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-				if( $scope.saved_items[ load_item ] )
-					localStorage[ currentItemLocalStorageVariable ] = $scope.saved_items[ load_item ].data;
-
-				$rootScope.closeDialogs();
-				$scope.init();
-			}
-
-			$scope.clearCurrent = function(  ) {
-
-				localStorage[ currentItemLocalStorageVariable ] = "";
-				$rootScope.closeDialogs();
-				$scope.init();
-			}
-
-			$scope.updateLoad = function( load_item ) {
-				$scope.load_item = load_item;
-			}
-
-			$scope.updateSave = function( save_over ) {
-				$scope.save_over = save_over;
-
-			}
-
-
-			$scope.closeConfirmDialog = function( ) {
-				$scope.showConfirmDialog = false;
-				// reset confirm to nothing...
-				$scope.confirmDialogYes = function() {
-					$scope.showConfirmDialog = false;
-				}
-			}
-
-			$scope.confirmDialogYes = function() {
-				// empty to be replaced...
-				$scope.showConfirmDialog = false;
-			}
-
-			$scope.confirmDialogQuestion = "";
-
-			$scope.confirmDialog = function( confirmationMessage, onYes ) {
-				$scope.confirmDialogQuestion = confirmationMessage;
-				$scope.showConfirmDialog = true;
-				$scope.confirmDialogYes = onYes;
-			}
-
-
-			$scope.removeSavedItem = function( itemIndex ) {
-
-				$translate([
-					'CREATOR_DELETION_CONFIRMATION'
-				]).then(
-					function (translation) {
-						$scope.confirmDialog(
-							translation.CREATOR_DELETION_CONFIRMATION,
-							function() {
-								$scope.showConfirmDialog = false;
-								$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-								$scope.saved_items.splice( itemIndex, 1);
-								localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
-							}
-						);
-					}
-				);
-			}
-
-			$scope.saveItem = function( save_over, saveName ) {
-
-				if( !localStorage[ savedItemsLocalStorageVariable ])
-					localStorage[ savedItemsLocalStorageVariable ] = "[]";
-
-				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-
-				if( save_over > -1 ) {
-					$scope.saved_items[ save_over ] = $scope.makeSaveObject( saveName );
+			$scope.selected_options = Array();
+			$scope.creatorOptions = savageWorldsSciFiOptions[ itemType ];
+			for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
+				if( typeof($scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ] ) != "undefined") {
+					$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ];
 				} else {
-					$scope.saved_items.push( $scope.makeSaveObject( saveName ));
+					$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ "en-US" ];
 				}
-				localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
 
-				$rootScope.closeDialogs();
+				// if( typeof($scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ] ) != "undefined") {
+				// 	$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ];
+				// } else {
+				// 	$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ "en-US" ];
+				// }
+				$scope.selected_options[optc] = false;
 			}
 
-			$scope.makeSaveObject = function( saveName ) {
-				save_object = {
-					name: saveName,
-					datetime: Date(),
-					type: itemType,
-					data:  $scope.creatorObj.exportJSON()
-				};
-				return save_object;
-			}
+			$translate([
+				'APP_TITLE', 'INDEX_BUTTON_SCIFI_STARSHIP', 'CREATOR_SIZE',
+				"CREATOR_FIXED_BOW_FRONT", "CREATOR_FIXED_STARBOARD_RIGHT", "CREATOR_FIXED_PORT_LEFT",
+				"CREATOR_FIXED_STERN_REAR",	"CREATOR_FIXED_TURRETED_NONE", 'CREATOR_SELECT_A_SIZE'
+			]).then(
+				function (translation) {
 
-			$scope.updatePage = function() {
-				$scope.creatorObj.calculate();
+					$rootScope.title_tag = translation.INDEX_BUTTON_SCIFI_STARSHIP + " | " + translation.APP_TITLE;
+					$rootScope.subtitle_tag = translation.INDEX_BUTTON_SCIFI_STARSHIP;
+					$scope.sizeLabel  = translation.CREATOR_SIZE;
 
-				$scope.setSize = $scope.creatorObj.size;
-
-				$scope.creator_preview = $scope.creatorObj.createStatesBlock();
-				localStorage[ currentItemLocalStorageVariable ] = $scope.creatorObj.exportJSON();
-
-				$scope.mod_list = Array();
-				angular.extend(	$scope.mod_list, savageWorldsSciFiMods[ itemType ] );
-				for(modc = 0; modc < $scope.mod_list.length; modc++) {
-					if( $scope.mod_list[modc].name[ localStorage["users_preferred_language"] ] ) {
-						$scope.mod_list[modc].local_name = $scope.mod_list[modc].name[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.mod_list[modc].local_name = $scope.mod_list[modc].name[ "en-US" ];
-					}
-					$scope.mod_list[modc].local_mod_cost = $scope.mod_list[modc].getModCost($scope.creatorObj);
-					$scope.mod_list[modc].local_cost = $scope.creatorObj.simplify_cost($scope.mod_list[modc].getCost($scope.creatorObj));
-					$scope.mod_list[modc].local_max = $scope.mod_list[modc].getMax($scope.creatorObj);
-					$scope.mod_list[modc].currently_added = $scope.creatorObj.getModificationCount( $scope.mod_list[modc].tag );
-					if(
-						( $scope.mod_list[modc].local_max == "u" || $scope.mod_list[modc].currently_added < $scope.mod_list[modc].local_max )
-						&&
-						( $scope.mod_list[modc].local_mod_cost <= $scope.creatorObj.mods_available )
-					) {
-						if( typeof($scope.mod_list[modc].isAvailable) == "function" ) {
-							if ( $scope.mod_list[modc].isAvailable( $scope.creatorObj ) ) {
-								$scope.mod_list[modc].can_add = true;
-							} else {
-								$scope.mod_list[modc].can_add = false;
-							}
-						} else {
-							$scope.mod_list[modc].can_add = true;
+					$scope.fixed_options = Array(
+						{
+							id: '0',
+							label: translation.CREATOR_FIXED_TURRETED_NONE
+						},
+						{
+							id: 'bow',
+							label: translation.CREATOR_FIXED_BOW_FRONT
+						},
+						{
+							id: 'port',
+							label: translation.CREATOR_FIXED_PORT_LEFT
+						},
+						{
+							id: 'starboard',
+							label: translation.CREATOR_FIXED_STARBOARD_RIGHT
+						},
+						{
+							id: 'stern',
+							label: translation.CREATOR_FIXED_STERN_REAR
 						}
-					} else {
-						$scope.mod_list[modc].can_add = false;
-					}
+					);
 
+					$scope.updatePage();
+				}
 
-					if( $scope.mod_list[modc].currently_added > 0)
-						$scope.mod_list[modc].can_remove = true;
+			);
+		}
+
+		$scope.addMod = function( modTag ) {
+			$scope.creatorObj.addMod(modTag);
+			$scope.updatePage();
+		}
+
+		$scope.addWeapon = function( modTag ) {
+			$scope.creatorObj.addWeapon(modTag);
+			$scope.updatePage();
+		}
+
+		$scope.removeMod = function( modTag ) {
+			$scope.creatorObj.removeMod(modTag);
+			$scope.updatePage();
+		}
+
+		$scope.updateSize = function() {
+
+			$scope.creatorObj.setSize( $scope.size_selected.id );
+			$scope.updatePage();
+		}
+
+		$scope.linkWeapon = function(weaponIndex, linkValue) {
+			$scope.creatorObj.incrementWeaponCount( weaponIndex);
+			$scope.updatePage();
+		}
+
+		$scope.setFixed = function(weaponIndex) {
+			newValue = $scope.installed_weapons[weaponIndex].fixed_dd_value.id
+			$scope.creatorObj.fixWeapon( weaponIndex, newValue);
+			$scope.updatePage();
+		}
+
+		$scope.unlinkWeapon = function(weaponIndex, linkValue) {
+			$scope.creatorObj.decrementWeaponCount( weaponIndex);
+			$scope.updatePage();
+		}
+
+		$scope.updateOption = function( option_index ) {
+
+			for(optc = 0; optc < $scope.selected_options.length; optc++ ) {
+				if( $scope.creatorOptions[optc].short_tag ) {
+					if( $scope.selected_options[optc] == 0 )
+						$scope.creatorObj.removeOption( $scope.creatorOptions[optc].short_tag );
 					else
-						$scope.mod_list[modc].can_remove = false;
+						$scope.creatorObj.addOption( $scope.creatorOptions[optc].short_tag );
 				}
+			}
+			$scope.updatePage();
+		}
 
-				// remove mods that aren't enabled or disabled by option
-				for(var modc = $scope.mod_list.length -1; modc >= 0; modc--) {
-					if(
+		$scope.removeWeapon = function(weaponIndex) {
+			$scope.creatorObj.removeWeapon( weaponIndex );
+			$scope.updatePage();
+		}
 
-						typeof($scope.mod_list[modc].showWithOption) != "undefined"
-							&&
-						$scope.mod_list[modc].showWithOption != ""
-					) {
-						if( $scope.creatorObj.hasOption( $scope.mod_list[modc].showWithOption ) == false) {
-							$scope.mod_list.splice(modc, 1);
-						}
+		$rootScope.closeDialogs = function() {
+			$rootScope.newDialogOpen = false;
+			$rootScope.loadDialogOpen = false;
+			$rootScope.saveDialogOpen = false;
+			$rootScope.importDialogOpen = false;
+			$rootScope.exportDialogOpen = false;
+			$rootScope.optionsDialogOpen = false;
+		}
 
-					}
+		$rootScope.newDialog = function() {
 
-					if(
+			$rootScope.closeDialogs();
+			$rootScope.newDialogOpen = true;
+		}
 
-						typeof($scope.mod_list[modc].hideWithOption) != "undefined"
-							&&
-						$scope.mod_list[modc].hideWithOption != ""
-					) {
-						if( $scope.creatorObj.hasOption( $scope.mod_list[modc].hideWithOption ) == true ) {
-							$scope.mod_list.splice(modc, 1);
-						}
+		$rootScope.loadDialog = function() {
 
-					}
-				}
+			if( !localStorage[ savedItemsLocalStorageVariable ])
+				localStorage[ savedItemsLocalStorageVariable ] = "[]";
 
-				$translate([
-					'CREATOR_SELECT_A_SIZE'
-				]).then(
-					function (translation) {
-
-
-						$scope.size_options = Array();
-						$scope.size_selected = null;
-						$scope.setSize = 0;
-
-						default_size_object = {
-							id: 0,
-							label: "- " + translation.CREATOR_SELECT_A_SIZE + " -"
-						};
-						$scope.size_options.push( default_size_object );
-						for(sizec = 0; sizec < savageWorldsSciFiSizes[itemType].length; sizec++) {
-							if( savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]])
-								display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
-							else
-								display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel["en-US"] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
-
-							push_object = {
-								id: savageWorldsSciFiSizes[itemType][sizec].size,
-								label: display_label
-							};
-							if( savageWorldsSciFiSizes[itemType][sizec].showWithOption )
-								push_object.showWithOption = savageWorldsSciFiSizes[itemType][sizec].showWithOption;
-							if( savageWorldsSciFiSizes[itemType][sizec].hideWithOption )
-								push_object.hideWithOption = savageWorldsSciFiSizes[itemType][sizec].hideWithOption;
-
-							$scope.size_options.push( push_object );
-							if( savageWorldsSciFiSizes[itemType][sizec].size == $scope.creatorObj.size ) {
-								$scope.size_selected = push_object;
-								$scope.setSize = $scope.creatorObj.size;
-							}
-
-
-						}
-						if( $scope.size_selected == null) {
-							$scope.size_selected = default_size_object;
-							$scope.setSize = 0;
-						}
-
-				// remove sizes that aren't enabled or disabled by option
-				for(var sizec = $scope.size_options.length -1; sizec >= 0; sizec--) {
-
-					if(
-
-						typeof($scope.size_options[sizec].showWithOption) != "undefined"
-							&&
-						$scope.size_options[sizec].showWithOption != ""
-					) {
-						if( $scope.creatorObj.hasOption( $scope.size_options[sizec].showWithOption ) == false) {
-
-							$scope.size_options.splice(sizec, 1);
-						}
-
-					}
-
-					if(
-
-						typeof($scope.size_options[sizec].hideWithOption) != "undefined"
-							&&
-						$scope.size_options[sizec].hideWithOption != ""
-					) {
-						if( $scope.creatorObj.hasOption( $scope.size_options[sizec].hideWithOption ) == true ) {
-							$scope.size_options.splice(sizec, 1);
-						}
-
-					}
-				}
-
-				});
-				$scope.available_weapons = Array();
-
-				for( weap_c = 0; weap_c < savageWorldsVehicleWeapons.length; weap_c++) {
-					if( savageWorldsVehicleWeapons[weap_c].name[ localStorage["users_preferred_language"] ] ) {
-						savageWorldsVehicleWeapons[weap_c].local_name = savageWorldsVehicleWeapons[weap_c].name[ localStorage["users_preferred_language"] ];
-					} else {
-						savageWorldsVehicleWeapons[weap_c].local_name = savageWorldsVehicleWeapons[weap_c].name[ "en-US" ];
-					}
-
-					if( savageWorldsVehicleWeapons[weap_c].name_plural[ localStorage["users_preferred_language"] ] ) {
-						savageWorldsVehicleWeapons[weap_c].local_name_plural = savageWorldsVehicleWeapons[weap_c].name_plural[ localStorage["users_preferred_language"] ];
-					} else {
-						savageWorldsVehicleWeapons[weap_c].local_name_plural = savageWorldsVehicleWeapons[weap_c].name_plural[ "en-US" ];
-					}
-
-					if( savageWorldsVehicleWeapons[weap_c].description[ localStorage["users_preferred_language"] ] ) {
-						savageWorldsVehicleWeapons[weap_c].local_description = savageWorldsVehicleWeapons[weap_c].description[ localStorage["users_preferred_language"] ];
-					} else {
-						savageWorldsVehicleWeapons[weap_c].local_description = savageWorldsVehicleWeapons[weap_c].description[ "en-US" ];
-					}
-
-					if( savageWorldsVehicleWeapons[weap_c].classification[ localStorage["users_preferred_language"] ] ) {
-						savageWorldsVehicleWeapons[weap_c].local_classification = savageWorldsVehicleWeapons[weap_c].classification[ localStorage["users_preferred_language"] ];
-					} else {
-						savageWorldsVehicleWeapons[weap_c].local_classification = savageWorldsVehicleWeapons[weap_c].classification[ "en-US" ];
-					}
-
-					savageWorldsVehicleWeapons[weap_c].local_cost = $scope.creatorObj.simplify_cost( savageWorldsVehicleWeapons[weap_c].cost );
-					if( savageWorldsVehicleWeapons[weap_c].notes[ localStorage["users_preferred_language"] ] ) {
-						savageWorldsVehicleWeapons[weap_c].local_notes = savageWorldsVehicleWeapons[weap_c].notes[ localStorage["users_preferred_language"] ];
-					} else {
-						savageWorldsVehicleWeapons[weap_c].local_notes = savageWorldsVehicleWeapons[weap_c].notes[ "en-US" ];
-					}
-
-					savageWorldsVehicleWeapons[weap_c].can_add = true;
-					if( typeof(savageWorldsVehicleWeapons[weap_c].isAvailable) == "function") {
-						if( savageWorldsVehicleWeapons[weap_c].isAvailable( $scope.creatorObj) == false ){
-
-							savageWorldsVehicleWeapons[weap_c].can_add = false;
-						}
-					}
-
-					// change vehicleWeaponModPoints to mods_available for non power armor vehicles ;)
-
-					if( $scope.creatorObj.vehicleWeaponModPoints < parseInt(savageWorldsVehicleWeapons[weap_c].mods) ) {
-
-						savageWorldsVehicleWeapons[weap_c].can_add = false;
-					}
-
-					if( savageWorldsVehicleWeapons[weap_c].can_add ) {
-						$scope.available_weapons.push(savageWorldsVehicleWeapons[weap_c]);
-					}
-				}
-
-				$scope.available_weapons.sort(
-					function(ob1,ob2) {
-						if (ob1.local_classification > ob2.local_classification) {
-							return 1;
-						} else if (ob1.local_classification < ob2.local_classification) {
-							return -1;
-						}
-
-						// Else go to the 2nd item
-						if (ob1.mods < ob2.mods) {
-							return -1;
-						} else if (ob1.mods > ob2.mods) {
-							return 1;
-						}
-
-						// Else go to the 3nd item
-						if (ob1.local_name < ob2.local_name) {
-							return -1;
-						} else if (ob1.local_name > ob2.local_name) {
-							return 1
-						}  else { // nothing to split them
-							return 0;
-						}
-					}
-				);
-
-				$scope.selected_options = Array();
-
-				angular.extend(	$scope.creatorOptions,savageWorldsSciFiOptions[ itemType ] );
-				for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
-					if( $scope.creatorObj.hasOption($scope.creatorOptions[optc].short_tag) )
-						$scope.selected_options[optc] = true;
-					else
-						$scope.selected_options[optc] = false;
-				}
-
-				$scope.installed_weapons = $scope.creatorObj.selected_weapons;
-				for(weap_c = 0; weap_c < $scope.installed_weapons.length; weap_c++) {
-					if( $scope.installed_weapons[weap_c].name[ localStorage["users_preferred_language"] ] ) {
-						$scope.installed_weapons[weap_c].local_name = $scope.installed_weapons[weap_c].name[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.installed_weapons[weap_c].local_name = $scope.installed_weapons[weap_c].name[ "en-US" ];
-					}
-
-					if( $scope.installed_weapons[weap_c].name_plural[ localStorage["users_preferred_language"] ] ) {
-						$scope.installed_weapons[weap_c].local_name_plural = $scope.installed_weapons[weap_c].name_plural[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.installed_weapons[weap_c].local_name_plural = $scope.installed_weapons[weap_c].name_plural[ "en-US" ];
-					}
-
-					if( $scope.installed_weapons[weap_c].description[ localStorage["users_preferred_language"] ] ) {
-						$scope.installed_weapons[weap_c].local_description = $scope.installed_weapons[weap_c].description[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.installed_weapons[weap_c].local_description = $scope.installed_weapons[weap_c].description[ "en-US" ];
-					}
-
-					if( $scope.installed_weapons[weap_c].classification[ localStorage["users_preferred_language"] ] ) {
-						$scope.installed_weapons[weap_c].local_classification = $scope.installed_weapons[weap_c].classification[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.installed_weapons[weap_c].local_classification = $scope.installed_weapons[weap_c].classification[ "en-US" ];
-					}
-
-
-					found_item = false
-					for(optc = 0;optc < $scope.fixed_options.length; optc++ ) {
-
-						if( $scope.fixed_options[optc].id == $scope.installed_weapons[weap_c].fixed ) {
-							$scope.installed_weapons[weap_c].fixed_dd_value = $scope.fixed_options[optc];
-							found_item = true;
-						}
-					}
-					if(!found_item)
-						$scope.installed_weapons[weap_c].fixed_dd_value = $scope.fixed_options[0];
-				}
-
+			$scope.load_item = 0;
+			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+			for( sic = 0; sic < $scope.saved_items.length; sic++) {
+				$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
 			}
 
+			$rootScope.closeDialogs();
+
+			$rootScope.closeDialogs();
+			$rootScope.loadDialogOpen = true;
+		}
+		$rootScope.saveDialog = function() {
+			if( !localStorage[ savedItemsLocalStorageVariable ])
+				localStorage[ savedItemsLocalStorageVariable ] = "[]";
+
+			$scope.save_over = -1;
+			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+			for( sic = 0; sic < $scope.saved_items.length; sic++) {
+				$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
+			}
+
+			$rootScope.closeDialogs();
+			$scope.save_as_name = $scope.creatorObj.itemName;
+			$rootScope.saveDialogOpen = true;
+		}
+		$rootScope.importDialog = function() {
+			$scope.importJSON = "";
+			$rootScope.closeDialogs();
+			$rootScope.importDialogOpen = true;
+		}
+
+		$scope.updateImportData = function(importJSON) {
+			$scope.importJSON = importJSON;
+		}
+
+		$scope.importData = function(importJSON) {
+
+			localStorage[ currentItemLocalStorageVariable ] = $scope.importJSON;
+			$rootScope.closeDialogs();
 			$scope.init();
 		}
 
-	]
-);
-
-angular.module("baseApp").controller(
-	"scifiVehicleController",
-	[
-		'$rootScope',
-		'$translate',
-		'$scope',
-		function ($rootScope, $translate, $scope) {
-			$rootScope.showSciFiCreatorMenu = true;
-			var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_vehicle";
-			var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.vehicle";
-			var itemType = "vehicle";
-			var itemName = "Vehicle";
-
-
-			$scope.init = function() {
-				$scope.creatorObj = new scifiCreator();
-
-
-
-				$scope.creatorObj.init(itemType, itemName, savageWorldsSciFiSizes[itemType], savageWorldsSciFiMods[itemType], savageWorldsSciFiOptions[ itemType ]);
-
-				if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
-					$scope.creatorObj.importJSON( localStorage[ currentItemLocalStorageVariable ] );
-				}
-
-				$scope.creatorObj.useLang = localStorage["users_preferred_language"];
-
-				$scope.selected_options = Array();
-				$scope.creatorOptions = savageWorldsSciFiOptions[ itemType ];
-				for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
-					if( typeof($scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ] ) != "undefined") {
-						$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ "en-US" ];
-					}
-
-					if( typeof($scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ] ) != "undefined") {
-						$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ "en-US" ];
-					}
-					$scope.selected_options[optc] = false;
-				}
-
-				$translate([
-					'APP_TITLE', 'INDEX_BUTTON_SCIFI_VEHICLE', 'CREATOR_SIZE',
-					"CREATOR_FIXED_BOW_FRONT", "CREATOR_FIXED_STARBOARD_RIGHT", "CREATOR_FIXED_PORT_LEFT",
-					"CREATOR_FIXED_STERN_REAR",	"CREATOR_FIXED_TURRETED_NONE", 'CREATOR_SELECT_A_SIZE'
-				]).then(
-					function (translation) {
-
-						$rootScope.title_tag = translation.INDEX_BUTTON_SCIFI_VEHICLE + " | " + translation.APP_TITLE;
-						$rootScope.subtitle_tag = translation.INDEX_BUTTON_SCIFI_VEHICLE;
-						$scope.sizeLabel  = translation.CREATOR_SIZE;
-
-						$scope.fixed_options = Array(
-							{
-								id: '0',
-								label: translation.CREATOR_FIXED_TURRETED_NONE
-							},
-							{
-								id: 'bow',
-								label: translation.CREATOR_FIXED_BOW_FRONT
-							},
-							{
-								id: 'port',
-								label: translation.CREATOR_FIXED_PORT_LEFT
-							},
-							{
-								id: 'starboard',
-								label: translation.CREATOR_FIXED_STARBOARD_RIGHT
-							},
-							{
-								id: 'stern',
-								label: translation.CREATOR_FIXED_STERN_REAR
-							}
-						);
-
-						$scope.updatePage();
-					}
-
-				);
-			}
-
-			$scope.addMod = function( modTag ) {
-				$scope.creatorObj.addMod(modTag);
-				$scope.updatePage();
-			}
-
-			$scope.addWeapon = function( modTag ) {
-				$scope.creatorObj.addWeapon(modTag);
-				$scope.updatePage();
-			}
-
-			$scope.removeMod = function( modTag ) {
-				$scope.creatorObj.removeMod(modTag);
-				$scope.updatePage();
-			}
-
-			$scope.updateSize = function() {
-
-				$scope.creatorObj.setSize( $scope.size_selected.id );
-				$scope.updatePage();
-			}
-
-			$scope.linkWeapon = function(weaponIndex, linkValue) {
-				$scope.creatorObj.incrementWeaponCount( weaponIndex);
-				$scope.updatePage();
-			}
-
-			$scope.setFixed = function(weaponIndex) {
-				newValue = $scope.installed_weapons[weaponIndex].fixed_dd_value.id
-				$scope.creatorObj.fixWeapon( weaponIndex, newValue);
-				$scope.updatePage();
-			}
-
-			$scope.unlinkWeapon = function(weaponIndex, linkValue) {
-				$scope.creatorObj.decrementWeaponCount( weaponIndex);
-				$scope.updatePage();
-			}
-
-			$scope.updateOption = function( option_index ) {
-
-				for(optc = 0; optc < $scope.selected_options.length; optc++ ) {
-					if( $scope.creatorOptions[optc].short_tag ) {
-						if( $scope.selected_options[optc] == 0 )
-							$scope.creatorObj.removeOption( $scope.creatorOptions[optc].short_tag );
-						else
-							$scope.creatorObj.addOption( $scope.creatorOptions[optc].short_tag );
-					}
-				}
-				$scope.updatePage();
-			}
-
-			$scope.removeWeapon = function(weaponIndex) {
-				$scope.creatorObj.removeWeapon( weaponIndex );
-				$scope.updatePage();
-			}
-
-			$rootScope.closeDialogs = function() {
-				$rootScope.newDialogOpen = false;
-				$rootScope.loadDialogOpen = false;
-				$rootScope.saveDialogOpen = false;
-				$rootScope.importDialogOpen = false;
-				$rootScope.exportDialogOpen = false;
-				$rootScope.optionsDialogOpen = false;
-			}
-
-			$rootScope.newDialog = function() {
-
-				$rootScope.closeDialogs();
-				$rootScope.newDialogOpen = true;
-			}
-
-			$rootScope.loadDialog = function() {
-
-				if( !localStorage[ savedItemsLocalStorageVariable ])
-					localStorage[ savedItemsLocalStorageVariable ] = "[]";
-
-				$scope.load_item = 0;
-				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-				for( sic = 0; sic < $scope.saved_items.length; sic++) {
-					$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
-				}
-
-				$rootScope.closeDialogs();
-
-				$rootScope.closeDialogs();
-				$rootScope.loadDialogOpen = true;
-			}
-			$rootScope.saveDialog = function() {
-				if( !localStorage[ savedItemsLocalStorageVariable ])
-					localStorage[ savedItemsLocalStorageVariable ] = "[]";
-
-				$scope.save_over = -1;
-				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-				for( sic = 0; sic < $scope.saved_items.length; sic++) {
-					$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
-				}
-
-				$rootScope.closeDialogs();
-				$scope.save_as_name = $scope.creatorObj.itemName;
-				$rootScope.saveDialogOpen = true;
-			}
-			$rootScope.importDialog = function() {
-				$scope.importJSON = "";
-				$rootScope.closeDialogs();
-				$rootScope.importDialogOpen = true;
-			}
-
-			$scope.updateImportData = function(importJSON) {
-				$scope.importJSON = importJSON;
-			}
-
-			$scope.importData = function(importJSON) {
-
-				localStorage[ currentItemLocalStorageVariable ] = $scope.importJSON;
-				$rootScope.closeDialogs();
-				$scope.init();
-			}
-
-			$rootScope.exportDialog = function() {
-				$scope.exportBBCode = $scope.creatorObj.exportBBCode();
-				$scope.exportJSON = $scope.creatorObj.exportJSON(true);
-				$rootScope.closeDialogs();
-				$rootScope.exportDialogOpen = true;
-			}
-			$rootScope.optionsDialog = function() {
-				$rootScope.closeDialogs();
-				$rootScope.optionsDialogOpen = true;
-			}
-
-			$scope.loadItem = function( load_item ) {
-				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-				if( $scope.saved_items[ load_item ] )
-					localStorage[ currentItemLocalStorageVariable ] = $scope.saved_items[ load_item ].data;
-
-				$rootScope.closeDialogs();
-				$scope.init();
-			}
-
-			$scope.clearCurrent = function(  ) {
-
-				localStorage[ currentItemLocalStorageVariable ] = "";
-				$rootScope.closeDialogs();
-				$scope.init();
-			}
-
-			$scope.updateLoad = function( load_item ) {
-				$scope.load_item = load_item;
-			}
-
-			$scope.updateSave = function( save_over ) {
-				$scope.save_over = save_over;
-
-			}
-
-
-			$scope.closeConfirmDialog = function( ) {
-				$scope.showConfirmDialog = false;
-				// reset confirm to nothing...
-				$scope.confirmDialogYes = function() {
-					$scope.showConfirmDialog = false;
-				}
-			}
-
-			$scope.confirmDialogYes = function() {
-				// empty to be replaced...
-				$scope.showConfirmDialog = false;
-			}
-
-			$scope.confirmDialogQuestion = "";
-
-			$scope.confirmDialog = function( confirmationMessage, onYes ) {
-				$scope.confirmDialogQuestion = confirmationMessage;
-				$scope.showConfirmDialog = true;
-				$scope.confirmDialogYes = onYes;
-			}
-
-
-			$scope.removeSavedItem = function( itemIndex ) {
-
-				$translate([
-					'CREATOR_DELETION_CONFIRMATION'
-				]).then(
-					function (translation) {
-						$scope.confirmDialog(
-							translation.CREATOR_DELETION_CONFIRMATION,
-							function() {
-								$scope.showConfirmDialog = false;
-								$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-								$scope.saved_items.splice( itemIndex, 1);
-								localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
-							}
-						);
-					}
-				);
-			}
-
-			$scope.saveItem = function( save_over, saveName ) {
-
-				if( !localStorage[ savedItemsLocalStorageVariable ])
-					localStorage[ savedItemsLocalStorageVariable ] = "[]";
-
-				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-
-				if( save_over > -1 ) {
-					$scope.saved_items[ save_over ] = $scope.makeSaveObject( saveName );
-				} else {
-					$scope.saved_items.push( $scope.makeSaveObject( saveName ));
-				}
-				localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
-
-				$rootScope.closeDialogs();
-			}
-
-			$scope.makeSaveObject = function( saveName ) {
-				save_object = {
-					name: saveName,
-					datetime: Date(),
-					type: itemType,
-					data:  $scope.creatorObj.exportJSON()
-				};
-				return save_object;
-			}
-
-			$scope.updatePage = function() {
-				$scope.creatorObj.calculate();
-
-				$scope.setSize = $scope.creatorObj.size;
-
-				$scope.creator_preview = $scope.creatorObj.createStatesBlock();
-				localStorage[ currentItemLocalStorageVariable ] = $scope.creatorObj.exportJSON();
-
-				$scope.mod_list = Array();
-				angular.extend(	$scope.mod_list, savageWorldsSciFiMods[ itemType ] );
-				for(modc = 0; modc < $scope.mod_list.length; modc++) {
-					if( $scope.mod_list[modc].name[ localStorage["users_preferred_language"] ] ) {
-						$scope.mod_list[modc].local_name = $scope.mod_list[modc].name[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.mod_list[modc].local_name = $scope.mod_list[modc].name[ "en-US" ];
-					}
-					$scope.mod_list[modc].local_mod_cost = $scope.mod_list[modc].getModCost($scope.creatorObj);
-					$scope.mod_list[modc].local_cost = $scope.creatorObj.simplify_cost($scope.mod_list[modc].getCost($scope.creatorObj));
-					$scope.mod_list[modc].local_max = $scope.mod_list[modc].getMax($scope.creatorObj);
-					$scope.mod_list[modc].currently_added = $scope.creatorObj.getModificationCount( $scope.mod_list[modc].tag );
-					if(
-						( $scope.mod_list[modc].local_max == "u" || $scope.mod_list[modc].currently_added < $scope.mod_list[modc].local_max )
-						&&
-						( $scope.mod_list[modc].local_mod_cost <= $scope.creatorObj.mods_available )
-					) {
-						if( typeof($scope.mod_list[modc].isAvailable) == "function" ) {
-							if ( $scope.mod_list[modc].isAvailable( $scope.creatorObj ) ) {
-								$scope.mod_list[modc].can_add = true;
-							} else {
-								$scope.mod_list[modc].can_add = false;
-							}
-						} else {
-							$scope.mod_list[modc].can_add = true;
-						}
-					} else {
-						$scope.mod_list[modc].can_add = false;
-					}
-
-
-					if( $scope.mod_list[modc].currently_added > 0)
-						$scope.mod_list[modc].can_remove = true;
-					else
-						$scope.mod_list[modc].can_remove = false;
-				}
-
-				// remove mods that aren't enabled or disabled by option
-				for(var modc = $scope.mod_list.length -1; modc >= 0; modc--) {
-					if(
-
-						typeof($scope.mod_list[modc].showWithOption) != "undefined"
-							&&
-						$scope.mod_list[modc].showWithOption != ""
-					) {
-						if( $scope.creatorObj.hasOption( $scope.mod_list[modc].showWithOption ) == false) {
-							$scope.mod_list.splice(modc, 1);
-						}
-
-					}
-
-					if(
-
-						typeof($scope.mod_list[modc].hideWithOption) != "undefined"
-							&&
-						$scope.mod_list[modc].hideWithOption != ""
-					) {
-						if( $scope.creatorObj.hasOption( $scope.mod_list[modc].hideWithOption ) == true ) {
-							$scope.mod_list.splice(modc, 1);
-						}
-
-					}
-				}
-
-				$translate([
-					'CREATOR_SELECT_A_SIZE'
-				]).then(
-					function (translation) {
-
-
-						$scope.size_options = Array();
-						$scope.size_selected = null;
-						$scope.setSize = 0;
-
-						default_size_object = {
-							id: 0,
-							label: "- " + translation.CREATOR_SELECT_A_SIZE + " -"
-						};
-						$scope.size_options.push( default_size_object );
-						for(sizec = 0; sizec < savageWorldsSciFiSizes[itemType].length; sizec++) {
-							if( savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]])
-								display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
-							else
-								display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel["en-US"] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
-
-							push_object = {
-								id: savageWorldsSciFiSizes[itemType][sizec].size,
-								label: display_label
-							};
-							if( savageWorldsSciFiSizes[itemType][sizec].showWithOption )
-								push_object.showWithOption = savageWorldsSciFiSizes[itemType][sizec].showWithOption;
-							if( savageWorldsSciFiSizes[itemType][sizec].hideWithOption )
-								push_object.hideWithOption = savageWorldsSciFiSizes[itemType][sizec].hideWithOption;
-
-							$scope.size_options.push( push_object );
-							if( savageWorldsSciFiSizes[itemType][sizec].size == $scope.creatorObj.size ) {
-								$scope.size_selected = push_object;
-								$scope.setSize = $scope.creatorObj.size;
-							}
-
-
-						}
-						if( $scope.size_selected == null) {
-							$scope.size_selected = default_size_object;
-							$scope.setSize = 0;
-						}
-
-				// remove sizes that aren't enabled or disabled by option
-				for(var sizec = $scope.size_options.length -1; sizec >= 0; sizec--) {
-
-					if(
-
-						typeof($scope.size_options[sizec].showWithOption) != "undefined"
-							&&
-						$scope.size_options[sizec].showWithOption != ""
-					) {
-						if( $scope.creatorObj.hasOption( $scope.size_options[sizec].showWithOption ) == false) {
-
-							$scope.size_options.splice(sizec, 1);
-						}
-
-					}
-
-					if(
-
-						typeof($scope.size_options[sizec].hideWithOption) != "undefined"
-							&&
-						$scope.size_options[sizec].hideWithOption != ""
-					) {
-						if( $scope.creatorObj.hasOption( $scope.size_options[sizec].hideWithOption ) == true ) {
-							$scope.size_options.splice(sizec, 1);
-						}
-
-					}
-				}
-
-				});
-				$scope.available_weapons = Array();
-
-				for( weap_c = 0; weap_c < savageWorldsVehicleWeapons.length; weap_c++) {
-					if( savageWorldsVehicleWeapons[weap_c].name[ localStorage["users_preferred_language"] ] ) {
-						savageWorldsVehicleWeapons[weap_c].local_name = savageWorldsVehicleWeapons[weap_c].name[ localStorage["users_preferred_language"] ];
-					} else {
-						savageWorldsVehicleWeapons[weap_c].local_name = savageWorldsVehicleWeapons[weap_c].name[ "en-US" ];
-					}
-
-					if( savageWorldsVehicleWeapons[weap_c].name_plural[ localStorage["users_preferred_language"] ] ) {
-						savageWorldsVehicleWeapons[weap_c].local_name_plural = savageWorldsVehicleWeapons[weap_c].name_plural[ localStorage["users_preferred_language"] ];
-					} else {
-						savageWorldsVehicleWeapons[weap_c].local_name_plural = savageWorldsVehicleWeapons[weap_c].name_plural[ "en-US" ];
-					}
-
-					if( savageWorldsVehicleWeapons[weap_c].description[ localStorage["users_preferred_language"] ] ) {
-						savageWorldsVehicleWeapons[weap_c].local_description = savageWorldsVehicleWeapons[weap_c].description[ localStorage["users_preferred_language"] ];
-					} else {
-						savageWorldsVehicleWeapons[weap_c].local_description = savageWorldsVehicleWeapons[weap_c].description[ "en-US" ];
-					}
-
-					if( savageWorldsVehicleWeapons[weap_c].classification[ localStorage["users_preferred_language"] ] ) {
-						savageWorldsVehicleWeapons[weap_c].local_classification = savageWorldsVehicleWeapons[weap_c].classification[ localStorage["users_preferred_language"] ];
-					} else {
-						savageWorldsVehicleWeapons[weap_c].local_classification = savageWorldsVehicleWeapons[weap_c].classification[ "en-US" ];
-					}
-
-					savageWorldsVehicleWeapons[weap_c].local_cost = $scope.creatorObj.simplify_cost( savageWorldsVehicleWeapons[weap_c].cost );
-					if( savageWorldsVehicleWeapons[weap_c].notes[ localStorage["users_preferred_language"] ] ) {
-						savageWorldsVehicleWeapons[weap_c].local_notes = savageWorldsVehicleWeapons[weap_c].notes[ localStorage["users_preferred_language"] ];
-					} else {
-						savageWorldsVehicleWeapons[weap_c].local_notes = savageWorldsVehicleWeapons[weap_c].notes[ "en-US" ];
-					}
-
-					savageWorldsVehicleWeapons[weap_c].can_add = true;
-					if( typeof(savageWorldsVehicleWeapons[weap_c].isAvailable) == "function") {
-						if( savageWorldsVehicleWeapons[weap_c].isAvailable( $scope.creatorObj) == false ){
-
-							savageWorldsVehicleWeapons[weap_c].can_add = false;
-						}
-					}
-
-					// change vehicleWeaponModPoints to mods_available for non power armor vehicles ;)
-
-					if( $scope.creatorObj.vehicleWeaponModPoints < parseInt(savageWorldsVehicleWeapons[weap_c].mods) ) {
-
-						savageWorldsVehicleWeapons[weap_c].can_add = false;
-					}
-
-					if( savageWorldsVehicleWeapons[weap_c].can_add ) {
-						$scope.available_weapons.push(savageWorldsVehicleWeapons[weap_c]);
-					}
-				}
-
-				$scope.available_weapons.sort(
-					function(ob1,ob2) {
-						if (ob1.local_classification > ob2.local_classification) {
-							return 1;
-						} else if (ob1.local_classification < ob2.local_classification) {
-							return -1;
-						}
-
-						// Else go to the 2nd item
-						if (ob1.mods < ob2.mods) {
-							return -1;
-						} else if (ob1.mods > ob2.mods) {
-							return 1;
-						}
-
-						// Else go to the 3nd item
-						if (ob1.local_name < ob2.local_name) {
-							return -1;
-						} else if (ob1.local_name > ob2.local_name) {
-							return 1
-						}  else { // nothing to split them
-							return 0;
-						}
-					}
-				);
-
-				$scope.selected_options = Array();
-
-				angular.extend(	$scope.creatorOptions,savageWorldsSciFiOptions[ itemType ] );
-				for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
-					if( $scope.creatorObj.hasOption($scope.creatorOptions[optc].short_tag) )
-						$scope.selected_options[optc] = true;
-					else
-						$scope.selected_options[optc] = false;
-				}
-
-				$scope.installed_weapons = $scope.creatorObj.selected_weapons;
-				for(weap_c = 0; weap_c < $scope.installed_weapons.length; weap_c++) {
-					if( $scope.installed_weapons[weap_c].name[ localStorage["users_preferred_language"] ] ) {
-						$scope.installed_weapons[weap_c].local_name = $scope.installed_weapons[weap_c].name[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.installed_weapons[weap_c].local_name = $scope.installed_weapons[weap_c].name[ "en-US" ];
-					}
-
-					if( $scope.installed_weapons[weap_c].name_plural[ localStorage["users_preferred_language"] ] ) {
-						$scope.installed_weapons[weap_c].local_name_plural = $scope.installed_weapons[weap_c].name_plural[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.installed_weapons[weap_c].local_name_plural = $scope.installed_weapons[weap_c].name_plural[ "en-US" ];
-					}
-
-					if( $scope.installed_weapons[weap_c].description[ localStorage["users_preferred_language"] ] ) {
-						$scope.installed_weapons[weap_c].local_description = $scope.installed_weapons[weap_c].description[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.installed_weapons[weap_c].local_description = $scope.installed_weapons[weap_c].description[ "en-US" ];
-					}
-
-					if( $scope.installed_weapons[weap_c].classification[ localStorage["users_preferred_language"] ] ) {
-						$scope.installed_weapons[weap_c].local_classification = $scope.installed_weapons[weap_c].classification[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.installed_weapons[weap_c].local_classification = $scope.installed_weapons[weap_c].classification[ "en-US" ];
-					}
-
-
-					found_item = false
-					for(optc = 0;optc < $scope.fixed_options.length; optc++ ) {
-
-						if( $scope.fixed_options[optc].id == $scope.installed_weapons[weap_c].fixed ) {
-							$scope.installed_weapons[weap_c].fixed_dd_value = $scope.fixed_options[optc];
-							found_item = true;
-						}
-					}
-					if(!found_item)
-						$scope.installed_weapons[weap_c].fixed_dd_value = $scope.fixed_options[0];
-				}
-
-			}
-
+		$rootScope.exportDialog = function() {
+			$scope.exportBBCode = $scope.creatorObj.exportBBCode();
+			$scope.exportJSON = $scope.creatorObj.exportJSON(true);
+			$rootScope.closeDialogs();
+			$rootScope.exportDialogOpen = true;
+		}
+		$rootScope.optionsDialog = function() {
+			$rootScope.closeDialogs();
+			$rootScope.optionsDialogOpen = true;
+		}
+
+		$scope.loadItem = function( load_item ) {
+			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+			if( $scope.saved_items[ load_item ] )
+				localStorage[ currentItemLocalStorageVariable ] = $scope.saved_items[ load_item ].data;
+
+			$rootScope.closeDialogs();
 			$scope.init();
 		}
 
-	]
-);
+		$scope.clearCurrent = function(  ) {
 
-angular.module("baseApp").controller(
-	"scifiWalkerController",
-	[
-		'$rootScope',
-		'$translate',
-		'$scope',
-		function ($rootScope, $translate, $scope) {
-			$rootScope.showSciFiCreatorMenu = true;
-			var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_walker";
-			var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.walker";
-			var itemType = "walker";
-			var itemName = "Walker";
-
-
-			$scope.init = function() {
-				$scope.creatorObj = new scifiCreator();
-
-
-
-				$scope.creatorObj.init(itemType, itemName, savageWorldsSciFiSizes[itemType], savageWorldsSciFiMods[itemType], savageWorldsSciFiOptions[ itemType ]);
-
-
-
-
-				if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
-					$scope.creatorObj.importJSON( localStorage[ currentItemLocalStorageVariable ] );
-				}
-
-				$scope.creatorObj.useLang = localStorage["users_preferred_language"];
-
-				$scope.selected_options = Array();
-				$scope.creatorOptions = savageWorldsSciFiOptions[ itemType ];
-				for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
-					if( typeof($scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ] ) != "undefined") {
-						$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ "en-US" ];
-					}
-
-					if( typeof($scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ] ) != "undefined") {
-						$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ "en-US" ];
-					}
-					$scope.selected_options[optc] = false;
-				}
-
-				$translate([
-					'APP_TITLE', 'INDEX_BUTTON_SCIFI_WALKER', 'CREATOR_SIZE',
-					"CREATOR_FIXED_BOW_FRONT", "CREATOR_FIXED_STARBOARD_RIGHT", "CREATOR_FIXED_PORT_LEFT",
-					"CREATOR_FIXED_STERN_REAR",	"CREATOR_FIXED_TURRETED_NONE", 'CREATOR_SELECT_A_SIZE'
-				]).then(
-					function (translation) {
-
-						$rootScope.title_tag = translation.INDEX_BUTTON_SCIFI_WALKER + " | " + translation.APP_TITLE;
-						$rootScope.subtitle_tag = translation.INDEX_BUTTON_SCIFI_WALKER;
-						$scope.sizeLabel  = translation.CREATOR_SIZE;
-
-						$scope.fixed_options = Array(
-							{
-								id: '0',
-								label: translation.CREATOR_FIXED_TURRETED_NONE
-							},
-							{
-								id: 'bow',
-								label: translation.CREATOR_FIXED_BOW_FRONT
-							},
-							{
-								id: 'port',
-								label: translation.CREATOR_FIXED_PORT_LEFT
-							},
-							{
-								id: 'starboard',
-								label: translation.CREATOR_FIXED_STARBOARD_RIGHT
-							},
-							{
-								id: 'stern',
-								label: translation.CREATOR_FIXED_STERN_REAR
-							}
-						);
-
-						$scope.updatePage();
-					}
-
-				);
-			}
-
-			$scope.addMod = function( modTag ) {
-				$scope.creatorObj.addMod(modTag);
-				$scope.updatePage();
-			}
-
-			$scope.addWeapon = function( modTag ) {
-				$scope.creatorObj.addWeapon(modTag);
-				$scope.updatePage();
-			}
-
-			$scope.removeMod = function( modTag ) {
-				$scope.creatorObj.removeMod(modTag);
-				$scope.updatePage();
-			}
-
-			$scope.updateSize = function() {
-
-				$scope.creatorObj.setSize( $scope.size_selected.id );
-				$scope.updatePage();
-			}
-
-			$scope.linkWeapon = function(weaponIndex, linkValue) {
-				$scope.creatorObj.incrementWeaponCount( weaponIndex);
-				$scope.updatePage();
-			}
-
-			$scope.setFixed = function(weaponIndex) {
-				newValue = $scope.installed_weapons[weaponIndex].fixed_dd_value.id
-				$scope.creatorObj.fixWeapon( weaponIndex, newValue);
-				$scope.updatePage();
-			}
-
-			$scope.unlinkWeapon = function(weaponIndex, linkValue) {
-				$scope.creatorObj.decrementWeaponCount( weaponIndex);
-				$scope.updatePage();
-			}
-
-			$scope.updateOption = function( option_index ) {
-
-				for(optc = 0; optc < $scope.selected_options.length; optc++ ) {
-					if( $scope.creatorOptions[optc].short_tag ) {
-						if( $scope.selected_options[optc] == 0 )
-							$scope.creatorObj.removeOption( $scope.creatorOptions[optc].short_tag );
-						else
-							$scope.creatorObj.addOption( $scope.creatorOptions[optc].short_tag );
-					}
-				}
-				$scope.updatePage();
-			}
-
-			$scope.removeWeapon = function(weaponIndex) {
-				$scope.creatorObj.removeWeapon( weaponIndex );
-				$scope.updatePage();
-			}
-
-			$rootScope.closeDialogs = function() {
-				$rootScope.newDialogOpen = false;
-				$rootScope.loadDialogOpen = false;
-				$rootScope.saveDialogOpen = false;
-				$rootScope.importDialogOpen = false;
-				$rootScope.exportDialogOpen = false;
-				$rootScope.optionsDialogOpen = false;
-			}
-
-			$rootScope.newDialog = function() {
-
-				$rootScope.closeDialogs();
-				$rootScope.newDialogOpen = true;
-			}
-
-			$rootScope.loadDialog = function() {
-
-				if( !localStorage[ savedItemsLocalStorageVariable ])
-					localStorage[ savedItemsLocalStorageVariable ] = "[]";
-
-				$scope.load_item = 0;
-				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-				for( sic = 0; sic < $scope.saved_items.length; sic++) {
-					$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
-				}
-
-				$rootScope.closeDialogs();
-
-				$rootScope.closeDialogs();
-				$rootScope.loadDialogOpen = true;
-			}
-			$rootScope.saveDialog = function() {
-				if( !localStorage[ savedItemsLocalStorageVariable ])
-					localStorage[ savedItemsLocalStorageVariable ] = "[]";
-
-				$scope.save_over = -1;
-				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-				for( sic = 0; sic < $scope.saved_items.length; sic++) {
-					$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
-				}
-
-				$rootScope.closeDialogs();
-				$scope.save_as_name = $scope.creatorObj.itemName;
-				$rootScope.saveDialogOpen = true;
-			}
-			$rootScope.importDialog = function() {
-				$scope.importJSON = "";
-				$rootScope.closeDialogs();
-				$rootScope.importDialogOpen = true;
-			}
-
-			$scope.updateImportData = function(importJSON) {
-				$scope.importJSON = importJSON;
-			}
-
-			$scope.importData = function(importJSON) {
-
-				localStorage[ currentItemLocalStorageVariable ] = $scope.importJSON;
-				$rootScope.closeDialogs();
-				$scope.init();
-			}
-
-			$rootScope.exportDialog = function() {
-				$scope.exportBBCode = $scope.creatorObj.exportBBCode();
-				$scope.exportJSON = $scope.creatorObj.exportJSON(true);
-				$rootScope.closeDialogs();
-				$rootScope.exportDialogOpen = true;
-			}
-			$rootScope.optionsDialog = function() {
-				$rootScope.closeDialogs();
-				$rootScope.optionsDialogOpen = true;
-			}
-
-			$scope.loadItem = function( load_item ) {
-				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-				if( $scope.saved_items[ load_item ] )
-					localStorage[ currentItemLocalStorageVariable ] = $scope.saved_items[ load_item ].data;
-
-				$rootScope.closeDialogs();
-				$scope.init();
-			}
-
-			$scope.clearCurrent = function(  ) {
-
-				localStorage[ currentItemLocalStorageVariable ] = "";
-				$rootScope.closeDialogs();
-				$scope.init();
-			}
-
-			$scope.updateLoad = function( load_item ) {
-				$scope.load_item = load_item;
-			}
-
-			$scope.updateSave = function( save_over ) {
-				$scope.save_over = save_over;
-
-			}
-
-			$scope.closeConfirmDialog = function( ) {
-				$scope.showConfirmDialog = false;
-				// reset confirm to nothing...
-				$scope.confirmDialogYes = function() {
-					$scope.showConfirmDialog = false;
-				}
-			}
-
-			$scope.confirmDialogYes = function() {
-				// empty to be replaced...
-				$scope.showConfirmDialog = false;
-			}
-
-			$scope.confirmDialogQuestion = "";
-
-			$scope.confirmDialog = function( confirmationMessage, onYes ) {
-				$scope.confirmDialogQuestion = confirmationMessage;
-				$scope.showConfirmDialog = true;
-				$scope.confirmDialogYes = onYes;
-			}
-
-			$scope.removeSavedItem = function( itemIndex ) {
-
-				$translate([
-					'CREATOR_DELETION_CONFIRMATION'
-				]).then(
-					function (translation) {
-						$scope.confirmDialog(
-							translation.CREATOR_DELETION_CONFIRMATION,
-							function() {
-								$scope.showConfirmDialog = false;
-								$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-								$scope.saved_items.splice( itemIndex, 1);
-								localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
-							}
-						);
-					}
-				);
-			}
-
-			$scope.saveItem = function( save_over, saveName ) {
-
-				if( !localStorage[ savedItemsLocalStorageVariable ])
-					localStorage[ savedItemsLocalStorageVariable ] = "[]";
-
-				$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-
-				if( save_over > -1 ) {
-					$scope.saved_items[ save_over ] = $scope.makeSaveObject( saveName );
-				} else {
-					$scope.saved_items.push( $scope.makeSaveObject( saveName ));
-				}
-				localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
-
-				$rootScope.closeDialogs();
-			}
-
-			$scope.makeSaveObject = function( saveName ) {
-				save_object = {
-					name: saveName,
-					datetime: Date(),
-					type: itemType,
-					data:  $scope.creatorObj.exportJSON()
-				};
-				return save_object;
-			}
-
-			$scope.updatePage = function() {
-				$scope.creatorObj.calculate();
-
-				$scope.setSize = $scope.creatorObj.size;
-
-				$scope.creator_preview = $scope.creatorObj.createStatesBlock();
-				localStorage[ currentItemLocalStorageVariable ] = $scope.creatorObj.exportJSON();
-
-				$scope.mod_list = Array();
-				angular.extend(	$scope.mod_list, savageWorldsSciFiMods[ itemType ] );
-				for(modc = 0; modc < $scope.mod_list.length; modc++) {
-					if( $scope.mod_list[modc].name[ localStorage["users_preferred_language"] ] ) {
-						$scope.mod_list[modc].local_name = $scope.mod_list[modc].name[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.mod_list[modc].local_name = $scope.mod_list[modc].name[ "en-US" ];
-					}
-					$scope.mod_list[modc].local_mod_cost = $scope.mod_list[modc].getModCost($scope.creatorObj);
-					$scope.mod_list[modc].local_cost = $scope.creatorObj.simplify_cost($scope.mod_list[modc].getCost($scope.creatorObj));
-					$scope.mod_list[modc].local_max = $scope.mod_list[modc].getMax($scope.creatorObj);
-					$scope.mod_list[modc].currently_added = $scope.creatorObj.getModificationCount( $scope.mod_list[modc].tag );
-					if(
-						( $scope.mod_list[modc].local_max == "u" || $scope.mod_list[modc].currently_added < $scope.mod_list[modc].local_max )
-						&&
-						( $scope.mod_list[modc].local_mod_cost <= $scope.creatorObj.mods_available )
-					) {
-						if( typeof($scope.mod_list[modc].isAvailable) == "function" ) {
-							if ( $scope.mod_list[modc].isAvailable( $scope.creatorObj ) ) {
-								$scope.mod_list[modc].can_add = true;
-							} else {
-								$scope.mod_list[modc].can_add = false;
-							}
-						} else {
-							$scope.mod_list[modc].can_add = true;
-						}
-					} else {
-						$scope.mod_list[modc].can_add = false;
-					}
-
-
-					if( $scope.mod_list[modc].currently_added > 0)
-						$scope.mod_list[modc].can_remove = true;
-					else
-						$scope.mod_list[modc].can_remove = false;
-				}
-
-				// remove mods that aren't enabled or disabled by option
-				for(var modc = $scope.mod_list.length -1; modc >= 0; modc--) {
-					if(
-
-						typeof($scope.mod_list[modc].showWithOption) != "undefined"
-							&&
-						$scope.mod_list[modc].showWithOption != ""
-					) {
-						if( $scope.creatorObj.hasOption( $scope.mod_list[modc].showWithOption ) == false) {
-							$scope.mod_list.splice(modc, 1);
-						}
-
-					}
-
-					if(
-
-						typeof($scope.mod_list[modc].hideWithOption) != "undefined"
-							&&
-						$scope.mod_list[modc].hideWithOption != ""
-					) {
-						if( $scope.creatorObj.hasOption( $scope.mod_list[modc].hideWithOption ) == true ) {
-							$scope.mod_list.splice(modc, 1);
-						}
-
-					}
-				}
-
-				$translate([
-					'CREATOR_SELECT_A_SIZE'
-				]).then(
-					function (translation) {
-
-
-						$scope.size_options = Array();
-						$scope.size_selected = null;
-						$scope.setSize = 0;
-
-						default_size_object = {
-							id: 0,
-							label: "- " + translation.CREATOR_SELECT_A_SIZE + " -"
-						};
-						$scope.size_options.push( default_size_object );
-						for(sizec = 0; sizec < savageWorldsSciFiSizes[itemType].length; sizec++) {
-							if( savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]])
-								display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
-							else
-								display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel["en-US"] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
-
-							push_object = {
-								id: savageWorldsSciFiSizes[itemType][sizec].size,
-								label: display_label
-							};
-							if( savageWorldsSciFiSizes[itemType][sizec].showWithOption )
-								push_object.showWithOption = savageWorldsSciFiSizes[itemType][sizec].showWithOption;
-							if( savageWorldsSciFiSizes[itemType][sizec].hideWithOption )
-								push_object.hideWithOption = savageWorldsSciFiSizes[itemType][sizec].hideWithOption;
-
-							$scope.size_options.push( push_object );
-							if( savageWorldsSciFiSizes[itemType][sizec].size == $scope.creatorObj.size ) {
-								$scope.size_selected = push_object;
-								$scope.setSize = $scope.creatorObj.size;
-							}
-
-
-						}
-						if( $scope.size_selected == null) {
-							$scope.size_selected = default_size_object;
-							$scope.setSize = 0;
-						}
-
-				// remove sizes that aren't enabled or disabled by option
-				for(var sizec = $scope.size_options.length -1; sizec >= 0; sizec--) {
-
-					if(
-
-						typeof($scope.size_options[sizec].showWithOption) != "undefined"
-							&&
-						$scope.size_options[sizec].showWithOption != ""
-					) {
-						if( $scope.creatorObj.hasOption( $scope.size_options[sizec].showWithOption ) == false) {
-
-							$scope.size_options.splice(sizec, 1);
-						}
-
-					}
-
-					if(
-
-						typeof($scope.size_options[sizec].hideWithOption) != "undefined"
-							&&
-						$scope.size_options[sizec].hideWithOption != ""
-					) {
-						if( $scope.creatorObj.hasOption( $scope.size_options[sizec].hideWithOption ) == true ) {
-							$scope.size_options.splice(sizec, 1);
-						}
-
-					}
-				}
-
-				});
-				$scope.available_weapons = Array();
-
-				for( weap_c = 0; weap_c < savageWorldsVehicleWeapons.length; weap_c++) {
-					if( savageWorldsVehicleWeapons[weap_c].name[ localStorage["users_preferred_language"] ] ) {
-						savageWorldsVehicleWeapons[weap_c].local_name = savageWorldsVehicleWeapons[weap_c].name[ localStorage["users_preferred_language"] ];
-					} else {
-						savageWorldsVehicleWeapons[weap_c].local_name = savageWorldsVehicleWeapons[weap_c].name[ "en-US" ];
-					}
-
-					if( savageWorldsVehicleWeapons[weap_c].name_plural[ localStorage["users_preferred_language"] ] ) {
-						savageWorldsVehicleWeapons[weap_c].local_name_plural = savageWorldsVehicleWeapons[weap_c].name_plural[ localStorage["users_preferred_language"] ];
-					} else {
-						savageWorldsVehicleWeapons[weap_c].local_name_plural = savageWorldsVehicleWeapons[weap_c].name_plural[ "en-US" ];
-					}
-
-					if( savageWorldsVehicleWeapons[weap_c].description[ localStorage["users_preferred_language"] ] ) {
-						savageWorldsVehicleWeapons[weap_c].local_description = savageWorldsVehicleWeapons[weap_c].description[ localStorage["users_preferred_language"] ];
-					} else {
-						savageWorldsVehicleWeapons[weap_c].local_description = savageWorldsVehicleWeapons[weap_c].description[ "en-US" ];
-					}
-
-					if( savageWorldsVehicleWeapons[weap_c].classification[ localStorage["users_preferred_language"] ] ) {
-						savageWorldsVehicleWeapons[weap_c].local_classification = savageWorldsVehicleWeapons[weap_c].classification[ localStorage["users_preferred_language"] ];
-					} else {
-						savageWorldsVehicleWeapons[weap_c].local_classification = savageWorldsVehicleWeapons[weap_c].classification[ "en-US" ];
-					}
-
-					savageWorldsVehicleWeapons[weap_c].local_cost = $scope.creatorObj.simplify_cost( savageWorldsVehicleWeapons[weap_c].cost );
-					if( savageWorldsVehicleWeapons[weap_c].notes[ localStorage["users_preferred_language"] ] ) {
-						savageWorldsVehicleWeapons[weap_c].local_notes = savageWorldsVehicleWeapons[weap_c].notes[ localStorage["users_preferred_language"] ];
-					} else {
-						savageWorldsVehicleWeapons[weap_c].local_notes = savageWorldsVehicleWeapons[weap_c].notes[ "en-US" ];
-					}
-
-					savageWorldsVehicleWeapons[weap_c].can_add = true;
-					if( typeof(savageWorldsVehicleWeapons[weap_c].isAvailable) == "function") {
-						if( savageWorldsVehicleWeapons[weap_c].isAvailable( $scope.creatorObj) == false ){
-
-							savageWorldsVehicleWeapons[weap_c].can_add = false;
-						}
-					}
-
-					// change vehicleWeaponModPoints to mods_available for non power armor vehicles ;)
-
-					if( $scope.creatorObj.vehicleWeaponModPoints < parseInt(savageWorldsVehicleWeapons[weap_c].mods) ) {
-
-						savageWorldsVehicleWeapons[weap_c].can_add = false;
-					}
-
-					if( savageWorldsVehicleWeapons[weap_c].can_add ) {
-						$scope.available_weapons.push(savageWorldsVehicleWeapons[weap_c]);
-					}
-				}
-
-				$scope.available_weapons.sort(
-					function(ob1,ob2) {
-						if (ob1.local_classification > ob2.local_classification) {
-							return 1;
-						} else if (ob1.local_classification < ob2.local_classification) {
-							return -1;
-						}
-
-						// Else go to the 2nd item
-						if (ob1.mods < ob2.mods) {
-							return -1;
-						} else if (ob1.mods > ob2.mods) {
-							return 1;
-						}
-
-						// Else go to the 3nd item
-						if (ob1.local_name < ob2.local_name) {
-							return -1;
-						} else if (ob1.local_name > ob2.local_name) {
-							return 1
-						}  else { // nothing to split them
-							return 0;
-						}
-					}
-				);
-
-				$scope.selected_options = Array();
-
-				angular.extend(	$scope.creatorOptions,savageWorldsSciFiOptions[ itemType ] );
-				for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
-					if( $scope.creatorObj.hasOption($scope.creatorOptions[optc].short_tag) )
-						$scope.selected_options[optc] = true;
-					else
-						$scope.selected_options[optc] = false;
-				}
-
-				$scope.installed_weapons = $scope.creatorObj.selected_weapons;
-				for(weap_c = 0; weap_c < $scope.installed_weapons.length; weap_c++) {
-					if( $scope.installed_weapons[weap_c].name[ localStorage["users_preferred_language"] ] ) {
-						$scope.installed_weapons[weap_c].local_name = $scope.installed_weapons[weap_c].name[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.installed_weapons[weap_c].local_name = $scope.installed_weapons[weap_c].name[ "en-US" ];
-					}
-
-					if( $scope.installed_weapons[weap_c].name_plural[ localStorage["users_preferred_language"] ] ) {
-						$scope.installed_weapons[weap_c].local_name_plural = $scope.installed_weapons[weap_c].name_plural[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.installed_weapons[weap_c].local_name_plural = $scope.installed_weapons[weap_c].name_plural[ "en-US" ];
-					}
-
-					if( $scope.installed_weapons[weap_c].description[ localStorage["users_preferred_language"] ] ) {
-						$scope.installed_weapons[weap_c].local_description = $scope.installed_weapons[weap_c].description[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.installed_weapons[weap_c].local_description = $scope.installed_weapons[weap_c].description[ "en-US" ];
-					}
-
-					if( $scope.installed_weapons[weap_c].classification[ localStorage["users_preferred_language"] ] ) {
-						$scope.installed_weapons[weap_c].local_classification = $scope.installed_weapons[weap_c].classification[ localStorage["users_preferred_language"] ];
-					} else {
-						$scope.installed_weapons[weap_c].local_classification = $scope.installed_weapons[weap_c].classification[ "en-US" ];
-					}
-
-
-					found_item = false
-					for(optc = 0;optc < $scope.fixed_options.length; optc++ ) {
-
-						if( $scope.fixed_options[optc].id == $scope.installed_weapons[weap_c].fixed ) {
-							$scope.installed_weapons[weap_c].fixed_dd_value = $scope.fixed_options[optc];
-							found_item = true;
-						}
-					}
-					if(!found_item)
-						$scope.installed_weapons[weap_c].fixed_dd_value = $scope.fixed_options[0];
-				}
-
-			}
-
+			localStorage[ currentItemLocalStorageVariable ] = "";
+			$rootScope.closeDialogs();
 			$scope.init();
 		}
 
-	]
-);
+		$scope.updateLoad = function( load_item ) {
+			$scope.load_item = load_item;
+		}
 
-angular.module("baseApp").controller(
-	"scifiWorldController",
-	function() {
+		$scope.updateSave = function( save_over ) {
+			$scope.save_over = save_over;
 
-	}
-);
-angular.module("baseApp").controller(
-	"settingsController",
-	[
-		'$rootScope',
-		'$translate',
-		'$scope',
-		'$route',
-		function ($rootScope, $translate,  $scope, $route) {
-			$rootScope.showSciFiCreatorMenu = false;
-			$rootScope.showChargenMenu = false;
+		}
 
-			$translate(['APP_TITLE', 'INDEX_SETTINGS']).then(function (translation) {
-				$rootScope.title_tag = translation.INDEX_SETTINGS + " | " + translation.APP_TITLE;
-				$rootScope.subtitle_tag = translation.INDEX_SETTINGS;
+
+		$scope.closeConfirmDialog = function( ) {
+			$scope.showConfirmDialog = false;
+			// reset confirm to nothing...
+			$scope.confirmDialogYes = function() {
+				$scope.showConfirmDialog = false;
+			}
+		}
+
+		$scope.confirmDialogYes = function() {
+			// empty to be replaced...
+			$scope.showConfirmDialog = false;
+		}
+
+		$scope.confirmDialogQuestion = "";
+
+		$scope.confirmDialog = function( confirmationMessage, onYes ) {
+			$scope.confirmDialogQuestion = confirmationMessage;
+			$scope.showConfirmDialog = true;
+			$scope.confirmDialogYes = onYes;
+		}
+
+
+		$scope.removeSavedItem = function( itemIndex ) {
+
+			$translate([
+				'CREATOR_DELETION_CONFIRMATION'
+			]).then(
+				function (translation) {
+					$scope.confirmDialog(
+						translation.CREATOR_DELETION_CONFIRMATION,
+						function() {
+							$scope.showConfirmDialog = false;
+							$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+							$scope.saved_items.splice( itemIndex, 1);
+							localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
+						}
+					);
+				}
+			);
+		}
+
+		$scope.saveItem = function( save_over, saveName ) {
+
+			if( !localStorage[ savedItemsLocalStorageVariable ])
+				localStorage[ savedItemsLocalStorageVariable ] = "[]";
+
+			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+
+			if( save_over > -1 ) {
+				$scope.saved_items[ save_over ] = $scope.makeSaveObject( saveName );
+			} else {
+				$scope.saved_items.push( $scope.makeSaveObject( saveName ));
+			}
+			localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
+
+			$rootScope.closeDialogs();
+		}
+
+		$scope.makeSaveObject = function( saveName ) {
+			save_object = {
+				name: saveName,
+				datetime: Date(),
+				type: itemType,
+				data:  $scope.creatorObj.exportJSON()
+			};
+			return save_object;
+		}
+
+		$scope.updatePage = function() {
+			$scope.creatorObj.calculate();
+
+			$scope.setSize = $scope.creatorObj.size;
+
+			$scope.creator_preview = $scope.creatorObj.createStatesBlock();
+			localStorage[ currentItemLocalStorageVariable ] = $scope.creatorObj.exportJSON();
+
+			$scope.mod_list = Array();
+			angular.extend(	$scope.mod_list, savageWorldsSciFiMods[ itemType ] );
+			for(modc = 0; modc < $scope.mod_list.length; modc++) {
+				if( $scope.mod_list[modc].name[ localStorage["users_preferred_language"] ] ) {
+					$scope.mod_list[modc].local_name = $scope.mod_list[modc].name[ localStorage["users_preferred_language"] ];
+				} else {
+					$scope.mod_list[modc].local_name = $scope.mod_list[modc].name[ "en-US" ];
+				}
+				$scope.mod_list[modc].local_mod_cost = $scope.mod_list[modc].getModCost($scope.creatorObj);
+				$scope.mod_list[modc].local_cost = $scope.creatorObj.simplify_cost($scope.mod_list[modc].getCost($scope.creatorObj));
+				$scope.mod_list[modc].local_max = $scope.mod_list[modc].getMax($scope.creatorObj);
+				$scope.mod_list[modc].currently_added = $scope.creatorObj.getModificationCount( $scope.mod_list[modc].tag );
+				if(
+					( $scope.mod_list[modc].local_max == "u" || $scope.mod_list[modc].currently_added < $scope.mod_list[modc].local_max )
+					&&
+					( $scope.mod_list[modc].local_mod_cost <= $scope.creatorObj.mods_available )
+				) {
+					if( typeof($scope.mod_list[modc].isAvailable) == "function" ) {
+						if ( $scope.mod_list[modc].isAvailable( $scope.creatorObj ) ) {
+							$scope.mod_list[modc].can_add = true;
+						} else {
+							$scope.mod_list[modc].can_add = false;
+						}
+					} else {
+						$scope.mod_list[modc].can_add = true;
+					}
+				} else {
+					$scope.mod_list[modc].can_add = false;
+				}
+
+
+				if( $scope.mod_list[modc].currently_added > 0)
+					$scope.mod_list[modc].can_remove = true;
+				else
+					$scope.mod_list[modc].can_remove = false;
+			}
+
+			// remove mods that aren't enabled or disabled by option
+			for(var modc = $scope.mod_list.length -1; modc >= 0; modc--) {
+				if(
+
+					typeof($scope.mod_list[modc].showWithOption) != "undefined"
+						&&
+					$scope.mod_list[modc].showWithOption != ""
+				) {
+					if( $scope.creatorObj.hasOption( $scope.mod_list[modc].showWithOption ) == false) {
+						$scope.mod_list.splice(modc, 1);
+					}
+
+				}
+
+				if(
+
+					typeof($scope.mod_list[modc].hideWithOption) != "undefined"
+						&&
+					$scope.mod_list[modc].hideWithOption != ""
+				) {
+					if( $scope.creatorObj.hasOption( $scope.mod_list[modc].hideWithOption ) == true ) {
+						$scope.mod_list.splice(modc, 1);
+					}
+
+				}
+			}
+
+			$translate([
+				'CREATOR_SELECT_A_SIZE'
+			]).then(
+				function (translation) {
+
+
+					$scope.size_options = Array();
+					$scope.size_selected = null;
+					$scope.setSize = 0;
+
+					default_size_object = {
+						id: 0,
+						label: "- " + translation.CREATOR_SELECT_A_SIZE + " -"
+					};
+					$scope.size_options.push( default_size_object );
+					for(sizec = 0; sizec < savageWorldsSciFiSizes[itemType].length; sizec++) {
+						if( savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]])
+							display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
+						else
+							display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel["en-US"] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
+
+						push_object = {
+							id: savageWorldsSciFiSizes[itemType][sizec].size,
+							label: display_label
+						};
+						if( savageWorldsSciFiSizes[itemType][sizec].showWithOption )
+							push_object.showWithOption = savageWorldsSciFiSizes[itemType][sizec].showWithOption;
+						if( savageWorldsSciFiSizes[itemType][sizec].hideWithOption )
+							push_object.hideWithOption = savageWorldsSciFiSizes[itemType][sizec].hideWithOption;
+
+						$scope.size_options.push( push_object );
+						if( savageWorldsSciFiSizes[itemType][sizec].size == $scope.creatorObj.size ) {
+							$scope.size_selected = push_object;
+							$scope.setSize = $scope.creatorObj.size;
+						}
+
+
+					}
+					if( $scope.size_selected == null) {
+						$scope.size_selected = default_size_object;
+						$scope.setSize = 0;
+					}
+
+			// remove sizes that aren't enabled or disabled by option
+			for(var sizec = $scope.size_options.length -1; sizec >= 0; sizec--) {
+
+				if(
+
+					typeof($scope.size_options[sizec].showWithOption) != "undefined"
+						&&
+					$scope.size_options[sizec].showWithOption != ""
+				) {
+					if( $scope.creatorObj.hasOption( $scope.size_options[sizec].showWithOption ) == false) {
+
+						$scope.size_options.splice(sizec, 1);
+					}
+
+				}
+
+				if(
+
+					typeof($scope.size_options[sizec].hideWithOption) != "undefined"
+						&&
+					$scope.size_options[sizec].hideWithOption != ""
+				) {
+					if( $scope.creatorObj.hasOption( $scope.size_options[sizec].hideWithOption ) == true ) {
+						$scope.size_options.splice(sizec, 1);
+					}
+
+				}
+			}
+
 			});
+			$scope.available_weapons = Array();
+
+			for( weap_c = 0; weap_c < savageWorldsVehicleWeapons.length; weap_c++) {
+				if( savageWorldsVehicleWeapons[weap_c].name[ localStorage["users_preferred_language"] ] ) {
+					savageWorldsVehicleWeapons[weap_c].local_name = savageWorldsVehicleWeapons[weap_c].name[ localStorage["users_preferred_language"] ];
+				} else {
+					savageWorldsVehicleWeapons[weap_c].local_name = savageWorldsVehicleWeapons[weap_c].name[ "en-US" ];
+				}
+
+				if( savageWorldsVehicleWeapons[weap_c].name_plural[ localStorage["users_preferred_language"] ] ) {
+					savageWorldsVehicleWeapons[weap_c].local_name_plural = savageWorldsVehicleWeapons[weap_c].name_plural[ localStorage["users_preferred_language"] ];
+				} else {
+					savageWorldsVehicleWeapons[weap_c].local_name_plural = savageWorldsVehicleWeapons[weap_c].name_plural[ "en-US" ];
+				}
+
+				// if( savageWorldsVehicleWeapons[weap_c].description[ localStorage["users_preferred_language"] ] ) {
+				// 	savageWorldsVehicleWeapons[weap_c].local_description = savageWorldsVehicleWeapons[weap_c].description[ localStorage["users_preferred_language"] ];
+				// } else {
+				// 	savageWorldsVehicleWeapons[weap_c].local_description = savageWorldsVehicleWeapons[weap_c].description[ "en-US" ];
+				// }
+
+				if( savageWorldsVehicleWeapons[weap_c].classification[ localStorage["users_preferred_language"] ] ) {
+					savageWorldsVehicleWeapons[weap_c].local_classification = savageWorldsVehicleWeapons[weap_c].classification[ localStorage["users_preferred_language"] ];
+				} else {
+					savageWorldsVehicleWeapons[weap_c].local_classification = savageWorldsVehicleWeapons[weap_c].classification[ "en-US" ];
+				}
+
+				savageWorldsVehicleWeapons[weap_c].local_cost = $scope.creatorObj.simplify_cost( savageWorldsVehicleWeapons[weap_c].cost );
+				if( savageWorldsVehicleWeapons[weap_c].notes[ localStorage["users_preferred_language"] ] ) {
+					savageWorldsVehicleWeapons[weap_c].local_notes = savageWorldsVehicleWeapons[weap_c].notes[ localStorage["users_preferred_language"] ];
+				} else {
+					savageWorldsVehicleWeapons[weap_c].local_notes = savageWorldsVehicleWeapons[weap_c].notes[ "en-US" ];
+				}
+
+				savageWorldsVehicleWeapons[weap_c].can_add = true;
+				if( typeof(savageWorldsVehicleWeapons[weap_c].isAvailable) == "function") {
+					if( savageWorldsVehicleWeapons[weap_c].isAvailable( $scope.creatorObj) == false ){
+
+						savageWorldsVehicleWeapons[weap_c].can_add = false;
+					}
+				}
+
+				// change vehicleWeaponModPoints to mods_available for non power armor vehicles ;)
+
+				if( $scope.creatorObj.vehicleWeaponModPoints < parseInt(savageWorldsVehicleWeapons[weap_c].mods) ) {
+
+					savageWorldsVehicleWeapons[weap_c].can_add = false;
+				}
+
+				if( savageWorldsVehicleWeapons[weap_c].can_add ) {
+					$scope.available_weapons.push(savageWorldsVehicleWeapons[weap_c]);
+				}
+			}
+
+			$scope.available_weapons.sort(
+				function(ob1,ob2) {
+					if (ob1.local_classification > ob2.local_classification) {
+						return 1;
+					} else if (ob1.local_classification < ob2.local_classification) {
+						return -1;
+					}
+
+					// Else go to the 2nd item
+					if (ob1.mods < ob2.mods) {
+						return -1;
+					} else if (ob1.mods > ob2.mods) {
+						return 1;
+					}
+
+					// Else go to the 3nd item
+					if (ob1.local_name < ob2.local_name) {
+						return -1;
+					} else if (ob1.local_name > ob2.local_name) {
+						return 1
+					}  else { // nothing to split them
+						return 0;
+					}
+				}
+			);
+
+			$scope.selected_options = Array();
+
+			angular.extend(	$scope.creatorOptions,savageWorldsSciFiOptions[ itemType ] );
+			for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
+				if( $scope.creatorObj.hasOption($scope.creatorOptions[optc].short_tag) )
+					$scope.selected_options[optc] = true;
+				else
+					$scope.selected_options[optc] = false;
+			}
+
+			$scope.installed_weapons = $scope.creatorObj.selected_weapons;
+			for(weap_c = 0; weap_c < $scope.installed_weapons.length; weap_c++) {
+				if( $scope.installed_weapons[weap_c].name[ localStorage["users_preferred_language"] ] ) {
+					$scope.installed_weapons[weap_c].local_name = $scope.installed_weapons[weap_c].name[ localStorage["users_preferred_language"] ];
+				} else {
+					$scope.installed_weapons[weap_c].local_name = $scope.installed_weapons[weap_c].name[ "en-US" ];
+				}
+
+				if( $scope.installed_weapons[weap_c].name_plural[ localStorage["users_preferred_language"] ] ) {
+					$scope.installed_weapons[weap_c].local_name_plural = $scope.installed_weapons[weap_c].name_plural[ localStorage["users_preferred_language"] ];
+				} else {
+					$scope.installed_weapons[weap_c].local_name_plural = $scope.installed_weapons[weap_c].name_plural[ "en-US" ];
+				}
+
+				// if( $scope.installed_weapons[weap_c].description[ localStorage["users_preferred_language"] ] ) {
+				// 	$scope.installed_weapons[weap_c].local_description = $scope.installed_weapons[weap_c].description[ localStorage["users_preferred_language"] ];
+				// } else {
+				// 	$scope.installed_weapons[weap_c].local_description = $scope.installed_weapons[weap_c].description[ "en-US" ];
+				// }
+
+				if( $scope.installed_weapons[weap_c].classification[ localStorage["users_preferred_language"] ] ) {
+					$scope.installed_weapons[weap_c].local_classification = $scope.installed_weapons[weap_c].classification[ localStorage["users_preferred_language"] ];
+				} else {
+					$scope.installed_weapons[weap_c].local_classification = $scope.installed_weapons[weap_c].classification[ "en-US" ];
+				}
 
 
-			$scope.available_languages = Array();
-			$scope.users_language = {};
+				found_item = false
+				for(optc = 0;optc < $scope.fixed_options.length; optc++ ) {
+
+					if( $scope.fixed_options[optc].id == $scope.installed_weapons[weap_c].fixed ) {
+						$scope.installed_weapons[weap_c].fixed_dd_value = $scope.fixed_options[optc];
+						found_item = true;
+					}
+				}
+				if(!found_item)
+					$scope.installed_weapons[weap_c].fixed_dd_value = $scope.fixed_options[0];
+			}
+
+		}
+
+		$scope.init();
+	}
+
+];
+angular.module("webApp").controller(
+	"scifiStarshipController",
+	scifistarshipArray
+);
+
+angular.module("cordovaApp").controller(
+	"scifiStarshipController",
+	scifistarshipArray
+);
+
+scifivehicleArray = [
+	'$rootScope',
+	'$translate',
+	'$scope',
+	function ($rootScope, $translate, $scope) {
+		$rootScope.showSciFiCreatorMenu = true;
+		var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_vehicle";
+		var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.vehicle";
+		var itemType = "vehicle";
+		var itemName = "Vehicle";
+
+
+		$scope.init = function() {
+			$scope.creatorObj = new scifiCreator();
+
+
+
+			$scope.creatorObj.init(itemType, itemName, savageWorldsSciFiSizes[itemType], savageWorldsSciFiMods[itemType], savageWorldsSciFiOptions[ itemType ]);
+
+			if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
+				$scope.creatorObj.importJSON( localStorage[ currentItemLocalStorageVariable ] );
+			}
+
+			$scope.creatorObj.useLang = localStorage["users_preferred_language"];
+
+			$scope.selected_options = Array();
+			$scope.creatorOptions = savageWorldsSciFiOptions[ itemType ];
+			for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
+				if( typeof($scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ] ) != "undefined") {
+					$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ];
+				} else {
+					$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ "en-US" ];
+				}
+
+				// if( typeof($scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ] ) != "undefined") {
+				// 	$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ];
+				// } else {
+				// 	$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ "en-US" ];
+				// }
+				$scope.selected_options[optc] = false;
+			}
+
+			$translate([
+				'APP_TITLE', 'INDEX_BUTTON_SCIFI_VEHICLE', 'CREATOR_SIZE',
+				"CREATOR_FIXED_BOW_FRONT", "CREATOR_FIXED_STARBOARD_RIGHT", "CREATOR_FIXED_PORT_LEFT",
+				"CREATOR_FIXED_STERN_REAR",	"CREATOR_FIXED_TURRETED_NONE", 'CREATOR_SELECT_A_SIZE'
+			]).then(
+				function (translation) {
+
+					$rootScope.title_tag = translation.INDEX_BUTTON_SCIFI_VEHICLE + " | " + translation.APP_TITLE;
+					$rootScope.subtitle_tag = translation.INDEX_BUTTON_SCIFI_VEHICLE;
+					$scope.sizeLabel  = translation.CREATOR_SIZE;
+
+					$scope.fixed_options = Array(
+						{
+							id: '0',
+							label: translation.CREATOR_FIXED_TURRETED_NONE
+						},
+						{
+							id: 'bow',
+							label: translation.CREATOR_FIXED_BOW_FRONT
+						},
+						{
+							id: 'port',
+							label: translation.CREATOR_FIXED_PORT_LEFT
+						},
+						{
+							id: 'starboard',
+							label: translation.CREATOR_FIXED_STARBOARD_RIGHT
+						},
+						{
+							id: 'stern',
+							label: translation.CREATOR_FIXED_STERN_REAR
+						}
+					);
+
+					$scope.updatePage();
+				}
+
+			);
+		}
+
+		$scope.addMod = function( modTag ) {
+			$scope.creatorObj.addMod(modTag);
+			$scope.updatePage();
+		}
+
+		$scope.addWeapon = function( modTag ) {
+			$scope.creatorObj.addWeapon(modTag);
+			$scope.updatePage();
+		}
+
+		$scope.removeMod = function( modTag ) {
+			$scope.creatorObj.removeMod(modTag);
+			$scope.updatePage();
+		}
+
+		$scope.updateSize = function() {
+
+			$scope.creatorObj.setSize( $scope.size_selected.id );
+			$scope.updatePage();
+		}
+
+		$scope.linkWeapon = function(weaponIndex, linkValue) {
+			$scope.creatorObj.incrementWeaponCount( weaponIndex);
+			$scope.updatePage();
+		}
+
+		$scope.setFixed = function(weaponIndex) {
+			newValue = $scope.installed_weapons[weaponIndex].fixed_dd_value.id
+			$scope.creatorObj.fixWeapon( weaponIndex, newValue);
+			$scope.updatePage();
+		}
+
+		$scope.unlinkWeapon = function(weaponIndex, linkValue) {
+			$scope.creatorObj.decrementWeaponCount( weaponIndex);
+			$scope.updatePage();
+		}
+
+		$scope.updateOption = function( option_index ) {
+
+			for(optc = 0; optc < $scope.selected_options.length; optc++ ) {
+				if( $scope.creatorOptions[optc].short_tag ) {
+					if( $scope.selected_options[optc] == 0 )
+						$scope.creatorObj.removeOption( $scope.creatorOptions[optc].short_tag );
+					else
+						$scope.creatorObj.addOption( $scope.creatorOptions[optc].short_tag );
+				}
+			}
+			$scope.updatePage();
+		}
+
+		$scope.removeWeapon = function(weaponIndex) {
+			$scope.creatorObj.removeWeapon( weaponIndex );
+			$scope.updatePage();
+		}
+
+		$rootScope.closeDialogs = function() {
+			$rootScope.newDialogOpen = false;
+			$rootScope.loadDialogOpen = false;
+			$rootScope.saveDialogOpen = false;
+			$rootScope.importDialogOpen = false;
+			$rootScope.exportDialogOpen = false;
+			$rootScope.optionsDialogOpen = false;
+		}
+
+		$rootScope.newDialog = function() {
+
+			$rootScope.closeDialogs();
+			$rootScope.newDialogOpen = true;
+		}
+
+		$rootScope.loadDialog = function() {
+
+			if( !localStorage[ savedItemsLocalStorageVariable ])
+				localStorage[ savedItemsLocalStorageVariable ] = "[]";
+
+			$scope.load_item = 0;
+			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+			for( sic = 0; sic < $scope.saved_items.length; sic++) {
+				$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
+			}
+
+			$rootScope.closeDialogs();
+
+			$rootScope.closeDialogs();
+			$rootScope.loadDialogOpen = true;
+		}
+		$rootScope.saveDialog = function() {
+			if( !localStorage[ savedItemsLocalStorageVariable ])
+				localStorage[ savedItemsLocalStorageVariable ] = "[]";
+
+			$scope.save_over = -1;
+			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+			for( sic = 0; sic < $scope.saved_items.length; sic++) {
+				$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
+			}
+
+			$rootScope.closeDialogs();
+			$scope.save_as_name = $scope.creatorObj.itemName;
+			$rootScope.saveDialogOpen = true;
+		}
+		$rootScope.importDialog = function() {
+			$scope.importJSON = "";
+			$rootScope.closeDialogs();
+			$rootScope.importDialogOpen = true;
+		}
+
+		$scope.updateImportData = function(importJSON) {
+			$scope.importJSON = importJSON;
+		}
+
+		$scope.importData = function(importJSON) {
+
+			localStorage[ currentItemLocalStorageVariable ] = $scope.importJSON;
+			$rootScope.closeDialogs();
+			$scope.init();
+		}
+
+		$rootScope.exportDialog = function() {
+			$scope.exportBBCode = $scope.creatorObj.exportBBCode();
+			$scope.exportJSON = $scope.creatorObj.exportJSON(true);
+			$rootScope.closeDialogs();
+			$rootScope.exportDialogOpen = true;
+		}
+		$rootScope.optionsDialog = function() {
+			$rootScope.closeDialogs();
+			$rootScope.optionsDialogOpen = true;
+		}
+
+		$scope.loadItem = function( load_item ) {
+			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+			if( $scope.saved_items[ load_item ] )
+				localStorage[ currentItemLocalStorageVariable ] = $scope.saved_items[ load_item ].data;
+
+			$rootScope.closeDialogs();
+			$scope.init();
+		}
+
+		$scope.clearCurrent = function(  ) {
+
+			localStorage[ currentItemLocalStorageVariable ] = "";
+			$rootScope.closeDialogs();
+			$scope.init();
+		}
+
+		$scope.updateLoad = function( load_item ) {
+			$scope.load_item = load_item;
+		}
+
+		$scope.updateSave = function( save_over ) {
+			$scope.save_over = save_over;
+
+		}
+
+
+		$scope.closeConfirmDialog = function( ) {
+			$scope.showConfirmDialog = false;
+			// reset confirm to nothing...
+			$scope.confirmDialogYes = function() {
+				$scope.showConfirmDialog = false;
+			}
+		}
+
+		$scope.confirmDialogYes = function() {
+			// empty to be replaced...
+			$scope.showConfirmDialog = false;
+		}
+
+		$scope.confirmDialogQuestion = "";
+
+		$scope.confirmDialog = function( confirmationMessage, onYes ) {
+			$scope.confirmDialogQuestion = confirmationMessage;
+			$scope.showConfirmDialog = true;
+			$scope.confirmDialogYes = onYes;
+		}
+
+
+		$scope.removeSavedItem = function( itemIndex ) {
+
+			$translate([
+				'CREATOR_DELETION_CONFIRMATION'
+			]).then(
+				function (translation) {
+					$scope.confirmDialog(
+						translation.CREATOR_DELETION_CONFIRMATION,
+						function() {
+							$scope.showConfirmDialog = false;
+							$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+							$scope.saved_items.splice( itemIndex, 1);
+							localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
+						}
+					);
+				}
+			);
+		}
+
+		$scope.saveItem = function( save_over, saveName ) {
+
+			if( !localStorage[ savedItemsLocalStorageVariable ])
+				localStorage[ savedItemsLocalStorageVariable ] = "[]";
+
+			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+
+			if( save_over > -1 ) {
+				$scope.saved_items[ save_over ] = $scope.makeSaveObject( saveName );
+			} else {
+				$scope.saved_items.push( $scope.makeSaveObject( saveName ));
+			}
+			localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
+
+			$rootScope.closeDialogs();
+		}
+
+		$scope.makeSaveObject = function( saveName ) {
+			save_object = {
+				name: saveName,
+				datetime: Date(),
+				type: itemType,
+				data:  $scope.creatorObj.exportJSON()
+			};
+			return save_object;
+		}
+
+		$scope.updatePage = function() {
+			$scope.creatorObj.calculate();
+
+			$scope.setSize = $scope.creatorObj.size;
+
+			$scope.creator_preview = $scope.creatorObj.createStatesBlock();
+			localStorage[ currentItemLocalStorageVariable ] = $scope.creatorObj.exportJSON();
+
+			$scope.mod_list = Array();
+			angular.extend(	$scope.mod_list, savageWorldsSciFiMods[ itemType ] );
+			for(modc = 0; modc < $scope.mod_list.length; modc++) {
+				if( $scope.mod_list[modc].name[ localStorage["users_preferred_language"] ] ) {
+					$scope.mod_list[modc].local_name = $scope.mod_list[modc].name[ localStorage["users_preferred_language"] ];
+				} else {
+					$scope.mod_list[modc].local_name = $scope.mod_list[modc].name[ "en-US" ];
+				}
+				$scope.mod_list[modc].local_mod_cost = $scope.mod_list[modc].getModCost($scope.creatorObj);
+				$scope.mod_list[modc].local_cost = $scope.creatorObj.simplify_cost($scope.mod_list[modc].getCost($scope.creatorObj));
+				$scope.mod_list[modc].local_max = $scope.mod_list[modc].getMax($scope.creatorObj);
+				$scope.mod_list[modc].currently_added = $scope.creatorObj.getModificationCount( $scope.mod_list[modc].tag );
+				if(
+					( $scope.mod_list[modc].local_max == "u" || $scope.mod_list[modc].currently_added < $scope.mod_list[modc].local_max )
+					&&
+					( $scope.mod_list[modc].local_mod_cost <= $scope.creatorObj.mods_available )
+				) {
+					if( typeof($scope.mod_list[modc].isAvailable) == "function" ) {
+						if ( $scope.mod_list[modc].isAvailable( $scope.creatorObj ) ) {
+							$scope.mod_list[modc].can_add = true;
+						} else {
+							$scope.mod_list[modc].can_add = false;
+						}
+					} else {
+						$scope.mod_list[modc].can_add = true;
+					}
+				} else {
+					$scope.mod_list[modc].can_add = false;
+				}
+
+
+				if( $scope.mod_list[modc].currently_added > 0)
+					$scope.mod_list[modc].can_remove = true;
+				else
+					$scope.mod_list[modc].can_remove = false;
+			}
+
+			// remove mods that aren't enabled or disabled by option
+			for(var modc = $scope.mod_list.length -1; modc >= 0; modc--) {
+				if(
+
+					typeof($scope.mod_list[modc].showWithOption) != "undefined"
+						&&
+					$scope.mod_list[modc].showWithOption != ""
+				) {
+					if( $scope.creatorObj.hasOption( $scope.mod_list[modc].showWithOption ) == false) {
+						$scope.mod_list.splice(modc, 1);
+					}
+
+				}
+
+				if(
+
+					typeof($scope.mod_list[modc].hideWithOption) != "undefined"
+						&&
+					$scope.mod_list[modc].hideWithOption != ""
+				) {
+					if( $scope.creatorObj.hasOption( $scope.mod_list[modc].hideWithOption ) == true ) {
+						$scope.mod_list.splice(modc, 1);
+					}
+
+				}
+			}
+
+			$translate([
+				'CREATOR_SELECT_A_SIZE'
+			]).then(
+				function (translation) {
+
+
+					$scope.size_options = Array();
+					$scope.size_selected = null;
+					$scope.setSize = 0;
+
+					default_size_object = {
+						id: 0,
+						label: "- " + translation.CREATOR_SELECT_A_SIZE + " -"
+					};
+					$scope.size_options.push( default_size_object );
+					for(sizec = 0; sizec < savageWorldsSciFiSizes[itemType].length; sizec++) {
+						if( savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]])
+							display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
+						else
+							display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel["en-US"] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
+
+						push_object = {
+							id: savageWorldsSciFiSizes[itemType][sizec].size,
+							label: display_label
+						};
+						if( savageWorldsSciFiSizes[itemType][sizec].showWithOption )
+							push_object.showWithOption = savageWorldsSciFiSizes[itemType][sizec].showWithOption;
+						if( savageWorldsSciFiSizes[itemType][sizec].hideWithOption )
+							push_object.hideWithOption = savageWorldsSciFiSizes[itemType][sizec].hideWithOption;
+
+						$scope.size_options.push( push_object );
+						if( savageWorldsSciFiSizes[itemType][sizec].size == $scope.creatorObj.size ) {
+							$scope.size_selected = push_object;
+							$scope.setSize = $scope.creatorObj.size;
+						}
+
+
+					}
+					if( $scope.size_selected == null) {
+						$scope.size_selected = default_size_object;
+						$scope.setSize = 0;
+					}
+
+			// remove sizes that aren't enabled or disabled by option
+			for(var sizec = $scope.size_options.length -1; sizec >= 0; sizec--) {
+
+				if(
+
+					typeof($scope.size_options[sizec].showWithOption) != "undefined"
+						&&
+					$scope.size_options[sizec].showWithOption != ""
+				) {
+					if( $scope.creatorObj.hasOption( $scope.size_options[sizec].showWithOption ) == false) {
+
+						$scope.size_options.splice(sizec, 1);
+					}
+
+				}
+
+				if(
+
+					typeof($scope.size_options[sizec].hideWithOption) != "undefined"
+						&&
+					$scope.size_options[sizec].hideWithOption != ""
+				) {
+					if( $scope.creatorObj.hasOption( $scope.size_options[sizec].hideWithOption ) == true ) {
+						$scope.size_options.splice(sizec, 1);
+					}
+
+				}
+			}
+
+			});
+			$scope.available_weapons = Array();
+
+			for( weap_c = 0; weap_c < savageWorldsVehicleWeapons.length; weap_c++) {
+				if( savageWorldsVehicleWeapons[weap_c].name[ localStorage["users_preferred_language"] ] ) {
+					savageWorldsVehicleWeapons[weap_c].local_name = savageWorldsVehicleWeapons[weap_c].name[ localStorage["users_preferred_language"] ];
+				} else {
+					savageWorldsVehicleWeapons[weap_c].local_name = savageWorldsVehicleWeapons[weap_c].name[ "en-US" ];
+				}
+
+				if( savageWorldsVehicleWeapons[weap_c].name_plural[ localStorage["users_preferred_language"] ] ) {
+					savageWorldsVehicleWeapons[weap_c].local_name_plural = savageWorldsVehicleWeapons[weap_c].name_plural[ localStorage["users_preferred_language"] ];
+				} else {
+					savageWorldsVehicleWeapons[weap_c].local_name_plural = savageWorldsVehicleWeapons[weap_c].name_plural[ "en-US" ];
+				}
+
+				// if( savageWorldsVehicleWeapons[weap_c].description[ localStorage["users_preferred_language"] ] ) {
+				// 	savageWorldsVehicleWeapons[weap_c].local_description = savageWorldsVehicleWeapons[weap_c].description[ localStorage["users_preferred_language"] ];
+				// } else {
+				// 	savageWorldsVehicleWeapons[weap_c].local_description = savageWorldsVehicleWeapons[weap_c].description[ "en-US" ];
+				// }
+
+				if( savageWorldsVehicleWeapons[weap_c].classification[ localStorage["users_preferred_language"] ] ) {
+					savageWorldsVehicleWeapons[weap_c].local_classification = savageWorldsVehicleWeapons[weap_c].classification[ localStorage["users_preferred_language"] ];
+				} else {
+					savageWorldsVehicleWeapons[weap_c].local_classification = savageWorldsVehicleWeapons[weap_c].classification[ "en-US" ];
+				}
+
+				savageWorldsVehicleWeapons[weap_c].local_cost = $scope.creatorObj.simplify_cost( savageWorldsVehicleWeapons[weap_c].cost );
+				if( savageWorldsVehicleWeapons[weap_c].notes[ localStorage["users_preferred_language"] ] ) {
+					savageWorldsVehicleWeapons[weap_c].local_notes = savageWorldsVehicleWeapons[weap_c].notes[ localStorage["users_preferred_language"] ];
+				} else {
+					savageWorldsVehicleWeapons[weap_c].local_notes = savageWorldsVehicleWeapons[weap_c].notes[ "en-US" ];
+				}
+
+				savageWorldsVehicleWeapons[weap_c].can_add = true;
+				if( typeof(savageWorldsVehicleWeapons[weap_c].isAvailable) == "function") {
+					if( savageWorldsVehicleWeapons[weap_c].isAvailable( $scope.creatorObj) == false ){
+
+						savageWorldsVehicleWeapons[weap_c].can_add = false;
+					}
+				}
+
+				// change vehicleWeaponModPoints to mods_available for non power armor vehicles ;)
+
+				if( $scope.creatorObj.vehicleWeaponModPoints < parseInt(savageWorldsVehicleWeapons[weap_c].mods) ) {
+
+					savageWorldsVehicleWeapons[weap_c].can_add = false;
+				}
+
+				if( savageWorldsVehicleWeapons[weap_c].can_add ) {
+					$scope.available_weapons.push(savageWorldsVehicleWeapons[weap_c]);
+				}
+			}
+
+			$scope.available_weapons.sort(
+				function(ob1,ob2) {
+					if (ob1.local_classification > ob2.local_classification) {
+						return 1;
+					} else if (ob1.local_classification < ob2.local_classification) {
+						return -1;
+					}
+
+					// Else go to the 2nd item
+					if (ob1.mods < ob2.mods) {
+						return -1;
+					} else if (ob1.mods > ob2.mods) {
+						return 1;
+					}
+
+					// Else go to the 3nd item
+					if (ob1.local_name < ob2.local_name) {
+						return -1;
+					} else if (ob1.local_name > ob2.local_name) {
+						return 1
+					}  else { // nothing to split them
+						return 0;
+					}
+				}
+			);
+
+			$scope.selected_options = Array();
+
+			angular.extend(	$scope.creatorOptions,savageWorldsSciFiOptions[ itemType ] );
+			for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
+				if( $scope.creatorObj.hasOption($scope.creatorOptions[optc].short_tag) )
+					$scope.selected_options[optc] = true;
+				else
+					$scope.selected_options[optc] = false;
+			}
+
+			$scope.installed_weapons = $scope.creatorObj.selected_weapons;
+			for(weap_c = 0; weap_c < $scope.installed_weapons.length; weap_c++) {
+				if( $scope.installed_weapons[weap_c].name[ localStorage["users_preferred_language"] ] ) {
+					$scope.installed_weapons[weap_c].local_name = $scope.installed_weapons[weap_c].name[ localStorage["users_preferred_language"] ];
+				} else {
+					$scope.installed_weapons[weap_c].local_name = $scope.installed_weapons[weap_c].name[ "en-US" ];
+				}
+
+				if( $scope.installed_weapons[weap_c].name_plural[ localStorage["users_preferred_language"] ] ) {
+					$scope.installed_weapons[weap_c].local_name_plural = $scope.installed_weapons[weap_c].name_plural[ localStorage["users_preferred_language"] ];
+				} else {
+					$scope.installed_weapons[weap_c].local_name_plural = $scope.installed_weapons[weap_c].name_plural[ "en-US" ];
+				}
+
+				// if( $scope.installed_weapons[weap_c].description[ localStorage["users_preferred_language"] ] ) {
+				// 	$scope.installed_weapons[weap_c].local_description = $scope.installed_weapons[weap_c].description[ localStorage["users_preferred_language"] ];
+				// } else {
+				// 	$scope.installed_weapons[weap_c].local_description = $scope.installed_weapons[weap_c].description[ "en-US" ];
+				// }
+
+				if( $scope.installed_weapons[weap_c].classification[ localStorage["users_preferred_language"] ] ) {
+					$scope.installed_weapons[weap_c].local_classification = $scope.installed_weapons[weap_c].classification[ localStorage["users_preferred_language"] ];
+				} else {
+					$scope.installed_weapons[weap_c].local_classification = $scope.installed_weapons[weap_c].classification[ "en-US" ];
+				}
+
+
+				found_item = false
+				for(optc = 0;optc < $scope.fixed_options.length; optc++ ) {
+
+					if( $scope.fixed_options[optc].id == $scope.installed_weapons[weap_c].fixed ) {
+						$scope.installed_weapons[weap_c].fixed_dd_value = $scope.fixed_options[optc];
+						found_item = true;
+					}
+				}
+				if(!found_item)
+					$scope.installed_weapons[weap_c].fixed_dd_value = $scope.fixed_options[0];
+			}
+
+		}
+
+		$scope.init();
+	}
+
+];
+angular.module("webApp").controller(
+	"scifiVehicleController",
+	scifivehicleArray
+);
+angular.module("cordovaApp").controller(
+	"scifiVehicleController",
+	scifivehicleArray
+);
+
+var scifiwalkerArray = [
+	'$rootScope',
+	'$translate',
+	'$scope',
+	function ($rootScope, $translate, $scope) {
+		$rootScope.showSciFiCreatorMenu = true;
+		var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_walker";
+		var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.walker";
+		var itemType = "walker";
+		var itemName = "Walker";
+
+
+		$scope.init = function() {
+			$scope.creatorObj = new scifiCreator();
+
+
+
+			$scope.creatorObj.init(itemType, itemName, savageWorldsSciFiSizes[itemType], savageWorldsSciFiMods[itemType], savageWorldsSciFiOptions[ itemType ]);
+
+
+
+
+			if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
+				$scope.creatorObj.importJSON( localStorage[ currentItemLocalStorageVariable ] );
+			}
+
+			$scope.creatorObj.useLang = localStorage["users_preferred_language"];
+
+			$scope.selected_options = Array();
+			$scope.creatorOptions = savageWorldsSciFiOptions[ itemType ];
+			for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
+				if( typeof($scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ] ) != "undefined") {
+					$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ localStorage["users_preferred_language"] ];
+				} else {
+					$scope.creatorOptions[optc].local_name = $scope.creatorOptions[optc].name[ "en-US" ];
+				}
+
+				// if( typeof($scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ] ) != "undefined") {
+				// 	$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ localStorage["users_preferred_language"] ];
+				// } else {
+				// 	$scope.creatorOptions[optc].local_description = $scope.creatorOptions[optc].description[ "en-US" ];
+				// }
+				$scope.selected_options[optc] = false;
+			}
+
+			$translate([
+				'APP_TITLE', 'INDEX_BUTTON_SCIFI_WALKER', 'CREATOR_SIZE',
+				"CREATOR_FIXED_BOW_FRONT", "CREATOR_FIXED_STARBOARD_RIGHT", "CREATOR_FIXED_PORT_LEFT",
+				"CREATOR_FIXED_STERN_REAR",	"CREATOR_FIXED_TURRETED_NONE", 'CREATOR_SELECT_A_SIZE'
+			]).then(
+				function (translation) {
+
+					$rootScope.title_tag = translation.INDEX_BUTTON_SCIFI_WALKER + " | " + translation.APP_TITLE;
+					$rootScope.subtitle_tag = translation.INDEX_BUTTON_SCIFI_WALKER;
+					$scope.sizeLabel  = translation.CREATOR_SIZE;
+
+					$scope.fixed_options = Array(
+						{
+							id: '0',
+							label: translation.CREATOR_FIXED_TURRETED_NONE
+						},
+						{
+							id: 'bow',
+							label: translation.CREATOR_FIXED_BOW_FRONT
+						},
+						{
+							id: 'port',
+							label: translation.CREATOR_FIXED_PORT_LEFT
+						},
+						{
+							id: 'starboard',
+							label: translation.CREATOR_FIXED_STARBOARD_RIGHT
+						},
+						{
+							id: 'stern',
+							label: translation.CREATOR_FIXED_STERN_REAR
+						}
+					);
+
+					$scope.updatePage();
+				}
+
+			);
+		}
+
+		$scope.addMod = function( modTag ) {
+			$scope.creatorObj.addMod(modTag);
+			$scope.updatePage();
+		}
+
+		$scope.addWeapon = function( modTag ) {
+			$scope.creatorObj.addWeapon(modTag);
+			$scope.updatePage();
+		}
+
+		$scope.removeMod = function( modTag ) {
+			$scope.creatorObj.removeMod(modTag);
+			$scope.updatePage();
+		}
+
+		$scope.updateSize = function() {
+
+			$scope.creatorObj.setSize( $scope.size_selected.id );
+			$scope.updatePage();
+		}
+
+		$scope.linkWeapon = function(weaponIndex, linkValue) {
+			$scope.creatorObj.incrementWeaponCount( weaponIndex);
+			$scope.updatePage();
+		}
+
+		$scope.setFixed = function(weaponIndex) {
+			newValue = $scope.installed_weapons[weaponIndex].fixed_dd_value.id
+			$scope.creatorObj.fixWeapon( weaponIndex, newValue);
+			$scope.updatePage();
+		}
+
+		$scope.unlinkWeapon = function(weaponIndex, linkValue) {
+			$scope.creatorObj.decrementWeaponCount( weaponIndex);
+			$scope.updatePage();
+		}
+
+		$scope.updateOption = function( option_index ) {
+
+			for(optc = 0; optc < $scope.selected_options.length; optc++ ) {
+				if( $scope.creatorOptions[optc].short_tag ) {
+					if( $scope.selected_options[optc] == 0 )
+						$scope.creatorObj.removeOption( $scope.creatorOptions[optc].short_tag );
+					else
+						$scope.creatorObj.addOption( $scope.creatorOptions[optc].short_tag );
+				}
+			}
+			$scope.updatePage();
+		}
+
+		$scope.removeWeapon = function(weaponIndex) {
+			$scope.creatorObj.removeWeapon( weaponIndex );
+			$scope.updatePage();
+		}
+
+		$rootScope.closeDialogs = function() {
+			$rootScope.newDialogOpen = false;
+			$rootScope.loadDialogOpen = false;
+			$rootScope.saveDialogOpen = false;
+			$rootScope.importDialogOpen = false;
+			$rootScope.exportDialogOpen = false;
+			$rootScope.optionsDialogOpen = false;
+		}
+
+		$rootScope.newDialog = function() {
+
+			$rootScope.closeDialogs();
+			$rootScope.newDialogOpen = true;
+		}
+
+		$rootScope.loadDialog = function() {
+
+			if( !localStorage[ savedItemsLocalStorageVariable ])
+				localStorage[ savedItemsLocalStorageVariable ] = "[]";
+
+			$scope.load_item = 0;
+			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+			for( sic = 0; sic < $scope.saved_items.length; sic++) {
+				$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
+			}
+
+			$rootScope.closeDialogs();
+
+			$rootScope.closeDialogs();
+			$rootScope.loadDialogOpen = true;
+		}
+		$rootScope.saveDialog = function() {
+			if( !localStorage[ savedItemsLocalStorageVariable ])
+				localStorage[ savedItemsLocalStorageVariable ] = "[]";
+
+			$scope.save_over = -1;
+			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+			for( sic = 0; sic < $scope.saved_items.length; sic++) {
+				$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
+			}
+
+			$rootScope.closeDialogs();
+			$scope.save_as_name = $scope.creatorObj.itemName;
+			$rootScope.saveDialogOpen = true;
+		}
+		$rootScope.importDialog = function() {
+			$scope.importJSON = "";
+			$rootScope.closeDialogs();
+			$rootScope.importDialogOpen = true;
+		}
+
+		$scope.updateImportData = function(importJSON) {
+			$scope.importJSON = importJSON;
+		}
+
+		$scope.importData = function(importJSON) {
+
+			localStorage[ currentItemLocalStorageVariable ] = $scope.importJSON;
+			$rootScope.closeDialogs();
+			$scope.init();
+		}
+
+		$rootScope.exportDialog = function() {
+			$scope.exportBBCode = $scope.creatorObj.exportBBCode();
+			$scope.exportJSON = $scope.creatorObj.exportJSON(true);
+			$rootScope.closeDialogs();
+			$rootScope.exportDialogOpen = true;
+		}
+		$rootScope.optionsDialog = function() {
+			$rootScope.closeDialogs();
+			$rootScope.optionsDialogOpen = true;
+		}
+
+		$scope.loadItem = function( load_item ) {
+			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+			if( $scope.saved_items[ load_item ] )
+				localStorage[ currentItemLocalStorageVariable ] = $scope.saved_items[ load_item ].data;
+
+			$rootScope.closeDialogs();
+			$scope.init();
+		}
+
+		$scope.clearCurrent = function(  ) {
+
+			localStorage[ currentItemLocalStorageVariable ] = "";
+			$rootScope.closeDialogs();
+			$scope.init();
+		}
+
+		$scope.updateLoad = function( load_item ) {
+			$scope.load_item = load_item;
+		}
+
+		$scope.updateSave = function( save_over ) {
+			$scope.save_over = save_over;
+
+		}
+
+		$scope.closeConfirmDialog = function( ) {
+			$scope.showConfirmDialog = false;
+			// reset confirm to nothing...
+			$scope.confirmDialogYes = function() {
+				$scope.showConfirmDialog = false;
+			}
+		}
+
+		$scope.confirmDialogYes = function() {
+			// empty to be replaced...
+			$scope.showConfirmDialog = false;
+		}
+
+		$scope.confirmDialogQuestion = "";
+
+		$scope.confirmDialog = function( confirmationMessage, onYes ) {
+			$scope.confirmDialogQuestion = confirmationMessage;
+			$scope.showConfirmDialog = true;
+			$scope.confirmDialogYes = onYes;
+		}
+
+		$scope.removeSavedItem = function( itemIndex ) {
+
+			$translate([
+				'CREATOR_DELETION_CONFIRMATION'
+			]).then(
+				function (translation) {
+					$scope.confirmDialog(
+						translation.CREATOR_DELETION_CONFIRMATION,
+						function() {
+							$scope.showConfirmDialog = false;
+							$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+							$scope.saved_items.splice( itemIndex, 1);
+							localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
+						}
+					);
+				}
+			);
+		}
+
+		$scope.saveItem = function( save_over, saveName ) {
+
+			if( !localStorage[ savedItemsLocalStorageVariable ])
+				localStorage[ savedItemsLocalStorageVariable ] = "[]";
+
+			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+
+			if( save_over > -1 ) {
+				$scope.saved_items[ save_over ] = $scope.makeSaveObject( saveName );
+			} else {
+				$scope.saved_items.push( $scope.makeSaveObject( saveName ));
+			}
+			localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
+
+			$rootScope.closeDialogs();
+		}
+
+		$scope.makeSaveObject = function( saveName ) {
+			save_object = {
+				name: saveName,
+				datetime: Date(),
+				type: itemType,
+				data:  $scope.creatorObj.exportJSON()
+			};
+			return save_object;
+		}
+
+		$scope.updatePage = function() {
+			$scope.creatorObj.calculate();
+
+			$scope.setSize = $scope.creatorObj.size;
+
+			$scope.creator_preview = $scope.creatorObj.createStatesBlock();
+			localStorage[ currentItemLocalStorageVariable ] = $scope.creatorObj.exportJSON();
+
+			$scope.mod_list = Array();
+			angular.extend(	$scope.mod_list, savageWorldsSciFiMods[ itemType ] );
+			for(modc = 0; modc < $scope.mod_list.length; modc++) {
+				if( $scope.mod_list[modc].name[ localStorage["users_preferred_language"] ] ) {
+					$scope.mod_list[modc].local_name = $scope.mod_list[modc].name[ localStorage["users_preferred_language"] ];
+				} else {
+					$scope.mod_list[modc].local_name = $scope.mod_list[modc].name[ "en-US" ];
+				}
+				$scope.mod_list[modc].local_mod_cost = $scope.mod_list[modc].getModCost($scope.creatorObj);
+				$scope.mod_list[modc].local_cost = $scope.creatorObj.simplify_cost($scope.mod_list[modc].getCost($scope.creatorObj));
+				$scope.mod_list[modc].local_max = $scope.mod_list[modc].getMax($scope.creatorObj);
+				$scope.mod_list[modc].currently_added = $scope.creatorObj.getModificationCount( $scope.mod_list[modc].tag );
+				if(
+					( $scope.mod_list[modc].local_max == "u" || $scope.mod_list[modc].currently_added < $scope.mod_list[modc].local_max )
+					&&
+					( $scope.mod_list[modc].local_mod_cost <= $scope.creatorObj.mods_available )
+				) {
+					if( typeof($scope.mod_list[modc].isAvailable) == "function" ) {
+						if ( $scope.mod_list[modc].isAvailable( $scope.creatorObj ) ) {
+							$scope.mod_list[modc].can_add = true;
+						} else {
+							$scope.mod_list[modc].can_add = false;
+						}
+					} else {
+						$scope.mod_list[modc].can_add = true;
+					}
+				} else {
+					$scope.mod_list[modc].can_add = false;
+				}
+
+
+				if( $scope.mod_list[modc].currently_added > 0)
+					$scope.mod_list[modc].can_remove = true;
+				else
+					$scope.mod_list[modc].can_remove = false;
+			}
+
+			// remove mods that aren't enabled or disabled by option
+			for(var modc = $scope.mod_list.length -1; modc >= 0; modc--) {
+				if(
+
+					typeof($scope.mod_list[modc].showWithOption) != "undefined"
+						&&
+					$scope.mod_list[modc].showWithOption != ""
+				) {
+					if( $scope.creatorObj.hasOption( $scope.mod_list[modc].showWithOption ) == false) {
+						$scope.mod_list.splice(modc, 1);
+					}
+
+				}
+
+				if(
+
+					typeof($scope.mod_list[modc].hideWithOption) != "undefined"
+						&&
+					$scope.mod_list[modc].hideWithOption != ""
+				) {
+					if( $scope.creatorObj.hasOption( $scope.mod_list[modc].hideWithOption ) == true ) {
+						$scope.mod_list.splice(modc, 1);
+					}
+
+				}
+			}
+
+			$translate([
+				'CREATOR_SELECT_A_SIZE'
+			]).then(
+				function (translation) {
+
+
+					$scope.size_options = Array();
+					$scope.size_selected = null;
+					$scope.setSize = 0;
+
+					default_size_object = {
+						id: 0,
+						label: "- " + translation.CREATOR_SELECT_A_SIZE + " -"
+					};
+					$scope.size_options.push( default_size_object );
+					for(sizec = 0; sizec < savageWorldsSciFiSizes[itemType].length; sizec++) {
+						if( savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]])
+							display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel[localStorage["users_preferred_language"]] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
+						else
+							display_label = savageWorldsSciFiSizes[itemType][sizec].sizeLabel["en-US"] + " - " + $scope.sizeLabel + " " + savageWorldsSciFiSizes[itemType][sizec].size;
+
+						push_object = {
+							id: savageWorldsSciFiSizes[itemType][sizec].size,
+							label: display_label
+						};
+						if( savageWorldsSciFiSizes[itemType][sizec].showWithOption )
+							push_object.showWithOption = savageWorldsSciFiSizes[itemType][sizec].showWithOption;
+						if( savageWorldsSciFiSizes[itemType][sizec].hideWithOption )
+							push_object.hideWithOption = savageWorldsSciFiSizes[itemType][sizec].hideWithOption;
+
+						$scope.size_options.push( push_object );
+						if( savageWorldsSciFiSizes[itemType][sizec].size == $scope.creatorObj.size ) {
+							$scope.size_selected = push_object;
+							$scope.setSize = $scope.creatorObj.size;
+						}
+
+
+					}
+					if( $scope.size_selected == null) {
+						$scope.size_selected = default_size_object;
+						$scope.setSize = 0;
+					}
+
+			// remove sizes that aren't enabled or disabled by option
+			for(var sizec = $scope.size_options.length -1; sizec >= 0; sizec--) {
+
+				if(
+
+					typeof($scope.size_options[sizec].showWithOption) != "undefined"
+						&&
+					$scope.size_options[sizec].showWithOption != ""
+				) {
+					if( $scope.creatorObj.hasOption( $scope.size_options[sizec].showWithOption ) == false) {
+
+						$scope.size_options.splice(sizec, 1);
+					}
+
+				}
+
+				if(
+
+					typeof($scope.size_options[sizec].hideWithOption) != "undefined"
+						&&
+					$scope.size_options[sizec].hideWithOption != ""
+				) {
+					if( $scope.creatorObj.hasOption( $scope.size_options[sizec].hideWithOption ) == true ) {
+						$scope.size_options.splice(sizec, 1);
+					}
+
+				}
+			}
+
+			});
+			$scope.available_weapons = Array();
+
+			for( weap_c = 0; weap_c < savageWorldsVehicleWeapons.length; weap_c++) {
+				if( savageWorldsVehicleWeapons[weap_c].name[ localStorage["users_preferred_language"] ] ) {
+					savageWorldsVehicleWeapons[weap_c].local_name = savageWorldsVehicleWeapons[weap_c].name[ localStorage["users_preferred_language"] ];
+				} else {
+					savageWorldsVehicleWeapons[weap_c].local_name = savageWorldsVehicleWeapons[weap_c].name[ "en-US" ];
+				}
+
+				if( savageWorldsVehicleWeapons[weap_c].name_plural[ localStorage["users_preferred_language"] ] ) {
+					savageWorldsVehicleWeapons[weap_c].local_name_plural = savageWorldsVehicleWeapons[weap_c].name_plural[ localStorage["users_preferred_language"] ];
+				} else {
+					savageWorldsVehicleWeapons[weap_c].local_name_plural = savageWorldsVehicleWeapons[weap_c].name_plural[ "en-US" ];
+				}
+
+				// if( savageWorldsVehicleWeapons[weap_c].description[ localStorage["users_preferred_language"] ] ) {
+				// 	savageWorldsVehicleWeapons[weap_c].local_description = savageWorldsVehicleWeapons[weap_c].description[ localStorage["users_preferred_language"] ];
+				// } else {
+				// 	savageWorldsVehicleWeapons[weap_c].local_description = savageWorldsVehicleWeapons[weap_c].description[ "en-US" ];
+				// }
+
+				if( savageWorldsVehicleWeapons[weap_c].classification[ localStorage["users_preferred_language"] ] ) {
+					savageWorldsVehicleWeapons[weap_c].local_classification = savageWorldsVehicleWeapons[weap_c].classification[ localStorage["users_preferred_language"] ];
+				} else {
+					savageWorldsVehicleWeapons[weap_c].local_classification = savageWorldsVehicleWeapons[weap_c].classification[ "en-US" ];
+				}
+
+				savageWorldsVehicleWeapons[weap_c].local_cost = $scope.creatorObj.simplify_cost( savageWorldsVehicleWeapons[weap_c].cost );
+				if( savageWorldsVehicleWeapons[weap_c].notes[ localStorage["users_preferred_language"] ] ) {
+					savageWorldsVehicleWeapons[weap_c].local_notes = savageWorldsVehicleWeapons[weap_c].notes[ localStorage["users_preferred_language"] ];
+				} else {
+					savageWorldsVehicleWeapons[weap_c].local_notes = savageWorldsVehicleWeapons[weap_c].notes[ "en-US" ];
+				}
+
+				savageWorldsVehicleWeapons[weap_c].can_add = true;
+				if( typeof(savageWorldsVehicleWeapons[weap_c].isAvailable) == "function") {
+					if( savageWorldsVehicleWeapons[weap_c].isAvailable( $scope.creatorObj) == false ){
+
+						savageWorldsVehicleWeapons[weap_c].can_add = false;
+					}
+				}
+
+				// change vehicleWeaponModPoints to mods_available for non power armor vehicles ;)
+
+				if( $scope.creatorObj.vehicleWeaponModPoints < parseInt(savageWorldsVehicleWeapons[weap_c].mods) ) {
+
+					savageWorldsVehicleWeapons[weap_c].can_add = false;
+				}
+
+				if( savageWorldsVehicleWeapons[weap_c].can_add ) {
+					$scope.available_weapons.push(savageWorldsVehicleWeapons[weap_c]);
+				}
+			}
+
+			$scope.available_weapons.sort(
+				function(ob1,ob2) {
+					if (ob1.local_classification > ob2.local_classification) {
+						return 1;
+					} else if (ob1.local_classification < ob2.local_classification) {
+						return -1;
+					}
+
+					// Else go to the 2nd item
+					if (ob1.mods < ob2.mods) {
+						return -1;
+					} else if (ob1.mods > ob2.mods) {
+						return 1;
+					}
+
+					// Else go to the 3nd item
+					if (ob1.local_name < ob2.local_name) {
+						return -1;
+					} else if (ob1.local_name > ob2.local_name) {
+						return 1
+					}  else { // nothing to split them
+						return 0;
+					}
+				}
+			);
+
+			$scope.selected_options = Array();
+
+			angular.extend(	$scope.creatorOptions,savageWorldsSciFiOptions[ itemType ] );
+			for(optc = 0; optc < $scope.creatorOptions.length; optc++) {
+				if( $scope.creatorObj.hasOption($scope.creatorOptions[optc].short_tag) )
+					$scope.selected_options[optc] = true;
+				else
+					$scope.selected_options[optc] = false;
+			}
+
+			$scope.installed_weapons = $scope.creatorObj.selected_weapons;
+			for(weap_c = 0; weap_c < $scope.installed_weapons.length; weap_c++) {
+				if( $scope.installed_weapons[weap_c].name[ localStorage["users_preferred_language"] ] ) {
+					$scope.installed_weapons[weap_c].local_name = $scope.installed_weapons[weap_c].name[ localStorage["users_preferred_language"] ];
+				} else {
+					$scope.installed_weapons[weap_c].local_name = $scope.installed_weapons[weap_c].name[ "en-US" ];
+				}
+
+				if( $scope.installed_weapons[weap_c].name_plural[ localStorage["users_preferred_language"] ] ) {
+					$scope.installed_weapons[weap_c].local_name_plural = $scope.installed_weapons[weap_c].name_plural[ localStorage["users_preferred_language"] ];
+				} else {
+					$scope.installed_weapons[weap_c].local_name_plural = $scope.installed_weapons[weap_c].name_plural[ "en-US" ];
+				}
+
+				// if( $scope.installed_weapons[weap_c].description[ localStorage["users_preferred_language"] ] ) {
+				// 	$scope.installed_weapons[weap_c].local_description = $scope.installed_weapons[weap_c].description[ localStorage["users_preferred_language"] ];
+				// } else {
+				// 	$scope.installed_weapons[weap_c].local_description = $scope.installed_weapons[weap_c].description[ "en-US" ];
+				// }
+
+				if( $scope.installed_weapons[weap_c].classification[ localStorage["users_preferred_language"] ] ) {
+					$scope.installed_weapons[weap_c].local_classification = $scope.installed_weapons[weap_c].classification[ localStorage["users_preferred_language"] ];
+				} else {
+					$scope.installed_weapons[weap_c].local_classification = $scope.installed_weapons[weap_c].classification[ "en-US" ];
+				}
+
+
+				found_item = false
+				for(optc = 0;optc < $scope.fixed_options.length; optc++ ) {
+
+					if( $scope.fixed_options[optc].id == $scope.installed_weapons[weap_c].fixed ) {
+						$scope.installed_weapons[weap_c].fixed_dd_value = $scope.fixed_options[optc];
+						found_item = true;
+					}
+				}
+				if(!found_item)
+					$scope.installed_weapons[weap_c].fixed_dd_value = $scope.fixed_options[0];
+			}
+
+		}
+
+		$scope.init();
+	}
+
+];
+angular.module("webApp").controller(
+	"scifiWalkerController",
+	scifiwalkerArray
+);
+
+angular.module("cordovaApp").controller(
+	"scifiWalkerController",
+	scifiwalkerArray
+);
+
+var scifiworldArray = [
+	function() {
+
+	}
+];
+angular.module("webApp").controller(
+	"scifiWorldController",
+	scifiworldArray
+);
+
+angular.module("cordovaApp").controller(
+	"scifiWorldController",
+	scifiworldArray
+);
+var settingsArray = [
+	'$rootScope',
+	'$translate',
+	'$scope',
+	'$route',
+	function ($rootScope, $translate,  $scope, $route) {
+		$rootScope.showSciFiCreatorMenu = false;
+		$rootScope.showChargenMenu = false;
+
+		$translate(['APP_TITLE', 'GENERAL_SETTINGS']).then(function (translation) {
+			$rootScope.title_tag = translation.GENERAL_SETTINGS + " | " + translation.APP_TITLE;
+			$rootScope.subtitle_tag = translation.GENERAL_SETTINGS;
+		});
+
+
+		$scope.available_languages = Array();
+		$scope.users_language = {};
+		for( lang_count = 0; lang_count < availableLanguages.length; lang_count++) {
+			if( availableLanguages[lang_count].active ) {
+				language_object = {
+					id: availableLanguages[lang_count].short_code,
+					label: availableLanguages[lang_count].native_name
+				};
+				$scope.available_languages.push(
+					language_object
+				);
+				if(localStorage["users_preferred_language"] == availableLanguages[lang_count].short_code ) {
+					$scope.users_language = language_object;
+					$scope.background_image_url = "url(images/flags/64/" + availableLanguages[lang_count].icon_file + ")";
+				}
+			}
+		}
+
+		$scope.chargen_pdf_layout = localStorage["users_chargen_pdf_layout"];
+
+		$scope.updateLanguage = function( language_selected ) {
+
+			$translate.use($scope.users_language.id);
+			localStorage["users_preferred_language"] = $scope.users_language.id;
 			for( lang_count = 0; lang_count < availableLanguages.length; lang_count++) {
 				if( availableLanguages[lang_count].active ) {
-					language_object = {
-						id: availableLanguages[lang_count].short_code,
-						label: availableLanguages[lang_count].native_name
-					};
-					$scope.available_languages.push(
-						language_object
-					);
 					if(localStorage["users_preferred_language"] == availableLanguages[lang_count].short_code ) {
-						$scope.users_language = language_object;
 						$scope.background_image_url = "url(images/flags/64/" + availableLanguages[lang_count].icon_file + ")";
 					}
 				}
 			}
 
-			$scope.updateLanguage = function( language_selected ) {
-
-				$translate.use($scope.users_language.id);
-				localStorage["users_preferred_language"] = $scope.users_language.id;
-				for( lang_count = 0; lang_count < availableLanguages.length; lang_count++) {
-					if( availableLanguages[lang_count].active ) {
-						if(localStorage["users_preferred_language"] == availableLanguages[lang_count].short_code ) {
-							$scope.background_image_url = "url(images/flags/64/" + availableLanguages[lang_count].icon_file + ")";
-						}
-					}
-				}
-
-				$route.reload();
-			}
-
-			// $scope.change_language = function (key) {
-			// 	$translate.use(key);
-			// 	localStorage["users_preferred_language"] = key;
-
-			// 	$route.reload();
-			// };
-
+			$route.reload();
 		}
-	]
+
+		$scope.updateChargenPDF = function( pdf_selected ) {
+			//console.log( "updateChargenPDF", pdf_selected );
+			localStorage["users_chargen_pdf_layout"] = pdf_selected;
+			$scope.chargen_pdf_layout = pdf_selected;
+			$route.reload();
+		}
+
+		// $scope.change_language = function (key) {
+		// 	$translate.use(key);
+		// 	localStorage["users_preferred_language"] = key;
+
+		// 	$route.reload();
+		// };
+
+	}
+];
+angular.module("webApp").controller(
+	"settingsController",
+	settingsArray
 );
 
-angular.module("baseApp").controller(
+angular.module("cordovaApp").controller(
+	"settingsController",
+	settingsArray
+);
+
+
+var welcomeArray = [
+	'$rootScope',
+	'$translate',
+	'$scope',
+	function ($rootScope, $translate, $scope) {
+		$rootScope.showSciFiCreatorMenu = false;
+		$rootScope.showChargenMenu = false;
+		$translate(['APP_TITLE', 'INDEX_WELCOME']).then(function (translation) {
+			$rootScope.title_tag = translation.INDEX_WELCOME + " | " + translation.APP_TITLE;
+			$rootScope.subtitle_tag = translation.INDEX_WELCOME;
+		});
+	}
+];
+angular.module("webApp").controller(
 	"welcomeController",
-	[
-		'$rootScope',
-		'$translate',
-		'$scope',
-		function ($rootScope, $translate, $scope) {
-			$rootScope.showSciFiCreatorMenu = false;
-			$rootScope.showChargenMenu = false;
-			$translate(['APP_TITLE', 'INDEX_WELCOME']).then(function (translation) {
-				$rootScope.title_tag = translation.INDEX_WELCOME + " | " + translation.APP_TITLE;
-				$rootScope.subtitle_tag = translation.INDEX_WELCOME;
-			});
-		}
-	]
+	welcomeArray
 );
+
+angular.module("cordovaApp").controller(
+	"welcomeController",
+	welcomeArray
+);
+
 
 /*
 
@@ -8308,16 +10351,12 @@ savageWorldsEdges = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Atlanteans are generally more intelligent than the other races of their world. They start with a d6 in Smarts rather than a d4.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'atlantean-advanced-civilization',
+	 page: 'p20',
 	 racial: 1,
 	 reselectable: 0,
 	 book: 1,
@@ -8332,16 +10371,12 @@ charObject.boostAttribute("smarts");
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Elves are graceful and agile. They start with a d6 in Agility instead of a d4.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'elf-agile',
+	 page: 'p20',
 	 racial: 1,
 	 reselectable: 0,
 	 book: 1,
@@ -8357,16 +10392,12 @@ charObject.boostAttribute("agility",1);
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Rakashans have the feline grace of their ancestors. They start with a d6 Agility attribute instead of a d4',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'rakasha-agile',
+	 page: 'p21',
 	 racial: 1,
 	 reselectable: 0,
 	 book: 1,
@@ -8381,16 +10412,12 @@ charObject.boostAttribute("agility", 1);
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Atlanteans live in and breathe water. They cannot drown in water, move at full Swimming skill, and get a free d6 Swimming.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'atlantean-aquatic',
+	 page: 'p20',
 	 racial: 1,
 	 reselectable: 0,
 	 book: 1,
@@ -8405,30 +10432,24 @@ charObject.addRacialSkill("SKILL_SWIMMING", 2);
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Rakashans have retractable claws that do Str+d6 damage and grant +2 to Climbing rolls on all but completely sheer surfaces.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'rakasha-claws',
+	 page: 'p21',
 	 racial: 1,
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.naturalWeapons = true;
+}
 },
 {
 	 name: {
 		 'en-US': 'Extra Edge',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'This edge gives an extra edge...',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -8437,6 +10458,7 @@ charObject.addRacialSkill("SKILL_SWIMMING", 2);
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'extra-edge',
+	 page: '',
 	 racial: 1,
 	 reselectable: 0,
 	 book: 1,
@@ -8451,8 +10473,21 @@ charEffect: function( characterObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Avions can fly at their basic Pace and even “run” while flying. It costs 2” of Pace to gain 1” of height.',
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'angel-flight',
+	 page: '',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 1,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Flight',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -8461,6 +10496,7 @@ charEffect: function( characterObject ) {
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'avion-flight',
+	 page: 'p20',
 	 racial: 1,
 	 reselectable: 0,
 	 book: 1,
@@ -8473,16 +10509,12 @@ charEffect: function( characterObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Half-folk draw one additional Benny per game session. This may be combined with the Luck and Great Luck Edges.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'half-folk-fortunate',
+	 page: 'p21',
 	 racial: 1,
 	 reselectable: 0,
 	 book: 1,
@@ -8495,16 +10527,12 @@ charEffect: function( characterObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Half-orcs can see in the infrared spectrum, halving attack penalties (round down) for bad lighting.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'half-orc-infravision',
+	 page: 'p21',
 	 racial: 1,
 	 reselectable: 0,
 	 book: 1,
@@ -8514,11 +10542,6 @@ charEffect: function( characterObject ) {
 {
 	 name: {
 		 'en-US': 'Low Light Vision',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Dwarven eyes are accustomed to the dark of the underearth. They ignore attack penalties for Dim and Dark lighting.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -8527,6 +10550,7 @@ charEffect: function( characterObject ) {
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'dwarf-low-light-vision',
+	 page: 'p20',
 	 racial: 1,
 	 reselectable: 0,
 	 book: 1,
@@ -8536,11 +10560,6 @@ charEffect: function( characterObject ) {
 {
 	 name: {
 		 'en-US': 'Low Light Vision',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Elven eyes amplify light like a cat\'s, allowing them to see in the dark. Elves ignores attack penalties for Dim and Dark lighting.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -8549,6 +10568,7 @@ charEffect: function( characterObject ) {
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'elf-low-light-vision',
+	 page: 'p20',
 	 racial: 1,
 	 reselectable: 0,
 	 book: 1,
@@ -8561,16 +10581,12 @@ charEffect: function( characterObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Rakashan eyes amplify light. They can see in the dark and ignore attack penalties for Dim and Dark lighting.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'rakasha-low-light-vision',
+	 page: 'p21',
 	 racial: 1,
 	 reselectable: 0,
 	 book: 1,
@@ -8583,30 +10599,24 @@ charEffect: function( characterObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'The tails, claws, and teeth of saurians allow them to tail slap, claw, or bite in combat for Str+d4 damage.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'saurian-natural-weapons',
+	 page: 'p21',
 	 racial: 1,
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.naturalWeapons = true;
+}
 },
 {
 	 name: {
 		 'en-US': 'Programming',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Androids begin with a free d6 in one skill, representing their original programmed role.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -8615,6 +10625,7 @@ charEffect: function( characterObject ) {
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'android-programming',
+	 page: '',
 	 racial: 1,
 	 reselectable: 0,
 	 book: 1,
@@ -8630,16 +10641,12 @@ charEffect: function( characterObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Saurians\' lizard tongues can “taste” the air, giving them +2 to Notice rolls. They are always considered active guards for Stealth checks.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'saurian-senses',
+	 page: 'p21',
 	 racial: 1,
 	 reselectable: 0,
 	 book: 1,
@@ -8652,16 +10659,12 @@ charEffect: function( characterObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Half-folk are generally optimistic beings. They start with a d6 Spirit instead of a d4.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'half-folk-spirited',
+	 page: 'p21',
 	 racial: 1,
 	 reselectable: 0,
 	 book: 1,
@@ -8676,16 +10679,12 @@ charObject.boostAttribute("spirit", 1);
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Half-orcs have some of the strength of their ancestry. They start with a d6 Strength attribute instead of a d4',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'half-orc-strong',
+	 page: 'p21',
 	 racial: 1,
 	 reselectable: 0,
 	 book: 1,
@@ -8700,16 +10699,12 @@ charObject.boostAttribute("strength", 1);
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'The pressure of their deep homes make Atlanteans tougher than most. Increase Toughness by 1.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'atlantean-tough',
+	 page: 'p20',
 	 racial: 1,
 	 reselectable: 0,
 	 book: 1,
@@ -8725,16 +10720,12 @@ charObject.derived.toughness++;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Dwarves are stout and tough. They start with a d6 Vigor instead of a d4',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'dwarf-tough',
+	 page: 'p20',
 	 racial: 1,
 	 reselectable: 0,
 	 book: 1,
@@ -8745,16 +10736,32 @@ charObject.boostAttribute("vigor",1);
 },
 {
 	 name: {
-		 'en-US': 'Ace',
+		 'en-US': 'Unnatural',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Aces are soecual pilots and drivers who feel more comfortable behind the wheel, throttle, or flight stick than on their own two feet.,Aces add +2 to Boating, Driving, and Piloting rolls. In addition, they may also spend Bennies to make Soak rolls for any vehicle or vessel they control. This is a Boating, Driving, or Piloting roll at -2 (cancelling their usual +2). Each success and raise negates a wound and any critical hit that would have resulted from it.',
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'android-unnatural',
+	 page: '',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 1,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Ace',
 	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'ace',
+	 page: 'p41',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -8772,14 +10779,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Acrobat',
 	},
-	 description: {
-		 'en-US': 'Those who have formal training in the acrobatic arts or are naturally agile may take this Edge. It adds +2 to all Agility rolls made to perform acrobatic maneuvers (including Trick maneuvers), and also adds +1 to a character\'s Parry as long as he has no encumbrance penalty.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'acrobat',
+	 page: 'p42',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -8799,14 +10804,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Alertness',
 	},
-	 description: {
-		 'en-US': 'Not much gets by your hero. He\'s very observant and perceptive, and adds +2 to his Notice rolls to hear, see, or otherwise sense the world around him.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'alertness',
+	 page: 'p35',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -8817,14 +10820,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Ambidextrous',
 	},
-	 description: {
-		 'en-US': 'Your hero is as deft with his left hand as he is with his right. Characters normally suffer a -2 penalty when performing physical tasks with the off-hand (characters are assumed to be right-handed). With this Edge, your warrior ignores the -2 penalty for using his off-hand (see page 75).',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'ambidextrous',
+	 page: 'p35',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -8844,16 +10845,12 @@ requires: function( characterObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'This is the Edge your character must purchase to have any sort of magical, psionic, or other supernatural ability. See Chapter Five for a complete description of Arcane Backgrounds.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'arcane-background',
+	 page: 'p35',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -8866,14 +10863,12 @@ charEffects: function ( charObject ){
 	 name: {
 		 'en-US': 'Arcane Resistance',
 	},
-	 description: {
-		 'en-US': 'This individual is particularly resistant to magic (including psionics, weird science, etc.), whether by nature or by heritage. He acts as if he had 2 points of Armor when hit by damage-causing arcane powers, and adds +2 to his Trait rolls when resisting opposed powers. Even friendly arcane powers must subtract this modifier to affect the resistant hero.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'arcane-resistance',
+	 page: 'p35',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -8890,15 +10885,15 @@ requires: function( characterObject) {
 {
 	 name: {
 		 'en-US': 'Arcane Resistance, Improved',
-	},
-	 description: {
-		 'en-US': 'As above but Armor and resistance are increased to 4.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 required_edge: 'arcane-resistance',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
-	 tag: 'arcane-resistance,-improved',
+	 tag: 'arcane-resistance-improved',
+	 page: 'p35',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -8909,14 +10904,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Assassin',
 	},
-	 description: {
-		 'en-US': 'Assassins are trained killers who know how to kill with deadly precision - if they can properly approach their prey. Assassins add +2 to any damage roll where they strike a foe unawares (even with ranged attacks).',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'assassin',
+	 page: 'p42',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -8934,14 +10927,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Attractive',
 	},
-	 description: {
-		 'en-US': 'It\'s no secret that beautiful people have an easier time getting their way in life. This Edge grants your beautiful or handsome character +2 to Charisma.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: 'ugly',
 	 tag: 'attractive',
+	 page: 'p35',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -8961,15 +10952,15 @@ requires: function( characterObject) {
 {
 	 name: {
 		 'en-US': 'Attractive, Very',
-	},
-	 description: {
-		 'en-US': 'Your hero is drop-dead gorgeous. His Charisma is increased to +4.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 required_edge: 'attractive',
 	 required_rank: 0,
 	 conflicts_edge: '',
-	 conflicts_hindrance: 'ugly',
-	 tag: 'attractive,-very',
+	 conflicts_hindrance: '',
+	 tag: 'attractive-very',
+	 page: 'p35',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -8982,14 +10973,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Beast Bond',
 	},
-	 description: {
-		 'en-US': 'Some individuals can exert incredible will over their animal companions. These characters may spend their own Bennies for any animals under their control, including mounts, pet dogs, familiars, and so on.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'beast-bond',
+	 page: 'p45',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9000,14 +10989,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Beast Master',
 	},
-	 description: {
-		 'en-US': 'Animals like your hero, and won\'t attack him unless he attacks them first or they are enraged for some reason. His "animal magnetism" is so great he\'s attracted a loyal animal of some sort as well. This is typically a dog, wolf, or raptor, though the GM may allow other companions if it fits the setting.,The beast is an Extra (not a Wild Card). If it should be killed, the hero finds a replacement in 2d6 days.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'beast-master',
+	 page: 'p45',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9025,14 +11012,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Berserk',
 	},
-	 description: {
-		 'en-US': 'Immediately after suffering a wound (including a Shaken result from physical damage), your hero must make a Smarts roll or go Berserk. While Berserk, his Parry is reduced by 2 but he adds +2 to all Fighting, Strength, melee damage rolls, and Toughness. The warrior ignores all wound modifiers while Berserk, but cannot use any skills, Edges, or maneuvers that require concentration, including Shooting and Taunt, but not Intimidation. Berserkers attack with reckless abandon. Anytime his Fighting die is a 1 (regardless of his Wild Die), he hits a random adjacent target (not the original target). The attack may hit friend as well as foe. If there are no other adjacent targets, the blow simply misses. The Berserker may end his rage by doing nothing (not even moving) for one full action and making a Smarts roll at -2.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'berserk',
+	 page: 'p35',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9046,16 +11031,12 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 1,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'block',
+	 page: 'p37',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9077,16 +11058,12 @@ requires: function( characterObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'As above, but the hero adds +2 to his Parry.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: 'block',
 	 required_rank: 2,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'improved-block',
+	 page: 'p37',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9098,14 +11075,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Brave',
 	},
-	 description: {
-		 'en-US': 'Those with this Edge have learned to master their fear. Or perhaps are so jaded or emotionally distant they\'ve just lost their normal "fight or flight" responses. Either way, your hero adds +2 to Fear tests. If the character is in a setting that uses Guts as a Setting Rule, it adds to that as well.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'brave',
+	 page: 'p35',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9126,14 +11101,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Brawler',
 	},
-	 description: {
-		 'en-US': 'Frequent fights with his bare hands have given this thug a powerful punch. When he hits a foe with a successful bare-handed Fighting roll, he adds +2 to his damage.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'brawler',
+	 page: 'p37',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9155,16 +11128,12 @@ requires: function( characterObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'When the bruiser gets a raise on his bare-handed Fighting attack, he rolls a d8 instead of a d6.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: 'brawler',
 	 required_rank: 1,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'bruiser',
+	 page: 'p37',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9176,14 +11145,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Brawny',
 	},
-	 description: {
-		 'en-US': 'Your bruiser is very large or perhaps just very fit. His bulk resists damage better than most and adds +1 to his Toughness. In addition, the character can carry more than most proportional to his Strength. He can carry 8 times his Strength in pounds without penalty instead of the usual 5 times his Strength.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: 'obese',
 	 tag: 'brawny',
+	 page: 'p36',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9207,14 +11174,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Champion',
 	},
-	 description: {
-		 'en-US': 'Champions are holy (or unholy) men and women chosen to fight for a particular deity or religion. Most are pious souls ready and willing to lay down their lives for a greater cause, but some may have been born into the role and follow their path with some reluctance.,Champions fight the forces of darkness (or good). They add +2 damage when attacking supernaturally evil (or good) creatures, and have +2 Toughness when suffering damage from supernaturally evil (or good) sources, including arcane powers and the weapons, claws, teeth, etc., of such creatures.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'champion',
+	 page: 'p42',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9235,36 +11200,35 @@ requires: function( characterObject) {
 {
 	 name: {
 		 'en-US': 'Charismatic',
-	},
-	 description: {
-		 'en-US': 'Your hero has learned how to work with others, even those who might be somewhat opposed to him or his efforts. This adds +2 to his Charisma.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'charismatic',
+	 page: 'p44',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObject) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 8
+		charObject.displayAttributes.spirit.value >= 8
 	) {
 		return true;
 	}
 		return false;
-	}
+},
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.derived.charisma = charObject.derived.charisma  + 2;
+}
 },
 {
 	 name: {
 		 'en-US': 'Combat Reflexes',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Your adventurer recovers quickly from shock and trauma. He adds +2 to his Spirit roll when attempting to recover from being Shaken.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -9273,6 +11237,7 @@ requires: function( characterObject) {
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'combat-reflexes',
+	 page: 'p37',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9284,14 +11249,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Command',
 	},
-	 description: {
-		 'en-US': 'Command is the ability to give clear instructions to surrounding allies and enforce your hero\'s will upon them. This makes your character\'s compatriots more willing to fight on despite their wounds, and so adds +1 to their Spirit rolls to recover from being Shaken',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'command',
+	 page: 'p40',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9311,14 +11274,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Command Presence',
 	},
-	 description: {
-		 'en-US': 'A booming voice, effective commands, natural charisma, or simple training results in a much more effective combat element. At the center of that element is the officer in command. A hero with this Edge has a "command radius" of 10" instead of the usual 5".',
-	},
 	 required_edge: 'command',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'command-presence',
+	 page: 'p40',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9332,16 +11293,12 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'A simple phrase uttered by a great leader can sometimes have momentous results. A leader with this ability can inspire his men to bloody fervor by yelling a motto, slogan, or other inspirational words. Those in the command radius add +1 to their Fighting damage rolls.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: 'command',
 	 required_rank: 2,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'fervor',
+	 page: 'p40',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9363,16 +11320,12 @@ requires: function( characterObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: 'command',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'hold-the-line',
+	 page: 'p40',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9392,14 +11345,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Inspire',
 	},
-	 description: {
-		 'en-US': 'Leaders with exceptional reputations and experience in battle inspire the soldiers around them. They add +2 to Spirit rolls when recovering from being Shaken (this includes the original +1 bonus for the Command Edge).',
-	},
 	 required_edge: 'command',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'inspire',
+	 page: 'p40',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9413,16 +11364,12 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: 'command',
 	 required_rank: 2,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'leader-of-men',
+	 page: 'p40',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9434,14 +11381,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Natural Leader',
 	},
-	 description: {
-		 'en-US': 'This Edge signifies a special link between a leader and his men. With it, he may share his Bennies with any troops under his command.',
-	},
 	 required_edge: 'command',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'natural-leader',
+	 page: 'p40',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9463,16 +11408,12 @@ requires: function( characterObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'The leader has a natural grasp of small unit tactics and can frequently take advantage of a rapidly changing situation.,At the beginning of a fight and before any Action Cards are dealt, the hero makes a Knowledge (Battle) roll. For each success and raise he receives one Action Card. These are kept separate from his regular Action Cards and are not placed back into the deck until used or the combat ends (including Jokers!). At the start of any round, the hero may give one or more of these extra cards to his allies, whether Extras or Wild Cards, who then use it as their Action Card for the round in place of the one dealt them. This allows Extras to operate independently of Wild Card characters for one round if they receive their own card.,Only one character per encounter may use this edge.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: 'command',
 	 required_rank: 1,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'tactician',
+	 page: 'p40',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9492,14 +11433,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Common Bond',
 	},
-	 description: {
-		 'en-US': 'This Edge signifies a special link between close companions-such as a typical party. It doesn\'t matter whether or not the characters get along perfectly or not, they\'ve just formed a close and common bond during their epic adventures.,A character with this Edge may freely give his Bennies to any other Wild Card he can communicate with. This represents the character giving his verbal or spiritual support to the ally. The player should say what his character is doing to give the support. The gesture could be as complex as a rousing speech, or as simple as a knowing nod.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'common-bond',
+	 page: 'p44',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9517,14 +11456,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Connections',
 	},
-	 description: {
-		 'en-US': 'Whether it\'s to the Feds, the cops, the Mob, or some big corporation, your heroine knows someone on the inside-someone who is willing to lend her a hand on occasion (usually once per game session).,This Edge may be taken more than once, but each time must be applied to a different organization. The GM should also ensure the organization is limited to a single, unique organization. A hero may, for instance, have Connections (US Army), but he shouldn\'t have a blanket Connections (Military).,To use a character\'s Connections requires that she first get in touch with one of her contacts. This requires a Streetwise roll. Failure means the particular contact wasn\'t available, their cell phone wasn\'t on, or they were otherwise tied up.,Once in contact, the hero must make a Persuasion roll. The GM should feel free to modify both the Persuasion roll and any results based on the circumstances.,A failure indicates the heroine\'s contacts just couldn\'t come through this time, or perhaps just weren\'t persuaded that their help was really necessary.,On a success, the contact might share information, but won\'t do anything too risky to help. On a raise, the contact is willing to leak sensitive information, but stops short of outright betrayal.,Two or more raises means the heroine has pushed the right buttons and can count on serious help. The Connection will risk serious consequences for the heroine, and if she needs financial assistance, may provide more than he\'s comfortable with. If the heroine asks for muscle, the contact delivers either one expert (a safe- cracker, wheel-man, security expert, etc.) or five average fighter-types for the contact\'s particular organization (a mob boss sends five thugs, the Army sends five infantrymen, etc.).',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'connections',
+	 page: 'p44',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9537,16 +11474,12 @@ requires: function( characterObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 1,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'counterattack',
+	 page: 'p37',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9560,16 +11493,12 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: 'counterattack',
 	 required_rank: 2,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'improved-counterattack',
+	 page: 'p37',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9581,14 +11510,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Danger Sense',
 	},
-	 description: {
-		 'en-US': 'Your hero can sense when something bad is about to happen. Anytime he\'s about to be the victim of a surprise attack, ambush, or other nasty surprise, he gets a Notice roll at -2 just before the attack or event occurs. If successful, the character knows something is about to happen and may take appropriate action against it. This means the hero is on Hold for the first round of a combat. Should the hero fail his roll, he still follows the normal Surprise rules, if applicable (see page 73).',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'danger-sense',
+	 page: 'p45',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9601,16 +11528,12 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'The character doubles his total damage when making a successful Shooting or Throwing attack this round.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 1,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'dead-shot',
+	 page: 'p45',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9627,14 +11550,12 @@ return false;
 	 name: {
 		 'en-US': 'Dodge',
 	},
-	 description: {
-		 'en-US': 'Some crafty types know how to get out of harm\'s way. This Edge allows them to use cover, movement, and concealment to make them harder to hit. Unless they are the victim of a surprise attack and taken completely unaware, attackers must subtract 1 from their ranged attack rolls when targeting them (even in close combat). Characters who attempt to evade area effect attacks may add +1 to their Agility roll as well (when allowed).',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'dodge',
+	 page: 'p37',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9656,16 +11577,12 @@ requires: function( characterObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'As above but attackers subtract 2 from their attack rolls, and the character adds +2 to evade area effect weapons when allowed.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: 'dodge',
 	 required_rank: 2,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'improved-dodge',
+	 page: 'p37',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9677,14 +11594,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Elan',
 	},
-	 description: {
-		 'en-US': 'When this spirited hero puts his heart into something it tends to pay off in big ways. When you spend a Benny on a Trait roll (including Soak rolls), add +2 to the final total.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'elan',
+	 page: 'p38',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9704,14 +11619,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Extraction',
 	},
-	 description: {
-		 'en-US': 'When a character normally withdraws from a melee, his attacker gets a free attack before he does so-a very dangerous proposition for most. Your hero is adept at retreating from an engagement.,Make an Agility roll. If successful, one opponent doesn\'t get a free attack anytime you disengage (see page 87).',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'extraction',
+	 page: 'p38',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9731,14 +11644,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Improved Extraction',
 	},
-	 description: {
-		 'en-US': 'As above but if you succeed with a raise all opponents currently in melee with the character lose their free attack as your warrior withdraws.',
-	},
 	 required_edge: 'extraction',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'improved-extraction',
+	 page: 'p38',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9750,14 +11661,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Fast Healer',
 	},
-	 description: {
-		 'en-US': 'Some individuals just seem to heal faster than others. Those with this blessing add +2 to Vigor rolls when checking for natural healing. See page 78 for complete rules on Healing.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'fast-healer',
+	 page: 'p36',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9778,14 +11687,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'First Strike',
 	},
-	 description: {
-		 'en-US': 'Once per turn the hero (if not Shaken) gets a free Fighting attack against a single foe who moves adjacent to him. This automatically interrupts the opponent\'s action and does not cost the hero his action if he is on Hold or has not yet acted this round.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'first-strike',
+	 page: 'p38',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9807,16 +11714,12 @@ requires: function( characterObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'As above but the hero may make one free attack against each and every foe who moves adjacent to him.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: 'first-strike',
 	 required_rank: 3,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'improved-first-strike',
+	 page: 'p38',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9828,14 +11731,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Fleet-Footed',
 	},
-	 description: {
-		 'en-US': 'The hero\'s Pace is increased by +2 and he rolls a d10 instead of a d6 when running.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'fleet-footed',
+	 page: 'p36',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9856,14 +11757,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Florentine',
 	},
-	 description: {
-		 'en-US': 'A character trained to fight "Florentine" is a master at wielding two weapons at once. He adds +1 to his Fighting rolls versus an opponent with a single weapon and no shield. In addition, opponents subtract 1 from any "gang up" bonuses they would normally get against the fighter as his two flashing blades parry their blows.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'florentine',
+	 page: 'p38',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9885,16 +11784,12 @@ requires: function( characterObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 4,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'followers',
+	 page: 'p46',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9907,16 +11802,12 @@ requires: function( characterObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 1,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'frenzy',
+	 page: 'p38',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9930,16 +11821,12 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: 'frenzy',
 	 required_rank: 2,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'improved-frenzy',
+	 page: 'p38',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9951,14 +11838,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Gadgeteer',
 	},
-	 description: {
-		 'en-US': 'These mechanical gurus are so technically savvy they can quickly build a machine to handle nearly any situation.,Once per game session, a gadgeteer can create a "jury-rigged" device from spare parts. The device functions just like any other Weird Science device, and uses any power available to Weird Scientists in that setting (though this is still subject to Rank restrictions). It has half the inventor\'s Power Points, and once these are used up, the gadget burns out and does not recharge. The inventor must have access to some parts and a reasonable amount of time (GM\'s call, but at least 1d20 minutes) to create the gizmo.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'gadgeteer',
+	 page: 'p42',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9976,14 +11861,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Giant Killer',
 	},
-	 description: {
-		 'en-US': 'The bigger they are, the harder they are to kill. At least for most. But your hero knows how to find the weak points in massive creatures.,Your hero does +1d6 damage when attacking creatures three sizes or more larger than himself. An ogre (Size +3) with this ability, for example, gains the bonus only against creatures of Size +6 or greater. A human Giant Killer (Size 0), can claim the bonus against the ogre, however.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'giant-killer',
+	 page: 'p38',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -9997,16 +11880,12 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'This adventurer has more lives than a truckload of cats. When forced to make Vigor rolls due to Incapacitation, he may ignore his wound modifiers. This only applies to Vigor rolls called for to resist Incapacitation or death (see page 77). He still suffers from wound modifiers for other Trait rolls normally.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'hard-to-kill',
+	 page: 'p38',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10028,16 +11907,12 @@ requires: function( characterObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: 'hard-to-kill',
 	 required_rank: 2,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'harder-to-kill',
+	 page: 'p39',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10049,14 +11924,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Healer',
 	},
-	 description: {
-		 'en-US': 'A hero with this Edge adds +2 to all Healing rolls (including natural healing rolls for his own wounds), whether natural or magical in nature. Up to five companions traveling with a Healer add the bonus to their natural healing rolls as well',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'healer',
+	 page: 'p45',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10073,15 +11946,15 @@ requires: function( characterObject) {
 {
 	 name: {
 		 'en-US': 'Holy/Unholy Warrior',
-	},
-	 description: {
-		 'en-US': 'Acolytes, clerics, paladins, holy slayers, and other avatars of the gods are frequently tasked with battling the forces of evil in the mortal world. This Edge gives them a slight advantage against such foes.,As an action, a priest or other holy person may call upon his chosen deity to repulse supernaturally evil creatures, such as the undead, demons, and the like. It also works on evil characters with the Arcane Background (Miracles) Edge.,Repulsing evil costs 1 Power Point and has a range of the character\'s Spirit. Targeted creatures within that range must make a Spirit roll. Failure means the creature is Shaken; a 1 means it is destroyed. Wild Cards suffer an automatic Wound instead.,A character may also be an Unholy Warrior working for the forces of evil. In this case, he repulses good creatures, such as angels, paladins, or good characters with Arcane Background (Miracles).',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
-	 tag: 'holy/unholy-warrior',
+	 tag: 'holy-unholy-warrior',
+	 page: 'p42',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10101,16 +11974,12 @@ requires: function( characterObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 1,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'improvisational-fighter',
+	 page: 'p39',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10130,14 +11999,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Investigator',
 	},
-	 description: {
-		 'en-US': 'Investigators have spent a great deal of time researching ancient legends, working the streets, or deducing devilish mysteries. Some of these heroes are actual Private Investigators for hire while others may be sleuthing mages in a fantasy world or perhaps inquisitive college professors stumbling upon Things Man Was Not Meant to Know in the dark of night. Investigators add +2 to Investigation and Streetwise rolls, as well as Notice rolls made to search through evidence.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'investigator',
+	 page: 'p43',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10155,14 +12022,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Jack of All Trades',
 	},
-	 description: {
-		 'en-US': 'Through advanced schooling, book-learning, computer-enhanced skill programs, or just amazing intuitive perception, your hero has a talent for picking up skills on the fly. There is little he can\'t figure out given a little time and a dash of luck.,Any time he makes an unskilled roll for a Smarts- based skill, he may do so at d4 instead of the usual d4-2.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'jack-of-all-trades',
+	 page: 'p43',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10180,14 +12045,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Killer Instinct',
 	},
-	 description: {
-		 'en-US': 'This hero hates losing. If he ties on an opposed roll of any sort, he wins. In addition, if his skill die on an opposed skill roll is a 1, he can reroll it (but must keep the second result, even if it\'s another 1).',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'killer-instinct',
+	 page: 'p39',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10201,16 +12064,12 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Fighters who can keep their cool when everyone else is running for cover are deadly customers in combat.,A hero with this Edge draws an additional Action Card in combat and acts on the best of the draw.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 1,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'level-headed',
+	 page: 'p39',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10230,14 +12089,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Improved Level Headed',
 	},
-	 description: {
-		 'en-US': 'As above but the hero draws 3 cards.',
-	},
 	 required_edge: 'level-headed',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'improved-level-headed',
+	 page: 'p39',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10249,14 +12106,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Linguist',
 	},
-	 description: {
-		 'en-US': 'The character has an ear for languages and a rare talent for recognizing similarities between them. A character with this Edge starts with a number of languages equal to his Smarts die, and can make a Smarts roll at -2 to make herself understood in any language or dialect she has heard spoken for at least a week.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'linguist',
+	 page: 'p36',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10273,16 +12128,12 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'liquid-courage',
+	 page: 'p45',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10300,14 +12151,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Luck',
 	},
-	 description: {
-		 'en-US': 'The adventurer seems to be blessed by fate, karma, the gods, or whatever external forces he believes in (or believe in him!) He draws one extra Benny at the beginning of each game session, allowing him to succeed at important tasks more often than most, and survive incredible dangers.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: 'bad-luck',
 	 tag: 'luck',
+	 page: 'p36',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10319,14 +12168,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Great Luck',
 	},
-	 description: {
-		 'en-US': 'The player draws two extra Bennies instead of one at the start of each session.',
-	},
 	 required_edge: 'luck',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: 'bad-luck',
 	 tag: 'great-luck',
+	 page: 'p36',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10340,16 +12187,12 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: 'luck',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'scavenger',
+	 page: 'p45',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10362,16 +12205,12 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'The hero excels at taking controlled, measured shots. If he does not move in a turn, he may fire as if he took the Aim maneuver. Marksman may never be used with a Rate of Fire greater than 1.,Marksman works with both Shooting and Throwing.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 1,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'marksman',
+	 page: 'p39',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10383,14 +12222,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Martial Artist',
 	},
-	 description: {
-		 'en-US': 'This character is highly trained in hand-to-hand fighting. He is never considered unarmed in combat and so is never subject to the Unarmed Defender rule (page 87). With a successful unarmed attack, he adds +d4 to his Strength roll (as if he were using a small weapon).',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'martial-artist',
+	 page: 'p39',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10404,16 +12241,12 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'The character now adds +d6 to his bare- handed damage.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: 'martial-artist',
 	 required_rank: 2,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'improved-martial-artist',
+	 page: 'p39',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10427,16 +12260,12 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'The warrior is deadly with his hands. He adds +2 to his bare-handed damage every time he takes this Edge, up to a maximum of five times for a total damage bonus of +10.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: 'improved-martial-artist',
 	 required_rank: 4,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'martial-arts-master',
+	 page: 'p46',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10447,14 +12276,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'McGyver',
 	},
-	 description: {
-		 'en-US': 'This character can improvise something when the need for a tool arises. He suffers no negative penalties on Trait rolls for lack of equipment in most situations.,In addition, given a few simple tools, props, or devices, he can generally rig devices to help escape from death-traps, weapons to match some bizarre need, or otherwise create something that\'s needed when such a thing isn\'t actually present. The extent of this is completely up to the Game Master, but creativity should be rewarded, particularly in dire situations where few other answers are possible.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'mcgyver',
+	 page: 'p43',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10472,14 +12299,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Mentalist',
 	},
-	 description: {
-		 'en-US': 'Mentalists are masters of mind control and psionics. Some are pulp heroes, others are trained in secret government academies to root out traitors. Their frequent toying with human minds gives them a +2 on any opposed Psionics roll, whether they are using their powers against a foe or are trying to defend against a rival Mentalist.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'mentalist',
+	 page: 'p42',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10499,16 +12324,12 @@ requires: function( characterObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'The character doubles his total damage when making a successful Fighting attack this round.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'mighty-blow',
+	 page: 'p45',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10524,14 +12345,12 @@ return false;
 	 name: {
 		 'en-US': 'Mr. Fix It',
 	},
-	 description: {
-		 'en-US': 'The inventor adds +2 to Repair rolls. With a raise, he halves the time normally required to fix something. This means that if a particular Repair job already states that a raise repairs it in half the time, a Mr. Fix It could finish the job in one-quarter the time with a raise.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'mr.-fix-it',
+	 page: 'p42',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10551,16 +12370,12 @@ requires: function( characterObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Your hero has learned to fight on through the most intense pain. He may ignore 1 point of wound penalties.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'nerves-of-steel',
+	 page: 'p39',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10580,14 +12395,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Improved Nerves of Steel',
 	},
-	 description: {
-		 'en-US': 'The hero ignores 2 points of wound penalties.',
-	},
 	 required_edge: 'nerves-of-steel',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'improved-nerves-of-steel',
+	 page: 'p39',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10601,32 +12414,31 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'An arcane character may learn a new power by choosing this Edge (which may be taken multiple times). He may choose from any powers normally available to his particular Arcane Background.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'new-power',
+	 page: 'p41',
 	 racial: 0,
 	 reselectable: 1,
 	 book: 1,
 	 child: 0,
 charEffects: function ( charObject ) {
 			charObject.powers_available++;
-		}
+		},
+requires: function( charObject) {
+if( charObject.usesSPCCreation == false) {
+if( charObject.hasArcaneBackground)
+return true;
+else
+return false;
+} 
+}
 },
 {
 	 name: {
 		 'en-US': 'No Mercy',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'The character may spend a Benny to reroll any one damage roll, including those made for area effect attacks.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -10635,6 +12447,7 @@ charEffects: function ( charObject ) {
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'no-mercy',
+	 page: 'p39',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10646,14 +12459,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Noble',
 	},
-	 description: {
-		 'en-US': 'Those born of noble blood have many perks in life, but often have just as many responsibilities. Nobles have high status in their societies, are entitled to special treatment from their foes, gain +2 Charisma, and also have the Rich Edge. This gives the hero several Edges for the price of one, but the responsibilities more than offset the additional perks. Nobles often have troops under their control, as well as land, a family home, and other assets. All of this must be determined by the GM, and balanced by the grave responsibilities the character faces. As an example, a character in a fantasy campaign might have a company of swordsmen, a small keep, and even a magical sword he inherited from his father. But he also has an entire region to manage, criminals to judge, justice to mete out, and a jealous neighbor who covets his lands and constantly plots against him at court.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'noble',
+	 page: 'p36',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10667,22 +12478,32 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Wizards, weird scientists, and other arcane types always want more power. This Edge grants them an additional 5 Power Points.,Power Points may be selected more than once, but only once per Rank.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'power-points',
+	 page: 'p41',
 	 racial: 0,
 	 reselectable: 1,
 	 book: 1,
 	 child: 0,
 charEffects: function ( charObject ) {
 	charObject.powerPointsAvailable += 5;
+	charObject.spcExtraPowerPoints += 5;
+},
+requires: function( charObject) {
+if( charObject.usesSPCCreation == false) {
+if( charObject.hasArcaneBackground)
+return true;
+else
+return false;
+} else {
+if( charObject.SPCRisingStars == true  )
+     return true;
+else
+    return false;
+}
 }
 },
 {
@@ -10691,16 +12512,12 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'This Edge is for those characters with Arcane Backgrounds. When dealt a Joker, the character recovers 2d6 Power Points. He may not exceed his usual limit.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 1,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'power-surge',
+	 page: 'p45',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10713,16 +12530,12 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'The character is an expert at a particular skill or attribute (his choice). That Trait becomes d12+1. This Edge may be selected more than once, but it may never be applied to the same skill or attribute twice.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 4,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'professional',
+	 page: 'p46',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10735,16 +12548,12 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'As above, but the Trait increases to d12+2.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: 'professional',
 	 required_rank: 4,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'expert',
+	 page: 'p46',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10757,16 +12566,12 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: 'expert',
 	 required_rank: 4,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'master',
+	 page: 'p46',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10777,14 +12582,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Quick Draw',
 	},
-	 description: {
-		 'en-US': 'This Edge allows a hero to draw a weapon as a free action (and thus ignore the usual -2 multi-action penalty if he chooses to fire as well). If the character must make an Agility roll to draw a weapon (see page 74), he adds +2 to the roll.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'quick-draw',
+	 page: 'p39',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10804,14 +12607,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Quick',
 	},
-	 description: {
-		 'en-US': 'Quick characters have lightning-fast reflexes and a cool head. Whenever you are dealt a 5 or lower in combat, you may discard and draw again until you get a card higher than 5. Characters with both the Level Headed and Quick Edges draw their additional card and take the best as usual. If that card is a Five or less, the Quick Edge may be used to draw a replacement until it\'s Six or higher.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'quick',
+	 page: 'p36',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10833,16 +12634,12 @@ requires: function( characterObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'This Edge allows an arcane character to regain 1 Power Point every 30 minutes.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 1,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'rapid-recharge',
+	 page: 'p41',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10862,16 +12659,12 @@ requires: function( characterObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'The character regains 1 Power Point every 15 minutes.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: 'rapid-recharge',
 	 required_rank: 2,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'improved-rapid-recharge',
+	 page: 'p41',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10882,14 +12675,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Rich',
 	},
-	 description: {
-		 'en-US': 'Whether the individual was born with a silver spoon in his mouth or earned it through hard work, he\'s got more money than most. Rich heroes start with three times the normal starting funds for the setting. If a regular income is appropriate for this setting, the hero receives the modern day equivalent of a $150,000 annual salary.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'rich',
+	 page: 'p36',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10905,16 +12696,12 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Some veteran shooters learn to compensate for the recoil of fully automatic weapons. If a character with this Edge does not move, he may ignore the recoil penalty for firing a weapon on full automatic.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 1,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'rock-and-roll',
+	 page: 'p39',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10926,14 +12713,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Scholar',
 	},
-	 description: {
-		 'en-US': 'Learned professors, devoted students, and amateur enthusiasts spend months of their lives studying particular subjects. They become experts in these fields, and rarely fail to answer questions in their particular area of expertise.,Pick any two Knowledge skills the Scholar has a d8 or better in. Add +2 to your total whenever these skills are used. Those who study military history have a natural edge when commanding troops in Mass Battles (see page 106)-a +2 to a Knowledge (Battle) roll can mean the difference between a rousing victory and a crushing defeat.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'scholar',
+	 page: 'p43',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10946,16 +12731,12 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 4,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'sidekick',
+	 page: 'p46',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10968,16 +12749,12 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 1,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'soul-drain',
+	 page: 'p41',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -10988,14 +12765,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Steady Hands',
 	},
-	 description: {
-		 'en-US': 'Your hero ignores the "unstable platform" penalty for firing from the backs of animals or while riding in moving vehicles. In addition, when performing actions while Running (see page 74), his penalty is -1 instead of -2.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'steady-hands',
+	 page: 'p39',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -11015,14 +12790,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Strong Willed',
 	},
-	 description: {
-		 'en-US': 'Characters with strong willpower use their voice, steely stares, or quick wits to unnerve their opponents. Strong Willed adds +2 to a character\'s Intimidation and Taunt rolls, as well as his Spirit and Smarts rolls when resisting Test of Wills attacks.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'strong-willed',
+	 page: 'p44',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -11033,14 +12806,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Sweep',
 	},
-	 description: {
-		 'en-US': 'Sweep allows a character to make a single Fighting attack and apply it against all currently adjacent targets at a -2 penalty (friends and foes alike-be careful). Resolve each damage roll separately. The attack is applied immediately when rolled and only affects targets adjacent at that time.,A character may not use Sweep in the same round she uses Frenzy, nor may she Sweep more than once per round, or with a second weapon held in another hand. In effect, the hero may only perform Sweep once per action unless she somehow gets two entire actions (perhaps under the effects of a spell or power, for example).',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'sweep',
+	 page: 'p39',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -11062,16 +12833,12 @@ requires: function( characterObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: 'sweep',
 	 required_rank: 2,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'improved-sweep',
+	 page: 'p40',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -11083,14 +12850,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Thief',
 	},
-	 description: {
-		 'en-US': 'Thieves specialize in deceit, treachery, and acrobatics. They can be invaluable where traps must be detected, walls must be climbed, and locks must be picked.,Thieves add +2 to Climbing, Lockpick, Stealth, as well as Notice or Repair rolls that relate to traps and similar devices. The bonus to Stealth does not apply when the character is in a wilderness environment-only in urban areas.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'thief',
+	 page: 'p44',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -11110,32 +12875,24 @@ requires: function( characterObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Your hero is a grizzled veteran. Increase his Toughness by +1.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 4,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'tough-as-nails',
+	 page: 'p46',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
-			charObject.derived.toughness += 1;
-		}
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.derived.toughness = charObject.derived.toughness  + 1;
+}
 },
 {
 	 name: {
 		 'en-US': 'Improved Tough as Nails',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': '',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -11144,6 +12901,7 @@ charEffects: function ( charObject ) {
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'improved-tough-as-nails',
+	 page: 'p46',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -11156,14 +12914,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Trademark Weapon',
 	},
-	 description: {
-		 'en-US': 'The hero knows one unique weapon (Excalibur, Old Betsy, Sting) like the back of his hand. When using that weapon, he adds +1 to his Fighting, Shooting, or Throwing rolls. A hero can take this Edge multiple times, applying it to a different weapon each time. If a Trademark Weapon is lost, the hero can replace it, but the benefit of the Edge doesn\'t kick in for two game weeks.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'trademark-weapon',
+	 page: 'p39',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -11185,16 +12941,12 @@ requires: function( characterObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'As above but the bonus when using the weapon increases to +2.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: 'trademark-weapon',
 	 required_rank: 2,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'improved-trademark-weapon',
+	 page: 'p40',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -11206,14 +12958,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Two-Fisted',
 	},
-	 description: {
-		 'en-US': 'A Two-Fisted hero isn\'t ambidextrous-he\'s simply learned to fight with two weapons (or both fists) at once. When attacking with a weapon in each hand, he rolls each attack separately but ignores the multi-action penalty (see page 75).',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'two-fisted',
+	 page: 'p40',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -11235,16 +12985,12 @@ requires: function( characterObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'weapon-master',
+	 page: 'p46',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -11265,16 +13011,12 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 required_edge: 'weapon-master',
 	 required_rank: 4,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'improved-weapon-master',
+	 page: 'p46',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -11287,14 +13029,12 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Wizard',
 	},
-	 description: {
-		 'en-US': 'Wizards range from young apprentices to frighteningly powerful supreme sorcerers. They are often physically weak, however, and rarely have the divine powers or healing abilities of priestly spellcasters. What they lack in spiritual favor, however, they more than make up for in utility and eldritch might.,Wizards tend to learn their craft in formalized institutions or under the tutelage of experienced masters. Each raise a Wizard gets on his Spellcasting roll reduces the cost of the spell by 1 Power Point. The Wizard must have the points available to cast the spell in the first place before rolling.',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'wizard',
+	 page: 'p44',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -11312,14 +13052,12 @@ requires: function( characterObject) {
 	 name: {
 		 'en-US': 'Woodsman',
 	},
-	 description: {
-		 'en-US': 'Woodsmen are rangers, scouts, and hunters who are more at home in the wilderness than in urban areas. They are skilled trackers and scouts, and know how to live off the land for months at a time. Woodsmen gain +2 to Tracking, Survival, and Stealth rolls made in the wilderness (not towns, ruins, or underground).',
-	},
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'woodsman',
+	 page: 'p44',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 1,
@@ -11332,6 +13070,543 @@ requires: function( characterObject) {
 	}
 		return false;
 	}
+},
+{
+	 name: {
+		 'en-US': 'Adaptable',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'adaptable',
+	 page: '',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 2,
+	 child: 0,
+requires: function( characterObject) {
+if( characterObject.race.id == 8 ||  characterObject.race.id == 1 ) {
+return true;
+}
+return false;
+}
+},
+{
+	 name: {
+		 'en-US': 'Adept',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'adept',
+	 page: '',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 2,
+	 child: 0,
+requires: function( characterObject)  {
+fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
+faithSkill = characterObject.getSkill("SKILL_FAITH");
+
+if( !characterObject.hasArcane( "miracles" ) ) 
+     return false;
+if( !fightingSkill )
+return false;
+if( !faithSkill )
+return false;
+if( fightingSkill.value < 3 )  // functional value of d8
+     return false;
+if( faithSkill.value < 3 )  // functional value of d8
+     return false;
+return true;
+},
+},
+{
+	 name: {
+		 'en-US': 'Artifact Hunter',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'artifact-hunter',
+	 page: 'p6',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 2,
+	 child: 0,
+requires: function( characterObject) {
+noticeSkill =  characterObject.getSkill("SKILL_NOTICE");
+if( !noticeSkill )
+return false;
+if( noticeSkill.value < 4 )
+     return false;
+return true;
+},
+},
+{
+	 name: {
+		 'en-US': 'Assassin',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'assassin',
+	 page: 'p6',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 2,
+	 child: 0,
+requires: function( characterObject) {
+climbingSkill = characterObject.getSkill( "SKILL_CLIMBING");
+fightingSkill = characterObject.getSkill( "SKILL_FIGHTING");
+stealthSkill = characterObject.getSkill( "SKILL_STEALTH");
+if( characterObject.displayAttributes.agility.value < 8 )
+     return false;
+
+if( !climbingSkill )
+     return false;
+if( climbingSkill.value < 2 )
+     return false;
+if( !fightingSkill )
+     return false;
+if( fightingSkill.value < 2 )
+     return false;
+if( !stealthSkill )
+     return false;
+if( stealthSkill.value < 3 )
+     return false;
+
+return true;
+},
+},
+{
+	 name: {
+		 'en-US': 'Barbaric Blood',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'barbaric-blood',
+	 page: '',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 2,
+	 child: 0,
+requires: function( characterObject) {
+if( characterObject .race.id != 11 )
+     return false;
+
+if( !characterObject.hasEdge("berserk") ) 
+     return false;
+
+return true;
+}
+},
+{
+	 name: {
+		 'en-US': 'Improved Barbaric Blood',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: 'barbaric-blood',
+	 required_rank: 2,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'improved-barbaric-blood',
+	 page: '',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 2,
+	 child: 1,
+requires: function( characterObject) {
+if( characterObject.displayAttributes.spirit.value >= 8 )
+    return true;
+return false;
+}
+},
+{
+	 name: {
+		 'en-US': 'Double Shot',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'double-shot',
+	 page: '',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 2,
+	 child: 0,
+requires: function( characterObject) {
+skillShooting = characterObject.getSkill("SKILL_SHOOTING");
+if( characterObject.race.id != 9 && characterObject.race.id != 7)
+     return false;
+if( !skillShooting ) 
+     return false;
+if( skillShooting.value < 3 ) 
+     return false;
+return true;
+},
+},
+{
+	 name: {
+		 'en-US': 'Improved Double Shot',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: 'double-shot',
+	 required_rank: 2,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'improved-double-shot',
+	 page: '',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 2,
+	 child: 1,
+
+},
+{
+	 name: {
+		 'en-US': 'Familiar',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'familiar',
+	 page: 'p5',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 2,
+	 child: 0,
+requires: function( characterObject) {
+arcaneSkill = characterObject.getSkill("SKILL_KNOWLEDGE", "Arcana");
+
+if( ! characterObject.hasArcane( "magic" ) ) 
+     return false;
+if( !arcaneSkill)
+     return false;
+if( arcaneSkill.value < 4 ) // functional value of d10
+     return false;
+return true;
+},
+},
+{
+	 name: {
+		 'en-US': 'Knight',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'knight',
+	 page: '',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 2,
+	 child: 0,
+requires: function( characterObject) {
+ridingSkill = characterObject.getSkill( "SKILL_RIDING");
+fightingSkill = characterObject.getSkill( "SKILL_FIGHTING");
+
+if( characterObject.displayAttributes.spirit.value < 2 )
+     return false;
+if( characterObject.displayAttributes.strength.value < 3 )
+     return false;
+
+if( characterObject.displayAttributes.vigor.value < 3 )
+     return false;
+
+
+if( !ridingSkill )
+     return false;
+if( ridingSkill.value < 3 )
+     return false;
+if( !fightingSkill )
+     return false;
+if( fightingSkill.value < 3 )
+     return false;
+
+
+return true;
+},
+},
+{
+	 name: {
+		 'en-US': 'Natural Warrior',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 1,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'natural-warrior',
+	 page: '',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 2,
+	 child: 0,
+requires: function( characterObject) {
+fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
+if( !fightingSkill)
+return false;
+
+if( fightingSkill.value < 3)
+return false;
+
+if( this.naturalWeapons == false)
+return false;
+
+return true;
+}
+},
+{
+	 name: {
+		 'en-US': 'Improved Natural Warrior',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: 'natural-warrior',
+	 required_rank: 2,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'improved-natural-warrior',
+	 page: '',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 2,
+	 child: 1,
+
+},
+{
+	 name: {
+		 'en-US': 'Scamper',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 1,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'scamper',
+	 page: '',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 2,
+	 child: 0,
+requires: function( characterObject) {
+
+if( characterObject.race.id != 10 )
+     return false;
+if( characterObject.displayAttributes.agility.value < 8 )
+     return false;
+return true;
+},
+},
+{
+	 name: {
+		 'en-US': 'Improved Scamper',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: 'scamper',
+	 required_rank: 2,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'improved-scamper',
+	 page: '',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 2,
+	 child: 1,
+
+},
+{
+	 name: {
+		 'en-US': 'Sunder',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 1,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sunder',
+	 page: '',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 2,
+	 child: 0,
+requires: function( characterObject) {
+if( characterObject.race.id == 6 )
+     return true;
+return false;
+},
+},
+{
+	 name: {
+		 'en-US': 'Improved Sunder',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: 'sunder',
+	 required_rank: 2,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'improved-sunder',
+	 page: 'p8',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 2,
+	 child: 1,
+
+},
+{
+	 name: {
+		 'en-US': 'Troubadour',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'troubadour',
+	 page: 'p7',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 2,
+	 child: 0,
+requires: function( characterObject) {
+faithSkill = characterObject.getSkill( "SKILL_FAITH");
+
+if( !faithSkill )
+     return false;
+if( faithSkill.value < 3 )
+     return false;
+
+return true;
+},
+},
+{
+	 name: {
+		 'en-US': 'Armor of the Lord',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'angel-armor-of-the-lord',
+	 page: '',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+				charEffect: function( characterObject) {
+					characterObject.derived.toughness += 4;
+				}
+},
+{
+	 name: {
+		 'en-US': 'Divine Strength',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'angel-divine-strength',
+	 page: '',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+charEffect: function( charObject) {
+charObject.boostAttribute("strength",4);
+}
+},
+{
+	 name: {
+		 'en-US': 'Faith',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'angel-faith',
+	 page: 'faith-ange',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+charEffect: function( characterObject) {
+characterObject.addRacialSkill("SKILL_FAITH", 2);
+}
+},
+{
+	 name: {
+		 'en-US': 'Healing',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'angel-healing',
+	 page: '',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'The Best There Is',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'the-best-there-is',
+	 page: 'p7',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 5,
+	 child: 0,
+
 }
 );
 
@@ -11355,12 +13630,8 @@ savageWorldsHindrances = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Elves have an inbred dislike of mechanical objects, and thus have the All Thumbs Hindrance. They shun most mechanical items and designs.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: 'elf-all-thumbs',
+	 page: '',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: '-',
@@ -11373,10 +13644,8 @@ savageWorldsHindrances = Array(
 	 name: {
 		 'en-US': 'Anemic',
 	},
-	 description: {
-		 'en-US': 'An anemic character is particularly susceptible to sickness, disease, environmental effects, and fatigue. He subtracts 2 from all Fatigue checks such as those made to resist poison and disease. (See page 86 for more information on Fatigue and the various hazards that lead to it.)',
-	},
 	 tag: 'anemic-minor',
+	 page: 'p28',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -11389,9 +13658,8 @@ savageWorldsHindrances = Array(
 	 name: {
 		 'en-US': 'Arrogant',
 	},
-	 description: {
-	},
 	 tag: 'arrogant-major',
+	 page: 'p28',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -11406,12 +13674,8 @@ savageWorldsHindrances = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'The android cannot harm, or by inaction bring harm to sentient beings. This gives him the Pacifist Hindrance (Major).',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: 'android-asimov-circuits',
+	 page: '',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: '-',
@@ -11424,9 +13688,8 @@ savageWorldsHindrances = Array(
 	 name: {
 		 'en-US': 'Bad Eyes',
 	},
-	 description: {
-	},
 	 tag: 'bad-eyes-major',
+	 page: 'p28',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -11439,9 +13702,8 @@ savageWorldsHindrances = Array(
 	 name: {
 		 'en-US': 'Bad Eyes',
 	},
-	 description: {
-	},
 	 tag: 'bad-eyes-minor',
+	 page: 'p28',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -11454,10 +13716,8 @@ savageWorldsHindrances = Array(
 	 name: {
 		 'en-US': 'Bad Luck',
 	},
-	 description: {
-		 'en-US': 'Your hero is a little less lucky than most. He gets one less Benny per game session than normal. A character cannot have both Bad Luck and the Luck Edge.',
-	},
 	 tag: 'bad-luck-major',
+	 page: 'p28',
 	 conflicts_edge: 'luck',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -11470,10 +13730,8 @@ savageWorldsHindrances = Array(
 	 name: {
 		 'en-US': 'Big Mouth',
 	},
-	 description: {
-		 'en-US': 'Loose lips sink ships, the saying goes. Your hero\'s mouth could drown an armada.,Your character can\'t keep a secret very well. He reveals plans and gives away things best kept among friends, usually at the worst possible times.',
-	},
 	 tag: 'big-mouth-minor',
+	 page: 'p28',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -11486,10 +13744,8 @@ savageWorldsHindrances = Array(
 	 name: {
 		 'en-US': 'Blind',
 	},
-	 description: {
-		 'en-US': 'The individual is completely without sight. He suffers a -6 to all physical tasks that require vision (which is most everything) and -2 to most social tasks as he can\'t "read" those he\'s interacting with as well as others.,On the plus side, Blind characters gain their choice of a free Edge to compensate for this particularly difficult Hindrance.',
-	},
 	 tag: 'blind-major',
+	 page: 'p28',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -11506,12 +13762,8 @@ charEffects: function ( charObject ) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Rakashans can be cruel to their foes, often toying with them for simple amusement. They rarely take prisoners and feel little compunction about punishing captured foes. This causes a ��"4 Charisma penalty among more “civilized” types.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: 'rakasha-bloodthirsty',
+	 page: 'p21',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: '-',
@@ -11526,10 +13778,8 @@ charObject.derived.charisma = charObject.derived.charisma - 4;
 	 name: {
 		 'en-US': 'Bloodthirsty',
 	},
-	 description: {
-		 'en-US': 'Your hero never takes prisoners unless under the direct supervision of a superior. This can cause major problems in a military campaign unless his superiors condone that sort of thing. Your killer suffers -4 to his Charisma, but only if his cruel habits are known.',
-	},
 	 tag: 'bloodthirsty-major',
+	 page: 'p28',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -11542,10 +13792,8 @@ charObject.derived.charisma = charObject.derived.charisma - 4;
 	 name: {
 		 'en-US': 'Cautious',
 	},
-	 description: {
-		 'en-US': 'Some folks gather too much intelligence. This character personifies over-cautiousness. He never makes rash decisions and likes to plot things out in detail long before any action is taken.',
-	},
 	 tag: 'cautious-minor',
+	 page: 'p28',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -11558,10 +13806,8 @@ charObject.derived.charisma = charObject.derived.charisma - 4;
 	 name: {
 		 'en-US': 'Clueless',
 	},
-	 description: {
-		 'en-US': 'Your hero isn\'t as aware of his world as most others. He suffers -2 to Common Knowledge rolls.',
-	},
 	 tag: 'clueless-major',
+	 page: 'p28',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -11574,10 +13820,8 @@ charObject.derived.charisma = charObject.derived.charisma - 4;
 	 name: {
 		 'en-US': 'Code of Honor',
 	},
-	 description: {
-		 'en-US': 'Honor is very important to your character. He keeps his word, won\'t abuse or kill prisoners, and generally tries to operate within his world\'s particular notion of proper gentlemanly or ladylike behavior.',
-	},
 	 tag: 'code-of-honor-major',
+	 page: 'p29',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -11592,12 +13836,8 @@ charObject.derived.charisma = charObject.derived.charisma - 4;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Androids add +2 to recover from being Shaken, don\'t suffer wound modifers, and are immune to poison and disease. Androids cannot heal naturally. To heal an android requires the Repair skill��"which is used like the Healing skill only with no “Golden Hour.”',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: 'android-construct',
+	 page: '',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: '-',
@@ -11610,10 +13850,8 @@ charObject.derived.charisma = charObject.derived.charisma - 4;
 	 name: {
 		 'en-US': 'Curious',
 	},
-	 description: {
-		 'en-US': 'It killed the cat, and it might kill your hero as well. Curious characters are easily dragged into any adventure. They have to check out everything and always want to know what\'s behind a potential mystery.',
-	},
 	 tag: 'curious-major',
+	 page: 'p29',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -11626,10 +13864,8 @@ charObject.derived.charisma = charObject.derived.charisma - 4;
 	 name: {
 		 'en-US': 'Deathwish',
 	},
-	 description: {
-		 'en-US': 'Having a death wish doesn\'t mean your adventurer is suicidal-but he does want to die after completing some important goal. Maybe he wants revenge for the murder of his family, or maybe he\'s dying from disease and wants to go out in a blaze of glory. He won\'t throw his life away for no reason, but when there\'s a chance to complete his goal, he\'ll do anything-and take any risk-to achieve it.,This hindrance is usually Minor unless the goal is relatively easily fulfilled (very rare)',
-	},
 	 tag: 'deathwish-minor',
+	 page: 'p29',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -11644,12 +13880,8 @@ charObject.derived.charisma = charObject.derived.charisma - 4;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Atlanteans must immerse themselves in water one hour out of every 24 or become automatically Fatigued each day until they are Incapacitated. The day after that, they perish.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: 'atlantean-dehydration',
+	 page: 'p20',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: '-',
@@ -11662,10 +13894,8 @@ charObject.derived.charisma = charObject.derived.charisma - 4;
 	 name: {
 		 'en-US': 'Delusion',
 	},
-	 description: {
-		 'en-US': 'Your hero believes something that is considered quite strange by everyone else. Minor Delusions are harmless or the character generally keeps it to himself (the government puts sedatives in soft drinks, dogs can talk, we\'re all just characters in some bizarre game, etc.).',
-	},
 	 tag: 'delusion-minor',
+	 page: 'p29',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -11678,10 +13908,8 @@ charObject.derived.charisma = charObject.derived.charisma - 4;
 	 name: {
 		 'en-US': 'Delusion',
 	},
-	 description: {
-		 'en-US': 'Your hero believes something that is considered quite strange by everyone else. Minor Delusions are harmless or the character generally keeps it to himself (the government puts sedatives in soft drinks, dogs can talk, we\'re all just characters in some bizarre game, etc.).,With a Major Delusion, he expresses his view on the situation frequently and it can occasionally lead to danger (the) government is run by aliens, hospitals are deadly, I\'m allergictoarmor,zombiesare my friends).',
-	},
 	 tag: 'delusion-major',
+	 page: 'p29',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -11694,10 +13922,8 @@ charObject.derived.charisma = charObject.derived.charisma - 4;
 	 name: {
 		 'en-US': 'Doubting Thomas',
 	},
-	 description: {
-		 'en-US': 'Some people don\'t believe in the supernatural until they\'re halfway down some creature\'s gullet. Doubting Thomases are skeptics who try their best to rationalize supernatural events. Even once a Doubting Thomas realizes the supernatural exists, he still tries to rationalize weird events, following red herrings or ignoring evidence.,Doubting Thomases suffer -2 to their Fear checks when confronted with undeniable supernatural horror.',
-	},
 	 tag: 'doubting-thomas-minor',
+	 page: 'p29',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -11710,10 +13936,8 @@ charObject.derived.charisma = charObject.derived.charisma - 4;
 	 name: {
 		 'en-US': 'Elderly',
 	},
-	 description: {
-		 'en-US': 'Your adventurer is getting on in years, but he\'s not quite ready for the nursing home. His Pace is reduced by 1, and his Strength and Vigor drop a die type to a minimum of d4, and cannot be raised thereafter.,On the plus side, the wisdom of his years grants the hero 5 extra skill points that may be used for any skills linked to Smarts.',
-	},
 	 tag: 'elderly-major',
+	 page: 'p29',
 	 conflicts_edge: '',
 	 conflicts_hindrance: 'young',
 	 severity: 'major',
@@ -11737,10 +13961,8 @@ charEffects: function (charObject) {
 	 name: {
 		 'en-US': 'Enemy',
 	},
-	 description: {
-		 'en-US': 'Someone out there hates the character and wants him dead. The value of the Hindrance depends on how powerful the enemy is and how often he might show up. A Minor Enemy might be a lone gunslinger out for vengeance. A Major Enemy might be a supernatural gunslinger who wants your hero dead.,If the enemy is one day defeated, the GM should gradually work in a replacement, or the hero may buy off the Hindrance by sacrificing an Advance.',
-	},
 	 tag: 'enemy-minor',
+	 page: 'p29',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -11753,10 +13975,8 @@ charEffects: function (charObject) {
 	 name: {
 		 'en-US': 'Enemy',
 	},
-	 description: {
-		 'en-US': 'Someone out there hates the character and wants him dead. The value of the Hindrance depends on how powerful the enemy is and how often he might show up. A Minor Enemy might be a lone gunslinger out for vengeance. A Major Enemy might be a supernatural gunslinger who wants your hero dead.,If the enemy is one day defeated, the GM should gradually work in a replacement, or the hero may buy off the Hindrance by sacrificing an Advance.',
-	},
 	 tag: 'enemy-major',
+	 page: 'p29',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -11769,9 +13989,8 @@ charEffects: function (charObject) {
 	 name: {
 		 'en-US': 'Greedy',
 	},
-	 description: {
-	},
 	 tag: 'greedy-minor',
+	 page: 'p29',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -11784,9 +14003,8 @@ charEffects: function (charObject) {
 	 name: {
 		 'en-US': 'Greedy',
 	},
-	 description: {
-	},
 	 tag: 'greedy-major',
+	 page: 'p29',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -11799,9 +14017,8 @@ charEffects: function (charObject) {
 	 name: {
 		 'en-US': 'Habit',
 	},
-	 description: {
-	},
 	 tag: 'habit-minor',
+	 page: 'p29',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -11814,10 +14031,8 @@ charEffects: function (charObject) {
 	 name: {
 		 'en-US': 'Hard of Hearing',
 	},
-	 description: {
-		 'en-US': 'Characters who have lost some or all of their hearing have this disadvantage. As a Minor Hindrance, it subtracts 2 from all Notice rolls made to hear, including awaking due to loud noises.',
-	},
 	 tag: 'hard-of-hearing-minor',
+	 page: 'p29',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -11830,10 +14045,8 @@ charEffects: function (charObject) {
 	 name: {
 		 'en-US': 'Hard of Hearing',
 	},
-	 description: {
-		 'en-US': 'Characters who have lost some or all of their hearing have this disadvantage. A Major Hindrance means the character is deaf. She cannot hear and automatically fails all Notice rolls that depend on hearing.',
-	},
 	 tag: 'hard-of-hearing-major',
+	 page: 'p29',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -11846,10 +14059,8 @@ charEffects: function (charObject) {
 	 name: {
 		 'en-US': 'Heroic',
 	},
-	 description: {
-		 'en-US': 'This noble soul never says no to a person in need. She doesn\'t have to be happy about it, but she always comes to the rescue of those she feels can\'t help themselves. She\'s the first one to run into a burning building, usually agrees to hunt monsters for little or no pay, and is generally a pushover for a sob story.',
-	},
 	 tag: 'heroic-major',
+	 page: 'p30',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -11864,12 +14075,8 @@ charEffects: function (charObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Avions have -1 Toughness',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: 'hollow-boned',
+	 page: 'p20',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: '-',
@@ -11884,10 +14091,8 @@ charEffect: function( characterObject ) {
 	 name: {
 		 'en-US': 'Illiterate',
 	},
-	 description: {
-		 'en-US': 'Your hero cannot read. He can probably sign his name and knows what a STOP sign says, but can do little else. He also doesn\'t know much about math either. He can probably do 2+2=4, but multiplication and the like are beyond him.,Illiterates can\'t read or write in any language, by the way, no matter how many they actually speak.',
-	},
 	 tag: 'illiterate-minor',
+	 page: 'p30',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -11900,10 +14105,8 @@ charEffect: function( characterObject ) {
 	 name: {
 		 'en-US': 'Lame',
 	},
-	 description: {
-		 'en-US': 'A past wound has nearly crippled your hero. His basic Pace is reduced by 2 and he rolls only a d4 for running rolls. A character\'s Pace may never be reduced below 1.',
-	},
 	 tag: 'lame-major',
+	 page: 'p30',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -11918,10 +14121,8 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Loyal',
 	},
-	 description: {
-		 'en-US': 'Your character may not be a hero, but he\'d give his life for his friends. This character can never leave a man behind if there\'s any chance at all he could help.',
-	},
 	 tag: 'loyal-minor',
+	 page: 'p30',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -11934,10 +14135,8 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Mean',
 	},
-	 description: {
-		 'en-US': 'This fellow is ill-tempered and disagreeable. No one really likes him, and he has trouble doing anything kind for anyone else. He must be paid for his troubles and doesn\'t even accept awards graciously. Your character suffers -2 to his Charisma.',
-	},
 	 tag: 'mean-minor',
+	 page: 'p30',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -11950,10 +14149,8 @@ charEffects: function ( charObject ) {
 	 name: {
 		 'en-US': 'Obese',
 	},
-	 description: {
-		 'en-US': 'Particularly large people often have great difficulty in dangerous physical situations. Those who carry their weight well have the Brawny Edge. Those who don\'t handle it very well are Obese. A character cannot be both Brawny and Obese.,An Obese hero adds 1 to his Toughness, but his Pace is decreased by 1 and his running die is a d4. Obese characters may also have difficulty finding armor or clothing that fits, squeezing into tight spaces, or even riding in confined spaces such as coach airplane seats or compact cars.',
-	},
 	 tag: 'obese-minor',
+	 page: 'p30',
 	 conflicts_edge: 'brawny',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -11969,10 +14166,8 @@ charEffects: function (charObject) {
 	 name: {
 		 'en-US': 'One Arm',
 	},
-	 description: {
-		 'en-US': 'Whether by birth or battle, your hero has lost an arm. Fortunately, his other arm is (now) his "good" one. Tasks that require two hands, such as Climbing, suffer a -4 modifier.',
-	},
 	 tag: 'one-arm-major',
+	 page: 'p30',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -11985,10 +14180,8 @@ charEffects: function (charObject) {
 	 name: {
 		 'en-US': 'One Eye',
 	},
-	 description: {
-		 'en-US': 'Your hero lost an eye for some unfortunate reason. If he doesn\'t wear a patch or buy a glass replacement (typically $500), he suffers -1 to his Charisma for the grotesque wound.,He suffers -2 to any Trait rolls that require depth perception, such as Shooting or Throwing, jumping a ravine or rooftop, and so on.',
-	},
 	 tag: 'one-eye-major',
+	 page: 'p30',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -12001,10 +14194,8 @@ charEffects: function (charObject) {
 	 name: {
 		 'en-US': 'One Leg',
 	},
-	 description: {
-		 'en-US': 'With a prosthetic, One Leg acts exactly like the Lame Hindrance, reducing Pace by 2 and running rolls are now a d4. Without a prosthetic, the character\'s Pace is 2 and he can never run. He also suffers -2 to Traits that require mobility, such as Climbing and Fighting. A character with one leg also suffers a -2 penalty to his Swimming skill (and Pace).',
-	},
 	 tag: 'one-leg-major',
+	 page: 'p30',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -12019,12 +14210,8 @@ charEffects: function (charObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Organic races often mistrust or misunderstand androids. They subtract 2 from their Charisma when dealing with races other than their own.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: 'android-outsider',
+	 page: '',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: '-',
@@ -12041,12 +14228,8 @@ charObject.derived.charisma = charObject.derived.charisma - 2;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Half-elves aren\'t true outsiders (as per the Hindrance of the same name), but neither are they ever quite comfortable around humans or elves as one of their own, so the effect is the same.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: 'half-elf-outsider',
+	 page: 'p20',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: '-',
@@ -12064,12 +14247,8 @@ charObject.derived.charisma = charObject.derived.charisma - 2;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Half-orcs aren\'t trusted by most other civilized races, and so subtract 2 from their Charisma.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: 'half-orc-outsider',
+	 page: 'p21',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: '-',
@@ -12083,15 +14262,11 @@ charObject.derived.charisma = charObject.derived.charisma - 2;
 {
 	 name: {
 		 'en-US': 'Outsider',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Most races distrust the\nunblinking saurians. Their habit of eating their meat still squirming is also less than appetizing. They suffer a ��"2 Charisma\npenalty.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
 	 tag: 'saurian-outsider',
+	 page: 'p21',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: '-',
@@ -12106,10 +14281,8 @@ charObject.derived.charisma = charObject.derived.charisma - 2;
 	 name: {
 		 'en-US': 'Outsider',
 	},
-	 description: {
-		 'en-US': 'In a society made up of only a few types of people, your hero isn\'t one of them. An Indian in a Western town, an alien in a sci-fi game of human marines, or a half-orc in a party of elves, dwarves, and humans are all examples of outsiders. Locals are likely to raise prices on the Outsider, ignore pleas for help, and generally treat him as if he\'s of a lower class than the rest of their society.,In addition to the roleplaying effects above, your hero\'s Charisma suffers a -2 modifier among all but his own people.',
-	},
 	 tag: 'outsider-minor',
+	 page: 'p30',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -12122,10 +14295,8 @@ charObject.derived.charisma = charObject.derived.charisma - 2;
 	 name: {
 		 'en-US': 'Overconfident',
 	},
-	 description: {
-		 'en-US': 'There\'s nothing out there your hero can\'t defeat. At least that\'s what he thinks. He believes he can do most anything and never wants to retreat from a challenge. He\'s not suicidal, but he certainly takes on more than common sense dictates.',
-	},
 	 tag: 'overconfident-major',
+	 page: 'p30',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -12138,10 +14309,8 @@ charObject.derived.charisma = charObject.derived.charisma - 2;
 	 name: {
 		 'en-US': 'Pacifist',
 	},
-	 description: {
-		 'en-US': 'Your hero absolutely despises violence. Minor pacifism means he only fights when given no other choice, and never allows the killing of prisoners or other defenseless victims.',
-	},
 	 tag: 'pacifist-minor',
+	 page: 'p30',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -12154,10 +14323,8 @@ charObject.derived.charisma = charObject.derived.charisma - 2;
 	 name: {
 		 'en-US': 'Pacifist',
 	},
-	 description: {
-		 'en-US': 'Major Pacifists won\'t fight living characters under any circumstances. They may defend themselves, but won\'t do anything to permanently harm sentient, living creatures. Note that undeniably evil creatures, undead, demons, and the like are fair game. A Major Pacifist might also fight with nonlethal methods, such as with his fists. Such characters only do so when obviously threatened, however.',
-	},
 	 tag: 'pacifist-major',
+	 page: 'p30',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -12170,10 +14337,8 @@ charObject.derived.charisma = charObject.derived.charisma - 2;
 	 name: {
 		 'en-US': 'Phobia',
 	},
-	 description: {
-		 'en-US': 'Phobias are overwhelming and irrational fears that stay with a hero for the rest of his life. Whenever a character is in the presence of his phobia, he subtracts 2 from all his Trait tests as a Minor Hindrance, and 4 if the fear is a Major Phobia.,Phobias shouldn\'t be too obvious-everyone should be afraid of vampires, for example, so it\'s not a phobia-it\'s common sense. Instead, the phobia usually centers on some random element the mind focused on during whatever encounter caused such a fright. Remember, phobias are irrational fears.',
-	},
 	 tag: 'phobia-minor',
+	 page: 'p30',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -12186,10 +14351,8 @@ charObject.derived.charisma = charObject.derived.charisma - 2;
 	 name: {
 		 'en-US': 'Phobia',
 	},
-	 description: {
-		 'en-US': 'Phobias are overwhelming and irrational fears that stay with a hero for the rest of his life. Whenever a character is in the presence of his phobia, he subtracts 2 from all his Trait tests as a Minor Hindrance, and 4 if the fear is a Major Phobia.,Phobias shouldn\'t be too obvious-everyone should be afraid of vampires, for example, so it\'s not a phobia-it\'s common sense. Instead, the phobia usually centers on some random element the mind focused on during whatever encounter caused such a fright. Remember, phobias are irrational fears.',
-	},
 	 tag: 'phobia-major',
+	 page: 'p30',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -12202,10 +14365,8 @@ charObject.derived.charisma = charObject.derived.charisma - 2;
 	 name: {
 		 'en-US': 'Poverty',
 	},
-	 description: {
-		 'en-US': 'It\'s said a fool and his money are soon parted. Your hero is that fool. He starts with half the usual money for your setting and just can\'t seem to hang onto funds acquired after play begins. In general, the player halves his total funds every game week.',
-	},
 	 tag: 'poverty-minor',
+	 page: 'p30',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -12218,10 +14379,8 @@ charObject.derived.charisma = charObject.derived.charisma - 2;
 	 name: {
 		 'en-US': 'Quirk',
 	},
-	 description: {
-		 'en-US': 'Your hero has some minor foible that is usually humorous, but can occasionally cause him trouble. A swashbuckler may always try to first slash his initials on his foes before attacking, a dwarf may brag constantly about his culture, or a snobby debutante might not eat, drink, or socialize with the lower class.',
-	},
 	 tag: 'quirk-minor',
+	 page: 'p30',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -12236,12 +14395,8 @@ charObject.derived.charisma = charObject.derived.charisma - 2;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Rakashan society rose at the expense of another. Pick a common race in your setting. Members of each culture suffer a -4Charisma when dealing with each other. Unless fettered by other authorities or common goals, individuals of the two races typically attack each other on sight.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: 'rakasha-racial-enemy',
+	 page: 'p21',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: '-',
@@ -12256,12 +14411,8 @@ charObject.derived.charisma = charObject.derived.charisma - 2;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'During character creation, the player must determine the android\'s power source. If the android cannot access his power source at least once per day, he\'s automatically Fatigued each day until he\'s Incapacitated. The day after that, he goes “off-line” and must be revived with a Repair roll and a four-hour charge of energy. The power source replaces the need for food and water, unless they are the chosen power source.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: 'android-recharge',
+	 page: '',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: '-',
@@ -12276,12 +14427,8 @@ charObject.derived.charisma = charObject.derived.charisma - 2;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Half-folk average only about 4\' tall. This gives them a Size of ��"1 and subtracts 1 from their Toughness.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: 'half-folk-short',
+	 page: 'p21',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: '-',
@@ -12298,12 +14445,8 @@ charObject.derived.toughness = charObject.derived.toughness -1;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Dwarves have a Pace of 5”.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: 'dwarf-slow',
+	 page: '',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: '-',
@@ -12318,10 +14461,8 @@ charObject.derived.pace = 5;
 	 name: {
 		 'en-US': 'Small',
 	},
-	 description: {
-		 'en-US': 'Your character is either very skinny, very short, or both relative to his particular race. Subtract 1 from his Toughness for his reduced stature.',
-	},
 	 tag: 'small-major',
+	 page: 'p31',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -12334,10 +14475,8 @@ charObject.derived.pace = 5;
 	 name: {
 		 'en-US': 'Stubborn',
 	},
-	 description: {
-		 'en-US': 'This stubborn individual always wants his way and never admits he\'s wrong. Even when it\'s painfully obvious he\'s made a mistake he tries to justify it with half-truths and rationalizations.',
-	},
 	 tag: 'stubborn-minor',
+	 page: 'p31',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -12350,10 +14489,8 @@ charObject.derived.pace = 5;
 	 name: {
 		 'en-US': 'Ugly',
 	},
-	 description: {
-		 'en-US': 'Unfortunately, this individual hit more than a few ugly sticks on his way down the tree of life. His Charisma is lowered by 2, and he is generally shunned by members of the opposite sex.',
-	},
 	 tag: 'ugly-minor',
+	 page: 'p31',
 	 conflicts_edge: 'attractive',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -12368,10 +14505,8 @@ charEffects: function (charObject) {
 	 name: {
 		 'en-US': 'Vengeful',
 	},
-	 description: {
-		 'en-US': 'Your character always attempts to right a wrong he feels was done to him. If this is a Minor Hindrance, he usually seeks vengeance legally. The type and immediacy of his vengeance varies by character, of course. Some plot and scheme for months to extract what they see as justice. Others demand immediate results.',
-	},
 	 tag: 'vengeful-minor',
+	 page: 'p31',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -12384,10 +14519,8 @@ charEffects: function (charObject) {
 	 name: {
 		 'en-US': 'Vengeful',
 	},
-	 description: {
-		 'en-US': 'Your character always attempts to right a wrong he feels was done to him. If this is a Minor Hindrance, he usually seeks vengeance legally. The type and immediacy of his vengeance varies by character, of course. Some plot and scheme for months to extract what they see as justice. Others demand immediate results.,If this is a Major Hindrance, your character will kill to rectify his perceived injustice.',
-	},
 	 tag: 'vengeful-major',
+	 page: 'p31',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -12400,10 +14533,8 @@ charEffects: function (charObject) {
 	 name: {
 		 'en-US': 'Vow',
 	},
-	 description: {
-		 'en-US': 'The character has a vow of some sort. Whether it\'s Major or Minor depends on the Vow itself. Some may have Vows to particular orders or causes, to the Hippocratic Oath, to rid the world of evil, and so on. The danger in fulfilling the Vow and how often it might occur determines the level of the Hindrance. Whatever the Vow, it\'s only a Hindrance if it actually comes into play from time to time and causes the character some discomfort.',
-	},
 	 tag: 'vow-major',
+	 page: 'p31',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -12416,10 +14547,8 @@ charEffects: function (charObject) {
 	 name: {
 		 'en-US': 'Vow',
 	},
-	 description: {
-		 'en-US': 'The character has a vow of some sort. Whether it\'s Major or Minor depends on the Vow itself. Some may have Vows to particular orders or causes, to the Hippocratic Oath, to rid the world of evil, and so on. The danger in fulfilling the Vow and how often it might occur determines the level of the Hindrance. Whatever the Vow, it\'s only a Hindrance if it actually comes into play from time to time and causes the character some discomfort.',
-	},
 	 tag: 'vow-minor',
+	 page: 'p31',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -12432,10 +14561,8 @@ charEffects: function (charObject) {
 	 name: {
 		 'en-US': 'Wanted',
 	},
-	 description: {
-		 'en-US': 'Your hero has committed some crime in his past and will be arrested if discovered by the authorities. This assumes the setting actually has laws and police officers to enforce them.,The level of the Hindrance depends on how serious the crime was. A hero with numerous unpaid parking tickets (in a game where he might have to drive occasionally) has a Minor Hindrance, as does someone wanted for more serious crimes away from the main campaign area. Being accused of murder is a Major Hindrance in almost any setting.',
-	},
 	 tag: 'wanted-major',
+	 page: 'p31',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -12448,10 +14575,8 @@ charEffects: function (charObject) {
 	 name: {
 		 'en-US': 'Wanted',
 	},
-	 description: {
-		 'en-US': 'Your hero has committed some crime in his past and will be arrested if discovered by the authorities. This assumes the setting actually has laws and police officers to enforce them.,The level of the Hindrance depends on how serious the crime was. A hero with numerous unpaid parking tickets (in a game where he might have to drive occasionally) has a Minor Hindrance, as does someone wanted for more serious crimes away from the main campaign area. Being accused of murder is a Major Hindrance in almost any setting.',
-	},
 	 tag: 'wanted-minor',
+	 page: 'p31',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'minor',
@@ -12466,12 +14591,8 @@ charEffects: function (charObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Though not truly cold-blooded, saurians are not comfortable in cold environments. They suffer a ��"4 penalty to resist cold environmental effects.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: 'saurian-warm-natured',
+	 page: 'p21',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: '-',
@@ -12484,10 +14605,8 @@ charEffects: function (charObject) {
 	 name: {
 		 'en-US': 'Yellow',
 	},
-	 description: {
-		 'en-US': 'Not everyone has ice water in his veins. Your hero is squeamish at the sight of blood and gore and terrified of coming to harm. He subtracts 2 from all of his fear-based Spirit checks.',
-	},
 	 tag: 'yellow-major',
+	 page: 'p31',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: 'major',
@@ -12500,10 +14619,8 @@ charEffects: function (charObject) {
 	 name: {
 		 'en-US': 'Young',
 	},
-	 description: {
-		 'en-US': 'Children are sometimes forced to go on dangerous adventures through unfortunate circumstances. Think carefully before choosing this Hindrance, for your youngster starts at a significant disadvantage.,Young heroes are generally 8-12 years old (in human years-adjust this for races with different aging paradigms). They have only 3 points to adjust their attributes and 10 skill points. On the plus side, youths like these have a fair amount of luck. They draw one extra Benny at the beginning of each game session in addition to any additional Bennies gained from such things as the Luck or Great Luck Edges.,If the character should live long enough to mature, the Hindrance doesn\'t have to be bought off, he\'s already paid the price for the Hindrance by starting at a disadvantage. He stops getting the extra Benny when he reaches 18 years of age however (or the age of adulthood in your particular setting).',
-	},
 	 tag: 'young-major',
+	 page: 'p31',
 	 conflicts_edge: '',
 	 conflicts_hindrance: 'elderly',
 	 severity: 'major',
@@ -12522,12 +14639,8 @@ charEffects: function (charObject) {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Angels receive commands from a distant and mysterious God. They have no one to question should they dislike such an order. If they disobey, they are stripped of their powers and become mortal.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: 'angel-warriors-of-heaven',
+	 page: '',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: '-',
@@ -12559,11 +14672,6 @@ savageWorldsRaces = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Androids are sentient machines with a variety of appearances depending on the setting. Some appear almost human, some are purely mechanical. The android presented here is a basic version with normal human knowledge and emotions. Particular settings may alter, remove, or add other abilities based on their role and function in that world.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: '',
 	 page: '',
 	 book: 1,
@@ -12574,11 +14682,6 @@ savageWorldsRaces = Array(
 	 id: 4,
 	 name: {
 		 'en-US': 'Atlantean',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'From the crushing depths come the mysterious folk known as Atlanteans. They are thick and sturdy beneath the waves but often vulnerable in the dry air or searing heat. Their civilization is advanced, and Atlantean science is a wonder to behold.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -12595,11 +14698,6 @@ savageWorldsRaces = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Avions are any basically human race with wings. They tend to be very slight of build owing to their hollow bones.\n',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: '',
 	 page: 'p20',
 	 book: 1,
@@ -12610,11 +14708,6 @@ savageWorldsRaces = Array(
 	 id: 6,
 	 name: {
 		 'en-US': 'Dwarf',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Dwarves are short, stout, hardy people who come from massive caverns in the high mountains. They are a proud, warlike race, usually made so by frequent contact with savage races such as orcs and goblins.\nDwarves usually live upwards of 200 years. In most fantasy campaigns, they have ruddy skin and all human hair colors.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -12631,11 +14724,6 @@ savageWorldsRaces = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Elves are tall, thin souls with pointed ears and deep- set eyes of various colors. Whether they hail from the forests or hidden valleys, they are all born more graceful than humans, though somewhat slighter. Most elves live upwards of 300 years. They have fair skin and their hair includes all human colors, plus shades of silver and blue.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: '',
 	 page: 'p20',
 	 book: 1,
@@ -12646,11 +14734,6 @@ savageWorldsRaces = Array(
 	 id: 9,
 	 name: {
 		 'en-US': 'Half-Elf (elf heritage)',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Half-elves are usually a solid mix of their two parents. They gain the elves\' grace but none of their elegant frailty. Most half-elves are well-adjusted, but some are shunned by one side of the family or the other and grow resentful. Others may even be mistreated. Their lifespans are closer to their human parent than those of their elven kin. Most half-elves live only to about 100 years.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -12667,11 +14750,6 @@ savageWorldsRaces = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Half-elves are usually a solid mix of their two parents. They gain the elves\' grace but none of their elegant frailty. Most half-elves are well-adjusted, but some are shunned by one side of the family or the other and grow resentful. Others may even be mistreated. Their lifespans are closer to their human parent than those of their elven kin. Most half-elves live only to about 100 years.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: '',
 	 page: 'p20',
 	 book: 1,
@@ -12682,11 +14760,6 @@ savageWorldsRaces = Array(
 	 id: 10,
 	 name: {
 		 'en-US': 'Half-Folk',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Half-folk are small, nimble creatures with fuzzy brown or black hair. Though they are frail compared to most other races, their cheerful optimism (or wily cunning) gives them a “never say die” attitude that makes them more than a match for creatures twice their size.\nHalf-folk see no reason to invite trouble, and tend to live in their own little communities far off the beaten path.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -12703,11 +14776,6 @@ savageWorldsRaces = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Half-orcs are the offspring of either a human and an orc or an orc and another half-orc. Rarely is such a mating willingly accepted, so the character\'s “family tree” is likely more than a little troublesome to him or her.\nHalf-orcs are usually accepted by orcish communities, but are shunned by most other races, including humans, elves, and dwarves. Some half-orcs choose to join the “civilized” races, turning their backs on their barbaric roots, and are often looking to redeem themselves. Many are heroic souls trying to prove their worth.\nHalf-orcs have light-colored human skin with just a tinge of orcish coloration, with black hair and\nsmall eyes. Their features are harsh and angular, like that of orcs. Their natural life-span is the same as humans, though it is rare when one dies of old age.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: '',
 	 page: 'p21',
 	 book: 1,
@@ -12718,11 +14786,6 @@ savageWorldsRaces = Array(
 	 id: 1,
 	 name: {
 		 'en-US': 'Human',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': '',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -12739,11 +14802,6 @@ savageWorldsRaces = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Rakashans have the form of humans with the features of felines. They come in a wide variety: the bright colors of tigers, the speckled hides of leopards, and the exotic look of Siamese cats are all appropriate. They have sharp claws and teeth and a cruel nature when it comes to dealing with their prey.\nRakashans can be found in their own remote and exotic cities or as fringe elements of normal society. While they are too beautiful to be shunned, they are too foreign to be easily accepted.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: '',
 	 page: 'p21',
 	 book: 1,
@@ -12757,11 +14815,6 @@ savageWorldsRaces = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Lizard men typically come from steaming jungles or deep deserts where they have unique civilizations unknown to other sentient races.\nFew outsiders have penetrated their society, and persistent rumors that Saurian religion requires sentient sacrifices remain unconfirmed.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: '',
 	 page: 'p21',
 	 book: 1,
@@ -12772,11 +14825,6 @@ savageWorldsRaces = Array(
 	 id: 3,
 	 name: {
 		 'en-US': 'Angel',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Angels are servants of powerful deities who sometimes help the “primitive” races far below. They also serve as avengers of their master��"destroying entire towns or cities to purge them of their wickedness.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -12806,8 +14854,6 @@ var savageWorldsBooksList = Array();
 savageWorldsBooksList[0] = {
 	id: 1,
 	core: true,
-	usesGutsSkill: false,
-
 	name: {
 		"en-US": "Savage Worlds Deluxe",
 		"de-DE": "German Savage Worlds",
@@ -12815,6 +14861,8 @@ savageWorldsBooksList[0] = {
 	},
 	short_name: "peg_swd_ee",
 	abbrev: "SWD:EE",
+	imagename: "savage-worlds-deluxe.jpg",
+	char_creator: 1,
 	publisher: {
 		"en-US": "Pinnacle Entertainment Group",
 		"de-DE": "Pinnacle Entertainment Group",
@@ -12822,7 +14870,6 @@ savageWorldsBooksList[0] = {
 
 	},
 	year: "2011",
-	uses_sanity: 0,
 	copyright: {
 		"en-US": "2011 Pinnacle Entertainment Group",
 		"de-DE": "2011 Pinnacle Entertainment Group",
@@ -12835,8 +14882,6 @@ savageWorldsBooksList[0] = {
 savageWorldsBooksList[1] = {
 	id: 2,
 	core: false,
-	usesGutsSkill: false,
-
 	name: {
 		"en-US": "Fantasy Companion",
 		"pt-BR": "Brazilian Fantasy",
@@ -12844,6 +14889,8 @@ savageWorldsBooksList[1] = {
 	},
 	short_name: "peg_swfc",
 	abbrev: "FC",
+	imagename: "fantasy-companion.jpg",
+	char_creator: 1,
 	publisher: {
 		"en-US": "Pinnacle Entertainment Group",
 		"pt-BR": "Pinnacle Entertainment Group",
@@ -12851,7 +14898,6 @@ savageWorldsBooksList[1] = {
 
 	},
 	year: "2012",
-	uses_sanity: 0,
 	copyright: {
 		"en-US": "2012 Pinnacle Entertainment Group",
 		"pt-BR": "",
@@ -12864,19 +14910,18 @@ savageWorldsBooksList[1] = {
 savageWorldsBooksList[2] = {
 	id: 3,
 	core: false,
-	usesGutsSkill: false,
-
 	name: {
 		"en-US": "Horror Companion",
 	},
 	short_name: "peg_swhc",
 	abbrev: "HC",
+	imagename: "horror-companion.jpg",
+	char_creator: 1,
 	publisher: {
 		"en-US": "Pinnacle Entertainment Group",
 
 	},
 	year: "2012",
-	uses_sanity: 1,
 	copyright: {
 		"en-US": "2012 Pinnacle Entertainment Group",
 
@@ -12887,19 +14932,18 @@ savageWorldsBooksList[2] = {
 savageWorldsBooksList[3] = {
 	id: 4,
 	core: false,
-	usesGutsSkill: false,
-
 	name: {
 		"en-US": "Science Fiction Companion",
 	},
 	short_name: "peg_sfc",
 	abbrev: "SFC",
+	imagename: "science-fiction-companion.jpg",
+	char_creator: 1,
 	publisher: {
 		"en-US": "Pinnacle Entertainment Group",
 
 	},
 	year: "2014",
-	uses_sanity: 0,
 	copyright: {
 		"en-US": "2014 Pinnacle Entertainment Group",
 
@@ -12910,19 +14954,18 @@ savageWorldsBooksList[3] = {
 savageWorldsBooksList[4] = {
 	id: 5,
 	core: false,
-	usesGutsSkill: false,
-
 	name: {
 		"en-US": "Super Powers Companion",
 	},
 	short_name: "peg_spc2",
 	abbrev: "SPC",
+	imagename: "super-powers-companion.jpg",
+	char_creator: 1,
 	publisher: {
 		"en-US": "Pinnacle Entertainment Group",
 
 	},
 	year: "2014",
-	uses_sanity: 0,
 	copyright: {
 		"en-US": "2014 Pinnacle Entertainment Group",
 
@@ -12933,19 +14976,18 @@ savageWorldsBooksList[4] = {
 savageWorldsBooksList[5] = {
 	id: 6,
 	core: false,
-	usesGutsSkill: false,
-
 	name: {
 		"en-US": "Savage Free Bestiary",
 	},
 	short_name: "sfb",
 	abbrev: "SFB",
+	imagename: "",
+	char_creator: 0,
 	publisher: {
 		"en-US": "(Unknown) Pinnacle Enterainment Group, Butch Curry, Andrea �Lord Lance� Parducci and probably others",
 
 	},
 	year: "",
-	uses_sanity: 0,
 	copyright: {
 		"en-US": "Butch Curry, Open?",
 
@@ -12956,19 +14998,18 @@ savageWorldsBooksList[5] = {
 savageWorldsBooksList[6] = {
 	id: 7,
 	core: false,
-	usesGutsSkill: false,
-
 	name: {
 		"en-US": "Lankhmar",
 	},
 	short_name: "peg_lank",
 	abbrev: "LANK",
+	imagename: "",
+	char_creator: 0,
 	publisher: {
 		"en-US": "Pinnacle Enterainment Group",
 
 	},
 	year: "2015",
-	uses_sanity: 0,
 	copyright: {
 		"en-US": "2015 Pinnacle Entertainment Group, Trademarks of the Estate of Fritz Leiber.",
 
@@ -12979,19 +15020,18 @@ savageWorldsBooksList[6] = {
 savageWorldsBooksList[7] = {
 	id: 8,
 	core: false,
-	usesGutsSkill: false,
-
 	name: {
 		"en-US": "The Last Parsec",
 	},
 	short_name: "peg_tlp",
 	abbrev: "TLP",
+	imagename: "",
+	char_creator: 0,
 	publisher: {
 		"en-US": "Pinnacle Enterainment Group",
 
 	},
 	year: "2015",
-	uses_sanity: 0,
 	copyright: {
 		"en-US": "2015 Pinnacle Enterainment Group",
 
@@ -13002,24 +15042,165 @@ savageWorldsBooksList[7] = {
 savageWorldsBooksList[8] = {
 	id: 13,
 	core: false,
-	usesGutsSkill: false,
-
 	name: {
 		"en-US": "Thrilling Tales (2nd Edition)",
 	},
 	short_name: "ad_tt",
 	abbrev: "TALES",
+	imagename: "",
+	char_creator: 0,
 	publisher: {
 		"en-US": "Adamant Entertainment",
 
 	},
 	year: "",
-	uses_sanity: 0,
 	copyright: {
 		"en-US": "Adamant Entertainment",
 
 	},
 	buyme: ""
+}
+
+savageWorldsBooksList[9] = {
+	id: 14,
+	core: false,
+	name: {
+		"en-US": "Rifts® The Tomorrow Legion Player's Guide",
+	},
+	short_name: "rifts-tomorrow-legion",
+	abbrev: "Rifts® Th",
+	imagename: "rifts-tomorrow-legion-players-handbook.jpg",
+	char_creator: 0,
+	publisher: {
+		"en-US": "Pinnacle Entertainment Group",
+
+	},
+	year: "2016",
+	copyright: {
+		"en-US": "Palladium Books and Pinnacle Entertainment Group",
+
+	},
+	buyme: ""
+}
+
+/*
+
+Data here is NOT Licensed under the Creative Commons and is owned by Pinnacle Entertainment Group.
+
+This product references the Savage Worlds game system, available from Pinnacle Entertainment Group at www.peginc.com.
+Savage Worlds and all associated logos and trademarks are copyrights of Pinnacle Entertainment Group. Used with permission.
+Pinnacle makes no representation or warranty as to the quality, viability, or suitability for purpose of this product.
+
+The entries in this file are from Savage Worlds Role Playing Game and are owned by Pinnacle Entertainment Group.
+
+DEVELOPERS: Do Not Edit or Pull Request this file, it is auto generated from a rudimentary admin area!
+*/
+
+var savageWorldsSettingRules = Array();
+
+savageWorldsSettingRules[0] = {
+	id: 1,
+	book: 1,
+	page: "p108",
+	name: {
+		 'en-US': 'Born a Hero',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+
+	tag: "born-a-hero",
+
+	char_creator: true
+}
+
+savageWorldsSettingRules[1] = {
+	id: 2,
+	book: 1,
+	page: "p109",
+	name: {
+		 'en-US': 'Multiple Languages',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+
+	tag: "multiple-languages",
+
+	char_creator: true
+}
+
+savageWorldsSettingRules[2] = {
+	id: 3,
+	book: 1,
+	page: "p109",
+	name: {
+		 'en-US': 'No Power Points',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+
+	tag: "no-power-points",
+
+	char_creator: true
+}
+
+savageWorldsSettingRules[3] = {
+	id: 4,
+	book: 1,
+	page: "p110",
+	name: {
+		 'en-US': 'Skill Specialization',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+
+	tag: "skill-specialization",
+
+	char_creator: false
+}
+
+savageWorldsSettingRules[4] = {
+	id: 5,
+	book: 3,
+	page: "p22",
+	name: {
+		 'en-US': 'Sanity',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+
+	tag: "sanity",
+
+	char_creator: true
+}
+
+savageWorldsSettingRules[5] = {
+	id: 7,
+	book: 4,
+	page: "p29",
+	name: {
+		 'en-US': 'Cyberware & Strain',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+
+	tag: "cyberware-strain",
+
+	char_creator: true
+}
+
+savageWorldsSettingRules[6] = {
+	id: 6,
+	book: 5,
+	page: "p7",
+	name: {
+		 'en-US': 'Super Hero',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+
+	tag: "super-hero",
+
+	char_creator: true
 }
 
 /*
@@ -13045,11 +15226,6 @@ savageWorldsBooksList[8] = {
 		 'pt-BR': 'Passeios de barco',
 		 'de-DE': 'Bootfahren',
 	},
-	 description: {
-		 'en-US': 'Boating',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'book': '1',
 		 'attribute': 'agility',
 		 'for_arcane': '',
@@ -13061,11 +15237,6 @@ savageWorldsBooksList[8] = {
 		 'en-US': 'Climbing',
 		 'pt-BR': 'Escalada',
 		 'de-DE': 'Kletterei',
-	},
-	 description: {
-		 'en-US': 'Climbing',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'book': '1',
 		 'attribute': 'strength',
@@ -13079,11 +15250,6 @@ savageWorldsBooksList[8] = {
 		 'pt-BR': 'Dirigindo',
 		 'de-DE': 'Fahren',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'book': '1',
 		 'attribute': 'agility',
 		 'for_arcane': '',
@@ -13095,11 +15261,6 @@ savageWorldsBooksList[8] = {
 		 'en-US': 'Faith',
 		 'pt-BR': 'Fé',
 		 'de-DE': 'Glauben',
-	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'book': '1',
 		 'attribute': 'spirit',
@@ -13113,11 +15274,6 @@ savageWorldsBooksList[8] = {
 		 'pt-BR': 'Combate',
 		 'de-DE': 'Kampf',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'book': '1',
 		 'attribute': 'agility',
 		 'for_arcane': '',
@@ -13129,11 +15285,6 @@ savageWorldsBooksList[8] = {
 		 'en-US': 'Gambling',
 		 'pt-BR': 'Jogos de azar',
 		 'de-DE': 'Spiel',
-	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
@@ -13147,11 +15298,6 @@ savageWorldsBooksList[8] = {
 		 'pt-BR': 'Cura',
 		 'de-DE': 'Heilung',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'book': '1',
 		 'attribute': 'smarts',
 		 'for_arcane': '',
@@ -13163,11 +15309,6 @@ savageWorldsBooksList[8] = {
 		 'en-US': 'Intimidation',
 		 'pt-BR': 'Intimidação',
 		 'de-DE': 'Einschüchterung',
-	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'book': '1',
 		 'attribute': 'spirit',
@@ -13181,11 +15322,6 @@ savageWorldsBooksList[8] = {
 		 'pt-BR': 'Investigação',
 		 'de-DE': 'Untersuchung',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'book': '1',
 		 'attribute': 'smarts',
 		 'for_arcane': '',
@@ -13197,11 +15333,6 @@ savageWorldsBooksList[8] = {
 		 'en-US': 'Knowledge',
 		 'pt-BR': 'Conhecimento',
 		 'de-DE': 'Wissen',
-	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
@@ -13215,11 +15346,6 @@ savageWorldsBooksList[8] = {
 		 'pt-BR': '',
 		 'de-DE': 'Schlösserknacken',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'book': '1',
 		 'attribute': 'agility',
 		 'for_arcane': '',
@@ -13231,11 +15357,6 @@ savageWorldsBooksList[8] = {
 		 'en-US': 'Notice',
 		 'pt-BR': 'Aviso prévio',
 		 'de-DE': 'Beachten',
-	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
@@ -13249,11 +15370,6 @@ savageWorldsBooksList[8] = {
 		 'pt-BR': 'Persuasão',
 		 'de-DE': ' Überzeugung',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'book': '1',
 		 'attribute': 'spirit',
 		 'for_arcane': '',
@@ -13266,11 +15382,6 @@ savageWorldsBooksList[8] = {
 		 'pt-BR': 'Pilotar',
 		 'de-DE': 'Steuerung',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'book': '1',
 		 'attribute': 'agility',
 		 'for_arcane': '',
@@ -13280,11 +15391,6 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_PSIONICS',
 	 name: {
 		 'en-US': 'Psionics',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': '',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -13300,11 +15406,6 @@ savageWorldsBooksList[8] = {
 		 'pt-BR': 'Reparar',
 		 'de-DE': 'Reparieren',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'book': '1',
 		 'attribute': 'smarts',
 		 'for_arcane': '',
@@ -13316,11 +15417,6 @@ savageWorldsBooksList[8] = {
 		 'en-US': 'Riding',
 		 'pt-BR': 'Equitação',
 		 'de-DE': 'Reiten',
-	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'book': '1',
 		 'attribute': 'agility',
@@ -13334,11 +15430,6 @@ savageWorldsBooksList[8] = {
 		 'pt-BR': 'Tiroteio',
 		 'de-DE': 'Schießen',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'book': '1',
 		 'attribute': 'agility',
 		 'for_arcane': '',
@@ -13348,11 +15439,6 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_SPELLCASTING',
 	 name: {
 		 'en-US': 'Spellcasting',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': '',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -13368,11 +15454,6 @@ savageWorldsBooksList[8] = {
 		 'pt-BR': 'Furtividade',
 		 'de-DE': 'List',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'book': '1',
 		 'attribute': 'agility',
 		 'for_arcane': '',
@@ -13382,11 +15463,6 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_STREETWISE',
 	 name: {
 		 'en-US': 'Streetwise',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': '',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -13402,11 +15478,6 @@ savageWorldsBooksList[8] = {
 		 'pt-BR': 'Sobrevivência',
 		 'de-DE': 'Überleben',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'book': '1',
 		 'attribute': 'smarts',
 		 'for_arcane': '',
@@ -13418,11 +15489,6 @@ savageWorldsBooksList[8] = {
 		 'en-US': 'Swimming',
 		 'pt-BR': 'Natação',
 		 'de-DE': 'Schwimmen',
-	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'book': '1',
 		 'attribute': 'agility',
@@ -13436,11 +15502,6 @@ savageWorldsBooksList[8] = {
 		 'pt-BR': 'Insulto',
 		 'de-DE': 'Spott',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'book': '1',
 		 'attribute': 'smarts',
 		 'for_arcane': '',
@@ -13452,11 +15513,6 @@ savageWorldsBooksList[8] = {
 		 'en-US': 'Throwing',
 		 'pt-BR': 'Jogando',
 		 'de-DE': 'Wurf',
-	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'book': '1',
 		 'attribute': 'agility',
@@ -13470,11 +15526,6 @@ savageWorldsBooksList[8] = {
 		 'pt-BR': 'Rastreamento',
 		 'de-DE': 'Verfolgung',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'book': '1',
 		 'attribute': 'smarts',
 		 'for_arcane': '',
@@ -13487,11 +15538,6 @@ savageWorldsBooksList[8] = {
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'book': '1',
 		 'attribute': 'smarts',
 		 'for_arcane': 'weird-science',
@@ -13501,11 +15547,6 @@ savageWorldsBooksList[8] = {
 		 'id': 'SKILL_GUTS',
 	 name: {
 		 'en-US': 'Guts',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': '',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -13542,15 +15583,14 @@ var savageWorldsArcaneBackgrounds = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Magicians range from powerful wizards to vile cultists. They draw on raw supernatural energy to fuel their eldritch fires. This energy often infuses the worlds in which they live, and is drawn forth with elaborate rituals, words of power, runes, or perhaps even dark sacrifices. Wizards are often quite weak early in their careers, but are forces to be reckoned with as they become powerful sorcerers.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
+		 'power_list': Array(
+
+		 ),
 		 'powers': 3,
 		 'power_points': 10,
 		 'page': '',
 		 'book': 1,
+		 'free_power': '',
 		 'tag': 'magic'
 },
 {
@@ -13564,15 +15604,14 @@ var savageWorldsArcaneBackgrounds = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Those who draw on miracles are priestly types or holy champions. Their power comes from a divine presence of some sort, including gods, nature, or spirits. Their powers are usually invoked with a few words of prayer or by performing established rituals.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
+		 'power_list': Array(
+
+		 ),
 		 'powers': 2,
 		 'power_points': 10,
 		 'page': '',
 		 'book': 1,
+		 'free_power': '',
 		 'tag': 'miracles'
 },
 {
@@ -13586,15 +15625,14 @@ var savageWorldsArcaneBackgrounds = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Psionicists have discovered how to tap into their own psychic powers. They can manipulate matter, create fire, or control their own bodies with but a thought.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
+		 'power_list': Array(
+
+		 ),
 		 'powers': 3,
 		 'power_points': 10,
 		 'page': '',
 		 'book': 1,
+		 'free_power': '',
 		 'tag': 'psionics'
 },
 {
@@ -13608,15 +15646,14 @@ var savageWorldsArcaneBackgrounds = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Characters with super powers gain their abilities through strange circumstances, such as being bitten by irradiated creatures, exposure to strange chemicals, or perhaps by finding alien artifacts. This particular level of power is intended for relatively low-level “pulp” heroes. More powerful super types are dealt with in specific Savage Settings, and you\'ll find an alternate and far more detailed system in our Super Powers Companion. Super powers work a little differently from most other Arcane Backgrounds��"each power is its own skill and has no linked attribute (and thus counts as “lower” than its linked Attribute for purposes of Advancement). A hero with the armor and bolt powers, for example, also has an Armor and a Bolt skill he uses to enable it. It\'s more expensive for a character to improve his powers, but he starts with more Power Points than other arcane types so he can use his abilities more often. Best of all, there are no drawbacks for super powers as there are with other types of arcane powers��"the power either works or it doesn\'t.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
+		 'power_list': Array(
+
+		 ),
 		 'powers': 1,
 		 'power_points': 20,
 		 'page': '',
 		 'book': 1,
+		 'free_power': '',
 		 'tag': 'super-powers'
 },
 {
@@ -13630,16 +15667,197 @@ var savageWorldsArcaneBackgrounds = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Weird Science is the creation of strange and powerful devices. It differs from regular science in that some element of the arcane is involved. Maybe it\'s just generic “super-science,” or perhaps it\'s divinely (or demonically) inspired. Maybe the science itself is relatively sound, but it derives power from an arcane source, such as ghost rock in Deadlands, or some other magical mineral or essence in a steampunk fantasy game. Wizards are often quite weak early in their careers, but are forces to be reckoned with as they become powerful sorcerers.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
+		 'power_list': Array(
+
+		 ),
 		 'powers': 1,
 		 'power_points': 10,
 		 'page': '',
 		 'book': 1,
+		 'free_power': '',
 		 'tag': 'weird-science'
+},
+{
+	 name: {
+		 'en-US': 'Alchemy',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 backlash: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'power_list': Array(
+		 'armor',
+		 'blast',
+		 'boost-lower-trait',
+		 'burrow',
+		 'detect-conceal-arcana',
+		 'environmental-protection',
+		 'fly',
+		 'greater-healing',
+		 'invisibility',
+		 'light-obscure',
+		 'quickness',
+		 'shape-change',
+		 'smite',
+		 'speak-language',
+		 'stun',
+		 'teleport'
+		 ),
+		 'powers': 3,
+		 'power_points': 10,
+		 'page': 'p23',
+		 'book': 2,
+		 'free_power': '',
+		 'tag': 'alchemy'
+},
+{
+	 name: {
+		 'en-US': 'Ritual Magic',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 backlash: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'power_list': Array(
+		 'armor',
+		 'banish',
+		 'barrier',
+		 'beast-friend',
+		 'blast',
+		 'blind',
+		 'bolt',
+		 'boost-lower-trait',
+		 'burrow',
+		 'burst',
+		 'confusion',
+		 'damage-field',
+		 'darksight',
+		 'delfection',
+		 'detect-conceal-arcana',
+		 'disguise',
+		 'dispel',
+		 'divination',
+		 'drain-power-points',
+		 'elemental-manipulation',
+		 'entangle',
+		 'environmental-protection',
+		 'farsight',
+		 'fear',
+		 'fly',
+		 'growth-shrink',
+		 'havoc',
+		 'intangibility',
+		 'invisibility',
+		 'light-obscure',
+		 'mind-reading',
+		 'pummel',
+		 'puppet',
+		 'quickness',
+		 'shape-change',
+		 'slow',
+		 'slumber',
+		 'smite',
+		 'speak-language',
+		 'stun',
+		 'summon-ally',
+		 'teleport',
+		 'wall-walker',
+		 'warriors-gift',
+		 'zombie',
+		 'analyze-foe',
+		 'bless-curse',
+		 'concentrate',
+		 'draining-touch',
+		 'jet',
+		 'legerdemain',
+		 'speed',
+		 'telekinesis'
+		 ),
+		 'powers': 1,
+		 'power_points': 15,
+		 'page': 'p25',
+		 'book': 2,
+		 'free_power': '',
+		 'tag': 'ritual-magic'
+},
+{
+	 name: {
+		 'en-US': 'Sorcery',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 backlash: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'power_list': Array(
+		 'armor',
+		 'banish',
+		 'barrier',
+		 'beast-friend',
+		 'blast',
+		 'blind',
+		 'bolt',
+		 'boost-lower-trait',
+		 'burrow',
+		 'burst',
+		 'confusion',
+		 'damage-field',
+		 'darksight',
+		 'delfection',
+		 'detect-conceal-arcana',
+		 'disguise',
+		 'dispel',
+		 'divination',
+		 'drain-power-points',
+		 'elemental-manipulation',
+		 'entangle',
+		 'environmental-protection',
+		 'farsight',
+		 'fear',
+		 'fly',
+		 'growth-shrink',
+		 'havoc',
+		 'intangibility',
+		 'invisibility',
+		 'light-obscure',
+		 'mind-reading',
+		 'pummel',
+		 'puppet',
+		 'quickness',
+		 'shape-change',
+		 'slow',
+		 'slumber',
+		 'smite',
+		 'speak-language',
+		 'stun',
+		 'summon-ally',
+		 'teleport',
+		 'wall-walker',
+		 'warriors-gift',
+		 'zombie',
+		 'analyze-foe',
+		 'bless-curse',
+		 'concentrate',
+		 'draining-touch',
+		 'jet',
+		 'legerdemain',
+		 'speed',
+		 'telekinesis'
+		 ),
+		 'powers': 1,
+		 'power_points': 15,
+		 'page': 'p25',
+		 'book': 2,
+		 'free_power': 'dispel',
+		 'tag': 'sorcery'
 }
 );
 
@@ -13664,11 +15882,6 @@ var savageWorldsArcaneTrappings = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'No trappings specified',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'page': '',
 		 'book': 1,
 		 'tag': ''
@@ -13676,11 +15889,6 @@ var savageWorldsArcaneTrappings = Array(
 {
 	 name: {
 		 'en-US': 'Acid',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': '',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -13694,11 +15902,6 @@ var savageWorldsArcaneTrappings = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'page': 'p122',
 		 'book': 1,
 		 'tag': 'cold'
@@ -13706,11 +15909,6 @@ var savageWorldsArcaneTrappings = Array(
 {
 	 name: {
 		 'en-US': 'Darkness',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': '',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -13724,11 +15922,6 @@ var savageWorldsArcaneTrappings = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'page': 'p122',
 		 'book': 1,
 		 'tag': 'electricity'
@@ -13736,11 +15929,6 @@ var savageWorldsArcaneTrappings = Array(
 {
 	 name: {
 		 'en-US': 'Fire/Heat',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': '',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -13754,11 +15942,6 @@ var savageWorldsArcaneTrappings = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'page': 'p123',
 		 'book': 1,
 		 'tag': 'light'
@@ -13769,11 +15952,6 @@ var savageWorldsArcaneTrappings = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'page': 'p123',
 		 'book': 1,
 		 'tag': 'necromantic'
@@ -13781,11 +15959,6 @@ var savageWorldsArcaneTrappings = Array(
 {
 	 name: {
 		 'en-US': 'Sound',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': '',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -22740,7 +24913,9 @@ var savageWorldsGearArmor = Array(
 		 'class': 0,
 		 'general': 1,
 		 'type': 1,
+		 'vs_lasers_only': 0,
 		 'armor': 2,
+		 'armor2': 0,
 		 'covers_torso': 1,
 		 'covers_legs': 1,
 		 'covers_arms': 1,
@@ -22748,6 +24923,151 @@ var savageWorldsGearArmor = Array(
 		 'covers_face': 0,
 		 'weight': 25,
 		 'cost': 300,
+		 'is_rigid': 0
+},
+{
+	 name: {
+		 'en-US': 'Flak Jacket',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Covers torso',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'flak-jacket',
+		 'book': 1,
+		 'page': 'p60',
+		 'class': 0,
+		 'general': 1,
+		 'type': 1,
+		 'vs_lasers_only': 0,
+		 'armor': 2,
+		 'armor2': 4,
+		 'covers_torso': 1,
+		 'covers_legs': 0,
+		 'covers_arms': 0,
+		 'covers_head': 0,
+		 'covers_face': 0,
+		 'weight': 12,
+		 'cost': 80,
+		 'is_rigid': 0
+},
+{
+	 name: {
+		 'en-US': 'Hard Armor',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Covers entire body, future military',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'hard-armor',
+		 'book': 1,
+		 'page': 'p61',
+		 'class': 0,
+		 'general': 1,
+		 'type': 1,
+		 'vs_lasers_only': 0,
+		 'armor': 8,
+		 'armor2': 0,
+		 'covers_torso': 1,
+		 'covers_legs': 1,
+		 'covers_arms': 1,
+		 'covers_head': 1,
+		 'covers_face': 1,
+		 'weight': 30,
+		 'cost': 0,
+		 'is_rigid': 1
+},
+{
+	 name: {
+		 'en-US': 'Infantry Battle Suit',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Covers entire body, near-future military, bomb suit',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'infantry-battle-suit',
+		 'book': 1,
+		 'page': 'p61',
+		 'class': 0,
+		 'general': 1,
+		 'type': 1,
+		 'vs_lasers_only': 0,
+		 'armor': 6,
+		 'armor2': 0,
+		 'covers_torso': 1,
+		 'covers_legs': 1,
+		 'covers_arms': 1,
+		 'covers_head': 1,
+		 'covers_face': 1,
+		 'weight': 20,
+		 'cost': 0,
+		 'is_rigid': 0
+},
+{
+	 name: {
+		 'en-US': 'Kevlar Vest w/inserts',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'As Kevlar, but ceramic inserts are +8 vs. bullets',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'kevlar-vest-w-inserts',
+		 'book': 1,
+		 'page': 'p61',
+		 'class': 0,
+		 'general': 1,
+		 'type': 1,
+		 'vs_lasers_only': 0,
+		 'armor': 4,
+		 'armor2': 8,
+		 'covers_torso': 1,
+		 'covers_legs': 0,
+		 'covers_arms': 0,
+		 'covers_head': 0,
+		 'covers_face': 0,
+		 'weight': 12,
+		 'cost': 2500,
+		 'is_rigid': 0
+},
+{
+	 name: {
+		 'en-US': 'Kevlar Vest',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Covers torso only, negates 4 AP, see notes',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'kevlar-vest',
+		 'book': 1,
+		 'page': 'p61',
+		 'class': 0,
+		 'general': 1,
+		 'type': 1,
+		 'vs_lasers_only': 0,
+		 'armor': 2,
+		 'armor2': 4,
+		 'covers_torso': 1,
+		 'covers_legs': 0,
+		 'covers_arms': 0,
+		 'covers_head': 0,
+		 'covers_face': 0,
+		 'weight': 8,
+		 'cost': 250,
 		 'is_rigid': 0
 },
 {
@@ -22767,7 +25087,9 @@ var savageWorldsGearArmor = Array(
 		 'class': 0,
 		 'general': 1,
 		 'type': 1,
+		 'vs_lasers_only': 0,
 		 'armor': 1,
+		 'armor2': 0,
 		 'covers_torso': 1,
 		 'covers_legs': 1,
 		 'covers_arms': 1,
@@ -22775,6 +25097,35 @@ var savageWorldsGearArmor = Array(
 		 'covers_face': 0,
 		 'weight': 15,
 		 'cost': 50,
+		 'is_rigid': 0
+},
+{
+	 name: {
+		 'en-US': 'Motorcycle Helmet',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'motorcycle-helmet',
+		 'book': 1,
+		 'page': 'p61',
+		 'class': 0,
+		 'general': 1,
+		 'type': 1,
+		 'vs_lasers_only': 0,
+		 'armor': 3,
+		 'armor2': 0,
+		 'covers_torso': 0,
+		 'covers_legs': 0,
+		 'covers_arms': 0,
+		 'covers_head': 1,
+		 'covers_face': 0,
+		 'weight': 5,
+		 'cost': 75,
 		 'is_rigid': 0
 },
 {
@@ -22794,7 +25145,9 @@ var savageWorldsGearArmor = Array(
 		 'class': 0,
 		 'general': 1,
 		 'type': 1,
+		 'vs_lasers_only': 0,
 		 'armor': 3,
+		 'armor2': 0,
 		 'covers_torso': 0,
 		 'covers_legs': 0,
 		 'covers_arms': 1,
@@ -22821,7 +25174,9 @@ var savageWorldsGearArmor = Array(
 		 'class': 0,
 		 'general': 1,
 		 'type': 1,
+		 'vs_lasers_only': 0,
 		 'armor': 3,
+		 'armor2': 0,
 		 'covers_torso': 0,
 		 'covers_legs': 0,
 		 'covers_arms': 0,
@@ -22848,7 +25203,9 @@ var savageWorldsGearArmor = Array(
 		 'class': 0,
 		 'general': 1,
 		 'type': 1,
+		 'vs_lasers_only': 0,
 		 'armor': 3,
+		 'armor2': 0,
 		 'covers_torso': 1,
 		 'covers_legs': 0,
 		 'covers_arms': 0,
@@ -22875,7 +25232,9 @@ var savageWorldsGearArmor = Array(
 		 'class': 0,
 		 'general': 1,
 		 'type': 1,
+		 'vs_lasers_only': 0,
 		 'armor': 3,
+		 'armor2': 0,
 		 'covers_torso': 0,
 		 'covers_legs': 1,
 		 'covers_arms': 0,
@@ -22902,7 +25261,9 @@ var savageWorldsGearArmor = Array(
 		 'class': 0,
 		 'general': 1,
 		 'type': 1,
+		 'vs_lasers_only': 0,
 		 'armor': 3,
+		 'armor2': 0,
 		 'covers_torso': 0,
 		 'covers_legs': 0,
 		 'covers_arms': 0,
@@ -22911,6 +25272,180 @@ var savageWorldsGearArmor = Array(
 		 'weight': 4,
 		 'cost': 75,
 		 'is_rigid': 1
+},
+{
+	 name: {
+		 'en-US': 'Powered Armor (battle suit)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Covers entire body, far future military',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'powered-armor-battle-suit',
+		 'book': 1,
+		 'page': 'p61',
+		 'class': 0,
+		 'general': 1,
+		 'type': 1,
+		 'vs_lasers_only': 0,
+		 'armor': 12,
+		 'armor2': 0,
+		 'covers_torso': 1,
+		 'covers_legs': 1,
+		 'covers_arms': 1,
+		 'covers_head': 1,
+		 'covers_face': 1,
+		 'weight': 0,
+		 'cost': 0,
+		 'is_rigid': 1
+},
+{
+	 name: {
+		 'en-US': 'Powered Armor (heavy suit)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Covers entire body, far future military',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'powered-armor-heavy-suit',
+		 'book': 1,
+		 'page': 'p61',
+		 'class': 0,
+		 'general': 1,
+		 'type': 1,
+		 'vs_lasers_only': 0,
+		 'armor': 14,
+		 'armor2': 0,
+		 'covers_torso': 1,
+		 'covers_legs': 1,
+		 'covers_arms': 1,
+		 'covers_head': 1,
+		 'covers_face': 1,
+		 'weight': 0,
+		 'cost': 0,
+		 'is_rigid': 1
+},
+{
+	 name: {
+		 'en-US': 'Powered Armor (scout suit)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Covers entire body, far future military',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'powered-armor-scout-suit',
+		 'book': 1,
+		 'page': 'p61',
+		 'class': 0,
+		 'general': 1,
+		 'type': 1,
+		 'vs_lasers_only': 0,
+		 'armor': 10,
+		 'armor2': 0,
+		 'covers_torso': 1,
+		 'covers_legs': 1,
+		 'covers_arms': 1,
+		 'covers_head': 1,
+		 'covers_face': 1,
+		 'weight': 0,
+		 'cost': 0,
+		 'is_rigid': 1
+},
+{
+	 name: {
+		 'en-US': 'Reflective Vest',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Covers torso, far future, works against lasers only',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'reflective-vest',
+		 'book': 1,
+		 'page': 'p61',
+		 'class': 0,
+		 'general': 1,
+		 'type': 1,
+		 'vs_lasers_only': 1,
+		 'armor': 10,
+		 'armor2': 0,
+		 'covers_torso': 1,
+		 'covers_legs': 0,
+		 'covers_arms': 0,
+		 'covers_head': 0,
+		 'covers_face': 0,
+		 'weight': 5,
+		 'cost': 200,
+		 'is_rigid': 0
+},
+{
+	 name: {
+		 'en-US': 'Reinforced chain',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Covers torso, arms, and legs; 1 point of Armor is bypassed if hit with a raise',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'reinforced-chain',
+		 'book': 2,
+		 'page': '',
+		 'class': 0,
+		 'general': 1,
+		 'type': 0,
+		 'vs_lasers_only': 0,
+		 'armor': 3,
+		 'armor2': 2,
+		 'covers_torso': 1,
+		 'covers_legs': 0,
+		 'covers_arms': 0,
+		 'covers_head': 0,
+		 'covers_face': 0,
+		 'weight': 40,
+		 'cost': 700,
+		 'is_rigid': 0
+},
+{
+	 name: {
+		 'en-US': 'Reinforced leather',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Covers torso, arms, and legs; 1 point of Armor is bypassed if hit with a raise',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'reinforced-leather',
+		 'book': 2,
+		 'page': '',
+		 'class': 0,
+		 'general': 1,
+		 'type': 0,
+		 'vs_lasers_only': 0,
+		 'armor': 2,
+		 'armor2': 1,
+		 'covers_torso': 1,
+		 'covers_legs': 0,
+		 'covers_arms': 0,
+		 'covers_head': 0,
+		 'covers_face': 0,
+		 'weight': 20,
+		 'cost': 200,
+		 'is_rigid': 0
 },
 {
 	 name: {
@@ -22929,7 +25464,9 @@ var savageWorldsGearArmor = Array(
 		 'class': 0,
 		 'general': 1,
 		 'type': 1,
+		 'vs_lasers_only': 0,
 		 'armor': 3,
+		 'armor2': 0,
 		 'covers_torso': 0,
 		 'covers_legs': 0,
 		 'covers_arms': 0,
@@ -22938,6 +25475,35 @@ var savageWorldsGearArmor = Array(
 		 'weight': 8,
 		 'cost': 150,
 		 'is_rigid': 1
+},
+{
+	 name: {
+		 'en-US': 'Steel Pot (helmet)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'steel-pot-helmet',
+		 'book': 1,
+		 'page': 'p61',
+		 'class': 0,
+		 'general': 1,
+		 'type': 1,
+		 'vs_lasers_only': 0,
+		 'armor': 4,
+		 'armor2': 0,
+		 'covers_torso': 0,
+		 'covers_legs': 0,
+		 'covers_arms': 0,
+		 'covers_head': 1,
+		 'covers_face': 0,
+		 'weight': 5,
+		 'cost': 80,
+		 'is_rigid': 0
 }
 );
 
@@ -23039,6 +25605,14 @@ var savageWorldsGearGeneral = Array(
 		 'de-DE': '',
 	},
 		 'id': 3
+},
+{
+	 name: {
+		 'en-US': 'Services',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'id': 7
 }
 );
 
@@ -23080,6 +25654,30 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 4,
 		 'cost': 2500
+},
+{
+	 name: {
+		 'en-US': 'Alchemists\' trunk',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'alchemists-trunk',
+		 'book': 2,
+		 'page': 'p9',
+		 'class': 0,
+		 'general': 6,
+		 'type': 15,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 15,
+		 'cost': 1000
 },
 {
 	 name: {
@@ -23176,6 +25774,30 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 2,
 		 'cost': 50
+},
+{
+	 name: {
+		 'en-US': 'Battery',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'battery',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 1,
+		 'cost': 10
 },
 {
 	 name: {
@@ -23491,6 +26113,78 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Crossbow, mini-quarrels',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'crossbow-miniquarrels',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 5,
+		 'type': 0,
+		 'is_ammo': 1,
+		 'is_container': 0,
+		 'weight_per': 10,
+		 'cost_per': 10,
+		 'weight': 1,
+		 'cost': 1
+},
+{
+	 name: {
+		 'en-US': 'Crossbow, Repeating',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP2; holds 36 quarrels',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'crossbow-repeating',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 5,
+		 'type': 0,
+		 'is_ammo': 1,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 6,
+		 'cost': 75
+},
+{
+	 name: {
+		 'en-US': 'Crossbow, Winch',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 2',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'crossbow-winch',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 5,
+		 'type': 0,
+		 'is_ammo': 1,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 1,
+		 'cost': 10
+},
+{
+	 name: {
 		 'en-US': 'Crowbar',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -23512,6 +26206,30 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 2,
 		 'cost': 10
+},
+{
+	 name: {
+		 'en-US': 'Crucifix/religious symbol',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'crucifixreligious-symbol',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 5,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 0,
+		 'cost': 20
 },
 {
 	 name: {
@@ -23587,6 +26305,30 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Film, 24 exposure',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Kirlian camera',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'film-24-exposure',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 0,
+		 'cost': 10
+},
+{
+	 name: {
 		 'en-US': 'Flashlight',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -23635,6 +26377,30 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Flask (metal)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'flask-metal',
+		 'book': 2,
+		 'page': 'p9',
+		 'class': 0,
+		 'general': 6,
+		 'type': 15,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 1,
+		 'cost': 10
+},
+{
+	 name: {
 		 'en-US': 'Flint and Steel',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -23679,6 +26445,54 @@ var savageWorldsGearMundane = Array(
 		 'weight_per': 0,
 		 'cost_per': 0,
 		 'weight': 0,
+		 'cost': 200
+},
+{
+	 name: {
+		 'en-US': 'Formal clothing',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'formal-clothing',
+		 'book': 2,
+		 'page': 'p9',
+		 'class': 0,
+		 'general': 6,
+		 'type': 16,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 0,
+		 'cost': 60
+},
+{
+	 name: {
+		 'en-US': 'Ghost trap',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'ghost-trap',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 5,
 		 'cost': 200
 },
 {
@@ -23851,6 +26665,78 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Kirlian camera, still',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'kirlian-camera-still',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 3,
+		 'cost': 260
+},
+{
+	 name: {
+		 'en-US': 'Kirlian camera, video',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'kirlian-camera-video',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 6,
+		 'cost': 600
+},
+{
+	 name: {
+		 'en-US': 'Kirlian goggles',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'kirlian-goggles',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 2,
+		 'cost': 1400
+},
+{
+	 name: {
 		 'en-US': 'Lantern',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -23995,6 +26881,54 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Mirror',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'mirror',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 2,
+		 'cost': 25
+},
+{
+	 name: {
+		 'en-US': 'Motion tracker',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'motion-tracker',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 4,
+		 'cost': 650
+},
+{
+	 name: {
 		 'en-US': 'MRE (Meal Ready to Eat)',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -24019,6 +26953,54 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Neck protector, leather',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'neck-protector-leather',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 1,
+		 'cost': 30
+},
+{
+	 name: {
+		 'en-US': 'Neck protector, metal',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'neck-protector-metal',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 3,
+		 'cost': 120
+},
+{
+	 name: {
 		 'en-US': 'Normal Clothing',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -24040,6 +27022,30 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 0,
 		 'cost': 20
+},
+{
+	 name: {
+		 'en-US': 'Normal clothing',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'normal-clothing',
+		 'book': 2,
+		 'page': 'p9',
+		 'class': 0,
+		 'general': 6,
+		 'type': 16,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 20,
+		 'cost': 0
 },
 {
 	 name: {
@@ -24088,6 +27094,30 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 4,
 		 'cost': 750
+},
+{
+	 name: {
+		 'en-US': 'Parchment (per sheet)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'parchment-per-sheet',
+		 'book': 2,
+		 'page': 'p9',
+		 'class': 0,
+		 'general': 6,
+		 'type': 15,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 1,
+		 'cost': 1
 },
 {
 	 name: {
@@ -24307,6 +27337,54 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Spike',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'spike',
+		 'book': 2,
+		 'page': 'p9',
+		 'class': 0,
+		 'general': 6,
+		 'type': 15,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 1,
+		 'cost': 1
+},
+{
+	 name: {
+		 'en-US': 'Tailored clothing',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'tailored-clothing',
+		 'book': 2,
+		 'page': 'p9',
+		 'class': 0,
+		 'general': 6,
+		 'type': 16,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 0,
+		 'cost': 100
+},
+{
+	 name: {
 		 'en-US': 'Telephone Tap',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -24451,6 +27529,54 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'UV  Flashlight',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'uv--flashlight',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 4,
+		 'cost': 65
+},
+{
+	 name: {
+		 'en-US': 'Video tape, 4-hours',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Kirlian camera, video',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'video-tape-4hours',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 0,
+		 'cost': 20
+},
+{
+	 name: {
 		 'en-US': 'War Horse Barding',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -24496,6 +27622,30 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 0,
 		 'cost': 750
+},
+{
+	 name: {
+		 'en-US': 'Warding Material',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'warding-material',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 1,
+		 'cost': 5
 },
 {
 	 name: {
@@ -24568,6 +27718,30 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 1,
 		 'cost': 100
+},
+{
+	 name: {
+		 'en-US': 'Winter clothes',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'winter-clothes',
+		 'book': 2,
+		 'page': 'p9',
+		 'class': 0,
+		 'general': 6,
+		 'type': 16,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 0,
+		 'weight': 3,
+		 'cost': 35
 },
 {
 	 name: {
@@ -24854,7 +28028,7 @@ The entries in this file are from Savage Worlds Role Playing Game and are owned 
 DEVELOPERS: Do Not Edit or Pull Request this file, it is auto generated from a rudimentary admin area!
 */
 
-var savageWorldsGearWeapons = Array(
+var savageWorldsGearHandWeapons = Array(
 {
 	 name: {
 		 'en-US': 'Axe',
@@ -24862,9 +28036,6 @@ var savageWorldsGearWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'tag': 'axe',
 		 'book': 1,
@@ -24872,7 +28043,6 @@ var savageWorldsGearWeapons = Array(
 		 'class': 0,
 		 'general': 2,
 		 'type': 4,
-		 'range': '0',
 		 'damage': 'd6',
 		 'damage_strength': 1,
 		 'ap_vs_rigid_only': 0,
@@ -24883,8 +28053,88 @@ var savageWorldsGearWeapons = Array(
 		 'min_str': 6,
 		 'rof': 0,
 		 'cost': 200,
-		 'ammo_item': 0,
 		 'weight': 2,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Axe, Throwing',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+	},
+		 'tag': 'axe-throwing',
+		 'book': 1,
+		 'page': 'p60',
+		 'class': 0,
+		 'general': 2,
+		 'type': 0,
+		 'damage': 'd6',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 1,
+		 'cost': 75,
+		 'weight': 2,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Bangstick',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+	},
+		 'tag': 'bangstick',
+		 'book': 1,
+		 'page': 'p60',
+		 'class': 0,
+		 'general': 2,
+		 'type': 0,
+		 'damage': '3d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 1,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 0,
+		 'cost': 5,
+		 'weight': 2,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Bastard Sword',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+	},
+		 'tag': 'bastard-sword',
+		 'book': 2,
+		 'page': '',
+		 'class': 0,
+		 'general': 2,
+		 'type': 3,
+		 'damage': 'd8',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': -1,
+		 'min_str': 8,
+		 'rof': 0,
+		 'cost': 350,
+		 'weight': 10,
 		 'reach': 0
 },
 {
@@ -24894,9 +28144,6 @@ var savageWorldsGearWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'tag': 'battle-axe',
 		 'book': 1,
@@ -24904,7 +28151,6 @@ var savageWorldsGearWeapons = Array(
 		 'class': 0,
 		 'general': 2,
 		 'type': 4,
-		 'range': '0',
 		 'damage': 'd8',
 		 'damage_strength': 1,
 		 'ap_vs_rigid_only': 0,
@@ -24915,28 +28161,23 @@ var savageWorldsGearWeapons = Array(
 		 'min_str': 8,
 		 'rof': 0,
 		 'cost': 300,
-		 'ammo_item': 0,
 		 'weight': 10,
 		 'reach': 0
 },
 {
 	 name: {
-		 'en-US': 'Dagger',
+		 'en-US': 'Bayonet',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
-		 'tag': 'dagger',
+		 'tag': 'bayonet',
 		 'book': 1,
-		 'page': 'p52',
+		 'page': 'p60',
 		 'class': 0,
 		 'general': 2,
-		 'type': 3,
-		 'range': '0',
+		 'type': 0,
 		 'damage': 'd4',
 		 'damage_strength': 1,
 		 'ap_vs_rigid_only': 0,
@@ -24947,9 +28188,143 @@ var savageWorldsGearWeapons = Array(
 		 'min_str': 0,
 		 'rof': 0,
 		 'cost': 25,
-		 'ammo_item': 0,
 		 'weight': 1,
 		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Billy Club/Baton',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+	},
+		 'tag': 'billy-club-baton',
+		 'book': 1,
+		 'page': 'p60',
+		 'class': 0,
+		 'general': 2,
+		 'type': 0,
+		 'damage': 'd4',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 0,
+		 'cost': 10,
+		 'weight': 1,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Brass Knuckles',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+	},
+		 'tag': 'brass-knuckles',
+		 'book': 1,
+		 'page': 'p60',
+		 'class': 0,
+		 'general': 2,
+		 'type': 0,
+		 'damage': 'd4',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 0,
+		 'cost': 20,
+		 'weight': 1,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Chainsaw',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+	},
+		 'tag': 'chainsaw',
+		 'book': 1,
+		 'page': 'p60',
+		 'class': 0,
+		 'general': 2,
+		 'type': 0,
+		 'damage': '2d6+4',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 0,
+		 'cost': 200,
+		 'weight': 20,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Corpse Catcher',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+	},
+		 'tag': 'corpse-catcher',
+		 'book': 3,
+		 'page': 'p12',
+		 'class': 0,
+		 'general': 2,
+		 'type': 0,
+		 'damage': 'none',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 0,
+		 'cost': 300,
+		 'weight': 40,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Dwarven axe-chain',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+	},
+		 'tag': 'dwarven-axechain',
+		 'book': 2,
+		 'page': '',
+		 'class': 0,
+		 'general': 2,
+		 'type': 0,
+		 'damage': 'd6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': -1,
+		 'min_str': 0,
+		 'rof': 0,
+		 'cost': 500,
+		 'weight': 15,
+		 'reach': 1
 },
 {
 	 name: {
@@ -24958,9 +28333,6 @@ var savageWorldsGearWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'Ignores Shield Parry and Cover bonus',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'tag': 'flail',
 		 'book': 1,
@@ -24968,7 +28340,6 @@ var savageWorldsGearWeapons = Array(
 		 'class': 0,
 		 'general': 2,
 		 'type': 3,
-		 'range': '0',
 		 'damage': 'd6',
 		 'damage_strength': 1,
 		 'ap_vs_rigid_only': 0,
@@ -24979,7 +28350,33 @@ var savageWorldsGearWeapons = Array(
 		 'min_str': 6,
 		 'rof': 0,
 		 'cost': 200,
-		 'ammo_item': 0,
+		 'weight': 8,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Flail',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+	},
+		 'tag': 'flail',
+		 'book': 2,
+		 'page': '',
+		 'class': 0,
+		 'general': 2,
+		 'type': 0,
+		 'damage': 'd6',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 0,
+		 'cost': 200,
 		 'weight': 8,
 		 'reach': 0
 },
@@ -24990,9 +28387,6 @@ var savageWorldsGearWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 1, Parry -1, 2 hands',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'tag': 'great-axe',
 		 'book': 1,
@@ -25000,7 +28394,6 @@ var savageWorldsGearWeapons = Array(
 		 'class': 0,
 		 'general': 2,
 		 'type': 3,
-		 'range': '0',
 		 'damage': 'd10',
 		 'damage_strength': 1,
 		 'ap_vs_rigid_only': 0,
@@ -25011,8 +28404,34 @@ var savageWorldsGearWeapons = Array(
 		 'min_str': 0,
 		 'rof': 0,
 		 'cost': 500,
-		 'ammo_item': 0,
 		 'weight': 15,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Great Flail',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+	},
+		 'tag': 'great-flail',
+		 'book': 2,
+		 'page': '',
+		 'class': 0,
+		 'general': 2,
+		 'type': 0,
+		 'damage': 'd8',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 1,
+		 'requires_2_hands': 1,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': -1,
+		 'min_str': 8,
+		 'rof': 0,
+		 'cost': 0,
+		 'weight': 25,
 		 'reach': 0
 },
 {
@@ -25022,9 +28441,6 @@ var savageWorldsGearWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'Parry -1, 2 Hands',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'tag': 'great-sword',
 		 'book': 1,
@@ -25032,7 +28448,6 @@ var savageWorldsGearWeapons = Array(
 		 'class': 0,
 		 'general': 2,
 		 'type': 3,
-		 'range': '0',
 		 'damage': 'd10',
 		 'damage_strength': 1,
 		 'ap_vs_rigid_only': 0,
@@ -25043,7 +28458,6 @@ var savageWorldsGearWeapons = Array(
 		 'min_str': 0,
 		 'rof': 0,
 		 'cost': 400,
-		 'ammo_item': 0,
 		 'weight': 12,
 		 'reach': 0
 },
@@ -25054,9 +28468,6 @@ var savageWorldsGearWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'tag': 'halberd',
 		 'book': 1,
@@ -25064,7 +28475,6 @@ var savageWorldsGearWeapons = Array(
 		 'class': 0,
 		 'general': 2,
 		 'type': 5,
-		 'range': '0',
 		 'damage': 'd8',
 		 'damage_strength': 1,
 		 'ap_vs_rigid_only': 0,
@@ -25075,7 +28485,6 @@ var savageWorldsGearWeapons = Array(
 		 'min_str': 8,
 		 'rof': 0,
 		 'cost': 250,
-		 'ammo_item': 0,
 		 'weight': 15,
 		 'reach': 1
 },
@@ -25086,9 +28495,6 @@ var savageWorldsGearWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'tag': 'katana',
 		 'book': 1,
@@ -25096,7 +28502,6 @@ var savageWorldsGearWeapons = Array(
 		 'class': 0,
 		 'general': 2,
 		 'type': 3,
-		 'range': '0',
 		 'damage': 'd6+2',
 		 'damage_strength': 1,
 		 'ap_vs_rigid_only': 0,
@@ -25107,8 +28512,34 @@ var savageWorldsGearWeapons = Array(
 		 'min_str': 6,
 		 'rof': 0,
 		 'cost': 1000,
-		 'ammo_item': 0,
 		 'weight': 6,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Knife/Dagger',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+	},
+		 'tag': 'knifedagger',
+		 'book': 1,
+		 'page': 'p60',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'damage': 'd4',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 25,
+		 'weight': 1,
 		 'reach': 0
 },
 {
@@ -25118,9 +28549,6 @@ var savageWorldsGearWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'mounted combat only, AP 2 when charging',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'tag': 'lance',
 		 'book': 1,
@@ -25128,7 +28556,6 @@ var savageWorldsGearWeapons = Array(
 		 'class': 0,
 		 'general': 2,
 		 'type': 5,
-		 'range': '0',
 		 'damage': 'd8',
 		 'damage_strength': 1,
 		 'ap_vs_rigid_only': 0,
@@ -25139,9 +28566,62 @@ var savageWorldsGearWeapons = Array(
 		 'min_str': 8,
 		 'rof': 0,
 		 'cost': 300,
-		 'ammo_item': 0,
 		 'weight': 10,
 		 'reach': 2
+},
+{
+	 name: {
+		 'en-US': 'Laser Sword',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+	},
+		 'tag': 'laser-sword',
+		 'book': 1,
+		 'page': 'p60',
+		 'class': 0,
+		 'general': 2,
+		 'type': 0,
+		 'damage': 'd6+8',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 12,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 0,
+		 'cost': 1000,
+		 'weight': 5,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Light Flail',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+	},
+		 'tag': 'light-flail',
+		 'book': 2,
+		 'page': '',
+		 'class': 0,
+		 'general': 2,
+		 'type': 0,
+		 'damage': 'd6',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 0,
+		 'cost': 150,
+		 'weight': 6,
+		 'reach': 0
 },
 {
 	 name: {
@@ -25150,9 +28630,6 @@ var savageWorldsGearWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'Includes Scimitars',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'tag': 'long-sword',
 		 'book': 1,
@@ -25160,7 +28637,6 @@ var savageWorldsGearWeapons = Array(
 		 'class': 0,
 		 'general': 2,
 		 'type': 3,
-		 'range': '0',
 		 'damage': 'd8',
 		 'damage_strength': 1,
 		 'ap_vs_rigid_only': 0,
@@ -25171,7 +28647,6 @@ var savageWorldsGearWeapons = Array(
 		 'min_str': 8,
 		 'rof': 0,
 		 'cost': 300,
-		 'ammo_item': 0,
 		 'weight': 8,
 		 'reach': 0
 },
@@ -25182,9 +28657,6 @@ var savageWorldsGearWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'tag': 'maul',
 		 'book': 1,
@@ -25192,7 +28664,6 @@ var savageWorldsGearWeapons = Array(
 		 'class': 0,
 		 'general': 2,
 		 'type': 4,
-		 'range': '0',
 		 'damage': 'd8',
 		 'damage_strength': 1,
 		 'ap_vs_rigid_only': 1,
@@ -25203,8 +28674,88 @@ var savageWorldsGearWeapons = Array(
 		 'min_str': 8,
 		 'rof': 0,
 		 'cost': 200,
-		 'ammo_item': 0,
 		 'weight': 20,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Molecular Knife',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+	},
+		 'tag': 'molecular-knife',
+		 'book': 1,
+		 'page': 'p60',
+		 'class': 0,
+		 'general': 2,
+		 'type': 0,
+		 'damage': 'd4+2',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 2,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 0,
+		 'cost': 250,
+		 'weight': 1,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Molecular Sword',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+	},
+		 'tag': 'molecular-sword',
+		 'book': 1,
+		 'page': 'p60',
+		 'class': 0,
+		 'general': 2,
+		 'type': 0,
+		 'damage': 'd8+2',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 4,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 0,
+		 'cost': 500,
+		 'weight': 8,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Orcish Combat Axe',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+	},
+		 'tag': 'orcish-combat-axe',
+		 'book': 2,
+		 'page': '',
+		 'class': 0,
+		 'general': 2,
+		 'type': 3,
+		 'damage': 'd6',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 8,
+		 'rof': 0,
+		 'cost': 350,
+		 'weight': 12,
 		 'reach': 0
 },
 {
@@ -25214,9 +28765,6 @@ var savageWorldsGearWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'tag': 'pike',
 		 'book': 1,
@@ -25224,7 +28772,6 @@ var savageWorldsGearWeapons = Array(
 		 'class': 0,
 		 'general': 2,
 		 'type': 5,
-		 'range': '0',
 		 'damage': 'd8',
 		 'damage_strength': 1,
 		 'ap_vs_rigid_only': 0,
@@ -25235,9 +28782,35 @@ var savageWorldsGearWeapons = Array(
 		 'min_str': 8,
 		 'rof': 0,
 		 'cost': 400,
-		 'ammo_item': 0,
 		 'weight': 25,
 		 'reach': 2
+},
+{
+	 name: {
+		 'en-US': 'Pump Crossbow',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+	},
+		 'tag': 'pump-crossbow',
+		 'book': 2,
+		 'page': '',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'damage': 'd6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 2,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 1,
+		 'cost': 1200,
+		 'weight': 12,
+		 'reach': 0
 },
 {
 	 name: {
@@ -25246,9 +28819,6 @@ var savageWorldsGearWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'tag': 'rapier',
 		 'book': 1,
@@ -25256,7 +28826,6 @@ var savageWorldsGearWeapons = Array(
 		 'class': 0,
 		 'general': 2,
 		 'type': 3,
-		 'range': '0',
 		 'damage': 'd4',
 		 'damage_strength': 1,
 		 'ap_vs_rigid_only': 0,
@@ -25267,7 +28836,6 @@ var savageWorldsGearWeapons = Array(
 		 'min_str': 0,
 		 'rof': 0,
 		 'cost': 150,
-		 'ammo_item': 0,
 		 'weight': 3,
 		 'reach': 0
 },
@@ -25278,9 +28846,6 @@ var savageWorldsGearWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'Includes Calvary Sabers',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'tag': 'short-sword',
 		 'book': 1,
@@ -25288,7 +28853,6 @@ var savageWorldsGearWeapons = Array(
 		 'class': 0,
 		 'general': 2,
 		 'type': 3,
-		 'range': '0',
 		 'damage': 'd6',
 		 'damage_strength': 1,
 		 'ap_vs_rigid_only': 0,
@@ -25299,8 +28863,1947 @@ var savageWorldsGearWeapons = Array(
 		 'min_str': 6,
 		 'rof': 0,
 		 'cost': 200,
+		 'weight': 4,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Staff',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+	},
+		 'tag': 'staff',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 5,
+		 'damage': 'd4',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 1,
+		 'min_str': 0,
+		 'rof': 0,
+		 'cost': 10,
+		 'weight': 8,
+		 'reach': 1
+},
+{
+	 name: {
+		 'en-US': 'Survival Knife',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+	},
+		 'tag': 'survival-knife',
+		 'book': 1,
+		 'page': 'p60',
+		 'class': 0,
+		 'general': 2,
+		 'type': 0,
+		 'damage': 'd4',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 0,
+		 'cost': 50,
+		 'weight': 3,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Switchblade',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+	},
+		 'tag': 'switchblade',
+		 'book': 1,
+		 'page': 'p60',
+		 'class': 0,
+		 'general': 2,
+		 'type': 0,
+		 'damage': 'd4',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 0,
+		 'cost': 10,
+		 'weight': 1,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Warhammer',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+	},
+		 'tag': 'warhammer',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 4,
+		 'damage': 'd6',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 1,
+		 'requires_2_hands': 0,
+		 'ap': 1,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 0,
+		 'cost': 250,
+		 'weight': 8,
+		 'reach': 0
+}
+);
+
+
+/*
+
+Data here is NOT Licensed under the Creative Commons and is owned by Pinnacle Entertainment Group.
+
+This product references the Savage Worlds game system, available from Pinnacle Entertainment Group at www.peginc.com.
+Savage Worlds and all associated logos and trademarks are copyrights of Pinnacle Entertainment Group. Used with permission.
+Pinnacle makes no representation or warranty as to the quality, viability, or suitability for purpose of this product.
+
+The entries in this file are from Savage Worlds Role Playing Game and are owned by Pinnacle Entertainment Group.
+
+DEVELOPERS: Do Not Edit or Pull Request this file, it is auto generated from a rudimentary admin area!
+*/
+
+var savageWorldsGearRangedWeapons = Array(
+{
+	 name: {
+		 'en-US': '14.5mm MG',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 2, Auto, may not move',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': '145mm-MG',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 13,
+		 'range': '50/100/200',
+		 'damage': '3d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 3,
+		 'cost': 5000,
+		 'ammo_item': 0,
+		 'weight': 30,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': '7.7 MG (Japanese)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 2, Auto, Snap re',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': '77-mg-japanese',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 13,
+		 'range': '30/60/120',
+		 'damage': '2d8',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 3,
+		 'cost': 1000,
+		 'ammo_item': 0,
+		 'weight': 30,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'AK47 (7.62)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 2, Auto',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'ak47-762',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 12,
+		 'range': '24/48/96',
+		 'damage': '2d8+1',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 3,
+		 'cost': 450,
+		 'ammo_item': 0,
+		 'weight': 10,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Atomic Ghost Pack',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'atomic-ghost-pack',
+		 'book': 3,
+		 'page': 'p13',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '5/10/20',
+		 'damage': 'special',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 1,
+		 'cost': 3000,
+		 'ammo_item': 0,
+		 'weight': 15,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Axe, Throwing',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'axe-throwing',
+		 'book': 1,
+		 'page': 'p60',
+		 'class': 0,
+		 'general': 2,
+		 'type': 0,
+		 'range': '3/6/12',
+		 'damage': 'd6',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 1,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 1,
+		 'cost': 75,
+		 'ammo_item': 0,
+		 'weight': 2,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Barret (.50)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP4, Snapfire, HW',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'barrett-50',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 8,
+		 'range': '50/100/200',
+		 'damage': '2d10',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 4,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 8,
+		 'rof': 1,
+		 'cost': 750,
+		 'ammo_item': 0,
+		 'weight': 35,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Besa MG (7.92)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 2, Auto, may not move',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'besa-mg-792',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 13,
+		 'range': '40/80/160',
+		 'damage': '2d8',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 3,
+		 'cost': 1000,
+		 'ammo_item': 0,
+		 'weight': 54,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Blunderbuss (8G)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '2 actions to reload',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'blunderbuss-8g',
+		 'book': 1,
+		 'page': 'p62',
+		 'class': 0,
+		 'general': 3,
+		 'type': 9,
+		 'range': '10/20/40',
+		 'damage': '1-3d6*',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 1,
+		 'cost': 300,
+		 'ammo_item': 0,
+		 'weight': 12,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Bow',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'bow',
+		 'book': 1,
+		 'page': 'p60',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '12/24/48',
+		 'damage': '2d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 250,
+		 'ammo_item': 0,
+		 'weight': 3,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Brown Bess (.75)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '2 actions to reload',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'brown-bess-75',
+		 'book': 1,
+		 'page': 'p62',
+		 'class': 0,
+		 'general': 3,
+		 'type': 9,
+		 'range': '10/20/40',
+		 'damage': '2d8',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 1,
+		 'cost': 300,
+		 'ammo_item': 0,
+		 'weight': 15,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Colt 1911 (.45)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': ' AP 1, Semi-Auto',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'colt-1911-45',
+		 'book': 1,
+		 'page': 'p62',
+		 'class': 0,
+		 'general': 3,
+		 'type': 7,
+		 'range': '12/24/48',
+		 'damage': 'd6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 1,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 200,
 		 'ammo_item': 0,
 		 'weight': 4,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Colt Dragoon (.44)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Revolver',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'colt-dragoon',
+		 'book': 1,
+		 'page': 'p62',
+		 'class': 0,
+		 'general': 3,
+		 'type': 7,
+		 'range': '12/24/48',
+		 'damage': '2d6+1',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 200,
+		 'ammo_item': 0,
+		 'weight': 4,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Crossbow',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 2, 1 action to reload',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'crossbow',
+		 'book': 1,
+		 'page': 'p60',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '15/30/60',
+		 'damage': '2d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 1,
+		 'requires_2_hands': 1,
+		 'parry_modifier': -4,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 500,
+		 'ammo_item': 0,
+		 'weight': 10,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Derringer (.44)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 1',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'derringer-44',
+		 'book': 1,
+		 'page': 'p62',
+		 'class': 0,
+		 'general': 3,
+		 'type': 7,
+		 'range': '5/10/20',
+		 'damage': '2d6+1',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 1,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 150,
+		 'ammo_item': 0,
+		 'weight': 2,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Desert Eagle (.50)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 2, Semi-Auto',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'desert-eagle',
+		 'book': 1,
+		 'page': 'p62',
+		 'class': 0,
+		 'general': 3,
+		 'type': 7,
+		 'range': '15/30/60',
+		 'damage': '2d8',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 300,
+		 'ammo_item': 0,
+		 'weight': 8,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Double-Barrel Shotgun (12g)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'See Text - p56',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'double-barrel-shotgun-12g',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 11,
+		 'range': '12/24/48',
+		 'damage': '1-3d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 150,
+		 'ammo_item': 0,
+		 'weight': 11,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'DTMG (7.62)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 2, Auto, May not move',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'DTMG-762',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 13,
+		 'range': '30/60/120',
+		 'damage': '2d8+1',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 3,
+		 'cost': 1000,
+		 'ammo_item': 0,
+		 'weight': 26,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Elven bow',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'elven-bow',
+		 'book': 2,
+		 'page': '',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '15/30/60',
+		 'damage': '2d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 1,
+		 'cost': 500,
+		 'ammo_item': 0,
+		 'weight': 4,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'English Long Bow',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'english-long-bow',
+		 'book': 1,
+		 'page': 'p60',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '15/30/60',
+		 'damage': '2d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 200,
+		 'ammo_item': 0,
+		 'weight': 5,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Flare Pistol',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '1 action to reload',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'flare-pistol',
+		 'book': 3,
+		 'page': 'p13',
+		 'class': 0,
+		 'general': 3,
+		 'type': 7,
+		 'range': '3/6/12',
+		 'damage': '2d6+1',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 100,
+		 'ammo_item': 0,
+		 'weight': 4,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Flintlock Pistol (.60)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '2 actions to reload',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'flintlock-pistol-60',
+		 'book': 1,
+		 'page': 'p62',
+		 'class': 0,
+		 'general': 3,
+		 'type': 9,
+		 'range': '5/10/20',
+		 'damage': '2d6+1',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 150,
+		 'ammo_item': 0,
+		 'weight': 3,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Gatling (.45)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP2, May not move',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'gatling-45',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 13,
+		 'range': '24/48/96',
+		 'damage': '2d8',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 3,
+		 'cost': 500,
+		 'ammo_item': 0,
+		 'weight': 40,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Glock (9mm)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 1, Semi-Auto',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'glock-9mm',
+		 'book': 1,
+		 'page': 'p62',
+		 'class': 0,
+		 'general': 3,
+		 'type': 7,
+		 'range': '12/24/48',
+		 'damage': '2d6',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 1,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 200,
+		 'ammo_item': 0,
+		 'weight': 3,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'H&K G3 (.308)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP2, Auto',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'h-and-k-g3-308',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 12,
+		 'range': '24/48/96',
+		 'damage': '2d8',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 3,
+		 'cost': 400,
+		 'ammo_item': 0,
+		 'weight': 10,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'H&K MP5 (9mm)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 1, Auto',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'h-and-p-mp5-9mm',
+		 'book': 1,
+		 'page': 'p62',
+		 'class': 0,
+		 'general': 3,
+		 'type': 10,
+		 'range': '12/24/48',
+		 'damage': '2d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 1,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 3,
+		 'cost': 300,
+		 'ammo_item': 0,
+		 'weight': 10,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Holy Water, Grenade',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Small Burst Template, See Notes',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'holy-water-grenade',
+		 'book': 3,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '5/10/20',
+		 'damage': 'Special',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 30,
+		 'ammo_item': 0,
+		 'weight': 2,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Holy Water, Pistol',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Pump to increase range to 3/6/9',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'holy-water-pistol',
+		 'book': 3,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '1/2/3',
+		 'damage': 'Special',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 50,
+		 'ammo_item': 0,
+		 'weight': 4,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Holy Water, Spray',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'holy-water-spray',
+		 'book': 3,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': 'SBT',
+		 'damage': 'Special',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 5,
+		 'ammo_item': 0,
+		 'weight': 1,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Kar98 (7.92)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'kar98-792',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 8,
+		 'range': '24/48/96',
+		 'damage': '2d8',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 1,
+		 'cost': 300,
+		 'ammo_item': 0,
+		 'weight': 9,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Kentucky Rifle (.45)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 2, 3 actions to reload',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'kentucky-rifle-45',
+		 'book': 1,
+		 'page': 'p62',
+		 'class': 0,
+		 'general': 3,
+		 'type': 9,
+		 'range': '15/30/60',
+		 'damage': '2d8',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 1,
+		 'cost': 300,
+		 'ammo_item': 0,
+		 'weight': 8,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Knife/Dagger',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'knife-dagger',
+		 'book': 1,
+		 'page': 'p60',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '3/6/12',
+		 'damage': 'd4',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 1,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 25,
+		 'ammo_item': 0,
+		 'weight': 1,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Laser MG',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Auto',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'swd-laser-mg',
+		 'book': 1,
+		 'page': 'p64',
+		 'class': 0,
+		 'general': 3,
+		 'type': 12,
+		 'range': '50/100/200',
+		 'damage': '1-3d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 8,
+		 'rof': 5,
+		 'cost': 500,
+		 'ammo_item': 0,
+		 'weight': 15,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Laser Pistol',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Semi-Auto',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'swd-laser-pistol',
+		 'book': 1,
+		 'page': 'p64',
+		 'class': 0,
+		 'general': 3,
+		 'type': 7,
+		 'range': '15/30/60',
+		 'damage': '1-3d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 200,
+		 'ammo_item': 0,
+		 'weight': 4,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Laser Rifle',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Auto, 3RB',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'swd-laser-rifle',
+		 'book': 1,
+		 'page': 'p64',
+		 'class': 0,
+		 'general': 3,
+		 'type': 8,
+		 'range': '30/60/120',
+		 'damage': '1-3d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 3,
+		 'cost': 300,
+		 'ammo_item': 0,
+		 'weight': 8,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'M-16 (5.56)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 2, Auto, 3RB',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'm-16-556',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 12,
+		 'range': '24/48/96',
+		 'damage': '2d8',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 3,
+		 'cost': 400,
+		 'ammo_item': 0,
+		 'weight': 8,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'M1 (.30)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 2, Semi-Auto',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'm1-30',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 8,
+		 'range': '24/48/96',
+		 'damage': '2d8',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 1,
+		 'cost': 300,
+		 'ammo_item': 0,
+		 'weight': 10,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'M1919 (.30)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 2, May not move',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'm1919-30',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 13,
+		 'range': '24/48/96',
+		 'damage': '2d8',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 3,
+		 'cost': 750,
+		 'ammo_item': 0,
+		 'weight': 32,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'M2 Browning (.50 Cal)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP4, Auto, May not move, HW',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'M2-Browning-50-Cal',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 13,
+		 'range': '50/100/200',
+		 'damage': '2d10',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 4,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 3,
+		 'cost': 1000,
+		 'ammo_item': 0,
+		 'weight': 84,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'M60',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 2, Snap re',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'm60',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 13,
+		 'range': '30/60/120',
+		 'damage': '2d8+1',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 8,
+		 'rof': 3,
+		 'cost': 1000,
+		 'ammo_item': 0,
+		 'weight': 33,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'MG34 (7.92)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 2, Snapfire',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'mg34-792',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 13,
+		 'range': '30/60/120',
+		 'damage': '2d8+1',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 8,
+		 'rof': 3,
+		 'cost': 500,
+		 'ammo_item': 0,
+		 'weight': 26,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'MG42 (7.92)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 2, Snapfire',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'mg42-792',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 13,
+		 'range': '30/60/120',
+		 'damage': '2d8+1',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 4,
+		 'cost': 500,
+		 'ammo_item': 0,
+		 'weight': 26,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Mini-crossbow',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Ap1',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'minicrossbow',
+		 'book': 2,
+		 'page': '',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '6/12/24',
+		 'damage': '2d4',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 1,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 200,
+		 'ammo_item': 0,
+		 'weight': 3,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Mini-crossbow',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 1, 1 action to reload',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'minicrossbow',
+		 'book': 3,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '6/12/24',
+		 'damage': '2d4',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 1,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 200,
+		 'ammo_item': 0,
+		 'weight': 3,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'MP40 (9mm)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP1,Auto',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'mp40-9mm',
+		 'book': 1,
+		 'page': 'p62',
+		 'class': 0,
+		 'general': 3,
+		 'type': 10,
+		 'range': '12/24/48',
+		 'damage': '2d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 1,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 3,
+		 'cost': 300,
+		 'ammo_item': 0,
+		 'weight': 11,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Peacemaker (.45)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 1, Revolver',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'peacemaker-45',
+		 'book': 1,
+		 'page': 'p62',
+		 'class': 0,
+		 'general': 3,
+		 'type': 7,
+		 'range': '12/24/48',
+		 'damage': '2d6+1',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 1,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 200,
+		 'ammo_item': 0,
+		 'weight': 3,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Pump Action Shotgun (12g)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'See Text - p56',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'pump-action-shotgun-12g',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 11,
+		 'range': '12/24/48',
+		 'damage': '1-3d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 150,
+		 'ammo_item': 0,
+		 'weight': 8,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Pump Crossbow',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Ap2',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'pump-crossbow',
+		 'book': 2,
+		 'page': '',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '10/20/40',
+		 'damage': 'd6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 1,
+		 'cost': 1200,
+		 'ammo_item': 0,
+		 'weight': 12,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Repeating Crossbow',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 2, Autofire',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'repeating-crossbow',
+		 'book': 3,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '15/30/60',
+		 'damage': '2d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 3,
+		 'cost': 800,
+		 'ammo_item': 0,
+		 'weight': 12,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Ruger (.22)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Semi-Auto',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'ruger-22',
+		 'book': 1,
+		 'page': 'p62',
+		 'class': 0,
+		 'general': 3,
+		 'type': 7,
+		 'range': '10/20/40',
+		 'damage': '2d6-1',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 100,
+		 'ammo_item': 0,
+		 'weight': 2,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'S&W (.357)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 1, Revolver',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 's-and-w-357',
+		 'book': 1,
+		 'page': 'p62',
+		 'class': 0,
+		 'general': 3,
+		 'type': 7,
+		 'range': '12/24/48',
+		 'damage': '2d',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 1,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 250,
+		 'ammo_item': 0,
+		 'weight': 4,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'S&W (.44)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 1, Revolver',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 's-and-w-44',
+		 'book': 1,
+		 'page': 'p62',
+		 'class': 0,
+		 'general': 3,
+		 'type': 7,
+		 'range': '12/24/48',
+		 'damage': '2d6+1',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 1,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 250,
+		 'ammo_item': 0,
+		 'weight': 5,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'SAW (5.56)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 2, Snapfire',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'saw-556',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 13,
+		 'range': '30/60/120',
+		 'damage': '2d8',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 8,
+		 'rof': 4,
+		 'cost': 750,
+		 'ammo_item': 0,
+		 'weight': 20,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Sawed-Off DB Shotgun (12g)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'See Text - p56',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'sawed-off-db-shotgun-12g',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 11,
+		 'range': '5/10/20',
+		 'damage': '1-3d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 150,
+		 'ammo_item': 0,
+		 'weight': 6,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Sharps Big 50 (.50)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 2, Snapfire Penalty',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'sharps-big-50',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 8,
+		 'range': '30/60/120',
+		 'damage': '2d10',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 8,
+		 'rof': 1,
+		 'cost': 400,
+		 'ammo_item': 0,
+		 'weight': 11,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Sling',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'sling',
+		 'book': 1,
+		 'page': 'p60',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '4/8/16',
+		 'damage': 'd4',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 10,
+		 'ammo_item': 0,
+		 'weight': 1,
 		 'reach': 0
 },
 {
@@ -25316,28 +30819,95 @@ var savageWorldsGearWeapons = Array(
 	},
 		 'tag': 'spear',
 		 'book': 1,
-		 'page': 'p52',
+		 'page': 'p60',
 		 'class': 0,
-		 'general': 2,
-		 'type': 5,
-		 'range': '0',
+		 'general': 3,
+		 'type': 0,
+		 'range': '3/6/12',
 		 'damage': 'd6',
 		 'damage_strength': 1,
 		 'ap_vs_rigid_only': 0,
 		 'requires_2_hands': 1,
+		 'throwable': 1,
 		 'ap': 0,
 		 'requires_2_hands': 1,
-		 'parry_modifier': 1,
+		 'parry_modifier': 0,
 		 'min_str': 6,
-		 'rof': 0,
-		 'cost': 10,
+		 'rof': 1,
+		 'cost': 100,
 		 'ammo_item': 0,
 		 'weight': 5,
-		 'reach': 1
+		 'reach': 0
 },
 {
 	 name: {
-		 'en-US': 'Staff',
+		 'en-US': 'Spencer Carbine (.52)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP2',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'spencer-carbine-52',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 8,
+		 'range': '20/40/80',
+		 'damage': '2d8',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 250,
+		 'ammo_item': 0,
+		 'weight': 8,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Springfield (.52)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '2 actions to reload',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'springfield-52',
+		 'book': 1,
+		 'page': 'p62',
+		 'class': 0,
+		 'general': 3,
+		 'type': 9,
+		 'range': '15/30/60',
+		 'damage': '2d8',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 1,
+		 'cost': 250,
+		 'ammo_item': 0,
+		 'weight': 11,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Stake',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -25346,57 +30916,257 @@ var savageWorldsGearWeapons = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-		 'tag': 'staff',
-		 'book': 1,
-		 'page': 'p52',
+		 'tag': 'stake',
+		 'book': 3,
+		 'page': 'p12',
 		 'class': 0,
-		 'general': 2,
-		 'type': 5,
-		 'range': '0',
+		 'general': 3,
+		 'type': 0,
+		 'range': '2/4/8',
 		 'damage': 'd4',
 		 'damage_strength': 1,
 		 'ap_vs_rigid_only': 0,
-		 'requires_2_hands': 1,
+		 'requires_2_hands': 0,
+		 'throwable': 1,
 		 'ap': 0,
-		 'requires_2_hands': 1,
-		 'parry_modifier': 1,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
 		 'min_str': 0,
 		 'rof': 0,
 		 'cost': 10,
 		 'ammo_item': 0,
-		 'weight': 8,
-		 'reach': 1
+		 'weight': 2,
+		 'reach': 0
 },
 {
 	 name: {
-		 'en-US': 'Warhammer',
+		 'en-US': 'Steyr AUG (5.56)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': '',
+		 'en-US': 'AP 2, Auto, 3RB',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-		 'tag': 'warhammer',
+		 'tag': 'steyr-aug-556',
 		 'book': 1,
-		 'page': 'p52',
+		 'page': 'p63',
 		 'class': 0,
-		 'general': 2,
-		 'type': 4,
-		 'range': '0',
-		 'damage': 'd6',
-		 'damage_strength': 1,
-		 'ap_vs_rigid_only': 1,
-		 'requires_2_hands': 0,
-		 'ap': 1,
-		 'requires_2_hands': 0,
+		 'general': 3,
+		 'type': 12,
+		 'range': '24/48/96',
+		 'damage': '2d8',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
 		 'parry_modifier': 0,
-		 'min_str': 6,
-		 'rof': 0,
-		 'cost': 250,
+		 'min_str': 0,
+		 'rof': 3,
+		 'cost': 400,
 		 'ammo_item': 0,
 		 'weight': 8,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Streetsweeper Shotgun (12g)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'See Text - p56',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'streetsweeper-shotgun-12g',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 11,
+		 'range': '12/24/48',
+		 'damage': '1-3d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 450,
+		 'ammo_item': 0,
+		 'weight': 10,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Tommy Gun (.45)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP1,Auto',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'tommy-gun-45',
+		 'book': 1,
+		 'page': 'p62',
+		 'class': 0,
+		 'general': 3,
+		 'type': 10,
+		 'range': '12/24/48',
+		 'damage': '2d6+1',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 1,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 3,
+		 'cost': 350,
+		 'ammo_item': 0,
+		 'weight': 13,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'UV Grenade',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Medium Burst Template',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'uv-grenade',
+		 'book': 3,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '',
+		 'damage': 'Special',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 5,
+		 'cost': 100,
+		 'ammo_item': 0,
+		 'weight': 2,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Uzi (9mm)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 1, Auto',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'uzi-9mm',
+		 'book': 1,
+		 'page': 'p62',
+		 'class': 0,
+		 'general': 3,
+		 'type': 10,
+		 'range': '12/24/48',
+		 'damage': '2d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 1,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 3,
+		 'cost': 300,
+		 'ammo_item': 0,
+		 'weight': 9,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Winch Crossbow',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 2; 1 action to reload',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'winch-crossbow',
+		 'book': 3,
+		 'page': 'p12',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '5/10/20',
+		 'damage': 'd6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 1,
+		 'cost': 650,
+		 'ammo_item': 0,
+		 'weight': 15,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Winchester \'76 (.45-.47)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 2',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'winchester-76-45-47',
+		 'book': 1,
+		 'page': 'p63',
+		 'class': 0,
+		 'general': 3,
+		 'type': 8,
+		 'range': '24/48/96',
+		 'damage': '2d8',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 1,
+		 'cost': 300,
+		 'ammo_item': 0,
+		 'weight': 10,
 		 'reach': 0
 }
 );
@@ -25410,21 +31180,6 @@ availableLanguages.push ({
 	active: true,
 
 	translations: {
-			BUTTON_LANG_EN: 'English',
-			BUTTON_LANG_BR: 'German',
-			GENERAL_ATTRIBUTES: 'Attribute',
-			ATTRIBUTE_AGILITY: 'Geschicklichkeit',
-			ATTRIBUTE_SMARTS: 'Verstand',
-			ATTRIBUTE_SPIRIT: 'Willenskraft',
-			ATTRIBUTE_STRENGTH: 'Stärke',
-			ATTRIBUTE_VIGOR: 'Konstitution',
-			GENERAL_SKILLS: 'Fertigkeiten',
-			GENERAL_TOUGHNESS: 'Robustheit',
-			GENERAL_PACE: 'Bewegungsweite',
-			GENERAL_CHARISMA: 'Charisma',
-			GENERAL_PARRY: 'Parade',
-			GENERAL_HINDRANCES: 'Handicaps',
-			GENERAL_EDGES: 'Talente',
 
 	}
 
@@ -25455,9 +31210,12 @@ availableLanguages.push ({
 			INDEX_BUTTON_SCIFI_VEHICLE: 'Vehicle Maker',
 			INDEX_BUTTON_SCIFI_WALKER: 'Walker Maker',
 			INDEX_BUTTON_SCIFI_WORLD: 'World Maker',
+			GENERAL_IN_USE: 'In Use',
+			GENERAL_TRY_AGAIN: 'Try Again',
 			GENERAL_NEW: 'New',
 			GENERAL_NAME: 'Name',
 			GENERAL_RACE: 'Race',
+			GENERAL_FREE: 'free',
 			GENERAL_DESCRIPTION: 'Description',
 			GENERAL_BACKGROUND: 'Background',
 			GENERAL_GENDER: 'Gender',
@@ -25477,19 +31235,31 @@ availableLanguages.push ({
 			GENERAL_REMOVE: 'Remove',
 			GENERAL_DELETE: 'Delete',
 			GENERAL_ADD: 'Add',
+			GENERAL_COST: 'Cost',
+			GENERAL_WEIGHT: 'Weight',
+			GENERAL_CHARGEN_PDF_LAYOUT: 'Character PDF Layout',
+			GENERAL_PORTRAIT: 'Portrait',
+			GENERAL_LANDSCAPE: 'Landscape',
 			GENERAL_SANITY: 'Sanity',
 			GENERAL_DERIVED: 'Derived',
 			GENERAL_TRAITS: 'Traits',
 			GENERAL_MALE: 'Male',
 			GENERAL_FEMALE: 'Female',
 			GENERAL_OTHER: 'Other',
+			TRAINER_CORRECT_ANSWERS: 'Correct Answers',
+			TRAINER_TOTAL_QUESTIONS: 'Total Questions',
+			GENERAL_PERCENTAGE: 'Percentage',
 			GENERAL_BBCODE: 'BB Code',
 			GENERAL_JSON: 'JSON',
 			GENERAL_ADVANCEMENT: 'Advancement',
 			GENERAL_ADVANCEMENTS: 'Advancements',
+			GENERAL_ADVANCES: 'Advances',
 			GENERAL_POWERS: 'Powers',
+			GENERAL_CYBERWARE: 'Cyberware',
+			GENERAL_STRAIN: 'Strain',
 			GENERAL_SETTINGS: 'Settings',
 			GENERAL_SELECT_LANGUAGE: 'Select Language',
+			GENERAL_SELECT: '-Select-',
 			GENERAL_ATTRIBUTES: 'Attributes',
 			ATTRIBUTE_AGILITY: 'Agility',
 			ATTRIBUTE_SMARTS: 'Smarts',
@@ -25508,9 +31278,14 @@ availableLanguages.push ({
 			GENERAL_EDGES: 'Edges',
 			GENERAL_PERKS: 'Perks',
 			GENERAL_GEAR: 'Gear',
+			CHARGEN_INTRO_MAKE_PC: 'Let\'s make a Player Character',
+			CHARGEN_INTRO_NOT_FOR_NPCS: 'Remember, this tool is meant for making PCs as per Savage Worlds Core and the various settings of rulebooks not for making NPCs. NPCs can be made from the GMs whim and aren\'t limited like a PC is during generation.',
+			CHARGEN_INTRO_NOT_FOR_NPCS2: 'This isn\'t to say that a GM can\'t use this tool as a guideline, but it could be more time consuming and unnecessary.',
 			CHARGEN_CHARACTER_INFORMATION: 'Character Information',
 			CHARGEN_ATTRIBUTES_AND_SKILLS: 'Attributes & Skills',
 			CHARGEN_BOOKS_DIALOG: 'Books in Use',
+			CHARGEN_INTRO_BOOKS: 'Books',
+			CHARGEN_INTRO_SETTING_RULES: 'Setting Rules',
 			CHARGEN_SPECIALIZATION_PLACEHOLDER: 'Skill Name',
 			CHARGEN_SPECIALIZATIONS: 'Specializations',
 			CHARGEN_STATUS_SKILL_POINTS: 'Skill Points (used/available)',
@@ -25518,15 +31293,23 @@ availableLanguages.push ({
 			CHARGEN_SELECT_POWER: 'Select a Power',
 			CHARGEN_STATUS_ATTRIBUTE_POINTS: 'Attribute Points (used/available)',
 			CHARGEN_STATUS_ADVANCEMENTS: 'Advancements (used/available)',
+			CHARGEN_NO_ADVANCEMENT_SLOTS_AVAILABLE: 'You have no advancement slots available. Please set your XP to five or greater to activate your advancment track.',
 			CHARGEN_VALIDATION_REPORT: 'Validation Report',
 			CHARGEN_RACIAL_PARENTHETICAL: '(racial)',
+			CHARGEN_SETTING_PARENTHETICAL: '(setting)',
+			CHARGEN_SPC_AB: 'Arcane Background (Super Powers, Setting Rule)',
 			CHARGEN_ADD_HINDRANCE: 'Add Hindrance',
 			CHARGEN_ADD_EDGE: 'Add Edge',
 			CHARGEN_ADD_GEAR: 'Add Gear',
+			CHARGEN_ADD_ARMOR: 'Add Armor',
+			CHARGEN_ADD_WEAPON: 'Add Weapon',
+			CHARGEN_ADD_RANGED_WEAPON: 'Add Ranged Weapon',
+			CHARGEN_ADD_HAND_WEAPON: 'Add Hand Weapon',
 			CHARGEN_MANAGE_GEAR: 'Manage Gear',
 			CHARGEN_PERK_POINTS: 'Perk Points',
 			CHARGEN_ADD_PERK: 'Add Perk',
 			CHARGEN_ADD_ADVANCEMENT: 'Add Advancement',
+			GENERAL_ADVANCEMENT_SELECTIONS: 'Advancement Selections',
 			CHARGEN_NO_PERK_POINTS: 'Select hindrances to gain perk points',
 			CHARGEN_SELECT_A_PERK: 'Select a Perk',
 			CHARGEN_PERKS_ATTRIBUTE: 'Gain another attribute point',
@@ -25534,10 +31317,16 @@ availableLanguages.push ({
 			CHARGEN_PERKS_SKILL: 'Gain another skill point',
 			CHARGEN_PERKS_FUNDS: 'Increase starting funds by 100%',
 			CHARGEN_NO_EDGES_AVAILABLE: 'You have no edges available',
+			CHARGEN_NO_POWERS_SELECTED: 'You have no powers selected',
 			CHARGEN_SELECT_HINDRANCE: 'Select a Hindrance',
 			CHARGEN_SELECT_EDGE: 'Select an Edge',
+			CHARGEN_ARCANE_BACKGROUND: 'Arcane Background',
+			CHARGEN_SELECTED_POWERS: 'Selected Powers',
 			CHARGEN_NO_ARCANE_EDGE: 'You do not have an Arcane Background edge selected',
 			CHARGEN_HINDRANCES_OPTIMIZED: 'You have optimized your hindrances. Selecting more will not advance the character.',
+			CHARGEN_KNOWN_LANGUAGES: 'Known Languages',
+			CHARGEN_CULT_NAT_LANG: 'Cultural/National Language',
+			CHARGEN_ADDITIONAL_LANGS: 'Additional Languages',
 			CHARGEN_VALIDATION_TOO_MANY_EDGES: 'You have too many edges',
 			CHARGEN_VALIDATION_TOO_MANY_ADVANCEMENTS: 'You have too many advancements selected for your XP',
 			CHARGEN_VALIDATION_TOO_MANY_ATTRIBUTES: 'You have spent too many attribute points',
@@ -25548,8 +31337,14 @@ availableLanguages.push ({
 			CHARGEN_VALIDATION_CONFLICTS_HINDRANCE: 'Conflicts with the hindrance \'{value}\'',
 			CHARGEN_VALIDATION_TOO_MANY_FUNDS: 'Character has overspent funds',
 			CHARGEN_VALIDATION_EDGE_DOESNT_MEET_REQUIREMENTS: 'Some requirements for this edge have not been met.',
-			CHARGEN_VALIDATION_NO_ARCANE_BG: 'You need to select an Arcane Background.',
-			CHARGEN_SELECT_ARCANE_BG: 'Select an Arcane BG',
+			CHARGEN_VALIDATION_NO_ARCANE_BG: 'You need to select an Arcane BG.',
+			CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_NOVICE: 'You have taken too many attribute advancements at novice rank',
+			CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_SEASONED: 'You have taken too many attribute advancements at seasoned rank',
+			CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_VETERAN: 'You have taken too many attribute advancements at veteran rank',
+			CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_HEROIC: 'You have taken too many attribute advancements at heroic rank',
+			CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_LEGENDARY: 'You have taken too many attribute advancements at legenary rank',
+			CHARGEN_VALIDATION_ADVANCEMENT_INVALID_EDGE: 'The edge selected edge \'{value}\' does not meet previous requirements.',
+			CHARGEN_SELECT_ARCANE_BG: 'Select an Arcane Background',
 			CHARGEN_BELOW_STR_WEAPON: 'You have a weapon equipped which has a minimum strength higher than your current strength. There will be penalties when using this weapon.',
 			CHARGEN_POWER_POINTS: 'Power Points',
 			CHARGEN_POWER_POINTS_AVAILABLE: 'Available Power Points',
@@ -25572,8 +31367,22 @@ availableLanguages.push ({
 			GENERAL_COMBAT_LOAD: 'Combat Load',
 			CHARGEN_VALIDATION_WARNINGS: 'Warnings',
 			CHARGEN_DROP_ITEM_COMBAT: 'Drop item while in combat',
+			GENERAL_VERSUS_ABBR: 'vs',
+			INDEX_RAISE_TRAINER: 'Raise Trainer',
+			GENERAL_START_TEST: 'Start Test',
+			GENERAL_FAIL: 'Failure',
+			GENERAL_SECONDS: 'Seconds',
+			GENERAL_SUCCESS: 'Success',
+			GENERAL_AVERAGE_ANSWER_TIME: 'Average Answer Time',
+			GENERAL_SUCCESS_1_RAISE: 'Success w/ Raise',
+			GENERAL_SUCCESS_2_RAISES: 'Success w/ 2 Raises',
+			GENERAL_SUCCESS_2_RAISES_OR_MORE: 'Success w/ 2 or more raises',
+			GENERAL_CURRENT_QUESTION: 'Current Question',
+			CHARGEN_FILTER_GEAR: 'Search for Gear',
 			CHARGEN_MUNDANE_GEAR: 'Mundane Gear',
 			CHARGEN_WEAPONS: 'Weapons',
+			CHARGEN_HAND_WEAPONS: 'Hand Weapons',
+			CHARGEN_RANGED_WEAPONS: 'Ranged Weapons',
 			CHARGEN_ARMOR: 'Armor',
 			CHARGEN_SHIELDS: 'Shields',
 			GENERAL_PURCHASED_FREE: '(free)',
@@ -25584,19 +31393,29 @@ availableLanguages.push ({
 			INDEX_CREDITS: 'Credits',
 			GENERAL_LICENSE: 'License',
 			GENERAL_THANK_YOU: 'Thank You',
+			GENERAL_EACH: 'each',
 			GENERAL_EQUIP_PRIMARY: 'Equip Primary',
 			GENERAL_EQUIP_SECONDARY: 'Equip Secondary',
 			GENERAL_EQUIP: 'Equip',
+			CREATOR_EQUIPPED_BOTH_HANDS: 'Equipped in both hands',
 			GENERAL_UNEQUIP: 'Unequip',
 			CREATOR_EQUIPPED_OFF: 'Equipped in off hand',
 			CREATOR_ARMOR_WORN: 'Armor is being worn',
 			CREATOR_EQUIPPED_PRIMARY: 'Equipped in primary hand',
 			CHARGEN_XP: 'XP',
+			CHARGEN_SELECTED_RANK: 'Selected Rank',
+			CHARGEN_RANK: 'Rank',
 			CHARGEN_RANK_NOVICE: 'Novice',
 			CHARGEN_RANK_SEASONED: 'Seasoned',
 			CHARGEN_RANK_VETERAN: 'Veteran',
 			CHARGEN_RANK_HEROIC: 'Heroic',
 			CHARGEN_RANK_LEGENDARY: 'Legendary',
+			CHARGEN_ADVANCEMENT_NOT_SELECTED: 'No advancement selected',
+			CHARGEN_ADVANCEMENT_NEW_EDGE: 'Gain a new edge',
+			CHARGEN_ADVANCEMENT_INCREASE_SKILL: 'Increase skill equal or greater to linked attribute',
+			CHARGEN_ADVANCEMENT_INCREASE_2_SKILLS: 'Increase two skills lower than linked attribute',
+			CHARGEN_ADVANCEMENT_NEW_SKILL: 'Buy a new skill at d4',
+			CHARGEN_ADVANCEMENT_INCREASE_ATTRIBUTE: 'Increase one attribute by a die type',
 			DICE_TITLE_TAG: 'Flexible Dice Roller | Savage Worlds Web Tools',
 			DICE_H3_DICE: 'Dice',
 			DICE_H3_ROLL_TYPE: 'Roll Type',
@@ -25616,6 +31435,7 @@ availableLanguages.push ({
 			DICE_TRAIT_OPTIONS: 'Trait Options',
 			DICE_DAMAGE_OPTIONS: 'Damage Options',
 			DICE_WILD_DIE_NOTE: 'Put a * after the d6, d8, etc to roll a wild die with that roll. Example: d4* - 2 for an untrained wild card skill check',
+			DICE_YOU_MAY_LINK_URL: 'You may link to these settings by copying the URL in the address bar',
 			DICE_LABEL_NO_EFFECT: 'No Effect',
 			DICE_LABEL_SHAKEN: 'Shaken',
 			DICE_LABEL_SHAKEN_AND_A_WOUND: 'Shaken and a wound',
@@ -25625,6 +31445,7 @@ availableLanguages.push ({
 			DICE_LABEL_SUCCESS: 'Success',
 			DICE_LABEL_SUCCESS_WITH_A_RAISE: 'Success with a raise',
 			DICE_LABEL_SUCCESS_WITH_X_RAISES: 'Success with {raises} raises',
+			WEAPON_HALF_DAMAGE: 'Weapon damage is halved against target',
 			DICE_LABEL_DIE_ROLL_NUMBER: 'die roll #',
 			DICE_LABEL_WILD_DIE_ROLL_NUMBER: 'wild die roll #',
 			DICE_ROLL_SET_NUM: 'Roll Set #',
@@ -25710,6 +31531,18 @@ availableLanguages.push ({
 			CREATOR_IMPORT: 'Import Item',
 			CREATOR_NO_OPTIONS_AVAILABLE: 'There are no options available for this type of item',
 			CREATOR_OPTIONS_DIALOG: 'Options',
+			GENERAL_SUPER_POWERS: 'Super Powers',
+			SPC_PULP_HEROES: 'Pulp Heroes',
+			CHARGEN_SPC_CANNOT_HAVE_AB: 'You cannot have a standard Arcane Background Edge when you\'re a super hero',
+			SPC_STREET_FIGHTERS: 'Street Fighters',
+			SPC_FOUR_COLOR: 'Four Color',
+			SPC_HEAVY_HITTERS: 'Heavy Hitters',
+			SPC_COSMIC: 'Cosmic',
+			SPC_RISING_STARS: 'Rising Stars',
+			SPC_CURRENT_PP: 'Current Power Points',
+			SPC_CAMPAIGN_POWER_LEVEL: 'Campaign Power Level',
+			SPC_POWER_LIMIT: 'Power Limit',
+			GENERAL_ICONIC_FRAMEWORKS: 'Iconic Frameworks',
 
 	}
 
@@ -25722,9 +31555,6 @@ availableLanguages.push ({
 	active: true,
 
 	translations: {
-			BUTTON_LANG_EN: 'English',
-			BUTTON_LANG_DE: 'German',
-			GENERAL_ATTRIBUTES: 'Atributos',
 
 	}
 
@@ -25756,11 +31586,6 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Armor creates a field of magical protection around a character or an actual shell of some sort, effectively giving the target Armor. Success grants the recipient 2 points of Armor. A raise grants 4 points of Armor.\nWhether the armor is visible or not depends largely on the trapping.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p125',
@@ -25779,11 +31604,6 @@ var savageWorldsPowers = Array(
 	},
 	 duration: {
 		 'en-US': 'Instant',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Whether ghosts, elementals, or demons, banish removes them all. This power can affect any creature that is not native to the current plane of existence (GM\'s determination).\nThis spell is an opposed roll of the caster\'s arcane skill versus the target\'s Spirit. On a success, the target is Shaken. On a raise, it is sent to its proper plane of existence.\nIf the target is a Wild Card, each casting of banish causes a wound instead. If the target already has three wounds, it is then banished to its native plane��"but it is not slain.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -25808,11 +31628,6 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Barrier creates a solid, immobile wall to protect the user against attack or to entrap an opponent. Regardless of what the barrier is made of (ice, thorns, stone, energy, etc.), it has a Toughness of 10. Every Power Point spent creates a 1” wide section of wall. The barrier ranges in thickness from a few “real world” inches for stone or other hard materials up to a foot for things like bones or ice. (If you\'re using a gridded mat to play, draw the barrier between the squares directly along the grid-lines.) The exact placement of each section is de ned by the caster, but each section must be connected to at least one other section after the first.\nWhen the spell expires or a section is broken, it crumbles to dust or dissipates. Trappings are never left behind.\nEach section of the barrier may be destroyed by an attack that equals its Toughness of 10. Physical walls are treated exactly like inanimate objects; they are considered to have a Parry of 2 (ranged attacks work as normal), but raises on the attack roll do not grant bonus damage nor do damage dice Ace. Opponents may climb the barrier at ��"2 to their Climbing roll if it is made of something solid. Fiery versions of the barrier cause 2d4 damage to anyone who wishes to leap through instead.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'rank': 1,
 		 'book': 1,
 		 'page': 'p125',
@@ -25831,11 +31646,6 @@ var savageWorldsPowers = Array(
 	},
 	 duration: {
 		 'en-US': '10 minutes',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'This spell allows mages to speak with and guide the actions of nature\'s beasts. It works only on creatures with animal intelligence, not humanoids. Nor does it work on conjured, magical, or otherwise “unnatural” animals.\nThe target must be within the sorcerer\'s range ��" it is not conjured.\nThe cost to control a creature depends on its Size. The base cost is 3, plus twice its Size for creatures with a Size greater than 0. A great white shark (Size +4) costs 3 plus 8 (2x4), or 11 points. A roc (Size +8) costs 19 Power Points to control.\nSwarms may also be controlled. Small swarms cost 3, Mediums 5, and Large 8. Thus a single rat costs 3 to control, as does a small swarm of the creatures.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -25863,11 +31673,6 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Blast is an area effect power that can put down many opponents at once. The caster first picks where he wants to center the blast, then makes the appropriate skill roll. Normal ranged attack modifiers apply.\nThe area of effect is a Medium Burst Template. If the roll is failed, the blast deviates as a launched projectile.\nTargets within the blast suffer 2d6 damage. Blast counts as a Heavy Weapon.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'rank': 1,
 		 'book': 1,
 		 'page': 'p126',
@@ -25889,11 +31694,6 @@ var savageWorldsPowers = Array(
 	},
 	 duration: {
 		 'en-US': 'Instant',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'This power temporarily blinds a target or targets. Those affected must make an Agility roll at ��"2 to avert their gaze and avoid the effect (at ��"4 if the caster got a raise on the attack roll). On a failure, victims are Shaken and ��"2 to Parry until their next action. If the target rolls a 1 on his Agility die (regardless of the Wild Die), he\'s Shaken and fully blind until he recovers from being Shaken. Blinded victims suffer a ��"6 penalty to all Trait rolls that require vision and have their Parry reduced to 2.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -25921,11 +31721,6 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Bolt is a standard attack power of wizards, and can also be used for ray guns, bursts of energy, streaks of holy light, and other ranged attacks. The damage of the bolt is 2d6.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p126',
@@ -25947,11 +31742,6 @@ var savageWorldsPowers = Array(
 	},
 	 duration: {
 		 'en-US': '3 (1/round)',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'This power allows a character to increase any of a target\'s Traits by one die type for a standard success, or by two with a raise. The affected Trait can exceed d12. Each step over d12 adds +1 to his Trait total. For example, a raise on someone who already has a d12 in the affected Trait grants him d12+2 for the duration of the power.\nThe power can also be used to lower an opponent\'s Trait. This is an opposed roll against the victim\'s Spirit. Success lowers any Trait of the caster\'s choice one step, a raise lowers it two steps. A Trait cannot be lowered below a d4. Multiple castings stack, though the caster must keep track of when each casting expires as usual.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -25979,11 +31769,6 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Burrow allows a mage standing on raw earth to meld into it. He can remain underground if he wants in a sort of “limbo” or burrow to anywhere with a Pace equal to the power\'s Range. A mage with a Smarts of d8 could therefore move up to 16” (32 yards) on the first round, then maintain the spell and stay submerged for the second and move another 16”.\nA burrowing earth mage can attempt to surprise a foe (even one who saw him burrow) by making an opposed Stealth versus Notice roll. If the mage wins, he gains +2 to attack and damage that round, or +4 with a raise. Targets on Hold may attempt to interrupt the attack as usual.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p127',
@@ -25991,6 +31776,1134 @@ var savageWorldsPowers = Array(
 		 'cost_per_round': '2',
 		 'range': 'Smarts x 2',
 		 'tag': 'burrow'
+},
+{
+	 name: {
+		 'en-US': 'Burst',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p127',
+		 'cost': '2',
+		 'cost_per_round': '0',
+		 'range': 'Cone Template',
+		 'tag': 'burst'
+},
+{
+	 name: {
+		 'en-US': 'Confusion',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': 'Additional Targets: The character may affect up to five targets by spending a like amount of additional Power Points.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p128',
+		 'cost': '1',
+		 'cost_per_round': '0',
+		 'range': 'Smarts x 2',
+		 'tag': 'confusion'
+},
+{
+	 name: {
+		 'en-US': 'Damage Field',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (2/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': 'p128',
+		 'cost': '4',
+		 'cost_per_round': '2',
+		 'range': 'Touch',
+		 'tag': 'damage-field'
+},
+{
+	 name: {
+		 'en-US': 'Darksight',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': 'AdditionalTargets: The character may affect up to  five targets by spending a like amount of additional Power Points.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '1 hour (1/hour)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p128',
+		 'cost': '1',
+		 'cost_per_round': '1',
+		 'range': 'Touch',
+		 'tag': 'darksight'
+},
+{
+	 name: {
+		 'en-US': 'Deflection',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p128',
+		 'cost': '3',
+		 'cost_per_round': '1',
+		 'range': 'Touch',
+		 'tag': 'delfection'
+},
+{
+	 name: {
+		 'en-US': 'Detect/Conceal Arcana',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p128',
+		 'cost': '3',
+		 'cost_per_round': '1',
+		 'range': 'Sight',
+		 'tag': 'detect-conceal-arcana'
+},
+{
+	 name: {
+		 'en-US': 'Disguise',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '',
+		 'pt-BR': '10 minutes (1/10 minutes)',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': 'p129',
+		 'cost': '3-5',
+		 'cost_per_round': '1',
+		 'range': 'Touch',
+		 'tag': 'disguise'
+},
+{
+	 name: {
+		 'en-US': 'Dispel',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': 'p129',
+		 'cost': '3',
+		 'cost_per_round': '0',
+		 'range': 'Smarts',
+		 'tag': 'dispel'
+},
+{
+	 name: {
+		 'en-US': 'Divination',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '1 minute',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 3,
+		 'book': 1,
+		 'page': 'p129',
+		 'cost': '5',
+		 'cost_per_round': '0',
+		 'range': 'Self',
+		 'tag': 'divination'
+},
+{
+	 name: {
+		 'en-US': 'Drain Power Points',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 3,
+		 'book': 1,
+		 'page': 'p130',
+		 'cost': '3',
+		 'cost_per_round': '0',
+		 'range': 'Smarts',
+		 'tag': 'drain-power-points'
+},
+{
+	 name: {
+		 'en-US': 'Elemental Manipulation',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p130',
+		 'cost': '3',
+		 'cost_per_round': '1',
+		 'range': 'Smarts x 2',
+		 'tag': 'elemental-manipulation'
+},
+{
+	 name: {
+		 'en-US': 'Entangle',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Special',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p130',
+		 'cost': '2-4',
+		 'cost_per_round': '0',
+		 'range': 'Smarts',
+		 'tag': 'entangle'
+},
+{
+	 name: {
+		 'en-US': 'Environmental Protection',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': 'Additional Targets: The character may affect up to  ve targets by spending a like amount of additional Power Points.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '1 hour (1/hour)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p130',
+		 'cost': '2',
+		 'cost_per_round': '1',
+		 'range': 'Touch',
+		 'tag': 'environmental-protection'
+},
+{
+	 name: {
+		 'en-US': 'Farsight',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': 'p131',
+		 'cost': '3',
+		 'cost_per_round': '1',
+		 'range': 'Touch',
+		 'tag': 'farsight'
+},
+{
+	 name: {
+		 'en-US': 'Fear',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p131',
+		 'cost': '2',
+		 'cost_per_round': '0',
+		 'range': 'Smarts x 2',
+		 'tag': 'fear'
+},
+{
+	 name: {
+		 'en-US': 'Fly',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': 'Additional Targets: The character may affect up to  ve targets by spending a like amount of additional Power Points.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 2,
+		 'book': 1,
+		 'page': 'p131',
+		 'cost': '3',
+		 'cost_per_round': '1',
+		 'range': 'Touch',
+		 'tag': 'fly'
+},
+{
+	 name: {
+		 'en-US': 'Greater Healing',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 2,
+		 'book': 1,
+		 'page': 'p131',
+		 'cost': '10/20',
+		 'cost_per_round': '0',
+		 'range': 'Touch',
+		 'tag': 'greater-healing'
+},
+{
+	 name: {
+		 'en-US': 'Growth/Shrink',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (2/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': 'p132',
+		 'cost': '2+',
+		 'cost_per_round': '2',
+		 'range': 'Smarts',
+		 'tag': 'growth-shrink'
+},
+{
+	 name: {
+		 'en-US': 'Havoc',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': 'Additional Effects: For double the Power Points, havoc affects a Large Burst Template.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': 'p132',
+		 'cost': '2-4',
+		 'cost_per_round': '0',
+		 'range': 'Smarts x 2',
+		 'tag': 'havoc'
+},
+{
+	 name: {
+		 'en-US': 'Healing',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p133',
+		 'cost': '3',
+		 'cost_per_round': '0',
+		 'range': 'Touch',
+		 'tag': 'healing'
+},
+{
+	 name: {
+		 'en-US': 'Intangibility',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (2/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 3,
+		 'book': 1,
+		 'page': 'p133',
+		 'cost': '5',
+		 'cost_per_round': '2',
+		 'range': 'Touch',
+		 'tag': 'intangibility'
+},
+{
+	 name: {
+		 'en-US': 'Invisibility',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': 'AdditionalTargets:Thecharactermayaffect up to  ve targets by spending a like amount of additional Power Points.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': 'p133',
+		 'cost': '5',
+		 'cost_per_round': '1',
+		 'range': 'Self',
+		 'tag': 'invisibility'
+},
+{
+	 name: {
+		 'en-US': 'Light/Obscure',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '30 minutes (1/10 minutes) or 3 (1/ round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p133',
+		 'cost': '2',
+		 'cost_per_round': '1',
+		 'range': 'Smarts',
+		 'tag': 'light-obscure'
+},
+{
+	 name: {
+		 'en-US': 'Mind Reading',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '1',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p133',
+		 'cost': '3',
+		 'cost_per_round': '0',
+		 'range': 'Smarts',
+		 'tag': 'mind-reading'
+},
+{
+	 name: {
+		 'en-US': 'Pummel',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': 'p134',
+		 'cost': '2',
+		 'cost_per_round': '0',
+		 'range': 'Cone Template',
+		 'tag': 'pummel'
+},
+{
+	 name: {
+		 'en-US': 'Puppet',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 2,
+		 'book': 1,
+		 'page': 'p134',
+		 'cost': '3',
+		 'cost_per_round': '1',
+		 'range': 'Smarts',
+		 'tag': 'puppet'
+},
+{
+	 name: {
+		 'en-US': 'Quickness',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (2/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': 'p134',
+		 'cost': '4',
+		 'cost_per_round': '2',
+		 'range': 'Touch',
+		 'tag': 'quickness'
+},
+{
+	 name: {
+		 'en-US': 'Shape Change',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '1 minute (1/minute)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p134',
+		 'cost': '3+',
+		 'cost_per_round': '1',
+		 'range': 'Self',
+		 'tag': 'shape-change'
+},
+{
+	 name: {
+		 'en-US': 'Slow',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': 'AdditionalTargets:Thecharactermayaffect up to  ve targets by spending a like amount of additional Power Points.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (2/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': 'p135',
+		 'cost': '1',
+		 'cost_per_round': '2',
+		 'range': 'Smarts x 2',
+		 'tag': 'slow'
+},
+{
+	 name: {
+		 'en-US': 'Slumber',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '1 minute (1/minute)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': 'p135',
+		 'cost': '2',
+		 'cost_per_round': '1',
+		 'range': 'Smarts x 2',
+		 'tag': 'slumber'
+},
+{
+	 name: {
+		 'en-US': 'Smite',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': 'Additional Targets: The character may affect up to  ve targets by spending a like amount of additional Power Points.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p135',
+		 'cost': '2',
+		 'cost_per_round': '1',
+		 'range': 'Touch',
+		 'tag': 'smite'
+},
+{
+	 name: {
+		 'en-US': 'Speak Language',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': 'This power allows a character to speak, read, and write a language other than his own. The language must be of an advanced form ��" not animalistic. A raise on the arcane skill roll allows the user to project a particular dialect as well.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '10 minutes',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': '136',
+		 'cost': '1',
+		 'cost_per_round': '1',
+		 'range': 'Touch',
+		 'tag': 'speak-language'
+},
+{
+	 name: {
+		 'en-US': 'Stun',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Special',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': '136',
+		 'cost': '2',
+		 'cost_per_round': '0',
+		 'range': '12/24/48',
+		 'tag': 'stun'
+},
+{
+	 name: {
+		 'en-US': 'Succor',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': '136',
+		 'cost': '1',
+		 'cost_per_round': '0',
+		 'range': 'Touch',
+		 'tag': 'succor'
+},
+{
+	 name: {
+		 'en-US': 'Summon Ally',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': '137',
+		 'cost': '3+',
+		 'cost_per_round': '0',
+		 'range': 'Smarts',
+		 'tag': 'summon-ally'
+},
+{
+	 name: {
+		 'en-US': 'Teleport',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': 'Carrying Others: The hero can carry other beings with him at the cost of a level of Fatigue per additional “rider.” More than two may be carried at once, but causes instant Incapacitation. One Fatigue level is regained for each full hour of rest.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': '137',
+		 'cost': '3+',
+		 'cost_per_round': '0',
+		 'range': 'Special',
+		 'tag': 'teleport'
+},
+{
+	 name: {
+		 'en-US': 'Wall Walker',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': 'Additional Targets: The character may affect up to  ve targets by spending a like amount of additional Power Points.',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 1,
+		 'page': 'p138',
+		 'cost': '2',
+		 'cost_per_round': '1',
+		 'range': 'Touch',
+		 'tag': 'wall-walker'
+},
+{
+	 name: {
+		 'en-US': 'Warrior\'s Gift',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 1,
+		 'page': '139',
+		 'cost': '4',
+		 'cost_per_round': '1',
+		 'range': 'Touch',
+		 'tag': 'warriors-gift'
+},
+{
+	 name: {
+		 'en-US': 'Zombie',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Special',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 2,
+		 'book': 1,
+		 'page': 'p140',
+		 'cost': '3/corpse',
+		 'cost_per_round': '0',
+		 'range': 'Smarts',
+		 'tag': 'zombie'
+},
+{
+	 name: {
+		 'en-US': 'Analyze Foe',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 2,
+		 'page': 'p28',
+		 'cost': '1-2',
+		 'cost_per_round': '1',
+		 'range': 'Smarts x 2',
+		 'tag': 'analyze-foe'
+},
+{
+	 name: {
+		 'en-US': 'Bless/Curse',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (2/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 2,
+		 'page': 'p30',
+		 'cost': '4-6',
+		 'cost_per_round': '2',
+		 'range': 'Smarts x 2',
+		 'tag': 'bless-curse'
+},
+{
+	 name: {
+		 'en-US': 'Concentrate',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (2/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 2,
+		 'page': 'p32',
+		 'cost': '4',
+		 'cost_per_round': '2',
+		 'range': 'Self',
+		 'tag': 'concentrate'
+},
+{
+	 name: {
+		 'en-US': 'Draining Touch',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 2,
+		 'page': 'p35',
+		 'cost': '3',
+		 'cost_per_round': '1',
+		 'range': 'Self',
+		 'tag': 'draining-touch'
+},
+{
+	 name: {
+		 'en-US': 'Jet',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 2,
+		 'page': 'p39',
+		 'cost': '2',
+		 'cost_per_round': '0',
+		 'range': '12"',
+		 'tag': 'jet'
+},
+{
+	 name: {
+		 'en-US': 'Legerdemain',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': 'Instant',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 2,
+		 'page': 'p39',
+		 'cost': '1',
+		 'cost_per_round': '0',
+		 'range': 'Smarts',
+		 'tag': 'legerdemain'
+},
+{
+	 name: {
+		 'en-US': 'Speed',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 0,
+		 'book': 2,
+		 'page': 'p42',
+		 'cost': '3',
+		 'cost_per_round': '1',
+		 'range': 'Touch',
+		 'tag': 'speed'
+},
+{
+	 name: {
+		 'en-US': 'Telekinesis',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 additional_effects: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 duration: {
+		 'en-US': '3 (1/round)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'rank': 1,
+		 'book': 2,
+		 'page': 'p44',
+		 'cost': '3',
+		 'cost_per_round': '1',
+		 'range': 'Smarts',
+		 'tag': 'telekinesis'
 }
 );
 
@@ -26023,22 +32936,12 @@ savageWorldsSciFiOptions['power_armor'] = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Some Ideas for making more agressive flight systems for Power Armor. <a href=\'http://www.peginc.com/forum/viewtopic.php?p=423784#423784\'>Discussion is here.</a>',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 type: 'bool',
 	 short_tag: 'climb-top-speed',
 },
 {
 	 name: {
 		 'en-US': 'Faster Flight Systems',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Some Ideas for making more agressive flight systems for Power Armor. <a href=\'http://www.peginc.com/forum/viewtopic.php?p=423784#423784\'>Discussion is here.</a>',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -26134,9 +33037,6 @@ savageWorldsSciFiMods['power_armor'] = Array(
 	 name: {
 		 'en-US': 'Anti-Personnel System',
 	},
-	 description: {
-		 'en-US': 'When activated (a free action via voice command), detonation packs attached to the suit explode in a Large Burst Template around the armor, causing 5d6 damage (the blast is shaped away from the suit so the wearer suffers only half damage). Wearers are advised to use this only as a last resort. Shrapnel pack reloads cost $1000, weigh 10 lb, and take one hour to install.',
-	},
 	 tag: 'anti-personnel-system',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -26156,9 +33056,6 @@ return 10;
 {
 	 name: {
 		 'en-US': 'Armor',
-	},
-	 description: {
-		 'en-US': 'Adds +2 Heavy Armor each time this Modification is taken.',
 	},
 	 tag: 'armor',
 getMax: function(selectedObject) { return selectedObject.size },
@@ -26180,9 +33077,6 @@ return 0;
 	 name: {
 		 'en-US': 'Command Pack',
 	},
-	 description: {
-		 'en-US': 'A well-designed suite of HUD apps and sensors to constantly monitor up to 100 team members within twenty miles. This extends the user\'s Command Range to all those in contact. The Command Pack requires the Sensor Suite Modification first.',
-	},
 	 tag: 'command-pack',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -26202,9 +33096,6 @@ return 0;
 {
 	 name: {
 		 'en-US': 'Faster Flight (unofficial) - +1 Climb',
-	},
-	 description: {
-		 'en-US': 'The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it\'s taken doubles previous Pace or increases Climb by 1.',
 	},
 	 tag: 'fflight-1-climb',
 showWithOption: "faster-flight",
@@ -26232,9 +33123,6 @@ return false;
 	 name: {
 		 'en-US': 'Faster Flight (unofficial) - Double Speed',
 	},
-	 description: {
-		 'en-US': 'The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it\'s taken doubles previous Pace or increases Climb by 1.',
-	},
 	 tag: 'fflight-double-speed',
 showWithOption: "faster-flight",
 getMax: function(selectedObject) { return "u" },
@@ -26261,9 +33149,6 @@ return false;
 {
 	 name: {
 		 'en-US': 'Faster Flight (unofficial) - Exchange Climb for Speed',
-	},
-	 description: {
-		 'en-US': 'The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it\'s taken doubles previous Pace or increases Climb by 1.',
 	},
 	 tag: 'fflight-exchange-climb-fo',
 showWithOption: "climb-top-speed",
@@ -26293,9 +33178,6 @@ return false;
 	 name: {
 		 'en-US': 'Faster Flight (unofficial)',
 	},
-	 description: {
-		 'en-US': 'The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it\'s taken doubles previous Pace or increases Climb by 1.',
-	},
 	 tag: 'fflight',
 showWithOption: "faster-flight",
 getMax: function(selectedObject) { return 1 },
@@ -26323,9 +33205,6 @@ return 0;
 	 name: {
 		 'en-US': 'Flight - +1 Climb',
 	},
-	 description: {
-		 'en-US': 'The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it\'s taken doubles previous Pace or increases Climb by 1.',
-	},
 	 tag: 'flight-1-climb',
 hideWithOption: "faster-flight",
 getMax: function(selectedObject) { return "u" },
@@ -26351,9 +33230,6 @@ return false;
 {
 	 name: {
 		 'en-US': 'Flight - Double Speed',
-	},
-	 description: {
-		 'en-US': 'The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it\'s taken doubles previous Pace or increases Climb by 1.',
 	},
 	 tag: 'flight-double-speed',
 hideWithOption: "faster-flight",
@@ -26381,9 +33257,6 @@ return false;
 	 name: {
 		 'en-US': 'Flight',
 	},
-	 description: {
-		 'en-US': 'The suit has expandable wings and thrusters for VTOL flight at a Pace of 6” and a Climb of 0. Each time it\'s taken doubles previous Pace or increases Climb by 1.',
-	},
 	 tag: 'flight',
 hideWithOption: "faster-flight",
 getMax: function(selectedObject) { return 1 },
@@ -26409,9 +33282,6 @@ return 0;
 	 name: {
 		 'en-US': 'Jump Pack',
 	},
-	 description: {
-		 'en-US': 'The user can jump up to 2�- the suit\'s Pace horizontally or 1�- Pace vertically.',
-	},
 	 tag: 'jump-pack',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -26431,9 +33301,6 @@ return 0;
 	 name: {
 		 'en-US': 'Magnetic Pads',
 	},
-	 description: {
-		 'en-US': 'The soles and palms of the suit are fitted with powerful magnets, allowing the wearer to walk up or cling to metal surfaces at full Pace. These are most often used in zero-g to allow marines to attach to ship\'s hulls or walkways.',
-	},
 	 tag: 'magnetic-pads',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -26452,11 +33319,6 @@ return 0;
 {
 	 name: {
 		 'en-US': 'Pace',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Powerful motors in the leg joints combine with gyroscopic stabilizers to increase Pace by +2 and the running die to d10. Each enhancement after the first only increases Pace by +2.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -26483,9 +33345,6 @@ return !selectedObject.hasMod("speed-reduction");
 	 name: {
 		 'en-US': 'Power Pack',
 	},
-	 description: {
-		 'en-US': 'Additional power cells add another 72 hours of energy.',
-	},
 	 tag: 'power-pack',
 getMax: function(selectedObject) { return "u" },
 getModCost: function(selectedObject) {
@@ -26506,9 +33365,6 @@ return 0;
 	 name: {
 		 'en-US': 'Propulsion Jets',
 	},
-	 description: {
-		 'en-US': 'Small propulsion jets allow the character to move in vacuum or water at 6”. The jets provide no benefits outside these environments.',
-	},
 	 tag: 'propulsion-jets',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -26526,9 +33382,6 @@ return 0;
 {
 	 name: {
 		 'en-US': 'Self-Sealing',
-	},
-	 description: {
-		 'en-US': 'The suit automatically seals minor breaches (the user suffers one or two wounds) with a fast-hardening sealant. This is critical when operating in a vacuum. If the wearer suffers three or more wounds from a single attack, however, the suit cannot seal and is breached.',
 	},
 	 tag: 'self-sealing',
 getMax: function(selectedObject) { return 1 },
@@ -26548,9 +33401,6 @@ return 0;
 	 name: {
 		 'en-US': 'Sensor Suite',
 	},
-	 description: {
-		 'en-US': 'An array of various sensors extends the suit\'s +2 bonus to visual and aural Notice rolls to 500 yards.',
-	},
 	 tag: 'sensor-suite',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -26568,9 +33418,6 @@ return 0;
 {
 	 name: {
 		 'en-US': 'Signal Booster',
-	},
-	 description: {
-		 'en-US': 'Increases communication range to 500 miles.',
 	},
 	 tag: 'signal-booster',
 getMax: function(selectedObject) { return 1 },
@@ -26590,9 +33437,6 @@ return 0;
 	 name: {
 		 'en-US': 'Stealth System',
 	},
-	 description: {
-		 'en-US': 'This thin and pliable piezoelectric material combines chameleon-like visual skin with heat baffles, radar scramblers, and other devices to make the suit difficult to detect by vision or sensors. Those trying to attack or detect the suit subtract 4 from their rolls against it. The effect is triggered as a free action, but is negated any round in which the user fires a weapon or emits some other non-cloakable signal such as radio broadcasts or active sensor searches.',
-	},
 	 tag: 'stealth-system',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -26610,9 +33454,6 @@ return 0;
 {
 	 name: {
 		 'en-US': 'Strength Enhancement',
-	},
-	 description: {
-		 'en-US': 'Increases Strength by one die type each time it\'s taken. After d12, add +1 per servo (d12+1, d12+2, etc).',
 	},
 	 tag: 'strength-enhancement',
 getMax: function(selectedObject) { return "u" },
@@ -26633,9 +33474,6 @@ return 0;
 	 name: {
 		 'en-US': 'Targeting System',
 	},
-	 description: {
-		 'en-US': 'An integrated system connects to all personal and weapon mounts to compensate for movement, range, multi-actions, and the like. This negates up to two points of the user\'s Shooting penalties.',
-	},
 	 tag: 'targeting-system',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -26655,9 +33493,6 @@ return 0;
 	 name: {
 		 'en-US': 'Trauma System',
 	},
-	 description: {
-		 'en-US': 'Automated systems within the suit are loaded with minor antibiotics, stimulants, and anesthetics designed to keep a soldier alive after suffering trauma. It has a d8 Healing and adds +2 to recover from being Shaken and resisting Bleeding Out.',
-	},
 	 tag: 'trauma-system',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -26676,11 +33511,6 @@ return 0;
 {
 	 name: {
 		 'en-US': 'Weapon Mount',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'A single mount can hold any one personal weapon up to 100 pounds, or one Mod point of vehicular weaponry. Two shoulder mounts can be combined into a central weapon mount over the user\'s head to hold a vehicle weapon with a Mod cost of 2. The user may fire mounted and personal weapons at standard multi-action penalties (but see Targeting System). Weaponry is purchased separately.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -26724,7 +33554,15 @@ return 0;
 	if(typeof(savageWorldsSciFiOptions) == "undefined")
 		var savageWorldsSciFiOptions = Array();
 savageWorldsSciFiOptions['starship'] = Array(
-
+{
+	 name: {
+		 'en-US': 'The Last Parsec Options',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 type: 'bool',
+	 short_tag: 'the-last-parsec',
+}
 );
 savageWorldsSciFiSizes['starship'] = Array(
 {
@@ -26976,9 +33814,6 @@ savageWorldsSciFiMods['starship'] = Array(
 	 name: {
 		 'en-US': 'AMCM',
 	},
-	 description: {
-		 'en-US': 'Anti-Missile Counter Measures are integrated jammers and decoys. They add +2 to Driving, Piloting or Knowledge (Electronics) rolls made to evade missile attacks.',
-	},
 	 tag: 'amcm',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -26991,9 +33826,6 @@ return 5000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Aquatic',
-	},
-	 description: {
-		 'en-US': 'The ship is built to withstand deep pressurization and is equipped with thrusters suitable for use in aqueous mediums, allowing it to function underwater as if it were a submersible. Acc and Top Speed are half a vehicle of equal Size',
 	},
 	 tag: 'aquatic',
 showWithOption: "the-last-parsec",
@@ -27028,9 +33860,6 @@ return 0;
 	 name: {
 		 'en-US': 'Armor',
 	},
-	 description: {
-		 'en-US': 'Increases a ship\'s Armor value by +2. Due to the nature of space and the size and shape of starships, all Armor is considered Heavy Armor.',
-	},
 	 tag: 'armor',
 getMax: function(selectedObject) {  return selectedObject.size },
 getModCost: function(selectedObject) {
@@ -27050,9 +33879,6 @@ selectedObject.toughness++;
 	 name: {
 		 'en-US': 'Artificial Intelligence',
 	},
-	 description: {
-		 'en-US': 'The ship\'s AI can operate all systems ��" from locomotion to weapons to opening or closing hatches. It has a skill level of d10 in these tasks, but is an “Extra” and does not receive a Wild Die. The AI does not suffer from multi-action penalties if given simultaneous tasks. In combat, the AI acts on the captain\'s Action Card. Giving the AI a short verbal command is a free action.',
-	},
 	 tag: 'artificial-intelligence',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -27065,9 +33891,6 @@ return 10000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Atmospheric',
-	},
-	 description: {
-		 'en-US': 'Allows the ship to enter planetary atmospheres. This includes heat shielding and additional work to handle the stress and strain of entry. All starships have vertical take-off and landing (VTOL) capability.',
 	},
 	 tag: 'atmospheric',
 getMax: function(selectedObject) { return 1 },
@@ -27082,9 +33905,6 @@ return 50000 * selectedObject.size;
 	 name: {
 		 'en-US': 'Bomb Bay',
 	},
-	 description: {
-		 'en-US': 'Each bomb bay may drop up to four Small, 2 Medium, or 1 Large (or larger) bomb per round at no penalty. All use the same attack roll. Dropping bombs uses the Knowledge (Bombardier) skill.',
-	},
 	 tag: 'bomb-bay',
 getMax: function(selectedObject) { return "u" },
 getModCost: function(selectedObject) {
@@ -27097,9 +33917,6 @@ return 50000;
 {
 	 name: {
 		 'en-US': 'Crew Reduction',
-	},
-	 description: {
-		 'en-US': 'Reduces living space, quarters, and facilities for personnel equal to 20% of the listed Crew for the vessel\'s Size, granting Size/4 Mods. If this reduces the Crew to 0, the ship is a fully automated drone',
 	},
 	 tag: 'crew-reduction',
 getMax: function(selectedObject) { return "u" },
@@ -27118,9 +33935,6 @@ selectedObject.crew -= selectedObject.selectedSize.crew / 5;
 	 name: {
 		 'en-US': 'Crew Space',
 	},
-	 description: {
-		 'en-US': 'Enough space and facilities for more personnel equal to 20% of the listed Crew for the vessel\'s Size. To accommodate even more passengers, use Superstructures instead.',
-	},
 	 tag: 'crew-space',
 getMax: function(selectedObject) { return "u" },
 getModCost: function(selectedObject) {
@@ -27136,9 +33950,6 @@ selectedObject.crew += selectedObject.selectedSize.crew / 5;
 {
 	 name: {
 		 'en-US': 'Deflector Screens',
-	},
-	 description: {
-		 'en-US': 'The vessel is protected by an energy field that deflects incoming ballistic attacks (it has no effect against lasers). Attackers must subtract ��"2 from their Shooting rolls. Mod cost is 2 for Small to Large ships, and 3 for Huge to Gargantuan vessels.',
 	},
 	 tag: 'deflector-screens',
 getMax: function(selectedObject) { return 1 },
@@ -27158,9 +33969,6 @@ return 10000 * selectedObject.size;
 	 name: {
 		 'en-US': 'Electromagnetic Shielding',
 	},
-	 description: {
-		 'en-US': 'Adds +6 to the ship\'s effective Toughness from EMP missiles (see page 25).',
-	},
 	 tag: 'electromagnetic-shielding',
 getMax: function(selectedObject) { return "u" },
 getModCost: function(selectedObject) {
@@ -27174,9 +33982,6 @@ return 5000 * selectedObject.size;
 	 name: {
 		 'en-US': 'FTL Drive',
 	},
-	 description: {
-		 'en-US': 'This includes both the drive and the navigation system required to use it.',
-	},
 	 tag: 'ftl-drive',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -27189,9 +33994,8 @@ return 2000000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'FTL Drive, Kalian',
-	},
-	 description: {
-		 'en-US': 'Kalian superluminal drives are considered the most finely crafted faster-than-light drives in the known worlds. They are high-end drives known for durability and dependability. They add +2 to Knowledge (Astrogation) rolls when traveling via “hyperspace.” For more information, see Space Travel on page 69. In addition, if a Kalian FTL system is damaged with a starship critical hit during combat, the Repair roll is only ��"1 per wound instead of the normal ��"2.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 tag: 'ftl-drive-kalian',
 showWithOption: "the-last-parsec",
@@ -27206,9 +34010,6 @@ return 4000000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Fuel Pods',
-	},
-	 description: {
-		 'en-US': 'Each fuel pod increases the vessel\'s energy capacity by 50%',
 	},
 	 tag: 'fuel-pods',
 getMax: function(selectedObject) { return "u" },
@@ -27226,9 +34027,6 @@ selectedObject.energyCapacity +=  selectedObject.baseEnergyCapacity / 2;
 	 name: {
 		 'en-US': 'Garage / Hangar',
 	},
-	 description: {
-		 'en-US': 'A small hangar (or garage or external lift-hooks) can carry up 8 Size points of ship, vehicle, or walker.',
-	},
 	 tag: 'garage-/-hangar',
 getMax: function(selectedObject) { return "u" },
 getModCost: function(selectedObject) {
@@ -27241,9 +34039,6 @@ return 1000000;
 {
 	 name: {
 		 'en-US': 'Mercantile',
-	},
-	 description: {
-		 'en-US': 'Found only on Huge and Gargantuan ships, this might be a restaurant, commissary, or speciality store. Each generates Size+$1d4K a month for the ship (and the same for the mercantile\'s owner). The store has 300 square feet of space. Each additional Mod adds roughly 100 square feet and +$1d4K to revenue.',
 	},
 	 tag: 'mercantile',
 getMax: function(selectedObject) { return "u" },
@@ -27264,9 +34059,6 @@ return false;
 	 name: {
 		 'en-US': 'Missile Launcher',
 	},
-	 description: {
-		 'en-US': 'Allows up to four Light or two Heavy (or AT) missiles to be fired at once.',
-	},
 	 tag: 'missile-launcher',
 getMax: function(selectedObject) { return "u" },
 getModCost: function(selectedObject) {
@@ -27283,9 +34075,6 @@ selectedObject.hasMissileLauncher = 1;
 	 name: {
 		 'en-US': 'Passenger Pod',
 	},
-	 description: {
-		 'en-US': 'Small and Medium ships only. These are rows of fairly spacious seats with safety harnesses, personal vid-screens, and other amenities designed for short travels (typically less than 24 hours). Each pod seats 10.',
-	},
 	 tag: 'passenger-pod',
 getMax: function(selectedObject) { return "u" },
 getModCost: function(selectedObject) {
@@ -27298,9 +34087,8 @@ return 50000;
 {
 	 name: {
 		 'en-US': 'Self-Destruct',
-	},
-	 description: {
-		 'en-US': 'Self-destruct is a mechanism that can cause an object to destroy itself within a predefined set of circumstances. The self-destruct mechanism is usually the most complete way to destroy the object. For that reason the self-destruct mechanism can be used to destroy objects that are meant to be discarded. Most civilian starships do not have a self-destruct mechanism.',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 	 tag: 'self-destruct',
 showWithOption: "the-last-parsec",
@@ -27316,9 +34104,6 @@ return 1000000 * selectedObject.size;
 	 name: {
 		 'en-US': 'Sensor Suite (Galactic)',
 	},
-	 description: {
-		 'en-US': 'Light, chemical, motion, and other active sensors allow detection of targets up to one light year away with a Knowledge (Electronics) roll. Within 10K miles, the sensors add +2 to the roll. Illumination penalties are ignored. Targets don\'t have to be in direct line of sight, but asteroid or powerful energy fields may cause inaccurate or false readings at the GM\'s discretion.',
-	},
 	 tag: 'sensor-suite-galactic',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -27331,9 +34116,6 @@ return 1000000;
 {
 	 name: {
 		 'en-US': 'Sensor Suite (Planetary)',
-	},
-	 description: {
-		 'en-US': 'This functions exactly like the Medium Sensor Suite (page 16) but has a range of 10K miles.',
 	},
 	 tag: 'sensor-suite-planetary',
 getMax: function(selectedObject) { return 1 },
@@ -27348,9 +34130,6 @@ return 50000;
 	 name: {
 		 'en-US': 'Shields',
 	},
-	 description: {
-		 'en-US': 'The craft is protected by an ablative energy field that absorbs 10�-Size points of damage before it\'s depleted. Apply all damage to the shield first, then any left over to the ship (AP counts as usual). Active shields detonate missiles and torpedoes before they hit, reducing their damage total by half. A craft may regenerate its Size in shield points if it makes no attacks in a round.',
-	},
 	 tag: 'shields',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -27364,9 +34143,6 @@ return 25000 * selectedObject.size;
 	 name: {
 		 'en-US': 'Sloped Armor',
 	},
-	 description: {
-		 'en-US': 'Non-energy, ballistic attacks against this vessel suffer a ��"2 penalty. It has no effect on energy attacks.',
-	},
 	 tag: 'sloped-armor',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -27379,11 +34155,6 @@ return 5000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Speed Reduction',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'The ship trades power and speed for additional room. Each time this is taken, reduce Acc by 5 and Top Speed by 50 to gain half the ship\'s Size in Mod slots.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -27408,9 +34179,6 @@ return !selectedObject.hasMod("speed");
 	 name: {
 		 'en-US': 'Speed',
 	},
-	 description: {
-		 'en-US': 'Each purchase increases the ship\'s Acc by 5 and Top Speed by 50. (This cannot be taken with Speed Reduction.)',
-	},
 	 tag: 'speed',
 getMax: function(selectedObject) { return "u" },
 getModCost: function(selectedObject) {
@@ -27431,9 +34199,6 @@ return !selectedObject.hasMod("speed-reduction");
 	 name: {
 		 'en-US': 'Stealth System',
 	},
-	 description: {
-		 'en-US': 'Radar-absorbing paint, heat baffles, scramblers, and other devices make the ship difficult to detect by vision or sensors. Those trying to spot, attack, (or lock on to) the ship subtract 4 from their rolls. The effect is triggered as a free action, but is negated any round in which the ship fires a weapon or emits some other non- cloakable signal such as radio signal or active sensor search.',
-	},
 	 tag: 'stealth-system',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -27446,9 +34211,6 @@ return 50000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Superstructure (Bulk Cargo)',
-	},
-	 description: {
-		 'en-US': 'These are massive, open hulls for hauling bulk cargo. This is equivalent to 18 train box-cars, and can handle up to 800,000 cubic feet of cargo (but no more than 1800 tons if the vessel enters atmosphere). Halve the cost if the storage area is a vacuum.',
 	},
 	 tag: 'superstructure-bulk-cargo',
 getMax: function(selectedObject) { return "u" },
@@ -27473,9 +34235,6 @@ selectedObject.crew += 100;
 	 name: {
 		 'en-US': 'Superstructure (Factory)',
 	},
-	 description: {
-		 'en-US': 'The ship contains processing and manufacturing facilities that can take in raw materials and create new goods (usually those necessary for extended voyages, military operations, or colony survival). This adds 100 Crew. The vessel must also have at least one shuttle per Factory Superstructure to take in raw goods. Each factory can generate 2d6�-$100K in goods, supplies, or raw materials a week in an average environment (such as an asteroid field or small planet). Add or subtract a d6 for a sparse / rich find.) Materials can be used to fuel and resupply the ship (and other ships as well).',
-	},
 	 tag: 'superstructure-factory',
 getMax: function(selectedObject) { return "u" },
 getModCost: function(selectedObject) {
@@ -27498,9 +34257,6 @@ selectedObject.crew += 100;
 {
 	 name: {
 		 'en-US': 'Superstructure (Hangar)',
-	},
-	 description: {
-		 'en-US': 'A large, dedicated flight bay that holds up to 24 Size points of vehicles, walkers, or Small or Medium ships (Large and greater ships won\'t fit due to logarithmic scaling). This includes additional fuel storage, maintenance bays, training rooms, and briefing areas, and adds 50 additional crew members.',
 	},
 	 tag: 'superstructure-hangar',
 getMax: function(selectedObject) { return "u" },
@@ -27525,9 +34281,6 @@ selectedObject.crew += 50;
 	 name: {
 		 'en-US': 'Superstructure (Passenger, Civilian)',
 	},
-	 description: {
-		 'en-US': 'Luxury accommodations for long-term travelers, including hydroponic gardens, theatres, gyms, malls, restaurants, shopping, and lodging for 700 passengers and 50 additional staff. Passengers typically pay an average of $200 per day.',
-	},
 	 tag: 'superstructure-passenger-',
 getMax: function(selectedObject) { return "u" },
 getModCost: function(selectedObject) {
@@ -27549,9 +34302,6 @@ selectedObject.toughness = selectedObject.toughness - 1;
 {
 	 name: {
 		 'en-US': 'Superstructure (Passenger, Military)',
-	},
-	 description: {
-		 'en-US': 'Spartan barracks, training facilities, armories, and a few multi- purpose recreational areas for 450 marines and 50 staff (cooks, techs, etc).',
 	},
 	 tag: 'superstructure-passenger-',
 getMax: function(selectedObject) { return "u" },
@@ -27575,9 +34325,6 @@ selectedObject.toughness = selectedObject.toughness - 1;
 	 name: {
 		 'en-US': 'Superstructure (Specialty)',
 	},
-	 description: {
-		 'en-US': 'This covers anything not detailed above, such as massive medical bays for a hospital ship, research facilities, etc. The specific function determines specifics, but a basic guideline is a Specialty Superstructure houses and services 200 individuals, their equipment, and storage needs.',
-	},
 	 tag: 'superstructure-specialty',
 getMax: function(selectedObject) { return "u" },
 getModCost: function(selectedObject) {
@@ -27599,9 +34346,6 @@ selectedObject.toughness = selectedObject.toughness - 1;
 {
 	 name: {
 		 'en-US': 'Superstructure',
-	},
-	 description: {
-		 'en-US': 'Superstructures are large sections that add great amounts of space to large ships, typically to accommodate more passengers or cargo. Each superstructure adds one to the fuel used per day, consumes 10 regular Mods, and subtracts 1 from the ship\'s base Toughness (not Armor) as it reduces overall structural integrity. Choose the type of superstructure from the sidebar below.',
 	},
 	 tag: 'superstructure',
 hidden: 1,
@@ -27626,9 +34370,6 @@ selectedObject.toughness = selectedObject.toughness - 1;
 	 name: {
 		 'en-US': 'Targeting System',
 	},
-	 description: {
-		 'en-US': 'The ship\'s internal sensors and computers are linked to all attached weapons. This compensates for movement, range, multi-actions, and the like, negating up to two points of Shooting penalties.',
-	},
 	 tag: 'targeting-system',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -27642,9 +34383,6 @@ return 10000  * selectedObject.size;
 	 name: {
 		 'en-US': 'Teleporter',
 	},
-	 description: {
-		 'en-US': 'Ultra Tech. Teleporters work by turning physical objects into energy, blasting them through space, and then reconstituting them at the destination. Each teleporter can transport six average size humans at a time, or 1000 pounds of cargo up to 100 miles distant, or up to 1000 miles distant if a linked transmitter is present at the destination.',
-	},
 	 tag: 'teleporter',
 getMax: function(selectedObject) { return "u" },
 getModCost: function(selectedObject) {
@@ -27657,9 +34395,6 @@ return 5000000;
 {
 	 name: {
 		 'en-US': 'Torpedo Tube',
-	},
-	 description: {
-		 'en-US': 'Each tube allows up to two Light or one Heavy torpedo to be fired at once (at one or two targets, as desired).',
 	},
 	 tag: 'torpedo-tube',
 getMax: function(selectedObject) { return "u" },
@@ -27676,11 +34411,6 @@ selectedObject.hasTorpedoTube = 1;
 {
 	 name: {
 		 'en-US': 'Tractor Beam',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Tractor beams are specialized starship weapons designed to hold an enemy ship in place and pull it to the “attacker.” Ships can only affect vessels of smaller Size. Their range is quite short (about 1000 yards), so they must get a Short Range result on the Chase table to use the weapon. This is an opposed Knowledge (Electronics) roll at ��"4 vs the defender\'s Piloting (or Knowledge (Electronics) in Large or larger ships). If the attacker is successful, the enemy ship is caught and pulled into contact in 2d6 rounds. A captive\'s ship\'s life support systems remain active, but all locomotion and weapons are shut down.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -27720,11 +34450,6 @@ savageWorldsSciFiOptions['vehicle'] = Array(
 {
 	 name: {
 		 'en-US': 'The Last Parsec Options',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Various options from The Last Parsec Sourcebooks vehicle options',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -27982,9 +34707,6 @@ savageWorldsSciFiMods['vehicle'] = Array(
 	 name: {
 		 'en-US': 'Aircraft, Anti-Grav',
 	},
-	 description: {
-		 'en-US': 'Ultra Tech. The vehicle is an aircraft powered by anti-gravitic propulsion. It can hover or fly, and has a Acc/TS of 30/100 and Climb of 2.',
-	},
 	 tag: 'aircraft-anti-grav',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -28004,9 +34726,6 @@ calcWeight: 1 // one of the first things to be calculated
 {
 	 name: {
 		 'en-US': 'Aircraft, Helicopter',
-	},
-	 description: {
-		 'en-US': 'The vehicle is a helicopter. It can hover or fly, and has a Acc/TS 10/80 and a Climb of ��"1.',
 	},
 	 tag: 'aircraft-helicopter',
 getMax: function(selectedObject) { return 1 },
@@ -28028,9 +34747,6 @@ calcWeight: 1 // one of the first things to be calculated
 	 name: {
 		 'en-US': 'Aircraft, Jet Plane',
 	},
-	 description: {
-		 'en-US': 'Jet planes are Acc/TS 50/600, Climb 2. They must move at least half their Top Speed each round or go Out of Control (they stall). The Speed Mod increases Acc by 10 instead of 5 and Top Speed by 100 instead of 10.',
-	},
 	 tag: 'aircraft-jet-plane',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -28050,9 +34766,6 @@ calcWeight: 1 // one of the first things to be calculated
 {
 	 name: {
 		 'en-US': 'Aircraft, Propeller Plane',
-	},
-	 description: {
-		 'en-US': 'A traditional prop plane. Acc/TS 20/150, Climb 1. Planes must move at least half their Top Speed each round or go Out of Control (they stall). The Speed Mod increases Top Speed by 50 instead of 10.',
 	},
 	 tag: 'aircraft-propeller-plane',
 getMax: function(selectedObject) { return 1 },
@@ -28074,9 +34787,6 @@ calcWeight: 1 // one of the first things to be calculated
 	 name: {
 		 'en-US': 'AMCM',
 	},
-	 description: {
-		 'en-US': 'Anti-Missile Counter Measures are integrated jammers and decoys. They add +2 to Driving, Piloting or Knowledge (Electronics) rolls made to evade missile attacks.',
-	},
 	 tag: 'amcm',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -28090,9 +34800,6 @@ return 5000 * selectedObject.size;
 	 name: {
 		 'en-US': 'Amphibious',
 	},
-	 description: {
-		 'en-US': 'The vehicle may move at half Acc/Top Speed while in water.',
-	},
 	 tag: 'amphibious',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -28105,9 +34812,6 @@ return 1000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Armor',
-	},
-	 description: {
-		 'en-US': 'Increases a vehicle\'s Armor value by +2. Armor +4 and higher is considered Heavy Armor. Vehicular Armor can also be front-loaded if desired. If so, Armor\'s maximum becomes 2x Size and each level increases the front armor by +3, side and top armor by +2, and rear and bottom Armor by +1. In the Chase rules, an attacker with Advantage and a Jack or higher can target the side armor, and one with a King or higher can target the rear.',
 	},
 	 tag: 'armor',
 getMax: function(selectedObject) { return selectedObject.size },
@@ -28127,9 +34831,6 @@ selectedObject.toughness++;
 {
 	 name: {
 		 'en-US': 'Armor, Front Loaded',
-	},
-	 description: {
-		 'en-US': 'Increases a vehicle\'s Armor value by +2. Armor +4 and higher is considered Heavy Armor. Vehicular Armor can also be front-loaded if desired. If so, Armor\'s maximum becomes 2x Size and each level increases the front armor by +3, side and top armor by +2, and rear and bottom Armor by +1. In the Chase rules, an attacker with Advantage and a Jack or higher can target the side armor, and one with a King or higher can target the rear.',
 	},
 	 tag: 'armor-front-loaded',
 getMax: function(selectedObject) { return selectedObject.size },
@@ -28154,9 +34855,6 @@ selectedObject.toughness++;
 	 name: {
 		 'en-US': 'Artificial Intelligence',
 	},
-	 description: {
-		 'en-US': 'The vehicle\'s AI can operate all systems ��" from locomotion to weapons to opening or closing hatches. It has a skill level of d10 in these tasks, but is an “Extra” and does not receive a Wild Die. The AI does not suffer from multi-action penalties if given simultaneous tasks. In combat, the AI acts on the captain\'s Action Card. Giving the AI a short verbal command is a free action.',
-	},
 	 tag: 'artificial-intelligence',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -28170,9 +34868,6 @@ return 10000 * selectedObject.size;
 	 name: {
 		 'en-US': 'Boosters',
 	},
-	 description: {
-		 'en-US': 'Nitrous oxide or other propellants double a vehicle\'s Acceleration and Top Speed for a round. Each booster has six uses before it must be replaced. Their effects do not stack. Refills cost $100 per booster.',
-	},
 	 tag: 'boosters',
 getMax: function(selectedObject) { return "u" },
 getModCost: function(selectedObject) {
@@ -28185,9 +34880,6 @@ return 1000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Climb',
-	},
-	 description: {
-		 'en-US': 'Aircraft only. The vehicle\'s Climb is increased by 1.',
 	},
 	 tag: 'climb',
 getMax: function(selectedObject) { return 5 },
@@ -28204,9 +34896,6 @@ selectedObject.climb = selectedObject.climb + 1;
 {
 	 name: {
 		 'en-US': 'Crew Reduction',
-	},
-	 description: {
-		 'en-US': 'Add 1 Mod slot for every four crewman deducted (round up).',
 	},
 	 tag: 'crew-reduction',
 getMax: function(selectedObject) { return "u" },
@@ -28225,9 +34914,6 @@ selectedObject.mods ++;
 	 name: {
 		 'en-US': 'Crew Space',
 	},
-	 description: {
-		 'en-US': 'Space for four permanent crew members.',
-	},
 	 tag: 'crew-space',
 getMax: function(selectedObject) { return "u" },
 getModCost: function(selectedObject) {
@@ -28244,9 +34930,6 @@ selectedObject.crew += 4;
 	 name: {
 		 'en-US': 'Deflector Screens',
 	},
-	 description: {
-		 'en-US': 'The vessel is protected by an energy field that deflects incoming ballistic attacks (it has no effect against lasers). Attackers must subtract ��"2 from their Shooting rolls. Mod cost is 2 for Small to Large vehicles, and 3 for Huge to Gargantuan vessels.',
-	},
 	 tag: 'deflector-screens',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -28259,9 +34942,6 @@ return 10000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Ejection System',
-	},
-	 description: {
-		 'en-US': 'Should a vehicle suffer a Wrecked result, crew members may make Agility rolls at ��"4 (or no penalty if an individual was on Hold or hasn\'t acted yet that round). Failure results in damage as usual and failure to eject that round. Those who succeed are launched into the air and descend safely via parachute. The system covers all passengers and crew.',
 	},
 	 tag: 'ejection-system',
 getMax: function(selectedObject) { return "u" },
@@ -28276,9 +34956,6 @@ return 5000 * selectedObject.size;
 	 name: {
 		 'en-US': 'Electromagnetic Shielding',
 	},
-	 description: {
-		 'en-US': 'Adds +6 to the vehicle\'s effective Toughness from EMP missiles (see page 25).',
-	},
 	 tag: 'electromagnetic-shielding',
 getMax: function(selectedObject) { return "u" },
 getModCost: function(selectedObject) {
@@ -28291,9 +34968,6 @@ return 5000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Exposed Crew',
-	},
-	 description: {
-		 'en-US': 'Motorcycles and other “ridden” vehicles offer no protection for their passengers. Crew get no Armor bonus should it sustain a Crew critical hit.',
 	},
 	 tag: 'exposed-crew',
 getMax:  function(selectedObject) { return 1 },
@@ -28308,9 +34982,6 @@ return  (selectedObject.baseCost / 2 ) * -1;
 	 name: {
 		 'en-US': 'Four Wheel Drive',
 	},
-	 description: {
-		 'en-US': 'Up to four direct-fire weapons of the same type may be linked and fired as one, increasing the damage by +2 per weapon and reducing the total number of Mods required. Total all Linked weapons in a set first, then halve their required Mods. (If Linking Fixed weapons, halve the total.)',
-	},
 	 tag: 'four-wheel-drive',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -28323,9 +34994,6 @@ return 1000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Handling',
-	},
-	 description: {
-		 'en-US': 'The vehicle is precision crafted and very maneuverable. This adds +1 to Driving rolls per level.',
 	},
 	 tag: 'handling',
 getMax: function(selectedObject) { return 3 },
@@ -28340,9 +35008,6 @@ return 5000 * selectedObject.size;
 	 name: {
 		 'en-US': 'Hover Vehicle',
 	},
-	 description: {
-		 'en-US': 'The vehicle uses hover fans instead of wheels. It ignores difficult terrain modifiers and obstacles less than a yard tall. Round Mod cost up. The Ultra Tech version uses anti-grav. It doubles the cost but halves the Mod cost.',
-	},
 	 tag: 'hover-vehicle',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -28355,11 +35020,6 @@ return 5000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Living Space',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Large or greater vehicles only. The vehicle has an extended superstructure with bunk beds, personal storage bins for up to four individuals, and one shared bathroom and kitchenette (regardless of how many times this is taken) for long- term travel. The superstructure decreases overall Toughness by 1 each time it\'s taken. The limit is half the vehicle\'s base Toughness.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -28381,11 +35041,6 @@ return 5000 * selectedObject.size;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Typically reserved for civilian vehicles, luxury features include music systems, minibars, video screens, and other comforts. The larger the vehicle, the more extravagant the features.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: 'luxury-features',
 		getMax: function(selectedObject) { return 1 },
 		getModCost: function(selectedObject) {
@@ -28398,9 +35053,6 @@ return 5000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Missile Launcher',
-	},
-	 description: {
-		 'en-US': 'Allows up to four Light or two Heavy (or AT) missiles to be fired at once.',
 	},
 	 tag: 'missile-launcher',
 getMax: function(selectedObject) { return "u" },
@@ -28417,11 +35069,6 @@ selectedObject.hasMissileLauncher = 1;
 {
 	 name: {
 		 'en-US': 'Multi-Legged',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'The vehicle has legs instead of wheels or tracks and can climb over small obstacles. Each time this Mod is taken increase Acc by 5 and TS by 10. The vehicle gains four legs and an additional pair each time this Mod is taken. Ignore driving penalties for difficult terrain and treat each inch of difficult terrain as 1.5” instead of 2”. On Super Heavy and Titan vehicles this modifier must be taken twice and on Colossus and Goliath taken three times for eight legs total. Vehicles with legs may not take the Speed modifier but may still take Speed Reduction.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -28460,9 +35107,6 @@ return "Multi-Legged (" + selectedObject.numberOfLegs + " legs)";
 	 name: {
 		 'en-US': 'Reinforced Chassis',
 	},
-	 description: {
-		 'en-US': 'Increases Toughness of the chassis by +1.',
-	},
 	 tag: 'reinforced-chassis',
 getMax: function(selectedObject) { return 3 },
 getModCost: function(selectedObject) {
@@ -28479,9 +35123,6 @@ selectedObject.toughness = selectedObject.toughness + 1;
 	 name: {
 		 'en-US': 'Sensor Suite',
 	},
-	 description: {
-		 'en-US': 'Light, chemical, motion, and other active sensors allow detection of targets up to one light year away with a Knowledge (Electronics) roll. Within 10K miles, the sensors add +2 to the roll. Illumination penalties are ignored. Targets don\'t have to be in direct line of sight, but asteroid or powerful energy fields may cause inaccurate or false readings at the GM\'s discretion.',
-	},
 	 tag: 'sensor-suite',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -28494,9 +35135,6 @@ return 50000;
 {
 	 name: {
 		 'en-US': 'Shields',
-	},
-	 description: {
-		 'en-US': 'The craft is protected by an ablative energy field that absorbs 10�-Size points of damage before it\'s depleted. Apply all damage to the shield first, then any left over to the vehicle (AP counts as usual). Active shields detonate missiles and torpedoes before they hit, reducing their damage total by half. A craft may regenerate its Size in shield points if it makes no attacks in a round.',
 	},
 	 tag: 'shields',
 getMax: function(selectedObject) { return 1 },
@@ -28511,9 +35149,6 @@ return 25000 * selectedObject.size;
 	 name: {
 		 'en-US': 'Sloped Armor',
 	},
-	 description: {
-		 'en-US': 'Non-energy, ballistic attacks against this vessel suffer a ��"2 penalty. It has no effect on energy attacks.',
-	},
 	 tag: 'sloped-armor',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -28526,11 +35161,6 @@ return 3000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Speed Reduction',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'The vehicle trades power and speed for additional room. Each time this is taken, reduce Acc by 5 and Top Speed by 50 to gain half the vehicle\'s Size in Mod slots.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -28557,11 +35187,6 @@ return !selectedObject.hasMod("speed");
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Each purchase increases the vehicle\'s Acc by 5 and Top Speed by 50. (This cannot be taken with Speed Reduction.)',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: 'speed',
 getMax: function(selectedObject) { return "u" },
 getModCost: function(selectedObject) {
@@ -28582,9 +35207,6 @@ return !selectedObject.hasMod("speed-reduction");
 	 name: {
 		 'en-US': 'Stealth System',
 	},
-	 description: {
-		 'en-US': 'Radar-absorbing paint, heat baffles, scramblers, and other devices make the vehicle difficult to detect by vision or sensors. Those trying to spot, attack, (or lock on to) the vehicle subtract 4 from their rolls. The effect is triggered as a free action, but is negated any round in which the vehicle fires a weapon or emits some other non- cloakable signal such as radio signal or active sensor search.',
-	},
 	 tag: 'stealth-system',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -28598,9 +35220,6 @@ return 10000 * selectedObject.size;
 	 name: {
 		 'en-US': 'Targeting System',
 	},
-	 description: {
-		 'en-US': 'The vehicle\'s internal sensors and computers are linked to all attached weapons. This compensates for movement, range, multi-actions, and the like, negating up to two points of Shooting penalties.',
-	},
 	 tag: 'targeting-system',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -28613,9 +35232,6 @@ return 10000  * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Torpedo Tube',
-	},
-	 description: {
-		 'en-US': 'Each tube allows up to two Light or one Heavy torpedo to be fired at once (at one or two targets, as desired).',
 	},
 	 tag: 'torpedo-tube',
 getMax: function(selectedObject) { return "u" },
@@ -28639,9 +35255,6 @@ return false;
 	 name: {
 		 'en-US': 'Tracked',
 	},
-	 description: {
-		 'en-US': 'The vehicle has tracks instead of wheels and can climb over small obstacles. This reduces Acc by 2 and TS by 5, and ignores Driving penalties for difficult terrain. On the table-top, every inch of movement is treated as 1.5”.',
-	},
 	 tag: 'tracked',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -28659,11 +35272,6 @@ selectedObject.mods += selectedObject.baseMods / 2;
 {
 	 name: {
 		 'en-US': 'Watercraft',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'The vehicle is a boat or ship. It\'s base Acceleration and Top Speed are halved (round up). Speed Modifications increase Acc by 3 and TS by 5. For larger vessels such as naval vessels or cruise ships, use the Starship rules for Size, Toughness, and Crew, and add any enhancements that aren\'t specifically designed for space such as FTL drives. If a Modification is listed under Vehicles, use that instead. Ships may have Torpedo Tubes.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -28711,11 +35319,6 @@ savageWorldsSciFiOptions['walker'] = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'This is a proposed walker size for 12-15 foot tall, Heavy Gear sized, Walkers. <a href=\'http://www.peginc.com/forum/viewtopic.php?t=45126\'>The discussion is here</a>.\n',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 type: 'bool',
 	 short_tag: 'ultra-light',
 }
@@ -28738,7 +35341,7 @@ savageWorldsSciFiSizes['walker'] = Array(
 	 ts: 0,
 	 climb: 0,
 	 pace: 30,
-	 toughness: 0,
+	 toughness: 15,
 	 armor: 4,
 	 mods: 15,
 	 crew: 1,
@@ -28889,9 +35492,6 @@ savageWorldsSciFiMods['walker'] = Array(
 	 name: {
 		 'en-US': 'AMCM',
 	},
-	 description: {
-		 'en-US': 'Anti-Missile Counter Measures are integrated jammers and decoys. They add +2 to Driving, Piloting or Knowledge (Electronics) rolls made to evade missile attacks.',
-	},
 	 tag: 'amcm',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -28904,9 +35504,6 @@ return 5000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Armor',
-	},
-	 description: {
-		 'en-US': 'Increases a walker&apos;s Armor value by +2. All walker Armor is considered Heavy Armor.',
 	},
 	 tag: 'armor',
 getMax: function(selectedObject) { return selectedObject.size },
@@ -28927,9 +35524,6 @@ selectedObject.toughness++;
 	 name: {
 		 'en-US': 'Close Combat Weapon',
 	},
-	 description: {
-		 'en-US': 'Some walkers are equipped with chain- blades or swords designed to cut through the hard armor of rival mechs, buildings, or enemy tanks. They have AP equal to the mech&apos;s Size and cause Str+2d10 damage (Heavy Weapon). The pilot uses the lower of his Fighting or Piloting to hit. The TN to hit an enemy mech or vehicle is 4, plus or minus normal speed or Size modifiers. Walkers aren&apos;t subject to all the normal rules of close combat, but GMs can use those as the basis for situational modifiers based on specific circumstances (such as multiple mechs ganging up on a foe).',
-	},
 	 tag: 'close-combat-weapon',
 getMax: function(selectedObject) { return 2 },
 getModCost: function(selectedObject) {
@@ -28942,9 +35536,6 @@ return 75000;
 {
 	 name: {
 		 'en-US': 'Deflector Screens',
-	},
-	 description: {
-		 'en-US': 'The vessel is protected by an energy field that deflects incoming ballistic attacks (it has no effect against lasers). Attackers must subtract ��"2 from their Shooting rolls. Mod cost is 2 for Small to Large walkers, and 3 for Huge to Gargantuan vessels.',
 	},
 	 tag: 'deflector-screens',
 getMax: function(selectedObject) { return 1 },
@@ -28959,9 +35550,6 @@ return 10000 * selectedObject.size;
 	 name: {
 		 'en-US': 'Electromagnetic Shielding',
 	},
-	 description: {
-		 'en-US': 'Adds +6 to the walker&apos;s effective Toughness from EMP missiles (see page 25).',
-	},
 	 tag: 'electromagnetic-shielding',
 getMax: function(selectedObject) { return "u" },
 getModCost: function(selectedObject) {
@@ -28975,9 +35563,6 @@ return 5000 * selectedObject.size;
 	 name: {
 		 'en-US': 'Jump Jets',
 	},
-	 description: {
-		 'en-US': 'Powerful rockets give walkers the ability to propel themselves high in the air��"to clear obstacles or perform “death from above” attacks on foes. To jump, the pilot uses an action to make a Piloting roll to both maneuver his walker and manage his power reserves. Each round spent jumping increases his height 50 feet for Light walkers, 30 feet for Mediums, and 20 feet for Heavies. Each subsequent round spent jumping (essentially flying) afterwards inflicts a ��"2 to the Piloting roll, cumulative to a maximum of ��"6. Failure means the walker descends immediately (a critical failure results in a fall��"see Falling, page 59).',
-	},
 	 tag: 'jump-jets',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -28990,9 +35575,6 @@ return selectedObject.size / 2;
 {
 	 name: {
 		 'en-US': 'Missile Launcher',
-	},
-	 description: {
-		 'en-US': 'Allows up to four Light or two Heavy (or AT) missiles to be fired at once.',
 	},
 	 tag: 'missile-launcher',
 getMax: function(selectedObject) { return "u" },
@@ -29009,11 +35591,6 @@ selectedObject.hasMissileLauncher = 1;
 {
 	 name: {
 		 'en-US': 'Pace',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Increases the mech&apos;s Pace by +4. (This cannot be taken with Speed Reduction.)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -29036,9 +35613,6 @@ return !selectedObject.hasMod("speed-reduction");
 	 name: {
 		 'en-US': 'Passenger Compartment',
 	},
-	 description: {
-		 'en-US': 'Cramped space for four passengers. Rescue mechs often use this Modification.',
-	},
 	 tag: 'passenger-compartment',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -29051,9 +35625,6 @@ return 5000;
 {
 	 name: {
 		 'en-US': 'Reinforced Frame',
-	},
-	 description: {
-		 'en-US': 'Increases Toughness of the chassis by +2.',
 	},
 	 tag: 'reinforced-frame',
 getMax: function(selectedObject) { return 3 },
@@ -29071,9 +35642,6 @@ selectedObject.toughness = selectedObject.toughness + 2;
 	 name: {
 		 'en-US': 'Sensor Suite',
 	},
-	 description: {
-		 'en-US': '+4 Notice vs sound, motion, strong chemicals, radiation, or electrical fields up to 1000 yards.',
-	},
 	 tag: 'sensor-suite',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -29086,9 +35654,6 @@ return 50000;
 {
 	 name: {
 		 'en-US': 'Shields',
-	},
-	 description: {
-		 'en-US': 'The walker is protected by an ablative energy field that absorbs 10�-Size points of damage before it&apos;s depleted. Apply all damage to the shield first, then any left over to the mech (AP counts as usual). Active shields detonate missiles and torpedoes before they hit, reducing their damage total by half. A walker may regenerate its Size in shield points if it makes no attacks in a round.',
 	},
 	 tag: 'shields',
 getMax: function(selectedObject) { return 1 },
@@ -29103,9 +35668,6 @@ return 50000 * selectedObject.size;
 	 name: {
 		 'en-US': 'Sloped Armor',
 	},
-	 description: {
-		 'en-US': 'Non-energy, ballistic attacks against this vessel suffer a ��"2 penalty. It has no effect on energy attacks.',
-	},
 	 tag: 'sloped-armor',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -29118,11 +35680,6 @@ return 5000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Speed Reduction',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'The walker sacrifices speed for additional room. Subtract 2 from Pace and add half its Size in Mod slots (round down).',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -29146,9 +35703,6 @@ return !selectedObject.hasMod("pace");
 	 name: {
 		 'en-US': 'Stealth System',
 	},
-	 description: {
-		 'en-US': 'Radar-absorbing paint, heat baffles, scramblers, and other devices make the walker difficult to detect by vision or sensors. Those trying to attack or spot the mech subtract 4 from their rolls. The effect is triggered as a free action, but is negated any round in which the walker fires a weapon or emits some other non- cloakable signal such as radio signal or active sensor search.',
-	},
 	 tag: 'stealth-system',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -29161,9 +35715,6 @@ return 50000 * selectedObject.size;
 {
 	 name: {
 		 'en-US': 'Strength Enhancement',
-	},
-	 description: {
-		 'en-US': 'Add +2 to the walker&apos;s Strength.',
 	},
 	 tag: 'strength-enhancement',
 getMax: function(selectedObject) { return 1 },
@@ -29183,11 +35734,6 @@ selectedObject.strength +=  2;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'The walker&apos;s internal sensors and computers are linked to all attached weapons. This compensates for movement, range, multi-actions, and the like, negating up to two points of Shooting penalties.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 tag: 'targeting-system',
 getMax: function(selectedObject) { return 1 },
 getModCost: function(selectedObject) {
@@ -29198,6 +35744,107 @@ return 10000  * selectedObject.size;
 }
 }
 );
+
+/*
+
+Data here is NOT Licensed under the Creative Commons and is owned by Pinnacle Entertainment Group.
+
+This product references the Savage Worlds game system, available from Pinnacle Entertainment Group at www.peginc.com.
+Savage Worlds and all associated logos and trademarks are copyrights of Pinnacle Entertainment Group. Used with permission.
+Pinnacle makes no representation or warranty as to the quality, viability, or suitability for purpose of this product.
+
+The entries in this file are from Savage Worlds Role Playing Game and are owned by Pinnacle Entertainment Group.
+
+DEVELOPERS: Do Not Edit or Pull Request this file, it is auto generated from a rudimentary admin area!
+*/
+
+var savageWorldsSPCPowers = Array(
+{
+		 'id': 1,
+	 name: {
+		 'en-US': 'Absorbtion',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': 5,
+		 'page': 'p20',
+		 'cost': '2',
+		 'per_level': '0',
+		 'tag': 'absorbtion',
+		 'modifiers': '[{"name":{"en-US":"Matter \/ Energy Master","pt-BR":"","de-DE":""},"points":"5"},{"name":{"en-US":"Reflection","pt-BR":"","de-DE":""},"points":"4"},{"name":{"en-US":"Transference","pt-BR":"","de-DE":""},"points":"2"}]',
+},
+{
+		 'id': 2,
+	 name: {
+		 'en-US': 'Ageless',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': 5,
+		 'page': 'p20',
+		 'cost': '2',
+		 'per_level': '0',
+		 'tag': 'ageless',
+		 'modifiers': '[{"name":{"en-US":"Very Old","pt-BR":"","de-DE":""},"points":"2"}]',
+},
+{
+		 'id': 3,
+	 name: {
+		 'en-US': 'Altered Form ',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': 5,
+		 'page': 'p20',
+		 'cost': '3',
+		 'per_level': '0',
+		 'tag': 'altered-form',
+		 'modifiers': '[{"name":{"en-US":"Grapple","pt-BR":"","de-DE":""},"points":"1","per_level":0},{"name":{"en-US":"Reach","pt-BR":"","de-DE":""},"points":"1","per_level":1}]',
+},
+{
+		 'id': 4,
+	 name: {
+		 'en-US': 'Animal Control',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': 5,
+		 'page': 'p20',
+		 'cost': '2',
+		 'per_level': '1',
+		 'tag': 'animal-control',
+		 'modifiers': '[{"name":{"en-US":"Animal Companion","pt-BR":"","de-DE":""},"points":"0","per_level":0},{"name":{"en-US":"Summonable","pt-BR":"","de-DE":""},"points":"4","per_level":0},{"name":{"en-US":"Super Powers","pt-BR":"","de-DE":""},"points":"0","per_level":0},{"name":{"en-US":"Telepathic Link","pt-BR":"","de-DE":""},"points":"1","per_level":0}]',
+},
+{
+		 'id': 5,
+	 name: {
+		 'en-US': 'Aquatic',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': 5,
+		 'page': 'p21',
+		 'cost': '2',
+		 'per_level': '0',
+		 'tag': 'aquatic',
+		 'modifiers': '[]',
+},
+{
+		 'id': 6,
+	 name: {
+		 'en-US': 'Armor',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': 5,
+		 'page': 'p22',
+		 'cost': '1',
+		 'per_level': '1',
+		 'tag': 'armor',
+		 'modifiers': '[{"name":{"en-US":"Hardy","pt-BR":"","de-DE":""},"points":"3","per_level":0},{"name":{"en-US":"Heavy Armor","pt-BR":"","de-DE":""},"points":"4","per_level":0},{"name":{"en-US":"Partial Protection","pt-BR":"","de-DE":""},"points":"0","per_level":0}]',
+}
+);
+
 
 /*
 
@@ -29223,11 +35870,6 @@ return 10000  * selectedObject.size;
 	},
 	 name_plural: {
 		 'en-US': 'Anti-Tank Missiles',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship��"if a ship gets a lock, it may fire all the missiles or torpedoes it\'s allowed.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -29268,11 +35910,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM\'s call) or other factors that might interfere with the bomb\'s targeting systems inflicts a ��"2 penalty.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Bombs',
 		 'pt-BR': '',
@@ -29310,11 +35947,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM\'s call) or other factors that might interfere with the bomb\'s targeting systems inflicts a ��"2 penalty.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Bombs',
 		 'pt-BR': '',
@@ -29348,9 +35980,6 @@ return false;
 	 name_plural: {
 		 'en-US': 'Grenade Launchers',
 	},
-	 description: {
-		 'en-US': 'Futuristic grenades are smaller, lighter, and pack a bit more punch than their predecessors. Grenade launchers may also use the grenades found on page 20.',
-	},
 	 classification: {
 		 'en-US': 'Grenade Launcher',
 	},
@@ -29376,11 +36005,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Heavy Autocannons',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Auto-cannons (also called chain guns) are powered weapons that fire bursts of chemically- propelled metal slugs at the target. They are primarily used by aircraft to destroy ground targets, or as point-defense weapons for starships. Ammo costs are for a full load.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -29416,11 +36040,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Cannons fire large, chemically-propelled, explosive shells. The shells listed below are the most common. High explsive versions reduce the damage die type to d8 and halve AP but increase the Burst Template to Large ot 10” radius if already Large. Ammo costs are per full load',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Cannons',
 		 'pt-BR': '',
@@ -29449,9 +36068,6 @@ return false;
 	 name_plural: {
 		 'en-US': 'Heavy Flamethrowers',
 	},
-	 description: {
-		 'en-US': 'Flamethrowers use liquid or vapor fuel to burn targets. They\'re often used to dig opponents out of caves or other tight places. The ones listed here are more powerful, lighter, and carry more propellant than older versions (such as those found in Savage Worlds).',
-	},
 	 classification: {
 		 'en-US': 'Flame Weapons',
 	},
@@ -29477,11 +36093,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Heavy Lasers',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don\'t use the rules for personal lasers listed on page 20.)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -29517,11 +36128,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Slugthrowers are traditional firearms firing chemically-propelled rounds.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Slugthrowers',
 		 'pt-BR': '',
@@ -29551,11 +36157,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Heavy Torpedoes',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship��"if a ship gets a lock, it may fire all the missiles or torpedoes it\'s allowed.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -29596,11 +36197,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship��"if a ship gets a lock, it may fire all the missiles or torpedoes it\'s allowed.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Missiles & Torpedoes',
 		 'pt-BR': '',
@@ -29635,11 +36231,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Large Bombs',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM\'s call) or other factors that might interfere with the bomb\'s targeting systems inflicts a ��"2 penalty.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -29680,11 +36271,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Auto-cannons (also called chain guns) are powered weapons that fire bursts of chemically- propelled metal slugs at the target. They are primarily used by aircraft to destroy ground targets, or as point-defense weapons for starships. Ammo costs are for a full load.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Auto-cannons',
 		 'pt-BR': '',
@@ -29713,9 +36299,6 @@ return false;
 	 name_plural: {
 		 'en-US': 'Light Flamethrowers',
 	},
-	 description: {
-		 'en-US': 'Flamethrowers use liquid or vapor fuel to burn targets. They\'re often used to dig opponents out of caves or other tight places. The ones listed here are more powerful, lighter, and carry more propellant than older versions (such as those found in Savage Worlds).',
-	},
 	 classification: {
 		 'en-US': 'Flame Weapons',
 	},
@@ -29741,11 +36324,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Light Lasers',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don\'t use the rules for personal lasers listed on page 20.)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -29778,11 +36356,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Light Missiles',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship��"if a ship gets a lock, it may fire all the missiles or torpedoes it\'s allowed.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -29823,11 +36396,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'These weapons use the rules for missiles in Savage Worlds and require missile launchers or torpedo tubes to mount. Attackers use Shooting to get a lock if firing directly or Knowledge (Computers) if fired indirectly from a bridge or weapons station. Defenders use Piloting if evading directly or Knowledge (Navigation) from a bridge or nav station. Determine lock by ship��"if a ship gets a lock, it may fire all the missiles or torpedoes it\'s allowed.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Missiles & Torpedoes',
 		 'pt-BR': '',
@@ -29865,11 +36433,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
 		 'pt-BR': '',
@@ -29903,9 +36466,6 @@ return false;
 	 name_plural: {
 		 'en-US': 'Mass Driver 10',
 	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
-	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
 	},
@@ -29934,9 +36494,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Mass Driver 11',
-	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
 	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
@@ -29967,9 +36524,6 @@ return false;
 	 name_plural: {
 		 'en-US': 'Mass Driver 12',
 	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
-	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
 	},
@@ -29998,9 +36552,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Mass Driver 13',
-	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
 	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
@@ -30031,9 +36582,6 @@ return false;
 	 name_plural: {
 		 'en-US': 'Mass Driver 14',
 	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
-	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
 	},
@@ -30062,9 +36610,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Mass Driver 2',
-	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
 	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
@@ -30095,9 +36640,6 @@ return false;
 	 name_plural: {
 		 'en-US': 'Mass Driver 3',
 	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
-	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
 	},
@@ -30126,9 +36668,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Mass Driver 4',
-	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
 	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
@@ -30159,9 +36698,6 @@ return false;
 	 name_plural: {
 		 'en-US': 'Mass Driver 5',
 	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
-	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
 	},
@@ -30190,9 +36726,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Mass Driver 6',
-	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
 	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
@@ -30223,9 +36756,6 @@ return false;
 	 name_plural: {
 		 'en-US': 'Mass Driver 7',
 	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
-	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
 	},
@@ -30255,9 +36785,6 @@ return false;
 	 name_plural: {
 		 'en-US': 'Mass Driver 8',
 	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
-	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
 	},
@@ -30286,9 +36813,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Mass Driver 9',
-	},
-	 description: {
-		 'en-US': 'Mass drivers are large, space-based, rail systems used to magnetically accelerate heavy projectiles at high speed, causing devastating damage wherever they impact. The ranges listed below are practical limits. In space the actual range is infinite. Projectiles are made of dense metallic materials (rocks) such as can be found easily in asteroids or planets with no manufacturing capability, making them favorite weapons for long-range military vessels that need to supply from natural materials (5 shots per hour can be mined from most asteroids).',
 	},
 	 classification: {
 		 'en-US': 'Mass Drivers',
@@ -30320,11 +36844,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Massive Lasers',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don\'t use the rules for personal lasers listed on page 20.)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -30365,11 +36884,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Auto-cannons (also called chain guns) are powered weapons that fire bursts of chemically- propelled metal slugs at the target. They are primarily used by aircraft to destroy ground targets, or as point-defense weapons for starships. Ammo costs are for a full load.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Auto-cannons',
 		 'pt-BR': '',
@@ -30399,11 +36913,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Medium Bombs',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM\'s call) or other factors that might interfere with the bomb\'s targeting systems inflicts a ��"2 penalty.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -30444,11 +36953,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Cannons fire large, chemically-propelled, explosive shells. The shells listed below are the most common. High explsive versions reduce the damage die type to d8 and halve AP but increase the Burst Template to Large ot 10” radius if already Large. Ammo costs are per full load',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Cannons',
 		 'pt-BR': '',
@@ -30478,11 +36982,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Medium Lasers',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don\'t use the rules for personal lasers listed on page 20.)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -30518,11 +37017,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Slugthrowers are traditional firearms firing chemically-propelled rounds.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Slugthrowers',
 		 'pt-BR': '',
@@ -30552,11 +37046,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Mega Lasers',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don\'t use the rules for personal lasers listed on page 20.)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -30597,11 +37086,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Slugthrowers are traditional firearms firing chemically-propelled rounds.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Slugthrowers',
 		 'pt-BR': '',
@@ -30631,11 +37115,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Particle Accelerators, Heavy',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Vehicular blasters fire a stream of charged particles (ions). Because the weapon fires a stream, a raise on the attack roll causes +2d6 damage instead of the usual 1d6.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -30671,11 +37150,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Vehicular blasters fire a stream of charged particles (ions). Because the weapon fires a stream, a raise on the attack roll causes +2d6 damage instead of the usual 1d6.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Particle Accelerators',
 		 'pt-BR': '',
@@ -30708,11 +37182,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Vehicular blasters fire a stream of charged particles (ions). Because the weapon fires a stream, a raise on the attack roll causes +2d6 damage instead of the usual 1d6.',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Particle Accelerators',
 		 'pt-BR': '',
@@ -30742,11 +37211,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Small Bombs',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Dropping bombs uses Knowledge (Bombardier) rather than Shooting. Craft must be in atmosphere to drop bombs. Night, cloud cover, rain, very high altitude attacks (GM\'s call) or other factors that might interfere with the bomb\'s targeting systems inflicts a ��"2 penalty.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -30787,11 +37251,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Cannons fire large, chemically-propelled, explosive shells. The shells listed below are the most common. High explsive versions reduce the damage die type to d8 and halve AP but increase the Burst Template to Large ot 10” radius if already Large. Ammo costs are per full load',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Cannons',
 		 'pt-BR': '',
@@ -30824,11 +37283,6 @@ return false;
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
-	 description: {
-		 'en-US': 'Cannons fire large, chemically-propelled, explosive shells. The shells listed below are the most common. High explsive versions reduce the damage die type to d8 and halve AP but increase the Burst Template to Large ot 10” radius if already Large. Ammo costs are per full load',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
 	 classification: {
 		 'en-US': 'Cannons',
 		 'pt-BR': '',
@@ -30858,11 +37312,6 @@ return false;
 	},
 	 name_plural: {
 		 'en-US': 'Super-Heavy Lasers',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 description: {
-		 'en-US': 'Lasers of this size burn through solid materials and flashboil flesh. (They don\'t use the rules for personal lasers listed on page 20.)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},

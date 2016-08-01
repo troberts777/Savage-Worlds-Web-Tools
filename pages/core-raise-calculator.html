@@ -2,6 +2,13 @@
 	<div class="row">
 		<div class="columns small-12 medium-6">
 			<fieldset class="fieldset">
+				<legend translate="RAISE_ROLL_RESULTS">Results</legend>
+				<h5><span translate="RAISE_RESULT_TRAIT">Trait Result</span>: <span ng-bind-html="trait_results"></span></h5>
+				<h5><span translate="RAISE_RESULT_DAMAGE">Damage Result</span>: <span ng-bind-html="damage_results"></span></h5>
+			</fieldset>
+		</div>
+		<div class="columns small-12 medium-6">
+			<fieldset class="fieldset">
 				<legend translate="RAISE_ROLL_VARS">Roll Specifics</legend>
 				<label>
 					<span translate="RAISE_ROLL">Roll</span>:<br />
@@ -19,14 +26,11 @@
 					<span translate="RAISE_WEAPON_AP">Weapon AP</span>:<br />
 					<input ng-keyup="update_results()" ng-change="update_results()" ng-model="input_weapons_ap" type="number" id="dice-roll" value="0">
 				</label>
+				<label>
+					<input ng-change="update_results()" ng-model="input_half_damage" ng-true-value="1" ng-false-value="0" type="checkbox" id="half-damage" value="0"> <span translate="WEAPON_HALF_DAMAGE">Only does half damage</span><br />
+				</label>
 			</fieldset>
 		</div>
-		<div class="columns small-12 medium-6">
-			<fieldset class="fieldset">
-				<legend translate="RAISE_ROLL_RESULTS">Results</legend>
-				<h5><span translate="RAISE_RESULT_TRAIT">Trait Result</span>: <span ng-bind-html="trait_results"></span></h5>
-				<h5><span translate="RAISE_RESULT_DAMAGE">Damage Result</span>: <span ng-bind-html="damage_results"></span></h5>
-			</fieldset>
-		</div>
+
 	</div>
 </div>
