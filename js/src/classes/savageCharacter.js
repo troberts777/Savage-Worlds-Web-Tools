@@ -54,6 +54,8 @@ savageCharacter.prototype.init = function(useLang){
 	this.multipleLanguages = false;
 	this.usesStrain = false;
 
+	this.powerAlterations = Array();
+
 	this.spcExtraPowerPoints = 0;
 
 	this.knownLanguages = Array();
@@ -630,6 +632,17 @@ savageCharacter.prototype.refreshAvailable = function( ) {
 
 }
 
+savageCharacter.prototype.getArcaneSkill = function() {
+	for(var skillCounter = 0; skillCounter < this.skillList.length; skillCounter++ ) {
+		if(  this.skillList[skillCounter].for_arcane ) {
+			if( this.hasArcane( this.skillList[skillCounter].for_arcane )) {
+				return this.skillList[skillCounter];
+			}
+		}
+	}
+	return null;
+}
+
 savageCharacter.prototype.setGender = function( genderID ) {
 	for(var gc = 0; gc < this.genderOptions.length; gc++) {
 		if( genderID == this.genderOptions[gc].id ) {
@@ -805,6 +818,7 @@ savageCharacter.prototype.validate = function() {
 	this.isValid = true;
 	this.validationReport = Array();
 	this.warningReport = Array();
+	this.powerAlterations = Array();
 	this.skillPointsAvailable = 15;
 	this.skillPointsUsed = 0;
 
@@ -1164,10 +1178,33 @@ savageCharacter.prototype.validate = function() {
 
 		for( var abCounter = 0 ; abCounter < savageWorldsPowers.length ; abCounter++) {
 
-			if( savageWorldsPowers[abCounter].rank <= this.XP.rankValue  )
-				 savageWorldsPowers[abCounter].selectable = true;
-			else
-				 savageWorldsPowers[abCounter].selectable = false;
+			if(
+				this.powerAlterations.length > 0
+				&&
+				typeof(this.powerAlterations[ savageWorldsPowers[abCounter].id ]) != "undefined"
+			) {
+
+				if( typeof(this.powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank) != "undefined" ) {
+					console.log("!", this.powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank, this.XP.rankValue);
+					if( this.powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank <= this.XP.rankValue  )
+						 savageWorldsPowers[abCounter].selectable = true;
+					else
+						 savageWorldsPowers[abCounter].selectable = false;
+				} else {
+					if( savageWorldsPowers[abCounter].rank <= this.XP.rankValue  )
+						 savageWorldsPowers[abCounter].selectable = true;
+					else
+						 savageWorldsPowers[abCounter].selectable = false;
+				}
+				console.log("this.powerAlterations", this.powerAlterations[ savageWorldsPowers[abCounter].id ]);
+				console.log("savageWorldsPowers[abCounter]", abCounter, savageWorldsPowers[abCounter]);
+			} else {
+
+				if( savageWorldsPowers[abCounter].rank <= this.XP.rankValue  )
+					 savageWorldsPowers[abCounter].selectable = true;
+				else
+					 savageWorldsPowers[abCounter].selectable = false;
+			}
 
 			if( this.selectedArcaneBackground && this.selectedArcaneBackground.power_list && this.selectedArcaneBackground.power_list.length > 0 ) {
 				if( this.selectedArcaneBackground.power_list.indexOf( savageWorldsPowers[abCounter].tag ) < 0 ) {
@@ -2452,8 +2489,18 @@ savageCharacter.prototype.bookInUse = function( bookID ) {
 }
 
 savageCharacter.prototype.hasArcane = function( arcaneTag ) {
-	if( this.selectedArcaneBackground && this.selectedArcaneBackground.tag == arcaneTag)
-		return true;
+	if( typeof( arcaneTag ) == "string") {
+		if( this.selectedArcaneBackground && this.selectedArcaneBackground.tag == arcaneTag)
+			return true;
+	} else {
+		// for possible future use.
+		if( typeof( arcaneTag ) == "array") {
+			for(var atc = 0; atc > arcaneTag.length; atc++ ) {
+				if( this.selectedArcaneBackground && this.selectedArcaneBackground.tag == arcaneTag[atc])
+					return true;
+			}
+		}
+	}
 	return false;
 }
 

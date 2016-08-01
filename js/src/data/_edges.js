@@ -1098,6 +1098,29 @@ requires: function( characterObject) {
 },
 {
 	 name: {
+		 'en-US': 'Fanaticism',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: 'command',
+	 required_rank: 1,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'fanaticism',
+	 page: 'p5',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 3,
+	 child: 1,
+requires: function( characterObject) {
+persuasionSkill = characterObject.getSkill("SKILL_PERSUASION");
+if( persuasionSkill.value >= 8)
+     return true;
+return false;
+},
+},
+{
+	 name: {
 		 'en-US': 'Common Bond',
 	},
 	 required_edge: '',
@@ -3256,6 +3279,112 @@ characterObject.addRacialSkill("SKILL_FAITH", 2);
 	 book: 3,
 	 child: 0,
 
+},
+{
+	 name: {
+		 'en-US': 'Exorcist',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'exorcist',
+	 page: 'p5',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+requires: function( characterObject)  {
+faithSkill = characterObject.getSkill("SKILL_FAITH");
+
+if( !characterObject.hasArcane( "miracles" ) ) 
+     return false;
+if( !faithSkill )
+     return false;
+if( characterObject.displayAttributes.spirit.value < 8 )
+     return false;
+if( faithSkill.value < 3 )  // functional value of d8
+     return false;
+return true;
+},
+},
+{
+	 name: {
+		 'en-US': 'Necromancer',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'necromancer',
+	 page: 'p6',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+requires: function( characterObject)  {
+arcaneSkill = characterObject.getArcaneSkill();
+
+if( !characterObject.hasArcane( "miracles" )  &&  !characterObject.hasArcane( "magic" )) 
+     return false;
+if( !arcaneSkill)
+     return false;
+if( characterObject.displayAttributes.spirit.value < 8 )
+     return false;
+if( arcaneSkill.value < 3 )  // functional value of d8
+     return false;
+return true;
+},
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+//48 is the ID for the Zombie power
+charObject.powerAlterations[48] = {"adjusted_rank": 0};
+}
+
+},
+{
+	 name: {
+		 'en-US': 'Master Necromancer',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: 'necromancer',
+	 required_rank: 2,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'master-necromancer',
+	 page: '',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 3,
+	 child: 1,
+
+},
+{
+	 name: {
+		 'en-US': 'Relentless',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'relentless',
+	 page: 'read SW_FA',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+requires: function( characterObject) {
+if( characterObject.displayAttributes.spirit.value >= 8 )
+     return true;
+return false;
+},
 },
 {
 	 name: {

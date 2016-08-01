@@ -1,5 +1,170 @@
 var availableLanguages = [];
 
+baseApp = angular.module(
+	'baseApp',
+	['ngRoute', 'ngResource', 'ngSanitize','pascalprecht.translate'],
+	[
+		'$routeProvider',
+		'$translateProvider',
+		function ($routeProvider, $translateProvider, $scope, $http) {
+
+			users_preferred_language = "en-US";
+			if( localStorage && localStorage["users_preferred_language"] ) {
+				users_preferred_language = localStorage["users_preferred_language"];
+			} else {
+				localStorage["users_preferred_language"] = users_preferred_language;
+			}
+
+			for( lang_count = 0; lang_count < availableLanguages.length; lang_count++) {
+				if( availableLanguages[lang_count].active ) {
+					$translateProvider.translations(
+						availableLanguages[lang_count].short_code ,
+						availableLanguages[lang_count].translations
+					);
+				}
+			}
+
+			$translateProvider.useSanitizeValueStrategy('sanitize');
+
+			$translateProvider.preferredLanguage(users_preferred_language);
+
+			$routeProvider
+
+			// route for the home/welcome page
+			.when('/', {
+				templateUrl : 'pages/welcome.html',
+				controller  : 'welcomeController'
+			})
+
+			// route for the credits page
+			.when('/credits', {
+				templateUrl : 'pages/credits.html',
+				controller  : 'creditsController'
+			})
+
+			// route for the credits page
+			.when('/settings', {
+				templateUrl : 'pages/settings.html',
+				controller  : 'settingsController'
+			})
+
+			// route for the core about page
+			.when('/core/dice', {
+				templateUrl : 'pages/core-dice.html',
+				controller  : 'coreDiceController'
+			})
+
+			// route for the core extras page
+			.when('/core/extras', {
+				templateUrl : 'pages/core-extras.html',
+				controller  : 'coreExtrasController'
+			})
+
+			// route for the core character maker page
+			.when('/core/character-maker-char-info', {
+				templateUrl : 'pages/core-character-maker-char-info.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-char-info'
+			})
+
+			// route for the core character maker page traits
+			.when('/core/character-maker-traits', {
+				templateUrl : 'pages/core-character-maker-traits.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-traits'
+			})
+
+			// route for the core character maker page skills
+			.when('/core/character-maker-skills', {
+				templateUrl : 'pages/core-character-maker-skills.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-skills'
+			})
+
+			// route for the core character maker page edges and hindrances
+			.when('/core/character-maker-hindrances-and-edges', {
+				templateUrl : 'pages/core-character-maker-hindrances-and-edges.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-hindrances-and-edges'
+			})
+
+			// route for the core character maker gear page
+			.when('/core/character-maker-gear', {
+				templateUrl : 'pages/core-character-maker-gear.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-gear'
+			})
+
+			// route for the core character maker powers page
+			.when('/core/character-maker-powers', {
+				templateUrl : 'pages/core-character-maker-powers.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-powers'
+			})
+
+			// route for the core character maker advancements page
+			.when('/core/character-maker-advancements', {
+				templateUrl : 'pages/core-character-maker-advancements.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-advancements'
+			})
+
+			// route for the core mass batles page
+			.when('/core/mass-battles', {
+				templateUrl : 'pages/core-mass-battles.html',
+				controller  : 'coreMassbattlesController'
+			})
+
+			// route for the core mass bartles page
+			.when('/core/raise-calculator', {
+				templateUrl : 'pages/core-raise-calculator.html',
+				controller  : 'coreRaiseCalcController'
+			})
+
+			// route for the scifi power armor maker page
+			.when('/scifi/power-armor-maker', {
+				templateUrl : 'pages/scifi-power-armor-maker.html',
+				controller  : 'scifiPowerarmorController'
+			})
+
+			// route for the scifi robot maker page
+			.when('/scifi/robot-maker', {
+				templateUrl : 'pages/scifi-robot-maker.html',
+				controller  : 'scifiRobotController'
+			})
+
+			// route for the scifi starship maker page
+			.when('/scifi/starship-maker', {
+				templateUrl : 'pages/scifi-starship-maker.html',
+				controller  : 'scifiStarshipController'
+			})
+
+			// route for the scifi vehicle page
+			.when('/scifi/vehicle-maker', {
+				templateUrl : 'pages/scifi-vehicle-maker.html',
+				controller  : 'scifiVehicleController'
+			})
+
+			// route for the scifi walker maker page
+			.when('/scifi/walker-maker', {
+				templateUrl : 'pages/scifi-walker-maker.html',
+				controller  : 'scifiWalkerController'
+			})
+
+			// route for the scifi world maker page
+			.when('/scifi/world-maker', {
+				templateUrl : 'pages/scifi-world-maker.html',
+				controller  : 'scifiWorldController'
+			})
+
+			;
+		}
+	]
+);
+
+
+var availableLanguages = [];
+
 cordovaApp = angular.module(
 	'cordovaApp',
 	['ngCordova', 'ngRoute', 'ngResource', 'ngSanitize','pascalprecht.translate'],
@@ -1978,6 +2143,8 @@ savageCharacter.prototype.init = function(useLang){
 	this.multipleLanguages = false;
 	this.usesStrain = false;
 
+	this.powerAlterations = Array();
+
 	this.spcExtraPowerPoints = 0;
 
 	this.knownLanguages = Array();
@@ -2554,6 +2721,17 @@ savageCharacter.prototype.refreshAvailable = function( ) {
 
 }
 
+savageCharacter.prototype.getArcaneSkill = function() {
+	for(var skillCounter = 0; skillCounter < this.skillList.length; skillCounter++ ) {
+		if(  this.skillList[skillCounter].for_arcane ) {
+			if( this.hasArcane( this.skillList[skillCounter].for_arcane )) {
+				return this.skillList[skillCounter];
+			}
+		}
+	}
+	return null;
+}
+
 savageCharacter.prototype.setGender = function( genderID ) {
 	for(var gc = 0; gc < this.genderOptions.length; gc++) {
 		if( genderID == this.genderOptions[gc].id ) {
@@ -2729,6 +2907,7 @@ savageCharacter.prototype.validate = function() {
 	this.isValid = true;
 	this.validationReport = Array();
 	this.warningReport = Array();
+	this.powerAlterations = Array();
 	this.skillPointsAvailable = 15;
 	this.skillPointsUsed = 0;
 
@@ -3088,10 +3267,33 @@ savageCharacter.prototype.validate = function() {
 
 		for( var abCounter = 0 ; abCounter < savageWorldsPowers.length ; abCounter++) {
 
-			if( savageWorldsPowers[abCounter].rank <= this.XP.rankValue  )
-				 savageWorldsPowers[abCounter].selectable = true;
-			else
-				 savageWorldsPowers[abCounter].selectable = false;
+			if(
+				this.powerAlterations.length > 0
+				&&
+				typeof(this.powerAlterations[ savageWorldsPowers[abCounter].id ]) != "undefined"
+			) {
+
+				if( typeof(this.powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank) != "undefined" ) {
+					console.log("!", this.powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank, this.XP.rankValue);
+					if( this.powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank <= this.XP.rankValue  )
+						 savageWorldsPowers[abCounter].selectable = true;
+					else
+						 savageWorldsPowers[abCounter].selectable = false;
+				} else {
+					if( savageWorldsPowers[abCounter].rank <= this.XP.rankValue  )
+						 savageWorldsPowers[abCounter].selectable = true;
+					else
+						 savageWorldsPowers[abCounter].selectable = false;
+				}
+				console.log("this.powerAlterations", this.powerAlterations[ savageWorldsPowers[abCounter].id ]);
+				console.log("savageWorldsPowers[abCounter]", abCounter, savageWorldsPowers[abCounter]);
+			} else {
+
+				if( savageWorldsPowers[abCounter].rank <= this.XP.rankValue  )
+					 savageWorldsPowers[abCounter].selectable = true;
+				else
+					 savageWorldsPowers[abCounter].selectable = false;
+			}
 
 			if( this.selectedArcaneBackground && this.selectedArcaneBackground.power_list && this.selectedArcaneBackground.power_list.length > 0 ) {
 				if( this.selectedArcaneBackground.power_list.indexOf( savageWorldsPowers[abCounter].tag ) < 0 ) {
@@ -4376,8 +4578,18 @@ savageCharacter.prototype.bookInUse = function( bookID ) {
 }
 
 savageCharacter.prototype.hasArcane = function( arcaneTag ) {
-	if( this.selectedArcaneBackground && this.selectedArcaneBackground.tag == arcaneTag)
-		return true;
+	if( typeof( arcaneTag ) == "string") {
+		if( this.selectedArcaneBackground && this.selectedArcaneBackground.tag == arcaneTag)
+			return true;
+	} else {
+		// for possible future use.
+		if( typeof( arcaneTag ) == "array") {
+			for(var atc = 0; atc > arcaneTag.length; atc++ ) {
+				if( this.selectedArcaneBackground && this.selectedArcaneBackground.tag == arcaneTag[atc])
+					return true;
+			}
+		}
+	}
 	return false;
 }
 
@@ -11431,6 +11643,29 @@ requires: function( characterObject) {
 },
 {
 	 name: {
+		 'en-US': 'Fanaticism',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: 'command',
+	 required_rank: 1,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'fanaticism',
+	 page: 'p5',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 3,
+	 child: 1,
+requires: function( characterObject) {
+persuasionSkill = characterObject.getSkill("SKILL_PERSUASION");
+if( persuasionSkill.value >= 8)
+     return true;
+return false;
+},
+},
+{
+	 name: {
 		 'en-US': 'Common Bond',
 	},
 	 required_edge: '',
@@ -13592,6 +13827,112 @@ characterObject.addRacialSkill("SKILL_FAITH", 2);
 },
 {
 	 name: {
+		 'en-US': 'Exorcist',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'exorcist',
+	 page: 'p5',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+requires: function( characterObject)  {
+faithSkill = characterObject.getSkill("SKILL_FAITH");
+
+if( !characterObject.hasArcane( "miracles" ) ) 
+     return false;
+if( !faithSkill )
+     return false;
+if( characterObject.displayAttributes.spirit.value < 8 )
+     return false;
+if( faithSkill.value < 3 )  // functional value of d8
+     return false;
+return true;
+},
+},
+{
+	 name: {
+		 'en-US': 'Necromancer',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'necromancer',
+	 page: 'p6',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+requires: function( characterObject)  {
+arcaneSkill = characterObject.getArcaneSkill();
+
+if( !characterObject.hasArcane( "miracles" )  &&  !characterObject.hasArcane( "magic" )) 
+     return false;
+if( !arcaneSkill)
+     return false;
+if( characterObject.displayAttributes.spirit.value < 8 )
+     return false;
+if( arcaneSkill.value < 3 )  // functional value of d8
+     return false;
+return true;
+},
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+//48 is the ID for the Zombie power
+charObject.powerAlterations[48] = {"adjusted_rank": 0};
+}
+
+},
+{
+	 name: {
+		 'en-US': 'Master Necromancer',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: 'necromancer',
+	 required_rank: 2,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'master-necromancer',
+	 page: '',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 3,
+	 child: 1,
+
+},
+{
+	 name: {
+		 'en-US': 'Relentless',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'relentless',
+	 page: 'read SW_FA',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+requires: function( characterObject) {
+if( characterObject.displayAttributes.spirit.value >= 8 )
+     return true;
+return false;
+},
+},
+{
+	 name: {
 		 'en-US': 'The Best There Is',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -14632,6 +14973,230 @@ charEffects: function (charObject) {
 			charObject.skill_points = 10;
 			charObject.bennies_total += 1;
 		}
+},
+{
+	 name: {
+		 'en-US': ' Doubting Thomas',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: '-doubting-thomas',
+	 page: 'p4',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 0,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Angst',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'angst-major',
+	 page: 'p3',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 0,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Bleeder',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'bleeder-major',
+	 page: 'p3',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 0,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Bullet Magnet',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'bullet-magnet-major',
+	 page: 'p4',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 0,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Combat Shock',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'combat-shock-major',
+	 page: 'p4',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 0,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Combat Shock',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'combat-shock-minor',
+	 page: 'p4',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'minor',
+	 racial: 0,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Cursed',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'cursed-major',
+	 page: 'p4',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 0,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Jumpy',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'jumpy-minor',
+	 page: 'p4',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'minor',
+	 racial: 0,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Screamer',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'screamer-minor',
+	 page: 'p4',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'minor',
+	 racial: 0,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Slow',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'slow-major',
+	 page: 'p5',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 0,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Touched',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'touched-major',
+	 page: 'p5',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 0,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Touched',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'touched-minor',
+	 page: 'p5',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'minor',
+	 racial: 0,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Victim',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'victim-major',
+	 page: 'p5',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 0,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Victim',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'victim-minor',
+	 page: 'p5',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'minor',
+	 racial: 0,
+	 specify: 0,
+	 book: 3,
+
 },
 {
 	 name: {
@@ -28028,6 +28593,567 @@ The entries in this file are from Savage Worlds Role Playing Game and are owned 
 DEVELOPERS: Do Not Edit or Pull Request this file, it is auto generated from a rudimentary admin area!
 */
 
+var savageWorldsGearWeapons = Array(
+{
+	 name: {
+		 'en-US': 'Axe',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'axe',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 4,
+		 'range': '0',
+		 'damage': 'd6',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 0,
+		 'cost': 200,
+		 'ammo_item': 0,
+		 'weight': 2,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Battle Axe',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'battle-axe',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 4,
+		 'range': '0',
+		 'damage': 'd8',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 8,
+		 'rof': 0,
+		 'cost': 300,
+		 'ammo_item': 0,
+		 'weight': 10,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Dagger',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'dagger',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 3,
+		 'range': '0',
+		 'damage': 'd4',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 0,
+		 'cost': 25,
+		 'ammo_item': 0,
+		 'weight': 1,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Flail',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Ignores Shield Parry and Cover bonus',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'flail',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 3,
+		 'range': '0',
+		 'damage': 'd6',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 0,
+		 'cost': 200,
+		 'ammo_item': 0,
+		 'weight': 8,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Great Axe',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 1, Parry -1, 2 hands',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'great-axe',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 3,
+		 'range': '0',
+		 'damage': 'd10',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'ap': 1,
+		 'requires_2_hands': 1,
+		 'parry_modifier': -1,
+		 'min_str': 0,
+		 'rof': 0,
+		 'cost': 500,
+		 'ammo_item': 0,
+		 'weight': 15,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Great Sword',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Parry -1, 2 Hands',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'great-sword',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 3,
+		 'range': '0',
+		 'damage': 'd10',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': -1,
+		 'min_str': 0,
+		 'rof': 0,
+		 'cost': 400,
+		 'ammo_item': 0,
+		 'weight': 12,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Halberd',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'halberd',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 5,
+		 'range': '0',
+		 'damage': 'd8',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 8,
+		 'rof': 0,
+		 'cost': 250,
+		 'ammo_item': 0,
+		 'weight': 15,
+		 'reach': 1
+},
+{
+	 name: {
+		 'en-US': 'Katana',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'katana',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 3,
+		 'range': '0',
+		 'damage': 'd6+2',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 2,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 0,
+		 'cost': 1000,
+		 'ammo_item': 0,
+		 'weight': 6,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Lance',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'mounted combat only, AP 2 when charging',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'lance',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 5,
+		 'range': '0',
+		 'damage': 'd8',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 2,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 8,
+		 'rof': 0,
+		 'cost': 300,
+		 'ammo_item': 0,
+		 'weight': 10,
+		 'reach': 2
+},
+{
+	 name: {
+		 'en-US': 'Long Sword',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Includes Scimitars',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'long-sword',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 3,
+		 'range': '0',
+		 'damage': 'd8',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 8,
+		 'rof': 0,
+		 'cost': 300,
+		 'ammo_item': 0,
+		 'weight': 8,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Maul',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'maul',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 4,
+		 'range': '0',
+		 'damage': 'd8',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 1,
+		 'requires_2_hands': 1,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': -1,
+		 'min_str': 8,
+		 'rof': 0,
+		 'cost': 200,
+		 'ammo_item': 0,
+		 'weight': 20,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Pike',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'pike',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 5,
+		 'range': '0',
+		 'damage': 'd8',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 8,
+		 'rof': 0,
+		 'cost': 400,
+		 'ammo_item': 0,
+		 'weight': 25,
+		 'reach': 2
+},
+{
+	 name: {
+		 'en-US': 'Rapier',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'rapier',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 3,
+		 'range': '0',
+		 'damage': 'd4',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 1,
+		 'min_str': 0,
+		 'rof': 0,
+		 'cost': 150,
+		 'ammo_item': 0,
+		 'weight': 3,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Short Sword',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Includes Calvary Sabers',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'short-sword',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 3,
+		 'range': '0',
+		 'damage': 'd6',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 0,
+		 'cost': 200,
+		 'ammo_item': 0,
+		 'weight': 4,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Spear',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'spear',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 5,
+		 'range': '0',
+		 'damage': 'd6',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 1,
+		 'min_str': 6,
+		 'rof': 0,
+		 'cost': 10,
+		 'ammo_item': 0,
+		 'weight': 5,
+		 'reach': 1
+},
+{
+	 name: {
+		 'en-US': 'Staff',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'staff',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 5,
+		 'range': '0',
+		 'damage': 'd4',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 1,
+		 'min_str': 0,
+		 'rof': 0,
+		 'cost': 10,
+		 'ammo_item': 0,
+		 'weight': 8,
+		 'reach': 1
+},
+{
+	 name: {
+		 'en-US': 'Warhammer',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'warhammer',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 4,
+		 'range': '0',
+		 'damage': 'd6',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 1,
+		 'requires_2_hands': 0,
+		 'ap': 1,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 0,
+		 'cost': 250,
+		 'ammo_item': 0,
+		 'weight': 8,
+		 'reach': 0
+}
+);
+
+
+/*
+
+Data here is NOT Licensed under the Creative Commons and is owned by Pinnacle Entertainment Group.
+
+This product references the Savage Worlds game system, available from Pinnacle Entertainment Group at www.peginc.com.
+Savage Worlds and all associated logos and trademarks are copyrights of Pinnacle Entertainment Group. Used with permission.
+Pinnacle makes no representation or warranty as to the quality, viability, or suitability for purpose of this product.
+
+The entries in this file are from Savage Worlds Role Playing Game and are owned by Pinnacle Entertainment Group.
+
+DEVELOPERS: Do Not Edit or Pull Request this file, it is auto generated from a rudimentary admin area!
+*/
+
 var savageWorldsGearHandWeapons = Array(
 {
 	 name: {
@@ -31586,6 +32712,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 1,
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p125',
@@ -31607,6 +32734,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 2,
 		 'rank': 2,
 		 'book': 1,
 		 'page': 'p125',
@@ -31628,6 +32756,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 3,
 		 'rank': 1,
 		 'book': 1,
 		 'page': 'p125',
@@ -31649,6 +32778,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 4,
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p126',
@@ -31673,6 +32803,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 5,
 		 'rank': 1,
 		 'book': 1,
 		 'page': 'p126',
@@ -31697,6 +32828,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 6,
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p126',
@@ -31721,6 +32853,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 7,
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p126',
@@ -31745,6 +32878,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 8,
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p127',
@@ -31769,6 +32903,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 9,
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p127',
@@ -31793,6 +32928,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 10,
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p127',
@@ -31817,6 +32953,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 11,
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p128',
@@ -31841,6 +32978,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 12,
 		 'rank': 1,
 		 'book': 1,
 		 'page': 'p128',
@@ -31865,6 +33003,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 13,
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p128',
@@ -31889,6 +33028,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 14,
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p128',
@@ -31913,6 +33053,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 15,
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p128',
@@ -31937,6 +33078,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '10 minutes (1/10 minutes)',
 		 'de-DE': '',
 	},
+		 'id': 16,
 		 'rank': 1,
 		 'book': 1,
 		 'page': 'p129',
@@ -31961,6 +33103,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 17,
 		 'rank': 1,
 		 'book': 1,
 		 'page': 'p129',
@@ -31985,6 +33128,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 18,
 		 'rank': 3,
 		 'book': 1,
 		 'page': 'p129',
@@ -32009,6 +33153,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 19,
 		 'rank': 3,
 		 'book': 1,
 		 'page': 'p130',
@@ -32033,6 +33178,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 20,
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p130',
@@ -32057,6 +33203,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 21,
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p130',
@@ -32081,6 +33228,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 22,
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p130',
@@ -32105,6 +33253,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 23,
 		 'rank': 1,
 		 'book': 1,
 		 'page': 'p131',
@@ -32129,6 +33278,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 24,
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p131',
@@ -32153,6 +33303,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 25,
 		 'rank': 2,
 		 'book': 1,
 		 'page': 'p131',
@@ -32177,6 +33328,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 26,
 		 'rank': 2,
 		 'book': 1,
 		 'page': 'p131',
@@ -32201,6 +33353,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 27,
 		 'rank': 1,
 		 'book': 1,
 		 'page': 'p132',
@@ -32225,6 +33378,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 28,
 		 'rank': 1,
 		 'book': 1,
 		 'page': 'p132',
@@ -32249,6 +33403,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 29,
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p133',
@@ -32273,6 +33428,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 30,
 		 'rank': 3,
 		 'book': 1,
 		 'page': 'p133',
@@ -32297,6 +33453,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 31,
 		 'rank': 1,
 		 'book': 1,
 		 'page': 'p133',
@@ -32321,6 +33478,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 32,
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p133',
@@ -32345,6 +33503,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 33,
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p133',
@@ -32369,6 +33528,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 34,
 		 'rank': 1,
 		 'book': 1,
 		 'page': 'p134',
@@ -32393,6 +33553,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 35,
 		 'rank': 2,
 		 'book': 1,
 		 'page': 'p134',
@@ -32417,6 +33578,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 36,
 		 'rank': 1,
 		 'book': 1,
 		 'page': 'p134',
@@ -32441,6 +33603,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 37,
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p134',
@@ -32465,6 +33628,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 38,
 		 'rank': 1,
 		 'book': 1,
 		 'page': 'p135',
@@ -32489,6 +33653,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 39,
 		 'rank': 1,
 		 'book': 1,
 		 'page': 'p135',
@@ -32513,6 +33678,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 40,
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p135',
@@ -32537,6 +33703,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 41,
 		 'rank': 0,
 		 'book': 1,
 		 'page': '136',
@@ -32561,6 +33728,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 42,
 		 'rank': 0,
 		 'book': 1,
 		 'page': '136',
@@ -32585,6 +33753,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 43,
 		 'rank': 0,
 		 'book': 1,
 		 'page': '136',
@@ -32609,6 +33778,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 44,
 		 'rank': 0,
 		 'book': 1,
 		 'page': '137',
@@ -32633,6 +33803,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 45,
 		 'rank': 1,
 		 'book': 1,
 		 'page': '137',
@@ -32657,6 +33828,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 46,
 		 'rank': 0,
 		 'book': 1,
 		 'page': 'p138',
@@ -32681,6 +33853,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 47,
 		 'rank': 1,
 		 'book': 1,
 		 'page': '139',
@@ -32705,6 +33878,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 48,
 		 'rank': 2,
 		 'book': 1,
 		 'page': 'p140',
@@ -32729,6 +33903,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 49,
 		 'rank': 0,
 		 'book': 2,
 		 'page': 'p28',
@@ -32753,6 +33928,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 50,
 		 'rank': 1,
 		 'book': 2,
 		 'page': 'p30',
@@ -32777,6 +33953,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 51,
 		 'rank': 1,
 		 'book': 2,
 		 'page': 'p32',
@@ -32801,6 +33978,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 52,
 		 'rank': 1,
 		 'book': 2,
 		 'page': 'p35',
@@ -32825,6 +34003,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 53,
 		 'rank': 0,
 		 'book': 2,
 		 'page': 'p39',
@@ -32849,6 +34028,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 54,
 		 'rank': 0,
 		 'book': 2,
 		 'page': 'p39',
@@ -32873,6 +34053,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 55,
 		 'rank': 0,
 		 'book': 2,
 		 'page': 'p42',
@@ -32897,6 +34078,7 @@ var savageWorldsPowers = Array(
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
+		 'id': 56,
 		 'rank': 1,
 		 'book': 2,
 		 'page': 'p44',
