@@ -3,7 +3,7 @@ availableLanguages.push ({
 	native_name: "Brasileiro",
 	icon_file: "BR.png",
 	short_code: "pt-BR",
-	active: true,
+	active: false,
 
 	translations: {
 

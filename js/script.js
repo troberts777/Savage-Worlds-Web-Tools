@@ -32303,7 +32303,7 @@ availableLanguages.push ({
 	native_name: "Deutsch",
 	icon_file: "DE.png",
 	short_code: "de-DE",
-	active: true,
+	active: false,
 
 	translations: {
 
@@ -32678,7 +32678,7 @@ availableLanguages.push ({
 	native_name: "Brasileiro",
 	icon_file: "BR.png",
 	short_code: "pt-BR",
-	active: true,
+	active: false,
 
 	translations: {
 

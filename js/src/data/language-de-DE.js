@@ -3,7 +3,7 @@ availableLanguages.push ({
 	native_name: "Deutsch",
 	icon_file: "DE.png",
 	short_code: "de-DE",
-	active: true,
+	active: false,
 
 	translations: {
 
