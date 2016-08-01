@@ -56,6 +56,8 @@ savageCharacter.prototype.init = function(useLang){
 
 	this.powerAlterations = Array();
 
+	this.characterJournal = Array();
+
 	this.spcExtraPowerPoints = 0;
 
 	this.knownLanguages = Array();

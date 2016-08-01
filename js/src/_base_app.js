@@ -102,6 +102,13 @@ baseApp = angular.module(
 				activetab: 'chargen-powers'
 			})
 
+			// route for the core character maker cyberware page
+			.when('/core/character-maker-cyberware', {
+				templateUrl : 'pages/core-character-maker-cyberware.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-cyberware'
+			})
+
 			// route for the core character maker advancements page
 			.when('/core/character-maker-advancements', {
 				templateUrl : 'pages/core-character-maker-advancements.html',
