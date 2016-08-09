@@ -13773,6 +13773,24 @@ return true;
 },
 {
 	 name: {
+		 'en-US': 'Affect the Physical World',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'phantom-Affect-Physical-World',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+
+},
+{
+	 name: {
 		 'en-US': 'Armor of the Lord',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -13790,6 +13808,60 @@ return true;
 				charEffect: function( characterObject) {
 					characterObject.derived.toughness += 4;
 				}
+},
+{
+	 name: {
+		 'en-US': 'Bite',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'werewolf-bite',
+	 page: 'p11',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Claws',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'vampire-claws',
+	 page: 'p11',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Claws',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'werewolf-claws',
+	 page: 'p11',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+
 },
 {
 	 name: {
@@ -13813,6 +13885,24 @@ charObject.boostAttribute("strength",4);
 },
 {
 	 name: {
+		 'en-US': 'Ethereal',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'phantom-ethereal',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+
+},
+{
+	 name: {
 		 'en-US': 'Faith',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -13833,6 +13923,24 @@ characterObject.addRacialSkill("SKILL_FAITH", 2);
 },
 {
 	 name: {
+		 'en-US': 'Fear -2',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'werewolf-fear',
+	 page: 'p11',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+
+},
+{
+	 name: {
 		 'en-US': 'Healing',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -13848,6 +13956,255 @@ characterObject.addRacialSkill("SKILL_FAITH", 2);
 	 book: 3,
 	 child: 0,
 
+},
+{
+	 name: {
+		 'en-US': 'Immunity',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'demon-immunity',
+	 page: 'p9',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Infernal Stamina',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'demon-infernal-stamina',
+	 page: 'p9',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Infravision',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'werewolf-infravision',
+	 page: 'p11',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Invisible',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'phantom-invisible',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Invulnerability',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'werewolf-Invulnerability',
+	 page: 'p11',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Parts',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'patchwork-man-parts',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Resistant to Normal Weapons',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'demon-resistant-to-normal-weapons',
+	 page: 'p9',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Sense Vampire',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'dhampyr-sense-vampire',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Sire\'s Strength',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'dhampyr-sires-strength',
+	 page: 'dhampyr-si',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+charEffect: function( charObject ) {
+charObject.boostAttribute("strength");
+}
+},
+{
+	 name: {
+		 'en-US': 'Strength of the Damned',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'vampire-strength-of-the-damned',
+	 page: 'p11',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.boostAttribute("strength",2);
+charObject.boostAttribute("vigor",2);
+}
+},
+{
+	 name: {
+		 'en-US': 'Undead',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'patchwork-man-undead',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.derived.toughness = charObject.derived.toughness + 2;
+}
+},
+{
+	 name: {
+		 'en-US': 'Undead',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'vampire-undead',
+	 page: 'p11',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.derived.toughness = charObject.derived.toughness + 2;
+}
+},
+{
+	 name: {
+		 'en-US': 'Undead',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'zombie-undead',
+	 page: 'p11',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.derived.toughness = charObject.derived.toughness + 2;
+}
 },
 {
 	 name: {
@@ -13877,6 +14234,50 @@ if( characterObject.displayAttributes.spirit.value < 8 )
 if( faithSkill.value < 3 )  // functional value of d8
      return false;
 return true;
+},
+},
+{
+	 name: {
+		 'en-US': 'Hardened',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 1,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'hardened',
+	 page: 'p6',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+requires: function( characterObject) {
+if( characterObject.displayAttributes.spirit.value >= 8 )
+     return true;
+return false;
+},
+},
+{
+	 name: {
+		 'en-US': 'Monster Hunter',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 1,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'monster-hunter',
+	 page: 'p6',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+requires: function( characterObject) {
+if( characterObject.displayAttributes.spirit.value >= 6 )
+     return true;
+return false;
 },
 },
 {
@@ -13935,7 +14336,7 @@ charObject.powerAlterations[48] = {"adjusted_rank": 0};
 },
 {
 	 name: {
-		 'en-US': 'Relentless',
+		 'en-US': 'Occultist',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -13943,8 +14344,42 @@ charObject.powerAlterations[48] = {"adjusted_rank": 0};
 	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
-	 tag: 'relentless',
-	 page: 'read SW_FA',
+	 tag: 'occultist',
+	 page: 'p7',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+requires: function( characterObject)  {
+investigationSkill = characterObject.getSkill("SKILL_INVESTIGATION");
+occultSkill = characterObject.getSkill("SKILL_KNOWLEDGE","Occult");
+
+if( characterObject.displayAttributes.smarts.value < 8 )
+     return false;
+if( !investigationSkill)
+     return false;
+if( investigationSkill.value < 3 )  // functional value of d8
+     return false;
+if( !occultSkill)
+     return false;
+if( occultSkill.value < 3 )  // functional value of d8
+     return false;
+return true;
+},
+
+},
+{
+	 name: {
+		 'en-US': 'One of the Chosen',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'one-of-the-chosen',
+	 page: 'p7',
 	 racial: 0,
 	 reselectable: 0,
 	 book: 3,
@@ -13954,6 +14389,132 @@ if( characterObject.displayAttributes.spirit.value >= 8 )
      return true;
 return false;
 },
+},
+{
+	 name: {
+		 'en-US': 'Relentless',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'relentless',
+	 page: 'read FAQ',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+requires: function( characterObject) {
+if( characterObject.displayAttributes.spirit.value >= 8 )
+     return true;
+return false;
+},
+},
+{
+	 name: {
+		 'en-US': 'Sound Mind',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sound-mind',
+	 page: 'p6',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+requires: function( characterObject) {
+if( characterObject.displayAttributes.spirit.value >= 6 )
+     return true;
+return false;
+},
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.derived.sanity = charObject.derived.sanity + 2;
+}
+},
+{
+	 name: {
+		 'en-US': 'Talisman Craftsman',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'talisman-craftsman',
+	 page: 'p6',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+requires: function( characterObject)  {
+arcaneSkill = characterObject.getArcaneSkill();
+occultSkill = characterObject.getSkill("SKILL_KNOWLEDGE","Occult");
+
+if( !characterObject.hasArcane( "miracles" )  &&  !characterObject.hasArcane( "magic" )) 
+     return false;
+if( !arcaneSkill)
+     return false;
+if( characterObject.displayAttributes.spirit.value < 8 )
+     return false;
+if( arcaneSkill.value < 3 )  // functional value of d8
+     return false;
+if( !occultSkill)
+     return false;
+if( occultSkill.value < 3 )  // functional value of d8
+     return false;
+return true;
+},
+
+},
+{
+	 name: {
+		 'en-US': 'Tower of Will',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'tower-of-will',
+	 page: 'p6',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+requires: function( characterObject) {
+if( characterObject.displayAttributes.spirit.value < 8 )
+     return false;
+if( characterObject.displayAttributes.vigor.value < 8 )
+     return false;
+return true;
+},
+},
+{
+	 name: {
+		 'en-US': 'Visions',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'visions',
+	 page: 'p7',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 3,
+	 child: 0,
+
 },
 {
 	 name: {
@@ -15112,6 +15673,86 @@ charEffects: function (charObject) {
 },
 {
 	 name: {
+		 'en-US': 'Death\'s Haze',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'patchwork-man-deaths-haze',
+	 page: 'p10',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: '-',
+	 racial: 1,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Feast of Flesh',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'zombie-feast-of-flesh',
+	 page: 'p10',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: '-',
+	 racial: 1,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Feed',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'vampire-feed',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: '-',
+	 racial: 1,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Full Moon Madness',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'werewolf-full-moon-madness',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: '-',
+	 racial: 1,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Infection',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'werewolf-infection',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: '-',
+	 racial: 1,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
 		 'en-US': 'Jumpy',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -15122,6 +15763,22 @@ charEffects: function (charObject) {
 	 conflicts_hindrance: '',
 	 severity: 'minor',
 	 racial: 0,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Rage',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'patchwork-man-rage',
+	 page: 'p10',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: '-',
+	 racial: 1,
 	 specify: 0,
 	 book: 3,
 
@@ -15230,6 +15887,150 @@ charEffects: function (charObject) {
 	},
 	 tag: 'angel-warriors-of-heaven',
 	 page: '',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: '-',
+	 racial: 1,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Weakness (Cold Iron)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'demon-weakness-cold-iron',
+	 page: 'p9',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: '-',
+	 racial: 1,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Weakness (Electricity)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'patchwork-man-weakness-electricity',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: '-',
+	 racial: 1,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Weakness (Garlic)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'vampire-weakness-garlic',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: '-',
+	 racial: 1,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Weakness (Salt)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'phantom-weakness-salt',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: '-',
+	 racial: 1,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Weakness (Silver)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'werewolf-weakness-silver',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: '-',
+	 racial: 1,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Weakness (Sunlight)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'dhampyrs-weakness-sunlight',
+	 page: 'p10',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: '-',
+	 racial: 1,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Weakness (Sunlight)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'vampire-weakness-sunlight',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: '-',
+	 racial: 1,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Weakness (Unwelcome Guest)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'vampire-weakness-unwelcome-guest',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: '-',
+	 racial: 1,
+	 specify: 0,
+	 book: 3,
+
+},
+{
+	 name: {
+		 'en-US': 'Weakness (Wood)',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: 'vampire-weakness-wood',
+	 page: 'p11',
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 severity: '-',
@@ -15422,6 +16223,97 @@ savageWorldsRaces = Array(
 	 book: 3,
 	 edges: '["angel-flight","angel-armor-of-the-lord","angel-divine-strength","angel-faith","angel-healing"]',
 	 hindrances: '["angel-warriors-of-heaven"]',
+},
+{
+	 id: 14,
+	 name: {
+		 'en-US': 'Demon',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: '',
+	 page: 'p9',
+	 book: 3,
+	 edges: '["demon-immunity","demon-infernal-stamina","demon-resistant-to-normal-weapons"]',
+	 hindrances: '["demon-weakness-cold-iron"]',
+},
+{
+	 id: 15,
+	 name: {
+		 'en-US': 'Dhampyr',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: '',
+	 page: 'p10',
+	 book: 3,
+	 edges: '["dhampyr-sense-vampire","dhampyr-sires-strength"]',
+	 hindrances: '["dhampyrs-weakness-sunlight"]',
+},
+{
+	 id: 19,
+	 name: {
+		 'en-US': 'Patchwork Man',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: '',
+	 page: 'p10',
+	 book: 3,
+	 edges: '["patchwork-man-parts","patchwork-man-undead"]',
+	 hindrances: '["patchwork-man-deaths-haze","patchwork-man-rage","patchwork-man-weakness-electricity"]',
+},
+{
+	 id: 18,
+	 name: {
+		 'en-US': 'Phantom',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: '',
+	 page: 'p11',
+	 book: 3,
+	 edges: '["phantom-Affect-Physical-World","phantom-ethereal","phantom-invisible"]',
+	 hindrances: '["phantom-weakness-salt"]',
+},
+{
+	 id: 16,
+	 name: {
+		 'en-US': 'Vampire',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: '',
+	 page: 'p11',
+	 book: 3,
+	 edges: '["vampire-claws","vampire-strength-of-the-damned","vampire-undead"]',
+	 hindrances: '["vampire-feed","vampire-weakness-garlic","vampire-weakness-sunlight","vampire-weakness-unwelcome-guest","vampire-weakness-wood"]',
+},
+{
+	 id: 20,
+	 name: {
+		 'en-US': 'Werewolf',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: '',
+	 page: 'p10',
+	 book: 3,
+	 edges: '["werewolf-bite","werewolf-claws","werewolf-fear","werewolf-infravision","werewolf-Invulnerability"]',
+	 hindrances: '["werewolf-full-moon-madness","werewolf-infection","werewolf-weakness-silver"]',
+},
+{
+	 id: 17,
+	 name: {
+		 'en-US': 'Zombie',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 tag: '',
+	 page: 'p11',
+	 book: 3,
+	 edges: '["zombie-undead"]',
+	 hindrances: '["zombie-feast-of-flesh"]',
 }
 );
 

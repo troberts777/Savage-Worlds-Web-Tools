@@ -5,25 +5,21 @@ Fantasy Companion:
 	Complete.
 
 Horror Companion:
-	Hindrances: complete
-	Weapons: Complete
-	Mundane: Complete
-	Armor: complete
-	Edges: Up to Master Necromancer complete, rest unentered
-	Races: Angel complete, rest unentered
+	Complete.
 
 SciFi Companion:
+	Races: not entered
 	Edges: not entered
 	Hindrances: not entered
 	Weapons: not entered
 	Armor: not entered
-	Races: not entered
+
 	Creators: complete
 
 Super Powers Companion:
+	Races: not entered
 	Edges: not entered
 	Hindrances: not entered
 	Weapons: not entered
 	Armor: not entered
-	Races: not entered
 	Powers: started, but not entered
