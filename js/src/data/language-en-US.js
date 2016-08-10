@@ -358,7 +358,8 @@ availableLanguages.push ({
 			SPC_CURRENT_PP: 'Current Power Points',
 			SPC_CAMPAIGN_POWER_LEVEL: 'Campaign Power Level',
 			SPC_POWER_LIMIT: 'Power Limit',
-			SPC_SUPER_KARMA_IN_EFFECT: 'Super Karma in effect',
+			SPC_SUPER_KARMA_AVAILABLE: 'Super Karma Available',
+			SPC_SUPER_KARMA_BLURB: 'To take extra power points select a second Major Hindrance then choose \'Extra Power Points\' from above.',
 			SPC_ADDITIONAL_POWER_POINTS_PERK: 'Extra Power Points',
 			GENERAL_ICONIC_FRAMEWORKS: 'Iconic Frameworks',
 

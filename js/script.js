@@ -6520,7 +6520,7 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 			if(
 				currentPerk.spcOnly == true
 					&&
-				$scope.savageCharacter.usesSPCCreation == false
+				$scope.savageCharacter.secondMajorHindranceChosen == false
 			) {
 				return false;
 			} else {
@@ -6925,7 +6925,7 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 				$scope.savageCharacter.addEdge( $scope.addEdgeTag.book, $scope.addEdgeTag.tag);
 				$scope.validateAndSave();
 				$scope.addEdgeTag = $scope.savageCharacter.availableEdges[0];
-				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
+				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
 			}
 
 		}
@@ -6936,7 +6936,7 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 				$scope.validateAndSave();
 
 				$scope.addHindranceTag = $scope.savageCharacter.availableHindrances[0];
-				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
+				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
 			}
 
 
@@ -6946,7 +6946,7 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 			if( edgeTag ) {
 				$scope.savageCharacter.removeEdgeByTag( edgeTag );
 				$scope.validateAndSave();
-				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
+				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
 			}
 		}
 
@@ -6954,7 +6954,7 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 			if( hindranceTag ) {
 				$scope.savageCharacter.removeHindranceByTag( hindranceTag );
 				$scope.validateAndSave();
-				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
+				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
 			}
 		}
 
@@ -33651,7 +33651,8 @@ availableLanguages.push ({
 			SPC_CURRENT_PP: 'Current Power Points',
 			SPC_CAMPAIGN_POWER_LEVEL: 'Campaign Power Level',
 			SPC_POWER_LIMIT: 'Power Limit',
-			SPC_SUPER_KARMA_IN_EFFECT: 'Super Karma in effect',
+			SPC_SUPER_KARMA_AVAILABLE: 'Super Karma Available',
+			SPC_SUPER_KARMA_BLURB: 'To take extra power points select a second Major Hindrance then choose \'Extra Power Points\' from above.',
 			SPC_ADDITIONAL_POWER_POINTS_PERK: 'Extra Power Points',
 			GENERAL_ICONIC_FRAMEWORKS: 'Iconic Frameworks',
 

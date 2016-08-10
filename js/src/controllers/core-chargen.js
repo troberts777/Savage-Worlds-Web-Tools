@@ -96,7 +96,7 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 			if(
 				currentPerk.spcOnly == true
 					&&
-				$scope.savageCharacter.usesSPCCreation == false
+				$scope.savageCharacter.secondMajorHindranceChosen == false
 			) {
 				return false;
 			} else {
@@ -501,7 +501,7 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 				$scope.savageCharacter.addEdge( $scope.addEdgeTag.book, $scope.addEdgeTag.tag);
 				$scope.validateAndSave();
 				$scope.addEdgeTag = $scope.savageCharacter.availableEdges[0];
-				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
+				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
 			}
 
 		}
@@ -512,7 +512,7 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 				$scope.validateAndSave();
 
 				$scope.addHindranceTag = $scope.savageCharacter.availableHindrances[0];
-				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
+				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
 			}
 
 
@@ -522,7 +522,7 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 			if( edgeTag ) {
 				$scope.savageCharacter.removeEdgeByTag( edgeTag );
 				$scope.validateAndSave();
-				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
+				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
 			}
 		}
 
@@ -530,7 +530,7 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 			if( hindranceTag ) {
 				$scope.savageCharacter.removeHindranceByTag( hindranceTag );
 				$scope.validateAndSave();
-				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
+				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
 			}
 		}
 
