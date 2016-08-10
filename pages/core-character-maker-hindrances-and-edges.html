@@ -55,7 +55,16 @@
 								<legend translate="GENERAL_PERKS">Perks</legend>
 								<div ng-show="savageCharacter.availablePerkPoints > 0">
 									<span translate="CHARGEN_PERK_POINTS">Perk Points</span>: <span ng-bind="savageCharacter.availablePerkPoints">X</span>
-									<select ng-model="addPerkTag" ng-options="perk as perk.label disable when perkNotAvailable(perk) for perk in savageCharacter.perkOptions track by perk.tag"></select>
+									<!-- <select ng-model="addPerkTag" ng-options="perk as perk.label disable when perkNotAvailable(perk) for perk in savageCharacter.perkOptions track by perk.tag | filter:perkVisible"></select> -->
+									<select ng-model="addPerkTag.tag">
+										<option ng-selected="{{perk.tag == addPerkTag.tag}}"
+            								ng-repeat="perk in savageCharacter.perkOptions"
+            								value="{{perk.tag}}"
+            								ng-show="perkVisible(perk)"
+            							>
+            							{{perk.label}}
+            							</option>
+            						</select>
 									<button class="button tiny primary expanded" ng-click="addPerk()" translate="CHARGEN_ADD_PERK">Add Perk</button>
 								</div>
 

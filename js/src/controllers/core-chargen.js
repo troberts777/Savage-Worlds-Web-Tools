@@ -92,17 +92,16 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 
 		}
 
-		$scope.perkNotAvailable = function( currentPerk ) {
-			if( currentPerk.cost > $scope.savageCharacter.availablePerkPoints )
+		$scope.perkVisible = function( currentPerk ) {
+			if(
+				currentPerk.spcOnly == true
+					&&
+				$scope.savageCharacter.usesSPCCreation == false
+			) {
+				return false;
+			} else {
 				return true;
-
-			if (currentPerk.spcOnly == false )
-				return false;
-
-			if(currentPerk.spcOnly == true && $scope.savageCharacter.usesSPCCreation > 0 && $scope.savageCharacter.secondMajorHindranceChosen)
-				return false;
-
-			return true;
+			}
 		}
 
 		$scope.updateSettingRule = function( settingTag ) {
