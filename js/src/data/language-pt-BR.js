@@ -3,9 +3,10 @@ availableLanguages.push ({
 	native_name: "Brasileiro",
 	icon_file: "BR.png",
 	short_code: "pt-BR",
-	active: false,
+	active: true,
 
 	translations: {
+			BUTTON_LANG_BR: 'Brasileiro',
 
 	}
 

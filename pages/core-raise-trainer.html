@@ -48,12 +48,15 @@
 				</div>
 				<div ng-show="showResults">
 					<div class="row">
-						<div class="columns small-12 medium-4">
-							<label><span translate="TRAINER_CORRECT_ANSWERS">Correct Answers</span>: <span ng-bind="resultsCorrect"></span></label>
-							<label><span translate="TRAINER_TOTAL_QUESTIONS">Total Questions</span>: <span ng-bind="numberOfQuestions"></span></label>
-							<label><span translate="GENERAL_PERCENTAGE">Percentage</span>: <span ng-bind="resultsPercentage"></span></label>
-							<label><span translate="GENERAL_AVERAGE_ANSWER_TIME">Average Answer Time</span>: <span ng-bind="averageAnswerTime"></span> <span translate="GENERAL_SECONDS">Seconds</span></label>
-							<button type="button" class="button primary" ng-click="startTest()" translate="GENERAL_TRY_AGAIN">Try Again</button>
+						<div class="columns small-12 medium-4 text-left">
+							<label><strong><span translate="TRAINER_CORRECT_ANSWERS">Correct Answers</span></strong>: <span ng-bind="resultsCorrect"></span></label>
+							<label><strong><span translate="TRAINER_TOTAL_QUESTIONS">Total Questions</span></strong>: <span ng-bind="numberOfQuestions"></span></label>
+							<label><strong><span translate="GENERAL_PERCENTAGE">Percentage</span></strong>: <span ng-bind="resultsPercentage"></span></label>
+							<label><strong><span translate="GENERAL_AVERAGE_ANSWER_TIME">Average Answer Time</span></strong>: <span ng-bind="averageAnswerTime"></span> <span translate="GENERAL_SECONDS">Seconds</span></label>
+
+							<label><strong><span translate="GENERAL_TOTAL_COMPLETION_TIME">Total Completion Time</span></strong>: <span ng-bind="totalAnswerTime"></span> <span translate="GENERAL_SECONDS">Seconds</span></label>
+							<br />
+							<button type="button" class="button primary expanded" ng-click="startTest()" translate="GENERAL_TRY_AGAIN">Try Again</button>
 						</div>
 						<div class="columns small-12 medium-8">
 							<table>

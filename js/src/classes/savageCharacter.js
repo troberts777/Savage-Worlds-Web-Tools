@@ -26,6 +26,15 @@ savageCharacter.prototype.calcSPC = function() {
 					this.SPCPowerLimit = this.SPCCurrentPowerPoints;
 			}
 		}
+
+		// for the extra power points perk....
+		if( this.SPCTakenExtraPowerPoints ) {
+			if( this.SPCSelectedPowerLevel == 0 || this.SPCSelectedPowerLevel == 1 ) {
+				this.SPCCurrentPowerPoints += 5;
+			} else {
+				this.SPCCurrentPowerPoints += 10;
+			}
+		}
 	}
 }
 
@@ -112,6 +121,7 @@ savageCharacter.prototype.init = function(useLang){
 	this.usesSPCCreation = false;
 	this.SPCRisingStars = false;
 	this.SPCCurrentPowerPoints = 0;
+	this.SPCTakenExtraPowerPoints = 0;
 	this.SPCPowerLevels = Array();
 	this.SPCSelectedPowerLevel = 0;
 	this.SPCPowerLevels[0] = {
@@ -385,49 +395,6 @@ savageCharacter.prototype.init = function(useLang){
 	);
 
 	this.selectedPerks = Array();
-
-	this.perkOptions = Array(
-		{
-			label: "- " + this.getTranslation("CHARGEN_SELECT_A_PERK") + " -",
-			tag: "null",
-			cost: 0,
-			effect: function() {
-
-			}
-		},
-		{
-			label: this.getTranslation("CHARGEN_PERKS_ATTRIBUTE"),
-			tag: "attribute",
-			cost: 2,
-			effect: function(savageCharObj) {
-				savageCharObj.attributePointsAvailable = savageCharObj.attributePointsAvailable + 1;
-			}
-		},
-		{
-			label: this.getTranslation("CHARGEN_PERKS_EDGE"),
-			tag: "edge",
-			cost: 2,
-			effect: function(savageCharObj) {
-				savageCharObj.availableEdgePoints = savageCharObj.availableEdgePoints + 1;
-			}
-		},
-		{
-			label: this.getTranslation("CHARGEN_PERKS_SKILL"),
-			tag: "skill",
-			cost: 1,
-			effect: function(savageCharObj) {
-				savageCharObj.skillPointsAvailable = savageCharObj.skillPointsAvailable + 1;
-			}
-		},
-		{
-			label: this.getTranslation("CHARGEN_PERKS_FUNDS"),
-			tag: "funds",
-			cost: 1,
-			effect: function(savageCharObj) {
-				savageCharObj.startingFunds = savageCharObj.startingFunds * 2;
-			}
-		}
-	);
 
 	this.skillList = Array();
 	for( skillCounter = 0; skillCounter < savageWorldsSkillList.length; skillCounter++) {
@@ -1057,6 +1024,7 @@ savageCharacter.prototype.validate = function() {
 	var majorPerk = 0;
 	var minorPerk1 = 0;
 	var minorPerk2 = 0;
+	var majorPerk2 = 0;
 	for( var hindranceCounter = 0; hindranceCounter < this.selectedHindrances.length; hindranceCounter++) {
 
 		if( typeof(this.selectedHindrances[hindranceCounter].charEffect) == "function" ) {
@@ -1066,8 +1034,21 @@ savageCharacter.prototype.validate = function() {
 			this.selectedHindrances[hindranceCounter].charEffects( this );
 		}
 		this.installedHindrances.push( this.selectedHindrances[hindranceCounter] );
+		this.secondMajorHindranceChosen = false;
 		if( this.selectedHindrances[hindranceCounter].severity == "major" ) {
-			majorPerk = 2;
+
+			if( this.usesSPCCreation ) {
+				if( majorPerk == 0 ) {
+					majorPerk = 2;
+					majorPerk2 = 0;
+				} else if( majorPerk2 == 0) {
+					majorPerk = 2;
+					majorPerk2 = 2;
+					this.secondMajorHindranceChosen = true;
+				}
+			} else {
+				majorPerk = 2;
+			}
 		}
 
 		if( this.selectedHindrances[hindranceCounter].severity == "minor" ) {
@@ -1078,15 +1059,128 @@ savageCharacter.prototype.validate = function() {
 				minorPerk1 = 1;
 				minorPerk2 = 1;
 			}
-
 		}
 	}
 
 
 
 	// Calculate Perks Available
-	this.totalPerkPoints = majorPerk + minorPerk2 + minorPerk1;
-	this.availablePerkPoints = majorPerk + minorPerk2 + minorPerk1;
+	if( this.usesSPCCreation ) {
+		this.totalPerkPoints = majorPerk + majorPerk2 + minorPerk2 + minorPerk1;
+		this.availablePerkPoints = majorPerk + majorPerk2 +minorPerk2 + minorPerk1;
+		this.optimizedPerkPoints = 6;
+
+		this.perkOptions = Array(
+			{
+				label: "- " + this.getTranslation("CHARGEN_SELECT_A_PERK") + " -",
+				tag: "null",
+				cost: 0,
+				spcOnly: false,
+				effect: function() {
+
+				}
+			},
+			{
+				label: this.getTranslation("CHARGEN_PERKS_ATTRIBUTE"),
+				tag: "attribute",
+				cost: 2,
+				spcOnly: false,
+				effect: function(savageCharObj) {
+					savageCharObj.attributePointsAvailable = savageCharObj.attributePointsAvailable + 1;
+				}
+			},
+			{
+				label: this.getTranslation("CHARGEN_PERKS_EDGE"),
+				tag: "edge",
+				cost: 2,
+				spcOnly: false,
+				effect: function(savageCharObj) {
+					savageCharObj.availableEdgePoints = savageCharObj.availableEdgePoints + 1;
+				}
+			},
+			{
+				label: this.getTranslation("CHARGEN_PERKS_SKILL"),
+				tag: "skill",
+				cost: 1,
+				spcOnly: false,
+				effect: function(savageCharObj) {
+					savageCharObj.skillPointsAvailable = savageCharObj.skillPointsAvailable + 1;
+				}
+			},
+			{
+				label: this.getTranslation("CHARGEN_PERKS_FUNDS"),
+				tag: "funds",
+				cost: 1,
+				spcOnly: false,
+				effect: function(savageCharObj) {
+					savageCharObj.startingFunds = savageCharObj.startingFunds * 2;
+				}
+			},
+			{
+				label: this.getTranslation("SPC_ADDITIONAL_POWER_POINTS_PERK"),
+				tag: "spc-power-points",
+				cost: 2,
+				spcOnly: true,
+				effect: function(savageCharObj) {
+					savageCharObj.SPCTakenExtraPowerPoints = 1;
+				}
+			}
+		);
+
+	}
+	else {
+		this.totalPerkPoints = majorPerk + minorPerk2 + minorPerk1;
+		this.availablePerkPoints = majorPerk + minorPerk2 + minorPerk1;
+		this.optimizedPerkPoints = 4;
+	this.perkOptions = Array(
+			{
+				label: "- " + this.getTranslation("CHARGEN_SELECT_A_PERK") + " -",
+				tag: "null",
+				cost: 0,
+				spcOnly: false,
+				effect: function() {
+
+				}
+			},
+			{
+				label: this.getTranslation("CHARGEN_PERKS_ATTRIBUTE"),
+				tag: "attribute",
+				cost: 2,
+				spcOnly: false,
+				effect: function(savageCharObj) {
+					savageCharObj.attributePointsAvailable = savageCharObj.attributePointsAvailable + 1;
+				}
+			},
+			{
+				label: this.getTranslation("CHARGEN_PERKS_EDGE"),
+				tag: "edge",
+				cost: 2,
+				spcOnly: false,
+				effect: function(savageCharObj) {
+					savageCharObj.availableEdgePoints = savageCharObj.availableEdgePoints + 1;
+				}
+			},
+			{
+				label: this.getTranslation("CHARGEN_PERKS_SKILL"),
+				tag: "skill",
+				cost: 1,
+				spcOnly: false,
+				effect: function(savageCharObj) {
+					savageCharObj.skillPointsAvailable = savageCharObj.skillPointsAvailable + 1;
+				}
+			},
+			{
+				label: this.getTranslation("CHARGEN_PERKS_FUNDS"),
+				tag: "funds",
+				cost: 1,
+				spcOnly: false,
+				effect: function(savageCharObj) {
+					savageCharObj.startingFunds = savageCharObj.startingFunds * 2;
+				}
+			}
+		);
+	}
+
 
 	// Process Selected Perks
 	for( var perkCounter = 0; perkCounter < this.selectedPerks.length; perkCounter++) {

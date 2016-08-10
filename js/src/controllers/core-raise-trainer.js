@@ -55,6 +55,7 @@ var raiseTrainerArray = 	[
 		$scope.calculateResults = function() {
 			correctCount = 0;
 			$scope.averageAnswerTime = 0;
+			$scope.totalAnswerTime = 0;
 			for(var testCount = 0; testCount < $scope.testQuestions.length; testCount++) {
 				if(
 					$scope.testQuestions[testCount].correct
@@ -69,8 +70,11 @@ var raiseTrainerArray = 	[
 					$scope.testQuestions[testCount].answerTime = $scope.testQuestions[testCount].time - $scope.testQuestions[testCount - 1].time;
 				}
 				$scope.averageAnswerTime += $scope.testQuestions[testCount].answerTime;
+				$scope.totalAnswerTime += $scope.testQuestions[testCount].answerTime;
+
 				$scope.testQuestions[testCount].answerTime = ($scope.testQuestions[testCount].answerTime / 1000 ).toFixed(3);
 			}
+			$scope.totalAnswerTime = ($scope.totalAnswerTime / 1000 ).toFixed(3)
 			$scope.averageAnswerTime = $scope.averageAnswerTime / $scope.testQuestions.length;
 			$scope.averageAnswerTime = ($scope.averageAnswerTime / 1000 ).toFixed(3);
 			$scope.resultsCorrect = correctCount;

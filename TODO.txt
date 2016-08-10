@@ -8,13 +8,16 @@ Horror Companion:
 	Complete.
 
 SciFi Companion:
+	Creators: complete
+
 	Races: not entered
 	Edges: not entered
 	Hindrances: not entered
 	Weapons: not entered
 	Armor: not entered
+	Cyberware: needs to be coded
+	Robot Creator: needs to be coded
 
-	Creators: complete
 
 Super Powers Companion:
 	Races: not entered
@@ -22,4 +25,5 @@ Super Powers Companion:
 	Hindrances: not entered
 	Weapons: not entered
 	Armor: not entered
-	Powers: started, but not entered
+
+	Powers: coding started, but not nearly complete

@@ -3,9 +3,10 @@ availableLanguages.push ({
 	native_name: "Deutsch",
 	icon_file: "DE.png",
 	short_code: "de-DE",
-	active: false,
+	active: true,
 
 	translations: {
+			BUTTON_LANG_DE: 'Deutsch',
 
 	}
 

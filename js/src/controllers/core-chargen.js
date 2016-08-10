@@ -92,6 +92,19 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 
 		}
 
+		$scope.perkNotAvailable = function( currentPerk ) {
+			if( currentPerk.cost > $scope.savageCharacter.availablePerkPoints )
+				return true;
+
+			if (currentPerk.spcOnly == false )
+				return false;
+
+			if(currentPerk.spcOnly == true && $scope.savageCharacter.usesSPCCreation > 0 && $scope.savageCharacter.secondMajorHindranceChosen)
+				return false;
+
+			return true;
+		}
+
 		$scope.updateSettingRule = function( settingTag ) {
 			// settingTag is not really used, but it's nice to know what's clicked for debugging.
 			// console.log( "updateSettingRule", settingTag );

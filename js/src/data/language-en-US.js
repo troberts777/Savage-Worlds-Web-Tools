@@ -9,6 +9,7 @@ availableLanguages.push ({
 			BUTTON_LANG_EN: 'English',
 			BUTTON_LANG_DE: 'German',
 			BUTTON_LANG_BR: 'Brazilian',
+			BUTTON_LANG_RU: 'Russian',
 			APP_TITLE: 'Savage Worlds Web Tools',
 			INDEX_WELCOME: 'Welcome',
 			INDEX_H3_CORE: 'Savage Worlds Core Tools',
@@ -188,6 +189,7 @@ availableLanguages.push ({
 			GENERAL_SECONDS: 'Seconds',
 			GENERAL_SUCCESS: 'Success',
 			GENERAL_AVERAGE_ANSWER_TIME: 'Average Answer Time',
+			GENERAL_TOTAL_COMPLETION_TIME: 'Total Completion Time',
 			GENERAL_SUCCESS_1_RAISE: 'Success w/ Raise',
 			GENERAL_SUCCESS_2_RAISES: 'Success w/ 2 Raises',
 			GENERAL_SUCCESS_2_RAISES_OR_MORE: 'Success w/ 2 or more raises',
@@ -356,6 +358,8 @@ availableLanguages.push ({
 			SPC_CURRENT_PP: 'Current Power Points',
 			SPC_CAMPAIGN_POWER_LEVEL: 'Campaign Power Level',
 			SPC_POWER_LIMIT: 'Power Limit',
+			SPC_SUPER_KARMA_IN_EFFECT: 'Super Karma in effect',
+			SPC_ADDITIONAL_POWER_POINTS_PERK: 'Extra Power Points',
 			GENERAL_ICONIC_FRAMEWORKS: 'Iconic Frameworks',
 
 	}

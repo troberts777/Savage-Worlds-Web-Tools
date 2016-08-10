@@ -27,7 +27,12 @@
 
 									<select ng-model="addHindranceTag" ng-options="hindrance as hindrance.select_option_name group by hindrance.bookObj.local_name disable when hindrance.selectable == false for hindrance in savageCharacter.availableHindrances track by hindrance.tag"></select>
 
-									<div class="text-center" ng-show="savageCharacter.totalPerkPoints == 4" translate="CHARGEN_HINDRANCES_OPTIMIZED">
+
+									<strong><div class="text-center" ng-show="savageCharacter.usesSPCCreation" translate="SPC_SUPER_KARMA_IN_EFFECT">
+										Super Karma is in effect.
+									</div></strong>
+
+									<div class="text-center" ng-show="savageCharacter.totalPerkPoints == savageCharacter.optimizedPerkPoints" translate="CHARGEN_HINDRANCES_OPTIMIZED">
 										You have optimized your hindrances. Selecting more will not advance the character.
 									</div>
 									<button ng-hide="savageCharacter.XP.value > 0" class="button tiny expanded primary" ng-click="addHindrance()" translate="CHARGEN_ADD_HINDRANCE">Add Hindrance</button>
@@ -50,7 +55,7 @@
 								<legend translate="GENERAL_PERKS">Perks</legend>
 								<div ng-show="savageCharacter.availablePerkPoints > 0">
 									<span translate="CHARGEN_PERK_POINTS">Perk Points</span>: <span ng-bind="savageCharacter.availablePerkPoints">X</span>
-									<select ng-model="addPerkTag" ng-options="perk as perk.label disable when perk.cost > savageCharacter.availablePerkPoints for perk in savageCharacter.perkOptions track by perk.tag"></select>
+									<select ng-model="addPerkTag" ng-options="perk as perk.label disable when perkNotAvailable(perk) for perk in savageCharacter.perkOptions track by perk.tag"></select>
 									<button class="button tiny primary expanded" ng-click="addPerk()" translate="CHARGEN_ADD_PERK">Add Perk</button>
 								</div>
 
