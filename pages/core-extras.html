@@ -23,6 +23,16 @@
 					</div>
 				</div>
 			</fieldset>
+
+			<fieldset class="fieldset">
+				<legend translate="EXTRAS_CATALOG_STATUS">Catalog Status</legend>
+				<ul class="catalog-status">
+				<li ng-repeat="bookcheck in activebooklist track by $index" class="form-group">
+					<strong>{{bookcheck.local_name}}</strong>: {{bookcheck.entries}} <span translate="GENERAL_ENTRIES">entries</span>
+				</li>
+				</ul>
+				<strong><span translate="GENERAL_TOTAL_ENTRIES">Total entries</span></strong>: {{totalEntries}}<br />
+			</fieldset>
 		</div>
 		<div class="column small-12 medium-8 large-9">
 			<fieldset class="fieldset">

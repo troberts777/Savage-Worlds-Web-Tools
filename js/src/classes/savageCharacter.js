@@ -324,6 +324,8 @@ savageCharacter.prototype.init = function(useLang){
 
 			savageWorldsGearMundane[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearMundane[eqCounter].general );
 			savageWorldsGearMundane[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearMundane[eqCounter].type );
+
+			savageWorldsGearMundane[eqCounter].bookObj = get_book_by_id( savageWorldsGearMundane[eqCounter].book );
 		}
 
 		// Localize Armor
@@ -335,6 +337,8 @@ savageCharacter.prototype.init = function(useLang){
 
 			savageWorldsGearArmor[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearArmor[eqCounter].general );
 			savageWorldsGearArmor[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearArmor[eqCounter].type );
+
+			savageWorldsGearArmor[eqCounter].bookObj = get_book_by_id( savageWorldsGearArmor[eqCounter].book );
 		}
 
 		// Localize Shields
@@ -346,6 +350,8 @@ savageCharacter.prototype.init = function(useLang){
 
 			savageWorldsGearShields[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearShields[eqCounter].general );
 			savageWorldsGearShields[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearShields[eqCounter].type );
+
+			savageWorldsGearShields[eqCounter].bookObj = get_book_by_id( savageWorldsGearShields[eqCounter].book );
 		}
 
 		// Localize Hand Weapons
@@ -357,6 +363,8 @@ savageCharacter.prototype.init = function(useLang){
 
 			savageWorldsGearHandWeapons[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearHandWeapons[eqCounter].general );
 			savageWorldsGearHandWeapons[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearHandWeapons[eqCounter].type );
+
+			savageWorldsGearHandWeapons[eqCounter].bookObj = get_book_by_id( savageWorldsGearHandWeapons[eqCounter].book );
 		}
 
 		// Localize Ranged Weapons
@@ -368,6 +376,8 @@ savageCharacter.prototype.init = function(useLang){
 
 			savageWorldsGearRangedWeapons[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearRangedWeapons[eqCounter].general );
 			savageWorldsGearRangedWeapons[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearRangedWeapons[eqCounter].type );
+
+			savageWorldsGearRangedWeapons[eqCounter].bookObj = get_book_by_id( savageWorldsGearRangedWeapons[eqCounter].book );
 		}
 
 
@@ -848,6 +858,8 @@ savageCharacter.prototype.validate = function() {
 	this.skillPointsAvailable = 15;
 	this.skillPointsUsed = 0;
 
+
+
 	this.spcExtraPowerPoints = 0;
 
 	this.attributePointsAvailable = 5;
@@ -1135,7 +1147,7 @@ savageCharacter.prototype.validate = function() {
 		this.optimizedPerkPoints = 4;
 	}
 
-
+	this.SPCTakenExtraPowerPoints = false;
 	// Process Selected Perks
 	for( var perkCounter = 0; perkCounter < this.selectedPerks.length; perkCounter++) {
 		this.selectedPerks[perkCounter].effect(this);

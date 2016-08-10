@@ -2502,6 +2502,8 @@ savageCharacter.prototype.init = function(useLang){
 
 			savageWorldsGearMundane[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearMundane[eqCounter].general );
 			savageWorldsGearMundane[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearMundane[eqCounter].type );
+
+			savageWorldsGearMundane[eqCounter].bookObj = get_book_by_id( savageWorldsGearMundane[eqCounter].book );
 		}
 
 		// Localize Armor
@@ -2513,6 +2515,8 @@ savageCharacter.prototype.init = function(useLang){
 
 			savageWorldsGearArmor[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearArmor[eqCounter].general );
 			savageWorldsGearArmor[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearArmor[eqCounter].type );
+
+			savageWorldsGearArmor[eqCounter].bookObj = get_book_by_id( savageWorldsGearArmor[eqCounter].book );
 		}
 
 		// Localize Shields
@@ -2524,6 +2528,8 @@ savageCharacter.prototype.init = function(useLang){
 
 			savageWorldsGearShields[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearShields[eqCounter].general );
 			savageWorldsGearShields[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearShields[eqCounter].type );
+
+			savageWorldsGearShields[eqCounter].bookObj = get_book_by_id( savageWorldsGearShields[eqCounter].book );
 		}
 
 		// Localize Hand Weapons
@@ -2535,6 +2541,8 @@ savageCharacter.prototype.init = function(useLang){
 
 			savageWorldsGearHandWeapons[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearHandWeapons[eqCounter].general );
 			savageWorldsGearHandWeapons[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearHandWeapons[eqCounter].type );
+
+			savageWorldsGearHandWeapons[eqCounter].bookObj = get_book_by_id( savageWorldsGearHandWeapons[eqCounter].book );
 		}
 
 		// Localize Ranged Weapons
@@ -2546,6 +2554,8 @@ savageCharacter.prototype.init = function(useLang){
 
 			savageWorldsGearRangedWeapons[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearRangedWeapons[eqCounter].general );
 			savageWorldsGearRangedWeapons[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearRangedWeapons[eqCounter].type );
+
+			savageWorldsGearRangedWeapons[eqCounter].bookObj = get_book_by_id( savageWorldsGearRangedWeapons[eqCounter].book );
 		}
 
 
@@ -3026,6 +3036,8 @@ savageCharacter.prototype.validate = function() {
 	this.skillPointsAvailable = 15;
 	this.skillPointsUsed = 0;
 
+
+
 	this.spcExtraPowerPoints = 0;
 
 	this.attributePointsAvailable = 5;
@@ -3313,7 +3325,7 @@ savageCharacter.prototype.validate = function() {
 		this.optimizedPerkPoints = 4;
 	}
 
-
+	this.SPCTakenExtraPowerPoints = false;
 	// Process Selected Perks
 	for( var perkCounter = 0; perkCounter < this.selectedPerks.length; perkCounter++) {
 		this.selectedPerks[perkCounter].effect(this);
@@ -7663,6 +7675,7 @@ var coreextrasArray = 	[
 		$scope.active_books = {};
 
 		// add book checkboxes.
+		$scope.totalEntries = 0;
 		for( swe_bc = 0; swe_bc < savageWorldsExtrasBooksList.length; swe_bc++) {
 			book_checked = false;
 			if( typeof(localStorage["com.jdg.swwt2.extras.input_book_check_" + swe_bc]) > 0 ) {
@@ -7673,7 +7686,15 @@ var coreextrasArray = 	[
 			book_checkbox_data = get_book_by_id( savageWorldsExtrasBooksList[swe_bc]["id"], localStorage["users_preferred_language"] );
 			//console.log("book_checkbox_data", book_checkbox_data);
 			//console.log('savageWorldsExtrasBooksList[swe_bc]["id"]', savageWorldsExtrasBooksList[swe_bc]["id"]);
+
+			book_checkbox_data.entries = 0;
+			for(var lCounter = 0; lCounter < savageWorldsExtrasDatabase.length; lCounter++ ) {
+				if( savageWorldsExtrasDatabase[lCounter].book == savageWorldsExtrasBooksList[swe_bc]["id"])
+					book_checkbox_data.entries++;
+			}
+			$scope.totalEntries += book_checkbox_data.entries;
 			$scope.activebooklist.push( book_checkbox_data );
+
 		}
 
 		if( typeof(localStorage["com.jdg.swwt2.extras.active_books"]) != "undefined"  && localStorage["com.jdg.swwt2.extras.active_books"] != "") {
@@ -26064,6 +26085,88 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		page: 'p62'
 	}
 );
+	// Cultist Priest
+savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
+	{
+		id: 219,
+		name: {
+			'en-US' : 'Cultist Priest',
+		},
+		gear: {
+			'en-US' : 'Ceremonial robes, cursed dagger (Str+d6+2 damage; wounds can only be healed naturally).',
+		},
+		treasure: {
+			'en-US' : '',
+		},
+		abilities: {
+			'en-US' : 'Powers: Bolt (screaming skull), fear (unearthly shriek), obscure (cloud of darkness), puppet (hypnotic voice), smite (bale re along blade), zombie (special powder),15 PP.',
+		},
+		tags: {
+			'en-US' : '',
+		},
+		edges: {
+			'en-US' : 'Arcane Background (Magic), New Power, Power Points',
+		},
+		hindrances: {
+			'en-US' : 'Arrogant',
+		},
+		blurb: {
+			'en-US' : 'At the top of every cult is the “high priest,” “grand wizard,” or some such high-titled lunatic. Most have supernatural powers granted to them by their deity. Despite believing in the power of their “god,” they actually use arcane magic rather than invoke miracles.\nThe spell trappings are suggestions. Ideally, you should alter them to  t the nature of the cult the characters are facing.',
+		},
+		attributes: '{"agility":"d6","smarts":"d8","spirit":"d10","strength":"d6","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SPELLCASTING":{"value":"d10"}}',
+		wildcard: 1,
+		image: '',
+		charisma: '0',
+		pace: '6',
+		parry: '6',
+		toughness: '6',
+		armor: '0',
+		book: 3,
+		page: 'p63'
+	}
+);
+	// Cultist, Typical
+savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
+	{
+		id: 218,
+		name: {
+			'en-US' : 'Cultist, Typical',
+		},
+		gear: {
+			'en-US' : 'Ceremonial robes, dagger (Str+d4).',
+		},
+		treasure: {
+			'en-US' : '',
+		},
+		abilities: {
+			'en-US' : 'Fanatical: If a cultist is adjacent to a cult leader when the latter is hit, the follower takes the blow for his master with a successful Agility roll.',
+		},
+		tags: {
+			'en-US' : '',
+		},
+		edges: {
+			'en-US' : '',
+		},
+		hindrances: {
+			'en-US' : '',
+		},
+		blurb: {
+			'en-US' : 'The mortal worshippers of insane gods, demons, and other supernatural entities are called cultists. Many are stark-raving mad and all are fanatically loyal to their masters, both human and inhuman.',
+		},
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
+		wildcard: 0,
+		image: '',
+		charisma: '0',
+		pace: '6',
+		parry: '5',
+		toughness: '5',
+		armor: '0',
+		book: 3,
+		page: 'p63'
+	}
+);
 	// Damned Children
 savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	{
@@ -33410,6 +33513,8 @@ availableLanguages.push ({
 			INDEX_BUTTON_SCIFI_VEHICLE: 'Vehicle Maker',
 			INDEX_BUTTON_SCIFI_WALKER: 'Walker Maker',
 			INDEX_BUTTON_SCIFI_WORLD: 'World Maker',
+			GENERAL_ENTRIES: 'Entries',
+			GENERAL_TOTAL_ENTRIES: 'Total Entries',
 			GENERAL_IN_USE: 'In Use',
 			GENERAL_TRY_AGAIN: 'Try Again',
 			GENERAL_NEW: 'New',
@@ -33426,6 +33531,7 @@ availableLanguages.push ({
 			GENERAL_EXPORT: 'Export',
 			GENERAL_OPTIONS: 'Options',
 			GENERAL_BOOKS: 'Books',
+			GENERAL_BOOK: 'Book',
 			GENERAL_PRINT: 'Print',
 			GENERAL_PDF: 'PDF',
 			GENERAL_YES: 'Yes',
@@ -33669,6 +33775,7 @@ availableLanguages.push ({
 			EXTRAS_NO_RESULTS: 'No extras were found with your search terms.',
 			EXTRAS_RESULTS_INTRO: 'Please search for a name in the search field.',
 			EXTRAS_TREASURE: 'Treasure',
+			EXTRAS_CATALOG_STATUS: 'Catalog Status',
 			CREATOR_SIZE: 'Size',
 			CREATOR_ACC_TS: 'Acc/TS',
 			CREATOR_CLIMB: 'Climb',

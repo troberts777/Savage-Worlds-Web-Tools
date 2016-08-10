@@ -557,6 +557,88 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		page: 'p62'
 	}
 );
+	// Cultist Priest
+savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
+	{
+		id: 219,
+		name: {
+			'en-US' : 'Cultist Priest',
+		},
+		gear: {
+			'en-US' : 'Ceremonial robes, cursed dagger (Str+d6+2 damage; wounds can only be healed naturally).',
+		},
+		treasure: {
+			'en-US' : '',
+		},
+		abilities: {
+			'en-US' : 'Powers: Bolt (screaming skull), fear (unearthly shriek), obscure (cloud of darkness), puppet (hypnotic voice), smite (bale re along blade), zombie (special powder),15 PP.',
+		},
+		tags: {
+			'en-US' : '',
+		},
+		edges: {
+			'en-US' : 'Arcane Background (Magic), New Power, Power Points',
+		},
+		hindrances: {
+			'en-US' : 'Arrogant',
+		},
+		blurb: {
+			'en-US' : 'At the top of every cult is the “high priest,” “grand wizard,” or some such high-titled lunatic. Most have supernatural powers granted to them by their deity. Despite believing in the power of their “god,” they actually use arcane magic rather than invoke miracles.\nThe spell trappings are suggestions. Ideally, you should alter them to  t the nature of the cult the characters are facing.',
+		},
+		attributes: '{"agility":"d6","smarts":"d8","spirit":"d10","strength":"d6","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SPELLCASTING":{"value":"d10"}}',
+		wildcard: 1,
+		image: '',
+		charisma: '0',
+		pace: '6',
+		parry: '6',
+		toughness: '6',
+		armor: '0',
+		book: 3,
+		page: 'p63'
+	}
+);
+	// Cultist, Typical
+savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
+	{
+		id: 218,
+		name: {
+			'en-US' : 'Cultist, Typical',
+		},
+		gear: {
+			'en-US' : 'Ceremonial robes, dagger (Str+d4).',
+		},
+		treasure: {
+			'en-US' : '',
+		},
+		abilities: {
+			'en-US' : 'Fanatical: If a cultist is adjacent to a cult leader when the latter is hit, the follower takes the blow for his master with a successful Agility roll.',
+		},
+		tags: {
+			'en-US' : '',
+		},
+		edges: {
+			'en-US' : '',
+		},
+		hindrances: {
+			'en-US' : '',
+		},
+		blurb: {
+			'en-US' : 'The mortal worshippers of insane gods, demons, and other supernatural entities are called cultists. Many are stark-raving mad and all are fanatically loyal to their masters, both human and inhuman.',
+		},
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
+		wildcard: 0,
+		image: '',
+		charisma: '0',
+		pace: '6',
+		parry: '5',
+		toughness: '5',
+		armor: '0',
+		book: 3,
+		page: 'p63'
+	}
+);
 	// Damned Children
 savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	{

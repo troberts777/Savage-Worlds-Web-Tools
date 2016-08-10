@@ -25,6 +25,7 @@ var coreextrasArray = 	[
 		$scope.active_books = {};
 
 		// add book checkboxes.
+		$scope.totalEntries = 0;
 		for( swe_bc = 0; swe_bc < savageWorldsExtrasBooksList.length; swe_bc++) {
 			book_checked = false;
 			if( typeof(localStorage["com.jdg.swwt2.extras.input_book_check_" + swe_bc]) > 0 ) {
@@ -35,7 +36,15 @@ var coreextrasArray = 	[
 			book_checkbox_data = get_book_by_id( savageWorldsExtrasBooksList[swe_bc]["id"], localStorage["users_preferred_language"] );
 			//console.log("book_checkbox_data", book_checkbox_data);
 			//console.log('savageWorldsExtrasBooksList[swe_bc]["id"]', savageWorldsExtrasBooksList[swe_bc]["id"]);
+
+			book_checkbox_data.entries = 0;
+			for(var lCounter = 0; lCounter < savageWorldsExtrasDatabase.length; lCounter++ ) {
+				if( savageWorldsExtrasDatabase[lCounter].book == savageWorldsExtrasBooksList[swe_bc]["id"])
+					book_checkbox_data.entries++;
+			}
+			$scope.totalEntries += book_checkbox_data.entries;
 			$scope.activebooklist.push( book_checkbox_data );
+
 		}
 
 		if( typeof(localStorage["com.jdg.swwt2.extras.active_books"]) != "undefined"  && localStorage["com.jdg.swwt2.extras.active_books"] != "") {
