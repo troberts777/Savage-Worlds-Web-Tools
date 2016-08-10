@@ -121,7 +121,7 @@ savageCharacter.prototype.init = function(useLang){
 	this.usesSPCCreation = false;
 	this.SPCRisingStars = false;
 	this.SPCCurrentPowerPoints = 0;
-	this.SPCTakenExtraPowerPoints = 0;
+	this.SPCTakenExtraPowerPoints = false;
 	this.SPCPowerLevels = Array();
 	this.SPCSelectedPowerLevel = 0;
 	this.SPCPowerLevels[0] = {
@@ -208,7 +208,7 @@ savageCharacter.prototype.init = function(useLang){
 			cost: 2,
 			spcOnly: true,
 			effect: function(savageCharObj) {
-				savageCharObj.SPCTakenExtraPowerPoints = 1;
+				savageCharObj.SPCTakenExtraPowerPoints = true;
 			}
 		}
 	);
@@ -1082,6 +1082,7 @@ savageCharacter.prototype.validate = function() {
 	var minorPerk1 = 0;
 	var minorPerk2 = 0;
 	var majorPerk2 = 0;
+	this.secondMajorHindranceChosen = false;
 	for( var hindranceCounter = 0; hindranceCounter < this.selectedHindrances.length; hindranceCounter++) {
 
 		if( typeof(this.selectedHindrances[hindranceCounter].charEffect) == "function" ) {
@@ -1091,7 +1092,7 @@ savageCharacter.prototype.validate = function() {
 			this.selectedHindrances[hindranceCounter].charEffects( this );
 		}
 		this.installedHindrances.push( this.selectedHindrances[hindranceCounter] );
-		this.secondMajorHindranceChosen = false;
+
 		if( this.selectedHindrances[hindranceCounter].severity == "major" ) {
 
 			if( this.usesSPCCreation ) {
@@ -1124,7 +1125,7 @@ savageCharacter.prototype.validate = function() {
 	// Calculate Perks Available
 	if( this.usesSPCCreation ) {
 		this.totalPerkPoints = majorPerk + majorPerk2 + minorPerk2 + minorPerk1;
-		this.availablePerkPoints = majorPerk + majorPerk2 +minorPerk2 + minorPerk1;
+		this.availablePerkPoints = majorPerk + majorPerk2 + minorPerk2 + minorPerk1;
 		this.optimizedPerkPoints = 6;
 
 	}
@@ -1132,7 +1133,6 @@ savageCharacter.prototype.validate = function() {
 		this.totalPerkPoints = majorPerk + minorPerk2 + minorPerk1;
 		this.availablePerkPoints = majorPerk + minorPerk2 + minorPerk1;
 		this.optimizedPerkPoints = 4;
-
 	}
 
 
@@ -1154,6 +1154,11 @@ savageCharacter.prototype.validate = function() {
 
 	if( this.skillPointsUsed > this.skillPointsAvailable ) {
 		this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_SKILLS") );
+		this.isValid = false;
+	}
+
+	if( this.SPCTakenExtraPowerPoints && majorPerk2 == 0 ) {
+		this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_SPC_EP_REQUIRES_2MAJOR") );
 		this.isValid = false;
 	}
 

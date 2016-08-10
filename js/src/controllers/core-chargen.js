@@ -1,4 +1,4 @@
-var corechargenFunctions = function ($rootScope, $translate, $scope, $location, $route, $cordovaFile) {
+var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $location, $route, $cordovaFile ) {
 		$rootScope.showChargenMenu = true;
 		var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_chargen";
 		var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.chargen";
@@ -37,6 +37,7 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 			$scope.addHindranceTag = $scope.savageCharacter.availableHindrances[0];
 			$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
 
+			$scope.gearAddedMessage = "";
 		}
 
 		$scope.init();
@@ -152,6 +153,10 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 
 		}
 
+		$rootScope.clearGearLog = function() {
+			$scope.gearAddedMessage = "";
+		}
+
 		$rootScope.closeDialogs = function() {
 			$rootScope.newDialogOpen = false;
 			$rootScope.loadDialogOpen = false;
@@ -161,36 +166,36 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 			$rootScope.exportDialogOpen = false;
 			$rootScope.optionsDialogOpen = false;
 			$scope.validationDialogOpen = false;
-			$scope.gearDialogOpen = false;
-			$scope.armorDialogOpen = false;
-			$scope.rangedWeaponDialogOpen = false;
-			$scope.handWeaponDialogOpen = false;
+			// $scope.gearDialogOpen = false;
+			// $scope.armorDialogOpen = false;
+			// $scope.rangedWeaponDialogOpen = false;
+			// $scope.handWeaponDialogOpen = false;
 			$scope.showNotifyDialog = false;
 		}
 
-		$rootScope.rangedWeaponDialog = function() {
+		// $rootScope.rangedWeaponDialog = function() {
 
-			$rootScope.closeDialogs();
-			$scope.rangedWeaponDialogOpen = true;
-		}
+		// 	$rootScope.closeDialogs();
+		// 	$scope.rangedWeaponDialogOpen = true;
+		// }
 
-		$rootScope.handWeaponDialog = function() {
+		// $rootScope.handWeaponDialog = function() {
 
-			$rootScope.closeDialogs();
-			$scope.handWeaponDialogOpen = true;
-		}
+		// 	$rootScope.closeDialogs();
+		// 	$scope.handWeaponDialogOpen = true;
+		// }
 
-		$rootScope.armorDialog = function() {
+		//$rootScope.armorDialog = function() {
 
-			$rootScope.closeDialogs();
-			$scope.armorDialogOpen = true;
-		}
+			// $rootScope.closeDialogs();
+			// $scope.armorDialogOpen = true;
+		//}
 
-		$rootScope.gearDialog = function() {
+		// $rootScope.gearDialog = function() {
 
-			$rootScope.closeDialogs();
-			$scope.gearDialogOpen = true;
-		}
+		// 	$rootScope.closeDialogs();
+		// 	$scope.gearDialogOpen = true;
+		// }
 
 		$rootScope.newDialog = function() {
 
@@ -713,6 +718,7 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 			else
 				itemCost = -1;
 			$scope.savageCharacter.addGearMundane( bookID, gearTag, itemCost );
+			$scope.showItemAdded();
 			$scope.validateAndSave();
 		}
 
@@ -721,6 +727,14 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 			$scope.validateAndSave();
 		}
 
+		$scope.showItemAdded = function() {
+			$scope.showAddedMessage = true;
+			$timeout( function() {
+					$scope.showAddedMessage = false;
+				},
+				2000
+			);
+		}
 
 		$scope.buyArmor = function( bookID, gearTag, forFree) {
 			if( forFree == true)
@@ -728,6 +742,7 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 			else
 				itemCost = -1;
 			$scope.savageCharacter.addGearArmor( bookID, gearTag, itemCost );
+			$scope.showItemAdded();
 			$scope.validateAndSave();
 		}
 
@@ -742,6 +757,7 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 			else
 				itemCost = -1;
 			$scope.savageCharacter.addGearHandWeapon( bookID, gearTag, itemCost );
+			$scope.showItemAdded();
 			$scope.validateAndSave();
 		}
 
@@ -752,6 +768,7 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 			else
 				itemCost = -1;
 			$scope.savageCharacter.addGearRangedWeapon( bookID, gearTag, itemCost );
+			$scope.showItemAdded();
 			$scope.validateAndSave();
 		}
 
@@ -863,11 +880,13 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 angular.module("webApp").controller(
 	"coreChargenController",
 	[
+		'$timeout',
 		'$rootScope',
 		'$translate',
 		'$scope',
 		'$location',
 		'$route',
+
 		corechargenFunctions
 	]
 );
@@ -875,6 +894,7 @@ angular.module("webApp").controller(
 angular.module("cordovaApp").controller(
 	"coreChargenController",
 	[
+		'$timeout',
 		'$rootScope',
 		'$translate',
 		'$scope',

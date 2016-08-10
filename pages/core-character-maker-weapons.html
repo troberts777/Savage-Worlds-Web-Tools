@@ -9,8 +9,8 @@
 <div ng-include="'pages/dialog-confirm.html'"></div>
 <div ng-include="'pages/dialog-notify.html'"></div>
 
-<div ng-include="'pages/chargen-dialog-hand-weapons-list.html'"></div>
-<div ng-include="'pages/chargen-dialog-ranged-weapons-list.html'"></div>
+<!-- <div ng-include="'pages/chargen-dialog-hand-weapons-list.html'"></div>
+<div ng-include="'pages/chargen-dialog-ranged-weapons-list.html'"></div> -->
 
 <div ng-include="'pages/chargen-status-bar.html'"></div>
 <div class="main-content">
@@ -19,7 +19,7 @@
 	 		<div ng-include="'pages/chargen-nav-menu.html'"></div>
 			<fieldset class="fieldset">
 				<legend translate="CHARGEN_HAND_WEAPONS">Hand Weapons</legend>
-					<button class="button tiny radius expanded primary" ng-click="handWeaponDialog()" translate="CHARGEN_ADD_HAND_WEAPON">Add Hand Weapon</button>
+					<a class="button tiny radius expanded primary" href="#/core/character-maker-hand-weapons-list" ng-click="clearGearLog()" translate="CHARGEN_ADD_HAND_WEAPON">Add Hand Weapon</a>
 					<div ng-show="savageCharacter.selectedHandWeapons.length > 0">
 						<table class="gear-list">
 							<thead>
@@ -82,7 +82,7 @@
 
 				<fieldset class="fieldset">
 				<legend translate="CHARGEN_RANGED_WEAPONS">Ranged Weapons</legend>
-					<button class="button tiny radius expanded primary" ng-click="rangedWeaponDialog()" translate="CHARGEN_ADD_RANGED_WEAPON">Add Ranged Weapon</button>
+					<a class="button tiny radius expanded primary" href="#/core/character-maker-ranged-weapons-list" ng-click="clearGearLog()" translate="CHARGEN_ADD_RANGED_WEAPON">Add Ranged Weapon</a>
 					<div ng-show="savageCharacter.selectedRangedWeapons.length > 0">
 						<table class="gear-list">
 							<thead>

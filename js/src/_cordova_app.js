@@ -2,7 +2,7 @@ var availableLanguages = [];
 
 cordovaApp = angular.module(
 	'cordovaApp',
-	['ngCordova', 'ngRoute', 'ngResource', 'ngSanitize','pascalprecht.translate'],
+	['ngCordova', 'ngRoute', 'ngResource', 'ngSanitize','pascalprecht.translate', 'sticky'],
 	[
 		'$routeProvider',
 		'$translateProvider',
@@ -141,6 +141,34 @@ cordovaApp = angular.module(
 				templateUrl : 'pages/core-character-maker-armor.html',
 				controller  : 'coreChargenController',
 				activetab: 'chargen-armor'
+			})
+
+			// route for the core character maker armor list page
+			.when('/core/character-maker-armor-list', {
+				templateUrl : 'pages/core-character-maker-armor-list.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-armor'
+			})
+
+			// route for the core character maker armor list page
+			.when('/core/character-maker-gear-list', {
+				templateUrl : 'pages/core-character-maker-gear-list.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-gear'
+			})
+
+			// route for the core character maker armor list page
+			.when('/core/character-maker-ranged-weapons-list', {
+				templateUrl : 'pages/core-character-maker-ranged-weapons-list.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-weapons'
+			})
+
+			// route for the core character maker armor list page
+			.when('/core/character-maker-hand-weapons-list', {
+				templateUrl : 'pages/core-character-maker-hand-weapons-list.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-weapons'
 			})
 
 			// route for the core character maker powers page

@@ -10,7 +10,7 @@ availableLanguages.push ({
 			BUTTON_LANG_DE: 'German',
 			BUTTON_LANG_BR: 'Brazilian',
 			BUTTON_LANG_RU: 'Russian',
-			APP_TITLE: 'Savage Worlds Web Tools',
+			APP_TITLE: 'Savage Worlds Tools',
 			INDEX_WELCOME: 'Welcome',
 			INDEX_H3_CORE: 'Savage Worlds Core Tools',
 			INDEX_H3_SCIFI: 'Sci-Fi Companion Tools',
@@ -201,6 +201,11 @@ availableLanguages.push ({
 			CHARGEN_RANGED_WEAPONS: 'Ranged Weapons',
 			CHARGEN_ARMOR: 'Armor',
 			CHARGEN_SHIELDS: 'Shields',
+			CHARGEN_ADDING_ARMOR: 'Adding Armor',
+			CHARGEN_ADDING_GEAR: 'Adding Gear',
+			CHARGEN_ADDING_HAND_WEAPONS: 'Adding Hand Weapons',
+			CHARGEN_ADDING_RANGED_WEAPONS: 'Adding Ranged Weapons',
+			CHARGEN_ITEM_ADDED_TO_INVENTORY: 'Item added to inventory',
 			GENERAL_PURCHASED_FREE: '(free)',
 			GENERAL_REDUCED: '(reduced)',
 			GENERAL_BUY_FREE: 'Get Free',
@@ -361,6 +366,7 @@ availableLanguages.push ({
 			SPC_SUPER_KARMA_AVAILABLE: 'Super Karma Available',
 			SPC_SUPER_KARMA_BLURB: 'To take extra power points select a second Major Hindrance then choose \'Extra Power Points\' from above.',
 			SPC_ADDITIONAL_POWER_POINTS_PERK: 'Extra Power Points',
+			CHARGEN_VALIDATION_SPC_EP_REQUIRES_2MAJOR: 'You need to have a second major hindrance to select the \'Extra Power Points\' perk.',
 			GENERAL_ICONIC_FRAMEWORKS: 'Iconic Frameworks',
 
 	}

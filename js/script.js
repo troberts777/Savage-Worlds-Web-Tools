@@ -174,7 +174,7 @@ var availableLanguages = [];
 
 cordovaApp = angular.module(
 	'cordovaApp',
-	['ngCordova', 'ngRoute', 'ngResource', 'ngSanitize','pascalprecht.translate'],
+	['ngCordova', 'ngRoute', 'ngResource', 'ngSanitize','pascalprecht.translate', 'sticky'],
 	[
 		'$routeProvider',
 		'$translateProvider',
@@ -313,6 +313,34 @@ cordovaApp = angular.module(
 				templateUrl : 'pages/core-character-maker-armor.html',
 				controller  : 'coreChargenController',
 				activetab: 'chargen-armor'
+			})
+
+			// route for the core character maker armor list page
+			.when('/core/character-maker-armor-list', {
+				templateUrl : 'pages/core-character-maker-armor-list.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-armor'
+			})
+
+			// route for the core character maker armor list page
+			.when('/core/character-maker-gear-list', {
+				templateUrl : 'pages/core-character-maker-gear-list.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-gear'
+			})
+
+			// route for the core character maker armor list page
+			.when('/core/character-maker-ranged-weapons-list', {
+				templateUrl : 'pages/core-character-maker-ranged-weapons-list.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-weapons'
+			})
+
+			// route for the core character maker armor list page
+			.when('/core/character-maker-hand-weapons-list', {
+				templateUrl : 'pages/core-character-maker-hand-weapons-list.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-weapons'
 			})
 
 			// route for the core character maker powers page
@@ -394,7 +422,7 @@ var availableLanguages = [];
 
 webApp = angular.module(
 	'webApp',
-	['ngRoute', 'ngResource', 'ngSanitize','pascalprecht.translate'],
+	['sticky', 'ngRoute', 'ngResource', 'ngSanitize','pascalprecht.translate'],
 	[
 		'$routeProvider',
 		'$translateProvider',
@@ -534,6 +562,35 @@ webApp = angular.module(
 				controller  : 'coreChargenController',
 				activetab: 'chargen-armor'
 			})
+
+			// route for the core character maker armor list page
+			.when('/core/character-maker-armor-list', {
+				templateUrl : 'pages/core-character-maker-armor-list.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-armor'
+			})
+
+			// route for the core character maker armor list page
+			.when('/core/character-maker-gear-list', {
+				templateUrl : 'pages/core-character-maker-gear-list.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-gear'
+			})
+
+			// route for the core character maker armor list page
+			.when('/core/character-maker-ranged-weapons-list', {
+				templateUrl : 'pages/core-character-maker-ranged-weapons-list.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-weapons'
+			})
+
+			// route for the core character maker armor list page
+			.when('/core/character-maker-hand-weapons-list', {
+				templateUrl : 'pages/core-character-maker-hand-weapons-list.html',
+				controller  : 'coreChargenController',
+				activetab: 'chargen-weapons'
+			})
+
 
 			// route for the core character maker powers page
 			.when('/core/character-maker-powers', {
@@ -2232,7 +2289,7 @@ savageCharacter.prototype.init = function(useLang){
 	this.usesSPCCreation = false;
 	this.SPCRisingStars = false;
 	this.SPCCurrentPowerPoints = 0;
-	this.SPCTakenExtraPowerPoints = 0;
+	this.SPCTakenExtraPowerPoints = false;
 	this.SPCPowerLevels = Array();
 	this.SPCSelectedPowerLevel = 0;
 	this.SPCPowerLevels[0] = {
@@ -2319,7 +2376,7 @@ savageCharacter.prototype.init = function(useLang){
 			cost: 2,
 			spcOnly: true,
 			effect: function(savageCharObj) {
-				savageCharObj.SPCTakenExtraPowerPoints = 1;
+				savageCharObj.SPCTakenExtraPowerPoints = true;
 			}
 		}
 	);
@@ -3193,6 +3250,7 @@ savageCharacter.prototype.validate = function() {
 	var minorPerk1 = 0;
 	var minorPerk2 = 0;
 	var majorPerk2 = 0;
+	this.secondMajorHindranceChosen = false;
 	for( var hindranceCounter = 0; hindranceCounter < this.selectedHindrances.length; hindranceCounter++) {
 
 		if( typeof(this.selectedHindrances[hindranceCounter].charEffect) == "function" ) {
@@ -3202,7 +3260,7 @@ savageCharacter.prototype.validate = function() {
 			this.selectedHindrances[hindranceCounter].charEffects( this );
 		}
 		this.installedHindrances.push( this.selectedHindrances[hindranceCounter] );
-		this.secondMajorHindranceChosen = false;
+
 		if( this.selectedHindrances[hindranceCounter].severity == "major" ) {
 
 			if( this.usesSPCCreation ) {
@@ -3235,7 +3293,7 @@ savageCharacter.prototype.validate = function() {
 	// Calculate Perks Available
 	if( this.usesSPCCreation ) {
 		this.totalPerkPoints = majorPerk + majorPerk2 + minorPerk2 + minorPerk1;
-		this.availablePerkPoints = majorPerk + majorPerk2 +minorPerk2 + minorPerk1;
+		this.availablePerkPoints = majorPerk + majorPerk2 + minorPerk2 + minorPerk1;
 		this.optimizedPerkPoints = 6;
 
 	}
@@ -3243,7 +3301,6 @@ savageCharacter.prototype.validate = function() {
 		this.totalPerkPoints = majorPerk + minorPerk2 + minorPerk1;
 		this.availablePerkPoints = majorPerk + minorPerk2 + minorPerk1;
 		this.optimizedPerkPoints = 4;
-
 	}
 
 
@@ -3265,6 +3322,11 @@ savageCharacter.prototype.validate = function() {
 
 	if( this.skillPointsUsed > this.skillPointsAvailable ) {
 		this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_SKILLS") );
+		this.isValid = false;
+	}
+
+	if( this.SPCTakenExtraPowerPoints && majorPerk2 == 0 ) {
+		this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_SPC_EP_REQUIRES_2MAJOR") );
 		this.isValid = false;
 	}
 
@@ -6422,7 +6484,7 @@ scifiCreator.prototype.hasOption = function(option_tag) {
 
 
 
-var corechargenFunctions = function ($rootScope, $translate, $scope, $location, $route, $cordovaFile) {
+var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $location, $route, $cordovaFile ) {
 		$rootScope.showChargenMenu = true;
 		var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_chargen";
 		var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.chargen";
@@ -6461,6 +6523,7 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 			$scope.addHindranceTag = $scope.savageCharacter.availableHindrances[0];
 			$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
 
+			$scope.gearAddedMessage = "";
 		}
 
 		$scope.init();
@@ -6576,6 +6639,10 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 
 		}
 
+		$rootScope.clearGearLog = function() {
+			$scope.gearAddedMessage = "";
+		}
+
 		$rootScope.closeDialogs = function() {
 			$rootScope.newDialogOpen = false;
 			$rootScope.loadDialogOpen = false;
@@ -6585,36 +6652,36 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 			$rootScope.exportDialogOpen = false;
 			$rootScope.optionsDialogOpen = false;
 			$scope.validationDialogOpen = false;
-			$scope.gearDialogOpen = false;
-			$scope.armorDialogOpen = false;
-			$scope.rangedWeaponDialogOpen = false;
-			$scope.handWeaponDialogOpen = false;
+			// $scope.gearDialogOpen = false;
+			// $scope.armorDialogOpen = false;
+			// $scope.rangedWeaponDialogOpen = false;
+			// $scope.handWeaponDialogOpen = false;
 			$scope.showNotifyDialog = false;
 		}
 
-		$rootScope.rangedWeaponDialog = function() {
+		// $rootScope.rangedWeaponDialog = function() {
 
-			$rootScope.closeDialogs();
-			$scope.rangedWeaponDialogOpen = true;
-		}
+		// 	$rootScope.closeDialogs();
+		// 	$scope.rangedWeaponDialogOpen = true;
+		// }
 
-		$rootScope.handWeaponDialog = function() {
+		// $rootScope.handWeaponDialog = function() {
 
-			$rootScope.closeDialogs();
-			$scope.handWeaponDialogOpen = true;
-		}
+		// 	$rootScope.closeDialogs();
+		// 	$scope.handWeaponDialogOpen = true;
+		// }
 
-		$rootScope.armorDialog = function() {
+		//$rootScope.armorDialog = function() {
 
-			$rootScope.closeDialogs();
-			$scope.armorDialogOpen = true;
-		}
+			// $rootScope.closeDialogs();
+			// $scope.armorDialogOpen = true;
+		//}
 
-		$rootScope.gearDialog = function() {
+		// $rootScope.gearDialog = function() {
 
-			$rootScope.closeDialogs();
-			$scope.gearDialogOpen = true;
-		}
+		// 	$rootScope.closeDialogs();
+		// 	$scope.gearDialogOpen = true;
+		// }
 
 		$rootScope.newDialog = function() {
 
@@ -7137,6 +7204,7 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 			else
 				itemCost = -1;
 			$scope.savageCharacter.addGearMundane( bookID, gearTag, itemCost );
+			$scope.showItemAdded();
 			$scope.validateAndSave();
 		}
 
@@ -7145,6 +7213,14 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 			$scope.validateAndSave();
 		}
 
+		$scope.showItemAdded = function() {
+			$scope.showAddedMessage = true;
+			$timeout( function() {
+					$scope.showAddedMessage = false;
+				},
+				2000
+			);
+		}
 
 		$scope.buyArmor = function( bookID, gearTag, forFree) {
 			if( forFree == true)
@@ -7152,6 +7228,7 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 			else
 				itemCost = -1;
 			$scope.savageCharacter.addGearArmor( bookID, gearTag, itemCost );
+			$scope.showItemAdded();
 			$scope.validateAndSave();
 		}
 
@@ -7166,6 +7243,7 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 			else
 				itemCost = -1;
 			$scope.savageCharacter.addGearHandWeapon( bookID, gearTag, itemCost );
+			$scope.showItemAdded();
 			$scope.validateAndSave();
 		}
 
@@ -7176,6 +7254,7 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 			else
 				itemCost = -1;
 			$scope.savageCharacter.addGearRangedWeapon( bookID, gearTag, itemCost );
+			$scope.showItemAdded();
 			$scope.validateAndSave();
 		}
 
@@ -7287,11 +7366,13 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 angular.module("webApp").controller(
 	"coreChargenController",
 	[
+		'$timeout',
 		'$rootScope',
 		'$translate',
 		'$scope',
 		'$location',
 		'$route',
+
 		corechargenFunctions
 	]
 );
@@ -7299,6 +7380,7 @@ angular.module("webApp").controller(
 angular.module("cordovaApp").controller(
 	"coreChargenController",
 	[
+		'$timeout',
 		'$rootScope',
 		'$translate',
 		'$scope',
@@ -33303,7 +33385,7 @@ availableLanguages.push ({
 			BUTTON_LANG_DE: 'German',
 			BUTTON_LANG_BR: 'Brazilian',
 			BUTTON_LANG_RU: 'Russian',
-			APP_TITLE: 'Savage Worlds Web Tools',
+			APP_TITLE: 'Savage Worlds Tools',
 			INDEX_WELCOME: 'Welcome',
 			INDEX_H3_CORE: 'Savage Worlds Core Tools',
 			INDEX_H3_SCIFI: 'Sci-Fi Companion Tools',
@@ -33494,6 +33576,11 @@ availableLanguages.push ({
 			CHARGEN_RANGED_WEAPONS: 'Ranged Weapons',
 			CHARGEN_ARMOR: 'Armor',
 			CHARGEN_SHIELDS: 'Shields',
+			CHARGEN_ADDING_ARMOR: 'Adding Armor',
+			CHARGEN_ADDING_GEAR: 'Adding Gear',
+			CHARGEN_ADDING_HAND_WEAPONS: 'Adding Hand Weapons',
+			CHARGEN_ADDING_RANGED_WEAPONS: 'Adding Ranged Weapons',
+			CHARGEN_ITEM_ADDED_TO_INVENTORY: 'Item added to inventory',
 			GENERAL_PURCHASED_FREE: '(free)',
 			GENERAL_REDUCED: '(reduced)',
 			GENERAL_BUY_FREE: 'Get Free',
@@ -33654,6 +33741,7 @@ availableLanguages.push ({
 			SPC_SUPER_KARMA_AVAILABLE: 'Super Karma Available',
 			SPC_SUPER_KARMA_BLURB: 'To take extra power points select a second Major Hindrance then choose \'Extra Power Points\' from above.',
 			SPC_ADDITIONAL_POWER_POINTS_PERK: 'Extra Power Points',
+			CHARGEN_VALIDATION_SPC_EP_REQUIRES_2MAJOR: 'You need to have a second major hindrance to select the \'Extra Power Points\' perk.',
 			GENERAL_ICONIC_FRAMEWORKS: 'Iconic Frameworks',
 
 	}

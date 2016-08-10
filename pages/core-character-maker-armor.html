@@ -9,7 +9,7 @@
 <div ng-include="'pages/dialog-confirm.html'"></div>
 <div ng-include="'pages/dialog-notify.html'"></div>
 
-<div ng-include="'pages/chargen-dialog-armor-list.html'"></div>
+<!-- <div ng-include="'pages/chargen-dialog-armor-list.html'"></div> -->
 
 <div ng-include="'pages/chargen-status-bar.html'"></div>
 <div class="main-content">
@@ -18,7 +18,7 @@
 	 		<div ng-include="'pages/chargen-nav-menu.html'"></div>
 			<fieldset class="fieldset">
 				<legend translate="CHARGEN_ARMOR">Armor</legend>
-					<button class="button tiny radius expanded primary" ng-click="armorDialog()" translate="CHARGEN_ADD_ARMOR">Add Armor</button>
+					<a class="button tiny radius expanded primary" ng-click="clearGearLog()" href="#/core/character-maker-armor-list" translate="CHARGEN_ADD_ARMOR">Add Armor</a>
 					<div ng-show="savageCharacter.selectedArmor.length > 0">
 						<h4 translate="CHARGEN_ARMOR">Armor</h4>
 						<table class="gear-list">

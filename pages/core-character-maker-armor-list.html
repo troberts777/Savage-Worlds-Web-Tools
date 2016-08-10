@@ -1,17 +1,25 @@
-<div class="modal-container" ng-show="armorDialogOpen == true">
-	<div class="reveal">
-	<button class="no-bottom-margin float-right button small primary" ng-click="closeDialogs()"  type="button" translate="GENERAL_CLOSE"></button>
-	  	<h3 class="lead" translate="CHARGEN_ADD_GEAR">Add Gear</h3>
-
-	  	<div class="row">
+</div>
+<div class="container gear-search-bar">
+	<div class="row">
 	  		<div class="small-12 columns">
 
+<!-- 				<fieldset class="fieldset"> -->
 
-				<fieldset class="fieldset">
-					<legend translate="CHARGEN_FILTER_GEAR">Armor</legend>
-					<input type="text"  ng-model="gearSearch.local_name" />
-				</fieldset>
 
+					<h3 class="text-center" translate="CHARGEN_ADDING_ARMOR">Armor</h3>
+
+					<a class="no-bottom-margin float-right button small primary" href="#/core/character-maker-armor" translate="GENERAL_CLOSE"></a>
+					<label><span translate="CHARGEN_FILTER_GEAR">Search for Gear</span>: <input type="text" class="inline-block input-tighter-padding" ng-model="gearSearch.local_name" />
+						<div class="inline-block item-added-message" ng-show="showAddedMessage" translate="CHARGEN_ITEM_ADDED_TO_INVENTORY"></div>
+					</label>
+				<!-- </fieldset> -->
+			</div>
+		</div>
+</div>
+<div class="gear-margin-top"></div>
+<div class="container">
+	  	<div class="row">
+	  		<div class="small-12 columns">
 				<table class="gear-list">
 					<thead>
 						<tr>
@@ -57,8 +65,5 @@
 				</table>
 			</div>
 	  	</div>
-
-
-
-	</div>
-</div>
+<div class="bottom-status-padding">&nbsp;</div>
+<div ng-include="'pages/chargen-status-bar.html'"></div>

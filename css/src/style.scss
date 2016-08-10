@@ -220,7 +220,27 @@ body {
 		min-height: 275px;
 	}
 
-
+	.gear-search-bar {
+		position: fixed;
+		left: 0;
+		top: 0;
+		background: $headerFooterBackground;
+		border-bottom: solid 2px $primaryBG;
+		color: #fff;
+		width: 100%;
+		padding: 2px 0;
+		.fieldset .legend {
+			background: $headerFooterBackground !important;
+		}
+	}
+	.gear-margin-top {
+		margin-top: 100px;
+	}
+	.item-added-message {
+		padding: 0 30px;
+		text-align: center;
+		color: $primaryBG;
+	}
 	.status-bar {
 		position: fixed;
 		left: 0;
@@ -296,7 +316,10 @@ body {
 		color: #aaa;
 	}
 
-
+	.input-tighter-padding {
+		padding: 0 .5rem !important;
+		height: 1.5rem !important;
+	}
 
 	.creator-preview {
 		background: $secondaryBG;
