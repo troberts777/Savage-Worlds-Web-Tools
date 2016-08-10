@@ -4932,7 +4932,6 @@ savageCharacter.prototype.removeSpecialtyAtIndex = function( skillID, specialtyI
 savageCharacter.prototype.addPerk = function( perkTag ) {
 	for( var perkCounter = 0; perkCounter < this.perkOptions.length; perkCounter++ ) {
 		if( perkTag == this.perkOptions[perkCounter].tag ) {
-			console.log( "perkTag", perkTag);
 			this.selectedPerks.push( this.perkOptions[perkCounter] );
 			return true;
 		}
@@ -6460,7 +6459,7 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 
 			$scope.addEdgeTag = $scope.savageCharacter.availableEdges[0];
 			$scope.addHindranceTag = $scope.savageCharacter.availableHindrances[0];
-			$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
+			$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
 
 		}
 
@@ -6960,10 +6959,10 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 		}
 
 		$scope.addPerk = function( ){
-			if( $scope.addPerkTag.tag != "null" ) {
-				$scope.savageCharacter.addPerk( $scope.addPerkTag.tag);
+			if( $scope.addPerkTag != "null" ) {
+				$scope.savageCharacter.addPerk( $scope.addPerkTag);
 				$scope.validateAndSave();
-				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
+				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
 			}
 
 		}

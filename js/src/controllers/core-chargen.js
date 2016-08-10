@@ -35,7 +35,7 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 
 			$scope.addEdgeTag = $scope.savageCharacter.availableEdges[0];
 			$scope.addHindranceTag = $scope.savageCharacter.availableHindrances[0];
-			$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
+			$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
 
 		}
 
@@ -535,10 +535,10 @@ var corechargenFunctions = function ($rootScope, $translate, $scope, $location, 
 		}
 
 		$scope.addPerk = function( ){
-			if( $scope.addPerkTag.tag != "null" ) {
-				$scope.savageCharacter.addPerk( $scope.addPerkTag.tag);
+			if( $scope.addPerkTag != "null" ) {
+				$scope.savageCharacter.addPerk( $scope.addPerkTag);
 				$scope.validateAndSave();
-				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0];
+				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
 			}
 
 		}

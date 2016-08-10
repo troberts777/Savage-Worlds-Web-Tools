@@ -2821,7 +2821,6 @@ savageCharacter.prototype.removeSpecialtyAtIndex = function( skillID, specialtyI
 savageCharacter.prototype.addPerk = function( perkTag ) {
 	for( var perkCounter = 0; perkCounter < this.perkOptions.length; perkCounter++ ) {
 		if( perkTag == this.perkOptions[perkCounter].tag ) {
-			console.log( "perkTag", perkTag);
 			this.selectedPerks.push( this.perkOptions[perkCounter] );
 			return true;
 		}
