@@ -9,6 +9,10 @@ webApp = angular.module(
 		function ($routeProvider, $translateProvider, $scope, $http) {
 
 			users_preferred_language = "en-US";
+			if( window.navigator.userLanguage )
+				users_preferred_language = window.navigator.userLanguage;
+			if( navigator.language )
+				users_preferred_language = navigator.language;
 			if( localStorage && localStorage["users_preferred_language"] ) {
 				users_preferred_language = localStorage["users_preferred_language"];
 			} else {
