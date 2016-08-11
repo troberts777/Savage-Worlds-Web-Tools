@@ -2,7 +2,7 @@ var availableLanguages = [];
 
 webApp = angular.module(
 	'webApp',
-	['sticky', 'ngRoute', 'ngResource', 'ngSanitize','pascalprecht.translate'],
+	['ngRoute', 'ngResource', 'ngSanitize','pascalprecht.translate'],
 	[
 		'$routeProvider',
 		'$translateProvider',

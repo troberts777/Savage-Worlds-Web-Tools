@@ -2,7 +2,7 @@ var availableLanguages = [];
 
 cordovaApp = angular.module(
 	'cordovaApp',
-	['ngCordova', 'ngRoute', 'ngResource', 'ngSanitize','pascalprecht.translate', 'sticky'],
+	['ngCordova', 'ngRoute', 'ngResource', 'ngSanitize','pascalprecht.translate'],
 	[
 		'$routeProvider',
 		'$translateProvider',
@@ -176,6 +176,7 @@ cordovaApp = angular.module(
 				controller  : 'coreChargenController',
 				activetab: 'chargen-weapons'
 			})
+
 
 			// route for the core character maker powers page
 			.when('/core/character-maker-powers', {

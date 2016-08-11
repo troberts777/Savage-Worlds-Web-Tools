@@ -174,7 +174,7 @@ var availableLanguages = [];
 
 cordovaApp = angular.module(
 	'cordovaApp',
-	['ngCordova', 'ngRoute', 'ngResource', 'ngSanitize','pascalprecht.translate', 'sticky'],
+	['ngCordova', 'ngRoute', 'ngResource', 'ngSanitize','pascalprecht.translate'],
 	[
 		'$routeProvider',
 		'$translateProvider',
@@ -349,6 +349,7 @@ cordovaApp = angular.module(
 				activetab: 'chargen-weapons'
 			})
 
+
 			// route for the core character maker powers page
 			.when('/core/character-maker-powers', {
 				templateUrl : 'pages/core-character-maker-powers.html',
@@ -428,7 +429,7 @@ var availableLanguages = [];
 
 webApp = angular.module(
 	'webApp',
-	['sticky', 'ngRoute', 'ngResource', 'ngSanitize','pascalprecht.translate'],
+	['ngRoute', 'ngResource', 'ngSanitize','pascalprecht.translate'],
 	[
 		'$routeProvider',
 		'$translateProvider',
