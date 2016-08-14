@@ -12167,6 +12167,9 @@ charEffects: function ( charObject ) {
 {
 	 name: {
 		 'en-US': 'Fleet-Footed',
+		 'pt-BR': '',
+		 'de-DE': '',
+		 'ru-RU': '',
 	},
 	 required_edge: '',
 	 required_rank: 0,
@@ -12179,7 +12182,7 @@ charEffects: function ( charObject ) {
 	 book: 1,
 	 child: 0,
 charEffects: function ( charObject ) {
-
+charObject.derived.pace = charObject.derived.pace + 2;
 		},
 requires: function( characterObject) {
 	if(
