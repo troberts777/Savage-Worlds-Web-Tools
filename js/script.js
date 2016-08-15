@@ -6780,7 +6780,7 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 			// if a cordova Application
 			document.addEventListener('deviceready', function () {
 				if( $scope.savageCharacter.name  != "" )
-					fileName = $scope.savageCharacter.name + ".SWT.pdf";
+					fileName = $scope.savageCharacter.name.toLowerCase().replace(" ", "-").replace("'", "").replace("\"", "") + ".SWT.pdf";
 				else
 					fileName = "Nameless.SWT.pdf";
 				if( $cordovaFile) {
