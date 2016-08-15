@@ -18,6 +18,8 @@ SciFi Companion:
 	Cyberware: needs to be coded
 	Robot Creator: needs to be coded
 
+	Data entry for Extras.
+
 
 Super Powers Companion:
 	Races: not entered
@@ -27,3 +29,5 @@ Super Powers Companion:
 	Armor: not entered
 
 	Powers: coding started, but not nearly complete
+
+	Data entry for Extras (not super heros).
