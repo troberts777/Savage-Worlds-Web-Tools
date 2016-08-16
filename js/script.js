@@ -2206,12 +2206,44 @@ savageCharacter.prototype.calcSPC = function() {
 			}
 		}
 
+
 		// for the extra power points perk....
 		if( this.SPCTakenExtraPowerPoints ) {
 			if( this.SPCSelectedPowerLevel == 0 || this.SPCSelectedPowerLevel == 1 ) {
 				this.SPCCurrentPowerPoints += 5;
 			} else {
 				this.SPCCurrentPowerPoints += 10;
+			}
+		}
+
+		for( var powerCounter = 0; powerCounter < this.selectedSPCPowers.length; powerCounter++) {
+			this.selectedSPCPowers[powerCounter].currentCost = this.selectedSPCPowers[powerCounter].cost  / 1* this.selectedSPCPowers[powerCounter].selectedLevel / 1;
+			for( var modCounter = 0; modCounter < this.selectedSPCPowers[powerCounter].modifiersObj.length; modCounter++) {
+				if( typeof(this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost) != "undefined" && this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost != 0) {
+					this.selectedSPCPowers[powerCounter].currentCost += this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost / 1;
+				}
+			}
+
+			if( this.selectedSPCPowers[powerCounter].currentCost > this.SPCPowerLimit) {
+
+				this.validationReport.push(
+					this.getTranslation("CHARGEN_VALIDATION_SPC_OVER_LIMIT").replace(
+						"{value}", this.selectedSPCPowers[powerCounter].local_name
+					)
+				);
+				this.isValid = false;
+
+			}
+
+			this.SPCCurrentPowerPoints -= this.selectedSPCPowers[powerCounter].currentCost;
+
+			if( this.SPCCurrentPowerPoints < 0 ) {
+				this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_SPC_OVER_POWER_POINTS") );
+				this.isValid = false;
+			}
+
+			if( this.selectedSPCPowers[powerCounter].charEffect ) {
+				this.selectedSPCPowers[powerCounter].charEffect( this, this.selectedSPCPowers[powerCounter]);
 			}
 		}
 	}
@@ -2241,6 +2273,8 @@ savageCharacter.prototype.init = function(useLang){
 	this.isNew = true;
 	this.multipleLanguages = false;
 	this.usesStrain = false;
+
+	this.selectedSPCPowers = Array();
 
 	this.powerAlterations = Array();
 
@@ -2437,7 +2471,20 @@ savageCharacter.prototype.init = function(useLang){
 		savageWorldsHindrances[hindranceCounter].bookObj = get_book_by_id( savageWorldsHindrances[hindranceCounter].book );
 	}
 
+	// Localize SPC Powers...
 
+	for( var spcCounter = 0; spcCounter < savageWorldsSPCPowers.length; spcCounter++ ) {
+		savageWorldsSPCPowers[spcCounter].local_name = this.getLocalName( savageWorldsSPCPowers[spcCounter].name );
+		savageWorldsSPCPowers[spcCounter].select_option_name = savageWorldsSPCPowers[spcCounter].local_name;
+
+		savageWorldsSPCPowers[spcCounter].modifiersObj =  JSON.parse(savageWorldsSPCPowers[spcCounter].modifiers)
+		for( var modCounter = 0; modCounter < savageWorldsSPCPowers[spcCounter].modifiersObj.length; modCounter++ ) {
+			savageWorldsSPCPowers[spcCounter].modifiersObj[ modCounter ].local_name = this.getLocalName( savageWorldsSPCPowers[spcCounter].modifiersObj[ modCounter ].name )
+		}
+
+//		savageWorldsSPCPowers[spcCounter].local_description = this.getLocalName( savageWorldsSPCPowers[spcCounter].description );
+		savageWorldsSPCPowers[spcCounter].bookObj = get_book_by_id( savageWorldsSPCPowers[spcCounter].book );
+	}
 
 	// Localize Arcane Backgrounds
 	for( var abCounter = 0; abCounter < savageWorldsArcaneBackgrounds.length; abCounter++ ) {
@@ -4315,6 +4362,20 @@ savageCharacter.prototype.importJSON = function( jsonString ) {
 				this.SPCRisingStars = false;
 			}
 
+			if( importObject.spcPowers ) {
+				//powerID, descriptionText, level, modifiers
+
+				for( var importCounter = 0; importCounter < importObject.spcPowers.length; importCounter++ ) {
+					//console.log(" *", importObject.spcPowers[ importCounter ])
+					powerID = importObject.spcPowers[ importCounter ].id;
+					descriptionText = importObject.spcPowers[ importCounter ].desc;
+					customName = importObject.spcPowers[ importCounter ].customName;
+					level = importObject.spcPowers[ importCounter ].level;
+					modifiers = importObject.spcPowers[ importCounter ].modifiers;
+					this.addSPCPower( powerID, customName, descriptionText, level, modifiers  );
+				}
+			}
+
 			if( importObject.advancements ) {
 				this.selectedAdvancements = Array();
 				this.validate();
@@ -4647,6 +4708,32 @@ savageCharacter.prototype.exportJSON = function(noUUID) {
 		exportObject.knownLanguages = Array();
 		for( var langCounter = 0; langCounter < this.knownLanguagesLimit + 1; langCounter++ ) {
 			exportObject.knownLanguages.push( this.knownLanguages[langCounter] );
+		}
+
+		if( this.usesSPCCreation ) {
+			exportObject.spcPowers = Array()
+
+			for( var powerCounter = 0; powerCounter < this.selectedSPCPowers.length; powerCounter++) {
+
+				var modifierObj = Array();
+				for( var modCounter = 0; modCounter < this.selectedSPCPowers[powerCounter].modifiersObj.length; modCounter++) {
+
+					modifierObj[modCounter] = {
+						//desc: this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].description,
+						cost: this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost,
+					}
+				}
+
+				var exportItem = {
+					id: this.selectedSPCPowers[powerCounter].id,
+					level: this.selectedSPCPowers[powerCounter].selectedLevel,
+					desc: this.selectedSPCPowers[powerCounter].description,
+					customName: this.selectedSPCPowers[powerCounter].custom_name,
+					modifiers: modifierObj
+				}
+
+				exportObject.spcPowers.push( exportItem );
+			}
 		}
 
 		exportObject.advancements = Array();
@@ -5463,6 +5550,40 @@ savageCharacter.prototype.setUsedDuringCombat = function( itemType, gearIndex ) 
 		this.selectedMundaneGear[gearIndex].droppedDuringCombat = false;
 }
 
+savageCharacter.prototype.addSPCPower = function( powerID, customName, descriptionText, level, modifiers ) {
+	if( !descriptionText )
+		descriptionText = "";
+	if( !level )
+		level = 1;
+
+
+	for( var spcCounter = 0; spcCounter < savageWorldsSPCPowers.length; spcCounter++) {
+		if( powerID == savageWorldsSPCPowers[spcCounter].id) {
+			var addPower = angular.copy( savageWorldsSPCPowers[spcCounter] );
+
+			if(!customName) {
+				addPower.custom_name = savageWorldsSPCPowers[spcCounter].local_name;
+			} else {
+				addPower.custom_name = customName;
+			}
+
+			addPower.description = descriptionText;
+			addPower.selectedLevel = level / 1;
+			for( var modCounter = 0; modCounter < addPower.modifiersObj.length;modCounter++) {
+				addPower.modifiersObj[modCounter].description = "";
+				addPower.modifiersObj[modCounter].currentCost = 0;
+				if( modifiers && modifiers[modCounter] ) {
+					//addPower.modifiersObj[modCounter].description = modifiers[modCounter].desc;
+					addPower.modifiersObj[modCounter].currentCost = modifiers[modCounter].cost;
+				}
+			}
+			this.selectedSPCPowers.push( addPower );
+
+			return true;
+		}
+	}
+	return false;
+}
 /* Extensions to  the savageCharacter class for Savage Rifts® exceptions and code */
 
 // mainly for Born a Hero checks
@@ -6547,6 +6668,10 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 			$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
 
 			$scope.gearAddedMessage = "";
+
+			$scope.savageWorldsSPCPowers = savageWorldsSPCPowers;
+
+			$scope.selectedSPCPower = savageWorldsSPCPowers[0];
 		}
 
 		$scope.init();
@@ -6583,6 +6708,10 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 			$scope.addEditPowerDialogOpen = true;
 		}
 
+		$scope.addSPCPower = function() {
+			$scope.savageCharacter.addSPCPower( $scope.selectedSPCPower.id );
+			$scope.validateAndSave();
+		}
 
 		$scope.propogatePowerDialog = function (indexNumber) {
 
@@ -7378,6 +7507,32 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 			$scope.validateAndSave();
 		}
 
+		$scope.incrementSPCPowerLevel = function( powerIndex ) {
+			console.log("incrementSPCPowerLevel", powerIndex);
+
+
+			$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel++;
+			if( $scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel > $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level) {
+				$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel = $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level;
+			}
+			$scope.validateAndSave();
+			return;
+		}
+
+		$scope.decrementSPCPowerLevel = function( powerIndex ) {
+			console.log("decrementSPCPowerLevel", powerIndex);
+			$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel--;
+			if( $scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel < 1) {
+				$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel = 1;
+			}
+			$scope.validateAndSave();
+			return;
+		}
+
+		$scope.removeSPCPower = function( powerIndex ) {
+			$scope.savageCharacter.selectedSPCPowers.splice( powerIndex, 1)
+			$scope.validateAndSave();
+		}
 
 
 	}
@@ -16548,6 +16703,7 @@ savageWorldsBooksList[1] = {
 		"en-US": "Fantasy Companion",
 		"pt-BR": "Brazilian Fantasy",
 		"de-DE": "German Fantasy",
+		"pt-BR": "Compêndio de Fantasia",
 	},
 	short_name: "peg_swfc",
 	abbrev: "FC",
@@ -16557,6 +16713,7 @@ savageWorldsBooksList[1] = {
 		"en-US": "Pinnacle Entertainment Group",
 		"pt-BR": "Pinnacle Entertainment Group",
 		"de-DE": "",
+		"pt-BR": "",
 
 	},
 	year: "2012",
@@ -16564,6 +16721,7 @@ savageWorldsBooksList[1] = {
 		"en-US": "2012 Pinnacle Entertainment Group",
 		"pt-BR": "",
 		"de-DE": "",
+		"pt-BR": "",
 
 	},
 	buyme: "http://www.peginc.com/store/savage-worlds-fantasy-companion/"
@@ -16574,6 +16732,7 @@ savageWorldsBooksList[2] = {
 	core: false,
 	name: {
 		"en-US": "Horror Companion",
+		"pt-BR": "Compêndio de Horror",
 	},
 	short_name: "peg_swhc",
 	abbrev: "HC",
@@ -16581,11 +16740,13 @@ savageWorldsBooksList[2] = {
 	char_creator: 1,
 	publisher: {
 		"en-US": "Pinnacle Entertainment Group",
+		"pt-BR": "Pinnacle Entertainment Group",
 
 	},
 	year: "2012",
 	copyright: {
 		"en-US": "2012 Pinnacle Entertainment Group",
+		"pt-BR": "",
 
 	},
 	buyme: "http://www.peginc.com/store/savage-worlds-horror-companion-2/"
@@ -16596,6 +16757,7 @@ savageWorldsBooksList[3] = {
 	core: false,
 	name: {
 		"en-US": "Science Fiction Companion",
+		"pt-BR": "Compêndio de Ficção Científica",
 	},
 	short_name: "peg_sfc",
 	abbrev: "SFC",
@@ -16603,11 +16765,13 @@ savageWorldsBooksList[3] = {
 	char_creator: 1,
 	publisher: {
 		"en-US": "Pinnacle Entertainment Group",
+		"pt-BR": "Pinnacle Entertainment Group",
 
 	},
 	year: "2014",
 	copyright: {
 		"en-US": "2014 Pinnacle Entertainment Group",
+		"pt-BR": "",
 
 	},
 	buyme: "https://www.peginc.com/store/science-fiction-companion-le-bundle/"
@@ -16618,6 +16782,7 @@ savageWorldsBooksList[4] = {
 	core: false,
 	name: {
 		"en-US": "Super Powers Companion",
+		"pt-BR": "Compêndio de Superpoderes",
 	},
 	short_name: "peg_spc2",
 	abbrev: "SPC",
@@ -16625,11 +16790,13 @@ savageWorldsBooksList[4] = {
 	char_creator: 1,
 	publisher: {
 		"en-US": "Pinnacle Entertainment Group",
+		"pt-BR": "Pinnacle Entertainment Group",
 
 	},
 	year: "2014",
 	copyright: {
 		"en-US": "2014 Pinnacle Entertainment Group",
+		"pt-BR": "",
 
 	},
 	buyme: "https://www.peginc.com/store/super-powers-companion-second-edition-le/"
@@ -16684,6 +16851,7 @@ savageWorldsBooksList[7] = {
 	core: false,
 	name: {
 		"en-US": "The Last Parsec",
+		"pt-BR": "The Last Parsec",
 	},
 	short_name: "peg_tlp",
 	abbrev: "TLP",
@@ -16691,11 +16859,13 @@ savageWorldsBooksList[7] = {
 	char_creator: 0,
 	publisher: {
 		"en-US": "Pinnacle Enterainment Group",
+		"pt-BR": "Pinnacle Enterainment Group",
 
 	},
 	year: "2015",
 	copyright: {
 		"en-US": "2015 Pinnacle Enterainment Group",
+		"pt-BR": "",
 
 	},
 	buyme: "https://www.peginc.com/store/the-last-parsec-core/"
@@ -37923,6 +38093,7 @@ availableLanguages.push ({
 			GENERAL_ADD: 'Add',
 			GENERAL_COST: 'Cost',
 			GENERAL_WEIGHT: 'Weight',
+			GENERAL_VARIABLE: 'variable',
 			GENERAL_CHARGEN_PDF_LAYOUT: 'Character PDF Layout',
 			GENERAL_PORTRAIT: 'Portrait',
 			GENERAL_LANDSCAPE: 'Landscape',
@@ -38082,6 +38253,7 @@ availableLanguages.push ({
 			GENERAL_BUY_FREE: 'Get Free',
 			GENERAL_BUY: 'Buy',
 			GENERAL_CREDITS: 'Credits',
+			CREDITS_BLURB: 'These are the people who have actively worked on this project in alphabetical order by his or her surname.',
 			INDEX_CREDITS: 'Credits',
 			GENERAL_LICENSE: 'License',
 			GENERAL_THANK_YOU: 'Thank You',
@@ -38238,6 +38410,15 @@ availableLanguages.push ({
 			SPC_SUPER_KARMA_AVAILABLE: 'Super Karma Available',
 			SPC_SUPER_KARMA_BLURB: 'To take extra power points select a second Major Hindrance then choose \'Extra Power Points\' from above.',
 			SPC_ADDITIONAL_POWER_POINTS_PERK: 'Extra Power Points',
+			CHARGEN_VALIDATION_SPC_OVER_LIMIT: 'Super Power \'{value}\' is over your power limit',
+			CHARGEN_VALIDATION_SPC_OVER_POWER_POINTS: 'You have spent too many Super Power points',
+			SPC_POWER_MODIFIERS: 'Power modifiers',
+			SPC_REMOVE_POWER: 'Remove Power',
+			SPC_POWER_NAME: 'Power Name',
+			GENERAL_LEVEL: 'Level',
+			GENERAL_COST_PER_LEVEL: 'Cost per level',
+			GENERAL_TOTAL_COST: 'Total Cost',
+			SPC_YOUR_DESCRIPTION: 'Your description',
 			CHARGEN_VALIDATION_SPC_EP_REQUIRES_2MAJOR: 'You need to have a second major hindrance to select the \'Extra Power Points\' perk.',
 			GENERAL_ICONIC_FRAMEWORKS: 'Iconic Frameworks',
 
@@ -38265,7 +38446,7 @@ availableLanguages.push ({
 	active: true,
 
 	translations: {
-			BUTTON_LANG_RU: 'ру́сский язы́к',
+			BUTTON_LANG_RU: 'русский',
 
 	}
 
@@ -42537,8 +42718,10 @@ var savageWorldsSPCPowers = Array(
 		 'page': 'p20',
 		 'cost': '2',
 		 'per_level': '0',
+		 'max_level': '1',
 		 'tag': 'absorbtion',
 		 'modifiers': '[{"name":{"en-US":"Matter \/ Energy Master","pt-BR":"","de-DE":""},"points":"5"},{"name":{"en-US":"Reflection","pt-BR":"","de-DE":""},"points":"4"},{"name":{"en-US":"Transference","pt-BR":"","de-DE":""},"points":"2"}]',
+
 },
 {
 		 'id': 2,
@@ -42551,8 +42734,10 @@ var savageWorldsSPCPowers = Array(
 		 'page': 'p20',
 		 'cost': '2',
 		 'per_level': '0',
+		 'max_level': '1',
 		 'tag': 'ageless',
 		 'modifiers': '[{"name":{"en-US":"Very Old","pt-BR":"","de-DE":""},"points":"2"}]',
+
 },
 {
 		 'id': 3,
@@ -42565,8 +42750,10 @@ var savageWorldsSPCPowers = Array(
 		 'page': 'p20',
 		 'cost': '3',
 		 'per_level': '0',
+		 'max_level': '1',
 		 'tag': 'altered-form',
 		 'modifiers': '[{"name":{"en-US":"Grapple","pt-BR":"","de-DE":""},"points":"1","per_level":0},{"name":{"en-US":"Reach","pt-BR":"","de-DE":""},"points":"1","per_level":1}]',
+
 },
 {
 		 'id': 4,
@@ -42579,8 +42766,10 @@ var savageWorldsSPCPowers = Array(
 		 'page': 'p20',
 		 'cost': '2',
 		 'per_level': '1',
+		 'max_level': '1',
 		 'tag': 'animal-control',
 		 'modifiers': '[{"name":{"en-US":"Animal Companion","pt-BR":"","de-DE":""},"points":"0","per_level":0},{"name":{"en-US":"Summonable","pt-BR":"","de-DE":""},"points":"4","per_level":0},{"name":{"en-US":"Super Powers","pt-BR":"","de-DE":""},"points":"0","per_level":0},{"name":{"en-US":"Telepathic Link","pt-BR":"","de-DE":""},"points":"1","per_level":0}]',
+
 },
 {
 		 'id': 5,
@@ -42593,8 +42782,10 @@ var savageWorldsSPCPowers = Array(
 		 'page': 'p21',
 		 'cost': '2',
 		 'per_level': '0',
+		 'max_level': '1',
 		 'tag': 'aquatic',
 		 'modifiers': '[]',
+
 },
 {
 		 'id': 6,
@@ -42602,13 +42793,19 @@ var savageWorldsSPCPowers = Array(
 		 'en-US': 'Armor',
 		 'pt-BR': '',
 		 'de-DE': '',
+		 'ru-RU': '',
 	},
 		 'book': 5,
 		 'page': 'p22',
 		 'cost': '1',
 		 'per_level': '1',
+		 'max_level': '10',
 		 'tag': 'armor',
-		 'modifiers': '[{"name":{"en-US":"Hardy","pt-BR":"","de-DE":""},"points":"3","per_level":0},{"name":{"en-US":"Heavy Armor","pt-BR":"","de-DE":""},"points":"4","per_level":0},{"name":{"en-US":"Partial Protection","pt-BR":"","de-DE":""},"points":"0","per_level":0}]',
+		 'modifiers': '[{"name":{"en-US":"Hardy","pt-BR":"","de-DE":"","ru-RU":""},"points":"3","per_level":0},{"name":{"en-US":"Heavy Armor","pt-BR":"","de-DE":"","ru-RU":""},"points":"4","per_level":0},{"name":{"en-US":"Partial Protection","pt-BR":"","de-DE":"","ru-RU":""},"points":"0","per_level":0}]',
+charEffect: function( charObject, powerObject ) {
+	// Affect Character Object Code here
+	charObject.derived.armor += powerObject.selectedLevel * 2;
+}
 }
 );
 

@@ -654,3 +654,32 @@ button.round, .button.round {
     background-position-x: 5%;
 }
 
+.spc-power-item {
+	textarea {
+		height: 300px;
+		width: 100%;
+	}
+
+	.spc-power-options {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: block;
+		li {
+			list-style: none;
+			display: block;
+			padding: 2px 5px;
+			margin: 0 0 2px 0;
+			background: rgba( 0,0,0, .5);
+			input {
+				margin: 0 10px 0 0;
+			}
+			label {
+				margin: 0;
+			}
+
+
+		}
+
+	}
+}

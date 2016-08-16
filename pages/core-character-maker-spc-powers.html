@@ -45,7 +45,75 @@
 					<div class="columns small-12 medium-12 large-12">
 						<fieldset class="fieldset text-center">
 							<legend translate="GENERAL_POWERS">Powers</legend>
-							<button class="button expanded primary small" translate="CHARGEN_ADD_POWER">Add Power</button>
+							<div class="row">
+								<div class="columns small-12 medium-6 large-6">
+									<label>
+										<select ng-model="selectedSPCPower" ng-options="powerOption as powerOption.local_name for powerOption in savageWorldsSPCPowers">
+										</select>
+									</label>
+								</div>
+								<div class="columns small-12 medium-6 large-6">
+									<button ng-click="addSPCPower()" class="button expanded primary small" translate="CHARGEN_ADD_POWER">Add Power</button>
+								</div>
+							</div>
+							<div ng-repeat="spcPower in savageCharacter.selectedSPCPowers" ng-init="powerIndex = $index">
+								<div class="row">
+									<div class="columns small-12 medium-12 large-12 text-left">
+										<fieldset class="fieldset spc-power-item">
+											<legend>{{spcPower.local_name}} ({{spcPower.page}})</legend>
+
+											<div class="row">
+												<div class="columns small-12 medium-6 large-6 text-left">
+
+
+													<h3 translate="SPC_POWER_MODIFIERS">Power Modifiers</h3>
+													<ul class="spc-power-options">
+														<li ng-repeat="spcModifier in spcPower.modifiersObj">
+															<div ng-show="spcModifier.points == 0">
+																<label><input size=3 class="inline-block" type="text" ng-model="spcModifier.currentCost" ng-change="validateAndSave();">{{spcModifier.local_name}} (<span translate="GENERAL_VARIABLE"></span>)</label>
+															</div>
+															<div ng-show="spcModifier.points > 0">
+																<label><input type="checkbox" ng-true-value="{{spcModifier.points}}" ng-false-value="0" ng-model="spcModifier.currentCost" ng-change="validateAndSave();" ng-checked="spcModifier.currentCost > 0">{{spcModifier.local_name}} ({{spcModifier.points}})</label>
+															</div>
+															<br />
+														</li>
+													</ul>
+												</div>
+
+												<div class="columns small-12 medium-6 large-6 text-left">
+													<div class="text-right">
+														<h4><span translate="GENERAL_TOTAL_COST">Total Cost</span>: {{spcPower.currentCost}}</h4>
+														<div ng-show="spcPower.per_level > 0">
+															<div class="row">
+																<div class="columns small-6">
+																	<label><span translate="GENERAL_COST_PER_LEVEL"> Cost per Level</span>: {{spcPower.cost}}</label>
+
+																</div>
+																<div class="columns small-6">
+																	<span translate="GENERAL_LEVEL">Level</span>:
+																	<button ng-click="decrementSPCPowerLevel($index);" class="button primary tiny">-</button>
+																	{{spcPower.selectedLevel}}
+																	<button ng-click="incrementSPCPowerLevel($index);" class="button primary tiny">+</button>
+																</div>
+															</div>
+														</div>
+
+													</div>
+													<button ng-click="removeSPCPower($index)" class="button primary expanded tiny" translate="SPC_REMOVE_POWER">Remove</button>
+													<label><span translate="SPC_POWER_NAME">Power Name</span><br />
+														<input type="text" ng-model="spcPower.custom_name" ng-keyup="justSave();" />
+													</label>
+													<label><h4 translate="SPC_YOUR_DESCRIPTION">Your Description</h4>
+													<textarea ng-model="spcPower.description" ng-keyup="justSave();"></textarea></label>
+
+
+												</div>
+											</div>
+
+										</fieldset>
+									</div>
+								</div>
+							</div>
 						</fieldset>
 					</div>
 				</div>

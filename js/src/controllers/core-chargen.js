@@ -38,6 +38,10 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 			$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
 
 			$scope.gearAddedMessage = "";
+
+			$scope.savageWorldsSPCPowers = savageWorldsSPCPowers;
+
+			$scope.selectedSPCPower = savageWorldsSPCPowers[0];
 		}
 
 		$scope.init();
@@ -74,6 +78,10 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 			$scope.addEditPowerDialogOpen = true;
 		}
 
+		$scope.addSPCPower = function() {
+			$scope.savageCharacter.addSPCPower( $scope.selectedSPCPower.id );
+			$scope.validateAndSave();
+		}
 
 		$scope.propogatePowerDialog = function (indexNumber) {
 
@@ -869,6 +877,32 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 			$scope.validateAndSave();
 		}
 
+		$scope.incrementSPCPowerLevel = function( powerIndex ) {
+			console.log("incrementSPCPowerLevel", powerIndex);
+
+
+			$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel++;
+			if( $scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel > $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level) {
+				$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel = $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level;
+			}
+			$scope.validateAndSave();
+			return;
+		}
+
+		$scope.decrementSPCPowerLevel = function( powerIndex ) {
+			console.log("decrementSPCPowerLevel", powerIndex);
+			$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel--;
+			if( $scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel < 1) {
+				$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel = 1;
+			}
+			$scope.validateAndSave();
+			return;
+		}
+
+		$scope.removeSPCPower = function( powerIndex ) {
+			$scope.savageCharacter.selectedSPCPowers.splice( powerIndex, 1)
+			$scope.validateAndSave();
+		}
 
 
 	}

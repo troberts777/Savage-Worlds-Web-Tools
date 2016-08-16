@@ -48,6 +48,7 @@ savageWorldsBooksList[1] = {
 		"en-US": "Fantasy Companion",
 		"pt-BR": "Brazilian Fantasy",
 		"de-DE": "German Fantasy",
+		"pt-BR": "Compêndio de Fantasia",
 	},
 	short_name: "peg_swfc",
 	abbrev: "FC",
@@ -57,6 +58,7 @@ savageWorldsBooksList[1] = {
 		"en-US": "Pinnacle Entertainment Group",
 		"pt-BR": "Pinnacle Entertainment Group",
 		"de-DE": "",
+		"pt-BR": "",
 
 	},
 	year: "2012",
@@ -64,6 +66,7 @@ savageWorldsBooksList[1] = {
 		"en-US": "2012 Pinnacle Entertainment Group",
 		"pt-BR": "",
 		"de-DE": "",
+		"pt-BR": "",
 
 	},
 	buyme: "http://www.peginc.com/store/savage-worlds-fantasy-companion/"
@@ -74,6 +77,7 @@ savageWorldsBooksList[2] = {
 	core: false,
 	name: {
 		"en-US": "Horror Companion",
+		"pt-BR": "Compêndio de Horror",
 	},
 	short_name: "peg_swhc",
 	abbrev: "HC",
@@ -81,11 +85,13 @@ savageWorldsBooksList[2] = {
 	char_creator: 1,
 	publisher: {
 		"en-US": "Pinnacle Entertainment Group",
+		"pt-BR": "Pinnacle Entertainment Group",
 
 	},
 	year: "2012",
 	copyright: {
 		"en-US": "2012 Pinnacle Entertainment Group",
+		"pt-BR": "",
 
 	},
 	buyme: "http://www.peginc.com/store/savage-worlds-horror-companion-2/"
@@ -96,6 +102,7 @@ savageWorldsBooksList[3] = {
 	core: false,
 	name: {
 		"en-US": "Science Fiction Companion",
+		"pt-BR": "Compêndio de Ficção Científica",
 	},
 	short_name: "peg_sfc",
 	abbrev: "SFC",
@@ -103,11 +110,13 @@ savageWorldsBooksList[3] = {
 	char_creator: 1,
 	publisher: {
 		"en-US": "Pinnacle Entertainment Group",
+		"pt-BR": "Pinnacle Entertainment Group",
 
 	},
 	year: "2014",
 	copyright: {
 		"en-US": "2014 Pinnacle Entertainment Group",
+		"pt-BR": "",
 
 	},
 	buyme: "https://www.peginc.com/store/science-fiction-companion-le-bundle/"
@@ -118,6 +127,7 @@ savageWorldsBooksList[4] = {
 	core: false,
 	name: {
 		"en-US": "Super Powers Companion",
+		"pt-BR": "Compêndio de Superpoderes",
 	},
 	short_name: "peg_spc2",
 	abbrev: "SPC",
@@ -125,11 +135,13 @@ savageWorldsBooksList[4] = {
 	char_creator: 1,
 	publisher: {
 		"en-US": "Pinnacle Entertainment Group",
+		"pt-BR": "Pinnacle Entertainment Group",
 
 	},
 	year: "2014",
 	copyright: {
 		"en-US": "2014 Pinnacle Entertainment Group",
+		"pt-BR": "",
 
 	},
 	buyme: "https://www.peginc.com/store/super-powers-companion-second-edition-le/"
@@ -184,6 +196,7 @@ savageWorldsBooksList[7] = {
 	core: false,
 	name: {
 		"en-US": "The Last Parsec",
+		"pt-BR": "The Last Parsec",
 	},
 	short_name: "peg_tlp",
 	abbrev: "TLP",
@@ -191,11 +204,13 @@ savageWorldsBooksList[7] = {
 	char_creator: 0,
 	publisher: {
 		"en-US": "Pinnacle Enterainment Group",
+		"pt-BR": "Pinnacle Enterainment Group",
 
 	},
 	year: "2015",
 	copyright: {
 		"en-US": "2015 Pinnacle Enterainment Group",
+		"pt-BR": "",
 
 	},
 	buyme: "https://www.peginc.com/store/the-last-parsec-core/"

@@ -797,3 +797,28 @@ button.round, .button.round {
   background-position: center left;
   background-size: 25% auto;
   background-position-x: 5%; }
+
+/* line 658, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+.spc-power-item textarea {
+  height: 300px;
+  width: 100%; }
+
+/* line 663, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+.spc-power-item .spc-power-options {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: block; }
+  /* line 668, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+  .spc-power-item .spc-power-options li {
+    list-style: none;
+    display: block;
+    padding: 2px 5px;
+    margin: 0 0 2px 0;
+    background: rgba(0, 0, 0, 0.5); }
+    /* line 674, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    .spc-power-item .spc-power-options li input {
+      margin: 0 10px 0 0; }
+    /* line 677, /srv/www/jdgwf.com/swwt2/public_html/css/src/style.scss */
+    .spc-power-item .spc-power-options li label {
+      margin: 0; }

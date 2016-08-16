@@ -27,12 +27,44 @@ savageCharacter.prototype.calcSPC = function() {
 			}
 		}
 
+
 		// for the extra power points perk....
 		if( this.SPCTakenExtraPowerPoints ) {
 			if( this.SPCSelectedPowerLevel == 0 || this.SPCSelectedPowerLevel == 1 ) {
 				this.SPCCurrentPowerPoints += 5;
 			} else {
 				this.SPCCurrentPowerPoints += 10;
+			}
+		}
+
+		for( var powerCounter = 0; powerCounter < this.selectedSPCPowers.length; powerCounter++) {
+			this.selectedSPCPowers[powerCounter].currentCost = this.selectedSPCPowers[powerCounter].cost  / 1* this.selectedSPCPowers[powerCounter].selectedLevel / 1;
+			for( var modCounter = 0; modCounter < this.selectedSPCPowers[powerCounter].modifiersObj.length; modCounter++) {
+				if( typeof(this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost) != "undefined" && this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost != 0) {
+					this.selectedSPCPowers[powerCounter].currentCost += this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost / 1;
+				}
+			}
+
+			if( this.selectedSPCPowers[powerCounter].currentCost > this.SPCPowerLimit) {
+
+				this.validationReport.push(
+					this.getTranslation("CHARGEN_VALIDATION_SPC_OVER_LIMIT").replace(
+						"{value}", this.selectedSPCPowers[powerCounter].local_name
+					)
+				);
+				this.isValid = false;
+
+			}
+
+			this.SPCCurrentPowerPoints -= this.selectedSPCPowers[powerCounter].currentCost;
+
+			if( this.SPCCurrentPowerPoints < 0 ) {
+				this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_SPC_OVER_POWER_POINTS") );
+				this.isValid = false;
+			}
+
+			if( this.selectedSPCPowers[powerCounter].charEffect ) {
+				this.selectedSPCPowers[powerCounter].charEffect( this, this.selectedSPCPowers[powerCounter]);
 			}
 		}
 	}
@@ -62,6 +94,8 @@ savageCharacter.prototype.init = function(useLang){
 	this.isNew = true;
 	this.multipleLanguages = false;
 	this.usesStrain = false;
+
+	this.selectedSPCPowers = Array();
 
 	this.powerAlterations = Array();
 
@@ -258,7 +292,20 @@ savageCharacter.prototype.init = function(useLang){
 		savageWorldsHindrances[hindranceCounter].bookObj = get_book_by_id( savageWorldsHindrances[hindranceCounter].book );
 	}
 
+	// Localize SPC Powers...
 
+	for( var spcCounter = 0; spcCounter < savageWorldsSPCPowers.length; spcCounter++ ) {
+		savageWorldsSPCPowers[spcCounter].local_name = this.getLocalName( savageWorldsSPCPowers[spcCounter].name );
+		savageWorldsSPCPowers[spcCounter].select_option_name = savageWorldsSPCPowers[spcCounter].local_name;
+
+		savageWorldsSPCPowers[spcCounter].modifiersObj =  JSON.parse(savageWorldsSPCPowers[spcCounter].modifiers)
+		for( var modCounter = 0; modCounter < savageWorldsSPCPowers[spcCounter].modifiersObj.length; modCounter++ ) {
+			savageWorldsSPCPowers[spcCounter].modifiersObj[ modCounter ].local_name = this.getLocalName( savageWorldsSPCPowers[spcCounter].modifiersObj[ modCounter ].name )
+		}
+
+//		savageWorldsSPCPowers[spcCounter].local_description = this.getLocalName( savageWorldsSPCPowers[spcCounter].description );
+		savageWorldsSPCPowers[spcCounter].bookObj = get_book_by_id( savageWorldsSPCPowers[spcCounter].book );
+	}
 
 	// Localize Arcane Backgrounds
 	for( var abCounter = 0; abCounter < savageWorldsArcaneBackgrounds.length; abCounter++ ) {
@@ -2136,6 +2183,20 @@ savageCharacter.prototype.importJSON = function( jsonString ) {
 				this.SPCRisingStars = false;
 			}
 
+			if( importObject.spcPowers ) {
+				//powerID, descriptionText, level, modifiers
+
+				for( var importCounter = 0; importCounter < importObject.spcPowers.length; importCounter++ ) {
+					//console.log(" *", importObject.spcPowers[ importCounter ])
+					powerID = importObject.spcPowers[ importCounter ].id;
+					descriptionText = importObject.spcPowers[ importCounter ].desc;
+					customName = importObject.spcPowers[ importCounter ].customName;
+					level = importObject.spcPowers[ importCounter ].level;
+					modifiers = importObject.spcPowers[ importCounter ].modifiers;
+					this.addSPCPower( powerID, customName, descriptionText, level, modifiers  );
+				}
+			}
+
 			if( importObject.advancements ) {
 				this.selectedAdvancements = Array();
 				this.validate();
@@ -2468,6 +2529,32 @@ savageCharacter.prototype.exportJSON = function(noUUID) {
 		exportObject.knownLanguages = Array();
 		for( var langCounter = 0; langCounter < this.knownLanguagesLimit + 1; langCounter++ ) {
 			exportObject.knownLanguages.push( this.knownLanguages[langCounter] );
+		}
+
+		if( this.usesSPCCreation ) {
+			exportObject.spcPowers = Array()
+
+			for( var powerCounter = 0; powerCounter < this.selectedSPCPowers.length; powerCounter++) {
+
+				var modifierObj = Array();
+				for( var modCounter = 0; modCounter < this.selectedSPCPowers[powerCounter].modifiersObj.length; modCounter++) {
+
+					modifierObj[modCounter] = {
+						//desc: this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].description,
+						cost: this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost,
+					}
+				}
+
+				var exportItem = {
+					id: this.selectedSPCPowers[powerCounter].id,
+					level: this.selectedSPCPowers[powerCounter].selectedLevel,
+					desc: this.selectedSPCPowers[powerCounter].description,
+					customName: this.selectedSPCPowers[powerCounter].custom_name,
+					modifiers: modifierObj
+				}
+
+				exportObject.spcPowers.push( exportItem );
+			}
 		}
 
 		exportObject.advancements = Array();
@@ -3282,4 +3369,39 @@ savageCharacter.prototype.setUsedDuringCombat = function( itemType, gearIndex ) 
 		this.selectedShields[gearIndex].droppedDuringCombat = false;
 	if( itemType == "gear")
 		this.selectedMundaneGear[gearIndex].droppedDuringCombat = false;
+}
+
+savageCharacter.prototype.addSPCPower = function( powerID, customName, descriptionText, level, modifiers ) {
+	if( !descriptionText )
+		descriptionText = "";
+	if( !level )
+		level = 1;
+
+
+	for( var spcCounter = 0; spcCounter < savageWorldsSPCPowers.length; spcCounter++) {
+		if( powerID == savageWorldsSPCPowers[spcCounter].id) {
+			var addPower = angular.copy( savageWorldsSPCPowers[spcCounter] );
+
+			if(!customName) {
+				addPower.custom_name = savageWorldsSPCPowers[spcCounter].local_name;
+			} else {
+				addPower.custom_name = customName;
+			}
+
+			addPower.description = descriptionText;
+			addPower.selectedLevel = level / 1;
+			for( var modCounter = 0; modCounter < addPower.modifiersObj.length;modCounter++) {
+				addPower.modifiersObj[modCounter].description = "";
+				addPower.modifiersObj[modCounter].currentCost = 0;
+				if( modifiers && modifiers[modCounter] ) {
+					//addPower.modifiersObj[modCounter].description = modifiers[modCounter].desc;
+					addPower.modifiersObj[modCounter].currentCost = modifiers[modCounter].cost;
+				}
+			}
+			this.selectedSPCPowers.push( addPower );
+
+			return true;
+		}
+	}
+	return false;
 }
