@@ -15,13 +15,15 @@ var savageWorldsGearMundane = Array(
 {
 	 name: {
 		 'en-US': 'Active Night Vision Goggles',
-		 'pt-BR': '',
+		 'pt-BR': '√"culos de Vis√£o Noturna Ativos',
 		 'de-DE': '',
+		 'ru-RU': '',
 	},
 	 notes: {
 		 'en-US': '',
 		 'pt-BR': '',
 		 'de-DE': '',
+		 'ru-RU': '',
 	},
 		 'tag': 'active-night-vision-goggles',
 		 'book': 1,
@@ -399,13 +401,15 @@ var savageWorldsGearMundane = Array(
 {
 	 name: {
 		 'en-US': 'Candle',
-		 'pt-BR': '',
+		 'pt-BR': 'Vela',
 		 'de-DE': '',
+		 'ru-RU': '',
 	},
 	 notes: {
 		 'en-US': 'provides light in 2" radius',
 		 'pt-BR': '',
 		 'de-DE': '',
+		 'ru-RU': '',
 	},
 		 'tag': 'candle',
 		 'book': 1,

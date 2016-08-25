@@ -19,8 +19,9 @@ savageWorldsSettingRules[0] = {
 	page: "p108",
 	name: {
 		 'en-US': 'Born a Hero',
-		 'pt-BR': '',
+		 'pt-BR': 'Nasce um Herói',
 		 'de-DE': '',
+		 'ru-RU': '',
 	},
 
 	tag: "born-a-hero",
@@ -34,8 +35,9 @@ savageWorldsSettingRules[1] = {
 	page: "p109",
 	name: {
 		 'en-US': 'Multiple Languages',
-		 'pt-BR': '',
+		 'pt-BR': 'Múltiplos Idiomas',
 		 'de-DE': '',
+		 'ru-RU': '',
 	},
 
 	tag: "multiple-languages",
@@ -49,8 +51,9 @@ savageWorldsSettingRules[2] = {
 	page: "p109",
 	name: {
 		 'en-US': 'No Power Points',
-		 'pt-BR': '',
+		 'pt-BR': 'Sem Pontos de Poder',
 		 'de-DE': '',
+		 'ru-RU': '',
 	},
 
 	tag: "no-power-points",
@@ -64,8 +67,9 @@ savageWorldsSettingRules[3] = {
 	page: "p110",
 	name: {
 		 'en-US': 'Skill Specialization',
-		 'pt-BR': '',
+		 'pt-BR': 'Especialização de Perícias',
 		 'de-DE': '',
+		 'ru-RU': '',
 	},
 
 	tag: "skill-specialization",
@@ -79,8 +83,9 @@ savageWorldsSettingRules[4] = {
 	page: "p22",
 	name: {
 		 'en-US': 'Sanity',
-		 'pt-BR': '',
+		 'pt-BR': 'Sanidade',
 		 'de-DE': '',
+		 'ru-RU': '',
 	},
 
 	tag: "sanity",
@@ -94,8 +99,9 @@ savageWorldsSettingRules[5] = {
 	page: "p29",
 	name: {
 		 'en-US': 'Cyberware & Strain',
-		 'pt-BR': '',
+		 'pt-BR': 'Cyberware & Tensão',
 		 'de-DE': '',
+		 'ru-RU': '',
 	},
 
 	tag: "cyberware-strain",

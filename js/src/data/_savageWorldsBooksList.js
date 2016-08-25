@@ -18,8 +18,8 @@ savageWorldsBooksList[0] = {
 	core: true,
 	name: {
 		"en-US": "Savage Worlds Deluxe",
-		"de-DE": "German Savage Worlds",
 		"pt-BR": "Savage Brazilians",
+		"ru-RU": "Дневник авантюриста",
 	},
 	short_name: "peg_swd_ee",
 	abbrev: "SWD:EE",
@@ -27,15 +27,15 @@ savageWorldsBooksList[0] = {
 	char_creator: 1,
 	publisher: {
 		"en-US": "Pinnacle Entertainment Group",
-		"de-DE": "Pinnacle Entertainment Group",
 		"pt-BR": "PEG",
+		"ru-RU": "",
 
 	},
 	year: "2011",
 	copyright: {
 		"en-US": "2011 Pinnacle Entertainment Group",
-		"de-DE": "2011 Pinnacle Entertainment Group",
 		"pt-BR": "Poog",
+		"ru-RU": "",
 
 	},
 	buyme: "http://www.peginc.com/store/savage-worlds-deluxe/"
@@ -46,8 +46,6 @@ savageWorldsBooksList[1] = {
 	core: false,
 	name: {
 		"en-US": "Fantasy Companion",
-		"pt-BR": "Brazilian Fantasy",
-		"de-DE": "German Fantasy",
 		"pt-BR": "Compêndio de Fantasia",
 	},
 	short_name: "peg_swfc",
@@ -56,16 +54,12 @@ savageWorldsBooksList[1] = {
 	char_creator: 1,
 	publisher: {
 		"en-US": "Pinnacle Entertainment Group",
-		"pt-BR": "Pinnacle Entertainment Group",
-		"de-DE": "",
 		"pt-BR": "",
 
 	},
 	year: "2012",
 	copyright: {
 		"en-US": "2012 Pinnacle Entertainment Group",
-		"pt-BR": "",
-		"de-DE": "",
 		"pt-BR": "",
 
 	},

@@ -6,8 +6,10 @@ function savageCharacter (useLang) {
 }
 
 savageCharacter.prototype.calcSPC = function() {
-	this.SPCPowerLimit = 0;
+
 	if( this.usesSPCCreation ) {
+		this.SPCPowerLimit = 0;
+		this.SPCCurrentPowerPoints = 0;
 		if( this.SPCRisingStars ) {
 			this.SPCCurrentPowerPoints = this.SPCPowerLevels[ this.SPCSelectedPowerLevel ].rising_stars_power_points;
 			this.SPCCurrentPowerPoints += this.spcExtraPowerPoints;
@@ -1752,8 +1754,8 @@ savageCharacter.prototype.validate = function() {
 	};
 
 	// recalc derived toughness
-//	this.derived.toughness = Math.floor(this.displayAttributes.vigor.value / 2) + 2;
-	this.derived.toughness += this.attributeBoost.vigor / 2;
+	this.derived.toughness = Math.floor(this.displayAttributes.vigor.value / 2) + 2;
+//	this.derived.toughness += this.attributeBoost.vigor / 2;
 
  	this.currentFunds = this.startingFunds;
  	this.currentLoad = 0;
