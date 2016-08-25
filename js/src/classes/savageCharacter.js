@@ -907,6 +907,7 @@ savageCharacter.prototype.validate = function() {
 	this.skillPointsAvailable = 15;
 	this.skillPointsUsed = 0;
 
+	this.encumbrance_multiplier = 5;
 
 
 	this.spcExtraPowerPoints = 0;
@@ -1003,7 +1004,7 @@ savageCharacter.prototype.validate = function() {
 
 
 	// Calc init derived stats
-	this.derived.toughness = Math.floor(this.displayAttributes.vigor.value / 2) + 2;
+	this.derived.toughness = 0; // Math.floor(this.displayAttributes.vigor.value / 2) + 2;
 	this.derived.armor = 0;
 	this.derived.currentLoad = 0;
 	this.derived.combatLoad = 0;
@@ -1754,9 +1755,9 @@ savageCharacter.prototype.validate = function() {
 	};
 
 	// recalc derived toughness
-	this.derived.toughness = Math.floor(this.displayAttributes.vigor.value / 2) + 2;
-//	this.derived.toughness += this.attributeBoost.vigor / 2;
-
+	this.derived.toughness_base = Math.floor(this.displayAttributes.vigor.value / 2) + 2;
+	//this.derived.toughness += this.attributeBoost.vigor; // will always be in steps of 2, so just add it ;)
+	this.derived.toughness += this.derived.toughness_base;
  	this.currentFunds = this.startingFunds;
  	this.currentLoad = 0;
  	this.combatLoad = 0;
@@ -1880,7 +1881,9 @@ savageCharacter.prototype.validate = function() {
 		this.derived.toughnessAndArmor = ( this.derived.toughness + this.derived.armor ) + " (" + this.derived.armor + ")";
 	}
 
-	this.loadLimit = this.displayAttributes.strength.value * 5;
+	this.loadLimit = this.displayAttributes.strength.value * this.encumbrance_multiplier;
+	// if( this.hasEdge("brawny") )
+	// 	this.loadLimit = this.displayAttributes.strength.value * 8;
 
 	if( this.loadLimit > 0 ) {
 		this.loadModifier = Math.floor( this.currentLoad / this.loadLimit ) * -1 ;
