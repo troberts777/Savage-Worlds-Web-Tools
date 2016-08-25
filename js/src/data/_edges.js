@@ -697,6 +697,7 @@ charEffects: function ( charObject ) {
 		 'en-US': 'Block',
 		 'pt-BR': '',
 		 'de-DE': '',
+		 'ru-RU': '',
 	},
 	 required_edge: '',
 	 required_rank: 1,
@@ -711,8 +712,9 @@ charEffects: function ( charObject ) {
 charEffects: function ( charObject ) {
 		},
 requires: function( characterObject) {
+fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		fightingSkill.value >= 3
 	) {
 		return true;
 	}
@@ -724,6 +726,7 @@ requires: function( characterObject) {
 		 'en-US': 'Improved Block',
 		 'pt-BR': '',
 		 'de-DE': '',
+		 'ru-RU': '',
 	},
 	 required_edge: 'block',
 	 required_rank: 2,
@@ -898,6 +901,7 @@ charObject.derived.charisma = charObject.derived.charisma  + 2;
 		 'en-US': 'Combat Reflexes',
 		 'pt-BR': '',
 		 'de-DE': '',
+		 'ru-RU': '',
 	},
 	 required_edge: '',
 	 required_rank: 1,
@@ -1163,9 +1167,10 @@ requires: function( characterObject) {
 		 'en-US': 'Counterattack',
 		 'pt-BR': '',
 		 'de-DE': '',
+		 'ru-RU': '',
 	},
 	 required_edge: '',
-	 required_rank: 1,
+	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'counterattack',
@@ -1174,8 +1179,15 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
-		}
+requires: function( characterObject) {
+fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
+if(
+	fightingSkill.value >= 3
+) {
+return true
+}
+return false
+}
 },
 {
 	 name: {
@@ -1231,7 +1243,7 @@ charEffects: function ( charObject ) {
 requires: function( characterObject) {
 throwingSkill = characterObject.getSkill("SKILL_THROWING");
 shootingSkill = characterObject.getSkill("SKILL_SHOOTING");
-if( throwingSkill.value >= 10 || shootingSkill.value >= 10)
+if( throwingSkill.value >= 4 || shootingSkill.value >= 4)
      return true;
 return false;
 },
@@ -1449,6 +1461,9 @@ requires: function( characterObject) {
 {
 	 name: {
 		 'en-US': 'Florentine',
+		 'pt-BR': '',
+		 'de-DE': '',
+		 'ru-RU': '',
 	},
 	 required_edge: '',
 	 required_rank: 0,
@@ -1463,8 +1478,11 @@ requires: function( characterObject) {
 charEffects: function ( charObject ) {
 		},
 requires: function( characterObject) {
+fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
 	if(
 		characterObject.displayAttributes.agility.value >= 8
+&&
+fightingSkill.value >= 3
 	) {
 		return true;
 	}
@@ -1494,9 +1512,10 @@ requires: function( characterObject) {
 		 'en-US': 'Frenzy',
 		 'pt-BR': '',
 		 'de-DE': '',
+		 'ru-RU': '',
 	},
 	 required_edge: '',
-	 required_rank: 1,
+	 required_rank: 0,
 	 conflicts_edge: '',
 	 conflicts_hindrance: '',
 	 tag: 'frenzy',
@@ -1505,8 +1524,13 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
-		}
+requires: function( characterObject) {
+ fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
+ if( fightingSkill.value >= 4) // d4 = 1, d6 = 2, d8 = 3, d10 = 4, d12 = 5
+     return true;
+
+return false;
+},
 },
 {
 	 name: {
@@ -1914,6 +1938,9 @@ charEffects: function ( charObject ) {
 {
 	 name: {
 		 'en-US': 'Martial Artist',
+		 'pt-BR': '',
+		 'de-DE': '',
+		 'ru-RU': '',
 	},
 	 required_edge: '',
 	 required_rank: 0,
@@ -1925,8 +1952,13 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
-		}
+requires: function( characterObject) {
+ fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
+ if( fightingSkill.value >= 2) // d4 = 1, d6 = 2, d8 = 3, d10 = 4, d12 = 5
+     return true;
+
+return false;
+},
 },
 {
 	 name: {
@@ -2029,7 +2061,7 @@ requires: function( characterObject) {
 	 child: 0,
 requires: function( charObject) {
 fightingSkill = charObject.getSkill("SKILL_FIGHTING");
-if( charObject.displayAttributes.agility.value >= 10 )
+if( fightingSkill.value >= 4 )
      return true;
 return false;
 },
@@ -2498,6 +2530,9 @@ requires: function( characterObject) {
 {
 	 name: {
 		 'en-US': 'Sweep',
+		 'pt-BR': '',
+		 'de-DE': '',
+		 'ru-RU': '',
 	},
 	 required_edge: '',
 	 required_rank: 0,
@@ -2510,15 +2545,19 @@ requires: function( characterObject) {
 	 book: 1,
 	 child: 0,
 charEffects: function ( charObject ) {
-		},
+},
 requires: function( characterObject) {
+	fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
+
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		fightingSkill.value >= 3
+			&&
+		characterObject.displayAttributes.strength.value >= 8
 	) {
 		return true;
 	}
-		return false;
-	}
+	return false;
+}
 },
 {
 	 name: {
@@ -2606,6 +2645,9 @@ charEffects: function ( charObject ) {
 {
 	 name: {
 		 'en-US': 'Trademark Weapon',
+		 'pt-BR': '',
+		 'de-DE': '',
+		 'ru-RU': '',
 	},
 	 required_edge: '',
 	 required_rank: 0,
@@ -2620,8 +2662,12 @@ charEffects: function ( charObject ) {
 charEffects: function ( charObject ) {
 		},
 requires: function( characterObject) {
+fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
+shootingSkill = characterObject.getSkill("SKILL_SHOOTING");
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		fightingSkill.value >= 3
+||
+		shootingSkill.value >= 3
 	) {
 		return true;
 	}
@@ -2690,7 +2736,7 @@ requires: function( characterObject) {
 	 child: 0,
 requires: function ( charObject ) {
 fightingSkill = charObject.getSkill("SKILL_FIGHTING");
-if( fightingSkill >= 12)
+if( fightingSkill >= 5)
        return true;
 return false;
 },
