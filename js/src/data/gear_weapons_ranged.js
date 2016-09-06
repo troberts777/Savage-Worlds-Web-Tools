@@ -773,7 +773,7 @@ var savageWorldsGearRangedWeapons = Array(
 },
 {
 	 name: {
-		 'en-US': 'H&K G3 (.308)',
+		 'en-US': 'H&amp;K G3 (.308)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -806,7 +806,7 @@ var savageWorldsGearRangedWeapons = Array(
 },
 {
 	 name: {
-		 'en-US': 'H&K MP5 (9mm)',
+		 'en-US': 'H&amp;K MP5 (9mm)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1631,7 +1631,7 @@ var savageWorldsGearRangedWeapons = Array(
 },
 {
 	 name: {
-		 'en-US': 'S&W (.357)',
+		 'en-US': 'S&amp;W (.357)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1664,7 +1664,7 @@ var savageWorldsGearRangedWeapons = Array(
 },
 {
 	 name: {
-		 'en-US': 'S&W (.44)',
+		 'en-US': 'S&amp;W (.44)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},

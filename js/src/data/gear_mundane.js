@@ -15,9 +15,6 @@ var savageWorldsGearMundane = Array(
 {
 	 name: {
 		 'en-US': 'Active Night Vision Goggles',
-		 'pt-BR': '�"culos de Visão Noturna Ativos',
-		 'de-DE': '',
-		 'ru-RU': '',
 	},
 	 notes: {
 		 'en-US': '',
@@ -40,7 +37,7 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
-		 'en-US': 'Alchemists\' trunk',
+		 'en-US': 'Alchemists&rsquo; trunk',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -406,7 +403,7 @@ var savageWorldsGearMundane = Array(
 		 'ru-RU': '',
 	},
 	 notes: {
-		 'en-US': 'provides light in 2" radius',
+		 'en-US': 'provides light in 2&quot; radius',
 		 'pt-BR': '',
 		 'de-DE': '',
 		 'ru-RU': '',
@@ -719,7 +716,7 @@ var savageWorldsGearMundane = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': '10" beam of light',
+		 'en-US': '10&quot; beam of light',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1127,7 +1124,7 @@ var savageWorldsGearMundane = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'provides light in 4” radius',
+		 'en-US': 'provides light in 4&rdquo; radius',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1218,7 +1215,7 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
-		 'en-US': 'Lineman\'s Telephone',
+		 'en-US': 'Lineman&rsquo;s Telephone',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1578,7 +1575,7 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
-		 'en-US': 'Rope, 10"',
+		 'en-US': 'Rope, 10&quot;',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1823,7 +1820,7 @@ var savageWorldsGearMundane = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': '1 hour, 4” radius',
+		 'en-US': '1 hour, 4&rdquo; radius',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},

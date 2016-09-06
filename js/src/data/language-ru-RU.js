@@ -6,7 +6,7 @@ availableLanguages.push ({
 	active: true,
 
 	translations: {
-			BUTTON_LANG_RU: 'Русский',
+			BUTTON_LANG_RU: '&ETH;&nbsp;&Ntilde;&fnof;&Ntilde;&Ntilde;&ETH;&ordm;&ETH;&cedil;&ETH;&sup1;',
 
 	}
 

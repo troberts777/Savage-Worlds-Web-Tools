@@ -175,6 +175,11 @@ var coreextrasArray = 	[
 				else
 					entry_object.local_treasure = entry_object.treasure[  "en-US" ];
 
+				if( entry_object.tags[ localStorage["users_preferred_language"] ] )
+					entry_object.local_tags = entry_object.tags[ localStorage["users_preferred_language"] ] ;
+				else
+					entry_object.local_tags = entry_object.tags[  "en-US" ];
+
 				if( entry_object.edges[ localStorage["users_preferred_language"] ] )
 					entry_object.local_edges = entry_object.edges[ localStorage["users_preferred_language"] ] ;
 				else

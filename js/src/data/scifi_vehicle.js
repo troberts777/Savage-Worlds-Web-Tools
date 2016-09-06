@@ -23,8 +23,6 @@ savageWorldsSciFiOptions['vehicle'] = Array(
 {
 	 name: {
 		 'en-US': 'The Last Parsec Options',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 	 type: 'bool',
 	 short_tag: 'the-last-parsec',
@@ -34,13 +32,9 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 {
 	 sizeLabel: {
 		 'en-US': 'Ultralight Vehicle',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 	 examples: {
 		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 	 size: 1,
 	 strength: 0,
@@ -62,7 +56,7 @@ savageWorldsSciFiSizes['vehicle'] = Array(
 	 sizeLabel: {
 		 'en-US': 'Light Vehicle',
 		 'pt-BR': '',
-		 'de-DE': '',
+		 'de-DE': 'lv',
 	},
 	 examples: {
 		 'en-US': 'Motorcycles',

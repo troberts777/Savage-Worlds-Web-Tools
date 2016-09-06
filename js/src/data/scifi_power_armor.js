@@ -126,6 +126,7 @@ savageWorldsSciFiMods['power_armor'] = Array(
 {
 	 name: {
 		 'en-US': 'Anti-Personnel System',
+		 'de-DE': 'aps',
 	},
 	 tag: 'anti-personnel-system',
 getMax: function(selectedObject) { return 1 },

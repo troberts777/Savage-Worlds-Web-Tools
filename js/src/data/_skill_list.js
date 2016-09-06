@@ -19,7 +19,7 @@
 	 name: {
 		 'en-US': 'Boating',
 		 'pt-BR': 'Passeios de barco',
-		 'de-DE': 'Bootfahren',
+		 'de-DE': 'Boatting',
 	},
 		 'book': '1',
 		 'attribute': 'agility',
@@ -54,7 +54,7 @@
 		 'id': 'SKILL_FAITH',
 	 name: {
 		 'en-US': 'Faith',
-		 'pt-BR': 'Fé',
+		 'pt-BR': 'F&eacute;',
 		 'de-DE': 'Glauben',
 	},
 		 'book': '1',
@@ -102,8 +102,8 @@
 		 'id': 'SKILL_INTIMIDATION',
 	 name: {
 		 'en-US': 'Intimidation',
-		 'pt-BR': 'Intimidação',
-		 'de-DE': 'Einschüchterung',
+		 'pt-BR': 'Intimida&ccedil;&atilde;o',
+		 'de-DE': 'Einsch&uuml;chterung',
 	},
 		 'book': '1',
 		 'attribute': 'spirit',
@@ -114,7 +114,7 @@
 		 'id': 'SKILL_INVESTIGATION',
 	 name: {
 		 'en-US': 'Investigation',
-		 'pt-BR': 'Investigação',
+		 'pt-BR': 'Investiga&ccedil;&atilde;o',
 		 'de-DE': 'Untersuchung',
 	},
 		 'book': '1',
@@ -139,7 +139,7 @@
 	 name: {
 		 'en-US': 'Lockpicking',
 		 'pt-BR': '',
-		 'de-DE': 'Schlösserknacken',
+		 'de-DE': 'Schl&ouml;sserknacken',
 	},
 		 'book': '1',
 		 'attribute': 'agility',
@@ -150,7 +150,7 @@
 		 'id': 'SKILL_NOTICE',
 	 name: {
 		 'en-US': 'Notice',
-		 'pt-BR': 'Aviso prévio',
+		 'pt-BR': 'Aviso pr&eacute;vio',
 		 'de-DE': 'Beachten',
 	},
 		 'book': '1',
@@ -162,8 +162,8 @@
 		 'id': 'SKILL_PERSUASION',
 	 name: {
 		 'en-US': 'Persuasion',
-		 'pt-BR': 'Persuasão',
-		 'de-DE': ' Überzeugung',
+		 'pt-BR': 'Persuas&atilde;o',
+		 'de-DE': ' &Uuml;berzeugung',
 	},
 		 'book': '1',
 		 'attribute': 'spirit',
@@ -210,7 +210,7 @@
 		 'id': 'SKILL_RIDING',
 	 name: {
 		 'en-US': 'Riding',
-		 'pt-BR': 'Equitação',
+		 'pt-BR': 'Equita&ccedil;&atilde;o',
 		 'de-DE': 'Reiten',
 	},
 		 'book': '1',
@@ -223,7 +223,7 @@
 	 name: {
 		 'en-US': 'Shooting',
 		 'pt-BR': 'Tiroteio',
-		 'de-DE': 'Schießen',
+		 'de-DE': 'Schie&szlig;en',
 	},
 		 'book': '1',
 		 'attribute': 'agility',
@@ -270,8 +270,8 @@
 		 'id': 'SKILL_SURVIVAL',
 	 name: {
 		 'en-US': 'Survival',
-		 'pt-BR': 'Sobrevivência',
-		 'de-DE': 'Überleben',
+		 'pt-BR': 'Sobreviv&ecirc;ncia',
+		 'de-DE': '&Uuml;berleben',
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
@@ -282,7 +282,7 @@
 		 'id': 'SKILL_SWIMMING',
 	 name: {
 		 'en-US': 'Swimming',
-		 'pt-BR': 'Natação',
+		 'pt-BR': 'Nata&ccedil;&atilde;o',
 		 'de-DE': 'Schwimmen',
 	},
 		 'book': '1',
@@ -339,6 +339,18 @@
 		 'specify': 0
 },
 {
+		 'id': 'SKILL_ALCHEMY',
+	 name: {
+		 'en-US': 'Alchemy',
+		 'pt-BR': '',
+		 'de-DE': 'sasa',
+	},
+		 'book': '2',
+		 'attribute': 'smarts',
+		 'for_arcane': 'sorcery',
+		 'specify': 0
+},
+{
 		 'id': 'SKILL_GUTS',
 	 name: {
 		 'en-US': 'Guts',
@@ -348,6 +360,30 @@
 		 'book': '2',
 		 'attribute': 'spirit',
 		 'for_arcane': '',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_RITUALISM',
+	 name: {
+		 'en-US': 'Ritualism',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '2',
+		 'attribute': 'smarts',
+		 'for_arcane': 'ritual-magic',
+		 'specify': 0
+},
+{
+		 'id': 'SKILL_SPELLWEAVING',
+	 name: {
+		 'en-US': 'Spellweaving',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'book': '2',
+		 'attribute': 'spirit',
+		 'for_arcane': 'sorcery',
 		 'specify': 0
 }
 );

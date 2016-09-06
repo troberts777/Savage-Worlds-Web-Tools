@@ -19,7 +19,7 @@ savageWorldsBooksList[0] = {
 	name: {
 		"en-US": "Savage Worlds Deluxe",
 		"pt-BR": "Savage Brazilians",
-		"ru-RU": "Дневник авантюриста",
+		"ru-RU": "Ð”Ð½ÐµÐ²Ð½Ð¸Ðº Ð°Ð²Ð°Ð½Ñ‚ÑŽÑ€Ð¸ÑÑ‚Ð°",
 	},
 	short_name: "peg_swd_ee",
 	abbrev: "SWD:EE",
@@ -46,7 +46,7 @@ savageWorldsBooksList[1] = {
 	core: false,
 	name: {
 		"en-US": "Fantasy Companion",
-		"pt-BR": "Compêndio de Fantasia",
+		"pt-BR": "CompÃªndio de Fantasia",
 	},
 	short_name: "peg_swfc",
 	abbrev: "FC",
@@ -71,7 +71,7 @@ savageWorldsBooksList[2] = {
 	core: false,
 	name: {
 		"en-US": "Horror Companion",
-		"pt-BR": "Compêndio de Horror",
+		"pt-BR": "CompÃªndio de Horror",
 	},
 	short_name: "peg_swhc",
 	abbrev: "HC",
@@ -96,7 +96,7 @@ savageWorldsBooksList[3] = {
 	core: false,
 	name: {
 		"en-US": "Science Fiction Companion",
-		"pt-BR": "Compêndio de Ficção Científica",
+		"pt-BR": "CompÃªndio de FicÃ§Ã£o CientÃ­fica",
 	},
 	short_name: "peg_sfc",
 	abbrev: "SFC",
@@ -121,7 +121,7 @@ savageWorldsBooksList[4] = {
 	core: false,
 	name: {
 		"en-US": "Super Powers Companion",
-		"pt-BR": "Compêndio de Superpoderes",
+		"pt-BR": "CompÃªndio de Superpoderes",
 	},
 	short_name: "peg_spc2",
 	abbrev: "SPC",
@@ -152,7 +152,7 @@ savageWorldsBooksList[5] = {
 	imagename: "",
 	char_creator: 0,
 	publisher: {
-		"en-US": "(Unknown) Pinnacle Enterainment Group, Butch Curry, Andrea �Lord Lance� Parducci and probably others",
+		"en-US": "(Unknown) Pinnacle Enterainment Group, Butch Curry, Andrea “Lord Lance” Parducci and probably others",
 
 	},
 	year: "",
@@ -236,10 +236,10 @@ savageWorldsBooksList[9] = {
 	id: 14,
 	core: false,
 	name: {
-		"en-US": "Rifts® The Tomorrow Legion Player's Guide",
+		"en-US": "RiftsÂ® The Tomorrow Legion Player's Guide",
 	},
 	short_name: "rifts-tomorrow-legion",
-	abbrev: "Rifts® Th",
+	abbrev: "RiftsÂ® Th",
 	imagename: "rifts-tomorrow-legion-players-handbook.jpg",
 	char_creator: 0,
 	publisher: {

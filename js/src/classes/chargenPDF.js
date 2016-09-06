@@ -47,12 +47,17 @@ chargenPDF.prototype.createBasicLandscapePDF = function () {
 	this.createAttributesAndSkillsTable( [6,30,70,92,122], 5,50,140,80, 5, 9 );
 	this.createDerivedStatsTable( 65,90,45,40,11 );
 	this.createDamageTrackTable( 110,90,35,40, 8, 10, 6 );
-	this.createEdgesAdvancementTrack( 235,5,55, 9 );
-	this.createPowersTable("Powers", 155, 5, 75,40, 6);
-	this.createEquipmentTable("Equipment", 155, 50, 75, 60);
+	this.createAdvancementTrack( 235,5,55, 9 );
+
+
+	this.createEquipmentTable("Equipment", 155, 5, 75, 60);
+	this.createArmorTable("Armor", 155, 66, 75, 28);
+	this.createPowersTable("Powers", 155, 95, 75,40, 6);
+
 	this.createWeaponTable( "Weapons", [10, 45,60,80,90,115,125], 5, 132, 6  );
-	this.createArmorTable("Armor", 5, 172, 70, 28);
+
 	this.createHindrancesTable("Hindrances", 80, 172, 65, 28, 9);
+	this.createEdgesTable("Edges", 5, 172, 65, 28, 9);
 
 	// Footer
 	this.currentDoc.setFontSize(6);
@@ -97,13 +102,14 @@ chargenPDF.prototype.createBasicPortraitPDF = function () {
 	this.createDerivedStatsTable( 95,90,55,40 );
 	this.createDamageTrackTable( 150,90,55,40 );
 	this.createHindrancesTable("Hindrances", 5, 130,65,40);
-	this.createPowersTable("Powers", 70,130,80,40);
+	this.createEdgesTable("Edges", 70,130,80,40);
 	this.createWeaponTable( "Weapons", Array(10, 45, 60, 80, 90, 120, 130 ),  5, 170, 8  );
 	this.createArmorTable("Armor",  5, 220, 65, 53);
 	this.createEquipmentTable("Equipment",  70, 220, 80, 53);
 
-	this.createEdgesAdvancementTrack( 150,130,55 );
+	this.createAdvancementTrack( 150,130,55 );
 
+// 		this.createPowersTable("Powers", 70,130,80,40);
 	// Footer
 	this.currentDoc.setFontSize(6);
 	this.currentDoc.lines([[0,0],[200,0]], 5, 273);
@@ -168,34 +174,34 @@ chargenPDF.prototype.createDerivedStatsTable = function( left, top, height, widt
 	this.currentDoc.setFontSize(10);
 };
 
-chargenPDF.prototype.createEdgesAdvancementTrack = function( left, top, width, smallFontSize ) {
+chargenPDF.prototype.createAdvancementTrack = function( left, top, width, smallFontSize ) {
 
 	if(!smallFontSize)
 		smallFontSize = 10;
 
 	this.currentDoc.rect(left,top,width,143);
-	this.currentDoc.setFontStyle("bold");
-	this.currentDoc.setFontSize(14);
-	this.currentDoc.text(left + 5, top + 7, "Initial Edges");
-	this.currentDoc.setFontStyle("normal");
-	this.currentDoc.setFontSize(smallFontSize);
-	advLineLocation = top + 11;
-	advLineHeight = 4;
-	for( novice_slot = 0; novice_slot <= this.currentCharacter.selectedEdges.length; novice_slot++) {
-		if(this.currentCharacter.selectedEdges[novice_slot])
-			this.currentDoc.text(left + 2, advLineLocation + novice_slot * advLineHeight, this.currentCharacter.selectedEdges[novice_slot].local_name + " (" + this.currentCharacter.selectedEdges[novice_slot].bookObj.abbrev + " " + this.currentCharacter.selectedEdges[novice_slot].page + ")" );
-		else
-			this.currentDoc.text(left + 2, advLineLocation + novice_slot * advLineHeight, "");
-	}
+	//~ this.currentDoc.setFontStyle("bold");
+	//~ this.currentDoc.setFontSize(14);
+	//~ this.currentDoc.text(left + 5, top + 7, "Initial Edges");
+	//~ this.currentDoc.setFontStyle("normal");
+	//~ this.currentDoc.setFontSize(smallFontSize);
+	//~ advLineLocation = top + 11;
+	//~ advLineHeight = 4;
+	//~ for( novice_slot = 0; novice_slot <= this.currentCharacter.selectedEdges.length; novice_slot++) {
+		//~ if(this.currentCharacter.selectedEdges[novice_slot])
+			//~ this.currentDoc.text(left + 2, advLineLocation + novice_slot * advLineHeight, this.currentCharacter.selectedEdges[novice_slot].local_name + " (" + this.currentCharacter.selectedEdges[novice_slot].bookObj.abbrev + " " + this.currentCharacter.selectedEdges[novice_slot].page + ")" );
+		//~ else
+			//~ this.currentDoc.text(left + 2, advLineLocation + novice_slot * advLineHeight, "");
+	//~ }
 
 	this.currentDoc.setFontStyle("bold");
 	this.currentDoc.setFontSize(14);
-	this.currentDoc.text(left + 5, top + 25, "Advancements");
+	this.currentDoc.text(left + 5, top + 5, "Advancements");
 	this.currentDoc.setFontStyle("normal");
 	this.currentDoc.setFontSize(smallFontSize);
 
 	advLineHeight = 4;
-	advLineLocation = top + 30;
+	advLineLocation = top + 10;
 
 	this.currentDoc.setFontStyle("bold");
 	this.currentDoc.text(left + 2, advLineLocation, "Novice");
@@ -205,7 +211,7 @@ chargenPDF.prototype.createEdgesAdvancementTrack = function( left, top, width, s
 		advLineLocation += advLineHeight;
 		current_xp = adv_slot * 5;
 
-		if(this.currentCharacter.selectedAdvancements[adv_slot])
+		if(this.currentCharacter.selectedAdvancements[adv_slot - 1])
 			selectedAdvancement = this.currentCharacter.selectedAdvancements[adv_slot - 1];
 		else
 			selectedAdvancement = null;
@@ -232,9 +238,13 @@ chargenPDF.prototype.createEdgesAdvancementTrack = function( left, top, width, s
 			current_xp = " " + current_xp;
 
 		advancement_slot = 0;
-		if( selectedAdvancement) {
+
+		if( selectedAdvancement && selectedAdvancement.tag ) {
+			if(selectedAdvancement.tag == "none") {
+				this.currentDoc.text(left + 2, advLineLocation, current_xp + ": ( unused )");
+			} else
 			if(selectedAdvancement.tag == "attribute") {
-				this.currentDoc.text(left + 2, advLineLocation, current_xp + ": " + uc_words(selectedAdvancement.option1.local_name) + "++");
+				this.currentDoc.text(left + 2, advLineLocation, current_xp + ": " + selectedAdvancement.option1 + "++");
 			} else if(selectedAdvancement.tag == "skill") {
 				this.currentDoc.text(left + 2, advLineLocation, current_xp + ": +Skill - " + selectedAdvancement.option1.local_name);
 			} else if(selectedAdvancement.tag == "edge") {
@@ -243,7 +253,7 @@ chargenPDF.prototype.createEdgesAdvancementTrack = function( left, top, width, s
 				this.currentDoc.setFontStyle("normal");
 			} else {
 				if(selectedAdvancement.option2.local_name && selectedAdvancement.option1.local_name ) {
-					this.currentDoc.text(left + 2, advLineLocation, current_xp + ": " + selectedAdvancement.option1 + "++, " + selectedAdvancement.option2.local_name  + "++");
+					this.currentDoc.text(left + 2, advLineLocation, current_xp + ": " + selectedAdvancement.option1.local_name + "++, " + selectedAdvancement.option2.local_name  + "++");
 				} else {
 					if(selectedAdvancement.option2 ) {
 						this.currentDoc.text(left + 2, advLineLocation, current_xp + ": " + selectedAdvancement.option2.local_name + "++");
@@ -271,11 +281,11 @@ chargenPDF.prototype.createAttributesAndSkillsTable = function( skillcols, left,
 	// this.currentDoc.rect(5,50,200,80);
 	this.currentDoc.rect(left, top, height, width);
 	this.currentDoc.setFontStyle("bold");
-	this.currentDoc.text(skillcols[0], top+5, "Agility: " + getDiceValue( this.currentCharacter.attributes.agility, this.useLang).local_label );
-	this.currentDoc.text(skillcols[1], top+5, "Smarts: " + getDiceValue( this.currentCharacter.attributes.smarts, this.useLang).local_label );
-	this.currentDoc.text(skillcols[2], top+5, "Spirit: " + getDiceValue( this.currentCharacter.attributes.spirit, this.useLang).local_label );
-	this.currentDoc.text(skillcols[3], top+5, "Strength: " + getDiceValue( this.currentCharacter.attributes.strength, this.useLang).local_label );
-	this.currentDoc.text(skillcols[4], top+5, "Vigor: " + getDiceValue( this.currentCharacter.attributes.vigor, this.useLang).local_label );
+	this.currentDoc.text(skillcols[0], top+5, "Agility: " + getDiceValue( this.currentCharacter.displayAttributes.agility.id, this.useLang).local_label );
+	this.currentDoc.text(skillcols[1], top+5, "Smarts: " + getDiceValue( this.currentCharacter.displayAttributes.smarts.id, this.useLang).local_label );
+	this.currentDoc.text(skillcols[2], top+5, "Spirit: " + getDiceValue( this.currentCharacter.displayAttributes.spirit.id, this.useLang).local_label );
+	this.currentDoc.text(skillcols[3], top+5, "Strength: " + getDiceValue( this.currentCharacter.displayAttributes.strength.id, this.useLang).local_label );
+	this.currentDoc.text(skillcols[4], top+5, "Vigor: " + getDiceValue( this.currentCharacter.displayAttributes.vigor.id, this.useLang).local_label );
 
 	// Agility Skills
 
@@ -490,16 +500,43 @@ chargenPDF.prototype.createHindrancesTable = function(label, left, top, width, h
 	this.currentDoc.text(left + 5, top + 5, label);
 	this.currentDoc.setFontStyle("normal");
 	this.currentDoc.setFontSize(smallFontSize);
-	for(hind_counter = 0; hind_counter < this.currentCharacter.selectedHindrances.length; hind_counter++) {
+	for(hind_counter = 0; hind_counter < this.currentCharacter.installedHindrances.length; hind_counter++) {
 		majorMinor = "";
-		if( this.currentCharacter.selectedHindrances[hind_counter].severity == "major")
+		if( this.currentCharacter.installedHindrances[hind_counter].severity == "major")
 			majorMinor = "major, ";
-		if( this.currentCharacter.selectedHindrances[hind_counter].severity == "minor")
+		if( this.currentCharacter.installedHindrances[hind_counter].severity == "minor")
 			majorMinor = "minor, ";
-		if(this.currentCharacter.selectedHindrances[hind_counter].specify_text && this.currentCharacter.selectedHindrances[hind_counter].specifyField != "")
-			this.currentDoc.text(left + 5, top + 10 + hind_counter * Math.floor(smallFontSize / 2) -1 , this.currentCharacter.selectedHindrances[hind_counter].local_name + ": " + this.currentCharacter.selectedHindrances[hind_counter].specifyField + " (" + majorMinor + this.currentCharacter.selectedHindrances[hind_counter].bookObj.abbrev + " " + this.currentCharacter.selectedHindrances[hind_counter].page + ")" );
+		if( this.currentCharacter.installedHindrances[hind_counter].racial > 0)
+			majorMinor = "racial, ";
+		if(this.currentCharacter.installedHindrances[hind_counter].specify_text && this.currentCharacter.installedHindrances[hind_counter].specifyField != "")
+			this.currentDoc.text(left + 5, top + 10 + hind_counter * Math.floor(smallFontSize / 2) -1 , this.currentCharacter.installedHindrances[hind_counter].local_name + ": " + this.currentCharacter.installedHindrances[hind_counter].specifyField + " (" + majorMinor + this.currentCharacter.installedHindrances[hind_counter].bookObj.abbrev + " " + this.currentCharacter.installedHindrances[hind_counter].page + ")" );
 		else
-			this.currentDoc.text(left + 5, top + 10 + hind_counter * Math.floor(smallFontSize / 2) -1 , this.currentCharacter.selectedHindrances[hind_counter].local_name + " (" + majorMinor + this.currentCharacter.selectedHindrances[hind_counter].bookObj.abbrev + " " + this.currentCharacter.selectedHindrances[hind_counter].page + ")" );
+			this.currentDoc.text(left + 5, top + 10 + hind_counter * Math.floor(smallFontSize / 2) -1 , this.currentCharacter.installedHindrances[hind_counter].local_name + " (" + majorMinor + this.currentCharacter.installedHindrances[hind_counter].bookObj.abbrev + " " + this.currentCharacter.installedHindrances[hind_counter].page + ")" );
+	}
+	this.currentDoc.setFontSize(10);
+}
+
+chargenPDF.prototype.createEdgesTable = function(label, left, top, width, height, smallFontSize) {
+	if(!smallFontSize)
+		smallFontSize = 10;
+	this.currentDoc.rect(left,top,width,height);
+	this.currentDoc.setFontStyle("bold");
+	this.currentDoc.setFontSize(14);
+	this.currentDoc.text(left + 5, top + 5, label);
+	this.currentDoc.setFontStyle("normal");
+	this.currentDoc.setFontSize(smallFontSize);
+	if( this.currentCharacter.race.edges ) {
+	}
+	for(edge_counter = 0; edge_counter < this.currentCharacter.installedEdges.length; edge_counter++) {
+		majorMinor = "";
+
+		if( this.currentCharacter.installedEdges[edge_counter].racial > 0)
+			majorMinor = "racial, ";
+
+		if(this.currentCharacter.installedEdges[edge_counter].specify_text && this.currentCharacter.installedEdges[edge_counter].specifyField != "")
+			this.currentDoc.text(left + 5, top + 10 + edge_counter * Math.floor(smallFontSize / 2) -1 , this.currentCharacter.installedEdges[edge_counter].local_name + ": " + this.currentCharacter.installedEdges[edge_counter].specifyField + " (" + majorMinor + this.currentCharacter.installedEdges[edge_counter].bookObj.abbrev + " " + this.currentCharacter.installedEdges[edge_counter].page + ")" );
+		else
+			this.currentDoc.text(left + 5, top + 10 + edge_counter * Math.floor(smallFontSize / 2) -1 , this.currentCharacter.installedEdges[edge_counter].local_name + " (" + majorMinor + this.currentCharacter.installedEdges[edge_counter].bookObj.abbrev + " " + this.currentCharacter.installedEdges[edge_counter].page + ")" );
 	}
 	this.currentDoc.setFontSize(10);
 }
@@ -570,7 +607,7 @@ chargenPDF.prototype.createPowersTable = function(label, left, top, width, heigh
 		this.currentDoc.setFontStyle("normal");
 		this.currentDoc.setFontSize(10);
 
-		this.currentDoc.text(left + 5, 142, "No Arcane Background Selected");
+		this.currentDoc.text(left + 5, top + 12, "No Arcane Background Selected");
 	}
 	this.currentDoc.setFontSize(10);
 }

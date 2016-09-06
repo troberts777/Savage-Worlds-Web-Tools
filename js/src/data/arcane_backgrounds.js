@@ -17,11 +17,13 @@ var savageWorldsArcaneBackgrounds = Array(
 		 'en-US': 'Magic',
 		 'pt-BR': '',
 		 'de-DE': '',
+		 'ru-RU': '',
 	},
 	 backlash: {
 		 'en-US': 'Backlash: When a wizard rolls a 1 on his Spellcasting die (regardless of his Wild Die), he is automatically Shaken. This can cause a wound.',
 		 'pt-BR': '',
 		 'de-DE': '',
+		 'ru-RU': '',
 	},
 		 'power_list': Array(
 
@@ -40,7 +42,7 @@ var savageWorldsArcaneBackgrounds = Array(
 		 'de-DE': '',
 	},
 	 backlash: {
-		 'en-US': 'Protector: Those who cast miracles are champions of their particular religions. Good priests vow to protect the innocent, fight evil, and obey all other tenets of their particular religion. Evil priests typically vow to defeat those who oppose their religion, or simply to cause as much misery and strife as possible. The player and Game Master should come up with a simple list of what is important to the character\'s religion and use this as a guide. Champions who violate their beliefs are temporarily or permanently forsaken by their chosen deity. Minor sins give the character a â€"2 to his Faith rolls for one week. Major sins rob him of all arcane powers for one week. Mortal sins cause the character to be forsaken until the penitent hero completes some great quest or task of atonement to regain his lost powers.',
+		 'en-US': 'Protector: Those who cast miracles are champions of their particular religions. Good priests vow to protect the innocent, fight evil, and obey all other tenets of their particular religion. Evil priests typically vow to defeat those who oppose their religion, or simply to cause as much misery and strife as possible. The player and Game Master should come up with a simple list of what is important to the character&rsquo;s religion and use this as a guide. Champions who violate their beliefs are temporarily or permanently forsaken by their chosen deity. Minor sins give the character a &ndash;2 to his Faith rolls for one week. Major sins rob him of all arcane powers for one week. Mortal sins cause the character to be forsaken until the penitent hero completes some great quest or task of atonement to regain his lost powers.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -229,8 +231,6 @@ var savageWorldsArcaneBackgrounds = Array(
 {
 	 name: {
 		 'en-US': 'Sorcery',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 	 backlash: {
 		 'en-US': '',

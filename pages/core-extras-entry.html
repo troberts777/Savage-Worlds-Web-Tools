@@ -1,6 +1,6 @@
 <div class="search-result">
 	<h3><span ng-hide="{{extra_item.wildcard < 1}}"><img class="float-left" style=" margin-right: 10px;height: 27px;margin-top: 10px;" src="images/sw_fan.png" alt="Savage Worlds Fan License"></span>{{extra_item.local_name}}</h3>
-	<img src="{{extra_item.image}}" ng-show="extra_item.local_name" class="float-left" style="max-width: 150px;margin-right: 10px;" />
+	<img onerror="this.hide" ng-src="{{extra_item.image}}" ng-show="extra_item.local_name" class="float-left" style="max-width: 150px;margin-right: 10px;" />
 	<div class="actual-entry" style="overflow: hidden">
 		<div ng-bind-html="extra_item.local_blurb"></div>
 
@@ -12,8 +12,6 @@
 			<span translate="ATTRIBUTE_STRENGTH">Strength</span>: {{extra_item.parsed_attributes.strength}},
 			<span translate="ATTRIBUTE_VIGOR">Vigor</span>: {{extra_item.parsed_attributes.vigor}}
 		</div>
-
-
 
 		<div ng-hide="{{extra_item.display_skills == ''}}">
 			<strong><span translate="GENERAL_SKILLS">Skills</span></strong>: <span ng-bind-html="extra_item.display_skills"></span>
@@ -45,6 +43,11 @@
 		<div ng-hide="{{extra_item.local_abilities == ''}}">
 			<h4 translate="EXTRAS_H4_ABILITIES">Abilities</h4>
 			<div ng-bind-html="extra_item.local_abilities"></div>
+		</div>
+
+		<div ng-hide="{{extra_item.local_tags == ''}}">
+			<span translate="SEARCH_TAGS">Tags</span>:
+			<span ng-bind-html="extra_item.local_tags"></span>
 		</div>
 	</div>
 	<p class="copyright-box">

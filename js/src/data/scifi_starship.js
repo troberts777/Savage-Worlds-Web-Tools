@@ -35,7 +35,7 @@ savageWorldsSciFiSizes['starship'] = Array(
 	 sizeLabel: {
 		 'en-US': 'Small Starship',
 		 'pt-BR': '',
-		 'de-DE': '',
+		 'de-DE': 'ss',
 	},
 	 examples: {
 		 'en-US': 'Fighters, shuttles',
@@ -279,6 +279,7 @@ savageWorldsSciFiMods['starship'] = Array(
 {
 	 name: {
 		 'en-US': 'AMCM',
+		 'de-DE': 'amcm',
 	},
 	 tag: 'amcm',
 getMax: function(selectedObject) { return 1 },

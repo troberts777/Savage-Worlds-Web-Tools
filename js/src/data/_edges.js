@@ -118,7 +118,7 @@ charObject.naturalWeapons = true;
 	 name: {
 		 'en-US': 'Extra Edge',
 		 'pt-BR': '',
-		 'de-DE': '',
+		 'de-DE': 'Axtra Edgo',
 	},
 	 required_edge: '',
 	 required_rank: 0,
@@ -597,7 +597,53 @@ requires: function( characterObject) {
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
-	 conflicts_hindrance: 'ugly',
+	 conflicts_hindrance: 'ugly-minor',
+	 tag: 'attractive',
+	 page: 'p35',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 1,
+	 child: 0,
+charEffects: function ( charObject ) {
+			charObject.derived.charisma = charObject.derived.charisma + 2;
+		},
+requires: function( characterObject) {
+	if(
+		characterObject.displayAttributes.vigor.value >= 6
+	) {
+		return true;
+	}
+		return false;
+	}
+},
+{
+	 name: {
+		 'en-US': 'Attractive, Very',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 required_edge: 'attractive',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'attractive-very',
+	 page: 'p35',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 1,
+	 child: 1,
+charEffects: function ( charObject ) {
+			charObject.derived.charisma = charObject.derived.charisma + 2;
+		}
+},
+{
+	 name: {
+		 'en-US': 'Attractive',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: 'ugly-minor',
 	 tag: 'attractive',
 	 page: 'p35',
 	 racial: 0,

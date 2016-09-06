@@ -239,9 +239,7 @@ body {
 		color: #fff;
 		width: 100%;
 		padding: 2px 0;
-		.fieldset .legend {
-			background: $headerFooterBackground !important;
-		}
+
 	}
 	.gear-margin-top {
 		margin-top: 50px;
@@ -397,7 +395,7 @@ body {
 		border-radius: 5px;
 		border-color: $primaryBG;
 		legend {
-			background: $bodyBackground;
+			background: transparent;
 			color: $primaryBG;
 			padding: 0 .5rem;
 			font-size: 1.4rem;

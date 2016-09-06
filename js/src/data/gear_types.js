@@ -22,7 +22,7 @@ var savageWorldsGearTypes = Array(
 },
 {
 	 name: {
-		 'en-US': 'Animals & Tack',
+		 'en-US': 'Animals &amp; Tack',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -71,8 +71,6 @@ var savageWorldsGearTypes = Array(
 {
 	 name: {
 		 'en-US': 'Computers',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'id': 19
 },

@@ -26,7 +26,6 @@ var savageWorldsSPCPowers = Array(
 		 'max_level': '1',
 		 'tag': 'absorbtion',
 		 'modifiers': '[{"name":{"en-US":"Matter \/ Energy Master","pt-BR":"","de-DE":""},"points":"5"},{"name":{"en-US":"Reflection","pt-BR":"","de-DE":""},"points":"4"},{"name":{"en-US":"Transference","pt-BR":"","de-DE":""},"points":"2"}]',
-
 },
 {
 		 'id': 2,
@@ -42,7 +41,6 @@ var savageWorldsSPCPowers = Array(
 		 'max_level': '1',
 		 'tag': 'ageless',
 		 'modifiers': '[{"name":{"en-US":"Very Old","pt-BR":"","de-DE":""},"points":"2"}]',
-
 },
 {
 		 'id': 3,
@@ -58,7 +56,6 @@ var savageWorldsSPCPowers = Array(
 		 'max_level': '1',
 		 'tag': 'altered-form',
 		 'modifiers': '[{"name":{"en-US":"Grapple","pt-BR":"","de-DE":""},"points":"1","per_level":0},{"name":{"en-US":"Reach","pt-BR":"","de-DE":""},"points":"1","per_level":1}]',
-
 },
 {
 		 'id': 4,
@@ -74,7 +71,6 @@ var savageWorldsSPCPowers = Array(
 		 'max_level': '1',
 		 'tag': 'animal-control',
 		 'modifiers': '[{"name":{"en-US":"Animal Companion","pt-BR":"","de-DE":""},"points":"0","per_level":0},{"name":{"en-US":"Summonable","pt-BR":"","de-DE":""},"points":"4","per_level":0},{"name":{"en-US":"Super Powers","pt-BR":"","de-DE":""},"points":"0","per_level":0},{"name":{"en-US":"Telepathic Link","pt-BR":"","de-DE":""},"points":"1","per_level":0}]',
-
 },
 {
 		 'id': 5,
@@ -90,7 +86,6 @@ var savageWorldsSPCPowers = Array(
 		 'max_level': '1',
 		 'tag': 'aquatic',
 		 'modifiers': '[]',
-
 },
 {
 		 'id': 6,
@@ -111,6 +106,22 @@ charEffect: function( charObject, powerObject ) {
 	// Affect Character Object Code here
 	charObject.derived.armor += powerObject.selectedLevel * 2;
 }
+},
+{
+		 'id': 7,
+	 name: {
+		 'en-US': 'Attack, Melee',
+		 'pt-BR': '',
+		 'de-DE': '',
+		 'ru-RU': '',
+	},
+		 'book': 5,
+		 'page': 'p22',
+		 'cost': '2',
+		 'per_level': '1',
+		 'max_level': '5',
+		 'tag': 'attack-melee',
+		 'modifiers': '[{"name":{"en-US":"Armor Piercing","pt-BR":"","de-DE":"","ru-RU":""},"points":"0","per_level":0}]',
 }
 );
 

@@ -662,6 +662,7 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 
 		$scope.filterLowerSkill = function( currentItem, otherOption ) {
 			return function (skillItem) {
+				//console.log( "#", skillItem.value + skillItem.boost ,skillItem.attribute, $scope.savageCharacter.displayAttributes[ skillItem.attribute ] )
 				if(
 					skillItem
 						&&
@@ -676,7 +677,7 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 							&&
 						skillItem.value + skillItem.boost > 0
 							&&
-						skillItem.value + skillItem.boost < $scope.savageCharacter.attributes[ skillItem.attribute ]
+						skillItem.value + skillItem.boost < $scope.savageCharacter.displayAttributes[ skillItem.attribute ].id
 						// 	&&
 						// skillItem.id != otherOption.id
 					)
@@ -686,7 +687,7 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 					// 		&&
 					// 	skillItem.value + skillItem.boost > 0
 					// 		&&
-					// 	skillItem.value + skillItem.boost < $scope.savageCharacter.attributes[ skillItem.attribute ]
+					// 	skillItem.value + skillItem.boost < $scope.savageCharacter.attributes[ skillItem.attribute ].value
 					// 		&&
 					// 	skillItem.specify != otherOption.specify
 					// )

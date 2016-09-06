@@ -1644,6 +1644,8 @@ savageCharacter.prototype.validate = function() {
 				}
 			}
 
+			this.installedEdges.push( this.selectedAdvancements[advCounter].option1 );
+
 
  		}
  		// End of Edge Advancement
@@ -1739,6 +1741,14 @@ savageCharacter.prototype.validate = function() {
  		}
  		// End of New Skill Advancement
 
+	 	// recalculate attributes from advancement boosts
+		this.displayAttributes = {
+			agility: getDiceValue( this.attributes.agility + this.attributeBoost.agility ),
+			smarts: getDiceValue( this.attributes.smarts + this.attributeBoost.smarts ),
+			spirit: getDiceValue( this.attributes.spirit + this.attributeBoost.spirit ),
+			strength: getDiceValue( this.attributes.strength + this.attributeBoost.strength ),
+			vigor: getDiceValue( this.attributes.vigor + this.attributeBoost.vigor ),
+		};
 	}
 
 	this.calcSPC();

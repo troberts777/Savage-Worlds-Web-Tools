@@ -92,7 +92,7 @@ availableLanguages.push ({
 			GENERAL_PACE: 'Pace',
 			GENERAL_CHARISMA: 'Charisma',
 			GENERAL_PARRY: 'Parry',
-			GENERAL_EDGES_AND_HINDRANCES: 'Edges & Hindrances',
+			GENERAL_EDGES_AND_HINDRANCES: 'Edges &amp; Hindrances',
 			GENERAL_HINDRANCES: 'Hindrances',
 			GENERAL_EDGES: 'Edges',
 			GENERAL_PERKS: 'Perks',
@@ -101,7 +101,7 @@ availableLanguages.push ({
 			CHARGEN_INTRO_NOT_FOR_NPCS: 'Remember, this tool is meant for making PCs as per Savage Worlds Core and the various settings of rulebooks not for making NPCs. NPCs can be made from the GMs whim and aren\'t limited like a PC is during generation.',
 			CHARGEN_INTRO_NOT_FOR_NPCS2: 'This isn\'t to say that a GM can\'t use this tool as a guideline, but it could be more time consuming and unnecessary.',
 			CHARGEN_CHARACTER_INFORMATION: 'Character Information',
-			CHARGEN_ATTRIBUTES_AND_SKILLS: 'Attributes & Skills',
+			CHARGEN_ATTRIBUTES_AND_SKILLS: 'Attributes &amp; Skills',
 			CHARGEN_BOOKS_DIALOG: 'Books in Use',
 			CHARGEN_INTRO_BOOKS: 'Books',
 			CHARGEN_INTRO_SETTING_RULES: 'Setting Rules',
@@ -383,6 +383,7 @@ availableLanguages.push ({
 			SPC_YOUR_DESCRIPTION: 'Your description',
 			CHARGEN_VALIDATION_SPC_EP_REQUIRES_2MAJOR: 'You need to have a second major hindrance to select the \'Extra Power Points\' perk.',
 			GENERAL_ICONIC_FRAMEWORKS: 'Iconic Frameworks',
+			SEARCH_TAGS: 'Search Tags',
 
 	}
 

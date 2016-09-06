@@ -37,6 +37,7 @@
 					<label ng-repeat="book in savageCharacter.books track by $index" ng-show="book.char_creator > 0" title="{{book.local_name}}" style="width: 25%;display: inline-block;margin: 0 3% 3% 0">
 						<div style="white-space:nowrap"><input ng-disabled="book.id == 1" type="checkbox" style="margin: 0 5px 0 0; display: inline-block;width: auto" ng-model="book.inUse" ng-change="updateBook($index)" /> <span translate="GENERAL_IN_USE">In Use</span></div>
 						<img ng-show="book.imagepath != ''" ng-src="{{book.imagepath}}" style="width: 100%" />
+						<a class="pull-right button tiny primary expanded" href="{{book.buyme}}?ref=jdgwf-swt" target="buyme"><span class="glyphicon glyphicon-heart-empty"></span>  <span translate="EXTRAS_BUY_BOOK">Buy This Book</span></a>
 					</label>
 
 				</div>

@@ -41,33 +41,6 @@ var savageWorldsGearHandWeapons = Array(
 },
 {
 	 name: {
-		 'en-US': 'Axe, Throwing',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 notes: {
-	},
-		 'tag': 'axe-throwing',
-		 'book': 1,
-		 'page': 'p60',
-		 'class': 0,
-		 'general': 2,
-		 'type': 0,
-		 'damage': 'd6',
-		 'damage_strength': 1,
-		 'ap_vs_rigid_only': 0,
-		 'requires_2_hands': 0,
-		 'ap': 0,
-		 'requires_2_hands': 0,
-		 'parry_modifier': 0,
-		 'min_str': 6,
-		 'rof': 1,
-		 'cost': 75,
-		 'weight': 2,
-		 'reach': 0
-},
-{
-	 name: {
 		 'en-US': 'Bangstick',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -368,6 +341,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'en-US': 'Great Axe',
 		 'pt-BR': '',
 		 'de-DE': '',
+		 'ru-RU': '',
 	},
 	 notes: {
 	},
@@ -384,7 +358,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 1,
 		 'requires_2_hands': 1,
 		 'parry_modifier': -1,
-		 'min_str': 0,
+		 'min_str': 10,
 		 'rof': 0,
 		 'cost': 500,
 		 'weight': 15,
@@ -422,6 +396,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'en-US': 'Great Sword',
 		 'pt-BR': '',
 		 'de-DE': '',
+		 'ru-RU': '',
 	},
 	 notes: {
 	},
@@ -438,7 +413,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 1,
 		 'parry_modifier': -1,
-		 'min_str': 0,
+		 'min_str': 10,
 		 'rof': 0,
 		 'cost': 400,
 		 'weight': 12,
