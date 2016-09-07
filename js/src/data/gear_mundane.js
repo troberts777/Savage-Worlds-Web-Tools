@@ -403,7 +403,7 @@ var savageWorldsGearMundane = Array(
 		 'ru-RU': '',
 	},
 	 notes: {
-		 'en-US': 'provides light in 2&quot; radius',
+		 'en-US': 'provides light in 2" radius',
 		 'pt-BR': '',
 		 'de-DE': '',
 		 'ru-RU': '',
@@ -716,7 +716,7 @@ var savageWorldsGearMundane = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': '10&quot; beam of light',
+		 'en-US': '10" beam of light',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1575,7 +1575,7 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
-		 'en-US': 'Rope, 10&quot;',
+		 'en-US': 'Rope, 10"',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},

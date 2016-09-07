@@ -879,11 +879,11 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 		}
 
 		$scope.incrementSPCPowerLevel = function( powerIndex ) {
-			console.log("incrementSPCPowerLevel", powerIndex);
+			//console.log("incrementSPCPowerLevel", powerIndex);
 
 
 			$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel++;
-			if( $scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel > $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level) {
+			if( $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level < 0 && $scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel > $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level) {
 				$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel = $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level;
 			}
 			$scope.validateAndSave();
@@ -891,7 +891,7 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 		}
 
 		$scope.decrementSPCPowerLevel = function( powerIndex ) {
-			console.log("decrementSPCPowerLevel", powerIndex);
+			//console.log("decrementSPCPowerLevel", powerIndex);
 			$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel--;
 			if( $scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel < 1) {
 				$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel = 1;

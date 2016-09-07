@@ -384,6 +384,18 @@ availableLanguages.push ({
 			CHARGEN_VALIDATION_SPC_EP_REQUIRES_2MAJOR: 'You need to have a second major hindrance to select the \'Extra Power Points\' perk.',
 			GENERAL_ICONIC_FRAMEWORKS: 'Iconic Frameworks',
 			SEARCH_TAGS: 'Search Tags',
+			SPC_STANDARD_MODIFIERS: 'Standard Modifiers',
+			SPC_GENERIC_MODIFIERS: 'Generic Modifiers',
+			SPC_MOD_CONTIGENT: 'Contingent',
+			SPC_MOD_DEVICE: 'Device',
+			SPC_MOD_LIMITATION: 'Limitation',
+			SPC_MOD_PROJECTILE: 'Projectile',
+			SPC_MOD_RTA: 'Ranged Touch Attack',
+			SPC_MOD_RA: 'Requires Activation',
+			SPC_MOD_STA: 'Slow to Activate',
+			SPC_MOD_SWITCHABLE: 'Switchable',
+			SPC_SELECT_ATTRIBUTE: 'Select Attribute',
+			SPC_SELECT_SKILL: 'Select Skill',
 
 	}
 

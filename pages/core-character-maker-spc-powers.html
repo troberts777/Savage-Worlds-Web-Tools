@@ -64,19 +64,48 @@
 
 											<div class="row">
 												<div class="columns small-12 medium-6 large-6 text-left">
+													<div ng-show="spcPower.boost_attribute > 0">
+														<label><span translate="SPC_SELECT_ATTRIBUTE">Select Attribute</span>:
+														<select ng-change="validateAndSave();" ng-model="spcPower.boosted_attribute" class="no-bottom-margin inline-block pad-right" >
+															<option value="" translate="GENERAL_SELECT">-Select-</option>
+															<option value="agility" translate="ATTRIBUTE_AGILITY">Agility</option>
+															<option value="smarts" translate="ATTRIBUTE_SMARTS">Smarts</option>
+															<option value="spirit" translate="ATTRIBUTE_SPIRIT">Spirit</option>
+															<option value="strength" translate="ATTRIBUTE_STRENGTH">Strength</option>
+															<option value="vigor" translate="ATTRIBUTE_VIGOR">Vigor</option>
+														</select>
 
+														</label>
+													</div>
+													<div ng-show="spcPower.boost_skill > 0">
+														<label><span translate="SPC_SELECT_SKILL">Select Skill</span>:
+														</label>
+													</div>
+													<h3 translate="SPC_GENERIC_MODIFIERS">Generic Modifiers</h3>
+													<ul class="spc-power-options">
+														<li ng-repeat="spcModifier in spcPower.genericModifiersObj">
+															<div ng-show="spcModifier.points == 0">
+																<label><input size=3 class="inline-block" type="text" ng-model="spcModifier.currentCost" ng-change="validateAndSave();">{{spcModifier.local_name}} (<span translate="GENERAL_VARIABLE"></span>)</label>
+															</div>
+															<div ng-show="spcModifier.points != 0">
+																<label><input type="checkbox" ng-true-value="{{spcModifier.points}}" ng-false-value="0" ng-model="spcModifier.currentCost" ng-change="validateAndSave();" ng-checked="spcModifier.currentCost != 0">{{spcModifier.local_name}} ({{spcModifier.points}})</label>
+															</div>
+														</li>
+													</ul>
 
+													<div ng-show="spcPower.modifiersObj.length > 0">
 													<h3 translate="SPC_POWER_MODIFIERS">Power Modifiers</h3>
 													<ul class="spc-power-options">
 														<li ng-repeat="spcModifier in spcPower.modifiersObj">
 															<div ng-show="spcModifier.points == 0">
 																<label><input size=3 class="inline-block" type="text" ng-model="spcModifier.currentCost" ng-change="validateAndSave();">{{spcModifier.local_name}} (<span translate="GENERAL_VARIABLE"></span>)</label>
 															</div>
-															<div ng-show="spcModifier.points > 0">
-																<label><input type="checkbox" ng-true-value="{{spcModifier.points}}" ng-false-value="0" ng-model="spcModifier.currentCost" ng-change="validateAndSave();" ng-checked="spcModifier.currentCost > 0">{{spcModifier.local_name}} ({{spcModifier.points}})</label>
+															<div ng-show="spcModifier.points != 0">
+																<label><input type="checkbox" ng-true-value="{{spcModifier.points}}" ng-false-value="0" ng-model="spcModifier.currentCost" ng-change="validateAndSave();" ng-checked="spcModifier.currentCost != 0">{{spcModifier.local_name}} ({{spcModifier.points}})</label>
 															</div>
 														</li>
 													</ul>
+													</div>
 												</div>
 
 												<div class="columns small-12 medium-6 large-6 text-left">

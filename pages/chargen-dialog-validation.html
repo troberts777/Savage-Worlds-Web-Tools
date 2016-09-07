@@ -3,10 +3,10 @@
 
 	<h3 ng-show="savageCharacter.validationReport.length > 0" translate="CHARGEN_VALIDATION_REPORT">Validation Report</h3>
 	<ul>
-		<li ng-repeat="item in savageCharacter.validationReport">{{item}}</li>
+		<li ng-repeat="item in savageCharacter.validationReport track by $index">{{item}}</li>
 	</ul>
 
-	<h3 ng-show="savageCharacter.warningReport.length > 0" translate="CHARGEN_VALIDATION_WARNINGS">Warnings</h3>
+	<h3 ng-show="savageCharacter.warningReport.length > 0 track by $index" translate="CHARGEN_VALIDATION_WARNINGS">Warnings</h3>
 	<ul>
 		<li ng-repeat="item in savageCharacter.warningReport">{{item}}</li>
 	</ul>

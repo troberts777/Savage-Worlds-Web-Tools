@@ -2263,6 +2263,29 @@ savageCharacter.prototype.calcSPC = function() {
 				}
 			}
 
+			for( var modCounter = 0; modCounter < this.selectedSPCPowers[powerCounter].genericModifiersObj.length; modCounter++) {
+				if( typeof(this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost) != "undefined" && this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost != 0) {
+					this.selectedSPCPowers[powerCounter].currentCost += this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost / 1;
+				}
+			}
+
+			if( this.selectedSPCPowers[powerCounter].currentCost < 1 )
+				this.selectedSPCPowers[powerCounter].currentCost = 1;
+
+			if( this.selectedSPCPowers[powerCounter].boost_attribute > 0 ) {
+				if( this.selectedSPCPowers[powerCounter].boosted_attribute != "" ) {
+					//~ console.log( "this.selectedSPCPowers[powerCounter].boosted_attribute", this.selectedSPCPowers[powerCounter].boosted_attribute);
+					//~ console.log( "this.selectedSPCPowers[powerCounter].selectedLevel", this.selectedSPCPowers[powerCounter].selectedLevel );
+					this.boostAttribute( this.selectedSPCPowers[powerCounter].boosted_attribute, this.selectedSPCPowers[powerCounter].selectedLevel );
+				}
+			}
+
+			if( this.selectedSPCPowers[powerCounter].boost_skill > 0 ) {
+				if( this.selectedSPCPowers[powerCounter].boosted_skill != "" ) {
+					this.boostSkill( this.selectedSPCPowers[powerCounter].boosted_skill, this.selectedSPCPowers[powerCounter].boosted_skill_specialty, this.selectedSPCPowers[powerCounter].selectedLevel  );
+				}
+			}
+
 			if( this.selectedSPCPowers[powerCounter].currentCost > this.SPCPowerLimit) {
 
 				this.validationReport.push(
@@ -2465,6 +2488,59 @@ savageCharacter.prototype.init = function(useLang){
 		}
 	);
 
+	this.spcGenericModifiers = Array();
+
+	this.spcGenericModifiers.push( {
+		"local_name": this.getTranslation("SPC_MOD_CONTIGENT"),
+		// "points": Array(-1,-2)
+		"points": 0,
+		"currentCost": 0
+	});
+
+	this.spcGenericModifiers.push( {
+		"local_name": this.getTranslation("SPC_MOD_DEVICE"),
+		//~ "points": Array(-1,-2)
+		"points": 0,
+		"currentCost": 0
+	});
+
+	this.spcGenericModifiers.push( {
+		"local_name": this.getTranslation("SPC_MOD_LIMITATION"),
+		//~ "points": Array(-1,-2)
+		"points": 0,
+		"currentCost": 0
+	});
+
+	this.spcGenericModifiers.push( {
+		"local_name": this.getTranslation("SPC_MOD_PROJECTILE"),
+		"points": 1,
+		"currentCost": 0
+	});
+
+	this.spcGenericModifiers.push( {
+		"local_name": this.getTranslation("SPC_MOD_RTA"),
+		"points": 1,
+		"currentCost": 0
+	});
+
+	this.spcGenericModifiers.push( {
+		"local_name": this.getTranslation("SPC_MOD_RA"),
+		"points": -1,
+		"currentCost": 0
+	});
+
+	this.spcGenericModifiers.push( {
+		"local_name": this.getTranslation("SPC_MOD_STA"),
+		"points": -1,
+		"currentCost": 0
+	});
+
+	this.spcGenericModifiers.push( {
+		"local_name": this.getTranslation("SPC_MOD_SWITCHABLE"),
+		"points": 2,
+		"currentCost": 0
+	});
+
 	this.books = Array();
 
 	for( bookCounter = 0; bookCounter < savageWorldsBooksList.length; bookCounter++ ) {
@@ -2520,6 +2596,8 @@ savageCharacter.prototype.init = function(useLang){
 		for( var modCounter = 0; modCounter < savageWorldsSPCPowers[spcCounter].modifiersObj.length; modCounter++ ) {
 			savageWorldsSPCPowers[spcCounter].modifiersObj[ modCounter ].local_name = this.getLocalName( savageWorldsSPCPowers[spcCounter].modifiersObj[ modCounter ].name )
 		}
+
+		savageWorldsSPCPowers[spcCounter].genericModifiersObj = angular.copy( this.spcGenericModifiers );
 
 //		savageWorldsSPCPowers[spcCounter].local_description = this.getLocalName( savageWorldsSPCPowers[spcCounter].description );
 		savageWorldsSPCPowers[spcCounter].bookObj = get_book_by_id( savageWorldsSPCPowers[spcCounter].book );
@@ -3862,7 +3940,6 @@ savageCharacter.prototype.validate = function() {
 
 			this.installedEdges.push( this.selectedAdvancements[advCounter].option1 );
 
-
  		}
  		// End of Edge Advancement
 
@@ -3965,6 +4042,14 @@ savageCharacter.prototype.validate = function() {
 			strength: getDiceValue( this.attributes.strength + this.attributeBoost.strength ),
 			vigor: getDiceValue( this.attributes.vigor + this.attributeBoost.vigor ),
 		};
+	}
+
+	fightingSkill = this.getSkill("SKILL_FIGHTING");
+
+	this.derived.parry = 2;
+	if( fightingSkill.value > 0 ) {
+		fightingValue = getDiceValue( fightingSkill.value + fightingSkill.boost  );
+		this.derived.parry = Math.floor(fightingValue.value / 2) + 2;
 	}
 
 	this.calcSPC();
@@ -4416,7 +4501,7 @@ savageCharacter.prototype.importJSON = function( jsonString ) {
 
 			if( importObject.spcPowers ) {
 				//powerID, descriptionText, level, modifiers
-
+				//~ console.log( importObject.spcPowers );
 				for( var importCounter = 0; importCounter < importObject.spcPowers.length; importCounter++ ) {
 					//console.log(" *", importObject.spcPowers[ importCounter ])
 					powerID = importObject.spcPowers[ importCounter ].id;
@@ -4424,7 +4509,16 @@ savageCharacter.prototype.importJSON = function( jsonString ) {
 					customName = importObject.spcPowers[ importCounter ].customName;
 					level = importObject.spcPowers[ importCounter ].level;
 					modifiers = importObject.spcPowers[ importCounter ].modifiers;
-					this.addSPCPower( powerID, customName, descriptionText, level, modifiers  );
+					if( importObject.spcPowers[ importCounter ].genericModifiers )
+						genericModifiers = importObject.spcPowers[ importCounter ].genericModifiers;
+					else
+						genericModifiers = null;
+
+					boostedAttribute = importObject.spcPowers[ importCounter ].boostedAttribute;
+					boostedSkill = importObject.spcPowers[ importCounter ].boostedSkill;
+					boostedSkillSpecialty = importObject.spcPowers[ importCounter ].boostedSkillSpecialty;
+
+					this.addSPCPower( powerID, customName, descriptionText, level, modifiers, genericModifiers, boostedAttribute,  boostedSkill, boostedSkillSpecialty );
 				}
 			}
 
@@ -4776,12 +4870,26 @@ savageCharacter.prototype.exportJSON = function(noUUID) {
 					}
 				}
 
+				var genericModifiersObj = Array();
+				for( var modCounter = 0; modCounter < this.selectedSPCPowers[powerCounter].genericModifiersObj.length; modCounter++) {
+
+					genericModifiersObj[modCounter] = {
+						//desc: this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].description,
+						cost: this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost,
+					}
+				}
+
+
 				var exportItem = {
 					id: this.selectedSPCPowers[powerCounter].id,
 					level: this.selectedSPCPowers[powerCounter].selectedLevel,
 					desc: this.selectedSPCPowers[powerCounter].description,
 					customName: this.selectedSPCPowers[powerCounter].custom_name,
-					modifiers: modifierObj
+					modifiers: modifierObj,
+					genericModifiers: genericModifiersObj,
+					boostedAttribute: this.selectedSPCPowers[powerCounter].boosted_attribute,
+					boostedSkill: this.selectedSPCPowers[powerCounter].boosted_skill,
+					boostedSkillSpecialty: this.selectedSPCPowers[powerCounter].boosted_specialty
 				}
 
 				exportObject.spcPowers.push( exportItem );
@@ -5602,12 +5710,14 @@ savageCharacter.prototype.setUsedDuringCombat = function( itemType, gearIndex ) 
 		this.selectedMundaneGear[gearIndex].droppedDuringCombat = false;
 }
 
-savageCharacter.prototype.addSPCPower = function( powerID, customName, descriptionText, level, modifiers ) {
+savageCharacter.prototype.addSPCPower = function( powerID, customName, descriptionText, level, modifiers, genericModifiers, boostedAttribute, boostedSkill, boostedSkillSpecialty ) {
 	if( !descriptionText )
 		descriptionText = "";
 	if( !level )
 		level = 1;
 
+	if( !genericModifiers )
+		genericModifiers = Array();
 
 	for( var spcCounter = 0; spcCounter < savageWorldsSPCPowers.length; spcCounter++) {
 		if( powerID == savageWorldsSPCPowers[spcCounter].id) {
@@ -5629,6 +5739,28 @@ savageCharacter.prototype.addSPCPower = function( powerID, customName, descripti
 					addPower.modifiersObj[modCounter].currentCost = modifiers[modCounter].cost;
 				}
 			}
+
+			for( var modCounter = 0; modCounter < addPower.genericModifiersObj.length;modCounter++) {
+				addPower.genericModifiersObj[modCounter].description = "";
+				addPower.genericModifiersObj[modCounter].currentCost = 0;
+				if( genericModifiers && genericModifiers[modCounter] ) {
+					//addPower.modifiersObj[modCounter].description = modifiers[modCounter].desc;
+					addPower.genericModifiersObj[modCounter].currentCost = genericModifiers[modCounter].cost;
+				}
+			}
+
+			addPower.boosted_attribute = "";
+			addPower.boosted_skill = "";
+			addPower.boosted_skill_specialty = "";
+			if( boostedAttribute )
+				addPower.boosted_attribute = boostedAttribute;
+
+			if( boostedSkill )
+				addPower.boosted_skill = boostedSkill;
+
+			if( boostedSkillSpecialty )
+				addPower.boosted_skill_specialty = boostedSkillSpecialty;
+
 			this.selectedSPCPowers.push( addPower );
 
 			return true;
@@ -7562,11 +7694,11 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 		}
 
 		$scope.incrementSPCPowerLevel = function( powerIndex ) {
-			console.log("incrementSPCPowerLevel", powerIndex);
+			//console.log("incrementSPCPowerLevel", powerIndex);
 
 
 			$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel++;
-			if( $scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel > $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level) {
+			if( $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level < 0 && $scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel > $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level) {
 				$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel = $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level;
 			}
 			$scope.validateAndSave();
@@ -7574,7 +7706,7 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 		}
 
 		$scope.decrementSPCPowerLevel = function( powerIndex ) {
-			console.log("decrementSPCPowerLevel", powerIndex);
+			//console.log("decrementSPCPowerLevel", powerIndex);
 			$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel--;
 			if( $scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel < 1) {
 				$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel = 1;
@@ -7951,6 +8083,7 @@ var coreextrasArray = 	[
 			} else {
 				$scope.show_default_text = true;
 			}
+			//console.log( $scope.search_results ) ;
 		}
 
 		$scope.localize_extra = function( entry_object ) {
@@ -18048,7 +18181,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Elemental: No additional damage from called shots;Fearless; Immune to disease and poison.\nEthereal: Air Elementals can maneuver through any non-solid surface. They can seep through the cracks in doors, bubble through water, and rush through sails.\nFlight: Air Elementals fly at a rate of 6&quot; with a Climb of 3. They may not run.\nInvulnerability:: Immune to all non-magical attacks except fire.\nPush: The air elemental can use an action to push a single adjacent target 1d6&quot; directly away with a concentrated blast of air. The victim makes a Strength roll, with each success and raise reducing the amount moved by 1&quot;(to a minimum of 0).\nWind Blast: Air Elementals can send directed blasts of air at foes using the Cone Template and a Shooting roll. Foes may make an opposed Agility roll to avoid the blast. The damage is 2d6 points of nonlethal damage.\nWhirlwind: As long as the air elemental does not move that turn it may attempt to pick up a foe. Make an opposed Strength check and if the air elemental wins then its foe is pulled into the swirling maelstrom of its body. While trapped, the target is at -2 on all rolls including damage, to hit and Strength rolls to free himself. The air elemental cannot move as long as it wants to keep foes trapped inside its form.',
+		 'en-US': 'Elemental: No additional damage from called shots;Fearless; Immune to disease and poison.\nEthereal: Air Elementals can maneuver through any non-solid surface. They can seep through the cracks in doors, bubble through water, and rush through sails.\nFlight: Air Elementals fly at a rate of 6" with a Climb of 3. They may not run.\nInvulnerability:: Immune to all non-magical attacks except fire.\nPush: The air elemental can use an action to push a single adjacent target 1d6" directly away with a concentrated blast of air. The victim makes a Strength roll, with each success and raise reducing the amount moved by 1"(to a minimum of 0).\nWind Blast: Air Elementals can send directed blasts of air at foes using the Cone Template and a Shooting roll. Foes may make an opposed Agility roll to avoid the blast. The damage is 2d6 points of nonlethal damage.\nWhirlwind: As long as the air elemental does not move that turn it may attempt to pick up a foe. Make an opposed Strength check and if the air elemental wins then its foe is pulled into the swirling maelstrom of its body. While trapped, the target is at -2 on all rolls including damage, to hit and Strength rolls to free himself. The air elemental cannot move as long as it wants to keep foes trapped inside its form.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -18062,8 +18195,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Air elementals manifest as sentient whirlwinds.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d12&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d12","smarts":"d6","spirit":"d6","strength":"d8","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://www.santharia.com/pictures/quellion/quellion_pics/air_elemental.jpg',
 		charisma: '0',
@@ -18103,8 +18236,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Alligators and crocs are staples of most pulp-genre adventure games. The statistics here represent an average specimen of either species. Much larger versions are often found in more remote areas.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d4&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d4","smarts":"d4 (A)","spirit":"d6","strength":"d10","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SWIMMING":{"value":"d8"}}',
 		wildcard: 0,
 		image: 'http://static.ddmcdn.com/gif/alligator-zigzag-1.jpg',
 		charisma: '0',
@@ -18144,8 +18277,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Large bears covers grizzlies, kodiaks, and massive polar bears.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+4&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6 (A)","spirit":"d8","strength":"d12+4","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SWIMMING":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://static.comicvine.com/uploads/original/8/85165/1933110-grizzly_bear.jpg',
 		charisma: '0',
@@ -18185,8 +18318,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Bulls are usually only aggressive toward humans when enraged. Of course, if you&rsquo;re looking up the statistics here, it&rsquo;s probably already seeing red.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4 (A)","spirit":"d8","strength":"d12+2","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d4"},"SKILL_NOTICE":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://www.shockingtimes.co.uk/wp-content/uploads/2010/03/Bull.jpg',
 		charisma: '0',
@@ -18226,8 +18359,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'This is an ordinary house cat, the sort that might be a familiar for a spellcaster, a Beast Master&rsquo;s animal friend, or an alternate form for the shape change power.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d4&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d10","strength":"d4","vigor":"d6"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: 'http://www.southbham.cats.org.uk/uploads/images/pages/cat-stalking-crop.jpg',
 		charisma: '0',
@@ -18267,8 +18400,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'The stats below are for large attack dogs, such as Rottweilers and Doberman Pinschers, as well as wolves, hyenas, and the like.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://www.green-humanity.com/uploads/8/0/4/1/8041038/9168429_orig.jpg',
 		charisma: '0',
@@ -18308,8 +18441,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Dragons are fire-breathing monsters that bring doom and despair to the villages they ravage. Such creatures should not be fought lightly as they are more than a match for even a party of experienced adventurers. These beasts are quite intelligent as well, and use all of their advantages when confronted by would-be dragon- slayers.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12+9&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d12&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d8","spirit":"d10","strength":"d12+9","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d12"}}',
 		wildcard: 1,
 		image: 'http://www.gamefront.com/wp-content/uploads/2008/12/red-dragon.jpg',
 		charisma: '0',
@@ -18349,8 +18482,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Drakes are non-flying dragons with animal intelligence (rather than the more human-like sentience of true dragons). They are much more aggressive in direct combat than their distant cousins, however.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12+6&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6 (A)","spirit":"d10","strength":"d12+6","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d8"}}',
 		wildcard: 1,
 		image: 'http://img2.wikia.nocookie.net/__cb20080714125534/finalfantasy/images/5/52/Greater_Drake_ffx-2.jpg',
 		charisma: '0',
@@ -18390,8 +18523,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Earth elementals manifest as five-foot tall, vaguely man-shaped collections of earth and stone. Though amazingly strong, they are also quite slow and ponderous.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+3&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d12+3","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d4"}}',
 		wildcard: 0,
 		image: 'http://www.elfwood.com/art/o/m/omarmorsy/earth_elemental.jpg',
 		charisma: '0',
@@ -18431,8 +18564,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Fire elementals appear as man-shaped flame.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d12+1&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d4&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d12+1","smarts":"d8","spirit":"d8","strength":"d4","vigor":"d6"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d8"}}',
 		wildcard: 0,
 		image: 'http://th08.deviantart.net/fs70/PRE/f/2010/036/7/d/Fire_elemental_by_javi_ure.jpg',
 		charisma: '0',
@@ -18472,8 +18605,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Spectres, shades, and phantoms sometimes return from death to haunt the living or fulfill some lost goal.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d12+2&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d12+4&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d12&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d10","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d12+2"},"SKILL_NOTICE":{"value":"d12"},"SKILL_TAUNT":{"value":"d10"},"SKILL_STEALTH":{"value":"d12+4"},"SKILL_THROWING":{"value":"d12"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -18499,7 +18632,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor +4: Scaly Hide.\nBite: Str+d8.\nBurrow (20&quot;): Giant worms can disappear and reappear on the following action anywhere within 20&quot;.\nGargantuan: The worms are Huge and thus suffer +4 to ranged attacks against them. Their attacks count as Heavy Weapons, and they add their Size to Strength rolls.\nHardy: The creature does not suffer a wound from being Shaken twice.\nSize +10: Giant worms are usually well over 50&rsquo;long and 10&rsquo; or more in diameter.\nSlam: Giant worms attempt to rise up and crush their prey beneath their massive bodies. This is an opposed roll of the creature&rsquo;s Fighting versus the target&rsquo;s Agility. If the worm wins, the victim suffers 4d6 damage.',
+		 'en-US': 'Armor +4: Scaly Hide.\nBite: Str+d8.\nBurrow (20"): Giant worms can disappear and reappear on the following action anywhere within 20".\nGargantuan: The worms are Huge and thus suffer +4 to ranged attacks against them. Their attacks count as Heavy Weapons, and they add their Size to Strength rolls.\nHardy: The creature does not suffer a wound from being Shaken twice.\nSize +10: Giant worms are usually well over 50&rsquo;long and 10&rsquo; or more in diameter.\nSlam: Giant worms attempt to rise up and crush their prey beneath their massive bodies. This is an opposed roll of the creature&rsquo;s Fighting versus the target&rsquo;s Agility. If the worm wins, the victim suffers 4d6 damage.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -18513,8 +18646,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Massive worms tunneling beneath the earth to gobble up unsuspecting adventurers are sometimes found in lonesome flatlands. The things sense vibrations through the earth, hearing a walking person at about 200 yards. The stats below are for a monster some 50&rsquo; long.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12+10&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6 (A)","spirit":"d10","strength":"d12+10","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -18554,8 +18687,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Goblins of myth and legend are far more sinister creatures than some games and fiction portray. In the original tales, they were terrifying creatures that stole into homes in the middle of the night to steal and eat unruly children. The statistics here work for both dark &ldquo;fairy tale&rdquo; goblins as well as those found alongside orcs in contemporary roleplaying games.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d4&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d6","strength":"d4","vigor":"d6"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_TAUNT":{"value":"d6"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"},"SKILL_THROWING":{"value":"d6"},"SKILL_SWIMMING":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://cdn.obsidianportal.com/assets/62147/goblins2.jpg',
 		charisma: '0',
@@ -18595,8 +18728,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Riding horses are medium-sized animals that manage a good compromise between speed and carrying capacity.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4 (A)","spirit":"d6","strength":"d12","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://horsebreedsinfo.com/images/brown_horse.jpg',
 		charisma: '0',
@@ -18636,8 +18769,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'War horses are large beasts trained for aggression. They are trained to fight with both hooves, either to their front or their rear. In combat, the animal attacks any round its rider doesn&rsquo;t make a trick maneuver of some kind.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4 (A)","spirit":"d6","strength":"d12+2","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://fc09.deviantart.net/fs44/f/2009/156/0/b/War_Horse_by_BenWootten.jpg',
 		charisma: '0',
@@ -18677,8 +18810,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Perhaps the most diabolical creature in any fantasy land is the lich&mdash;a necromancer so consumed with the black arts that he eventually becomes undead himself.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d12+2&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_KNOWLEDGE&quot;:{&quot;value&quot;:&quot;d12+2&quot;,&quot;special&quot;:{&quot;en-US&quot;:&quot;Occult&quot;}},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d12&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d12+2","spirit":"d10","strength":"d10","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_KNOWLEDGE":{"value":"d12+2","special":{"en-US":"Occult"}},"SKILL_NOTICE":{"value":"d10"},"SKILL_SPELLCASTING":{"value":"d12"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -18718,8 +18851,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'The kings of the jungle are fierce predators, particularly in open grassland where their prey cannot seek refuge.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d10","strength":"d12","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"}}',
 		wildcard: 0,
 		image: 'http://news.bbcimg.co.uk/media/images/66231000/jpg/_66231792_z9340587-male_african_lion-spl.jpg',
 		charisma: '0',
@@ -18759,8 +18892,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'The stats below are for a 12\' high mechanized sentinel such as might be found in a typical hard sci-fi campaign. This is a light patrol-style platform with reasonable intelligence, a sensor package, and high maneuverability.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d4&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d4&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d4","smarts":"d6","spirit":"d4","strength":"d6","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"},"SKILL_SHOOTING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -18800,8 +18933,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Minotaurs stand over 7&rsquo; tall and have massive, bull-like heads and horns. In many fantasy worlds, they are used as guardians of labyrinths. In others, they are simply another race of creatures occupying a fantastically savage setting. In all cases, they are fierce beasts eager for battle and the taste of their opponents&rsquo; flesh.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d12+2","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d10"},"SKILL_THROWING":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -18841,8 +18974,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Mules are a cross between a donkey and a horse, and are usually used to haul heavy goods or pull wagons.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d4&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;}}',
+		attributes: '{"agility":"d4","smarts":"d4 (A)","spirit":"d6","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_NOTICE":{"value":"d4"}}',
 		wildcard: 0,
 		image: 'http://www.lovelongears.com/curly_spring05.jpg',
 		charisma: '0',
@@ -18882,8 +19015,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Ogres are kin to orcs and lesser giants. They are often taken in by orc clans, who respect the dumb brutes for their savagery and strength. Orcs often pit their &ldquo;pet&rdquo; ogres in savage combats against their rivals&rsquo; ogres.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+3&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d12+3","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d4"},"SKILL_THROWING":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://cdn.obsidianportal.com/assets/161371/Ogre_Warlord.jpg',
 		charisma: '0',
@@ -18923,8 +19056,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'The leader of small orc clans is always the most deadly brute in the bunch. Orc chieftains generally have a magical item or two in settings where such things are relatively common (most &ldquo;swords and sorcery&rdquo; worlds).',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d6","strength":"d10","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d12"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"},"SKILL_THROWING":{"value":"d8"}}',
 		wildcard: 1,
 		image: 'http://fc09.deviantart.net/fs71/f/2013/098/0/0/orc_chieftain_final_by_director_16-d60veug.jpg',
 		charisma: '0',
@@ -18964,8 +19097,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Orcs are savage, green-skinned humanoids with pig-like features, including snouts and sometimes even tusks. They have foul temperaments, and rarely take prisoners.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"},"SKILL_THROWING":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'https://www.frontlinegaming.org/wp-content/uploads/2013/01/4e_DnD_Orcs_by_RalphHorsley1.jpeg',
 		charisma: '0',
@@ -19005,8 +19138,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'These statistics cover great whites, 18 to 25 feet long. Larger specimens surely exist.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+4&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4 (A)","spirit":"d6","strength":"d12+4","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d12"},"SKILL_SWIMMING":{"value":"d10"}}',
 		wildcard: 0,
 		image: 'http://24.media.tumblr.com/b2fb55d2fcc1a2c4a79e86b092ef2724/tumblr_mqogn2Sind1r15h5mo1_500.jpg',
 		charisma: '0',
@@ -19046,8 +19179,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'These statistics cover most medium sized mankillers, such as tiger sharks an bulls.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4 (A)","spirit":"d6","strength":"d8","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d12"},"SKILL_SWIMMING":{"value":"d10"}}',
 		wildcard: 0,
 		image: 'http://www.fearbeneath.com/wp-content/gallery/tiger-sharks/Tiger-Shark-Roger-Horrocks.jpg',
 		charisma: '0',
@@ -19087,8 +19220,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'The skin has already rotted from these risen dead, leaving them slightly quicker than their flesh laden zombie counterparts. They are often found swarming in vile necromancer legions.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d4&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4","spirit":"d4","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d4"},"SKILL_SWIMMING":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://wiki.chronicles-of-blood.com/images/thumb/Creatures-Skeleton.jpg/350px-Creatures-Skeleton.jpg',
 		charisma: '0',
@@ -19128,8 +19261,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Pythons, boa constrictors, and other snakes over 15&rsquo; long are rarely deadly to man in the real world because they aren&rsquo;t particularly aggressive toward such large prey. In games, however, such snakes might be provoked, drugged, or just plain mean.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d4&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d4","smarts":"d4 (A)","spirit":"d8","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -19169,8 +19302,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Here are the stats for Taipans (Australian brown snakes), cobras, and similar medium- sized snakes with extremely deadly poison.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d4&quot;,&quot;vigor&quot;:&quot;d4&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d12&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4 (A)","spirit":"d6","strength":"d4","vigor":"d4"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d12"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -19210,8 +19343,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Giant spiders are about the size of large dogs and live in nests of 1d6+2 arachnids. They frequently go hunting in these packs when prey is scarce in their home lair.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d12+2&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d4 (A)","spirit":"d6","strength":"d10","vigor":"d6"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d12+2"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d10"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -19251,8 +19384,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Sometimes the most deadly foes come in the smallest packages. The swarm described below can be of most anything&mdash; from biting ants to stinging wasps to filthy rats.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d12&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d4 (A)","spirit":"d12","strength":"d8","vigor":"d10"}',
+		skills: '{"SKILL_NOTICE":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -19292,8 +19425,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Trolls in myths and legends are horrid, flesh-eating creatures who live in deep woods, beneath bridges, or in hidden mountain caves. In modern games and fiction, trolls are monsters with the ability to regenerate damage and a weakness to fire. These statistics reflect both backgrounds.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d12+2","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SWIMMING":{"value":"d6"},"SKILL_THROWING":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -19333,8 +19466,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Blood-drinkers of lore are common in many fantasy games. The statistics below are for a vampire somewhat below the legendary Dracula, but far above those bloodsuckers fresh from the grave (detailed next). The abilities listed below are standard&mdash;the GM may want to add other Edges as befits the vampire&rsquo;s previous lifestyle.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d10&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12+3&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d10","spirit":"d10","strength":"d12+3","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_SWIMMING":{"value":"d8"},"SKILL_THROWING":{"value":"d8"}}',
 		wildcard: 1,
 		image: 'http://static.ddmcdn.com/gif/vampire-power-1.jpg',
 		charisma: '0',
@@ -19374,8 +19507,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Blood-drinkers of lore are common in many fantasy games. This is a relatively young vampire minion.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+1&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d8","spirit":"d8","strength":"d12+1","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d6"},"SKILL_SWIMMING":{"value":"d8"},"SKILL_THROWING":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://upload.wikimedia.org/wikipedia/commons/f/f8/VampireE3.jpg',
 		charisma: '0',
@@ -19415,8 +19548,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Water spirits are frothing, man-shaped creatures of water and sea-foam.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d12+2&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d6","strength":"d10","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_SWIMMING":{"value":"d12+2"}}',
 		wildcard: 0,
 		image: 'http://www.santharia.com/pictures/quellion/quellion_pics/water_elemental.jpg',
 		charisma: '0',
@@ -19456,8 +19589,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'When a full moon emerges, humans infected with lycanthropy lose control and become snarling creatures bent on murder. Some embrace their cursed state and revel in the destruction they cause.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d12+2&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_TRACKING&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d6","strength":"d12+2","vigor":"d10"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d12+2"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d12"},"SKILL_SWIMMING":{"value":"d10"},"SKILL_STEALTH":{"value":"d10"},"SKILL_TRACKING":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -19497,8 +19630,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'These walking dead are typical groaning fiends looking for fresh meat.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d4&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d4","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d4"},"SKILL_SHOOTING":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://cdn.foodbeast.com.s3.amazonaws.com/content/wp-content/uploads/2013/02/zombies-620x412.jpeg',
 		charisma: '0',
@@ -19568,8 +19701,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Elementals are living spirits of earth, fire, water, and air. These are average examples of such creatures. They may be more or less powerful in specific settings.\nAir elementals manifest as sentient whirlwinds.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d12&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d12","smarts":"d6","spirit":"d6","strength":"d8","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -19609,8 +19742,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Arachnaurs are a mix of human and spider in the same way centaurs are part human, part horse. They live in dense woodlands, spinning webs to catch unwary intruders. Despite being a sentient race, they have no qualms about eating the flesh of other sentients.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d6","spirit":"d6","strength":"d10","vigor":"d8"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d12"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d10"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -19650,8 +19783,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Mages range from lowly apprentices armed with a handful of spells to arch mages, whose great power is often political as well as arcane. The stats here are for typical adventuring mages, but they need to be adjusted to fit whatever role they are found in. A court mage is very different from a magic item crafter, for example. Feel free to add new powers to suit your particular needs.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d12&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d12+2&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_KNOWLEDGE0&quot;:{&quot;special&quot;:{&quot;en-US&quot;:&quot;Arcana&quot;},&quot;value&quot;:&quot;d12&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d12","spirit":"d10","strength":"d6","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d10"},"SKILL_SPELLCASTING":{"value":"d12+2"},"SKILL_STEALTH":{"value":"d6"},"SKILL_KNOWLEDGE0":{"special":{"en-US":"Arcana"},"value":"d12"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -19691,8 +19824,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Assassins are hired killers. They may be mysterious loners or belong to an organized guild. What they have in common is a lack of scruples about killing for money.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STREETWISE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d6","spirit":"d8","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"},"SKILL_SHOOTING":{"value":"d6"},"SKILL_STREETWISE":{"value":"d6"},"SKILL_THROWING":{"value":"d8"}}',
 		wildcard: 0,
 		image: 'http://www.wizards.com/dnd/images/dmg35_gallery/DMG35_PG180_WEB.jpg',
 		charisma: '0',
@@ -19732,8 +19865,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Assassins are hired killers. They may be mysterious loners or belong to an organized guild. What they have in common is a lack of scruples about killing for money.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d12&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_STREETWISE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d12","smarts":"d8","spirit":"d8","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d12"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d10"},"SKILL_SHOOTING":{"value":"d6"},"SKILL_STEALTH":{"value":"d12"},"SKILL_STREETWISE":{"value":"d8"},"SKILL_THROWING":{"value":"d10"}}',
 		wildcard: 0,
 		image: 'http://www.wizards.com/dnd/images/dmg35_gallery/DMG35_PG180_WEB.jpg',
 		charisma: '0',
@@ -19773,8 +19906,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Bandits are outlaws, earning a living by raiding small settlements or waylaying travelers. Not all bandits are necessarily evil. Some may have been wrongly outlawed or forced to flee their homes by an invading force. Others may be Robin Hood-type figures, fighting against an unjust system.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_RIDING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_RIDING":{"value":"d8"},"SKILL_SHOOTING":{"value":"d10"},"SKILL_STEALTH":{"value":"d8"},"SKILL_THROWING":{"value":"d8"}}',
 		wildcard: 1,
 		image: 'http://cdn.obsidianportal.com/images/315512/akiyoko.jpg',
 		charisma: '-2',
@@ -19814,8 +19947,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Bandits are outlaws, earning a living by raiding small settlements or waylaying travelers. Not all bandits are necessarily evil. Some may have been wrongly outlawed or forced to flee their homes by an invading force. Others may be Robin Hood-type figures, fighting against an unjust system.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"},"SKILL_THROWING":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://cdn.obsidianportal.com/images/315512/akiyoko.jpg',
 		charisma: '-2',
@@ -19855,8 +19988,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Bargests are huge, black dogs. It is said that anyone who sees a bargest is destined to die soon.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4 (A)","spirit":"d6","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"}}',
 		wildcard: 0,
 		image: 'http://vampirewarzone.yolasite.com/resources/BARGH.jpg',
 		charisma: '0',
@@ -19896,8 +20029,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Called the king of serpents because of its head crest, the gaze of the basilisk can instantly kill. Even its blood is deadly to the touch. The cockatrice is a form of basilisk, but lacks the poisonous blood.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d12+2&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d12+2","strength":"d6","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 0,
 		image: 'http://www.gods-and-monsters.com/images/mythical-creatures-basilisk.jpg',
 		charisma: '0',
@@ -19923,7 +20056,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager, in lair',
 	},
 	 abilities: {
-		 'en-US': 'Flight: Giant bees have a Flying Pace of 6&quot; and Climb of 3&quot;.\nPoison: Any creature Shaken or wounded by a sting attack must make a Vigor roll or take a wound.\nSize -1: Giant bees are 3&rsquo; long.\nSting: Str+d4',
+		 'en-US': 'Flight: Giant bees have a Flying Pace of 6" and Climb of 3".\nPoison: Any creature Shaken or wounded by a sting attack must make a Vigor roll or take a wound.\nSize -1: Giant bees are 3&rsquo; long.\nSting: Str+d4',
 	},
 	 tags: {
 		 'en-US': '',
@@ -19937,8 +20070,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Giant bees are considerably larger than regular bees but fortunately do not form large swarms.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4 (A)","spirit":"d6","strength":"d8","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d8"}}',
 		wildcard: 0,
 		image: 'http://farm7.staticflickr.com/6120/6263370588_7162b81b4a_z.jpg',
 		charisma: '0',
@@ -19964,7 +20097,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Blind: When attacking large prey (such as characters), birds of prey go for the eyes. If the bird scores a raise on its Fighting roll, it has hit the character&rsquo;s face. The character must make an Agility roll. On a failure, he suffers the One Eye Hindrance until his wounds heal. A roll of 1, regardless of the Wild Die, he suffers the Blind Hindrance instead.\nClaws: Str+d6\nFlying: Flying Pace 8&quot;.\nSize: Birds of prey measure up to 2&rsquo; in height.\nSmall: Attackers suffer a &ndash;2 penalty to attack rolls because of the beast&rsquo;s size.',
+		 'en-US': 'Blind: When attacking large prey (such as characters), birds of prey go for the eyes. If the bird scores a raise on its Fighting roll, it has hit the character&rsquo;s face. The character must make an Agility roll. On a failure, he suffers the One Eye Hindrance until his wounds heal. A roll of 1, regardless of the Wild Die, he suffers the Blind Hindrance instead.\nClaws: Str+d6\nFlying: Flying Pace 8".\nSize: Birds of prey measure up to 2&rsquo; in height.\nSmall: Attackers suffer a &ndash;2 penalty to attack rolls because of the beast&rsquo;s size.',
 	},
 	 tags: {
 		 'en-US': 'animal,',
@@ -19978,8 +20111,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Birds of prey may not be big, but their talons can rip through flesh with ease. The bird of prey could be used for eagles, hawks, and any hunting birds.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d4&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d12+4&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d4 (A)","spirit":"d6","strength":"d4","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d12+4"}}',
 		wildcard: 0,
 		image: 'http://images.nationalgeographic.com/wpf/media-live/photos/000/006/cache/red-tailed-hawk_681_600x450.jpg',
 		charisma: '0',
@@ -20019,8 +20152,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Clad in jet-black plate armor and armed with weapons swathed in balefire, black knights are the elite troops of the demon lords. Beneath their armor is a mummified corpse with burning green eyes.\nThey most often serve as unit commanders in demonic armies, but can sometimes be found as bodyguards for powerful, evil wizards and priests. Many ride nightmares.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_KNOWLEDGE&quot;:{&quot;value&quot;:&quot;d10&quot;,&quot;special&quot;:{&quot;en-US&quot;:&quot;Battle&quot;}},&quot;SKILL_RIDING&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d10","strength":"d12","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_KNOWLEDGE":{"value":"d10","special":{"en-US":"Battle"}},"SKILL_RIDING":{"value":"d10"}}',
 		wildcard: 0,
 		image: 'http://www.pixel77.com/wp-content/uploads/2010/03/dark_knight_by_zeo_x.jpg',
 		charisma: '0',
@@ -20060,8 +20193,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Wild boars are hunted for their rich meat. They are tenacious fighters, especially when wounded.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4 (A)","spirit":"d6","strength":"d8","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://www.pennmac.com/blog/wp-content/uploads/2011/12/wild-boar-festival.jpeg',
 		charisma: '0',
@@ -20099,10 +20232,10 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'All Thumbs, Mean',
 	},
 	 blurb: {
-		 'en-US': '&quot;Cave man&quot; is a generic term used to describe a member of a primitive, non- technological society. Some cave men actually live in caves, whereas others inhabit deserts, jungles, or swamps, living in mud or reed huts. They lack an organized society, typically being led by a chief who is advised by one or more shamans.\nCave man culture focuses on hunting and warring with rival tribes&mdash;the latter being typically for females. Some tribes fear outsiders, using force to drive them away. Others welcome limited contact, swapping furs and meat for metal tools. Some are cannibals, openly welcoming strangers, only to turn on them and eat them.\nCave men communities are often lead by a chieftain. Typically, he is the largest and strongest individual in the tribe.',
+		 'en-US': '"Cave man" is a generic term used to describe a member of a primitive, non- technological society. Some cave men actually live in caves, whereas others inhabit deserts, jungles, or swamps, living in mud or reed huts. They lack an organized society, typically being led by a chief who is advised by one or more shamans.\nCave man culture focuses on hunting and warring with rival tribes&mdash;the latter being typically for females. Some tribes fear outsiders, using force to drive them away. Others welcome limited contact, swapping furs and meat for metal tools. Some are cannibals, openly welcoming strangers, only to turn on them and eat them.\nCave men communities are often lead by a chieftain. Typically, he is the largest and strongest individual in the tribe.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d10","vigor":"d10"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d4"},"SKILL_STEALTH":{"value":"d6"},"SKILL_THROWING":{"value":"d8"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '-2',
@@ -20140,10 +20273,10 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'All Thumbs, Mean',
 	},
 	 blurb: {
-		 'en-US': '&quot;Cave man&quot; is a generic term used to describe a member of a primitive, non- technological society. Some cave men actually live in caves, whereas others inhabit deserts, jungles, or swamps, living in mud or reed huts. They lack an organized society, typically being led by a chief who is advised by one or more shamans.\nCave man culture focuses on hunting and warring with rival tribes&mdash;the latter being typically for females. Some tribes fear outsiders, using force to drive them away. Others welcome limited contact, swapping furs and meat for metal tools. Some are cannibals, openly welcoming strangers, only to turn on them and eat them.\nMost cave man tribes have at least one shaman in their number. He communes with the spirits and foretells the omens.',
+		 'en-US': '"Cave man" is a generic term used to describe a member of a primitive, non- technological society. Some cave men actually live in caves, whereas others inhabit deserts, jungles, or swamps, living in mud or reed huts. They lack an organized society, typically being led by a chief who is advised by one or more shamans.\nCave man culture focuses on hunting and warring with rival tribes&mdash;the latter being typically for females. Some tribes fear outsiders, using force to drive them away. Others welcome limited contact, swapping furs and meat for metal tools. Some are cannibals, openly welcoming strangers, only to turn on them and eat them.\nMost cave man tribes have at least one shaman in their number. He communes with the spirits and foretells the omens.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d8","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d4"},"SKILL_SPELLCASTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '-2',
@@ -20181,10 +20314,10 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'All Thumbs, Mean',
 	},
 	 blurb: {
-		 'en-US': '&quot;Cave man&quot; is a generic term used to describe a member of a primitive, non- technological society. Some cave men actually live in caves, whereas others inhabit deserts, jungles, or swamps, living in mud or reed huts. They lack an organized society, typically being led by a chief who is advised by one or more shamans.\nCave man culture focuses on hunting and warring with rival tribes&mdash;the latter being typically for females. Some tribes fear outsiders, using force to drive them away. Others welcome limited contact, swapping furs and meat for metal tools. Some are cannibals, openly welcoming strangers, only to turn on them and eat them.',
+		 'en-US': '"Cave man" is a generic term used to describe a member of a primitive, non- technological society. Some cave men actually live in caves, whereas others inhabit deserts, jungles, or swamps, living in mud or reed huts. They lack an organized society, typically being led by a chief who is advised by one or more shamans.\nCave man culture focuses on hunting and warring with rival tribes&mdash;the latter being typically for females. Some tribes fear outsiders, using force to drive them away. Others welcome limited contact, swapping furs and meat for metal tools. Some are cannibals, openly welcoming strangers, only to turn on them and eat them.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d10","vigor":"d10"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d4"},"SKILL_STEALTH":{"value":"d6"},"SKILL_THROWING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '-2',
@@ -20224,8 +20357,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Centaurs have the upper body of a human and the lower body of a horse. In some settings they are reclusive philosophers. In others, they are nomads, wandering the plains and forests in herds.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SURVIVAL&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d8","spirit":"d8","strength":"d10","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"},"SKILL_SURVIVAL":{"value":"d8"}}',
 		wildcard: 0,
 		image: 'http://media1.shmoop.com/images/mythology/characters/centaurs/chiron-centaur-achilles.jpg',
 		charisma: '0',
@@ -20265,8 +20398,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Measuring up to eight yards in length and covered in black chitinous armor, giant centipedes are predominantly found underground or in tropical jungles. Their powerful mandibles can pierce most armor and deliver a lethal poison.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4 (A)","spirit":"d6","strength":"d10","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -20306,8 +20439,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'In their natural form, changelings resemble skinless humans devoid of any distinguishing features, save for their gruesome appearance. Changelings have the ability to assume the exact form of their victims, taking on their mannerisms and retaining their memories.\nRegardless of the form they assume, they keep their own attributes. Thus, a changeling who assumes the form of a human with a d10 Strength may look physically impressive but lacks the muscle power of the original. However, a changeling absorbs its victim&rsquo;s memories. It gains all its victim&rsquo;s skills at one die type lower (minimum d4) unless its own skills are higher&mdash;in which case it retains its own levels.\nChangelings are used as infiltrators and assassins.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -20347,8 +20480,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'A chimera has the head of a lion, the body of a goat, and the tail of a dragon, complete with a dragon&rsquo;s head at the tip. The creature&rsquo;s leonine head can breathe fire. A few chimera can also breathe fire from their dragon-headed tail.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d10","strength":"d12","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"}}',
 		wildcard: 0,
 		image: 'http://img2.wikia.nocookie.net/__cb20120615060217/dragonsdogma/images/0/06/Chimera01.png',
 		charisma: '0',
@@ -20386,10 +20519,10 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': '&quot;Citizens&quot; covers everything from farmers to crafters.',
+		 'en-US': '"Citizens" covers everything from farmers to crafters.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_KNOWLEDGE&quot;:{&quot;value&quot;:&quot;d6&quot;,&quot;special&quot;:{&quot;en-US&quot;:&quot;Trade&quot;}},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d4"},"SKILL_KNOWLEDGE":{"value":"d6","special":{"en-US":"Trade"}},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d4"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -20429,8 +20562,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Mortals sometimes make deals with powerful demon lords in the hope of accruing power&mdash;sometimes they try to renege on the deal. When this happens, the demon lords despatch a demon whose task it is to drain souls and return them to Hell. Collectors are sometimes used as common assassins, but they are at best halfhearted in this role, finding it beneath them.\nAlthough powerful, they are not interested in wanton destruction&mdash;all that matters to them is their quarry. Of course, any creature foolish enough to stand in its way is slaughtered without mercy.\nCollectors always wear black, heavy cowls. They reveal their face only to those they are hunting, for it is said that to gaze on one is to lose one&rsquo;s soul.\nBeneath their cowls, collectors resemble bipedal vultures with rotting flesh. Their eyes are empty hollows, in which a vortex of balefire swirls.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d12&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_TRACKING&quot;:{&quot;value&quot;:&quot;d12+2&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d8","spirit":"d12","strength":"d12","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d12"},"SKILL_TRACKING":{"value":"d12+2"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -20470,8 +20603,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Giants come in several forms, but all share two common features&mdash;they are tall and they enjoy human flesh. Fortunately, they are also rather stupid.\nDepending on where they are found, these hulking brutes are known as forest giants, hill giants, mountain giants, or simply as giants. There are slight differences between the breeds, but not enough to separate them.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+5&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d12+5","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_THROWING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -20511,8 +20644,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Mercenaries are hired soldiers. Some belong to respectable units, with a history of integrity and loyalty to their paymaster. Others happily switch sides if a better offer is made. Groups of mercenaries are often armed with the same weapons. Thus, one finds mercenary pikemen, cavalrymen, skirmishers, archers, and so on.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d6","strength":"d6","vigor":"d8"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"},"SKILL_THROWING":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -20552,8 +20685,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Mercenaries are hired soldiers. Some belong to respectable units, with a history of integrity and loyalty to their paymaster. Others happily switch sides if a better offer is made. Groups of mercenaries are often armed with the same weapons. Thus, one finds mercenary pikemen, cavalrymen, skirmishers, archers, and so on.\nHardened by battle, these tough combatants charge more for their services. As with common mercenaries, their reputation and weapons vary considerably.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d10"},"SKILL_STEALTH":{"value":"d6"},"SKILL_THROWING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -20593,8 +20726,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Golems are magical constructs, given life through the imprisonment of a spirit within the golem&rsquo;s body. Creating one is costly and laborious, and few mages have the requisite knowledge. Despite being inhabited by a spirit, golems cannot talk.\nThe vilest golems are those crafted from the body parts of corpses. Depending on the creator, the golem may be stitched together from the parts of one species or multiple species. Some corpse golems utilize animal parts.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d10","strength":"d12","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://img4.wikia.nocookie.net/__cb20100814131953/dragonage/images/4/4b/Harvester_golem.png',
 		charisma: '0',
@@ -20634,8 +20767,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Naga are giant snakes with the head of women. In Buddhist mythology, the naga tried to follow Buddha&rsquo;s teaching and become a monk, transforming into human form to nfiltrate the monks. Buddha discovered the ploy and told the naga it was a beast, not a human, and therefore could not be ordained. Still loyal to the Buddhist faith, the naga became a temple guardian. In a fantasy campaign, nagas serve as guardians of temples to the gods of good.\nIn a fantasy setting, there is no reason why a naga cannot follow the gods of evil. Unlike guardian naga, who are forbidden from joining the priesthood and learning magic, corrupt naga are powerful spellcasters. Some even go so far as to form their own cults, with the naga as living gods.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d10&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d10","spirit":"d10","strength":"d12","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d10"},"SKILL_STEALTH":{"value":"d4"},"SKILL_TAUNT":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -20675,8 +20808,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'This entry covers both true nobles and their courtier lackeys, such as seneschals and chancellors. The generic noble is suitable for every noble Rank from baron to emperor.\nDespite often being dwarves or hunchbacks (or both), jesters are more than just comical entertainment for the nobility. They have their lord&rsquo;s ear, are privy to his most secret affairs, can get away with insulting powerful guests, and conceal great wisdom in their seemingly nonsensical riddles and japes.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STREETWISE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d12&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d8","spirit":"d8","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d4"},"SKILL_NOTICE":{"value":"d8"},"SKILL_PERSUASION":{"value":"d6"},"SKILL_STREETWISE":{"value":"d8"},"SKILL_TAUNT":{"value":"d12"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -20716,8 +20849,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'This entry covers both true nobles and their courtier lackeys, such as seneschals and chancellors. The generic noble is suitable for every noble Rank from baron to emperor.\nCourtiers are more than just servants&mdash; they are advisors and often hold positions of importance within the court. Unless the characters know a noble personally, most dealings are conducted through a trusted courtier, typically a seneschal.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_RIDING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STREETWISE&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d4"},"SKILL_NOTICE":{"value":"d8"},"SKILL_PERSUASION":{"value":"d8"},"SKILL_RIDING":{"value":"d6"},"SKILL_STREETWISE":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '+2',
@@ -20757,8 +20890,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Giant crabs live on beaches, hiding under the sand ready to leap out at passing prey.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4 (A)","spirit":"d8","strength":"d10","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -20798,8 +20931,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'The crocotta looks like a wolf except for its jaws, which are as long as a crocodile&rsquo;s. Its jaws are powerful enough to bite through almost any material.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d6","strength":"d8","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -20839,8 +20972,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Cyclopses are a race of one-eyed giants. Despite raising herds of goats, they have a taste for human flesh. In some legends, they crafted lightning bolts for the gods.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+3&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d6","strength":"d12+3","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_THROWING":{"value":"d8"}}',
 		wildcard: 0,
 		image: 'http://www.cartuneland.com/cyclops1.jpg',
 		charisma: '0',
@@ -20880,8 +21013,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Making up the bulk of the legions of Hell are demonic soldiers, small, feral creatures with sharp teeth and claws and only a limited capacity for reasoning. They attack with berserk fury, ripping their prey to shreds with howls of glee. Demon lords use them in &ldquo;human-wave&rdquo; tactics and rarely bother to provide them with armor or weapons.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4","spirit":"d6","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -20921,8 +21054,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Dire wolves are very large and feral wolves often used by orcs as attack dogs. They may also be found roaming in packs in the deepest, darkest woods.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4 (A)","spirit":"d6","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -20948,7 +21081,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager.',
 	},
 	 abilities: {
-		 'en-US': 'Acid: Str+d6\nCamouflage: When lying still, dissolvers gain +4 to Stealth rolls.\nEnvelope: If a dissolver succeeds in a Fighting roll it has enveloped part of its target. Each round the victim remains enveloped, he suffers 2d6 damage. All equipment permanently loses 1 point of Toughness (Protection for armor) per round until it reaches zero, at which point it is destroyed. Trying to escape from a grapple requires a Strength roll at &ndash;6. A dissolver may only envelope one foe at a time, regardless of its size.\nPseudopod: A dissolver can extend a single pseudopod out to 1&quot;. Damage 2d6.',
+		 'en-US': 'Acid: Str+d6\nCamouflage: When lying still, dissolvers gain +4 to Stealth rolls.\nEnvelope: If a dissolver succeeds in a Fighting roll it has enveloped part of its target. Each round the victim remains enveloped, he suffers 2d6 damage. All equipment permanently loses 1 point of Toughness (Protection for armor) per round until it reaches zero, at which point it is destroyed. Trying to escape from a grapple requires a Strength roll at &ndash;6. A dissolver may only envelope one foe at a time, regardless of its size.\nPseudopod: A dissolver can extend a single pseudopod out to 1". Damage 2d6.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -20962,8 +21095,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'These vile terrors are black, amorphous blobs whose secretions are highly acidic. Their favorite tactic is to grapple their prey, subjecting them to constant attack.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d4&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d4","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -20989,7 +21122,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager.',
 	},
 	 abilities: {
-		 'en-US': 'Armor+2: Scaly hide.\nBite/Claws: Str+d4.\nFiery Breath: Dragon men can spit balls of fire. This works as the bolt power using Shooting to aim the fireballs. The Ability is innate rather than magical. Dragon men have 15 Power Points for this purpose only.\nFlight: Dragon men have leathery wings with a Flying Pace of 8&quot; and a Climb of 4&quot;',
+		 'en-US': 'Armor+2: Scaly hide.\nBite/Claws: Str+d4.\nFiery Breath: Dragon men can spit balls of fire. This works as the bolt power using Shooting to aim the fireballs. The Ability is innate rather than magical. Dragon men have 15 Power Points for this purpose only.\nFlight: Dragon men have leathery wings with a Flying Pace of 8" and a Climb of 4"',
 	},
 	 tags: {
 		 'en-US': 'dragon,dragon men,',
@@ -21003,8 +21136,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Dragon men are bipedal dragons, slightly taller than an average human. Scholars have long debated whether they are a natural species, a mutated dragon embryo, or the result of some ancient arcane experiment. The race consists of two castes&mdash;warriors and sorcerers.\nThey are sometimes found working with true dragons, and it seems beyond coincidence that the color of their scales usually matches that of their dragon lord. If you are using the Variant Dragon options (p113), dragon men can also have different breath weapons .',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d8","spirit":"d6","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: 'http://suptg.thisisnotatrueending.com/archive/10417239/images/1276223355554.jpg',
 		charisma: '0',
@@ -21030,7 +21163,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager.',
 	},
 	 abilities: {
-		 'en-US': 'Armor+2: Scaly hide.\nBite/Claws: Str+d4.\nFiery Breath: Dragon men can spit balls of fire. This works as the bolt power using Shooting to aim the fireballs. The Ability is innate rather than magical. Dragon men have 15 Power Points for this purpose only.\nFlight: Dragon men have leathery wings with a Flying Pace of 8&quot; and a Climb of 4&quot;\nPowers: Dragon men sorcerers have 30 Power Points and know the following powers: armor, blast, deflection, detect/conceal arcana, dispel, fear, healing, obscure, shape change, smite, and speak language.',
+		 'en-US': 'Armor+2: Scaly hide.\nBite/Claws: Str+d4.\nFiery Breath: Dragon men can spit balls of fire. This works as the bolt power using Shooting to aim the fireballs. The Ability is innate rather than magical. Dragon men have 15 Power Points for this purpose only.\nFlight: Dragon men have leathery wings with a Flying Pace of 8" and a Climb of 4"\nPowers: Dragon men sorcerers have 30 Power Points and know the following powers: armor, blast, deflection, detect/conceal arcana, dispel, fear, healing, obscure, shape change, smite, and speak language.',
 	},
 	 tags: {
 		 'en-US': 'dragon,dragon men,',
@@ -21044,8 +21177,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Dragon men are bipedal dragons, slightly taller than an average human. Scholars have long debated whether they are a natural species, a mutated dragon embryo, or the result of some ancient arcane experiment. The race consists of two castes&mdash;warriors and sorcerers.\nThey are sometimes found working with true dragons, and it seems beyond coincidence that the color of their scales usually matches that of their dragon lord. If you are using the Variant Dragon options (p113), dragon men can also have different breath weapons.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d10&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d10","spirit":"d10","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 1,
 		image: 'http://i42.tinypic.com/2qjayk5.png',
 		charisma: '0',
@@ -21085,8 +21218,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'This dragon is the standard fire-breathing variety common to European mythology. If you want to use different types of dragons in your game, the Variant Dragons sidebar (p113) contains some ideas on how to make them different.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12+9&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d12&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d8","spirit":"d10","strength":"d12+9","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d12"}}',
 		wildcard: 1,
 		image: 'http://www.gamefront.com/wp-content/uploads/2008/12/red-dragon.jpg',
 		charisma: '0',
@@ -21126,8 +21259,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Drakes are non-flying dragons with animal intelligence (rather than the more human-like sentience of true dragons). They are much more aggressive in direct combat than their distant cousins, however.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12+6&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6 (A)","spirit":"d10","strength":"d12+6","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d8"}}',
 		wildcard: 1,
 		image: 'http://img2.wikia.nocookie.net/__cb20080714125534/finalfantasy/images/5/52/Greater_Drake_ffx-2.jpg',
 		charisma: '0',
@@ -21167,8 +21300,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Dryads are nature spirits, specifically those of the woodlands. Shy by nature, they prefer to watch intruders, only making their presence felt if the need arises. They get along well with elves and other woodland folk of good character.\nThough they are usually reluctant to deal with outsiders dryads, have been known to administer aid to kind souls in great need.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d10&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d10","spirit":"d10","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d4"},"SKILL_NOTICE":{"value":"d10"},"SKILL_PERSUASION":{"value":"d8"},"SKILL_SPELLCASTING":{"value":"d10"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '+2',
@@ -21208,8 +21341,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Dwarves are common in mountains, where they live in vast underground cities. The statistics presented here are for a typical dwarf warrior.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_KNOWLEDGE&quot;:{&quot;value&quot;:&quot;d6&quot;,&quot;special&quot;:{&quot;en-US&quot;:&quot;Stonecraft&quot;}},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d6","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_KNOWLEDGE":{"value":"d6","special":{"en-US":"Stonecraft"}},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -21249,8 +21382,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Elementals are living spirits of earth, fire, water, and air. These are average examples of such creatures. They may be more or less powerful in specific settings.\nEarth elementals manifest as five-foot tall, vaguely man-shaped collections of earth and stone. Though amazingly strong, they are also quite slow and ponderous.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+3&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d12+3","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d4"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -21290,8 +21423,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'War elephants are larger than standard bull elephants and are bred purely for battle. In war, they carry a wooden platform on their back, housing the steersman and three soldiers.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+8&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4 (A)","spirit":"d6","strength":"d12+8","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d4"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -21331,8 +21464,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Elves commonly inhabit forests, living in tune with nature. The statistics presented here are for a typical elf warrior.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SURVIVAL&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_TRACKING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d6","spirit":"d6","strength":"d6","vigor":"d8"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d10"},"SKILL_STEALTH":{"value":"d8"},"SKILL_SURVIVAL":{"value":"d8"},"SKILL_TRACKING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -21372,8 +21505,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Elementals are living spirits of earth, fire, water, and air. These are average examples of such creatures. They may be more or less powerful in specific settings.\nFire elementals appear as man-shaped flame.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d12+1&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d4&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d12+1","smarts":"d8","spirit":"d8","strength":"d4","vigor":"d6"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -21413,8 +21546,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Giants come in several forms, but all share two common features&mdash;they are tall and they enjoy human flesh. Fortunately, they are also rather stupid.\nFire giants prefer to dwell in hot places, such as near volcanoes or in the middle of scorching-hot deserts. Their ruddy complexion and flame-red hair makes them easy to identify.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+4&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d6","strength":"d12+4","vigor":"d10"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_THROWING":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://www.wizards.com/dnd/images/dun200_firegiant.jpg',
 		charisma: '0',
@@ -21454,8 +21587,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'These bright orange creatures live in volcanic areas or baking-hot deserts. They can survive in moderate temperatures for several hours before needing to return to their infernal pits.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d6","spirit":"d8","strength":"d10","vigor":"d10"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d10"},"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -21495,8 +21628,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Giants come in several forms, but all share two common features&mdash;they are tall and they enjoy human flesh. Fortunately, they are also rather stupid.\nFrost giants live in high mountains, above the snow line, or in the frozen reaches of the world. They build vast stone forts, from which they rule over lesser races, such as orcs and goblins, as veritable gods. Their skin is pale blue, and their hair as white as snow.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+3&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d8","strength":"d12+3","vigor":"d10"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_THROWING":{"value":"d8"}}',
 		wildcard: 0,
 		image: 'http://img1.wikia.nocookie.net/__cb20110621041734/forgottenrealms/images/7/74/Frost_giant.png',
 		charisma: '0',
@@ -21536,8 +21669,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Mammoths are large elephants with long, curling tusks and thick, woolly coats. They are found only in cold climates.\nFrost mammoths resemble small mammoths. Unlike regular mammoths, however, their breath can freeze a man to death.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+4&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4 (A)","spirit":"d6","strength":"d12+4","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d4"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -21577,8 +21710,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Frost wolves haunt arctic climes, roaming the tundra in packs. Their thick fur is pure white, allowing them to blend in with the snow and ice.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4 (A)","spirit":"d6","strength":"d10","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -21604,7 +21737,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None.',
 	},
 	 abilities: {
-		 'en-US': 'Arcane Resistance: +2 Armor against damage-causing powers and +2 on trait rolls to resist opposed powers.\nArmor +1: Hide\nBerserk: Furies can become Berserk at will.\nClaws: Str+d4\nFlight: Furies have a Flying Pace of 6&quot; and a Climb of 3&quot;.',
+		 'en-US': 'Arcane Resistance: +2 Armor against damage-causing powers and +2 on trait rolls to resist opposed powers.\nArmor +1: Hide\nBerserk: Furies can become Berserk at will.\nClaws: Str+d4\nFlight: Furies have a Flying Pace of 6" and a Climb of 3".',
 	},
 	 tags: {
 		 'en-US': '',
@@ -21618,8 +21751,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Furies are savage, bestial creatures sent by the gods to punish worshippers for major transgressions. The exact form of a fury varies by deity, but all have sharp claws and wings of some description.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d10","strength":"d10","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_PERSUASION":{"value":"d6"},"SKILL_TAUNT":{"value":"d8"},"SKILL_THROWING":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -21659,8 +21792,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Ghost blades take the form of spectral warriors clutching a great sword. The ghostly figure is, in fact, a manifestation of the true creature&mdash;the blade.\nGhost blades are created by swords used by great heroes fallen in battle. The memories of the former wielder become burned into the blade, which then creates a ghostly figure to carry it into battle. Ghost blades seek only to kill, not caring if their victims are helpless children or mighty dragons.\nThe attributes are for the ghostly form, which cannot be harmed by any means so long as the sword is intact. Attacks against the sword are conducted as normal.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d8 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d4&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d12&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d8 (A)","spirit":"d6","strength":"d10","vigor":"d4"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d12"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -21700,8 +21833,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Ghouls are vile scavengers, feasting off carrion and unfortunate victims who cross their path.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_TRACKING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d6","spirit":"d6","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"},"SKILL_TRACKING":{"value":"d8"}}',
 		wildcard: 0,
 		image: 'http://fc06.deviantart.net/fs70/f/2010/276/7/d/ghoul_by_kelsm-d300tgr.jpg',
 		charisma: '0',
@@ -21741,8 +21874,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Golems are magical constructs, given life through the imprisonment of a spirit within the golem&rsquo;s body. Creating one is costly and laborious, and few mages have the requisite knowledge. Despite being inhabited by a spirit, golems cannot talk.\nThese unusual constructs are crafted to resemble a stained glass warrior and are most often used as guardians in temples. Unlike other golems, they are almost two- dimensional, being no thicker than a pane of glass.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d12","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: 'http://940ee6dce6677fa01d25-0f55c9129972ac85d6b1f4e703468e6b.r99.cf2.rackcdn.com/products/pictures/1013449.jpg',
 		charisma: '0',
@@ -21768,7 +21901,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager per 5 glide monkeys',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str+d4.\nGliders: These monkeys can glide descending 1&quot; vertically for every 2&quot; moved horizontally.\nHurl: Glide monkeys hurl hard nuts or stones from the high branches of their homes before gliding down to snatch stunned prey. These cause Str+d6 damage if they are above a victim, or Str if the monkey does not have a significant altitude advantage. Range is 5/10/20.\nSize -1: Glide monkeys are the size of small children.',
+		 'en-US': 'Bite: Str+d4.\nGliders: These monkeys can glide descending 1" vertically for every 2" moved horizontally.\nHurl: Glide monkeys hurl hard nuts or stones from the high branches of their homes before gliding down to snatch stunned prey. These cause Str+d6 damage if they are above a victim, or Str if the monkey does not have a significant altitude advantage. Range is 5/10/20.\nSize -1: Glide monkeys are the size of small children.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -21782,8 +21915,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Glide monkeys resemble large baboons with leathery flaps stretching from their wrists to their ankles. They live in the highest treetops, and travel from tree to tree by leaping or gliding, thus avoiding ground- based predators.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d8 (A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d8 (A)","spirit":"d8","strength":"d6","vigor":"d8"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_THROWING":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -21823,8 +21956,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Goblins of myth and legend are far more sinister creatures than some games and fiction portray. In the original tales, they were terrifying creatures that stole into homes in the middle of the night to steal and eat unruly children. The statistics here work for both dark &ldquo;fairy tale&rdquo; goblins as well as those found alongside orcs in contemporary roleplaying games.\nGoblin shamans serve as advisors to goblin lords. Their arcane talents give them a position of respect within the tribe.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d4&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d8","spirit":"d6","strength":"d4","vigor":"d6"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_TAUNT":{"value":"d6"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_SPELLCASTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"},"SKILL_THROWING":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://fc01.deviantart.net/fs71/f/2010/107/4/f/wow_goblin_shaman_concept_art_by_nightlybrian212.jpg',
 		charisma: '0',
@@ -21864,8 +21997,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Goblins of myth and legend are far more sinister creatures than some games and fiction portray. In the original tales, they were terrifying creatures that stole into homes in the middle of the night to steal and eat unruly children. The statistics here work for both dark &ldquo;fairy tale&rdquo; goblins as well as those found alongside orcs in contemporary roleplaying games.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d4&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d6","strength":"d4","vigor":"d6"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_TAUNT":{"value":"d6"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"},"SKILL_THROWING":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://cdn.obsidianportal.com/assets/62147/goblins2.jpg',
 		charisma: '0',
@@ -21905,8 +22038,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Golden ram are large beasts, living in remote mountainous regions. Their fleece is actually made of fine gold threads, which makes them popular with hunters and trappers.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+1&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d8","strength":"d12+1","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -21946,8 +22079,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Grave guardians are placed in tombs to watch over the valuables entombed with the deceased. They resemble blackened corpses, with long talons and yellow eyes. Their orders are simple&mdash;destroy any creature entering the tomb, and hunt down and retrieve any stolen items.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_TRACKING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d10","strength":"d12","vigor":"d12"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SPELLCASTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"},"SKILL_TRACKING":{"value":"d8"}}',
 		wildcard: 0,
 		image: 'http://gerezon.se/wp-content/uploads/2013/11/spit-tombguardian.jpg',
 		charisma: '0',
@@ -21973,7 +22106,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager, in lair',
 	},
 	 abilities: {
-		 'en-US': 'Bite/Claws: Str+d6\nFlight: Griffins have a Flying Pace of 12&quot; and a Climb of 6&quot;.\nGrapple: If a griffin gets a raise while performing a grapple, it has knocked its foe to the ground and pinned it with its paws. Bite attacks against a pinned foe are made at +2.\nHorse Terror: Griffins&rsquo; favorite prey is horse flesh. Horses seeing a griffin must make a Fear check or become Panicked.\nImproved Frenzy: Griffins may make two Fighting attacks each action at no penalty.\nSize +2: Griffins weigh over 500 pounds.\nSwoop: Griffins often swoop on their prey to pin it to the ground. It gains +4 to its attack and damage for this action . Its Parry is reduced by &ndash;2 until its next action when performing the maneuver, however.',
+		 'en-US': 'Bite/Claws: Str+d6\nFlight: Griffins have a Flying Pace of 12" and a Climb of 6".\nGrapple: If a griffin gets a raise while performing a grapple, it has knocked its foe to the ground and pinned it with its paws. Bite attacks against a pinned foe are made at +2.\nHorse Terror: Griffins&rsquo; favorite prey is horse flesh. Horses seeing a griffin must make a Fear check or become Panicked.\nImproved Frenzy: Griffins may make two Fighting attacks each action at no penalty.\nSize +2: Griffins weigh over 500 pounds.\nSwoop: Griffins often swoop on their prey to pin it to the ground. It gains +4 to its attack and damage for this action . Its Parry is reduced by &ndash;2 until its next action when performing the maneuver, however.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -21987,8 +22120,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Griffins have the body of a lion and the head and wings of an eagle. They are fierce predators, swooping down on their foes to pin them. Once their prey is trapped and helpless, they tear them open with their sharp beaks.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d8","strength":"d12","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d12"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://img4.wikia.nocookie.net/__cb20120819183320/mythology/images/f/f1/Griffin.jpg',
 		charisma: '0',
@@ -22028,8 +22161,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Mummies are undead whose bodies have been dried and preserved. The spirit is bound to the corpse through powerful necromantic rituals known only to a select few priests. In your setting, you may allow a more powerful version of the zombie power to create these horrors.\nThe most common type of mummy, these creatures were servants and soldiers placed in tombs to guard them for all eternity.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d4&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d4","smarts":"d6","spirit":"d10","strength":"d12+2","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -22069,8 +22202,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Naga are giant snakes with the head of women. In Buddhist mythology, the naga tried to follow Buddha&rsquo;s teaching and become a monk, transforming into human form to nfiltrate the monks. Buddha discovered the ploy and told the naga it was a beast, not a human, and therefore could not be ordained. Still loyal to the Buddhist faith, the naga became a temple guardian. In a fantasy campaign, nagas serve as guardians of temples to the gods of good.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d10&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d10","spirit":"d10","strength":"d12","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d10"},"SKILL_PERSUASION":{"value":"d10"},"SKILL_STEALTH":{"value":"d4"},"SKILL_TAUNT":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -22110,8 +22243,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'These cannibalistic ogres have powerful magical abilities. They are fond of eating children, but are not picky and eat nearly anything made of meat.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d4&quot;,&quot;smarts&quot;:&quot;d10&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_KNOWLEDGE&quot;:{&quot;value&quot;:&quot;d6&quot;,&quot;special&quot;:{&quot;en-US&quot;:&quot;Arcana&quot;}},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d4","smarts":"d10","spirit":"d8","strength":"d10","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_KNOWLEDGE":{"value":"d6","special":{"en-US":"Arcana"}},"SKILL_NOTICE":{"value":"d6"},"SKILL_PERSUASION":{"value":"d12"},"SKILL_SPELLCASTING":{"value":"d10"},"SKILL_TAUNT":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '-2',
@@ -22151,8 +22284,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Half-folk try to avoid trouble, but sometimes trouble comes to them. The statistics are for a typical militiaman.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"},"SKILL_TAUNT":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -22178,7 +22311,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager, in lair',
 	},
 	 abilities: {
-		 'en-US': 'Claws: Str+d4\nFlight: Harpies have a Flying Pace of 8&quot; and a Climb of 4&quot;\nPoison -2: Harpies live in unsanitary habitats, and their claws are caked in filth. Any victim wounded or Shaken by a claw attack must make a Vigor roll or the wound becomes infected. Each day, the victim must make a Vigor roll or gain a level of Fatigue. A successful Healing roll, also at &ndash;2, cleans out the infection. Fatigue levels are recovered at the rate of one per day once the infection is stopped.',
+		 'en-US': 'Claws: Str+d4\nFlight: Harpies have a Flying Pace of 8" and a Climb of 4"\nPoison -2: Harpies live in unsanitary habitats, and their claws are caked in filth. Any victim wounded or Shaken by a claw attack must make a Vigor roll or the wound becomes infected. Each day, the victim must make a Vigor roll or gain a level of Fatigue. A successful Healing roll, also at &ndash;2, cleans out the infection. Fatigue levels are recovered at the rate of one per day once the infection is stopped.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -22192,8 +22325,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Harpies have the lower body, wings, and claws of a vulture and the head and chest of an ugly woman. In mythology, they were created by the gods, but in your setting they may be a natural species, capable of breeding and forming a rudimentary society.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -22233,8 +22366,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Hellhounds are monstrous dogs, often with black skin which steams from the heat of the beast&rsquo;s demonic blood. Their eyes burn with demonic fire and their teeth are oversized, protruding from their jaw at all angles. Certain demons often keep them as pets, though they may also be found in the company of necromancers and other evil wizards.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d8","strength":"d10","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -22260,7 +22393,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager, in lair',
 	},
 	 abilities: {
-		 'en-US': 'Bite/Claws: Str+d6\nFlight: Hippogriffs have a Flying Pace of 8&quot; and a Climb of 4&quot;.\nImproved Frenzy: Hippogriffs may make two Fighting attacks each action at no penalty.\nSize+3: Hippogriffs are comparable in size to a war horse.',
+		 'en-US': 'Bite/Claws: Str+d6\nFlight: Hippogriffs have a Flying Pace of 8" and a Climb of 4".\nImproved Frenzy: Hippogriffs may make two Fighting attacks each action at no penalty.\nSize+3: Hippogriffs are comparable in size to a war horse.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -22274,8 +22407,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'A hippogriff has the body and hindquarters of a horse and the head, wings, and forelimbs of a giant eagle. They are natural enemies of griffins, but are no less fond of flesh than their rivals.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d8 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d12&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d8 (A)","spirit":"d6","strength":"d12+2","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d12"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -22315,8 +22448,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Hobgoblins are large goblins. They can be found in their own communities, as well as lording over their lesser kin.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d6","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_TAUNT":{"value":"d6"},"SKILL_STEALTH":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_THROWING":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -22356,8 +22489,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Knights are the fantasy equivalent of tanks&mdash;heavily armored and highly mobile. They differ from regular cavalry troops in that they are usually minor nobles, often with a fortified manor as their fief. Knights may be chivalric champions out to save princesses and slay dragons or despicable curs interested only in throwing their weight around.\nReligious knights are champions of faith, acting as the military wing of a religion. Some serve good gods, defending the weak and fighting evil. Others follow dark gods, promoting their evil agendas.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_HEALING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_RIDING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d10","strength":"d10","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_HEALING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_PERSUASION":{"value":"d8"},"SKILL_RIDING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '+2',
@@ -22397,8 +22530,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Elven horses are slightly smaller than riding horses but are considerably faster and can cross broken ground as if it were a smooth road. Elves never sell them and only rarely give them as gifts to non-elves who have done their people a great service.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d10 (A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d10 (A)","spirit":"d8","strength":"d12","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d4"},"SKILL_NOTICE":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -22438,8 +22571,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Hydra are multi-headed beasts, akin to dragons. Some breathe fire, others can grow new heads to replace ones lost in combat, and others are more mundane. The number of heads varies.\nThe stats below include fire breathing and regenerating heads. Whether you choose to use one, both, or none depends on how powerful a hydra you want.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4 (A)","spirit":"d8","strength":"d10","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://www.pantheon.org/areas/gallery/mythology/europe/greek_people/hydra.gif',
 		charisma: '0',
@@ -22479,8 +22612,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Imps are small, winged demons. They are often sent to the material world to serve as familiars to honored wizards. Although they aid their new masters, they also report back to their demonic overlords and are thus useful spies.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d10&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d10","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"},"SKILL_SPELLCASTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -22506,7 +22639,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager, per 5 birds',
 	},
 	 abilities: {
-		 'en-US': 'Flight: Pace 6&quot;, Climb 4&quot;\nJabber: The jabbering of these birds fills a Medium Burst Template centered on the bird. Characters within the Template must make as Spirit roll, &ndash;1 for each additional Template they are caught in, or become disoriented. Disoriented characters suffer a &ndash;2 penalty to trait rolls and Pace so long as they remain within at least one Template and for 3 rounds after they leave.\nSize -2: Jabber birds are 1&rsquo; tall.',
+		 'en-US': 'Flight: Pace 6", Climb 4"\nJabber: The jabbering of these birds fills a Medium Burst Template centered on the bird. Characters within the Template must make as Spirit roll, &ndash;1 for each additional Template they are caught in, or become disoriented. Disoriented characters suffer a &ndash;2 penalty to trait rolls and Pace so long as they remain within at least one Template and for 3 rounds after they leave.\nSize -2: Jabber birds are 1&rsquo; tall.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -22520,8 +22653,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Jabber birds are cowardly forest-dwelling scavengers. Their high-pitched jabbering, for which they are named, serves two purposes&mdash;it disorients potential prey and alerts predators that there is an easy meal waiting. Once the predators have killed the prey and taken their fill, the jabber birds feed on the remains.\nJabber birds hunt in small flocks, surrounding prey and preventing it from escaping before the nearest predator arrives.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d4&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d6 (A)","spirit":"d6","strength":"d4","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d4"},"SKILL_NOTICE":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -22561,8 +22694,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Jinn (singular: jinni) are grouped into five categories. Marids are the most powerful, then efrit, shaitan, jinn, and finally the jann. All five are powerful, corporeal beings with the power to disappear at will. Some jinn are good, but the majority are evil&mdash;all are masters of trickery. The Westernized spelling is genie. The stats presented here are for a typical jinni.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d8","spirit":"d8","strength":"d12","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SPELLCASTING":{"value":"d10"},"SKILL_TAUNT":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -22602,8 +22735,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Khazok is a dwarven word meaning &ldquo;rock monster.&rdquo; Khazoks are carnivorous creatures with sharp mandibles and a rocky shell and are found in mountainous terrain and deep underground. Their favorite tactic is to curl into a ball, which resembles a small boulder, then spring to attack unwary passersby.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6 (A)","spirit":"d6","strength":"d8","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -22643,8 +22776,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Knights are the fantasy equivalent of tanks&mdash;heavily armored and highly mobile. They differ from regular cavalry troops in that they are usually minor nobles, often with a fortified manor as their fief. Knights may be chivalric champions out to save princesses and slay dragons or despicable curs interested only in throwing their weight around.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_KNOWLEDGE&quot;:{&quot;value&quot;:&quot;d6&quot;,&quot;special&quot;:{&quot;en-US&quot;:&quot;Battle&quot;}},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_RIDING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_KNOWLEDGE":{"value":"d6","special":{"en-US":"Battle"}},"SKILL_NOTICE":{"value":"d6"},"SKILL_RIDING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '+2',
@@ -22684,8 +22817,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Knowledge eaters resemble large spiders but have an extendable proboscis and a grey, pulsating, membranous body. They feed on the knowledge of their victims, literally sucking away intelligence. It seems unlikely that such a beast could have evolved naturally, but so far no race has uncovered any knowledge regarding their creation.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d8 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d8 (A)","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -22711,7 +22844,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Arcane Resistance: +2 Armor against damage-causing powers and +2 on trait rolls to resist opposed powers.\nArmor +3: Iron Scales\nBarbed Whip: Str+d8, Reach 2. Anyone struck by the whip, whether they are injured or not, must make a Vigor roll or be Shaken by the immense pain caused by the barbs. They cannot attempt to recover for 1d6 rounds after the attack.\nDemon: +2 to recover from being Shaken; Immune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nFear: Anyone seeing a lasher must make a Fear check at &ndash;2.\nFlight: Lashers have a Flying Pace of 12&quot; and a Climb of 6&quot;\nInfravision: Lashers halve penalties for poor lighting against living targets.\nSize +3: Lashers stand 9&rsquo; tall and weigh over 1000 pounds.\nSweep: By whirling its whip round, a lasher can attack all opponents within 2&rdquo; at no penalty.\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
+		 'en-US': 'Arcane Resistance: +2 Armor against damage-causing powers and +2 on trait rolls to resist opposed powers.\nArmor +3: Iron Scales\nBarbed Whip: Str+d8, Reach 2. Anyone struck by the whip, whether they are injured or not, must make a Vigor roll or be Shaken by the immense pain caused by the barbs. They cannot attempt to recover for 1d6 rounds after the attack.\nDemon: +2 to recover from being Shaken; Immune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nFear: Anyone seeing a lasher must make a Fear check at &ndash;2.\nFlight: Lashers have a Flying Pace of 12" and a Climb of 6"\nInfravision: Lashers halve penalties for poor lighting against living targets.\nSize +3: Lashers stand 9&rsquo; tall and weigh over 1000 pounds.\nSweep: By whirling its whip round, a lasher can attack all opponents within 2&rdquo; at no penalty.\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
 	},
 	 tags: {
 		 'en-US': 'demon,devil,',
@@ -22725,8 +22858,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Lashers are demonic taskmasters, using their barbed whips to keep lesser demons in line. Considerably larger than humans, they resemble an unholy giant bat with blackened, iron scales. They can be summoned into the world through dark rituals, but are usually only employed when a number of lesser demons need controlling.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12+3&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_KNOWLEDGE&quot;:{&quot;value&quot;:&quot;d6&quot;,&quot;special&quot;:{&quot;en-US&quot;:&quot;Battle&quot;}},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d10","strength":"d12+3","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_KNOWLEDGE":{"value":"d6","special":{"en-US":"Battle"}},"SKILL_NOTICE":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -22752,7 +22885,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Armor +3: Rocky hide.\nBurrow (6&quot;): Lava elementals can meld into and out of the ground.\nElemental: No additional damage from called shots; Fearless; Immune to disease and poison.\nFlame Strike: Lava elementals can spit a searing blast of flame using the Cone Template. Characters within the cone must beat the elemental&rsquo;s Shooting roll with Agility or suffer 2d10 damage, plus the chance of catching fire.',
+		 'en-US': 'Armor +3: Rocky hide.\nBurrow (6"): Lava elementals can meld into and out of the ground.\nElemental: No additional damage from called shots; Fearless; Immune to disease and poison.\nFlame Strike: Lava elementals can spit a searing blast of flame using the Cone Template. Characters within the cone must beat the elemental&rsquo;s Shooting roll with Agility or suffer 2d10 damage, plus the chance of catching fire.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -22766,8 +22899,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Composed of fire and earth, these creatures have a stony skin overlaying a body of molten rock. They look similar to earth elementals, but have fiery eyes, a mouth that looks like the centre of an active volcano when opened, and smoking, blackened, rocky skin.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+3&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d6","strength":"d12+3","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -22807,8 +22940,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Golems are magical constructs, given life through the imprisonment of a spirit within the golem&rsquo;s body. Creating one is costly and laborious, and few mages have the requisite knowledge. Despite being inhabited by a spirit, golems cannot talk.\nAlthough superficially similar to stone golems, lava golems have fiery ichor running through their rock bodies. Their eyes glow red and their fists are superheated.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d6","strength":"d12","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://fc02.deviantart.net/fs49/f/2009/168/0/5/Lava_Golem_by_Vij_8.jpg',
 		charisma: '0',
@@ -22848,8 +22981,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Perhaps the most diabolical creature in any fantasy land is the liche&mdash;a necromancer so consumed with the black arts that he eventually becomes undead himself.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d12+2&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_KNOWLEDGE&quot;:{&quot;value&quot;:&quot;d12+2&quot;,&quot;special&quot;:{&quot;en-US&quot;:&quot;Occult&quot;}},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d12&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d12+2","spirit":"d10","strength":"d10","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_KNOWLEDGE":{"value":"d12+2","special":{"en-US":"Occult"}},"SKILL_NOTICE":{"value":"d10"},"SKILL_SPELLCASTING":{"value":"d12"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -22889,8 +23022,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Lizard men are aggressive bipedal lizards with a fondness for warm flesh. Most live in marshy terrain, where they hunt fish and water fowl. Their society is extremely primitive. They have never developed metalworking, but prize metal tools and weapons looted from the corpses of those who intrude in their realms.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"},"SKILL_SWIMMING":{"value":"d8"},"SKILL_THROWING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -22930,8 +23063,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Many stories exist about how mage banes came to be. Some say they are the spirits of mages who never fulfilled their potential in life. Others claim they are the result of magical backlash. A few even say they are elementals, drawn from the realm of magic. Whatever the truth, they detest mages (but not priests or other Miracle workers). They appear as black, faceless humanoids.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d12&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d12&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d12","spirit":"d10","strength":"d6","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_SPELLCASTING":{"value":"d12"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -22971,8 +23104,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Mages range from lowly apprentices armed with a handful of spells to arch mages, whose great power is often political as well as arcane. The stats here are for typical adventuring mages, but they need to be adjusted to fit whatever role they are found in. A court mage is very different from a magic item crafter, for example. Feel free to add new powers to suit your particular needs.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d10&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_KNOWLEDGE&quot;:{&quot;value&quot;:&quot;d8&quot;,&quot;special&quot;:{&quot;en-US&quot;:&quot;Arcana&quot;}},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d10","spirit":"d8","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_KNOWLEDGE":{"value":"d8","special":{"en-US":"Arcana"}},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d6"},"SKILL_SPELLCASTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"},"SKILL_TAUNT":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -23012,8 +23145,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Mages range from lowly apprentices armed with a handful of spells to arch mages, whose great power is often political as well as arcane. The stats here are for typical adventuring mages, but they need to be adjusted to fit whatever role they are found in. A court mage is very different from a magic item crafter, for example. Feel free to add new powers to suit your particular needs.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d12&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_KNOWLEDGE&quot;:{&quot;value&quot;:&quot;d10&quot;,&quot;special&quot;:{&quot;en-US&quot;:&quot;Arcana&quot;}},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STREETWISE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d12","spirit":"d8","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_KNOWLEDGE":{"value":"d10","special":{"en-US":"Arcana"}},"SKILL_NOTICE":{"value":"d8"},"SKILL_PERSUASION":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_SPELLCASTING":{"value":"d12"},"SKILL_STEALTH":{"value":"d6"},"SKILL_STREETWISE":{"value":"d8"},"SKILL_TAUNT":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -23053,8 +23186,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'A manticore has the body of a lion and a vaguely human head. Its mouth contains three rows of razor sharp teeth and its tail ends in a ball of darts or spines. Manticores are fierce predators and devour every part of their victims, including their gear.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_TRACKING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d8","strength":"d12+2","vigor":"d10"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"},"SKILL_TRACKING":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://images.wikia.com/olympians/images/4/45/Percy_Jackson_Manticore.jpg',
 		charisma: '0',
@@ -23094,8 +23227,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Also known as swamp trolls, bog trolls, and marsh fiends, these foul creatures haunt dank marshes. Their skin is black and slimy, matching the murky waters of their home, and they stink like rotting vegetation.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+1&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4","spirit":"d6","strength":"d12+1","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d8"},"SKILL_SWIMMING":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -23135,8 +23268,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Thieves earn a living from stealing from others. Some may be allies of the characters, other are antagonists. In a city or town, thieves often assemble into a guild. Despite being tricky customers, thieves&rsquo; guilds are often excellent sources of information&mdash;if you can find them.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d12&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_LOCKPICKING&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_STREETWISE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d12","smarts":"d8","spirit":"d8","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_LOCKPICKING":{"value":"d12"},"SKILL_NOTICE":{"value":"d10"},"SKILL_STEALTH":{"value":"d12"},"SKILL_STREETWISE":{"value":"d8"},"SKILL_TAUNT":{"value":"d8"},"SKILL_THROWING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -23176,8 +23309,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'According to the elves, tree men were present at the beginning of time. They are a sentient species, dedicated to guarding their forests against all forms of attack. They can resemble any form of regular tree, but are always of a type native to the forests in which they live.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d4&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+6&quot;,&quot;vigor&quot;:&quot;d12+1&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d4","smarts":"d6","spirit":"d8","strength":"d12+6","vigor":"d12+1"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://digital-art-gallery.com/oid/10/3390x2712_3453_Tree_Man_2d_fantasy_tree_forest_god_picture_image_digital_art.jpg',
 		charisma: '0',
@@ -23215,10 +23348,10 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'The legendary medusa was a unique creature&mdash;a former maiden of beauty cursed by the gods for her vanity. In fantasy settings, the creature may be unique or part of a race of the same name. Medusas are found in most terrains. They lair is usually decorated with numerous &quot;statues.&quot;',
+		 'en-US': 'The legendary medusa was a unique creature&mdash;a former maiden of beauty cursed by the gods for her vanity. In fantasy settings, the creature may be unique or part of a race of the same name. Medusas are found in most terrains. They lair is usually decorated with numerous "statues."',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d8","spirit":"d8","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: 'http://deyoung.famsf.org/files/imagecache/exhibition_preview_large/blog/MedusaFace.JPG',
 		charisma: '0',
@@ -23258,8 +23391,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Mercenaries are hired soldiers. Some belong to respectable units, with a history of integrity and loyalty to their paymaster. Others happily switch sides if a better offer is made. Groups of mercenaries are often armed with the same weapons. Thus, one finds mercenary pikemen, cavalrymen, skirmishers, archers, and so on.\nCaptains are experienced soldiers commanding a mercenary unit. They typically carry the same weapons as their men but are mounted.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_KNOWLEDGE&quot;:{&quot;value&quot;:&quot;d10&quot;,&quot;special&quot;:{&quot;en-US&quot;:&quot;Battle&quot;}},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_RIDING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d8","spirit":"d8","strength":"d10","vigor":"d8"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d12"},"SKILL_KNOWLEDGE":{"value":"d10","special":{"en-US":"Battle"}},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"},"SKILL_RIDING":{"value":"d8"},"SKILL_SHOOTING":{"value":"d10"},"SKILL_STEALTH":{"value":"d6"},"SKILL_THROWING":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -23299,8 +23432,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Mermaids appear as beautiful, naked young women from the waist up with glistening fish tales for their lower torso. Once underwater, their true form is revealed. They are hideous monsters with jagged teeth, blood-red fish eyes, and green scaly skin covered in slime.\nOnce sailors are in the water, they attempt to hold them there and drown the unfortunate souls.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d8","spirit":"d8","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_PERSUASION":{"value":"d10"},"SKILL_STEALTH":{"value":"d8"},"SKILL_TAUNT":{"value":"d8"},"SKILL_THROWING":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://cdn2-b.examiner.com/sites/default/files/styles/article_large/hash/17/bc/17bcc3eff2b01dec93b7cc32dae4e7d2.jpg?itok=8-GDWrLu',
 		charisma: '+4',
@@ -23340,8 +23473,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Golems are magical constructs, given life through the imprisonment of a spirit within the golem&rsquo;s body. Creating one is costly and laborious, and few mages have the requisite knowledge. Despite being inhabited by a spirit, golems cannot talk.\nTypically crafted in humanoid form from iron or bronze, metal golems are among the most powerful golems. Some creators give their iron golems long swords instead of hands, allowing them to attack more often.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+3&quot;,&quot;vigor&quot;:&quot;d12+1&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d8","strength":"d12+3","vigor":"d12+1"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://th02.deviantart.net/fs7/PRE/i/2005/159/2/5/iron_golem_by_muninsnape.jpg',
 		charisma: '0',
@@ -23381,8 +23514,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Methusaleh trees look like oaks, spruces, and other mundane trees, but are always healthy specimens unbothered by nesting birds or tree-dwelling mammals. There is good reason why animals do not bother the tree&mdash;it feeds on their life-force.\nAs well as regular foliage, a Methusaleh tree has four sharpened branches which it uses to impale prey, draining and sucking out their vitality, thus rejuvenating itself.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12+4&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4 (A)","spirit":"d10","strength":"d12+4","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -23422,8 +23555,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Moss men are mobile, semi-intelligent humanoid plants composed of tightly packed moss, vines, and grass. They have a mouth tipped with sharp thorns which function as teeth and glowing yellow eyes.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6 (A)","spirit":"d8","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -23463,8 +23596,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Mud elementals bridge the realms of earth and water. They resemble earth elementals in shape, but are fluid like their water elemental kin.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+1&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4","spirit":"d6","strength":"d12+1","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -23504,8 +23637,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Mummies are undead whose bodies have been dried and preserved. The spirit is bound to the corpse through powerful necromantic rituals known only to a select few priests. In your setting, you may allow a more powerful version of the zombie power to create these horrors.\nMummy lords were priests and mages preserved for eternity and granted an unearthly life through arcane rituals.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d4&quot;,&quot;smarts&quot;:&quot;d10&quot;,&quot;spirit&quot;:&quot;d12&quot;,&quot;strength&quot;:&quot;d12+4&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d4","smarts":"d10","spirit":"d12","strength":"d12+4","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SPELLCASTING":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -23545,8 +23678,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Naga are giant snakes with the head of women. In Buddhist mythology, the naga tried to follow Buddha&rsquo;s teaching and become a monk, transforming into human form to nfiltrate the monks. Buddha discovered the ploy and told the naga it was a beast, not a human, and therefore could not be ordained. Still loyal to the Buddhist faith, the naga became a temple guardian. In a fantasy campaign, nagas serve as guardians of temples to the gods of good.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d10&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d10","spirit":"d10","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_PERSUASION":{"value":"d10"},"SKILL_STEALTH":{"value":"d6"},"SKILL_TAUNT":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '+4',
@@ -23586,8 +23719,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Naiads are fresh water spirits in the way dryads are tree spirits. Nereids are the salt water equivalent to naiads and use the same stats.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d10&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d10","spirit":"d10","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d4"},"SKILL_NOTICE":{"value":"d10"},"SKILL_PERSUASION":{"value":"d8"},"SKILL_SPELLCASTING":{"value":"d10"},"SKILL_STEALTH":{"value":"d10"},"SKILL_SWIMMING":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '+2',
@@ -23613,7 +23746,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager in nest',
 	},
 	 abilities: {
-		 'en-US': 'Armor +2: Thick, leathery skin.\nBite/Claws: Str+d6.\nCamouflage: Natural gargoyles receive +2 to Stealth rolls in rocky terrain due to their skin color.\nFlight: Furies have a Flying Pace of 10&quot; and a Climb of 4&quot;.',
+		 'en-US': 'Armor +2: Thick, leathery skin.\nBite/Claws: Str+d6.\nCamouflage: Natural gargoyles receive +2 to Stealth rolls in rocky terrain due to their skin color.\nFlight: Furies have a Flying Pace of 10" and a Climb of 4".',
 	},
 	 tags: {
 		 'en-US': '',
@@ -23627,8 +23760,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'The little-known natural gargoyle is the base for the stone figures. They fly on leathery wings that fold flush with the body to prevent damage on jagged rocks. They perch on craggy rock faces waiting for prey, a tireless vigil that prompted their use in architecture.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4","spirit":"d6","strength":"d10","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -23668,8 +23801,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Nightmares are demonic steeds. They are black as night, with fiery hooves and eyes. They only accept evil riders, throwing off and stomping those of good heart.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+4&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6 (A)","spirit":"d6","strength":"d12+4","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -23709,8 +23842,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'This entry covers both true nobles and their courtier lackeys, such as seneschals and chancellors. The generic noble is suitable for every noble Rank from baron to emperor.\nSome nobles are decadent dandies content with living a life of luxury. Others are rich landowners, skilled in business matters. Other noble types include military commanders, advisors to a higher authority, poverty stricken ones, extremely wealthy ones, and those who dabble in forbidden arts.\nThis version presents a typical middle-of- the-road noble. A few specific Hindrances and Edges can quickly turn this into any sort of noble you need.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_RIDING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d8","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_PERSUASION":{"value":"d6"},"SKILL_RIDING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '+2',
@@ -23750,8 +23883,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'These terrors of the deep are aggressive and always hungry. Alone, they are quite cowardly and attack only what they consider easy prey. Wounded beasts typically emit an ink cloud and attempt to escape.\nCharacters often try to sever tentacles. A tentacle is severed if it takes the creature&rsquo;s Toughness in damage in one shot from an edged weapon. Attacking a tentacle that has entangled a friend is somewhat risky&mdash;a roll of 1 on the attack die means the ally is hit instead.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4(A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+4&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4(A)","spirit":"d6","strength":"d12+4","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"},"SKILL_SWIMMING":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -23791,8 +23924,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Ogres are kin to orcs and lesser giants. They are often taken in by orc clans, who respect the dumb brutes for their savagery and strength. Orcs often pit their &ldquo;pet&rdquo; ogres in savage combats against their rivals&rsquo; ogres.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+3&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d12+3","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d4"},"SKILL_THROWING":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -23832,8 +23965,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Orcs are savage, green-skinned humanoids with pig-like features, including snouts and sometimes even tusks. They have foul temperaments, and rarely take prisoners.\nThe leader of small orc clans is always the most deadly brute in the bunch. Orc chieftains generally have a magical item or two in settings where such things are relatively common (most &ldquo;swords and sorcery&rdquo; worlds).',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d6","strength":"d10","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d12"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"},"SKILL_THROWING":{"value":"d8"}}',
 		wildcard: 1,
 		image: 'http://fc09.deviantart.net/fs71/f/2013/098/0/0/orc_chieftain_final_by_director_16-d60veug.jpg',
 		charisma: '0',
@@ -23873,8 +24006,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Orcs are savage, green-skinned humanoids with pig-like features, including snouts and sometimes even tusks. They have foul temperaments, and rarely take prisoners.\nOrcs worship gods of destruction and slaughter. Their shamans personify this image, and while they are usually the smallest members of a clan, they are often the most savage.\nOrc shamans drape themselves in crude fetishes, bones, and other occult trappings to appear more menacing to their foes. Their power is simple hedge magic, however, and is not divinely inspired despite several millennia believing otherwise.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d8","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d6"},"SKILL_SPELLCASTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: 'http://fc09.deviantart.net/fs71/f/2013/098/0/0/orc_chieftain_final_by_director_16-d60veug.jpg',
 		charisma: '0',
@@ -23914,8 +24047,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Orcs are savage, green-skinned humanoids with pig-like features, including snouts and sometimes even tusks. They have foul temperaments, and rarely take prisoners.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"},"SKILL_THROWING":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'https://www.frontlinegaming.org/wp-content/uploads/2013/01/4e_DnD_Orcs_by_RalphHorsley1.jpeg',
 		charisma: '0',
@@ -23955,8 +24088,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Pegasi (singular: pegasus) are horses with great, feathery wings. In Greek myth the animal was unique, but in many fantasy settings they are standard creatures.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4 (A)","spirit":"d6","strength":"d12","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -23996,8 +24129,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Clad in fiery feathers of yellow, orange, and red, the immortal phoenix is seen as a representation of the sun god. Many cultures consider the bird sacred, but its feathers contain magical power and thus the bird is often hunted.\nThe greatest gift a phoenix can bestow is one of its tail feathers. Although the magic in them is temporary, the phoenix forever weakens its life-force with the gift.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d10 (A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d12&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d10 (A)","spirit":"d8","strength":"d6","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"},"SKILL_SPELLCASTING":{"value":"d12"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -24037,8 +24170,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Priests are the servants of the gods. Each deity has a network of priests, whose duty it is to spread the faith and ensure the tenets of the god are upheld by the faithful. Every priest has equipment and powers appropriate to his faith. A sample of commonly-encountered priests is presented below.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FAITH&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d10","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_FAITH":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -24078,8 +24211,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Priests are the servants of the gods. Each deity has a network of priests, whose duty it is to spread the faith and ensure the tenets of the god are upheld by the faithful. Every priest has equipment and powers appropriate to his faith. A sample of commonly-encountered priests is presented below.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FAITH&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_HEALING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d10","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FAITH":{"value":"d10"},"SKILL_HEALING":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_PERSUASION":{"value":"d8"},"SKILL_TAUNT":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -24119,8 +24252,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Priests are the servants of the gods. Each deity has a network of priests, whose duty it is to spread the faith and ensure the tenets of the god are upheld by the faithful. Every priest has equipment and powers appropriate to his faith. A sample of commonly-encountered priests is presented below.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_FAITH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_KNOWLEDGE&quot;:{&quot;value&quot;:&quot;d6&quot;,&quot;special&quot;:{&quot;en-US&quot;:&quot;Battle&quot;}},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_FAITH":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_KNOWLEDGE":{"value":"d6","special":{"en-US":"Battle"}},"SKILL_NOTICE":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -24160,8 +24293,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Rat men are, as the name implies, a cross between rats and humans. They are bipedal, but otherwise resemble rats. They are not lycanthropes, for they cannot change into a purely human form. Most rat men colonies are found in or beneath cities, where they scavenge for food and dropped coins.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_SURVIVAL&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_TRACKING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d6","spirit":"d8","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"},"SKILL_SURVIVAL":{"value":"d8"},"SKILL_TRACKING":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -24201,8 +24334,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Redcaps are related to goblins, but are much larger and more ferocious. Their name comes from the woolen hats they wear, which are soaked in the blood of their victims.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d6","strength":"d12","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_TAUNT":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -24242,8 +24375,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'These massive birds are large enough to pick up small ships and whales. The great Sinbad the Sailor had a near-fatal encounter with one. Most roost in isolated aeries, searching for large prey for their feasts. Sailors and city guard have sometimes managed to fend off these beasts with ballistae, but even these weapons rarely penetrate the roc&rsquo;s lizard-like skin.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6(A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6(A)","spirit":"d6","strength":"d12+8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -24283,8 +24416,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Sabre-toothed tigers haunt grasslands using their patterned skin to sneak up on unsuspecting prey. Their twin canine teeth can slice through armor and bone as easily as flesh.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d6(A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_TRACKING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d6(A)","spirit":"d8","strength":"d12","vigor":"d10"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"},"SKILL_TRACKING":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -24324,8 +24457,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Sand elementals inhabit the dusty border between the realms of earth and air. They manifest as sandy humanoids, but can turn into whirling clouds of flying dust and grit.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d6","spirit":"d6","strength":"d12","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -24365,8 +24498,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Sand trolls primarily inhabit deserts, though they can sometimes be found on beaches. Their favorite tactic is to burrow just below the surface, then leap out to attack passing prey.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+1&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4","spirit":"d6","strength":"d12+1","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -24406,8 +24539,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Scorpion men have the upper bodies of humans and the lower bodies of scorpions. They prefer hot, dusty environments, but can survive in temperate conditions. They guard their lairs with deadly force.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d6","strength":"d10","vigor":"d8"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_SHOOTING":{"value":"d10"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -24447,8 +24580,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Giant scorpions are usually found in hot climates. Unlike their normal-size cousins, giant scorpions are fierce predators.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4(A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+1&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4(A)","spirit":"d8","strength":"d12+1","vigor":"d10"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -24488,8 +24621,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Giants come in several forms, but all share two common features&mdash;they are tall and they enjoy human flesh. Fortunately, they are also rather stupid.\nSea giants dwell in caves beneath the ocean. For the most part they eat marine animals, but sometimes they rise to the surface to swipe unsuspecting sailors from passing ships.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+7&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d12+7","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SWIMMING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -24529,8 +24662,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Sea serpents are monstrous beasts, capable of crushing ships into kindling. Even ship- mounted artillery can do little to hurt these nightmarish beasts.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4(A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+8&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4(A)","spirit":"d8","strength":"d12+8","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SWIMMING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -24570,8 +24703,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Called sea trolls by some, skrags and manes by others, these flesh-eating fiends haunt areas of rocks and seaweed.\nThey dress in numerous soft kelps, seashells, and other natural materials that add +2 to their Stealth when they sit quietly in small pools or piles of detritus from the sea.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d4&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d4","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"},"SKILL_SWIMMING":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -24611,8 +24744,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Siren bushes are carnivorous plants. When they detect living prey, they emit a hypnotic hum which lures the victim into the web of roots. Once close enough, the thorny roots rip into the target&rsquo;s flesh, saturating the surrounding ground in blood, which the roots then absorb.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4(A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4(A)","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -24652,8 +24785,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'The skin has already rotted from these risen dead, leaving them slightly quicker than their flesh-laden zombie counterparts.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d4&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4","spirit":"d4","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d4"},"SKILL_SHOOTING":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://img2.wikia.nocookie.net/__cb20130516203624/warriorsofmyth/images/4/4a/640x747_16373_Skeleton_2d_fantasy_creature_dark_darkness_skeleton_warrior_picture_image_digital_art.jpg',
 		charisma: '0',
@@ -24693,8 +24826,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'An sphinx has the body of a lion, the head of a human (often female), and feathered wings. They are extremely clever, enjoy riddles, and savor the taste of human flesh.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d12+1&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d12&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d12+1","spirit":"d10","strength":"d10","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_PERSUASION":{"value":"d10"},"SKILL_STEALTH":{"value":"d8"},"SKILL_TAUNT":{"value":"d12"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -24720,7 +24853,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Elemental: No additional damage from called shots; Fearless; Immune to disease and poison.\nFlight: Steam elementals fly at a rate of 6&quot; with a Climb rate of 4&quot;. They may never &quot;run&quot;\nImmunity: Steam elementals suffer no damage from non-magical attacks.\nSteam Blast: Steam elementals can send directed blasts of superheated air at foes using the Cone Template and a Shooting roll. Foes may make an opposed Agility roll to avoid the blast. The damage is 2d10 and ignores nonmagical Armor.\nSeep: Steam elementals can squeeze through any gaps or porous surfaces as if they were Difficult Ground\nSlam: Str+d4\nWhirlwind: As long as the elemental does not move that turn it may attempt to pick up a foe. Make an opposed Strength check. If the elemental wins then its foe is pulled into the swirling maelstrom of its steamy body. While trapped, the target is at &ndash;2 on all rolls (including damage, to hit, and Strength rolls to free himself), and suffers 2d6 damage per round. The elemental cannot move as long as it wants to keep foes trapped inside its form.',
+		 'en-US': 'Elemental: No additional damage from called shots; Fearless; Immune to disease and poison.\nFlight: Steam elementals fly at a rate of 6" with a Climb rate of 4". They may never "run"\nImmunity: Steam elementals suffer no damage from non-magical attacks.\nSteam Blast: Steam elementals can send directed blasts of superheated air at foes using the Cone Template and a Shooting roll. Foes may make an opposed Agility roll to avoid the blast. The damage is 2d10 and ignores nonmagical Armor.\nSeep: Steam elementals can squeeze through any gaps or porous surfaces as if they were Difficult Ground\nSlam: Str+d4\nWhirlwind: As long as the elemental does not move that turn it may attempt to pick up a foe. Make an opposed Strength check. If the elemental wins then its foe is pulled into the swirling maelstrom of its steamy body. While trapped, the target is at &ndash;2 on all rolls (including damage, to hit, and Strength rolls to free himself), and suffers 2d6 damage per round. The elemental cannot move as long as it wants to keep foes trapped inside its form.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -24734,8 +24867,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'The last of the common border elementals are those inhabiting the overlap of the realms of fire and water. They manifest as clouds of swirling steam.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d12&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d12","smarts":"d6","spirit":"d6","strength":"d6","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -24761,7 +24894,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None.',
 	},
 	 abilities: {
-		 'en-US': 'Armor +4: Body of stone..\nConstruct: +2 to recover from being Shaken; No additional damage from called shots; Immune to poison and disease.\nFearless: Stone gargoyles are immune to fear and Intimidation.\nBite/Claws: Str+d6.\nCamouflage: Stone gargoyles receive +2 to Stealth rolls to blend in with normal, decorative gargoyles on buildings.\nFlight: Furies have a Flying Pace of 10&quot; and a Climb of 4&quot;.\nPlunge: Gargoyles can literally drop like a rock. Any gargoyle that falls at least 4&quot; to attack may add +4 to its damage.',
+		 'en-US': 'Armor +4: Body of stone..\nConstruct: +2 to recover from being Shaken; No additional damage from called shots; Immune to poison and disease.\nFearless: Stone gargoyles are immune to fear and Intimidation.\nBite/Claws: Str+d6.\nCamouflage: Stone gargoyles receive +2 to Stealth rolls to blend in with normal, decorative gargoyles on buildings.\nFlight: Furies have a Flying Pace of 10" and a Climb of 4".\nPlunge: Gargoyles can literally drop like a rock. Any gargoyle that falls at least 4" to attack may add +4 to its damage.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -24775,8 +24908,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Most gargoyles are lifeless statues used to impress or decorate, but some have been given magical life to serve as guardians. Whether they serve good or evil depends upon their controller&rsquo;s whim.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d12","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -24816,8 +24949,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Golems are magical constructs, given life through the imprisonment of a spirit within the golem&rsquo;s body. Creating one is costly and laborious, and few mages have the requisite knowledge. Despite being inhabited by a spirit, golems cannot talk.\nStone golems are the traditional animated statue. As with most golems, they are shaped in the form of warriors and serve as guardians.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d8","strength":"d12+2","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://4.bp.blogspot.com/-OM8U5jk53ao/TlqKIELs8qI/AAAAAAAAAKQ/QKcOvwxuTRk/s1600/stonegolem.jpg',
 		charisma: '0',
@@ -24857,8 +24990,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Golems are magical constructs, given life through the imprisonment of a spirit within the golem&rsquo;s body. Creating one is costly and laborious, and few mages have the requisite knowledge. Despite being inhabited by a spirit, golems cannot talk.\nStraw golems are most often designed to resemble scarecrows. As well as scaring off birds and natural predators such as wolves, they can bolster a village&rsquo;s militia in times of invasion.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d6","spirit":"d8","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: 'http://www.entertainmentearth.com/images/AUTOIMAGES/MS019lg.jpg',
 		charisma: '0',
@@ -24898,8 +25031,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Succubi and incubi resemble beautiful females and males respectively. This form is illusory, however, and in their natural form they are winged demons with grotesque faces, leathery skin, and long claws. They use their illusory looks to lure unsuspecting victims into their deadly embrace.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d12+2&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d8","spirit":"d10","strength":"d10","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_PERSUASION":{"value":"d12+2"}}',
 		wildcard: 0,
 		image: 'http://blaine.org/sevenimpossiblethings/wp-content/uploads/2009/08/incubus.jpg',
 		charisma: '+6',
@@ -24939,8 +25072,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Thieves earn a living from stealing from others. Some may be allies of the characters, other are antagonists. In a city or town, thieves often assemble into a guild. Despite being tricky customers, thieves&rsquo; guilds are often excellent sources of information&mdash;if you can find them.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_LOCKPICKING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STREETWISE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d6","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_LOCKPICKING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"},"SKILL_STREETWISE":{"value":"d6"},"SKILL_TAUNT":{"value":"d6"},"SKILL_THROWING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -24980,8 +25113,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Giant toads are monstrous, bloated amphibians, capable of swallowing a riding horse in one gulp.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4(A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4(A)","spirit":"d6","strength":"d10","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -25021,8 +25154,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Militia are employed in smaller towns and in large villages. Though they are tasked with defending the area in case of emergency, it isn&rsquo;t their primary job, and they are not particularly skilled.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d4"},"SKILL_NOTICE":{"value":"d4"},"SKILL_SHOOTING":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://wiki.totalwar.com/images/e/e5/Ven_pike_militia_info.png',
 		charisma: '0',
@@ -25062,8 +25195,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'According to the elves, tree men were present at the beginning of time. They are a sentient species, dedicated to guarding their forests against all forms of attack. They can resemble any form of regular tree, but are always of a type native to the forests in which they live.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+3&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d8","strength":"d12+3","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: 'http://digital-art-gallery.com/oid/10/3390x2712_3453_Tree_Man_2d_fantasy_tree_forest_god_picture_image_digital_art.jpg',
 		charisma: '0',
@@ -25103,8 +25236,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Trolls in myths and legends were horrid, flesh-eating creatures who lived in deep woods, beneath bridges, or in hidden mountain caves. In modern games and fiction, the ability to regenerate damage and a weakness to fire have been added. These statistics reflect both backgrounds.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d12+2","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_THROWING":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -25144,8 +25277,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Rangers inhabit wilderness areas, preferring to avoid crowded towns and cities. Some belong to organizations often dedicated to hunting down evil creatures and protecting the wilds. Others are solitary, hiring out their services as guides and trackers.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_HEALING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_RIDING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SURVIVAL&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_TRACKING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d6","vigor":"d8"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_HEALING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d8"},"SKILL_RIDING":{"value":"d6"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"},"SKILL_SURVIVAL":{"value":"d8"},"SKILL_TRACKING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -25185,8 +25318,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'King of the dinosaurs, the T-rex is a deadly predator, capable of taking on prey much larger than itself. T-rex are poorly suited for mountainous and dense forest terrain, and can most often be found in hilly areas or on plains, where they hunt large herbivores.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+4&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4 (A)","spirit":"d8","strength":"d12+4","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://www.rareresource.com/photos/dinosaur-gallery/tyrannosaurus-rex.jpg',
 		charisma: '0',
@@ -25226,8 +25359,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Often seen as the embodiment of good and purity, unicorns are white horses with a horn growing from their forehead. The horn is said to possess magical properties, which makes them a target for unscrupulous hunters. A unicorn that loses its horn while still alive instantly dies.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d8 (A)&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d8 (A)","spirit":"d10","strength":"d12+2","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SPELLCASTING":{"value":"d12"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -25267,8 +25400,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'These smart, bipedal dinosaurs are pack hunters, and use remarkably well-developed tactics. True velociraptors were the size of turkeys&mdash;the larger variety made famous in the movies are actually dinonychus, a related species.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d8 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d8 (A)","spirit":"d6","strength":"d10","vigor":"d8"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://velociraptorinmycloset.webstarts.com/uploads/43245373-velociraptors.jpg',
 		charisma: '0',
@@ -25308,8 +25441,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Knights are the fantasy equivalent of tanks&mdash;heavily armored and highly mobile. They differ from regular cavalry troops in that they are usually minor nobles, often with a fortified manor as their fief. Knights may be chivalric champions out to save princesses and slay dragons or despicable curs interested only in throwing their weight around.\nThese knights are the elite of a kingdom, having survived several battles. Most own a small castle and control 100 soldiers.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_KNOWLEDGE&quot;:{&quot;value&quot;:&quot;d8&quot;,&quot;special&quot;:{&quot;en-US&quot;:&quot;Battle&quot;}},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_RIDING&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d10","strength":"d10","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_KNOWLEDGE":{"value":"d8","special":{"en-US":"Battle"}},"SKILL_NOTICE":{"value":"d6"},"SKILL_RIDING":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '+2',
@@ -25349,8 +25482,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Rangers inhabit wilderness areas, preferring to avoid crowded towns and cities. Some belong to organizations often dedicated to hunting down evil creatures and protecting the wilds. Others are solitary, hiring out their services as guides and trackers.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_HEALING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_RIDING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SURVIVAL&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_TRACKING&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d8","vigor":"d10"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d10"},"SKILL_HEALING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"},"SKILL_RIDING":{"value":"d6"},"SKILL_SHOOTING":{"value":"d10"},"SKILL_STEALTH":{"value":"d8"},"SKILL_SURVIVAL":{"value":"d10"},"SKILL_TRACKING":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -25390,8 +25523,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'These fellows are well-trained, well- equipped, and well-led. They are veterans of many scrapes and know how to handle themselves.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://blogs-images.forbes.com/erikkain/files/2012/05/holy-grail-guard.jpg',
 		charisma: '0',
@@ -25431,8 +25564,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'War trees are regular trees animated through dryad or special elven magic. They are not sentient, but possess animal-like intelligence.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d4&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12+6&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d4","smarts":"d4 (A)","spirit":"d10","strength":"d12+6","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -25472,8 +25605,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Captains command a squad of town or city guards and answer only to the ruling authority.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_RIDING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d8","spirit":"d8","strength":"d10","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"},"SKILL_RIDING":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 1,
 		image: 'http://rs264.pbsrc.com/albums/ii174/Alowhakid/1265385946003.gif~c200',
 		charisma: '0',
@@ -25513,8 +25646,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'The watch are charged with maintaining law and order within the settlement and defending it in time of attack. Depending on the settlement, the watch may be a full-time professional body led by officers or local farmers.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: 'http://www.oocities.org/televisioncity/4766/film/hg/frenchsn.jpg',
 		charisma: '0',
@@ -25554,8 +25687,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Elementals are living spirits of earth, fire, water, and air. These are average examples of such creatures. They may be more or less powerful in specific settings.\nWater spirits are frothing, man-shaped creatures of water and sea-foam.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d12+2&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d6","strength":"d10","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_SWIMMING":{"value":"d12+2"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -25595,8 +25728,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Whereas werewolves take delight in using their powers to kill, werebears are generally more refrained. Even in human form, werebears prefer to stay far from civilization. Good werebears, and they do exist, often help elves and rangers patrol the wilderness. Those of evil nature revel in their dark powers, however.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+6&quot;,&quot;vigor&quot;:&quot;d12+2&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d12+2&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_TRACKING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d12+6","vigor":"d12+2"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d12+2"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d12"},"SKILL_SWIMMING":{"value":"d6"},"SKILL_STEALTH":{"value":"d8"},"SKILL_TRACKING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -25636,8 +25769,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Wights are restless dead, most often noble lords whose greed and earthly desires cause their spirits to remain behind to guard their treasures.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d8","spirit":"d10","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -25677,8 +25810,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Also known as marsh phantoms and ghost lanterns, wisps are malicious spirits resembling glowing balls of light. They captivate victims with their lights, then lead them into quicksand or the lairs of dangerous beasts. They have no combat capabilities and so try to remain a safe distance from their prey.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d4&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d6","spirit":"d8","strength":"d4","vigor":"d6"}',
+		skills: '{"SKILL_NOTICE":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -25718,8 +25851,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Mammoths are large elephants with long, curling tusks and thick, woolly coats. They are found only in cold climates.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+6&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4 (A)","spirit":"d6","strength":"d12+6","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d4"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -25759,8 +25892,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Wyverns resemble small, two-legged dragons. They have no fiery breath, but possess long necks, sharp teeth, and a poisonous sting in their tail. Some wyverns have wings (Flight: 6&rdquo;; Climb 3&rdquo;).',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d8","strength":"d12+2","vigor":"d10"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -25800,8 +25933,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Obviously zombie animals are much more dangerous than regular zombies. You may wish to increase the Power Point cost to raise zombie animals to reflect this. Increasing the cost by 1 Power Point per level of Size is a good place to start, but you could just as easily use the shape change chart as a guideline.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6(A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+4&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6(A)","spirit":"d8","strength":"d12+4","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -25841,8 +25974,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Obviously zombie animals are much more dangerous than regular zombies. You may wish to increase the Power Point cost to raise zombie animals to reflect this. Increasing the cost by 1 Power Point per level of Size is a good place to start, but you could just as easily use the shape change chart as a guideline.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d4(A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d12+2&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d4(A)","spirit":"d6","strength":"d10","vigor":"d6"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d12+2"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d10"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -25882,8 +26015,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'These walking dead are typical groaning fiends looking for fresh meat.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d4&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d4","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d4"},"SKILL_SHOOTING":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -25933,7 +26066,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Acolyte',
 	},
 	 gear: {
-		 'en-US': '[{&quot;name&quot;:&quot;Armor +2&quot;,&quot;description&quot;:&quot;In a fantasy setting, acolytes usually wear medium-weight armor, such as chain mail. In a more modern setting, they\'ll wear only their ceremonial robes.&quot;},{&quot;name&quot;:&quot;Weapons&quot;,&quot;description&quot;:&quot;Acolytes typically carry swords, clubs, or maces; these are Str+d6 weapons. Some will carry crossbows (15/30/60, 2d6, AP2, takes 1 action to reload). Most will also carry a dagger, usually ceremonial but always functional (Str+d4). Modern acolytes will carry low-quality firearms (10/20/40, 2d6-1, Semi-Auto)&quot;}]',
+		 'en-US': '[{"name":"Armor +2","description":"In a fantasy setting, acolytes usually wear medium-weight armor, such as chain mail. In a more modern setting, they\'ll wear only their ceremonial robes."},{"name":"Weapons","description":"Acolytes typically carry swords, clubs, or maces; these are Str+d6 weapons. Some will carry crossbows (15/30/60, 2d6, AP2, takes 1 action to reload). Most will also carry a dagger, usually ceremonial but always functional (Str+d4). Modern acolytes will carry low-quality firearms (10/20/40, 2d6-1, Semi-Auto)"}]',
 	},
 	 treasure: {
 		 'en-US': '',
@@ -25953,8 +26086,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Acolytes are non-powered clerics, or cultists; they&rsquo;re the lowest level of a clerical or a religious organization, lacking the ability to manifest miracles. They&rsquo;re often led by a more powerful cleric.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_GUTS&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_KNOWLEDGE&quot;:{&quot;value&quot;:&quot;d8&quot;,&quot;special&quot;:{&quot;en-US&quot;:&quot;Religion&quot;}},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d4&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d8","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_GUTS":{"value":"d6"},"SKILL_KNOWLEDGE":{"value":"d8","special":{"en-US":"Religion"}},"SKILL_NOTICE":{"value":"d4"},"SKILL_SHOOTING":{"value":"d4"}}',
 		wildcard: 0,
 		image: 'http://www.arkhamdrive-in.com/Graphics/Stills/SP12-cultists.jpg',
 		charisma: '0',
@@ -25994,8 +26127,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'This abomination has the body of a lion but the skin, tail, and jaws of an alligator.\nAdditional changes allow it to function underwater. They are particularly foul- tempered and easy to anger.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d8","strength":"d12","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SWIMMING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -26033,10 +26166,10 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Translating roughly as &quot;imp of heaven,&quot; ama-no-jaku are small demons found in Japan that tempt and provoke mischief into mortals. They often do this by pretending to be something they&rsquo;re not&mdash;such as a human child or a beneficent spirit.\nAma-no-jaku (sometimes amanojaku) do not have a magical power to obscure their looks, so they must wear natural disguises, such as shrouds or the skin of their victims.',
+		 'en-US': 'Translating roughly as "imp of heaven," ama-no-jaku are small demons found in Japan that tempt and provoke mischief into mortals. They often do this by pretending to be something they&rsquo;re not&mdash;such as a human child or a beneficent spirit.\nAma-no-jaku (sometimes amanojaku) do not have a magical power to obscure their looks, so they must wear natural disguises, such as shrouds or the skin of their victims.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d10&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d4&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_KNOWLEDGE&quot;:{&quot;value&quot;:&quot;d10&quot;,&quot;special&quot;:{&quot;en-US&quot;:&quot;Disguise&quot;}},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d12&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d10","spirit":"d6","strength":"d4","vigor":"d6"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_KNOWLEDGE":{"value":"d10","special":{"en-US":"Disguise"}},"SKILL_NOTICE":{"value":"d8"},"SKILL_PERSUASION":{"value":"d12"},"SKILL_STEALTH":{"value":"d10"},"SKILL_TAUNT":{"value":"d12"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -26076,8 +26209,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Many people are afraid of spiders. If they knew their true origin, everyone would be afraid of them. Arachnos. Mother of Spiders, takes the form of a monstrous tarantula.\nCrawling across her back are thousands and thousands of small spiders&acirc;&euro;&rdquo;her young. Because of this, Arachnos is usually referred to as a goddess by her deranged followers.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+4&quot;,&quot;vigor&quot;:&quot;d12+2&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d6","spirit":"d8","strength":"d12+4","vigor":"d12+2"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d10"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d10"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -26117,8 +26250,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'An aswang is a vampire-like creature from the Philippines. By day it assumes the form of a beautiful female and lives a normal human life, even marrying and having children. By night, however, it becomes a bloodsucking fiend. It uses its immensely long, hollow tongue to siphon blood, preferring to project it down through cracks in the roof rather than enter buildings. Unlike most vampires, however, the aswang is not undead.\nFor its human form, use the Innocent Victim stats (see page 117) but add the Very Attractive Edge. The stats below are for its vampiric form.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d10","strength":"d12+2","vigor":"d10"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d10"},"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -26158,8 +26291,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Banshees are feminine horrors who take one of three forms&mdash;a young maiden, a matron-like figure, or an old crone. All dress in either a dark, hooded cloak or a funeral shroud. Their long nails may be able to tear through flesh, but their most feared power is their terrible scream, which can drive a man mad or even kill him.\nA variant of the banshee, known as the &ldquo;washer woman&rdquo; comes in the form of a cloaked figure washing blood-stained clothes. According to legend, these are the garments of those about to die from her wailing.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -26199,8 +26332,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Also known as wights and hagbui (literally &ldquo;barrow dweller&rdquo;), these undead are the corporeal remains of kings and heroes buried in ages past. They are common in northern Europe, especially areas the Vikings settled. Their form is that of a mummified corpse with tight, leathery skin drawn over wasted muscles. Their eyes burn with a pale, cold light. Although barrow dwellers can speak, they only speak languages known to them in the era they died. Their tombs are brimming with treasure, and they intend to ensure it remains that way for eternity.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d8","spirit":"d10","strength":"d10","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -26240,8 +26373,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Giant bats are usually found in groups of 2d6 members. They are rarely aggressive unless provoked in their lair or under the control of some nefarious master.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4(A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4(A)","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d12"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -26281,8 +26414,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Animal golems are stitched together from the parts of many beasts. Below is an example using the torso and legs of a bear with the forearms and head of a lion.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_TRACKING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d10","strength":"d12+2","vigor":"d10"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"},"SKILL_TRACKING":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -26322,8 +26455,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Black trees are malevolent creatures found in clusters within ancient and dark forests. Some are formed by desecration of old burial grounds, some are possessed by spirits or demons, and others exist where chemical dumping has corrupted the land.\nThey resemble standard trees, but their bark is black, and sticky red sap oozes from gaps in the bark. Most have &ldquo;facial&rdquo; features, formed from knots and twists in the wood.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4(A)&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12+4&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4(A)","spirit":"d10","strength":"d12+4","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -26363,8 +26496,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'A blob is basically an amorphous mass of acidic jelly with an insatiable hunger. It might be an alien entity brought to Earth on a crashed satellite, a creature from another dimension, or the result of pollution.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d4&quot;,&quot;smarts&quot;:&quot;d4(A)&quot;,&quot;spirit&quot;:&quot;d12&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d4","smarts":"d4(A)","spirit":"d12","strength":"d12+2","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -26404,8 +26537,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Blood golems are created by magically binding together the blood of many creatures. Blood congeals quickly, so it must be fresh when the ritual is conducted. Soon after, it turns to a thick jelly.\nBlood golems are dark red in color, humanoid in shape, but with no facial features other than two yellow slits for eyes.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d8","strength":"d10","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -26486,8 +26619,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Unlike skeletons, bone golems are a mishmash of bones bonded together through dark magic. Many are given bony spines to add to their already grotesque appearance.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4","spirit":"d8","strength":"d12","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -26527,8 +26660,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'This is an ordinary house cat, the sort that might be a familiar for a spellcaster, a Beast Master&rsquo;s animal friend, or an alternate form for the shape change power.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6(A)&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d4&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6(A)","spirit":"d10","strength":"d4","vigor":"d6"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -26568,8 +26701,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Collector demons are sent to gather the souls of those who renege on their promises to Hell. This may be someone who sold their soul, a cultist who pledged his life to a dark master, or perhaps even a fool\nwho lost a bet with some demonic power.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d12&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_TRACKING&quot;:{&quot;value&quot;:&quot;d12+2&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d8","spirit":"d12","strength":"d12","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d12"},"SKILL_TRACKING":{"value":"d12+2"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -26609,8 +26742,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Corpse golems are patchwork men made from the bits and pieces of others recently deceased.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d10","strength":"d12","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -26650,7 +26783,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Corpse worms are one-inch long red worms with a taste for  esh and a paralyzing bite. Although they usually feed on carcasses, they are partial to warm, living tissue. While an individual worm poses little threat to a healthy human, a swarm can render a man incapable of defending himself very quickly.\nCorpse worm swarms  ll a Medium Burst Template and cannot Split. They also have the following Special Abilities:',
 	},
-		attributes: '{&quot;agility&quot;:&quot;&quot;,&quot;smarts&quot;:&quot;&quot;,&quot;spirit&quot;:&quot;&quot;,&quot;strength&quot;:&quot;&quot;,&quot;vigor&quot;:&quot;&quot;}',
+		attributes: '{"agility":"","smarts":"","spirit":"","strength":"","vigor":""}',
 		skills: '[]',
 		wildcard: 0,
 		image: '',
@@ -26691,8 +26824,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Crazalphasalius is aptly titled. His form is that of a vast  fireball of no  fixed dimensions. He ebbs and flows to his own tide, engulfing everything he touches in searing flame. Few materials can withstand his  ery wrath for long. His other titles include the Living Flame, the Howling Inferno, Purifying Flame, and the Burning Maelstrom.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d12+8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d10","strength":"d10","vigor":"d12+8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_SHOOTING":{"value":"d10"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -26732,8 +26865,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Creeping hands are severed hands given animation by some arcane process. Three different varieties have been recorded, though all share the same traits.\nThe first are those of murderers. In this instance, the hand somehow reanimates after death and sets out on a murderous spree.\nThe second belong to sorcerers who have learned how to detach their hands and send them to perform errands. Not all of these are necessarily evil.\nThe third sort are vengeful creatures, usually belonging to accident victims who have had their hands severed but seek revenge. The hand seems to take on a will of its own, carrying out a terrible revenge on those who wronged their former owner.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d6 (A)","spirit":"d10","strength":"d12+2","vigor":"d8"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d10"},"SKILL_FIGHTING":{"value":"d10"},"SKILL_NOTICE":{"value":"d4"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -26773,8 +26906,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'At the top of every cult is the &acirc;&euro;&oelig;high priest,&acirc;&euro; &acirc;&euro;&oelig;grand wizard,&acirc;&euro; or some such high-titled lunatic. Most have supernatural powers granted to them by their deity. Despite believing in the power of their &acirc;&euro;&oelig;god,&acirc;&euro; they actually use arcane magic rather than invoke miracles.\nThe spell trappings are suggestions. Ideally, you should alter them to  t the nature of the cult the characters are facing.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d8","spirit":"d10","strength":"d6","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SPELLCASTING":{"value":"d10"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -26814,8 +26947,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'The mortal worshippers of insane gods, demons, and other supernatural entities are called cultists. Many are stark-raving mad and all are fanatically loyal to their masters, both human and inhuman.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -26855,8 +26988,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'These are human children who have been genetically manipulated by the Grays either pre-conception or in utero. From birth there&rsquo;s no question that they&rsquo;re somehow... different. The Damned often serve as advance scouts for the alien invaders. They&rsquo;re all born with blonde hair and blue eyes.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d10&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d4&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_KNOWLEDGE&quot;:{&quot;value&quot;:&quot;d12&quot;,&quot;special&quot;:{&quot;en-US&quot;:&quot;Alien Science&quot;}},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_REPAIR&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d10","spirit":"d10","strength":"d4","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d4"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_KNOWLEDGE":{"value":"d12","special":{"en-US":"Alien Science"}},"SKILL_NOTICE":{"value":"d8"},"SKILL_PERSUASION":{"value":"d8"},"SKILL_REPAIR":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 1,
 		image: 'http://2.bp.blogspot.com/-LL_YJa5gGNI/UCvzRkO2XmI/AAAAAAAAG0M/yWrnZzB8YXY/s400/damned.jpg',
 		charisma: '0',
@@ -26896,8 +27029,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'A danse macabre is both a singular entity and an event. The creature itself, often called the Dance Master to differentiate it from the event it leads, is a skeletal  figure clad in brightly colored robes. Although it has no capacity to breathe, it plays on a set of pipes crafted from the bones of the damned. The tune is not only spellbindingly haunting, it is deadly to mortals.\nFollowing the Dance Master are a number of skeletons (see page 110). These are its previous victims who defend their master from attack.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d12&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d8","spirit":"d12","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -26937,8 +27070,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Although often referred to as &acirc;&euro;&oelig;the&acirc;&euro; Dark Man, evidence suggests that this creature is not a unique entity. A dark man, is a humanoid  gure of inky darkness with no visible facial features.\nA dark man is a source of pure necromantic energy, and its power lies in its ability to boost undead. As such, they are never summoned except to &acirc;&euro;&oelig;lead&acirc;&euro; a host of such  ends. Their abilities work on Wild Card undead as well as Extras.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d12+2&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d8","spirit":"d10","strength":"d6","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d12+2"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -26978,8 +27111,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Dark stalkers are small insectoid aliens that hang on the shadowy sides of ceilings, waiting for unsuspecting victims to pass below. When they spot prey, they race down from their hidings, and strike with lightning speed. Their prey almost never sees them coming before it&rsquo;s too late.\nBefore they strike, dark stalkers are almost totally silent. They emit an evil hissing sound when fighting that sounds almost like a riled serpent.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_GUTS&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d4 (A)","spirit":"d6","strength":"d10","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_GUTS":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -27019,8 +27152,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Every mad scientist or cult leader has a trusty sidekick, and they&acirc;&euro;&trade;re usually deformed in some way. Deformed minions are fanatically loyal to their master.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d8","strength":"d10","vigor":"d8"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"},"SKILL_TAUNT":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -27060,8 +27193,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Summoned from the depths of Hell, demon worms are actually more akin to gargantuan slugs. Their mottled green skin drips with foul ichor and leaves a slimy trail wherever it goes. Unlike slugs, however, they have vast, round mouths full of needlelike teeth surrounded by a mass of writhing tentacles.\nSome cultists worship them as gods, though they are far from omnipotent and can bestow no powers to their misguided followers.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12+10&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4 (A)","spirit":"d10","strength":"d12+10","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d10"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -27101,8 +27234,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Demonic steeds are primarily used by demons to travel around Hell. Rarely, they are gifted to loyal mortals to use as they will. Demonic steeds are jet black with red eyes and steaming nostrils. Their bits and bridles are made from twisted, barbed wire, and their horseshoes are hammered in with nails made from the ribs of sinners.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6 (A)","spirit":"d6","strength":"d12+2","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -27142,8 +27275,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Although Satanists often claim to have summoned the Devil, Lucifer is too powerful to answer to the beck\nand call of mortals. The creature summoned by these misguided fools is actually a devilkin, a minor minion of the Devil. Devilkins are humanoid, but have cloven hooves and the head of a goat.\nThe devilkin does not speak, but it listens to the summoner&acirc;&euro;&trade;s please, canting its unearthly head back and forth as it does so. Then it runs off and tries to fulfill the caster&acirc;&euro;&trade;s pleas&acirc;&euro;&rdquo;in the worst way possible.\nIt won&acirc;&euro;&trade;t attack the summoner though&acirc;&euro;&rdquo;it wants to torment her through its deeds instead.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d10 (A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d10 (A)","spirit":"d8","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SPELLCASTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -27183,8 +27316,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': '',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_TRACKING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d8","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"},"SKILL_TRACKING":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -27224,8 +27357,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': '',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4 (A)","spirit":"d6","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -27265,8 +27398,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'When first encountered, dismembered corpses look exactly like zombies. However, after they take their first wound, they  y apart into four limbs, a torso, intestines, and a head&acirc;&euro;&rdquo;each acting as an independent entity.\nThe various parts  oat around the torso, but operate completely independently. These various bits  ail, slap, kick, and claw at their bewildered foes.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d4&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d4","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d4"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -27306,8 +27439,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': '',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -27347,8 +27480,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Dread liches are those foul beings who have &acirc;&euro;&oelig;lived&acirc;&euro; for centuries, refining and honing their mastery of the dark arts. Aside from having greater magic and enhanced control over lesser undead than liches, dread liches can avoid destruction by transferring their essence to lesser undead.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d12+2&quot;,&quot;spirit&quot;:&quot;d12&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_KNOWLEDGE0&quot;:{&quot;special&quot;:{&quot;en-US&quot;:&quot;Battle&quot;},&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d12+2","spirit":"d12","strength":"d10","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d10"},"SKILL_SPELLCASTING":{"value":"d12"},"SKILL_KNOWLEDGE0":{"special":{"en-US":"Battle"},"value":"d10"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -27388,7 +27521,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'At certain times of the year, evil holds great sway. All Hallows Eve is one such occasion, but there are others. During this time, creatures born in sleepers&acirc;&euro;&trade; nightmares gain the power to enter the physical world.\nTheir exact form varies from sleeper to sleeper. Some take the form of demonic clowns, others as tentacled beasts or maniacal versions of abusive parents. Regardless of form, all are intent on manifesting in the physical world and causing as much mayhem as possible.\nDream evils materialize after their host has gone to sleep, generally appearing within a few miles and proceed to act something like what they&acirc;&euro;&trade;ve manifested as. A giant spider lurks in trees and ensnares victims, however. An evil clown might appear near a circus and lure attendees into a dark tent where it can devour them.\nDream evils never attack their host&acirc;&euro;&rdquo;that automatically ends their existence. The only way to be rid of them is to survive seven straight nights without sleep, or via the banish entity power.\nDream evils have physical statistics based on their form. Their Smarts and Spirit are equal to the Spirit of the host. They also have the following Special Abilities.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;&quot;,&quot;smarts&quot;:&quot;&quot;,&quot;spirit&quot;:&quot;&quot;,&quot;strength&quot;:&quot;&quot;,&quot;vigor&quot;:&quot;&quot;}',
+		attributes: '{"agility":"","smarts":"","spirit":"","strength":"","vigor":""}',
 		skills: '[]',
 		wildcard: 1,
 		image: '',
@@ -27429,8 +27562,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Dreamreavers are spirits of nightmare that walk the mortal world looking for victims&acirc;&euro;&trade; psyches to feed upon. They do so by plunging the victim into a terrible and all-too-real dream world. Within, the dreamer must battle to complete some quest, overcoming obstacles and defeating foes, or remain lost in the nightmare land forever.\nDreamreavers often pull close companions of their victims into the nightmare realm as well. This means an entire party might find themselves trapped in one of their companions&acirc;&euro;&trade; nightmares.\nOnce in the dream world, the victim soon stumbles upon some quest that he feels compelled to complete. The task may be simple escape, it may be to defeat a dread foe, or it may to reach some distant objective.\nThe foes and obstacles faced along the way are very real (within the dream world, anyway), and should be handled just as in regular play.\nVictims who die within the dream world remain in a coma in the physical world. They are essentially brain dead&acirc;&euro;&rdquo;the dreamreaver has devoured their essence.\nThose who survive and &acirc;&euro;&oelig;win&acirc;&euro; dispel the dreamreaver and are blessed with restful sleep for the rest of their lives. If they suffered from night terrors or other sleep disorders before, they are cured. They may still have occasional nightmares, but are always aware they are nothing but dreams and ignore any ill effects.\nThe statistics below are for the dreamreaver&acirc;&euro;&trade;s invisible spirit form. Those who can see such things spy a squat, toad-like humanoid with black eyes, lolling tongue, and vacant, slack- jawed gaze.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d10&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d10","spirit":"d8","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d4"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -27470,8 +27603,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': '',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d6","strength":"d8","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -27511,8 +27644,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Not all zombies are near-mindless, shambling corpses. The einherjar are one such breed of zombies. In Norse mythology, the einherjar were Odin&acirc;&euro;&trade;s eternal warriors, mortals who had earned a seat in Valhalla. Necromancers could petition Odin for use of the einherjar, though on Earth they appear as zombies rather than &acirc;&euro;&oelig;live&acirc;&euro; warriors. They are renowned for their strength and courage.\nIn a fantasy horror game, a god of battle might have similar undead followers he loans to favored mortals. For a modern game, perhaps the ancient Norse gods are not completely dead and can still make their presence felt on Earth.\nEinherjar can speak, though traditional ones only speak Old Norse. A character with knowledge of any Scandinavian language can make a Common Knowledge (if it&acirc;&euro;&trade;s his native tongue) or Knowledge (Language) to communicate with them.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_BOATING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d8","strength":"d12","vigor":"d10"}',
+		skills: '{"SKILL_BOATING":{"value":"d6"},"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_TAUNT":{"value":"d6"},"SKILL_THROWING":{"value":"d8"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -27552,8 +27685,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Emotion spirits are non-corporeal embodiments of a dark or negative emotion, such as hatred or greed.\nThey attach themselves to a victim who was&acirc;&euro;&rdquo;at least momentarily&acirc;&euro;&rdquo;affected by its particular vice. So a Greedy character, or one who was even temporarily greedy, might attract the spirit&acirc;&euro;&trade;s attention.\nAfter that, the creature follows its host around, invisible and ethereal, emphasizing this negative trait to the extreme in hopes of causing more misery and pain.\nTo those who can see them, or once made  esh (see below), their form varies by type. A spirit of greed might appear as a corpulent human weighed down by golden chains. A spirit of cruelty might be covered in weeping whip marks.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d10","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -27593,8 +27726,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'That irrational fear you have of clowns isn&acirc;&euro;&trade;t always irrational. Below is a common version of the evil clown&acirc;&euro;&rdquo;the kind that lures victims into the dark and devours them.\nA gaggle of clowns have the statistics listed below. A single clown&acirc;&euro;&rdquo;or sometimes a &acirc;&euro;&oelig;boss clown&acirc;&euro;&acirc;&euro;&rdquo;is a Wild Card.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_DRIVING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d6","spirit":"d8","strength":"d10","vigor":"d10"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_DRIVING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_PERSUASION":{"value":"d10"},"SKILL_STEALTH":{"value":"d8"},"SKILL_TAUNT":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -27634,8 +27767,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Fear stalkers are created when a person shows true fear. In game terms, they can come into being whenever someone critically fails a Fear test, or if a die roll is a critical failure as a result of a Phobia.\nFear stalkers are invisible spirits that attach themselves to victims. The subject becomes nervous and jumpy over time, receiving a -1 penalty to his Fear tests for each week the spirit is attached, up to a maximum of -4.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4 (A)","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_INTIMIDATION":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -27675,8 +27808,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Fetches are spiritual companions to mortals who can detect spirits and other ethereal beings. Traditionally, only people born on a Saturday could have a fetch dog, but this may vary depending on the setting and your particular lore. In a game setting, fetch&acirc;&euro;&trade;s are probably better suited to be gifts from powerful friendly entities.\nThe &acirc;&euro;&oelig;owner&acirc;&euro; of a fetch cannot communicate with it&acirc;&euro;&rdquo;the thing simply stays by its companion at all times, protecting its master from evil to the best of its ability. It cannot affect the physical world in any way.\nFetches are invisible, but occasionally&acirc;&euro;&rdquo;at the Game Master&acirc;&euro;&trade;s discretion&acirc;&euro;&rdquo;mortals might catch a glimpse of the creature.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d8","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -27716,8 +27849,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Flesh rippers are fleshless humanoids who need the skin of victims to survive. Although they can use animal skins, most prefer the comforting  t of human skin. Particularly beautiful or charismatic humans are their favorite targets. Individual flesh rippers may have other preferences, such as heavily tattooed victims or those with a\nparticular hair or eye color.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d6","strength":"d10","vigor":"d10"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -27757,8 +27890,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Among certain tribes of North American Indians, there exist stories of  flying heads. Each head is as tall as a man, and rests upon two short legs. At the end of each leg are a set of powerful claws.\nFlying heads emit a fearsome cry which can turn a warrior&acirc;&euro;&trade;s blood to ice.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d8","spirit":"d10","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"},"SKILL_SWIMMING":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -27798,8 +27931,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Pumpkin Jack is probably the most famous foul scarecrow, but he isn&acirc;&euro;&trade;t the only one of his kind. Foul scarecrows are most commonly awakened by evil spirits, but sometimes the spilling of blood can awaken them. Old battle fields now turned over to agriculture are good candidates.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d10","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -27839,8 +27972,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Spectres, shades, and phantoms sometimes return from death to haunt\nthe living or fulfill some lost goal.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d12+2&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d12+4&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d10","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d12+2"},"SKILL_NOTICE":{"value":"d12"},"SKILL_STEALTH":{"value":"d12+4"},"SKILL_TAUNT":{"value":"d10"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -27880,8 +28013,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Ghouls are vile scavengers, feasting off carrion and unfortunate victims who cross their path while feeding. Whether they are a natural species or the creation of foul magic is open to debate.\nGhouls have pale, rubbery skin with the texture of uncooked pastry. Their eyes are large and glow with a pale feral-yellow color. They have sharp claws and teeth, often with shreds of rendered  flesh hanging from them.\nGhouls typically scavenge in packs of 3-9 creatures (1d6+3), and live in vast lairs of 20+ individuals with a Wild Card &acirc;&euro;&oelig;king.&acirc;&euro;',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_TRACKING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d6","spirit":"d6","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"},"SKILL_TRACKING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -27921,8 +28054,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Gladiators are Hell&acirc;&euro;&trade;s warriors,  ghting in the service&acirc;&euro;&rdquo;or for the amusement&acirc;&euro;&rdquo;of demon princes. They are towering monstrosities of muscle, metal, and hate.\nSomewhere in the bowels of the Abyss, in some horri c workshop of screaming blacksmiths, metal plates have been crudely riveted onto its  esh; and its arms below the elbow end in large, jagged blades, the tips of which scrape along the ground when the beast moves. Even when calm, a gladiator froths at the mouth and has a mad look in its eyes.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+3&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d6","spirit":"d8","strength":"d12+3","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d12"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -27962,8 +28095,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Gluttony demons have the bodies of large, bloated toads and the limbs of a pig. So obese are they, their body actually\nwobbles from side to side, like a massive quivering jelly.\nTheir jaws can expand wide enough to swallow a man-sized object in a single gulp. Their appetite is endless, and they can swallow an unlimited number of foes during a single combat.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d8","strength":"d12","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -28003,8 +28136,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Goblins are twisted creatures about the size of a child with pale, leathery skin. Their eyes are milky-white and pupil-less, rendered useless after generations of lightless existence in the dank tunnels under the earth. To compensate, they have evolved the ability to navigate solely by sound. When not trying to be stealthy, the creatures make an unnerving cooing sound by which to better sense their surroundings.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d4&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4","spirit":"d4","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -28044,8 +28177,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'When a powerful necromancer dies, his body putrefies in his grave while his spirit refuses to let go of existence. The result is a gravebane.\nGravebanes are large blobs of putrescent energy. They retain a small degree of intelligence, but are primarily interested in feasting. They do so by animating nearby undead to hunt for them.\nThe gravebane&acirc;&euro;&trade;s favored tactic is to remain hidden and use its zombies to kill nearby beings. Once all the prey are dead, the zombies bring the corpses to the gravebane for absorption.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d4&quot;,&quot;smarts&quot;:&quot;d8 (A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d4","smarts":"d8 (A)","spirit":"d8","strength":"d6","vigor":"d10"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -28065,7 +28198,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Grays',
 	},
 	 gear: {
-		 'en-US': '[{&quot;name&quot;:&quot;Hypodermic&quot;,&quot;description&quot;:&quot;Str+d4. These are foot-long and wickedly barbed. If the Gray hits with a raise, the extra damage inflicted is caused by blood and other fluids (and sometimes solids!) being extracted from the target. Damage from a hypo is incredibly painful; those Shaken by one are at a -2 to their Spirit roll to recover.&quot;},{&quot;name&quot;:&quot;Implants&quot;,&quot;description&quot;:&quot;These are small bits of metal implanted into victim during their time with the Grays. They allow the aliens to track the victim anywhere on Earth; they also transmit fear, pain, and feelings of paranoia and isolation back to the Grays for distillation.&quot;},{&quot;name&quot;:&quot;Probes&quot;,&quot;description&quot;:&quot;These aren&rsquo;t used for gathering information, but for inflicting pain. They allow the Grays to torture a victim for days (or longer) without doing any permanent damage to them.&quot;}]',
+		 'en-US': '[{"name":"Hypodermic","description":"Str+d4. These are foot-long and wickedly barbed. If the Gray hits with a raise, the extra damage inflicted is caused by blood and other fluids (and sometimes solids!) being extracted from the target. Damage from a hypo is incredibly painful; those Shaken by one are at a -2 to their Spirit roll to recover."},{"name":"Implants","description":"These are small bits of metal implanted into victim during their time with the Grays. They allow the aliens to track the victim anywhere on Earth; they also transmit fear, pain, and feelings of paranoia and isolation back to the Grays for distillation."},{"name":"Probes","description":"These aren&rsquo;t used for gathering information, but for inflicting pain. They allow the Grays to torture a victim for days (or longer) without doing any permanent damage to them."}]',
 	},
 	 treasure: {
 		 'en-US': '',
@@ -28085,8 +28218,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'These beings generally appear to be your archetypal aliens: gray skinned, tall and spindly, with huge black eyes and small slits for mouths, though they can take on other forms. These particular aliens do not come in peace.\nThey utilize a bizarre mixture of super-science and mysticism which to a large degree has baffled Earth scientists. More recently, they have completed development of the technology to distill pain and fear from Earth creatures as a source of techno-occult power. (Hence the rise in horrifying abductions and cattle mutilations.) At some point their supply of such power will reach critical mass; what happens then is up to you, but it certainly won&rsquo;t be anything good... The Grays find combat distasteful, and allow their servants to handle it for them.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d12&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_GUTS&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_KNOWLEDGE&quot;:{&quot;value&quot;:&quot;d12&quot;,&quot;special&quot;:{&quot;en-US&quot;:&quot;Torture&quot;}},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d12","spirit":"d10","strength":"d8","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_GUTS":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_KNOWLEDGE":{"value":"d12","special":{"en-US":"Torture"}},"SKILL_NOTICE":{"value":"d10"},"SKILL_SHOOTING":{"value":"d6"}}',
 		wildcard: 1,
 		image: 'http://www.coasttocoastam.com/cimages/var/ezwebin_site/storage/images/coast-to-coast/repository/photos/gray-alien-digital-sculpture/544100-1-eng-US/Gray-Alien-Digital-Sculpture_photo_medium.jpg',
 		charisma: '0',
@@ -28126,8 +28259,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Greater mummies were former high priests, mages, and corrupt rulers, deliberately preserved for eternity and granted an unearthly life through arcane rituals.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d4&quot;,&quot;smarts&quot;:&quot;d10&quot;,&quot;spirit&quot;:&quot;d12&quot;,&quot;strength&quot;:&quot;d12+4&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d4","smarts":"d10","spirit":"d12","strength":"d12+4","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SPELLCASTING":{"value":"d10"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -28167,8 +28300,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'The most common type of mummy, these creatures were former priests and soldiers, placed in tombs to guard their masters for all eternity.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d4&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d4","smarts":"d6","spirit":"d10","strength":"d12+2","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -28208,8 +28341,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'A hate is formed when multiple souls suffer a collective fate. They are most commonly found on battle elds, at scenes of massacres, and in death camps.\nWhen the bodies of the victims die, their souls  ock to form a mass of swirling, screaming spirits. Hates are  lled only with thoughts of vengeance. Although initially they target those who oppressed them in life, their desire for revenge can never be truly sated and even innocents quickly become their prey.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d10","strength":"d6","vigor":"d10"}',
+		skills: '{"SKILL_NOTICE":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -28249,8 +28382,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Haunted armor may be possessed by a ghost, or brought to life by arcane magic as a golem. The vast majority resemble suits of medieval plate armor, such as those found in old houses or museums.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4 (A)","spirit":"d8","strength":"d10","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -28290,7 +28423,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Haunted cars (or other vehicles) are possessed by evil machine spirits who &acirc;&euro;&oelig;feed&acirc;&euro; by mangling victims within them.\nHaunted cars are sentient and malevolent. They&acirc;&euro;&trade;re also conscious of being destroyed and so know to maintain a low profile&acirc;&euro;&rdquo;when they aren&acirc;&euro;&trade;t on a murderous rampage.\nUse the statistics for the car in question, but add Smarts at d8 and Spirit at d10 for the spirit inside, as well as the Special Abilities listed below. Track the car&acirc;&euro;&trade;s wounds just as you would any other vehicle. If it&acirc;&euro;&trade;s &acirc;&euro;&oelig;wrecked,&acirc;&euro; it&acirc;&euro;&trade;s treated as Incapacitated.\nHaunted cars control themselves, but like to toy with their victims for a while before feasting on their shattered bodies. This process may go on for several days or even weeks if the car becomes fond of a particular operator. When this happens, which it often does, the machine spirit &acirc;&euro;&oelig;falls in love&acirc;&euro; with the driver, killing at night or when the operator isn&acirc;&euro;&trade;t present to avoid the temptation of devouring him or her instead. Such spirits often become very jealous of others who compete for their operator&acirc;&euro;&trade;s attention.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;&quot;,&quot;smarts&quot;:&quot;&quot;,&quot;spirit&quot;:&quot;&quot;,&quot;strength&quot;:&quot;&quot;,&quot;vigor&quot;:&quot;&quot;}',
+		attributes: '{"agility":"","smarts":"","spirit":"","strength":"","vigor":""}',
 		skills: '[]',
 		wildcard: 0,
 		image: '',
@@ -28331,8 +28464,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'A haunted portrait is a painting possessed by a malevolent spirit&acirc;&euro;&rdquo;typically a shade or shadow of the person depicted.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d4&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d4&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d4","smarts":"d8","spirit":"d10","strength":"d4","vigor":"d10"}',
+		skills: '{"SKILL_NOTICE":{"value":"d8"},"SKILL_SPELLCASTING":{"value":"d10"},"SKILL_TAUNT":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -28372,8 +28505,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Helldrakes are akin to dragons but have seven heads, each inscribed with a blasphemous name. Their thick scales are  ery red, like the  res of Hell in which they are spawned, and engraved with unholy runes and sigils. Unlike dragons, however, helldrakes do not have fiery breath or tails, nor can they  y. It is said that each demon prince of Hell has a helldrake as his mount, spawned by the great dragon defeated by Archangel Michael during\nLucifer&acirc;&euro;&trade;s rebellion.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12+9&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d12&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d8","spirit":"d10","strength":"d12+9","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d12"},"SKILL_SPELLCASTING":{"value":"d12"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -28413,8 +28546,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Hellhounds are monstrous dogs, often with black skin which steams from the heat of the beast&acirc;&euro;&trade;s demonic blood. Their eyes burn with demonic  re and their teeth are oversized, protruding from their jaw at all angles. Certain demons often keep them as pets, though they may also be found in the company of necromancers and other evil wizards. They are sometimes known as &acirc;&euro;&oelig;black dogs.&acirc;&euro;',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d8","strength":"d10","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -28454,8 +28587,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'These malevolent spirits\nwere once Norse warriors,\ntravelling from frozen,\nnorthern lands to raid for\nboth riches and  esh.\nUnlike many of their\nViking brethren, these\nghosts were spawned\nfrom men who were\nneither proud nor\nhonorable. Little more\nthan murderous thugs in\nlife, the souls of these men\nwere denied admittance to the\nafterlife and are now cursed to roam the seas, raiding seaside communities again and again.\nIn life, Vikings limited their raids mainly to European shores. In general, hoarfrost warriors are most likely to be found in these regions. However, the power of the curse upon them may send hoarfrost warriors onto any seacoast where the temperature drops below freezing.\nWhen these entities appear, they approach the shore in long, dark boats which are nothing more than silhouettes in the night. The hoarfrost warriors silently glide across the waves from their shadowy craft and into unsuspecting towns, spreading havoc and death throughout the settlement.\nOn occasion, these spirit raiders claim live victims and take them aboard their ethereal longboats. Invariably, they choose male victims for hostages. Legend claims that these spirits do so to  ll holes in their own number, turning the victim into a hoarfrost warrior himself through some unknown process.\nThese ghosts are invisible except in moonlight. There, they appear as translucent, hulking Norse warriors with pale white skin accented by pale blue veins and hair. Deep within their chests, a character making a Notice roll of their frozen hearts pulsing in time with their blood lust.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_BOATING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4","spirit":"d8","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_BOATING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_SHOOTING":{"value":"d6"},"SKILL_THROWING":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -28495,8 +28628,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'The homunculus is the result of an alchemist successfully crafting a living creature using his art. These creatures are tiny, man-shaped, and sometimes take on the rough appearance of their creators. The recipes for homunculi vary from alchemist to alchemist and often vary greatly. However, all have one thing in common: even though they are somehow granted a spark of life, these strange constructs lack a soul.\nThis fact makes homunculi extremely dangerous for they are perfect vessels for demonic or other types of spiritual possession. Few escape falling prey to the attentions of fell beings, often within hours&acirc;&euro;&rdquo;or even minutes&acirc;&euro;&rdquo;of their creation. Ironically, since most alchemists fancy themselves scientists rather than magicians, the majority of them scoff at the possibility of such an event.\nWhile in service of their creator, these creatures are typically used for innocuous purposes, or at worst, to spy on others. Under the control of a malevolent spirit, they become focused on mischief and mayhem&acirc;&euro;&rdquo;or far worse.\nInitially, the appearance of these small constructs depends largely on the ingredients used in their manufacture. Some appear plant-like, while others may vaguely resemble lizards or other reptilian creatures. Over time, they may take on more human features as they bond to their creator&acirc;&euro;&rdquo;or more demonic ones if they succumb to diabolic influences.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d4&quot;,&quot;strength&quot;:&quot;d4&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d4","strength":"d4","vigor":"d8"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -28536,8 +28669,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Some mummies are formed naturally in very dry environments where the corpse is frozen or sealed over with naturally protective elements.\nIce and sand mummies have rock hard skin infused with frozen water or calcified earth and tissue. Their limbs are twisted and deformed as their flesh shrunk and hardened.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d4&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d4","smarts":"d6","spirit":"d8","strength":"d12","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -28577,8 +28710,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'These hideous mutations are created when an unfortunate human with icthynite ancestry responds to the  sh-men&acirc;&euro;&trade;s call. Very soon after making contact with the icthynites, his skin develops a thin covering of sickly gray scales and his teeth become more pointed and cartilaginous. In time, he develops a gill-like structure on the side of his neck and webs between his toes to allow him to live in the depths with his scaled cousins.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_KNOWLEDGE0&quot;:{&quot;special&quot;:{&quot;en-US&quot;:&quot;One Trade&quot;},&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"},"SKILL_SWIMMING":{"value":"d8"},"SKILL_KNOWLEDGE0":{"special":{"en-US":"One Trade"},"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -28618,8 +28751,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'The icthynites are a race of  fish-men who hail from a time long forgotten by humanity. From a distance, they appear to be humanoid. Nearer, one can see the silver sheen of their scaled skin. The mouths of these creatures are gaping and piscine,  filled with sharp, translucent teeth. Most remarkable of all are their glistening, metallic eyes which never blink.\nTravelers have claimed sighting ancient cites occupied by these  sh-men in lonely stretches of the sea. Perhaps these lost megalopolises were even built by the icthynites themselves.\nIf so, the secrets to their ancient civilization are long lost, for the feral  sh-men seem to  have no recollection of it. Instead, they clamber over the neglected ruins,  fighting each other and feeding on any mortals that dare wander close to their abodes.\nIcthynites are capable of breeding with human women. Usually, any offspring born to a human parent is horribly deformed. Few of these survive even the first moments of life. Over the years, a small number have been born with none of their inhuman father&acirc;&euro;&trade;s traits and have integrated into human society. Most have\nno idea of their unnatural parentage. Those offspring that survive&acirc;&euro;&rdquo;as well as their own descendants&acirc;&euro;&rdquo;have hidden ancestral memories deep within their souls. For this reason, the  sh-men croon from the sea at night, recalling all mortals who can remember their alien song. Should any wander towards the waves, they are taken from the shore and into the deep below to never be seen again.\nWe don&acirc;&euro;&trade;t recommend you apply this fate to heroes. Being the ancestral offspring of a degenerate race of  sh-men is probably something a player shouldn&acirc;&euro;&trade;t learn about as a result of a random Trait check!',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d12&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4","spirit":"d6","strength":"d8","vigor":"d12"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"},"SKILL_SWIMMING":{"value":"d12"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -28659,8 +28792,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Imps are pernicious creatures who may be the source of myths of faeries and similar creatures. However, unlike the faeries of legend, imp mischief is usually marked by violence. Most often summoned by a witch or necromancer, their injurious acts are almost always focused on those who have committed some wrong, leading some stories to claim they are merely elemental manifestations of justice. But there is very little that is &acirc;&euro;&oelig;just&acirc;&euro; about imp work.\nWithout fail, these monsters inflict much harsher punishment upon their victims than they deserve. These creatures have been known to snatch the tongues of liars, or blind a man for coveting his neighbor&acirc;&euro;&trade;s house. Conversely, they rarely punish truly heinous crimes such as murder or the like, instead reserving their torments for those guilty of only small immoralities. In rare instances, imps will offer to undo their harm. In such cases, the imps invariably require their victims to perform even worse acts&acirc;&euro;&rdquo;usually upon another transgressor&acirc;&euro;&rdquo;than that of which the imps first found them &acirc;&euro;&oelig;guilty.&acirc;&euro;\nImps abide by odd rules of behavior for reasons beyond human understanding. These restrictions are magical in nature and their effects so strong that a imp cannot choose to disobey them. This, no doubt, is why some arcane practitioners call on them. A hero who makes a Knowledge (Occult) roll can recall these strictures, but it is up to her to use them to her advantage.\nImps are short, humanoid beings with large heads and pointed ears. They favor darkened areas, recoiling violently from bright light with hisses or curses. Should their fanged mouths and clawed fingers leave any doubt, the malevolent gleam in their eyes make their wicked natures clear.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d4&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_KNOWLEDGE0&quot;:{&quot;special&quot;:{&quot;en-US&quot;:&quot;Magic&quot;},&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d8","spirit":"d8","strength":"d4","vigor":"d6"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d10"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_SPELLCASTING":{"value":"d10"},"SKILL_STEALTH":{"value":"d10"},"SKILL_TAUNT":{"value":"d8"},"SKILL_KNOWLEDGE0":{"special":{"en-US":"Magic"},"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -28700,8 +28833,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Whether high school students living in the big city or peasant farmers from some distant part of Eastern Europe (or a fantasy setting), innocent victims are the food upon which monsters prey.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_KNOWLEDGE0&quot;:{&quot;special&quot;:{&quot;en-US&quot;:&quot;School Subject or Trade&quot;},&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d4"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d4"},"SKILL_STEALTH":{"value":"d6"},"SKILL_KNOWLEDGE0":{"special":{"en-US":"School Subject or Trade"},"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -28741,8 +28874,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Jjrikillimsg is mad&acirc;&euro;&rdquo;totally and utterly mad in a way no mortal can ever hope to understand or emulate. His titles include such epithets as the Insane, One Without True Form, Revealer of Secrets, and Enlightener of Closed Minds.\nIf it has a true shape, no one has ever recorded it. Jjrikillimsg  its between many forms, changing so rapidly that the human eye cannot keep up. Every now and then, however, he pauses in one form just long enough for the brain to analyze what it has seen. Madness usually follows shortly thereafter.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d12&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d12+4&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4 (A)","spirit":"d12","strength":"d12+2","vigor":"d12+4"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d6"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -28782,8 +28915,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Found in Irish folklore, the leanhaum-shee is a type of vampiric fairy. She uses her stunning appearance and seductive ways to enslave men, whom she then\ndrains of their life force.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d10&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d12+2&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d10","spirit":"d10","strength":"d6","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_PERSUASION":{"value":"d12+2"},"SKILL_TAUNT":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -28823,8 +28956,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Abhorrent as it may be, people sometimes resort to cannibalism when lost in the wilderness or stranded on deserted islands.\nFor most, it is a matter of survival, never to be tried again once they are rescued. For a few, however, it becomes a craving. These individuals are said to be possessed by the spirit of the wendigo, an American Indian cannibal spirit.\nThis version is an enhanced human&acirc;&euro;&rdquo; perhaps an early stage of the creature which follows. It remains human in appearance, but typically naked or covered in dirty rags and with a feral snarl on its blood-stained face.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d8","strength":"d6","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -28864,8 +28997,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'While it&acirc;&euro;&trade;s doubtful many demon lords have libraries, these unusual demons are the scholars of the underworld. The epithet, perhaps given in jest, has become common parlance.\nLibrarians are tall, blue-skinned humanoids with red eyes. Their heads are completely bald, and runes of power and knowledge are burned into their skull. When traveling in mortal realms, they wear heavy cowled cloaks to conceal their appearance.\nUnusually for a denizen of Hell, librarians seem quite willing to help mortals in return for a small reward, such as a relic or a tome of knowledge. What use they have for these items in Hell is anyone&acirc;&euro;&trade;s guess.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d12&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_INVESTIGATION&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_KNOWLEDGE0&quot;:{&quot;special&quot;:{&quot;en-US&quot;:&quot;Any One&quot;},&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_KNOWLEDGE1&quot;:{&quot;special&quot;:{&quot;en-US&quot;:&quot;Any One&quot;},&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_KNOWLEDGE2&quot;:{&quot;special&quot;:{&quot;en-US&quot;:&quot;All Others&quot;},&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d12","spirit":"d10","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d4"},"SKILL_INVESTIGATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"},"SKILL_TAUNT":{"value":"d8"},"SKILL_KNOWLEDGE0":{"special":{"en-US":"Any One"},"value":"d12"},"SKILL_KNOWLEDGE1":{"special":{"en-US":"Any One"},"value":"d12"},"SKILL_KNOWLEDGE2":{"special":{"en-US":"All Others"},"value":"d10"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -28905,8 +29038,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'These abominations aren&acirc;&euro;&trade;t true gods, but are supernatural servitors of those beings. Commonly found among the ancient Egyptians, they have the bodies of humans but the heads of animals. Thus, one  nds crocodile-headed living gods following Sobek, jackal-headed gods following Anubis, and\ncow-headed gods following Hathor.\nWhen found on Earth, they are usually leading a cult of worshippers. In a fantasy setting, they might just as easily be servitors of other gods, taking the heads of sacred animals. In a sci-  game, they could be an alien race posing as divine messengers among a primitive culture.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FAITH&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d10","strength":"d12+2","vigor":"d12"}',
+		skills: '{"SKILL_FAITH":{"value":"d10"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"},"SKILL_THROWING":{"value":"d8"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -28946,8 +29079,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Grimoires are books containing dark knowledge or spells. Most are simply books, though they may be written in blood or contain images that turn even the strongest stomach. Living grimoires, however, are magical creations, designed to protect the book from nosy individuals.\nLiving grimoires are actually just the covers of the book they hold. Usually they take the form of demonic faces, gaping maws, or perhaps just sharp claws used to clasp the book closed. They only make their presence felt when someone other than the book&acirc;&euro;&trade;s rightful owner tries to pick up or open the book. Killing the grimoire does not damage the book (a by-product of the magic used in their creation).\nLiving grimoires speak many languages, but usually only converse to threaten or taunt people.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d4&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d12&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d4","smarts":"d4 (A)","spirit":"d12","strength":"d8","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_TAUNT":{"value":"d10"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -28987,8 +29120,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Whether given life through magic or demonic possession, living topiaries haunt the recesses of stately homes and the gardens of those with dark secrets.\nRegardless of form, the plants use the statistics listed below.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4 (A)","spirit":"d6","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -29028,8 +29161,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': '',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d12&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INVESTIGATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_KNOWLEDGE0&quot;:{&quot;special&quot;:{&quot;en-US&quot;:&quot;Occult&quot;},&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_KNOWLEDGE1&quot;:{&quot;special&quot;:{&quot;en-US&quot;:&quot;Weird Science&quot;},&quot;value&quot;:&quot;d12&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d12","spirit":"d10","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INVESTIGATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"},"SKILL_TAUNT":{"value":"d6"},"SKILL_KNOWLEDGE0":{"special":{"en-US":"Occult"},"value":"d8"},"SKILL_KNOWLEDGE1":{"special":{"en-US":"Weird Science"},"value":"d12"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -29069,8 +29202,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'A man-dog hybrid is humanoid, covered in fur, and has the head and tail of a dog. It stands hunched and, while it can run upright, prefers to move on all fours. Their fingers, though tipped in small claws, are dextrous enough to use weapons and tools. These foul beasts can talk, though have a growling, rough voice.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"},"SKILL_SHOOTING":{"value":"d6"},"SKILL_THROWING":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -29110,8 +29243,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Stories of possessed marionettes (stringed puppets) have dated back centuries. More modern marionette golems may be made in the form of dolls or teddy bears.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d8","spirit":"d8","strength":"d8","vigor":"d10"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d10"},"SKILL_TAUNT":{"value":"d8"},"SKILL_THROWING":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -29131,7 +29264,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Men in Black',
 	},
 	 gear: {
-		 'en-US': '[{&quot;name&quot;:&quot;Vehicle - Edsel&quot;,&quot;description&quot;:&quot;What&rsquo;s weirder than the MiB&rsquo;s driving Edsels? The fact that they look like they just drove off of the assembly line. A careful examination under the hood reveals that although the engine appears normal at first glance, it&rsquo;s put together completely wrong, and could never actually run... They&rsquo;re identical to Sports Cars (see SW:DE page 49).&quot;},{&quot;name&quot;:&quot;Guns&quot;,&quot;description&quot;:&quot;These are functionally identical to a Colt.45, and look approximately like one as well. Like their Edsels, if the inner workings are examined, there&rsquo;s no way these weapons should be able to actually fire.&quot;}]',
+		 'en-US': '[{"name":"Vehicle - Edsel","description":"What&rsquo;s weirder than the MiB&rsquo;s driving Edsels? The fact that they look like they just drove off of the assembly line. A careful examination under the hood reveals that although the engine appears normal at first glance, it&rsquo;s put together completely wrong, and could never actually run... They&rsquo;re identical to Sports Cars (see SW:DE page 49)."},{"name":"Guns","description":"These are functionally identical to a Colt.45, and look approximately like one as well. Like their Edsels, if the inner workings are examined, there&rsquo;s no way these weapons should be able to actually fire."}]',
 	},
 	 treasure: {
 		 'en-US': '',
@@ -29151,8 +29284,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'There is considerable speculation on who these agents really work for; is it the Grays? Are they part of a government black op? Someone else, someone we haven&rsquo;t seen yet? Or do they work for no one but themselves, serving an agenda we can&rsquo;t hope to understand? Men in Black are known to appear wherever a great deal of psychic/supernatural activity has occurred, or is about to occur. They look more or less normal, but their features are uneven, and their voices project down into deep subharmonics. Their behavior is erratic, at best.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d10&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_GUTS&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_KNOWLEDGE&quot;:{&quot;value&quot;:&quot;d8&quot;,&quot;special&quot;:{&quot;en-US&quot;:&quot;Alien Technology&quot;}},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d10","spirit":"d10","strength":"d10","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_GUTS":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_KNOWLEDGE":{"value":"d8","special":{"en-US":"Alien Technology"}},"SKILL_NOTICE":{"value":"d8"},"SKILL_PERSUASION":{"value":"d8"},"SKILL_SHOOTING":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -29192,8 +29325,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Metal juggernauts are constructs of metal and machinery bonded together through the force of a powerful spirit. They are most common on modern (and futuristic) battlefields where they form (or are formed)\nfrom wrecked tanks and armored vehicles. Left on their own, they are likely to try and hide in the bowels of old factories or scrapyards where they will be left alone.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+3&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d8","strength":"d12+3","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d8"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -29233,8 +29366,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Those unfortunate souls sprayed with Todoto&acirc;&euro;&trade;s blood become twisted and warped. No two forms are the same. Some may grow extra limbs or tentacles while others turn inside out, transforming into an unholy blend of man, plant, and animal. Still others might become putrescent blobs of gelatinous ooze.\nMinions are loyal to Todoto, though he has no special powers to control their actions.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -29274,8 +29407,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Contrary to conspiracy theory, the Nordics are not a separate alien race (they&rsquo;re alternately described as being in league with, or opposed to, the Grays). Rather, they are Damned Children who have grown to full size... and full power. Despite this power, they remain the thralls of the Grays. Nordics are all statuesque (averaging 6&rsquo;6&rdquo;), with perfectly chiseled features, platinum blonde hair and pale blue eyes. With all their power, they&rsquo;re still more comfortable with others of their kind around, and are almost never encountered alone.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d10&quot;,&quot;spirit&quot;:&quot;d12&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_GUTS&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_KNOWLEDGE&quot;:{&quot;value&quot;:&quot;d12&quot;,&quot;special&quot;:{&quot;en-US&quot;:&quot;Alien Science&quot;}},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_PILOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_REPAIR&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d10","spirit":"d12","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_GUTS":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_KNOWLEDGE":{"value":"d12","special":{"en-US":"Alien Science"}},"SKILL_NOTICE":{"value":"d12"},"SKILL_PILOTING":{"value":"d8"},"SKILL_REPAIR":{"value":"d10"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -29315,8 +29448,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Pazuzu have the head of a man with a lion&acirc;&euro;&trade;s mane, leonine claws on its hands and feet, the wings of an eagle, and a scorpion&acirc;&euro;&trade;s tail.\nWhen on Earth they prefer hot, dry climates.\nThey are said to be masters of illusion, and desert nomads believe mirages are their work. They enjoy cruel and often lethal pranks.\nOne common trick is to approach desert nomads. It then questions them about how much water they have. If they are low, it offers to lead them to an oasis in return for money. In reality, it leads them deeper into the desert and then abandons them to await a lingering death. Once its victims have died, it returns to feast on their  flesh.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d10&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d12&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d10","spirit":"d8","strength":"d12+2","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_PERSUASION":{"value":"d10"},"SKILL_STEALTH":{"value":"d8"},"SKILL_TAUNT":{"value":"d12"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -29356,8 +29489,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Plague demons are followers of Beelzebub, the Lord of the Flies. They have haunted mankind for millennia, spreading sickness and disease wherever they go.\nThey resemble humans (or any other race if you&acirc;&euro;&trade;re playing a fantasy or sci-fi  horror game),\nbut are covered in weeping sores, pus-filled boils, and are always surrounded by a dark halo of flies.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d6","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -29397,8 +29530,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'While the Chief of Police usually calls the shots, it is these officers who manage the day-to-day operations of the  department and oversee operations during a crisis.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_DRIVING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INVESTIGATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STREETWISE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_KNOWLEDGE0&quot;:{&quot;special&quot;:{&quot;en-US&quot;:&quot;Battle&quot;},&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d8","spirit":"d8","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_DRIVING":{"value":"d10"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INVESTIGATION":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STREETWISE":{"value":"d6"},"SKILL_SWIMMING":{"value":"d6"},"SKILL_THROWING":{"value":"d6"},"SKILL_KNOWLEDGE0":{"special":{"en-US":"Battle"},"value":"d6"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -29438,8 +29571,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Whether they are foot cops, riding in a squad car, or patrolling on bikes, the beat cops are the grunts who fight crime in the trenches day after day.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_DRIVING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STREETWISE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d8","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_DRIVING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STREETWISE":{"value":"d6"},"SKILL_SWIMMING":{"value":"d6"},"SKILL_THROWING":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -29479,8 +29612,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'In their natural form, possessors are dark shadows of indiscernible shape. They drift like clouds, changing form in response to an imaginary wind.\nPossessors exist only to possess mortal hosts and use them as puppets to wreak havoc and misery. Although they can possess alert and awake victims, possessors prefer to infest those who are sleeping, if only to keep their presence a secret.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d12&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d10","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d10"},"SKILL_TAUNT":{"value":"d12"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -29520,8 +29653,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Rabies is a disease of the central nervous system and can be found in any warm-blooded animal. In the real world, it tends to be found in smaller animals, such as bats or raccoons, but in a horror game there&acirc;&euro;&trade;s no reason why a larger creature can&acirc;&euro;&trade;t have the disease.\nTo make a rabid animal, simply add the Berserk, Disease, Fearless, and Weakness (Water) abilities as shown below in the sample creature.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12+6&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6 (A)","spirit":"d10","strength":"d12+6","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -29561,8 +29694,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': '',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d12&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d4 (A)","spirit":"d12","strength":"d8","vigor":"d10"}',
+		skills: '{"SKILL_NOTICE":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -29602,8 +29735,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Revenants are a form of zombie focused on a speci c purpose. It may be to right a wrong done to them in life, to retrieve items stolen from their grave, or to stop someone from harming those they left\nbehind.\nRevenants have no capacity for speech, nor\ndo they wish to accept apologies or bargain for the return of stolen items. They seek only bloody revenge on those who have wronged them.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d8","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -29643,8 +29776,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Animal skin rugs may be out of fashion in the 21st century, but there are still plenty around. Most are just the skins of dead animals, but a few still retain the spirit of the beast. Rug  fiends lack flesh and bone, but they are still dangerous to unwary intruders. The version below is a tiger skin rug, but other types exist on the floors of the hunters who slew them.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6 (A)","spirit":"d8","strength":"d12","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -29684,8 +29817,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Said to have been created by a maniacal toymaker with a hatred of children, the &acirc;&euro;&oelig;Savage Jack&acirc;&euro; is a tool of fear and revenge. The same toymaker may have created the  first marionette golems as well (see page 86).\nAlthough it looks like a normal children&acirc;&euro;&trade;s toy by day, by night it becomes a twisted, macabre jester with a hatred of children. Its favorite tactic is to rattle its box until the child grows curious and opens it. Savage Jack then springs out, armed with a vicious, jagged knife stained in the blood of previous victims.\nA Savage Jack can talk, though it usually only converses to intimidate and mock its victims.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d12+2&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"},"SKILL_TAUNT":{"value":"d12+2"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -29725,8 +29858,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Screaming skulls are human skulls given limited intellect through arcane rituals. They serve primarily as spies, though they can defend themselves if attacked.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d4&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d4&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d4","smarts":"d6","spirit":"d8","strength":"d4","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d10"},"SKILL_STEALTH":{"value":"d6"},"SKILL_TAUNT":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -29766,8 +29899,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'The sea is a mysterious place, its depths scarcely explored by man and with unknown terrors lurking beneath the waves. Seaweed  ends may be a natural creature, the result of magic, or the result of chemical pollution.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d8","strength":"d10","vigor":"d8"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -29807,8 +29940,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Whereas incubi and succubi seduce mortals to feed on their life energy, seducer demons corrupt their souls. They favor the innocent - though harder to corrupt, the end result is a much larger gain.\nSeducers work by approaching mortals and offering them strength, power, love, wealth, or other bene ts. These &acirc;&euro;&oelig;dark gifts&acirc;&euro; are usually delivered subtly within a few days or weeks. Raising a Trait might take a few days so as not to raise suspicions. Wealth might come in the form of a lucrative contract, or something as simple as finding a treasure chest or bag of money.\n\nSee Horror Companion for details of these gifts.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d12&quot;,&quot;spirit&quot;:&quot;d12&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d12+2&quot;},&quot;SKILL_STREETWISE&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d12","spirit":"d12","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_PERSUASION":{"value":"d12+2"},"SKILL_STREETWISE":{"value":"d12"},"SKILL_TAUNT":{"value":"d10"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -29848,8 +29981,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Unlike in real life, serial killers in most horror settings aren&acirc;&euro;&trade;t the quiet-guy- next-door type. Horror setting serial\nkillers stand out in a crowd, mainly because of their strange attire, blood-soaked clothes, and large, dangerous weapons.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_DRIVING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d10","strength":"d12","vigor":"d10"}',
+		skills: '{"SKILL_DRIVING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '-6',
@@ -29889,8 +30022,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Skeletal horses serve as mounts for necromancers and demons visiting the mortal realm.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4 (A)","spirit":"d6","strength":"d12","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -29930,8 +30063,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'The &acirc;&euro;&oelig;king of the dinosaurs&acirc;&euro; was no doubt a terrifying creature when it roamed the Earth. As a skeletal creature, it&acirc;&euro;&trade;s even more fearsome.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4 (A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+4&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4 (A)","spirit":"d8","strength":"d12+4","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -29971,8 +30104,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Skeleton warriors are the reanimated bones of long-dead soldiers. Unlike common skeletons, these undead troops retain more of their combat skills and are equipped with functional, if somewhat old, armaments.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d4&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4","spirit":"d4","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d4"},"SKILL_SHOOTING":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -30012,8 +30145,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': '',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d4&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4","spirit":"d4","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d4"},"SKILL_SHOOTING":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -30053,8 +30186,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Smog clouds in dark worlds sometimes gain malevolent sentience. These vaporous beings of polluted air can drift against the wind, but otherwise resemble dirty, black clouds. Some occasionally exhibit coal-black eyes, but these are near-impossible to detect.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4","spirit":"d8","strength":"d6","vigor":"d12"}',
+		skills: '{"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -30094,8 +30227,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Spined demons are hunched humanoids with scaly skin covered in short, sharp spines. They have no visible facial features, yet have little difficulty detecting their foes. They typically serve as minions to other demons and devils.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d12","vigor":"d8"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d10"},"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d10"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -30135,8 +30268,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Many movies depict zombies as having an insatiable craving for human brains. Some of these zombies can speak, though usually their vocabulary is limited to one word&acirc;&euro;&rdquo; &acirc;&euro;&oelig;Brains!&acirc;&euro;&acirc;&euro;&rdquo;which they moan continually when they spy a potential meal.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d4&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d4","spirit":"d4","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d4"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -30176,8 +30309,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Most departments have a group of of cers on call for the Special Weapons and Tactics team. These are highly trained of cers who are often ex-military and equipped to deal with any terrorist or criminal threats (or heavily- armed characters).',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_DRIVING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d8","spirit":"d8","strength":"d6","vigor":"d8"}',
+		skills: '{"SKILL_DRIVING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_SWIMMING":{"value":"d6"},"SKILL_THROWING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -30217,8 +30350,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Some rumors of heavy metal musicians who have sold their soul to Satan may be true. These black-hearted musicians have sold their souls for  eeting\nfame and fortune.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d8","strength":"d6","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -30299,8 +30432,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'The black coachman has existed in one form or another for millennia. The Egyptians knew him as the &ldquo;dark charioteer,&rdquo; the Romans called him the &ldquo;black rider,&rdquo; and the Normans knew him as &ldquo;death&rsquo;s wagoner.&rdquo; His current name stems from the Victorian era.\nThe coachman appears only when summoned via a summon demon spell. This is typically done as vengeance against someone the summoner believes has wronged him.\nOnce summoned and tasked, the coachman begins its long ride the very next night at 13 minutes after midnight. It rides the roads within 13 miles of where it was summoned and gathers the souls of all those it meets. The summoner can task it with reaping the souls of up to 13 named victims, whom it seeks unerringly, one per night. Along the way, the coachman may gather any other unfortunates he comes across except the summoner and up to 12 individuals he&rsquo;s named as protected.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_DRIVING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_RIDING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d8","spirit":"d8","strength":"d10","vigor":"d10"}',
+		skills: '{"SKILL_DRIVING":{"value":"d10"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_RIDING":{"value":"d10"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -30340,8 +30473,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Four stallions, with coats as black as pitch and eyes like burning coals, pull the coachman&rsquo;s black coach. There are no reins attaching them to the coach, only strands of inky blackness. They fight only if they or the coachman are attacked.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6(A)&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+4&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6(A)","spirit":"d8","strength":"d12+4","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -30381,8 +30514,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'For those who know the ancient rituals necessary to summon him, the black judge can be an ally in the fight against evil. He takes the form of a cowled figure clad in robes of darkest night. Over his face he wears a vaguely skull-like mask. Although predominantly black, the mask has burning yellow eyes and fangs. What lies beneath the mask has never been revealed.\nOnce summoned, the judge usually takes a moment to hear the petitioner&rsquo;s plea, and may even converse with him. Before the judge grants any information, however, he must be defeated in single melee combat.\nThe judge is incredibly tough, but is vulnerable to whoever summoned him. Weighing whether or not the judge should be summoned should be a very difficult decision.\nIf the judge is defeated, the summoner may ask him how to defeat one supernatural creature&mdash;good or evil.\nIf the summoner is defeated, the judge renders judgement&ndash;see below.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d10&quot;,&quot;spirit&quot;:&quot;d12&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d10","spirit":"d12","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d12"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"},"SKILL_PERSUASION":{"value":"d10"},"SKILL_STEALTH":{"value":"d8"},"SKILL_TAUNT":{"value":"d10"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -30422,8 +30555,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'For some reason, feisty, attractive females attract serial killers and supernatural evil. Most have a wide circle of friends; at least until the splatter action begins.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_DRIVING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_HEALING&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_DRIVING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d4"},"SKILL_HEALING":{"value":"d4"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '4',
@@ -30463,8 +30596,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': '',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d4&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_DRIVING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_KNOWLEDGE0&quot;:{&quot;special&quot;:{&quot;en-US&quot;:&quot;Football Stats&quot;},&quot;value&quot;:&quot;d6&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d4","spirit":"d6","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_DRIVING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"},"SKILL_TAUNT":{"value":"d8"},"SKILL_THROWING":{"value":"d10"},"SKILL_KNOWLEDGE0":{"special":{"en-US":"Football Stats"},"value":"d6"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '2',
@@ -30504,8 +30637,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'The nerd may be the brains of the out t, but he&acirc;&euro;&trade;s a social pariah. His bookish knowledge might save his friends&acirc;&euro;&trade; lives, but his nerdy glasses and lack of social skills mean they don&acirc;&euro;&trade;t want to hang with him socially.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;&quot;,&quot;smarts&quot;:&quot;&quot;,&quot;spirit&quot;:&quot;&quot;,&quot;strength&quot;:&quot;&quot;,&quot;vigor&quot;:&quot;&quot;}',
-		skills: '{&quot;SKILL_INVESTIGATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_REPAIR&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_KNOWLEDGE0&quot;:{&quot;special&quot;:{&quot;en-US&quot;:&quot;Computers&quot;},&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_KNOWLEDGE1&quot;:{&quot;special&quot;:{&quot;en-US&quot;:&quot;Science&quot;},&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"","smarts":"","spirit":"","strength":"","vigor":""}',
+		skills: '{"SKILL_INVESTIGATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d4"},"SKILL_REPAIR":{"value":"d6"},"SKILL_STEALTH":{"value":"d4"},"SKILL_KNOWLEDGE0":{"special":{"en-US":"Computers"},"value":"d8"},"SKILL_KNOWLEDGE1":{"special":{"en-US":"Science"},"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -30545,8 +30678,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Todoto takes the form of a huge giant with dark green skin. His skin bubbles and writhes as if some unholy\nforce were fighting for release.\nTodoto is a chaos god, warping life through the power of his blood. Nothing is safe from his corruption, and once corrupted, his victims can never be returned to their normal form.\nAs with most dark gods, Todoto has many titles, including the Spawner, Chaos Breeder, Dark Warper, and the Unholy Shaper.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12+6&quot;,&quot;vigor&quot;:&quot;d12+4&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d10","strength":"d12+6","vigor":"d12+4"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d12"},"SKILL_NOTICE":{"value":"d8"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -30586,8 +30719,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Abhorrent as it may be, people sometimes resort to cannibalism when lost in the wilderness or stranded on deserted islands.\nFor most, it is a matter of survival, never to be tried again once they are rescued. For a few, however, it becomes a craving. These individuals are said to be possessed by the spirit of the wendigo, an American Indian cannibal spirit.\nTrue wendigos are either more advanced forms of their lesser cousins or born from more savage stock or circumstances. They tend to exist in the dead of winter, but there&acirc;&euro;&trade;s no reason such creatures\ncan&acirc;&euro;&trade;t exist in other climates.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_TRACKING&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d8","spirit":"d8","strength":"d12+2","vigor":"d12"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d12"},"SKILL_FIGHTING":{"value":"d12"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d10"},"SKILL_STEALTH":{"value":"d8"},"SKILL_SWIMMING":{"value":"d10"},"SKILL_THROWING":{"value":"d10"},"SKILL_TRACKING":{"value":"d10"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -30627,8 +30760,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Many are called, but most die before they get a chance to prove themselves. Whether a chosen slayer is a feisty young maiden hunting vampires or a mean hombre packing state-of- the-art technology depends on your setting. What they all have in common is a calling to serve a higher power.\nThis stat block is for a chosen slayer at the start of his or her career.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"},"SKILL_TAUNT":{"value":"d4"},"SKILL_THROWING":{"value":"d8"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -30668,8 +30801,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'These are the frontline soldiers. They are obedient to their superiors to the point of fanaticism.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_DRIVING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d6","strength":"d6","vigor":"d8"}',
+		skills: '{"SKILL_DRIVING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d6"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -30709,8 +30842,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': '',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_INVESTIGATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STREETWISE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_KNOWLEDGE0&quot;:{&quot;special&quot;:{&quot;en-US&quot;:&quot;Occult&quot;},&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d8","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d4"},"SKILL_INVESTIGATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STREETWISE":{"value":"d8"},"SKILL_KNOWLEDGE0":{"special":{"en-US":"Occult"},"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -30750,8 +30883,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Ventriloquist dummies with a mind of their own have been the subject of many horror movies. They may look like the ventriloquist is making it talk, but in reality the dummy is the boss. Dummies don&acirc;&euro;&trade;t like to move about on their own unless absolutely necessary, but they can. In most cases, they get their &acirc;&euro;&oelig;master&acirc;&euro; to do their dirty work for them.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d12&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d8","spirit":"d10","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_PERSUASION":{"value":"d10"},"SKILL_STEALTH":{"value":"d6"},"SKILL_TAUNT":{"value":"d12"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -30791,8 +30924,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Many are called, but most die before they get a chance to prove themselves. Whether a chosen slayer is a feisty young maiden hunting vampires or a mean hombre packing state-of- the-art technology depends on your setting. What they all have in common is a calling to serve a higher power.\nSlayers who survive their first few years have learned how to handle themselves in battle against a variety of supernatural foes.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d12&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_THROWING&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d12","smarts":"d6","spirit":"d8","strength":"d10","vigor":"d10"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d12"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d10"},"SKILL_STEALTH":{"value":"d8"},"SKILL_TAUNT":{"value":"d6"},"SKILL_THROWING":{"value":"d10"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -30832,8 +30965,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Veteran Inquisitors are hardened soldiers who believe the ends justify the means.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d8&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_DRIVING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d8","vigor":"d8"}',
+		skills: '{"SKILL_DRIVING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -30873,8 +31006,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': '',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d12&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_INVESTIGATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_STREETWISE&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d12","spirit":"d10","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INVESTIGATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"},"SKILL_PERSUASION":{"value":"d6"},"SKILL_STREETWISE":{"value":"d10"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -30914,8 +31047,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Vralkresh is a monstrous-sized bag of pulsating jelly, with blood red segments mixed with ichor green, putrefying blue, and all manner of other vile colorations.\nWhen lying dormant, Vralkresh has no discernible features. Once awakened, however, a throng of slimy tentacles, each tipped with a grasping mouth, sprouts from his gelatinous form.\nVralkresh is known by many other names, including Lord of Many Mouths, He Who Feeds Endlessly, and the Slithering Maw.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d12&quot;,&quot;strength&quot;:&quot;d12+8&quot;,&quot;vigor&quot;:&quot;d12+4&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d12","strength":"d12+8","vigor":"d12+4"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d12"},"SKILL_NOTICE":{"value":"d8"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -30955,8 +31088,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'War droids are bipedal constructs, but due to their skeletal appearance (which is designed to instill fear) cannot be mistaken for humans. Their sole function is to destroy whatever life- form they&acirc;&euro;&trade;ve been programmed to see as their enemy. They can use any standard weapons available to the race which built them.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6 (A)&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d6","strength":"d12+2","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -30996,8 +31129,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Werejaguars may be supernatural creatures or priests of dark and bloodthirsty gods who grant their followers the ability to change form.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12+1&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d6","spirit":"d10","strength":"d12+1","vigor":"d12"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d10"},"SKILL_FIGHTING":{"value":"d12"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d10"},"SKILL_STEALTH":{"value":"d12"},"SKILL_SWIMMING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -31037,8 +31170,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Weresharks are a human-shark mix. Like all werecreatures, they have a humanoid form with bestial features. In this instance, the creatures has a shark&acirc;&euro;&trade;s head and skin, webbed hands, and a dorsal  n.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+1&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d12+2&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d6","spirit":"d6","strength":"d12+1","vigor":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d12"},"SKILL_NOTICE":{"value":"d12+2"},"SKILL_STEALTH":{"value":"d6"},"SKILL_SWIMMING":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -31078,8 +31211,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'When a full moon emerges, humans infected with lycanthropy lose control and become snarling creatures bent on murder. Some embrace their cursed state and revel in the destruction they cause.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d6&quot;,&quot;strength&quot;:&quot;d12+2&quot;,&quot;vigor&quot;:&quot;d10&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d12+2&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_TRACKING&quot;:{&quot;value&quot;:&quot;d10&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d6","spirit":"d6","strength":"d12+2","vigor":"d10"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d12+2"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d12"},"SKILL_STEALTH":{"value":"d10"},"SKILL_SWIMMING":{"value":"d10"},"SKILL_TRACKING":{"value":"d10"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -31119,8 +31252,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Will o&acirc;&euro;&trade; wisps are the ghosts of witches and necromancers who have been burned at the stake. They manifest as small handfuls of  flickering white flame that is oddly cold to the touch rather than hot. Legend claims a brave observer can see a grinning face inside of a will o&acirc;&euro;&trade; wisp.\nA will o&acirc;&euro;&trade; wisp uses the glimmering light produced by its form to lure its intended victim to a secluded spot. There, it weakens the poor soul with a  re that seems to spring from Hell itself. Once its target succumbs to the heat, the ghost possesses his corpse which immediately bursts aflame. These burning zombies are sometimes referred to as &acirc;&euro;&oelig;flaming jacks,&acirc;&euro; particularly among more rural populations. The ghost uses the reanimated body to wreak as much havoc as it can before it is consumed by the creature&acirc;&euro;&trade;s otherworldly  ames&acirc;&euro;&rdquo;preferably on those it believes wronged it in its former life.\nInitially, a will o&acirc;&euro;&trade; wisp haunts the area near its death, seeking vengeance on those responsible for any and all wrongdoings against it during life. However, even once it has revenged itself on everyone guilty of even the slightest infraction, the hatred and anger that drove it to an undead existence continues to burn within the ghost. Eventually, these spirits tend to gravitate toward lonely, desolate areas where their unnatural spite for all things living leads them to prey upon unsuspecting travelers.\nThe process by which a will o&acirc;&euro;&trade; wisp is formed is a closely guarded secret among the few practitioners of the dark arts that know it and often varies greatly in the details. Invariably though, it involves the creation of a talisman of some sort which must be on the black magician at the time of his death and which serves as the ghost&acirc;&euro;&trade;s anchor to this plane. The talisman is not consumed in the  ames, but remains ever after searing hot to the touch.\nThe light of a will o&acirc;&euro;&trade; wisp varies from cold white to  flame orange. The ghost can lessen its brilliance to that of a mere candle or brighten it to that of a torch at will.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d4&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_TAUNT&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_TRACKING&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d8","spirit":"d10","strength":"d4","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"},"SKILL_STEALTH":{"value":"d8"},"SKILL_TAUNT":{"value":"d6"},"SKILL_TRACKING":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -31160,8 +31293,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'There are many types of witches in horror tales&acirc;&euro;&rdquo;from classic crones making deals with the devil to modern divas who practice (cinematic) wicca. Where they draw their power from and what they do with it is typically the feature of your tale.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d8&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_PERSUASION&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d8","spirit":"d8","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d4"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d8"},"SKILL_PERSUASION":{"value":"d8"},"SKILL_SPELLCASTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -31201,8 +31334,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'The classic horror xenoform is humanoid, but covered in thick bone or carapace shell. It has no discernible eyes, and scientists are as yet unsure how it navigates. Primary weapons seem to be a powerful, extendable jaw and sharp claws, though it also has a tail with a barbed stinger it uses to pin its prey. The creature is certainly equipped for close- up hunting as it is protected by thick armor plating.\nThe xenoform is a skilled hunter, and uses complex tactics to divide and conquer its prey.\nXenoforms are typically lead by a queen. Her primary function is to lay eggs, but she is a voracious killer when\nencountered deep in her lair.\nQueens have four legs on their thorax and two on the upper body that can be used to grasp or attack.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d10 (A)&quot;,&quot;spirit&quot;:&quot;d12&quot;,&quot;strength&quot;:&quot;d12+6&quot;,&quot;vigor&quot;:&quot;d12&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d12&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d10 (A)","spirit":"d12","strength":"d12+6","vigor":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -31242,8 +31375,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'The classic horror xenoform is humanoid, but covered in thick bone or carapace shell. It has no discernible eyes, and scientists are as yet unsure how it navigates. Primary weapons seem to be a powerful, extendable jaw and sharp claws, though it also has a tail with a barbed stinger it uses to pin its prey. The creature is certainly equipped for close- up hunting as it is protected by thick armor plating.\nThe xenoform is a skilled hunter, and uses complex tactics to divide and conquer its prey.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d10&quot;,&quot;smarts&quot;:&quot;d8 (A)&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d12+1&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_CLIMBING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_INTIMIDATION&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SWIMMING&quot;:{&quot;value&quot;:&quot;d12&quot;}}',
+		attributes: '{"agility":"d10","smarts":"d8 (A)","spirit":"d10","strength":"d12+1","vigor":"d8"}',
+		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SWIMMING":{"value":"d12"}}',
 		wildcard: 0,
 		image: '',
 		charisma: '0',
@@ -31283,8 +31416,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'The zombie lord is an intelligent zombie, capable of creating zombies with a single touch of its rotting hands. Some legends say zombie lords are practitioners of dark arts, rewarded with unlife by their patrons. Others claim they are cursed beings who crossed the path of ancient gods or foul demonic lords. While not as powerful as liches, they are capable necromancers with an\ninherent knowledge of their minions.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d8&quot;,&quot;smarts&quot;:&quot;d10&quot;,&quot;spirit&quot;:&quot;d10&quot;,&quot;strength&quot;:&quot;d10&quot;,&quot;vigor&quot;:&quot;d8&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d8&quot;},&quot;SKILL_SPELLCASTING&quot;:{&quot;value&quot;:&quot;d10&quot;},&quot;SKILL_STEALTH&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_KNOWLEDGE0&quot;:{&quot;special&quot;:{&quot;en-US&quot;:&quot;Arcana&quot;},&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d8","smarts":"d10","spirit":"d10","strength":"d10","vigor":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SPELLCASTING":{"value":"d10"},"SKILL_STEALTH":{"value":"d6"},"SKILL_KNOWLEDGE0":{"special":{"en-US":"Arcana"},"value":"d8"}}',
 		wildcard: 1,
 		image: '',
 		charisma: '0',
@@ -31354,8 +31487,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Acolytes are non-powered clerics, or cultists; they\'re the lowest level of a clerical or a religious organization, lacking the ability to manifest miracles. They\'re often led by a more powerful cleric.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_GUTS&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_KNOWLEDGE0&quot;:{&quot;special&quot;:{&quot;en-US&quot;:&quot;Religion&quot;},&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d8","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_GUTS":{"value":"d6"},"SKILL_NOTICE":{"value":"d4"},"SKILL_SHOOTING":{"value":"d4"},"SKILL_KNOWLEDGE0":{"special":{"en-US":"Religion"},"value":"d8"}}',
 		wildcard: 0,
 		image: 'http://th08.deviantart.net/fs71/PRE/i/2012/316/5/a/cthulhu_cultist___lucca_comics_and_games_2012_by_cookingmaru-d5kra97.jpg',
 		charisma: '0',
@@ -32511,7 +32644,7 @@ var savageWorldsGearMundane = Array(
 		 'ru-RU': '',
 	},
 	 notes: {
-		 'en-US': 'provides light in 2&quot; radius',
+		 'en-US': 'provides light in 2" radius',
 		 'pt-BR': '',
 		 'de-DE': '',
 		 'ru-RU': '',
@@ -32824,7 +32957,7 @@ var savageWorldsGearMundane = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': '10&quot; beam of light',
+		 'en-US': '10" beam of light',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -33683,7 +33816,7 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
-		 'en-US': 'Rope, 10&quot;',
+		 'en-US': 'Rope, 10"',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -38597,6 +38730,18 @@ availableLanguages.push ({
 			CHARGEN_VALIDATION_SPC_EP_REQUIRES_2MAJOR: 'You need to have a second major hindrance to select the \'Extra Power Points\' perk.',
 			GENERAL_ICONIC_FRAMEWORKS: 'Iconic Frameworks',
 			SEARCH_TAGS: 'Search Tags',
+			SPC_STANDARD_MODIFIERS: 'Standard Modifiers',
+			SPC_GENERIC_MODIFIERS: 'Generic Modifiers',
+			SPC_MOD_CONTIGENT: 'Contingent',
+			SPC_MOD_DEVICE: 'Device',
+			SPC_MOD_LIMITATION: 'Limitation',
+			SPC_MOD_PROJECTILE: 'Projectile',
+			SPC_MOD_RTA: 'Ranged Touch Attack',
+			SPC_MOD_RA: 'Requires Activation',
+			SPC_MOD_STA: 'Slow to Activate',
+			SPC_MOD_SWITCHABLE: 'Switchable',
+			SPC_SELECT_ATTRIBUTE: 'Select Attribute',
+			SPC_SELECT_SKILL: 'Select Skill',
 
 	}
 
@@ -42892,6 +43037,8 @@ var savageWorldsSPCPowers = Array(
 		 'per_level': '0',
 		 'max_level': '1',
 		 'tag': 'absorbtion',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
 		 'modifiers': '[{"name":{"en-US":"Matter \/ Energy Master","pt-BR":"","de-DE":""},"points":"5"},{"name":{"en-US":"Reflection","pt-BR":"","de-DE":""},"points":"4"},{"name":{"en-US":"Transference","pt-BR":"","de-DE":""},"points":"2"}]',
 },
 {
@@ -42907,6 +43054,8 @@ var savageWorldsSPCPowers = Array(
 		 'per_level': '0',
 		 'max_level': '1',
 		 'tag': 'ageless',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
 		 'modifiers': '[{"name":{"en-US":"Very Old","pt-BR":"","de-DE":""},"points":"2"}]',
 },
 {
@@ -42922,6 +43071,8 @@ var savageWorldsSPCPowers = Array(
 		 'per_level': '0',
 		 'max_level': '1',
 		 'tag': 'altered-form',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
 		 'modifiers': '[{"name":{"en-US":"Grapple","pt-BR":"","de-DE":""},"points":"1","per_level":0},{"name":{"en-US":"Reach","pt-BR":"","de-DE":""},"points":"1","per_level":1}]',
 },
 {
@@ -42937,6 +43088,8 @@ var savageWorldsSPCPowers = Array(
 		 'per_level': '1',
 		 'max_level': '1',
 		 'tag': 'animal-control',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
 		 'modifiers': '[{"name":{"en-US":"Animal Companion","pt-BR":"","de-DE":""},"points":"0","per_level":0},{"name":{"en-US":"Summonable","pt-BR":"","de-DE":""},"points":"4","per_level":0},{"name":{"en-US":"Super Powers","pt-BR":"","de-DE":""},"points":"0","per_level":0},{"name":{"en-US":"Telepathic Link","pt-BR":"","de-DE":""},"points":"1","per_level":0}]',
 },
 {
@@ -42952,15 +43105,14 @@ var savageWorldsSPCPowers = Array(
 		 'per_level': '0',
 		 'max_level': '1',
 		 'tag': 'aquatic',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
 		 'modifiers': '[]',
 },
 {
 		 'id': 6,
 	 name: {
 		 'en-US': 'Armor',
-		 'pt-BR': '',
-		 'de-DE': '',
-		 'ru-RU': '',
 	},
 		 'book': 5,
 		 'page': 'p22',
@@ -42968,7 +43120,9 @@ var savageWorldsSPCPowers = Array(
 		 'per_level': '1',
 		 'max_level': '10',
 		 'tag': 'armor',
-		 'modifiers': '[{"name":{"en-US":"Hardy","pt-BR":"","de-DE":"","ru-RU":""},"points":"3","per_level":0},{"name":{"en-US":"Heavy Armor","pt-BR":"","de-DE":"","ru-RU":""},"points":"4","per_level":0},{"name":{"en-US":"Partial Protection","pt-BR":"","de-DE":"","ru-RU":""},"points":"0","per_level":0}]',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Hardy"},"points":"3","per_level":"0"},{"name":{"en-US":"Heavy Armor"},"points":"4","per_level":"0"},{"name":{"en-US":"Partial Protection"},"points":"0","per_level":"0"}]',
 charEffect: function( charObject, powerObject ) {
 	// Affect Character Object Code here
 	charObject.derived.armor += powerObject.selectedLevel * 2;
@@ -42978,9 +43132,6 @@ charEffect: function( charObject, powerObject ) {
 		 'id': 7,
 	 name: {
 		 'en-US': 'Attack, Melee',
-		 'pt-BR': '',
-		 'de-DE': '',
-		 'ru-RU': '',
 	},
 		 'book': 5,
 		 'page': 'p22',
@@ -42988,7 +43139,1055 @@ charEffect: function( charObject, powerObject ) {
 		 'per_level': '1',
 		 'max_level': '5',
 		 'tag': 'attack-melee',
-		 'modifiers': '[{"name":{"en-US":"Armor Piercing","pt-BR":"","de-DE":"","ru-RU":""},"points":"0","per_level":0}]',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Armor Piercing"},"points":"1","per_level":"0"},{"name":{"en-US":"Focus"},"points":"3","per_level":"0"},{"name":{"en-US":"Heavy Weapon"},"points":"1","per_level":"0"},{"name":{"en-US":"Lethal"},"points":"-1","per_level":"0"},{"name":{"en-US":"Multiple Attacks"},"points":"2","per_level":"0"},{"name":{"en-US":"One Arm"},"points":"-1","per_level":"0"},{"name":{"en-US":"Reach"},"points":"1","per_level":"1"},{"name":{"en-US":"Stackable"},"points":"2","per_level":"0"}]',
+},
+{
+		 'id': 8,
+	 name: {
+		 'en-US': 'Attack, Ranged',
+	},
+		 'book': 5,
+		 'page': 'p22',
+		 'cost': '2',
+		 'per_level': '1',
+		 'max_level': '6',
+		 'tag': 'attack-ranged',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Area Effect"},"points":"0","per_level":"0"},{"name":{"en-US":"Armor Piercing"},"points":"1","per_level":"0"},{"name":{"en-US":"Cone"},"points":"0","per_level":"0"},{"name":{"en-US":"Enhanced Damage"},"points":"4","per_level":"0"},{"name":{"en-US":"Focus"},"points":"3","per_level":"0"},{"name":{"en-US":"Heavy Weapon"},"points":"1","per_level":"0"},{"name":{"en-US":"Lethal"},"points":"-1","per_level":"0"},{"name":{"en-US":"Range"},"points":"0","per_level":"0"},{"name":{"en-US":"Rate of Fire"},"points":"0","per_level":"0"},{"name":{"en-US":"Requires Material"},"points":"0","per_level":"0"}]',
+},
+{
+		 'id': 9,
+	 name: {
+		 'en-US': 'Awareness',
+	},
+		 'book': 5,
+		 'page': 'p23',
+		 'cost': '0',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'awareness',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[]',
+},
+{
+		 'id': 10,
+	 name: {
+		 'en-US': 'Broadcast',
+	},
+		 'book': 5,
+		 'page': 'p23',
+		 'cost': '2',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'broadcast',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Manipulation"},"points":"0","per_level":"0"},{"name":{"en-US":"One Channel"},"points":"-1","per_level":"0"},{"name":{"en-US":"Range"},"points":"1","per_level":"0"}]',
+},
+{
+		 'id': 11,
+	 name: {
+		 'en-US': 'Burrowing',
+	},
+		 'book': 5,
+		 'page': 'p23',
+		 'cost': '2',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'burrowing',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Pace"},"points":"1","per_level":"0"}]',
+},
+{
+		 'id': 12,
+	 name: {
+		 'en-US': 'Chameleon',
+	},
+		 'book': 5,
+		 'page': 'p24',
+		 'cost': '3',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'chameleon',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Inanimate Object"},"points":"3","per_level":"0"},{"name":{"en-US":"Voice"},"points":"2","per_level":"0"}]',
+},
+{
+		 'id': 13,
+	 name: {
+		 'en-US': 'Construct',
+	},
+		 'book': 5,
+		 'page': 'p24',
+		 'cost': '8',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'construct',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[]',
+},
+{
+		 'id': 14,
+	 name: {
+		 'en-US': 'Copycat',
+	},
+		 'book': 5,
+		 'page': 'p24',
+		 'cost': '2',
+		 'per_level': '1',
+		 'max_level': '0',
+		 'tag': 'copycat',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Range"},"points":"2","per_level":"0"},{"name":{"en-US":"Devices"},"points":"2","per_level":"0"},{"name":{"en-US":"Duration"},"points":"3","per_level":"0"},{"name":{"en-US":"Magician"},"points":"2","per_level":"0"},{"name":{"en-US":"Nemesis"},"points":"1","per_level":"0"},{"name":{"en-US":"Overly Accurate"},"points":"-2","per_level":"0"},{"name":{"en-US":"Uncontrolled"},"points":"-2","per_level":"0"},{"name":{"en-US":"Versatility"},"points":"0","per_level":"0"}]',
+},
+{
+		 'id': 15,
+	 name: {
+		 'en-US': 'Damage Field',
+	},
+		 'book': 5,
+		 'page': 'p25',
+		 'cost': '3',
+		 'per_level': '1',
+		 'max_level': '6',
+		 'tag': 'damage-field',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Armor Piercing"},"points":"1","per_level":"0"},{"name":{"en-US":"Heavy Weapon"},"points":"1","per_level":"0"},{"name":{"en-US":"Medium Template"},"points":"3","per_level":"0"},{"name":{"en-US":"Permanent"},"points":"-2","per_level":"0"},{"name":{"en-US":"Selective"},"points":"2","per_level":"0"}]',
+},
+{
+		 'id': 16,
+	 name: {
+		 'en-US': 'Danger Sense',
+	},
+		 'book': 5,
+		 'page': 'p25',
+		 'cost': '2',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'danger-sense',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[]',
+},
+{
+		 'id': 17,
+	 name: {
+		 'en-US': 'Decay',
+	},
+		 'book': 5,
+		 'page': 'p25',
+		 'cost': '4',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'decay',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Midas Touch"},"points":"-2","per_level":"0"},{"name":{"en-US":"Rapid Decay"},"points":"2","per_level":"0"},{"name":{"en-US":"Strong"},"points":"1","per_level":"0"}]',
+},
+{
+		 'id': 18,
+	 name: {
+		 'en-US': 'Deflection',
+	},
+		 'book': 5,
+		 'page': 'p25',
+		 'cost': '1',
+		 'per_level': '1',
+		 'max_level': '10',
+		 'tag': 'deflection',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Protector"},"points":"0","per_level":"0"}]',
+},
+{
+		 'id': 19,
+	 name: {
+		 'en-US': 'Doesn\'t Breathe',
+	},
+		 'book': 5,
+		 'page': 'p26',
+		 'cost': '2',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'doesnt-breathy',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[]',
+},
+{
+		 'id': 20,
+	 name: {
+		 'en-US': 'Doesn\'t Eat',
+	},
+		 'book': 5,
+		 'page': 'p26',
+		 'cost': '1',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'doesnt-eat',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[]',
+},
+{
+		 'id': 21,
+	 name: {
+		 'en-US': 'Doesn\'t Sleep',
+	},
+		 'book': 5,
+		 'page': 'p26',
+		 'cost': '0',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'doesnt-sleep',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[]',
+},
+{
+		 'id': 22,
+	 name: {
+		 'en-US': 'Duplication',
+	},
+		 'book': 5,
+		 'page': 'p26',
+		 'cost': '3',
+		 'per_level': '1',
+		 'max_level': '0',
+		 'tag': 'duplication',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"No Tell"},"points":"1","per_level":"0"},{"name":{"en-US":"Promotion"},"points":"2","per_level":"0"}]',
+},
+{
+		 'id': 23,
+	 name: {
+		 'en-US': 'Earthquake',
+	},
+		 'book': 5,
+		 'page': '',
+		 'cost': '2',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'earthquake',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Depth"},"points":"3","per_level":"0"},{"name":{"en-US":"Earthshake"},"points":"3","per_level":"0"},{"name":{"en-US":"Trigger"},"points":"1","per_level":"0"}]',
+},
+{
+		 'id': 24,
+	 name: {
+		 'en-US': 'Energy Control',
+	},
+		 'book': 5,
+		 'page': 'p27',
+		 'cost': '5',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'energy-control',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Area Effect"},"points":"2","per_level":"0"},{"name":{"en-US":"Master"},"points":"5","per_level":"0"},{"name":{"en-US":"Range"},"points":"2","per_level":"0"},{"name":{"en-US":"Selective"},"points":"2","per_level":"0"}]',
+},
+{
+		 'id': 25,
+	 name: {
+		 'en-US': 'Ensnare',
+	},
+		 'book': 5,
+		 'page': 'p26',
+		 'cost': '3',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'ensnare',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Area Effect"},"points":"0","per_level":"0"},{"name":{"en-US":"Very Strong"},"points":"2","per_level":"0"}]',
+},
+{
+		 'id': 26,
+	 name: {
+		 'en-US': 'Explode',
+	},
+		 'book': 5,
+		 'page': 'p28',
+		 'cost': '2',
+		 'per_level': '1',
+		 'max_level': '5',
+		 'tag': 'explode',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Fatigued"},"points":"-2","per_level":"0"},{"name":{"en-US":"Heavy Weapon"},"points":"1","per_level":"0"},{"name":{"en-US":"Large Template"},"points":"1","per_level":"0"}]',
+},
+{
+		 'id': 27,
+	 name: {
+		 'en-US': 'Extra Actions',
+	},
+		 'book': 5,
+		 'page': 'p28',
+		 'cost': '3',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'extra-actions',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Fast Action"},"points":"2","per_level":"0"}]',
+},
+{
+		 'id': 28,
+	 name: {
+		 'en-US': 'Extra Limbs',
+	},
+		 'book': 5,
+		 'page': 'p28',
+		 'cost': '3',
+		 'per_level': '1',
+		 'max_level': '0',
+		 'tag': 'extra-limbs',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Reach"},"points":"2","per_level":"0"}]',
+},
+{
+		 'id': 29,
+	 name: {
+		 'en-US': 'Fear',
+	},
+		 'book': 5,
+		 'page': 'p28',
+		 'cost': '3',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'fear',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Scary"},"points":"-2","per_level":"0"},{"name":{"en-US":"Terror"},"points":"2","per_level":"0"}]',
+},
+{
+		 'id': 30,
+	 name: {
+		 'en-US': 'Fearless',
+	},
+		 'book': 5,
+		 'page': 'p28',
+		 'cost': '2',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'fearless',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[]',
+},
+{
+		 'id': 31,
+	 name: {
+		 'en-US': 'Flight',
+	},
+		 'book': 5,
+		 'page': 'p29',
+		 'cost': '0',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'flight',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Climb"},"points":"1","per_level":"1"}]',
+},
+{
+		 'id': 32,
+	 name: {
+		 'en-US': 'Force Control',
+	},
+		 'book': 5,
+		 'page': 'p29',
+		 'cost': '2',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'force-control',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Area Effect"},"points":"2","per_level":"0"},{"name":{"en-US":"Force Field"},"points":"3","per_level":"0"},{"name":{"en-US":"Heavy Weapon"},"points":"2","per_level":"0"},{"name":{"en-US":"Range"},"points":"1","per_level":"0"}]',
+},
+{
+		 'id': 33,
+	 name: {
+		 'en-US': 'Gifted',
+	},
+		 'book': 5,
+		 'page': 'p30',
+		 'cost': '2',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'gifted',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[]',
+},
+{
+		 'id': 34,
+	 name: {
+		 'en-US': 'Growth',
+	},
+		 'book': 5,
+		 'page': 'p30',
+		 'cost': '3',
+		 'per_level': '1',
+		 'max_level': '0',
+		 'tag': 'growth',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Big Fists"},"points":"0","per_level":"0"},{"name":{"en-US":"Fast Growth"},"points":"2","per_level":"0"},{"name":{"en-US":"Long Stride"},"points":"2","per_level":"0"},{"name":{"en-US":"Monster"},"points":"-2","per_level":"0"}]',
+},
+{
+		 'id': 35,
+	 name: {
+		 'en-US': 'Healing',
+	},
+		 'book': 5,
+		 'page': 'p30',
+		 'cost': '5',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'healing',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Cure"},"points":"3","per_level":"0"},{"name":{"en-US":"Refresh"},"points":"0","per_level":"0"},{"name":{"en-US":"Restoration"},"points":"2","per_level":"0"},{"name":{"en-US":"Resurrection"},"points":"8","per_level":"0"}]',
+},
+{
+		 'id': 36,
+	 name: {
+		 'en-US': 'Heightened Senses',
+	},
+		 'book': 5,
+		 'page': 'p31',
+		 'cost': '1',
+		 'per_level': '1',
+		 'max_level': '0',
+		 'tag': 'heightened-senses',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Spatial Sense"},"points":"2","per_level":"0"}]',
+},
+{
+		 'id': 37,
+	 name: {
+		 'en-US': 'Illusion',
+	},
+		 'book': 5,
+		 'page': 'p31',
+		 'cost': '2',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'illusion',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Film Quality"},"points":"1","per_level":"0"},{"name":{"en-US":"Obscurement"},"points":"0","per_level":"0"},{"name":{"en-US":"System Shock"},"points":"2","per_level":"0"},{"name":{"en-US":"Targeted"},"points":"-1","per_level":"0"}]',
+},
+{
+		 'id': 38,
+	 name: {
+		 'en-US': 'Immune to Poison/Disease',
+	},
+		 'book': 5,
+		 'page': 'p32',
+		 'cost': '1',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'immune-to-poison-disease',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[]',
+},
+{
+		 'id': 39,
+	 name: {
+		 'en-US': 'Infection',
+	},
+		 'book': 5,
+		 'page': 'p32',
+		 'cost': '3',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'infection',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Carrier"},"points":"-1","per_level":"0"},{"name":{"en-US":"Contagious"},"points":"2","per_level":"0"},{"name":{"en-US":"Strong"},"points":"1","per_level":"0"}]',
+},
+{
+		 'id': 40,
+	 name: {
+		 'en-US': 'Intangibility',
+	},
+		 'book': 5,
+		 'page': 'p32',
+		 'cost': '5',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'intangibility',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Phase"},"points":"5","per_level":"0"},{"name":{"en-US":"Permanent"},"points":"-2","per_level":"0"},{"name":{"en-US":"Reflexive Contro"},"points":"2","per_level":"0"},{"name":{"en-US":"Tag Along"},"points":"2","per_level":"0"}]',
+},
+{
+		 'id': 41,
+	 name: {
+		 'en-US': 'Interface',
+	},
+		 'book': 5,
+		 'page': 'p33',
+		 'cost': '2',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'interface',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Code Breaker"},"points":"1","per_level":"0"}]',
+},
+{
+		 'id': 42,
+	 name: {
+		 'en-US': 'Invent',
+	},
+		 'book': 5,
+		 'page': 'p33',
+		 'cost': '2',
+		 'per_level': '1',
+		 'max_level': '0',
+		 'tag': 'invent',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"On The Fly"},"points":"3","per_level":"0"}]',
+},
+{
+		 'id': 43,
+	 name: {
+		 'en-US': 'Invisibility',
+	},
+		 'book': 5,
+		 'page': 'p34',
+		 'cost': '4',
+		 'per_level': '1',
+		 'max_level': '0',
+		 'tag': 'invisibility',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Permanent"},"points":"-2","per_level":"0"},{"name":{"en-US":"Personal"},"points":"-2","per_level":"0"},{"name":{"en-US":"Projection"},"points":"0","per_level":"0"}]',
+},
+{
+		 'id': 44,
+	 name: {
+		 'en-US': 'Jinx',
+	},
+		 'book': 5,
+		 'page': 'p34',
+		 'cost': '2',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'jinx',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Improved Jinx"},"points":"2","per_level":"0"}]',
+},
+{
+		 'id': 45,
+	 name: {
+		 'en-US': 'Leaping',
+	},
+		 'book': 5,
+		 'page': 'p34',
+		 'cost': '1',
+		 'per_level': '1',
+		 'max_level': '5',
+		 'tag': 'leaping',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Bounce"},"points":"1","per_level":"0"},{"name":{"en-US":"Death From Above"},"points":"1","per_level":"0"}]',
+},
+{
+		 'id': 46,
+	 name: {
+		 'en-US': 'Malfunction',
+	},
+		 'book': 5,
+		 'page': 'p34',
+		 'cost': '3',
+		 'per_level': '1',
+		 'max_level': '0',
+		 'tag': 'malfunction',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Area Effect"},"points":"2","per_level":"0"}]',
+},
+{
+		 'id': 47,
+	 name: {
+		 'en-US': 'Matter Control',
+	},
+		 'book': 5,
+		 'page': 'p35',
+		 'cost': '2',
+		 'per_level': '1',
+		 'max_level': '0',
+		 'tag': 'matter-control',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Constructs"},"points":"3","per_level":"0"},{"name":{"en-US":"Master"},"points":"5","per_level":"0"},{"name":{"en-US":"Range"},"points":"2","per_level":"0"},{"name":{"en-US":"Requires Material"},"points":"-2","per_level":"0"}]',
+},
+{
+		 'id': 48,
+	 name: {
+		 'en-US': 'Mind Control',
+	},
+		 'book': 5,
+		 'page': 'p36',
+		 'cost': '5',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'mind-control',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Memory Alteration"},"points":"0","per_level":"0"},{"name":{"en-US":"Multiple Minds"},"points":"2","per_level":"0"}]',
+},
+{
+		 'id': 49,
+	 name: {
+		 'en-US': 'Mind Reading',
+	},
+		 'book': 5,
+		 'page': 'p37',
+		 'cost': '2',
+		 'per_level': '1',
+		 'max_level': '0',
+		 'tag': 'mind-reading',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Memory Mastery"},"points":"3","per_level":"0"},{"name":{"en-US":"Mind Reader"},"points":"3","per_level":"0"}]',
+},
+{
+		 'id': 50,
+	 name: {
+		 'en-US': 'Minions',
+	},
+		 'book': 5,
+		 'page': 'p37',
+		 'cost': '2',
+		 'per_level': '1',
+		 'max_level': '0',
+		 'tag': 'minions',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Summonable"},"points":"4","per_level":"0"},{"name":{"en-US":"Super Powers"},"points":"0","per_level":"0"}]',
+},
+{
+		 'id': 51,
+	 name: {
+		 'en-US': 'Negation',
+	},
+		 'book': 5,
+		 'page': 'p38',
+		 'cost': '4',
+		 'per_level': '1',
+		 'max_level': '0',
+		 'tag': 'negation',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Full Spectrum"},"points":"5","per_level":"0"},{"name":{"en-US":"Leach"},"points":"5","per_level":"0"}]',
+},
+{
+		 'id': 52,
+	 name: {
+		 'en-US': 'Paralysis',
+	},
+		 'book': 5,
+		 'page': 'p38',
+		 'cost': '3',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'paralysis',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Strong"},"points":"1","per_level":"0"}]',
+},
+{
+		 'id': 53,
+	 name: {
+		 'en-US': 'Parry',
+	},
+		 'book': 5,
+		 'page': 'p38',
+		 'cost': '1',
+		 'per_level': '1',
+		 'max_level': '10',
+		 'tag': 'parry',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Deflect"},"points":"4","per_level":"0"},{"name":{"en-US":"Protector"},"points":"0","per_level":"0"}]',
+charEffect: function( charObject, powerObj ) {
+// Affect Character Object Code here
+//console.log( "powerObj", powerObj);
+//console.log( "powerObj.level", powerObj.level);
+if( powerObj.selectedLevel )
+    charObject.derived.parry += parseInt(powerObj.selectedLevel);
+}
+},
+{
+		 'id': 54,
+	 name: {
+		 'en-US': 'Poison',
+	},
+		 'book': 5,
+		 'page': 'p38',
+		 'cost': '3',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'poison',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Knockout"},"points":"3","per_level":"0"},{"name":{"en-US":"Lethal"},"points":"5","per_level":"0"},{"name":{"en-US":"Strong"},"points":"1","per_level":"0"}]',
+},
+{
+		 'id': 55,
+	 name: {
+		 'en-US': 'Possession',
+	},
+		 'book': 5,
+		 'page': 'p39',
+		 'cost': '8',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'possession',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Memories"},"points":"2","per_level":"0"}]',
+},
+{
+		 'id': 56,
+	 name: {
+		 'en-US': 'Regeneration',
+	},
+		 'book': 5,
+		 'page': 'p39',
+		 'cost': '2',
+		 'per_level': '1',
+		 'max_level': '5',
+		 'tag': 'regeneration',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Recovery"},"points":"1","per_level":"0"},{"name":{"en-US":"Regrowth"},"points":"2","per_level":"0"}]',
+},
+{
+		 'id': 57,
+	 name: {
+		 'en-US': 'Resistance',
+	},
+		 'book': 5,
+		 'page': 'p39',
+		 'cost': '0',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'resistance',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[]',
+},
+{
+		 'id': 58,
+	 name: {
+		 'en-US': 'Shape Change',
+	},
+		 'book': 5,
+		 'page': 'p40',
+		 'cost': '0',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'shape-change',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Speech"},"points":"2","per_level":"0"},{"name":{"en-US":"Swarm"},"points":"0","per_level":"0"}]',
+},
+{
+		 'id': 59,
+	 name: {
+		 'en-US': 'Shrink',
+	},
+		 'book': 5,
+		 'page': 'p40',
+		 'cost': '4',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'shrink',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Quick Change"},"points":"1","per_level":"0"},{"name":{"en-US":"Tiny"},"points":"4","per_level":"0"}]',
+},
+{
+		 'id': 61,
+	 name: {
+		 'en-US': 'Sidekick',
+	},
+		 'book': 5,
+		 'page': 'p41',
+		 'cost': '5',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'sidekick',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[]',
+},
+{
+		 'id': 60,
+	 name: {
+		 'en-US': 'Speak Language',
+	},
+		 'book': 5,
+		 'page': 'p41',
+		 'cost': '1',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'spea-language',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Written Word"},"points":"1","per_level":"0"}]',
+},
+{
+		 'id': 62,
+	 name: {
+		 'en-US': 'Speed',
+	},
+		 'book': 5,
+		 'page': '',
+		 'cost': '0',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'speed',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Blinding Reflexes"},"points":"2","per_level":"0"},{"name":{"en-US":"Catch and Throw"},"points":"2","per_level":"0"},{"name":{"en-US":"Pummel"},"points":"1","per_level":"0"},{"name":{"en-US":"Surface Tension"},"points":"1","per_level":"0"},{"name":{"en-US":"Vibrate"},"points":"5","per_level":"0"},{"name":{"en-US":"Whirlwind"},"points":"2","per_level":"0"}]',
+},
+{
+		 'id': 63,
+	 name: {
+		 'en-US': 'Storm',
+	},
+		 'book': 5,
+		 'page': 'p42',
+		 'cost': '3',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'storm',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Downpour"},"points":"1","per_level":"0"},{"name":{"en-US":"Gale Force"},"points":"1","per_level":"0"},{"name":{"en-US":"Lightning Strike"},"points":"3","per_level":"0"}]',
+},
+{
+		 'id': 64,
+	 name: {
+		 'en-US': 'Sturn',
+	},
+		 'book': 5,
+		 'page': 'p42',
+		 'cost': '2',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'stun',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Area Effect"},"points":"0","per_level":"0"},{"name":{"en-US":"Selective"},"points":"2","per_level":"0"},{"name":{"en-US":"Strong"},"points":"1","per_level":"0"}]',
+},
+{
+		 'id': 65,
+	 name: {
+		 'en-US': 'Super Attribute',
+	},
+		 'book': 5,
+		 'page': 'p43',
+		 'cost': '2',
+		 'per_level': '1',
+		 'max_level': '0',
+		 'tag': 'super-attribute',
+		 'boost_attribute': 1,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Not Today"},"points":"2","per_level":"0"}]',
+},
+{
+		 'id': 66,
+	 name: {
+		 'en-US': 'Super Skill',
+	},
+		 'book': 5,
+		 'page': 'p43',
+		 'cost': '1',
+		 'per_level': '1',
+		 'max_level': '0',
+		 'tag': 'super-skill',
+		 'boost_attribute': 0,
+		 'boost_skill': 1,
+		 'modifiers': '[]',
+},
+{
+		 'id': 67,
+	 name: {
+		 'en-US': 'Super Sorcery',
+	},
+		 'book': 5,
+		 'page': 'p43',
+		 'cost': '2',
+		 'per_level': '1',
+		 'max_level': '0',
+		 'tag': 'super-sorcery',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[]',
+},
+{
+		 'id': 68,
+	 name: {
+		 'en-US': 'Swinging',
+	},
+		 'book': 5,
+		 'page': 'p45',
+		 'cost': '2',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'swinging',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Strong Line"},"points":"1","per_level":"1"}]',
+},
+{
+		 'id': 69,
+	 name: {
+		 'en-US': 'Telekinesis',
+	},
+		 'book': 5,
+		 'page': 'p45',
+		 'cost': '2',
+		 'per_level': '1',
+		 'max_level': '0',
+		 'tag': 'telekinesis',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Focus"},"points":"3","per_level":"0"},{"name":{"en-US":"Heavy Weapon"},"points":"1","per_level":"0"},{"name":{"en-US":"Range"},"points":"2","per_level":"0"}]',
+},
+{
+		 'id': 70,
+	 name: {
+		 'en-US': 'Telepathy',
+	},
+		 'book': 5,
+		 'page': 'p45',
+		 'cost': '2',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'telepathy',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Broadcast"},"points":"0","per_level":"0"},{"name":{"en-US":"Mind Reader"},"points":"3","per_level":"0"},{"name":{"en-US":"Switchboard"},"points":"2","per_level":"0"}]',
+},
+{
+		 'id': 71,
+	 name: {
+		 'en-US': 'Teleport',
+	},
+		 'book': 5,
+		 'page': 'p45',
+		 'cost': '3',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': '5eleport',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Range"},"points":"0","per_level":"0"},{"name":{"en-US":"Rapid Telepor"},"points":"3","per_level":"0"},{"name":{"en-US":"Teleport Other"},"points":"5","per_level":"0"},{"name":{"en-US":"Traverse"},"points":"3","per_level":"0"}]',
+},
+{
+		 'id': 72,
+	 name: {
+		 'en-US': 'Toughness',
+	},
+		 'book': 5,
+		 'page': 'p46',
+		 'cost': '1',
+		 'per_level': '1',
+		 'max_level': '10',
+		 'tag': 'toughness',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[]',
+charEffect: function( charObject, powerObject ) {
+	// Affect Character Object Code here
+	charObject.derived.toughness += powerObject.selectedLevel * 2;
+}
+},
+{
+		 'id': 73,
+	 name: {
+		 'en-US': 'Uncanny Reflexes',
+	},
+		 'book': 5,
+		 'page': 'p46',
+		 'cost': '0',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'uncanny-reflexes',
+		 'boost_attribute': 0,
+		 'boost_skill': 1,
+		 'modifiers': '[{"name":{"en-US":"Blinding Reflexes"},"points":"2","per_level":"0"}]',
+},
+{
+		 'id': 74,
+	 name: {
+		 'en-US': 'Undead',
+	},
+		 'book': 5,
+		 'page': 'p47',
+		 'cost': '10',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'undead',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[]',
+},
+{
+		 'id': 75,
+	 name: {
+		 'en-US': 'Wall Walker',
+	},
+		 'book': 5,
+		 'page': 'p47',
+		 'cost': '1',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'wall-walker',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[]',
+},
+{
+		 'id': 76,
+	 name: {
+		 'en-US': 'Whirlwind',
+	},
+		 'book': 5,
+		 'page': 'p47',
+		 'cost': '2',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'whirlwind',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[{"name":{"en-US":"Large Template"},"points":"2","per_level":"0"},{"name":{"en-US":"Twister"},"points":"2","per_level":"0"}]',
 }
 );
 

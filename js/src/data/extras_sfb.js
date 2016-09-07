@@ -52,8 +52,8 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 	 blurb: {
 		 'en-US': 'Acolytes are non-powered clerics, or cultists; they\'re the lowest level of a clerical or a religious organization, lacking the ability to manifest miracles. They\'re often led by a more powerful cleric.',
 	},
-		attributes: '{&quot;agility&quot;:&quot;d6&quot;,&quot;smarts&quot;:&quot;d6&quot;,&quot;spirit&quot;:&quot;d8&quot;,&quot;strength&quot;:&quot;d6&quot;,&quot;vigor&quot;:&quot;d6&quot;}',
-		skills: '{&quot;SKILL_FIGHTING&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_GUTS&quot;:{&quot;value&quot;:&quot;d6&quot;},&quot;SKILL_NOTICE&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_SHOOTING&quot;:{&quot;value&quot;:&quot;d4&quot;},&quot;SKILL_KNOWLEDGE0&quot;:{&quot;special&quot;:{&quot;en-US&quot;:&quot;Religion&quot;},&quot;value&quot;:&quot;d8&quot;}}',
+		attributes: '{"agility":"d6","smarts":"d6","spirit":"d8","strength":"d6","vigor":"d6"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_GUTS":{"value":"d6"},"SKILL_NOTICE":{"value":"d4"},"SKILL_SHOOTING":{"value":"d4"},"SKILL_KNOWLEDGE0":{"special":{"en-US":"Religion"},"value":"d8"}}',
 		wildcard: 0,
 		image: 'http://th08.deviantart.net/fs71/PRE/i/2012/316/5/a/cthulhu_cultist___lucca_comics_and_games_2012_by_cookingmaru-d5kra97.jpg',
 		charisma: '0',

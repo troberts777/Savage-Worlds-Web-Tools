@@ -47,6 +47,29 @@ savageCharacter.prototype.calcSPC = function() {
 				}
 			}
 
+			for( var modCounter = 0; modCounter < this.selectedSPCPowers[powerCounter].genericModifiersObj.length; modCounter++) {
+				if( typeof(this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost) != "undefined" && this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost != 0) {
+					this.selectedSPCPowers[powerCounter].currentCost += this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost / 1;
+				}
+			}
+
+			if( this.selectedSPCPowers[powerCounter].currentCost < 1 )
+				this.selectedSPCPowers[powerCounter].currentCost = 1;
+
+			if( this.selectedSPCPowers[powerCounter].boost_attribute > 0 ) {
+				if( this.selectedSPCPowers[powerCounter].boosted_attribute != "" ) {
+					//~ console.log( "this.selectedSPCPowers[powerCounter].boosted_attribute", this.selectedSPCPowers[powerCounter].boosted_attribute);
+					//~ console.log( "this.selectedSPCPowers[powerCounter].selectedLevel", this.selectedSPCPowers[powerCounter].selectedLevel );
+					this.boostAttribute( this.selectedSPCPowers[powerCounter].boosted_attribute, this.selectedSPCPowers[powerCounter].selectedLevel );
+				}
+			}
+
+			if( this.selectedSPCPowers[powerCounter].boost_skill > 0 ) {
+				if( this.selectedSPCPowers[powerCounter].boosted_skill != "" ) {
+					this.boostSkill( this.selectedSPCPowers[powerCounter].boosted_skill, this.selectedSPCPowers[powerCounter].boosted_skill_specialty, this.selectedSPCPowers[powerCounter].selectedLevel  );
+				}
+			}
+
 			if( this.selectedSPCPowers[powerCounter].currentCost > this.SPCPowerLimit) {
 
 				this.validationReport.push(
@@ -249,6 +272,59 @@ savageCharacter.prototype.init = function(useLang){
 		}
 	);
 
+	this.spcGenericModifiers = Array();
+
+	this.spcGenericModifiers.push( {
+		"local_name": this.getTranslation("SPC_MOD_CONTIGENT"),
+		// "points": Array(-1,-2)
+		"points": 0,
+		"currentCost": 0
+	});
+
+	this.spcGenericModifiers.push( {
+		"local_name": this.getTranslation("SPC_MOD_DEVICE"),
+		//~ "points": Array(-1,-2)
+		"points": 0,
+		"currentCost": 0
+	});
+
+	this.spcGenericModifiers.push( {
+		"local_name": this.getTranslation("SPC_MOD_LIMITATION"),
+		//~ "points": Array(-1,-2)
+		"points": 0,
+		"currentCost": 0
+	});
+
+	this.spcGenericModifiers.push( {
+		"local_name": this.getTranslation("SPC_MOD_PROJECTILE"),
+		"points": 1,
+		"currentCost": 0
+	});
+
+	this.spcGenericModifiers.push( {
+		"local_name": this.getTranslation("SPC_MOD_RTA"),
+		"points": 1,
+		"currentCost": 0
+	});
+
+	this.spcGenericModifiers.push( {
+		"local_name": this.getTranslation("SPC_MOD_RA"),
+		"points": -1,
+		"currentCost": 0
+	});
+
+	this.spcGenericModifiers.push( {
+		"local_name": this.getTranslation("SPC_MOD_STA"),
+		"points": -1,
+		"currentCost": 0
+	});
+
+	this.spcGenericModifiers.push( {
+		"local_name": this.getTranslation("SPC_MOD_SWITCHABLE"),
+		"points": 2,
+		"currentCost": 0
+	});
+
 	this.books = Array();
 
 	for( bookCounter = 0; bookCounter < savageWorldsBooksList.length; bookCounter++ ) {
@@ -304,6 +380,8 @@ savageCharacter.prototype.init = function(useLang){
 		for( var modCounter = 0; modCounter < savageWorldsSPCPowers[spcCounter].modifiersObj.length; modCounter++ ) {
 			savageWorldsSPCPowers[spcCounter].modifiersObj[ modCounter ].local_name = this.getLocalName( savageWorldsSPCPowers[spcCounter].modifiersObj[ modCounter ].name )
 		}
+
+		savageWorldsSPCPowers[spcCounter].genericModifiersObj = angular.copy( this.spcGenericModifiers );
 
 //		savageWorldsSPCPowers[spcCounter].local_description = this.getLocalName( savageWorldsSPCPowers[spcCounter].description );
 		savageWorldsSPCPowers[spcCounter].bookObj = get_book_by_id( savageWorldsSPCPowers[spcCounter].book );
@@ -1646,7 +1724,6 @@ savageCharacter.prototype.validate = function() {
 
 			this.installedEdges.push( this.selectedAdvancements[advCounter].option1 );
 
-
  		}
  		// End of Edge Advancement
 
@@ -1749,6 +1826,14 @@ savageCharacter.prototype.validate = function() {
 			strength: getDiceValue( this.attributes.strength + this.attributeBoost.strength ),
 			vigor: getDiceValue( this.attributes.vigor + this.attributeBoost.vigor ),
 		};
+	}
+
+	fightingSkill = this.getSkill("SKILL_FIGHTING");
+
+	this.derived.parry = 2;
+	if( fightingSkill.value > 0 ) {
+		fightingValue = getDiceValue( fightingSkill.value + fightingSkill.boost  );
+		this.derived.parry = Math.floor(fightingValue.value / 2) + 2;
 	}
 
 	this.calcSPC();
@@ -2200,7 +2285,7 @@ savageCharacter.prototype.importJSON = function( jsonString ) {
 
 			if( importObject.spcPowers ) {
 				//powerID, descriptionText, level, modifiers
-
+				//~ console.log( importObject.spcPowers );
 				for( var importCounter = 0; importCounter < importObject.spcPowers.length; importCounter++ ) {
 					//console.log(" *", importObject.spcPowers[ importCounter ])
 					powerID = importObject.spcPowers[ importCounter ].id;
@@ -2208,7 +2293,16 @@ savageCharacter.prototype.importJSON = function( jsonString ) {
 					customName = importObject.spcPowers[ importCounter ].customName;
 					level = importObject.spcPowers[ importCounter ].level;
 					modifiers = importObject.spcPowers[ importCounter ].modifiers;
-					this.addSPCPower( powerID, customName, descriptionText, level, modifiers  );
+					if( importObject.spcPowers[ importCounter ].genericModifiers )
+						genericModifiers = importObject.spcPowers[ importCounter ].genericModifiers;
+					else
+						genericModifiers = null;
+
+					boostedAttribute = importObject.spcPowers[ importCounter ].boostedAttribute;
+					boostedSkill = importObject.spcPowers[ importCounter ].boostedSkill;
+					boostedSkillSpecialty = importObject.spcPowers[ importCounter ].boostedSkillSpecialty;
+
+					this.addSPCPower( powerID, customName, descriptionText, level, modifiers, genericModifiers, boostedAttribute,  boostedSkill, boostedSkillSpecialty );
 				}
 			}
 
@@ -2560,12 +2654,26 @@ savageCharacter.prototype.exportJSON = function(noUUID) {
 					}
 				}
 
+				var genericModifiersObj = Array();
+				for( var modCounter = 0; modCounter < this.selectedSPCPowers[powerCounter].genericModifiersObj.length; modCounter++) {
+
+					genericModifiersObj[modCounter] = {
+						//desc: this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].description,
+						cost: this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost,
+					}
+				}
+
+
 				var exportItem = {
 					id: this.selectedSPCPowers[powerCounter].id,
 					level: this.selectedSPCPowers[powerCounter].selectedLevel,
 					desc: this.selectedSPCPowers[powerCounter].description,
 					customName: this.selectedSPCPowers[powerCounter].custom_name,
-					modifiers: modifierObj
+					modifiers: modifierObj,
+					genericModifiers: genericModifiersObj,
+					boostedAttribute: this.selectedSPCPowers[powerCounter].boosted_attribute,
+					boostedSkill: this.selectedSPCPowers[powerCounter].boosted_skill,
+					boostedSkillSpecialty: this.selectedSPCPowers[powerCounter].boosted_specialty
 				}
 
 				exportObject.spcPowers.push( exportItem );
@@ -3386,12 +3494,14 @@ savageCharacter.prototype.setUsedDuringCombat = function( itemType, gearIndex ) 
 		this.selectedMundaneGear[gearIndex].droppedDuringCombat = false;
 }
 
-savageCharacter.prototype.addSPCPower = function( powerID, customName, descriptionText, level, modifiers ) {
+savageCharacter.prototype.addSPCPower = function( powerID, customName, descriptionText, level, modifiers, genericModifiers, boostedAttribute, boostedSkill, boostedSkillSpecialty ) {
 	if( !descriptionText )
 		descriptionText = "";
 	if( !level )
 		level = 1;
 
+	if( !genericModifiers )
+		genericModifiers = Array();
 
 	for( var spcCounter = 0; spcCounter < savageWorldsSPCPowers.length; spcCounter++) {
 		if( powerID == savageWorldsSPCPowers[spcCounter].id) {
@@ -3413,6 +3523,28 @@ savageCharacter.prototype.addSPCPower = function( powerID, customName, descripti
 					addPower.modifiersObj[modCounter].currentCost = modifiers[modCounter].cost;
 				}
 			}
+
+			for( var modCounter = 0; modCounter < addPower.genericModifiersObj.length;modCounter++) {
+				addPower.genericModifiersObj[modCounter].description = "";
+				addPower.genericModifiersObj[modCounter].currentCost = 0;
+				if( genericModifiers && genericModifiers[modCounter] ) {
+					//addPower.modifiersObj[modCounter].description = modifiers[modCounter].desc;
+					addPower.genericModifiersObj[modCounter].currentCost = genericModifiers[modCounter].cost;
+				}
+			}
+
+			addPower.boosted_attribute = "";
+			addPower.boosted_skill = "";
+			addPower.boosted_skill_specialty = "";
+			if( boostedAttribute )
+				addPower.boosted_attribute = boostedAttribute;
+
+			if( boostedSkill )
+				addPower.boosted_skill = boostedSkill;
+
+			if( boostedSkillSpecialty )
+				addPower.boosted_skill_specialty = boostedSkillSpecialty;
+
 			this.selectedSPCPowers.push( addPower );
 
 			return true;

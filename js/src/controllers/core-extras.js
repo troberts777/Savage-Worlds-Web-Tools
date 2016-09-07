@@ -91,6 +91,7 @@ var coreextrasArray = 	[
 			} else {
 				$scope.show_default_text = true;
 			}
+			//console.log( $scope.search_results ) ;
 		}
 
 		$scope.localize_extra = function( entry_object ) {
