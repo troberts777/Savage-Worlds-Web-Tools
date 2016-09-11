@@ -98,7 +98,7 @@ savageWorldsSettingRules[5] = {
 	book: 4,
 	page: "p29",
 	name: {
-		 'en-US': 'Cyberware &amp; Strain',
+		 'en-US': 'Cyberware and Strain',
 		 'pt-BR': 'Cyberware &amp; Tens&atilde;o',
 		 'de-DE': '',
 		 'ru-RU': '',

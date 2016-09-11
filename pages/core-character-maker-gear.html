@@ -24,9 +24,9 @@
 						<table class="gear-list">
 							<thead>
 								<tr>
-									<th></th>
-									<th></th>
-									<th></th>
+									<th>Name</th>
+									<th>Cost</th>
+									<th>Weight</th>
 									<th></th>
 								</tr>
 							</thead>
@@ -50,7 +50,7 @@
 									</td>
 									<td>
 
-										${{gearItem.totalWeight}}
+										{{gearItem.totalWeight}}
 											<span ng-show="gearItem.weight != gearItem.totalWeight"> ({{gearItem.weight}} <span translate="GENERAL_EACH">each</span>)</span>
 									</td>
 									<td class="text-right">
