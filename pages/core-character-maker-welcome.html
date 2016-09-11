@@ -47,6 +47,10 @@
 		<div class="columns small-12 medium-6">
 			<fieldset class="fieldset">
 				<legend translate="CHARGEN_INTRO_SETTING_RULES" class="text-left">Settings</legend>
+					<label>
+						<span translate="CHARGEN_STARTING_WEALTH">Starting Wealth</span>:
+						<input type="number" ng-model="savageCharacter.startingFunds" ng-change="validateAndSave()" />
+					</label>
 					<div ng-repeat="book in savageCharacter.books track by $index" ng-show="book.char_creator > 0">
 						<div ng-show="book.setting_rules.length > 0 && book.inUse">
 							<h4>{{book.local_name}}</h4>

@@ -987,7 +987,7 @@ savageCharacter.prototype.validate = function() {
 
 	this.encumbrance_multiplier = 5;
 
-
+	this.currentFunds = this.startingFunds;
 	this.spcExtraPowerPoints = 0;
 
 	this.attributePointsAvailable = 5;
@@ -1000,7 +1000,7 @@ savageCharacter.prototype.validate = function() {
 
 	this.currentArcaneBackground = {};
 
-	this.startingFunds = 500;
+	//this.startingFunds = 500;
 
 	this.usesSanity = false;
 	this.usesGutsSkill = false;
@@ -1853,7 +1853,7 @@ savageCharacter.prototype.validate = function() {
 	this.derived.toughness_base = Math.floor(this.displayAttributes.vigor.value / 2) + 2;
 	//this.derived.toughness += this.attributeBoost.vigor; // will always be in steps of 2, so just add it ;)
 	this.derived.toughness += this.derived.toughness_base;
- 	this.currentFunds = this.startingFunds;
+
  	this.currentLoad = 0;
  	this.combatLoad = 0;
  	// subtract gear costs....
@@ -2106,6 +2106,9 @@ savageCharacter.prototype.importJSON = function( jsonString ) {
 					}
 				}
 			}
+
+			if( importObject.startingFunds )
+				this.startingFunds = importObject.startingFunds;
 
 			if( importObject.settingRules ) {
 				for( var importCounter = 0; importCounter < importObject.settingRules.length; importCounter++ ) {
@@ -2481,6 +2484,9 @@ savageCharacter.prototype.exportJSON = function(noUUID) {
 	exportObject.xp = this.XP.value;
 	exportObject.gender = this.gender.id;
 	exportObject.race = this.race.id;
+
+	exportObject.startingFunds = this.startingFunds;
+
 
 	exportObject.attributes = {
 		agility: this.attributes.agility,

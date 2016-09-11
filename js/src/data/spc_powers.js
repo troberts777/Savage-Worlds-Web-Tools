@@ -1093,10 +1093,10 @@ if( powerObj.selectedLevel )
 		 'cost': '3',
 		 'per_level': '0',
 		 'max_level': '0',
-		 'tag': '5eleport',
+		 'tag': 'teleport',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
-		 'modifiers': '[{"name":{"en-US":"Range"},"points":"0","per_level":"0"},{"name":{"en-US":"Rapid Telepor"},"points":"3","per_level":"0"},{"name":{"en-US":"Teleport Other"},"points":"5","per_level":"0"},{"name":{"en-US":"Traverse"},"points":"3","per_level":"0"}]',
+		 'modifiers': '[{"name":{"en-US":"Range"},"points":"0","per_level":"0"},{"name":{"en-US":"Rapid Teleport"},"points":"3","per_level":"0"},{"name":{"en-US":"Teleport Other"},"points":"5","per_level":"0"},{"name":{"en-US":"Traverse"},"points":"3","per_level":"0"}]',
 },
 {
 		 'id': 72,
@@ -1111,10 +1111,10 @@ if( powerObj.selectedLevel )
 		 'tag': 'toughness',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
-		 'modifiers': '[]',
+		 'modifiers': '[{"name":{"en-US":"Hardy"},"points":"3","per_level":"0"}]',
 charEffect: function( charObject, powerObject ) {
 	// Affect Character Object Code here
-	charObject.derived.toughness += powerObject.selectedLevel * 2;
+	charObject.derived.toughness += powerObject.selectedLevel;
 }
 },
 {
@@ -1129,7 +1129,7 @@ charEffect: function( charObject, powerObject ) {
 		 'max_level': '0',
 		 'tag': 'uncanny-reflexes',
 		 'boost_attribute': 0,
-		 'boost_skill': 1,
+		 'boost_skill': 0,
 		 'modifiers': '[{"name":{"en-US":"Blinding Reflexes"},"points":"2","per_level":"0"}]',
 },
 {

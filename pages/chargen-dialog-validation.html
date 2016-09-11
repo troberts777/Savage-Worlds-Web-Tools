@@ -6,9 +6,9 @@
 		<li ng-repeat="item in savageCharacter.validationReport track by $index">{{item}}</li>
 	</ul>
 
-	<h3 ng-show="savageCharacter.warningReport.length > 0 track by $index" translate="CHARGEN_VALIDATION_WARNINGS">Warnings</h3>
+	<h3 ng-show="savageCharacter.warningReport.length > 0" translate="CHARGEN_VALIDATION_WARNINGS">Warnings</h3>
 	<ul>
-		<li ng-repeat="item in savageCharacter.warningReport">{{item}}</li>
+		<li ng-repeat="item in savageCharacter.warningReport track by $index">{{item}}</li>
 	</ul>
 
 	<div class="text-right">

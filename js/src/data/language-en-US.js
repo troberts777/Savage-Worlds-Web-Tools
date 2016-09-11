@@ -396,6 +396,7 @@ availableLanguages.push ({
 			SPC_MOD_SWITCHABLE: 'Switchable',
 			SPC_SELECT_ATTRIBUTE: 'Select Attribute',
 			SPC_SELECT_SKILL: 'Select Skill',
+			CHARGEN_STARTING_WEALTH: 'Starting Wealth',
 
 	}
 

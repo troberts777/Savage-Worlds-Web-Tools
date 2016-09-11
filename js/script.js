@@ -3203,7 +3203,7 @@ savageCharacter.prototype.validate = function() {
 
 	this.encumbrance_multiplier = 5;
 
-
+	this.currentFunds = this.startingFunds;
 	this.spcExtraPowerPoints = 0;
 
 	this.attributePointsAvailable = 5;
@@ -3216,7 +3216,7 @@ savageCharacter.prototype.validate = function() {
 
 	this.currentArcaneBackground = {};
 
-	this.startingFunds = 500;
+	//this.startingFunds = 500;
 
 	this.usesSanity = false;
 	this.usesGutsSkill = false;
@@ -4069,7 +4069,7 @@ savageCharacter.prototype.validate = function() {
 	this.derived.toughness_base = Math.floor(this.displayAttributes.vigor.value / 2) + 2;
 	//this.derived.toughness += this.attributeBoost.vigor; // will always be in steps of 2, so just add it ;)
 	this.derived.toughness += this.derived.toughness_base;
- 	this.currentFunds = this.startingFunds;
+
  	this.currentLoad = 0;
  	this.combatLoad = 0;
  	// subtract gear costs....
@@ -4322,6 +4322,9 @@ savageCharacter.prototype.importJSON = function( jsonString ) {
 					}
 				}
 			}
+
+			if( importObject.startingFunds )
+				this.startingFunds = importObject.startingFunds;
 
 			if( importObject.settingRules ) {
 				for( var importCounter = 0; importCounter < importObject.settingRules.length; importCounter++ ) {
@@ -4697,6 +4700,9 @@ savageCharacter.prototype.exportJSON = function(noUUID) {
 	exportObject.xp = this.XP.value;
 	exportObject.gender = this.gender.id;
 	exportObject.race = this.race.id;
+
+	exportObject.startingFunds = this.startingFunds;
+
 
 	exportObject.attributes = {
 		agility: this.attributes.agility,
@@ -12527,6 +12533,24 @@ requires: function( characterObject) {
 },
 {
 	 name: {
+		 'en-US': 'Filthy Rich',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'filthy-rich',
+	 page: 'p36',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 1,
+	 child: 0,
+charEffects: function ( charObject ) {
+	charObject.currentFunds += (charObject.startingFunds / 1) * 4;
+}
+},
+{
+	 name: {
 		 'en-US': 'First Strike',
 	},
 	 required_edge: '',
@@ -13335,7 +13359,9 @@ charEffects: function ( charObject ) {
 	 book: 1,
 	 child: 0,
 charEffects: function ( charObject ) {
-		}
+	charObject.currentFunds += (charObject.startingFunds / 1) * 2;
+	charObject.derived.charisma += 2;
+}
 },
 {
 	 name: {
@@ -13551,9 +13577,8 @@ requires: function( characterObject) {
 	 book: 1,
 	 child: 0,
 charEffects: function ( charObject ) {
-
-			charObject.current_funds = (charObject.current_funds / 1) * 3;
-		}
+	charObject.currentFunds += (charObject.startingFunds / 1) * 2;
+}
 },
 {
 	 name: {
@@ -38742,6 +38767,7 @@ availableLanguages.push ({
 			SPC_MOD_SWITCHABLE: 'Switchable',
 			SPC_SELECT_ATTRIBUTE: 'Select Attribute',
 			SPC_SELECT_SKILL: 'Select Skill',
+			CHARGEN_STARTING_WEALTH: 'Starting Wealth',
 
 	}
 
@@ -44105,10 +44131,10 @@ if( powerObj.selectedLevel )
 		 'cost': '3',
 		 'per_level': '0',
 		 'max_level': '0',
-		 'tag': '5eleport',
+		 'tag': 'teleport',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
-		 'modifiers': '[{"name":{"en-US":"Range"},"points":"0","per_level":"0"},{"name":{"en-US":"Rapid Telepor"},"points":"3","per_level":"0"},{"name":{"en-US":"Teleport Other"},"points":"5","per_level":"0"},{"name":{"en-US":"Traverse"},"points":"3","per_level":"0"}]',
+		 'modifiers': '[{"name":{"en-US":"Range"},"points":"0","per_level":"0"},{"name":{"en-US":"Rapid Teleport"},"points":"3","per_level":"0"},{"name":{"en-US":"Teleport Other"},"points":"5","per_level":"0"},{"name":{"en-US":"Traverse"},"points":"3","per_level":"0"}]',
 },
 {
 		 'id': 72,
@@ -44123,10 +44149,10 @@ if( powerObj.selectedLevel )
 		 'tag': 'toughness',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
-		 'modifiers': '[]',
+		 'modifiers': '[{"name":{"en-US":"Hardy"},"points":"3","per_level":"0"}]',
 charEffect: function( charObject, powerObject ) {
 	// Affect Character Object Code here
-	charObject.derived.toughness += powerObject.selectedLevel * 2;
+	charObject.derived.toughness += powerObject.selectedLevel;
 }
 },
 {
@@ -44141,7 +44167,7 @@ charEffect: function( charObject, powerObject ) {
 		 'max_level': '0',
 		 'tag': 'uncanny-reflexes',
 		 'boost_attribute': 0,
-		 'boost_skill': 1,
+		 'boost_skill': 0,
 		 'modifiers': '[{"name":{"en-US":"Blinding Reflexes"},"points":"2","per_level":"0"}]',
 },
 {
