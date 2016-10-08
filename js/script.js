@@ -197,7 +197,7 @@ cordovaApp = angular.module(
 			if( localStorage && localStorage["users_chargen_pdf_layout"] ) {
 				users_chargen_pdf_layout = localStorage["users_chargen_pdf_layout"];
 			} else {
-				localStorage["users_chargen_pdf_layout"] = "portrait";
+				localStorage["users_chargen_pdf_layout"] = "landscape";
 			}
 
 			for( lang_count = 0; lang_count < availableLanguages.length; lang_count++) {
@@ -450,7 +450,7 @@ webApp = angular.module(
 			if( localStorage && localStorage["users_chargen_pdf_layout"] ) {
 				users_chargen_pdf_layout = localStorage["users_chargen_pdf_layout"];
 			} else {
-				localStorage["users_chargen_pdf_layout"] = "portrait";
+				localStorage["users_chargen_pdf_layout"] = "landscape";
 			}
 
 			for( lang_count = 0; lang_count < availableLanguages.length; lang_count++) {
@@ -4010,8 +4010,17 @@ savageCharacter.prototype.validate = function() {
  		if( this.selectedAdvancements[advCounter].tag == "skill" ) {
  			if(
  				this.selectedAdvancements[advCounter].option1
- 				&& this.selectedAdvancements[advCounter].option1.specify
- 				&& this.selectedAdvancements[advCounter].option1.specify > 0
+ 				&& 
+ 				( this.selectedAdvancements[advCounter].option1.specify
+					&& this.selectedAdvancements[advCounter].option1.specify > 0
+				) ||
+				(
+					this.selectedAdvancements[advCounter].option1 
+					&&
+					this.selectedAdvancements[advCounter].option1.is_specialty
+					&& 
+					this.selectedAdvancements[advCounter].option1.is_specialty != ""
+				)
  			) {
  				this.addSpecialtySkill(
  					this.selectedAdvancements[advCounter].option1,
@@ -4627,6 +4636,7 @@ savageCharacter.prototype.setAdvancementOption2 = function( advIndex, optionItem
 
 		) {
 			//if( optionItem.id ) {
+			//	console.log("specifyName", specifyName) ;
 				this.selectedAdvancements[advIndex].option2 = specifyName;
 			//} else {
 			//	this.selectedAdvancements[advIndex].option2 = this.getSkill( optionItem , specifyName);
@@ -4943,6 +4953,9 @@ savageCharacter.prototype.exportJSON = function(noUUID) {
 
 					if( typeof(this.selectedAdvancements[advCounter].option2.specify_name) == "string" ) {
 						exportItem.option2name = this.selectedAdvancements[advCounter].option2.specify_name;
+					}
+					if( typeof(this.selectedAdvancements[advCounter].option2) == "string" ) {
+						exportItem.option2name = this.selectedAdvancements[advCounter].option2;
 					}
 				}
 
@@ -6844,6 +6857,10 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 			);
 
 			localizeDiceValues();
+
+
+			if( !localStorage["users_chargen_pdf_layout"] || localStorage["users_chargen_pdf_layout"] == "")
+				localStorage["users_chargen_pdf_layout"] = "landscape";
 
 
 			$scope.savageCharacter = new savageCharacter( localStorage["users_preferred_language"] );
@@ -43620,16 +43637,31 @@ charEffect: function( charObject, powerObject ) {
 		 'modifiers': '[{"name":{"en-US":"Film Quality"},"points":"1","per_level":"0"},{"name":{"en-US":"Obscurement"},"points":"0","per_level":"0"},{"name":{"en-US":"System Shock"},"points":"2","per_level":"0"},{"name":{"en-US":"Targeted"},"points":"-1","per_level":"0"}]',
 },
 {
+		 'id': 77,
+	 name: {
+		 'en-US': 'Immune to Disease',
+	},
+		 'book': 5,
+		 'page': 'p32',
+		 'cost': '0',
+		 'per_level': '0',
+		 'max_level': '0',
+		 'tag': 'immune-to-disease',
+		 'boost_attribute': 0,
+		 'boost_skill': 0,
+		 'modifiers': '[]',
+},
+{
 		 'id': 38,
 	 name: {
-		 'en-US': 'Immune to Poison/Disease',
+		 'en-US': 'Immune to Poison',
 	},
 		 'book': 5,
 		 'page': 'p32',
 		 'cost': '1',
 		 'per_level': '0',
 		 'max_level': '0',
-		 'tag': 'immune-to-poison-disease',
+		 'tag': 'immune-to-poison',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
 		 'modifiers': '[]',

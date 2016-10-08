@@ -25,6 +25,10 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 			localizeDiceValues();
 
 
+			if( !localStorage["users_chargen_pdf_layout"] || localStorage["users_chargen_pdf_layout"] == "")
+				localStorage["users_chargen_pdf_layout"] = "landscape";
+
+
 			$scope.savageCharacter = new savageCharacter( localStorage["users_preferred_language"] );
 
 			if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {

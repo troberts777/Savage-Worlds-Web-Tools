@@ -67,7 +67,8 @@
 
 											ng-change="setAdvancementOption1($index, advancementItem.option1)"
 										></select>
-										<span ng-show="advancementItem.option1.specify > 0">
+								
+										<span ng-show="advancementItem.option1.specify > 0 || advancementItem.option1.is_specialty">
 											&nbsp;<strong>:</strong>&nbsp;
 											<input class="inline-block no-bottom-margin" placeholder="{{specializionPlaceholder}}" ng-model="advancementItem.option2"
 											ng-change="setAdvancementOption2($index, advancementItem.option2)" type="text">

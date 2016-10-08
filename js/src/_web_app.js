@@ -23,7 +23,7 @@ webApp = angular.module(
 			if( localStorage && localStorage["users_chargen_pdf_layout"] ) {
 				users_chargen_pdf_layout = localStorage["users_chargen_pdf_layout"];
 			} else {
-				localStorage["users_chargen_pdf_layout"] = "portrait";
+				localStorage["users_chargen_pdf_layout"] = "landscape";
 			}
 
 			for( lang_count = 0; lang_count < availableLanguages.length; lang_count++) {

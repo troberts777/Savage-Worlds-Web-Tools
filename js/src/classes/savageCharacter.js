@@ -1794,8 +1794,17 @@ savageCharacter.prototype.validate = function() {
  		if( this.selectedAdvancements[advCounter].tag == "skill" ) {
  			if(
  				this.selectedAdvancements[advCounter].option1
- 				&& this.selectedAdvancements[advCounter].option1.specify
- 				&& this.selectedAdvancements[advCounter].option1.specify > 0
+ 				&& 
+ 				( this.selectedAdvancements[advCounter].option1.specify
+					&& this.selectedAdvancements[advCounter].option1.specify > 0
+				) ||
+				(
+					this.selectedAdvancements[advCounter].option1 
+					&&
+					this.selectedAdvancements[advCounter].option1.is_specialty
+					&& 
+					this.selectedAdvancements[advCounter].option1.is_specialty != ""
+				)
  			) {
  				this.addSpecialtySkill(
  					this.selectedAdvancements[advCounter].option1,
@@ -2411,6 +2420,7 @@ savageCharacter.prototype.setAdvancementOption2 = function( advIndex, optionItem
 
 		) {
 			//if( optionItem.id ) {
+			//	console.log("specifyName", specifyName) ;
 				this.selectedAdvancements[advIndex].option2 = specifyName;
 			//} else {
 			//	this.selectedAdvancements[advIndex].option2 = this.getSkill( optionItem , specifyName);
@@ -2727,6 +2737,9 @@ savageCharacter.prototype.exportJSON = function(noUUID) {
 
 					if( typeof(this.selectedAdvancements[advCounter].option2.specify_name) == "string" ) {
 						exportItem.option2name = this.selectedAdvancements[advCounter].option2.specify_name;
+					}
+					if( typeof(this.selectedAdvancements[advCounter].option2) == "string" ) {
+						exportItem.option2name = this.selectedAdvancements[advCounter].option2;
 					}
 				}
 
