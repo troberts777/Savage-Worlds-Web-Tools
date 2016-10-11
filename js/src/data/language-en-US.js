@@ -397,6 +397,7 @@ availableLanguages.push ({
 			SPC_SELECT_ATTRIBUTE: 'Select Attribute',
 			SPC_SELECT_SKILL: 'Select Skill',
 			CHARGEN_STARTING_WEALTH: 'Starting Wealth',
+			GENERAL_STAT_BLOCK: 'Stat Block',
 
 	}
 

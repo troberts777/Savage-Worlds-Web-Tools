@@ -124,6 +124,8 @@ savageCharacter.prototype.init = function(useLang){
 
 	this.powerAlterations = Array();
 
+	this.activeSkills = Array();
+
 	this.characterJournal = Array();
 
 	this.spcExtraPowerPoints = 0;
@@ -131,6 +133,8 @@ savageCharacter.prototype.init = function(useLang){
 	this.knownLanguages = Array();
 
 	this.knownLanguagesLimit = 0;
+
+	this.innateAttacks = Array();
 
 	this.xpOptions = Array();
 	for( var optCounter = 0; optCounter <= 100; optCounter++) {
@@ -1794,15 +1798,15 @@ savageCharacter.prototype.validate = function() {
  		if( this.selectedAdvancements[advCounter].tag == "skill" ) {
  			if(
  				this.selectedAdvancements[advCounter].option1
- 				&& 
+ 				&&
  				( this.selectedAdvancements[advCounter].option1.specify
 					&& this.selectedAdvancements[advCounter].option1.specify > 0
 				) ||
 				(
-					this.selectedAdvancements[advCounter].option1 
+					this.selectedAdvancements[advCounter].option1
 					&&
 					this.selectedAdvancements[advCounter].option1.is_specialty
-					&& 
+					&&
 					this.selectedAdvancements[advCounter].option1.is_specialty != ""
 				)
  			) {
@@ -2010,7 +2014,48 @@ savageCharacter.prototype.validate = function() {
 		if( typeof(this.knownLanguages[ langCounter]) == "undefined")
 			this.knownLanguages[ langCounter ] = "";
 	}
+
+
+	this.activeSkills = {};
+	for( var skCount = 0; skCount <  this.agilitySkills.length; skCount++ ) {
+		//console.log( this.agilitySkills[skCount].local_name, this.agilitySkills[skCount].displayValue );
+		if( this.agilitySkills[skCount].displayValue && this.agilitySkills[skCount].displayValue != "")
+			this.activeSkills[ this.agilitySkills[skCount].local_name ] = this.agilitySkills[skCount].displayValue;
+	}
+
+	for( var skCount = 0; skCount <  this.smartsSkills.length; skCount++ ) {
+		//console.log( this.smartsSkills[skCount].local_name, this.smartsSkills[skCount].displayValue );
+		if( this.smartsSkills[skCount].displayValue && this.smartsSkills[skCount].displayValue != "")
+			this.activeSkills[ this.smartsSkills[skCount].local_name ] = this.smartsSkills[skCount].displayValue;
+
+		if( this.smartsSkills[skCount].specialties.length > 0 ) {
+			for( var spCount = 0; spCount <  this.smartsSkills[skCount].specialties.length; spCount++ ) {
+				skillName = this.smartsSkills[skCount].local_name + " (" + this.smartsSkills[skCount].specialties[spCount].name + ")";
+				this.activeSkills[ skillName ] = this.smartsSkills[skCount].specialties[spCount].displayValue;
+			}
+		}
+	}
+
+	for( var skCount = 0; skCount <  this.spiritSkills.length; skCount++ ) {
+		//console.log( this.spiritSkills[skCount].local_name, this.spiritSkills[skCount].displayValue );
+		if( this.spiritSkills[skCount].displayValue && this.spiritSkills[skCount].displayValue != "")
+			this.activeSkills[ this.spiritSkills[skCount].local_name ] = this.spiritSkills[skCount].displayValue;
+	}
+
+	for( var skCount = 0; skCount <  this.strengthSkills.length; skCount++ ) {
+		//console.log( this.strengthSkills[skCount].local_name, this.strengthSkills[skCount].displayValue );
+		if( this.strengthSkills[skCount].displayValue && this.strengthSkills[skCount].displayValue != "")
+			this.activeSkills[ this.strengthSkills[skCount].local_name ] = this.strengthSkills[skCount].displayValue;
+	}
+
+
+
+
+	//console.log( this.activeSkills );
+
 }
+
+
 
 savageCharacter.prototype.setCharAt = function(str,index,chr) {
     if(index > str.length-1) return str;
@@ -2037,7 +2082,288 @@ savageCharacter.prototype.getHindrance = function( hindranceTag  ) {
 }
 
 savageCharacter.prototype.exportBBCode = function() {
-	return "TODO";
+	var html = this.exportHTMLCode();
+
+	while( html.indexOf("<br />\n") > -1)
+		html = html.replace("<br />\n", "\n");
+	while( html.indexOf("<br />") > -1)
+		html = html.replace("<br />", "\n");
+	while( html.indexOf("<br/>\n") > -1)
+		html = html.replace("<br/>\n", "\n");
+	while( html.indexOf("<br/>") > -1)
+		html = html.replace("<br/>", "\n");
+	while( html.indexOf("<br>\n") > -1)
+		html = html.replace("<br>\n", "\n");
+	while( html.indexOf("<br>") > -1)
+		html = html.replace("<br>", "\n");
+	while( html.indexOf("<strong>") > -1)
+		html = html.replace("<strong>", "[b]");
+	while( html.indexOf("</strong>") > -1)
+		html = html.replace("</strong>", "[/b]");
+	while( html.indexOf("<b>") > -1)
+		html = html.replace("<b>", "[b]");
+	while( html.indexOf("</b>") > -1)
+		html = html.replace("</b>", "[/b]");
+	while( html.indexOf("</ul>") > -1)
+		html = html.replace("</ul>", "[/list]");
+	while( html.indexOf("<ul>") > -1)
+		html = html.replace("<ul>", "[list]");
+	while( html.indexOf("</li>\n") > -1)
+		html = html.replace("</li>\n", "\n");
+	while( html.indexOf("</li>") > -1)
+		html = html.replace("</li>", "\n");
+	while( html.indexOf("<li>") > -1)
+		html = html.replace("<li>", "[*]");
+	while( html.indexOf("<h3>") > -1)
+		html = html.replace("<h3>", "[size=150][b]");
+	while( html.indexOf("</h3>") > -1)
+		html = html.replace("</h3>", "[/b][/size]\n");
+	while( html.indexOf("<em>") > -1)
+		html = html.replace("<em>", "[i]");
+	while( html.indexOf("</em>") > -1)
+		html = html.replace("</em>", "[/i]");
+
+	// This should be pretty close! :)
+
+	return html;
+}
+
+savageCharacter.prototype.exportHTMLCode = function() {
+	var html;
+	html = "<h3>" + this.name + "</h3>";
+
+
+	html += this.description.replace("\n", "<br />\n") + "<br />\n<br />\n";
+
+	html += this.background.replace("\n", "<br />\n") + "<br />\n<br />\n";
+
+
+
+	html += "<b>" + this.race.local_name + " " + this.gender.label + "</b><br />\n";
+
+	html += "<b>" + this.getTranslation("CHARGEN_RANK") + ":</b> " + this.XP.rankName + "<br />\n";
+
+	/*
+Attributes: Agility d8, Smarts d6, Spirit d6, Strength d6, Vigor d8
+Skills: Fighting d8, Notice d6, Shooting d8, Stealth d8, Survival d8, Tracking d6, Climbing d6
+Charisma: –1; Pace: 6; Parry: 5; Toughness: 10 (4)
+Hindrances: Bad Luck, Greedy (Minor), Habit (Minor—frequently disappears)
+Edges: Alertness, Woodsman, Assassin
+Gear: Binoculars (in cabin), body armor (+4, hidden in cabin), blaster pistol (Range 12/24/48, Damage 2d6+2, AP 2, hidden in cabin), commlink, C$50.
+	 * */
+
+	// Traits
+		// Attributes
+		html += "<strong>" + this.getTranslation("GENERAL_ATTRIBUTES") + ":</strong> ";
+			html += this.getTranslation("ATTRIBUTE_AGILITY") + ": " + getDiceValue( this.attributes.agility, this.useLang).local_label + ", ";
+			html += this.getTranslation("ATTRIBUTE_SMARTS") + ": " +  getDiceValue( this.attributes.smarts, this.useLang).local_label + ", ";
+			html += this.getTranslation("ATTRIBUTE_SPIRIT") + ": " +  getDiceValue( this.attributes.spirit, this.useLang).local_label + ", ";
+			html += this.getTranslation("ATTRIBUTE_STRENGTH") + ": " +  getDiceValue( this.attributes.strength, this.useLang).local_label + ", ";
+			html += this.getTranslation("ATTRIBUTE_VIGOR") + ": " +  getDiceValue( this.attributes.vigor, this.useLang).local_label + " ";
+		html += "<br />\n";
+
+		// Skills
+		html += "<strong>" + this.getTranslation("GENERAL_SKILLS") + ":</strong> ";
+
+		// sort skills alphabetacially
+		keys = Object.keys(this.activeSkills),
+
+		keys.sort();
+
+		for (var kCount = 0; kCount < keys.length; kCount++) {
+			html += keys[kCount] + ": " + this.activeSkills[ keys[kCount] ];
+			if( kCount < keys.length -1 )
+				html += ", ";
+		}
+
+		html += "<br />\n";
+
+		// Derived
+		//html += "<b>" + this.getTranslation("CHARGEN_ATTRIBUTES") + ":</b> ";
+
+		if( this.derived.charisma != 0 ) {
+			if( this.derived.charisma > 0 ) {
+				html += "<strong>" + this.getTranslation("GENERAL_CHARISMA") + ":</strong> +" + this.derived.charisma + "; ";
+			} else {
+				html += "<strong>" + this.getTranslation("GENERAL_CHARISMA") + ":</strong> " + this.derived.charisma + "; ";
+			}
+		}
+		html += "<strong>" + this.getTranslation("GENERAL_PACE") + ":</strong> " + this.derived.pace + "; ";
+
+		html += "<strong>" + this.getTranslation("GENERAL_PARRY") + ":</strong> " + this.derived.parry + "; ";
+
+		html += "<strong>" + this.getTranslation("GENERAL_TOUGHNESS") + ":</strong> " + (this.derived.toughness + this.derived.armor ) + " ";
+		if( this.derived.armor != 0 )
+			html += "(" + this.derived.armor + ")";
+
+
+		html += "<br />\n";
+		// Edges
+
+		html += "<strong>" + this.getTranslation("GENERAL_EDGES") + ":</strong> ";
+		var eCounter = 0;
+		if( this.installedEdges.length > 0 ) {
+			for (var eCount = 0; eCount < this.installedEdges.length; eCount++) {
+				html += this.installedEdges[ eCount ].local_name ;
+				if( this.installedEdges[ eCount ].racial )
+					html += " " + this.getTranslation("CHARGEN_RACIAL_PARENTHETICAL") + "";
+				if( eCount < this.installedEdges.length - 1 ) {
+					html += ", ";
+				}
+				eCounter++;
+			}
+		}
+
+
+		if( eCounter == 0 ) {
+			html += "(none)";
+		}
+
+		html += "<br />\n";
+
+		// Hindrances
+		html += "<strong>" + this.getTranslation("GENERAL_HINDRANCES") + ":</strong> ";
+
+		var hCounter = 0;
+		if( this.installedHindrances.length > 0 ) {
+			for (var hCount = 0; hCount < this.installedHindrances.length; hCount++) {
+				html += this.installedHindrances[ hCount ].select_option_name ;
+				if( this.installedHindrances[ hCount ].specifyField )
+					html += ": " + this.installedHindrances[ hCount ].specifyField;
+				if( this.installedHindrances[ hCount ].racial )
+					html += " " + this.getTranslation("CHARGEN_RACIAL_PARENTHETICAL") + "";
+				if( hCount < this.installedHindrances.length - 1 ) {
+					html += ", ";
+				}
+				hCounter++;
+			}
+		}
+
+
+
+		if(hCounter == 0) {
+			html += "(none)";
+		}
+
+		html += "<br />\n";
+
+	// Gear
+		html += "<strong>" + this.getTranslation("GENERAL_GEAR") + ":</strong> ";
+		var gearCount = 0;
+
+			for (var gCount = 0; gCount < this.selectedHandWeapons.length; gCount++) {
+				html += this.selectedHandWeapons[gCount].local_name;
+				// TODO: reach and damage
+				html += " (";
+				console.log(this.selectedHandWeapons[gCount]);
+				html += "Damage:  " + this.selectedHandWeapons[gCount].displayDamage.toString();
+				if( this.selectedHandWeapons[gCount].reach > 0 )
+					html += ", Reach:  " +  this.selectedHandWeapons[gCount].reach;
+				if( this.selectedHandWeapons[gCount].ap > 0 )
+					html += ", AP: " +  this.selectedHandWeapons[gCount].ap;
+				html += " )";
+
+				html += ", ";
+				gearCount++;
+			}
+
+			for (var gCount = 0; gCount < this.selectedRangedWeapons.length; gCount++) {
+				html += this.selectedRangedWeapons[gCount].local_name;
+				// TODO: range, rof, ap, and damage
+				html += " (";
+				//~ console.log(this.selectedHandWeapons[gCount]);
+				html += "Damage:  " + this.selectedHandWeapons[gCount].displayDamage.toString();
+				if( this.selectedHandWeapons[gCount].range )
+					html += ", Range:  " +  this.selectedHandWeapons[gCount].reach;
+				if( this.selectedHandWeapons[gCount].ap > 0 )
+					html += ", AP: " +  this.selectedHandWeapons[gCount].ap;
+				if( this.selectedHandWeapons[gCount].rof > 0 )
+					html += ", ROF: " +  this.selectedHandWeapons[gCount].rof;
+				html += " )";
+
+				html += ", ";
+				gearCount++;
+			}
+
+			for (var gCount = 0; gCount < this.selectedArmor.length; gCount++) {
+				html += this.selectedArmor[gCount].local_name + ", ";
+				gearCount++;
+			}
+
+			for (var gCount = 0; gCount < this.selectedShields.length; gCount++) {
+				html += this.selectedShields[gCount].local_name + ", ";
+				gearCount++;
+			}
+
+			for (var gCount = 0; gCount < this.selectedMundaneGear.length; gCount++) {
+				html += this.selectedMundaneGear[gCount].local_name + ", ";
+				gearCount++;
+			}
+
+		if(gearCount == 0) {
+			html += "(none)";
+		} else {
+			// remove last comma
+			html = html.substr(0, html.length - 2);
+		}
+
+		html += "<br />\n";
+	// Powers
+		if( this.selectedPowers.length > 0 ) {
+			html += "<strong>" + this.getTranslation("GENERAL_POWERS") + ":</strong> ";
+
+			for(p_counter = 0; p_counter < this.selectedPowers.length; p_counter++) {
+
+				if( this.selectedPowers[p_counter].customName != "") {
+					power_name = this.selectedPowers[p_counter].customName + " (" + this.selectedPowers[p_counter].local_name;
+					if( this.selectedPowers[p_counter].trapping.local_name != "" )
+						power_name += ", " + this.selectedPowers[p_counter].trapping.local_name  + ")";
+					else
+						power_name += ")";
+
+				} else {
+					if( this.selectedPowers[p_counter].trapping != "" ) {
+						power_name = this.selectedPowers[p_counter].local_name + " (" + this.selectedPowers[p_counter].trapping.local_name  + ")" ;
+					} else {
+						power_name = this.selectedPowers[p_counter].local_name ;
+					}
+				}
+
+				details_line = " - ";
+
+				//~ console.log( this.selectedPowers[p_counter] );
+
+				if(this.selectedPowers[p_counter].cost) {
+					details_line += "Cost: " + this.selectedPowers[p_counter].cost + "; ";
+				}
+				if(this.selectedPowers[p_counter].range) {
+					details_line += "Range: " + this.selectedPowers[p_counter].range + "; ";
+				}
+				if(this.selectedPowers[p_counter].damage) {
+					details_line += "Damage: " + this.selectedPowers[p_counter].damage + "; ";
+				}
+				if(this.selectedPowers[p_counter].local_duration) {
+					details_line += "Duration: " + this.selectedPowers[p_counter].local_duration + "; ";
+				}
+
+				//~ if(this.selectedPowers[p_counter].bookObj) {
+					//~ details_line += this.selectedPowers[p_counter].bookObj.abbrev + " " + this.selectedPowers[p_counter].page;
+				//~ }
+				details_line = "";
+
+				if( details_line && details_line != " - ")
+					html += "<em>" + power_name + "</em>" + details_line + ", ";
+				else
+					html +=  "<em>" + power_name + "</em>, ";
+			}
+
+			html = html.substr(0, html.length - 2);
+
+			html += "<br />\n";
+		}
+
+
+	return html;
 }
 
 savageCharacter.prototype.enableSettingRule = function(settingTag) {

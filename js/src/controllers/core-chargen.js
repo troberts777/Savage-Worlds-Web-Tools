@@ -265,6 +265,7 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 
 		$rootScope.exportDialog = function() {
 			$scope.exportBBCode = $scope.savageCharacter.exportBBCode();
+			$scope.exportHTMLCode = $scope.savageCharacter.exportHTMLCode();
 			$scope.exportJSON = $scope.savageCharacter.exportJSON(true);
 			$rootScope.closeDialogs();
 			$rootScope.exportDialogOpen = true;
