@@ -1013,27 +1013,27 @@ chargenPDF.prototype.createDamageTrackTable = function(left, top, height, width,
 
 	this.currentDoc.rect(left, top, height, width);
 	this.currentDoc.setFontStyle("bold");
-	this.currentDoc.text(left+5, top+5, "Wounds");
+	this.currentDoc.text(left+2, top+5, "Wounds");
 	this.currentDoc.text(left+spacing_between+ 10, top+5, "Fatigue");
 
-	this.currentDoc.circle(left+10, top+11, 5);
-	this.currentDoc.circle(left+10, top+22, 5);
-	this.currentDoc.circle(left+10, top+33, 5);
+	this.currentDoc.circle(left+7, top+11, 5);
+	this.currentDoc.circle(left+7, top+22, 5);
+	this.currentDoc.circle(left+7, top+33, 5);
 
-	this.currentDoc.rect(left+spacing_between+ 12, top+7, 10, 10);
-	this.currentDoc.rect(left+spacing_between+ 12, top+18, 10, 10);
+	this.currentDoc.rect(left+spacing_between+ 10, top+7, 10, 10);
+	this.currentDoc.rect(left+spacing_between+ 10, top+18, 10, 10);
 
 	this.currentDoc.setFontSize(smallFontSize);
-	this.currentDoc.text(left+spacing_between+incap_margin, top+37, "Incapacitated");
+	this.currentDoc.text(left+spacing_between+incap_margin, top+34, "Incapacitated");
 	this.currentDoc.setFontStyle("normal");
 	this.currentDoc.setFontSize(20);
 
-	this.currentDoc.text(left+spacing_between+ 14, top+14, "-1");
-	this.currentDoc.text(left+spacing_between+ 14, top+25, "-2");
+	this.currentDoc.text(left+spacing_between+ 11, top+14, "-1");
+	this.currentDoc.text(left+spacing_between+ 11, top+25, "-2");
 
-	this.currentDoc.text(left+7, top+13, "-1");
-	this.currentDoc.text(left+7, top+24, "-2");
-	this.currentDoc.text(left+7, top+35, "-3");
+	this.currentDoc.text(left+4, top+13, "-1");
+	this.currentDoc.text(left+4, top+24, "-2");
+	this.currentDoc.text(left+4, top+35, "-3");
 	this.currentDoc.setFontSize(10);
 }
 chargenPDF.prototype.createDerivedStatsTable = function( left, top, height, width, smallFontSize ) {
@@ -1044,15 +1044,25 @@ chargenPDF.prototype.createDerivedStatsTable = function( left, top, height, widt
 	this.currentDoc.rect(left, top, height, width);
 	this.currentDoc.setFontSize(smallFontSize);
 	this.currentDoc.setFontStyle("bold");
-	this.currentDoc.text(left + 3, top+5, "Pace: " + this.currentCharacter.derived.pace);
-	this.currentDoc.text(left + 3, top+10, "Parry: " + this.currentCharacter.derived.parry);
-	this.currentDoc.text(left + 3, top+15, "Toughness: " + this.currentCharacter.derived.toughnessAndArmor);
-	this.currentDoc.text(left + 3, top+20, "Charisma: " + this.currentCharacter.derived.charisma);
+	this.currentDoc.text(left + 1, top+5, "Pace: " + this.currentCharacter.derived.pace);
+	this.currentDoc.text(left + 1, top+10, "Parry: " + this.currentCharacter.derived.parry);
+	this.currentDoc.text(left + 1, top+15, "Toughness: " + this.currentCharacter.derived.toughnessAndArmor);
+	this.currentDoc.text(left + 1, top+20, "Charisma: " + this.currentCharacter.derived.charisma);
 
-	this.currentDoc.text(left + 3, top+32, "Current Load");
+	this.currentDoc.text(left + 1, top+32, "Current / Combat Load");
 	this.currentDoc.setFontStyle("normal");
 
-	this.currentDoc.text(left + 3, top+36, this.currentCharacter.currentLoad + " (" + this.currentCharacter.loadModifier + ")");
+	this.currentDoc.text(
+		left + 1,
+		top+36,
+
+		this.currentCharacter.currentLoad + " (" + this.currentCharacter.loadModifier + ")"
+
+		+ " / " +
+
+		this.currentCharacter.combatLoad + " (" + this.currentCharacter.combatLoadModifier + ")"
+
+	);
 	this.currentDoc.setFontSize(10);
 };
 
@@ -1346,11 +1356,13 @@ chargenPDF.prototype.createEquipmentTable = function(label, left, top, width, he
 	this.currentDoc.rect(left, top, width, height);
 	this.currentDoc.setFontStyle("bold");
 	this.currentDoc.setFontSize(14);
-	this.currentDoc.text(left + 5, top + 5, label);
+	this.currentDoc.text(left + 1, top + 5, label);
 	this.currentDoc.setFontStyle("normal");
 	this.currentDoc.setFontSize(10);
 
 	current_equipment = this.currentCharacter.selectedMundaneGear;
+	var droppedInCombatFootnote = "";
+	var currentLine = 0;
 	for(e_counter = 0; e_counter < 9; e_counter++) {
 		if(current_equipment[e_counter]) {
 
@@ -1365,10 +1377,21 @@ chargenPDF.prototype.createEquipmentTable = function(label, left, top, width, he
 					equipment_line += " each";
 			}
 
-			this.currentDoc.text(left + 5, top + 10 + e_counter * 4, equipment_line);
+			if( current_equipment[e_counter].droppedDuringCombat > 0) {
+
+				equipment_line += " ‡";
+				droppedInCombatFootnote = "‡ Dropped in Combat";
+			}
+
+			this.currentDoc.text(left + 1, top + 10 + e_counter * 4, equipment_line);
+			currentLine = e_counter;
 
 		}
 	}
+
+	currentLine++;
+	currentLine++;
+	this.currentDoc.text(left + 5, top + 10 + currentLine * 4, droppedInCombatFootnote);
 
 	this.currentDoc.setFontSize(10);
 }
@@ -1434,7 +1457,7 @@ chargenPDF.prototype.createPowersTable = function(label, left, top, width, heigh
 		this.currentDoc.setFontStyle("bold");
 		this.currentDoc.setFontSize(14);
 
-		this.currentDoc.text(left + 5, top + 5, this.currentCharacter.selectedArcaneBackground.local_name + " - " + this.currentCharacter.powerPointsAvailable + " power points");
+		this.currentDoc.text(left + 1, top + 5, this.currentCharacter.selectedArcaneBackground.local_name + " - " + this.currentCharacter.powerPointsAvailable + " power points");
 		this.currentDoc.setFontStyle("normal");
 		this.currentDoc.setFontSize(10);
 		current_location = top + 5;
@@ -1446,12 +1469,12 @@ chargenPDF.prototype.createPowersTable = function(label, left, top, width, heigh
 					power_name += ", " + this.currentCharacter.selectedPowers[p_counter].trapping.local_name  + ")";
 				else
 					power_name += ")";
-				this.currentDoc.text(left+5, current_location , power_name );
+				this.currentDoc.text(left+1, current_location , power_name );
 			} else {
 				if( this.currentCharacter.selectedPowers[p_counter].trapping != "" ) {
-					this.currentDoc.text(left+5, current_location , this.currentCharacter.selectedPowers[p_counter].local_name + " (" + this.currentCharacter.selectedPowers[p_counter].trapping.local_name  + ")" );
+					this.currentDoc.text(left+1, current_location , this.currentCharacter.selectedPowers[p_counter].local_name + " (" + this.currentCharacter.selectedPowers[p_counter].trapping.local_name  + ")" );
 				} else {
-					this.currentDoc.text(left+5, current_location , this.currentCharacter.selectedPowers[p_counter].local_name );
+					this.currentDoc.text(left+1, current_location , this.currentCharacter.selectedPowers[p_counter].local_name );
 				}
 			}
 
@@ -1499,7 +1522,7 @@ chargenPDF.prototype.createArmorTable = function(label, left, top, width, height
 	this.currentDoc.rect(left, top ,width, height);
 	this.currentDoc.setFontStyle("bold");
 	this.currentDoc.setFontSize(14);
-	this.currentDoc.text(left + 5, top + 5, label);
+	this.currentDoc.text(left + 1, top + 5, label);
 	this.currentDoc.setFontStyle("normal");
 	this.currentDoc.setFontSize(9);
 
@@ -1516,10 +1539,10 @@ chargenPDF.prototype.createArmorTable = function(label, left, top, width, height
 			if(currentArmor[a_counter].weight )
 				armor_line += ", " + currentArmor[a_counter].weight + "lbs";
 
-			this.currentDoc.text(left + 5, top + 10 + a_counter * 5, armor_line);
+			this.currentDoc.text(left + 1, top + 10 + a_counter * 5, armor_line);
 			if(currentArmor[a_counter].local_notes ) {
 				this.currentDoc.setFontSize(6);
-				this.currentDoc.text(left + 5, top + 10 + a_counter * 5 + 3, currentArmor[a_counter].local_notes);
+				this.currentDoc.text(left + 1, top + 10 + a_counter * 5 + 3, currentArmor[a_counter].local_notes);
 				this.currentDoc.setFontSize(10);
 			}
 			a_counter_total++;
@@ -1540,10 +1563,10 @@ chargenPDF.prototype.createArmorTable = function(label, left, top, width, height
 			if(currentShields[b_counter].weight )
 				armor_line += ", " + currentShields[b_counter].weight + "lbs";
 
-			this.currentDoc.text(left + 5, top + 10 + (a_counter_total + b_counter) * 5, armor_line);
+			this.currentDoc.text(left + 1, top + 10 + (a_counter_total + b_counter) * 5, armor_line);
 			if( currentShields[b_counter].local_notes ) {
 				this.currentDoc.setFontSize(6);
-				this.currentDoc.text(left + 5, top + 10 + (a_counter_total + b_counter) * 5 + 3, currentShields[b_counter].local_notes);
+				this.currentDoc.text(left + 1, top + 10 + (a_counter_total + b_counter) * 5 + 3, currentShields[b_counter].local_notes);
 				this.currentDoc.setFontSize(10);
 			}
 		}
@@ -2215,8 +2238,9 @@ function getDiceValue( diceID, language ) {
 	return false;
 }
 
-function savageCharacter (useLang) {
 
+function savageCharacter (useLang) {
+	this.appVersion = "2.0.0.2016101101";
 	this.init(useLang);
 
 }
@@ -2312,8 +2336,6 @@ savageCharacter.prototype.calcSPC = function() {
 }
 
 savageCharacter.prototype.init = function(useLang){
-
-	this.appVersion = "2016050101";
 
 	if( useLang )
 		this.useLang = useLang;
@@ -4331,13 +4353,23 @@ savageCharacter.prototype.exportBBCode = function() {
 	while( html.indexOf("<li>") > -1)
 		html = html.replace("<li>", "[*]");
 	while( html.indexOf("<h3>") > -1)
-		html = html.replace("<h3>", "[size=150][b]");
+		html = html.replace("<h3>", "[size=200][b]");
 	while( html.indexOf("</h3>") > -1)
 		html = html.replace("</h3>", "[/b][/size]\n");
 	while( html.indexOf("<em>") > -1)
 		html = html.replace("<em>", "[i]");
 	while( html.indexOf("</em>") > -1)
 		html = html.replace("</em>", "[/i]");
+
+	while( html.indexOf("<h4>") > -1)
+		html = html.replace("<h4>", "[size=150][b]");
+	while( html.indexOf("</h4>") > -1)
+		html = html.replace("</h4>", "[/b][/size]\n");
+
+	while( html.indexOf("<h5>") > -1)
+		html = html.replace("<h5>", "[size=125][b]");
+	while( html.indexOf("</h5>") > -1)
+		html = html.replace("</h5>", "[/b][/size]\n");
 
 	// This should be pretty close! :)
 
@@ -4346,12 +4378,16 @@ savageCharacter.prototype.exportBBCode = function() {
 
 savageCharacter.prototype.exportHTMLCode = function() {
 	var html;
-	html = "<h3>" + this.name + "</h3>";
+	if( this.name != "")
+		html = "<h3>" + this.name + "</h3>";
+	else
+		html = "<h3>The Nameless Character :(</h3>";
 
+	if( this.description != "")
+		html += this.description.replace("\n", "<br />\n") + "<br />\n<br />\n";
 
-	html += this.description.replace("\n", "<br />\n") + "<br />\n<br />\n";
-
-	html += this.background.replace("\n", "<br />\n") + "<br />\n<br />\n";
+	if( this.background != "")
+		html += this.background.replace("\n", "<br />\n") + "<br />\n<br />\n";
 
 
 
@@ -4578,6 +4614,87 @@ Gear: Binoculars (in cabin), body armor (+4, hidden in cabin), blaster pistol (R
 			html += "<br />\n";
 		}
 
+		if( this.usesSPCCreation ) {
+
+			powerLevel = this.SPCPowerLevels[ this.SPCSelectedPowerLevel ].name + " Hero";
+			if( this.SPCRisingStars )
+				powerLevel += ", A Rising Star";
+			html += "<br /><h5>Super Hero Powers (" + powerLevel + ")</h5>";
+
+			for( var powerCounter = 0; powerCounter < this.selectedSPCPowers.length; powerCounter++) {
+
+				//~ var modifierObj = Array();
+				//~ for( var modCounter = 0; modCounter < this.selectedSPCPowers[powerCounter].modifiersObj.length; modCounter++) {
+
+					//~ modifierObj[modCounter] = {
+						//~ //desc: this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].description,
+						//~ cost: this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost,
+					//~ }
+				//~ }
+
+				//~ var genericModifiersObj = Array();
+				//~ for( var modCounter = 0; modCounter < this.selectedSPCPowers[powerCounter].genericModifiersObj.length; modCounter++) {
+
+					//~ genericModifiersObj[modCounter] = {
+						//~ //desc: this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].description,
+						//~ cost: this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost,
+					//~ }
+				//~ }
+
+				var exportItem = {
+					id: this.selectedSPCPowers[powerCounter].id,
+					level: this.selectedSPCPowers[powerCounter].selectedLevel,
+					desc: this.selectedSPCPowers[powerCounter].description,
+					customName: this.selectedSPCPowers[powerCounter].custom_name,
+					//modifiers: modifierObj,
+					//genericModifiers: genericModifiersObj,
+					boostedAttribute: this.selectedSPCPowers[powerCounter].boosted_attribute,
+					boostedSkill: this.selectedSPCPowers[powerCounter].boosted_skill,
+					boostedSkillSpecialty: this.selectedSPCPowers[powerCounter].boosted_specialty
+				}
+
+				//exportObject.spcPowers.push( exportItem );
+				if( this.selectedSPCPowers[powerCounter].custom_name != "" && this.selectedSPCPowers[powerCounter].custom_name != this.selectedSPCPowers[powerCounter].local_name )
+					html += "<strong>" + this.selectedSPCPowers[powerCounter].custom_name + " (" +  this.selectedSPCPowers[powerCounter].local_name + ")";
+				else
+					html += "<strong>" +  this.selectedSPCPowers[powerCounter].local_name;
+
+				if( this.selectedSPCPowers[powerCounter].per_level ) {
+					html += " Level " + this.selectedSPCPowers[powerCounter].selectedLevel;
+				}
+
+				html += " - " + this.selectedSPCPowers[powerCounter].currentCost + " points</strong><br />\n";
+				html += "<ul>";
+
+				for( var modCounter = 0; modCounter < this.selectedSPCPowers[powerCounter].modifiersObj.length; modCounter++) {
+					if( this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost != 0) {
+						html += "<li>";
+						html += this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].local_name;
+						html += ": ";
+						if( this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost > 0 )
+							html += "+";
+						html += this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost;
+						html += "</li>";
+					}
+				}
+
+				for( var modCounter = 0; modCounter < this.selectedSPCPowers[powerCounter].genericModifiersObj.length; modCounter++) {
+					if( this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost != 0) {
+						html += "<li>";
+						html += this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].local_name;
+						html += ": ";
+						if( this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost > 0 )
+							html += "+";
+						html += this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost;
+						html += "</li>";
+
+					}
+				}
+
+				html += "</ul>";
+			}
+
+		}
 
 	return html;
 }

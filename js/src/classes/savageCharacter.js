@@ -1,6 +1,7 @@
 
-function savageCharacter (useLang) {
 
+function savageCharacter (useLang) {
+	this.appVersion = "2.0.0.2016101101";
 	this.init(useLang);
 
 }
@@ -96,8 +97,6 @@ savageCharacter.prototype.calcSPC = function() {
 }
 
 savageCharacter.prototype.init = function(useLang){
-
-	this.appVersion = "2016050101";
 
 	if( useLang )
 		this.useLang = useLang;
@@ -2115,13 +2114,23 @@ savageCharacter.prototype.exportBBCode = function() {
 	while( html.indexOf("<li>") > -1)
 		html = html.replace("<li>", "[*]");
 	while( html.indexOf("<h3>") > -1)
-		html = html.replace("<h3>", "[size=150][b]");
+		html = html.replace("<h3>", "[size=200][b]");
 	while( html.indexOf("</h3>") > -1)
 		html = html.replace("</h3>", "[/b][/size]\n");
 	while( html.indexOf("<em>") > -1)
 		html = html.replace("<em>", "[i]");
 	while( html.indexOf("</em>") > -1)
 		html = html.replace("</em>", "[/i]");
+
+	while( html.indexOf("<h4>") > -1)
+		html = html.replace("<h4>", "[size=150][b]");
+	while( html.indexOf("</h4>") > -1)
+		html = html.replace("</h4>", "[/b][/size]\n");
+
+	while( html.indexOf("<h5>") > -1)
+		html = html.replace("<h5>", "[size=125][b]");
+	while( html.indexOf("</h5>") > -1)
+		html = html.replace("</h5>", "[/b][/size]\n");
 
 	// This should be pretty close! :)
 
@@ -2130,12 +2139,16 @@ savageCharacter.prototype.exportBBCode = function() {
 
 savageCharacter.prototype.exportHTMLCode = function() {
 	var html;
-	html = "<h3>" + this.name + "</h3>";
+	if( this.name != "")
+		html = "<h3>" + this.name + "</h3>";
+	else
+		html = "<h3>The Nameless Character :(</h3>";
 
+	if( this.description != "")
+		html += this.description.replace("\n", "<br />\n") + "<br />\n<br />\n";
 
-	html += this.description.replace("\n", "<br />\n") + "<br />\n<br />\n";
-
-	html += this.background.replace("\n", "<br />\n") + "<br />\n<br />\n";
+	if( this.background != "")
+		html += this.background.replace("\n", "<br />\n") + "<br />\n<br />\n";
 
 
 
@@ -2362,6 +2375,87 @@ Gear: Binoculars (in cabin), body armor (+4, hidden in cabin), blaster pistol (R
 			html += "<br />\n";
 		}
 
+		if( this.usesSPCCreation ) {
+
+			powerLevel = this.SPCPowerLevels[ this.SPCSelectedPowerLevel ].name + " Hero";
+			if( this.SPCRisingStars )
+				powerLevel += ", A Rising Star";
+			html += "<br /><h5>Super Hero Powers (" + powerLevel + ")</h5>";
+
+			for( var powerCounter = 0; powerCounter < this.selectedSPCPowers.length; powerCounter++) {
+
+				//~ var modifierObj = Array();
+				//~ for( var modCounter = 0; modCounter < this.selectedSPCPowers[powerCounter].modifiersObj.length; modCounter++) {
+
+					//~ modifierObj[modCounter] = {
+						//~ //desc: this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].description,
+						//~ cost: this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost,
+					//~ }
+				//~ }
+
+				//~ var genericModifiersObj = Array();
+				//~ for( var modCounter = 0; modCounter < this.selectedSPCPowers[powerCounter].genericModifiersObj.length; modCounter++) {
+
+					//~ genericModifiersObj[modCounter] = {
+						//~ //desc: this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].description,
+						//~ cost: this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost,
+					//~ }
+				//~ }
+
+				var exportItem = {
+					id: this.selectedSPCPowers[powerCounter].id,
+					level: this.selectedSPCPowers[powerCounter].selectedLevel,
+					desc: this.selectedSPCPowers[powerCounter].description,
+					customName: this.selectedSPCPowers[powerCounter].custom_name,
+					//modifiers: modifierObj,
+					//genericModifiers: genericModifiersObj,
+					boostedAttribute: this.selectedSPCPowers[powerCounter].boosted_attribute,
+					boostedSkill: this.selectedSPCPowers[powerCounter].boosted_skill,
+					boostedSkillSpecialty: this.selectedSPCPowers[powerCounter].boosted_specialty
+				}
+
+				//exportObject.spcPowers.push( exportItem );
+				if( this.selectedSPCPowers[powerCounter].custom_name != "" && this.selectedSPCPowers[powerCounter].custom_name != this.selectedSPCPowers[powerCounter].local_name )
+					html += "<strong>" + this.selectedSPCPowers[powerCounter].custom_name + " (" +  this.selectedSPCPowers[powerCounter].local_name + ")";
+				else
+					html += "<strong>" +  this.selectedSPCPowers[powerCounter].local_name;
+
+				if( this.selectedSPCPowers[powerCounter].per_level ) {
+					html += " Level " + this.selectedSPCPowers[powerCounter].selectedLevel;
+				}
+
+				html += " - " + this.selectedSPCPowers[powerCounter].currentCost + " points</strong><br />\n";
+				html += "<ul>";
+
+				for( var modCounter = 0; modCounter < this.selectedSPCPowers[powerCounter].modifiersObj.length; modCounter++) {
+					if( this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost != 0) {
+						html += "<li>";
+						html += this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].local_name;
+						html += ": ";
+						if( this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost > 0 )
+							html += "+";
+						html += this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost;
+						html += "</li>";
+					}
+				}
+
+				for( var modCounter = 0; modCounter < this.selectedSPCPowers[powerCounter].genericModifiersObj.length; modCounter++) {
+					if( this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost != 0) {
+						html += "<li>";
+						html += this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].local_name;
+						html += ": ";
+						if( this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost > 0 )
+							html += "+";
+						html += this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost;
+						html += "</li>";
+
+					}
+				}
+
+				html += "</ul>";
+			}
+
+		}
 
 	return html;
 }
