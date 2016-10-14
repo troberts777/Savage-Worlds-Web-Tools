@@ -398,6 +398,10 @@ availableLanguages.push ({
 			SPC_SELECT_SKILL: 'Select Skill',
 			CHARGEN_STARTING_WEALTH: 'Starting Wealth',
 			GENERAL_STAT_BLOCK: 'Stat Block',
+			GENERAL_NOT_TALLIED_PARENTH: '(not tallied)',
+			SPC_SWITCHABLE_WITH: 'Switchable with power',
+			GENERAL_NOT_SWITCHABLE_PAREN: '(Not Switchable)',
+			CHARGEN_VALIDATION_SPC_SWITCH: 'Super Power \'{value}\' cannot be more points than the parent switchable power minus the Switchable Modification.',
 
 	}
 

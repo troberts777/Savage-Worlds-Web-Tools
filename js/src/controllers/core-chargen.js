@@ -888,7 +888,7 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 
 
 			$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel++;
-			if( $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level < 0 && $scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel > $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level) {
+			if( $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level > 1 && $scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel >= $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level) {
 				$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel = $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level;
 			}
 			$scope.validateAndSave();
@@ -910,6 +910,21 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 			$scope.validateAndSave();
 		}
 
+		$scope.getTypeOf = function(val){ return typeof val; };
+
+		$scope.isAnArray = function(val){
+			if(  typeof(val) == "object" || typeof(val) == "object")
+			 	return true;
+			else {
+				return false;
+			}
+		};
+
+		$scope.isSwitchablePower = function(item){
+		    // return function(item){
+		      return item["switchable"] > 0;
+		    // }
+		};
 
 	}
 ;

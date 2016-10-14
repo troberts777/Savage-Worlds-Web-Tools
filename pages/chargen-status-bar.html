@@ -8,17 +8,22 @@
 			<span translate="CHARGEN_STATUS_ATTRIBUTE_POINTS">Attribute Points (used/availble)</span>: <span ng-bind="savageCharacter.attributePointsUsed"></span> / <span ng-bind="savageCharacter.attributePointsAvailable"></span>
 
 			<span ng-show="savageCharacter.selectedArcaneBackground.tag != ''">
-			<span class="separator">|</span>
+				<span class="separator">|</span>
 				<span translate="CHARGEN_STATUS_POWERS">Powers (used/availble)</span>: <span ng-bind="savageCharacter.selectedPowers.length"></span> / <span ng-bind="savageCharacter.selectedArcaneBackground.powers"></span>
 			</span>
 
 			<span ng-show="savageCharacter.XP.value >= 5">
-			<span class="separator">|</span>
+				<span class="separator">|</span>
 				<span translate="CHARGEN_STATUS_ADVANCEMENTS">Advancements (used/availble)</span>: <span ng-bind="savageCharacter.selectedAdvancements.length"></span> / <span ng-bind="savageCharacter.availableAdvancements"></span>
 			</span>
 
 			<span class="separator">|</span>
 				<span translate="CHARGEN_CURRENT_FUNDS">Current Funds</span>: $<span ng-bind="savageCharacter.currentFunds"></span>
+			</span>
+
+			<span ng-show="savageCharacter.usesSPCCreation > 0">
+				<span class="separator">|</span>
+				<span translate="SPC_CURRENT_PP">Current Power Points</span>: <span ng-bind="savageCharacter.SPCCurrentPowerPoints"></span>
 			</span>
 		</div>
 	</div>

@@ -84,11 +84,18 @@
 													<h3 translate="SPC_GENERIC_MODIFIERS">Generic Modifiers</h3>
 													<ul class="spc-power-options">
 														<li ng-repeat="spcModifier in spcPower.genericModifiersObj">
-															<div ng-show="spcModifier.points == 0">
+															<div ng-show="!isAnArray( spcModifier.points ) && spcModifier.points == 0">
 																<label><input size=3 class="inline-block" type="text" ng-model="spcModifier.currentCost" ng-change="validateAndSave();">{{spcModifier.local_name}} (<span translate="GENERAL_VARIABLE"></span>)</label>
 															</div>
-															<div ng-show="spcModifier.points != 0">
+															<div ng-show="!isAnArray( spcModifier.points ) && spcModifier.points != 0">
 																<label><input type="checkbox" ng-true-value="{{spcModifier.points}}" ng-false-value="0" ng-model="spcModifier.currentCost" ng-change="validateAndSave();" ng-checked="spcModifier.currentCost != 0">{{spcModifier.local_name}} ({{spcModifier.points}})</label>
+															</div>
+
+															<div ng-show="isAnArray( spcModifier.points )">
+																<label>
+																	<label><select style="width: 50px" class="inline-block" type="text" ng-model="spcModifier.currentCost" ng-options="pts for pts in spcModifier.points" ng-change="validateAndSave();"></select>
+																		{{spcModifier.local_name}} (<span translate="GENERAL_VARIABLE"></span>)
+																	</label>
 															</div>
 														</li>
 													</ul>
@@ -97,20 +104,29 @@
 													<h3 translate="SPC_POWER_MODIFIERS">Power Modifiers</h3>
 													<ul class="spc-power-options">
 														<li ng-repeat="spcModifier in spcPower.modifiersObj">
-															<div ng-show="spcModifier.points == 0">
+															<div ng-show="!isAnArray( spcModifier.points ) && spcModifier.points == 0">
 																<label><input size=3 class="inline-block" type="text" ng-model="spcModifier.currentCost" ng-change="validateAndSave();">{{spcModifier.local_name}} (<span translate="GENERAL_VARIABLE"></span>)</label>
 															</div>
-															<div ng-show="spcModifier.points != 0">
+															<div ng-show="!isAnArray( spcModifier.points ) && spcModifier.points != 0">
 																<label><input type="checkbox" ng-true-value="{{spcModifier.points}}" ng-false-value="0" ng-model="spcModifier.currentCost" ng-change="validateAndSave();" ng-checked="spcModifier.currentCost != 0">{{spcModifier.local_name}} ({{spcModifier.points}})</label>
+															</div>
+
+															<div ng-show="isAnArray( spcModifier.points )">
+																<label>
+																	<label><select style="width: 50px" class="inline-block" type="text" ng-model="spcModifier.currentCost" ng-options="pts for pts in spcModifier.points" ng-change="validateAndSave();"></select>
+																		{{spcModifier.local_name}} (<span translate="GENERAL_VARIABLE"></span>)
+																	</label>
 															</div>
 														</li>
 													</ul>
 													</div>
 												</div>
 
+
+
 												<div class="columns small-12 medium-6 large-6 text-left">
 													<div class="text-right">
-														<h4><span translate="GENERAL_TOTAL_COST">Total Cost</span>: {{spcPower.currentCost}}</h4>
+														<h4><span translate="GENERAL_TOTAL_COST">Total Cost</span>: {{spcPower.currentCost}} <span ng-show="spcPower.switchableWith" translate="GENERAL_NOT_TALLIED_PARENTH"></span></h4>
 														<div ng-show="spcPower.per_level > 0">
 															<div class="row">
 																<div class="columns small-6">
@@ -127,6 +143,14 @@
 														</div>
 
 													</div>
+
+													<label ng-show="savageCharacter.hasSPCSwitchablePowers == true && spcPower.switchable == false">
+														<span translate="SPC_SWITCHABLE_WITH">Switchable With</span><br />
+														<select ng-model="spcPower.switchableWith" ng-options="powerOption as powerOption.local_name for powerOption in savageCharacter.switchableSPCPowers track by powerOption.tag " ng-change="validateAndSave();">
+															<option value="" translate="GENERAL_NOT_SWITCHABLE_PAREN"></option>
+														</select>
+													</label>
+
 													<button ng-click="removeSPCPower($index)" class="button primary expanded tiny" translate="SPC_REMOVE_POWER">Remove</button>
 													<label><span translate="SPC_POWER_NAME">Power Name</span><br />
 														<input type="text" ng-model="spcPower.custom_name" ng-keyup="justSave();" />

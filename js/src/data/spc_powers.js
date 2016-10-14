@@ -110,7 +110,7 @@ var savageWorldsSPCPowers = Array(
 		 'tag': 'armor',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
-		 'modifiers': '[{"name":{"en-US":"Hardy"},"points":"3","per_level":"0"},{"name":{"en-US":"Heavy Armor"},"points":"4","per_level":"0"},{"name":{"en-US":"Partial Protection"},"points":"0","per_level":"0"}]',
+		 'modifiers': '[{"name":{"en-US":"Hardy"},"points":"3","per_level":"0"},{"name":{"en-US":"Heavy Armor"},"points":"4","per_level":"0"},{"name":{"en-US":"Partial Protection"},"points":"[0,-1,-2]","per_level":"0"}]',
 charEffect: function( charObject, powerObject ) {
 	// Affect Character Object Code here
 	charObject.derived.armor += powerObject.selectedLevel * 2;
@@ -140,11 +140,11 @@ charEffect: function( charObject, powerObject ) {
 		 'page': 'p22',
 		 'cost': '2',
 		 'per_level': '1',
-		 'max_level': '6',
+		 'max_level': '5',
 		 'tag': 'attack-ranged',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
-		 'modifiers': '[{"name":{"en-US":"Area Effect"},"points":"0","per_level":"0"},{"name":{"en-US":"Armor Piercing"},"points":"1","per_level":"0"},{"name":{"en-US":"Cone"},"points":"0","per_level":"0"},{"name":{"en-US":"Enhanced Damage"},"points":"4","per_level":"0"},{"name":{"en-US":"Focus"},"points":"3","per_level":"0"},{"name":{"en-US":"Heavy Weapon"},"points":"1","per_level":"0"},{"name":{"en-US":"Lethal"},"points":"-1","per_level":"0"},{"name":{"en-US":"Range"},"points":"0","per_level":"0"},{"name":{"en-US":"Rate of Fire"},"points":"0","per_level":"0"},{"name":{"en-US":"Requires Material"},"points":"0","per_level":"0"}]',
+		 'modifiers': '[{"name":{"en-US":"Area Effect"},"points":"0","per_level":"0"},{"name":{"en-US":"Armor Piercing"},"points":"1","per_level":"0"},{"name":{"en-US":"Cone"},"points":"[0,1]","per_level":"0"},{"name":{"en-US":"Enhanced Damage"},"points":"4","per_level":"0"},{"name":{"en-US":"Focus"},"points":"3","per_level":"0"},{"name":{"en-US":"Heavy Weapon"},"points":"1","per_level":"0"},{"name":{"en-US":"Lethal"},"points":"-1","per_level":"0"},{"name":{"en-US":"Range"},"points":"0","per_level":"0"},{"name":{"en-US":"Rate of Fire"},"points":"0","per_level":"0"},{"name":{"en-US":"Requires Material"},"points":"0","per_level":"0"}]',
 },
 {
 		 'id': 9,
@@ -174,7 +174,7 @@ charEffect: function( charObject, powerObject ) {
 		 'tag': 'broadcast',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
-		 'modifiers': '[{"name":{"en-US":"Manipulation"},"points":"0","per_level":"0"},{"name":{"en-US":"One Channel"},"points":"-1","per_level":"0"},{"name":{"en-US":"Range"},"points":"1","per_level":"0"}]',
+		 'modifiers': '[{"name":{"en-US":"Manipulation"},"points":"[2,4]","per_level":"0"},{"name":{"en-US":"One Channel"},"points":"-1","per_level":"0"},{"name":{"en-US":"Range"},"points":"1","per_level":"0"}]',
 },
 {
 		 'id': 11,

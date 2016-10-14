@@ -2246,6 +2246,9 @@ function savageCharacter (useLang) {
 }
 
 savageCharacter.prototype.calcSPC = function() {
+	this.hasSPCSwitchablePowers = false;
+	this.switchableSPCPowers = Array()
+
 
 	if( this.usesSPCCreation ) {
 		this.SPCPowerLimit = 0;
@@ -2286,10 +2289,17 @@ savageCharacter.prototype.calcSPC = function() {
 					this.selectedSPCPowers[powerCounter].currentCost += this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost / 1;
 				}
 			}
-
+			this.selectedSPCPowers[powerCounter].switchable = false;
 			for( var modCounter = 0; modCounter < this.selectedSPCPowers[powerCounter].genericModifiersObj.length; modCounter++) {
 				if( typeof(this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost) != "undefined" && this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost != 0) {
 					this.selectedSPCPowers[powerCounter].currentCost += this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost / 1;
+					if( this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].switchable > 0 && this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost > 0 ) {
+							this.switchableSPCPowers.push( this.selectedSPCPowers[powerCounter] );
+							this.hasSPCSwitchablePowers = true;
+							this.selectedSPCPowers[powerCounter].switchable = true;
+
+					}
+					this.selectedSPCPowers[powerCounter].internalID = powerCounter;
 				}
 			}
 
@@ -2311,26 +2321,41 @@ savageCharacter.prototype.calcSPC = function() {
 			}
 
 			if( this.selectedSPCPowers[powerCounter].currentCost > this.SPCPowerLimit) {
-
-				this.validationReport.push(
-					this.getTranslation("CHARGEN_VALIDATION_SPC_OVER_LIMIT").replace(
-						"{value}", this.selectedSPCPowers[powerCounter].local_name
-					)
-				);
-				this.isValid = false;
+				if( this.validSPCoverLimitShown  == false ) {
+					this.validationReport.push(
+						this.getTranslation("CHARGEN_VALIDATION_SPC_OVER_LIMIT").replace(
+							"{value}", this.selectedSPCPowers[powerCounter].local_name
+						)
+					);
+					this.isValid = false;
+					this.validSPCoverLimitShown = true;
+				}
 
 			}
 
-			this.SPCCurrentPowerPoints -= this.selectedSPCPowers[powerCounter].currentCost;
-
-			if( this.SPCCurrentPowerPoints < 0 ) {
-				this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_SPC_OVER_POWER_POINTS") );
-				this.isValid = false;
+			if( this.selectedSPCPowers[powerCounter].switchableWith ) {
+				if( this.selectedSPCPowers[powerCounter].currentCost > this.selectedSPCPowers[powerCounter].switchableWith.currentCost - 2) {
+					this.validationReport.push(
+						this.getTranslation("CHARGEN_VALIDATION_SPC_SWITCH").replace(
+							"{value}", this.selectedSPCPowers[powerCounter].local_name
+						)
+					);
+					this.isValid = false;
+				}
+			} else {
+				this.SPCCurrentPowerPoints -= this.selectedSPCPowers[powerCounter].currentCost;
 			}
+
+
 
 			if( this.selectedSPCPowers[powerCounter].charEffect ) {
 				this.selectedSPCPowers[powerCounter].charEffect( this, this.selectedSPCPowers[powerCounter]);
 			}
+		}
+
+		if( this.SPCCurrentPowerPoints < 0 ) {
+			this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_SPC_OVER_POWER_POINTS") );
+			this.isValid = false;
 		}
 	}
 }
@@ -2519,21 +2544,21 @@ savageCharacter.prototype.init = function(useLang){
 	this.spcGenericModifiers.push( {
 		"local_name": this.getTranslation("SPC_MOD_CONTIGENT"),
 		// "points": Array(-1,-2)
-		"points": 0,
+		"points": [0,-1,-2],
 		"currentCost": 0
 	});
 
 	this.spcGenericModifiers.push( {
 		"local_name": this.getTranslation("SPC_MOD_DEVICE"),
 		//~ "points": Array(-1,-2)
-		"points": 0,
+		"points": [0,-1,-2],
 		"currentCost": 0
 	});
 
 	this.spcGenericModifiers.push( {
 		"local_name": this.getTranslation("SPC_MOD_LIMITATION"),
 		//~ "points": Array(-1,-2)
-		"points": 0,
+		"points": [0,-1,-2],
 		"currentCost": 0
 	});
 
@@ -2545,7 +2570,7 @@ savageCharacter.prototype.init = function(useLang){
 
 	this.spcGenericModifiers.push( {
 		"local_name": this.getTranslation("SPC_MOD_RTA"),
-		"points": 1,
+		"points": 2,
 		"currentCost": 0
 	});
 
@@ -2564,6 +2589,7 @@ savageCharacter.prototype.init = function(useLang){
 	this.spcGenericModifiers.push( {
 		"local_name": this.getTranslation("SPC_MOD_SWITCHABLE"),
 		"points": 2,
+		"switchable": 1,
 		"currentCost": 0
 	});
 
@@ -2621,6 +2647,8 @@ savageCharacter.prototype.init = function(useLang){
 		savageWorldsSPCPowers[spcCounter].modifiersObj =  JSON.parse(savageWorldsSPCPowers[spcCounter].modifiers)
 		for( var modCounter = 0; modCounter < savageWorldsSPCPowers[spcCounter].modifiersObj.length; modCounter++ ) {
 			savageWorldsSPCPowers[spcCounter].modifiersObj[ modCounter ].local_name = this.getLocalName( savageWorldsSPCPowers[spcCounter].modifiersObj[ modCounter ].name )
+			if( savageWorldsSPCPowers[spcCounter].modifiersObj[ modCounter ].points[0] == "[" )
+					savageWorldsSPCPowers[spcCounter].modifiersObj[ modCounter ].points = JSON.parse( 	savageWorldsSPCPowers[spcCounter].modifiersObj[ modCounter ].points );
 		}
 
 		savageWorldsSPCPowers[spcCounter].genericModifiersObj = angular.copy( this.spcGenericModifiers );
@@ -3221,6 +3249,7 @@ savageCharacter.prototype.removeGear = function(indexNumber) {
 // Validate does both calculation and validation of the character as per the base rules and settings
 savageCharacter.prototype.validate = function() {
 	this.isValid = true;
+	this.validSPCoverLimitShown = false;
 	this.validationReport = Array();
 	this.warningReport = Array();
 	this.powerAlterations = Array();
@@ -3250,23 +3279,6 @@ savageCharacter.prototype.validate = function() {
 	this.usesRiftsCreation = false;
 	this.usesSPCCreation = false;
 
-	// for( key in this.books ) {
-	// 	if( this.books[key].inUse ) {
-	// 		if( this.books[key].uses_rifts_creation > 0 )
-	// 			this.usesRiftsCreation = true;
-	// 		if( this.books[key].uses_spc_creation > 0 )
-	// 			this.usesSPCCreation = true;
-	// 		if( this.books[key].usesGutsSkill > 0 )
-	// 			this.usesGutsSkill = true;
-	// 		if( this.books[key].uses_sanity > 0)
-	// 			this.usesSanity = true;
-	// 	}
-	// }
-	// console.log( "this.usesSPCCreation", this.usesSPCCreation);
-	// console.log( "this.usesGutsSkill", this.usesGutsSkill);
-	// console.log( "this.usesRiftsCreation", this.usesRiftsCreation);
-	// console.log( "this.usesSanity", this.usesSanity);
-	// Savage Worlds Deluxe is ALWAYS in use.
 	swDeluxe = get_book_by_id( 1 ) ;
 	swDeluxe.inUse = true;
 
@@ -3622,7 +3634,7 @@ savageCharacter.prototype.validate = function() {
 			) {
 
 				if( typeof(this.powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank) != "undefined" ) {
-					console.log("!", this.powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank, this.XP.rankValue);
+					//console.log("!", this.powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank, this.XP.rankValue);
 					if( this.powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank <= this.XP.rankValue  )
 						 savageWorldsPowers[abCounter].selectable = true;
 					else
@@ -3633,8 +3645,8 @@ savageCharacter.prototype.validate = function() {
 					else
 						 savageWorldsPowers[abCounter].selectable = false;
 				}
-				console.log("this.powerAlterations", this.powerAlterations[ savageWorldsPowers[abCounter].id ]);
-				console.log("savageWorldsPowers[abCounter]", abCounter, savageWorldsPowers[abCounter]);
+			//	console.log("this.powerAlterations", this.powerAlterations[ savageWorldsPowers[abCounter].id ]);
+			//	console.log("savageWorldsPowers[abCounter]", abCounter, savageWorldsPowers[abCounter]);
 			} else {
 
 				if( savageWorldsPowers[abCounter].rank <= this.XP.rankValue  )
@@ -4407,11 +4419,11 @@ Gear: Binoculars (in cabin), body armor (+4, hidden in cabin), blaster pistol (R
 	// Traits
 		// Attributes
 		html += "<strong>" + this.getTranslation("GENERAL_ATTRIBUTES") + ":</strong> ";
-			html += this.getTranslation("ATTRIBUTE_AGILITY") + ": " + getDiceValue( this.attributes.agility, this.useLang).local_label + ", ";
-			html += this.getTranslation("ATTRIBUTE_SMARTS") + ": " +  getDiceValue( this.attributes.smarts, this.useLang).local_label + ", ";
-			html += this.getTranslation("ATTRIBUTE_SPIRIT") + ": " +  getDiceValue( this.attributes.spirit, this.useLang).local_label + ", ";
-			html += this.getTranslation("ATTRIBUTE_STRENGTH") + ": " +  getDiceValue( this.attributes.strength, this.useLang).local_label + ", ";
-			html += this.getTranslation("ATTRIBUTE_VIGOR") + ": " +  getDiceValue( this.attributes.vigor, this.useLang).local_label + " ";
+			html += this.getTranslation("ATTRIBUTE_AGILITY") + ": " +  this.displayAttributes.agility.local_label + ", ";
+			html += this.getTranslation("ATTRIBUTE_SMARTS") + ": " +  this.displayAttributes.smarts.local_label + ", ";
+			html += this.getTranslation("ATTRIBUTE_SPIRIT") + ": " +   this.displayAttributes.spirit.local_label + ", ";
+			html += this.getTranslation("ATTRIBUTE_STRENGTH") + ": " +   this.displayAttributes.strength.local_label + ", ";
+			html += this.getTranslation("ATTRIBUTE_VIGOR") + ": " +   this.displayAttributes.vigor.local_label + " ";
 		html += "<br />\n";
 
 		// Skills
@@ -4507,7 +4519,7 @@ Gear: Binoculars (in cabin), body armor (+4, hidden in cabin), blaster pistol (R
 				html += this.selectedHandWeapons[gCount].local_name;
 				// TODO: reach and damage
 				html += " (";
-				console.log(this.selectedHandWeapons[gCount]);
+			//  	console.log(this.selectedHandWeapons[gCount]);
 				html += "Damage:  " + this.selectedHandWeapons[gCount].displayDamage.toString();
 				if( this.selectedHandWeapons[gCount].reach > 0 )
 					html += ", Reach:  " +  this.selectedHandWeapons[gCount].reach;
@@ -4619,52 +4631,75 @@ Gear: Binoculars (in cabin), body armor (+4, hidden in cabin), blaster pistol (R
 			powerLevel = this.SPCPowerLevels[ this.SPCSelectedPowerLevel ].name + " Hero";
 			if( this.SPCRisingStars )
 				powerLevel += ", A Rising Star";
-			html += "<br /><h5>Super Hero Powers (" + powerLevel + ")</h5>";
+			html += "<br /><h5>Super Hero Powers (" + powerLevel;
+
+			if( this.SPCTakenExtraPowerPoints ) {
+				html += ", Super Karma Taken";
+			}
+
+			html  += ")</h5>";
 
 			for( var powerCounter = 0; powerCounter < this.selectedSPCPowers.length; powerCounter++) {
-
-				//~ var modifierObj = Array();
-				//~ for( var modCounter = 0; modCounter < this.selectedSPCPowers[powerCounter].modifiersObj.length; modCounter++) {
-
-					//~ modifierObj[modCounter] = {
-						//~ //desc: this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].description,
-						//~ cost: this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost,
-					//~ }
-				//~ }
-
-				//~ var genericModifiersObj = Array();
-				//~ for( var modCounter = 0; modCounter < this.selectedSPCPowers[powerCounter].genericModifiersObj.length; modCounter++) {
-
-					//~ genericModifiersObj[modCounter] = {
-						//~ //desc: this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].description,
-						//~ cost: this.selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost,
-					//~ }
-				//~ }
 
 				var exportItem = {
 					id: this.selectedSPCPowers[powerCounter].id,
 					level: this.selectedSPCPowers[powerCounter].selectedLevel,
 					desc: this.selectedSPCPowers[powerCounter].description,
 					customName: this.selectedSPCPowers[powerCounter].custom_name,
-					//modifiers: modifierObj,
-					//genericModifiers: genericModifiersObj,
+					switchableWith: this.selectedSPCPowers[powerCounter].switchableWith,
 					boostedAttribute: this.selectedSPCPowers[powerCounter].boosted_attribute,
 					boostedSkill: this.selectedSPCPowers[powerCounter].boosted_skill,
 					boostedSkillSpecialty: this.selectedSPCPowers[powerCounter].boosted_specialty
 				}
 
 				//exportObject.spcPowers.push( exportItem );
-				if( this.selectedSPCPowers[powerCounter].custom_name != "" && this.selectedSPCPowers[powerCounter].custom_name != this.selectedSPCPowers[powerCounter].local_name )
-					html += "<strong>" + this.selectedSPCPowers[powerCounter].custom_name + " (" +  this.selectedSPCPowers[powerCounter].local_name + ")";
-				else
-					html += "<strong>" +  this.selectedSPCPowers[powerCounter].local_name;
+				if(
+					this.selectedSPCPowers[powerCounter].custom_name != ""
+						&&
 
-				if( this.selectedSPCPowers[powerCounter].per_level ) {
-					html += " Level " + this.selectedSPCPowers[powerCounter].selectedLevel;
+					this.selectedSPCPowers[powerCounter].custom_name != this.selectedSPCPowers[powerCounter].local_name
+				) {
+					html += "<strong>" + this.selectedSPCPowers[powerCounter].custom_name + " (" +  this.selectedSPCPowers[powerCounter].local_name;
+
+					if( this.selectedSPCPowers[powerCounter].boosted_attribute ) {
+						attribute = this.selectedSPCPowers[powerCounter].boosted_attribute.charAt(0).toUpperCase() + this.selectedSPCPowers[powerCounter].boosted_attribute.slice(1);
+						html += ": " + attribute ;
+					}
+
+					html += ")";
+				} else {
+					html += "<strong>" +  this.selectedSPCPowers[powerCounter].local_name;
+					if( this.selectedSPCPowers[powerCounter].boosted_attribute ) {
+						attribute = this.selectedSPCPowers[powerCounter].boosted_attribute.charAt(0).toUpperCase() + this.selectedSPCPowers[powerCounter].boosted_attribute.slice(1);
+						html += ": " + attribute ;
+					}
 				}
 
-				html += " - " + this.selectedSPCPowers[powerCounter].currentCost + " points</strong><br />\n";
+
+				if( this.selectedSPCPowers[powerCounter].per_level ) {
+					html += " - Level " + this.selectedSPCPowers[powerCounter].selectedLevel;
+				}
+
+
+
+
+				html += " - " + this.selectedSPCPowers[powerCounter].currentCost + " points</strong>";
+				if( this.selectedSPCPowers[powerCounter].switchableWith ) {
+					html += " " + this.getTranslation("GENERAL_NOT_TALLIED_PARENTH");
+				}
+
+				html += "<br />\n";
+
+				if( this.selectedSPCPowers[powerCounter].description != "")
+					html += this.selectedSPCPowers[powerCounter].description.replace("\n", "<br />\n") + "<br />\n";
+
+
+
 				html += "<ul>";
+				if( this.selectedSPCPowers[powerCounter].switchableWith ) {
+					html += "<li>Switchable With: " + this.selectedSPCPowers[powerCounter].switchableWith.local_name + "</li>";
+				}
+
 
 				for( var modCounter = 0; modCounter < this.selectedSPCPowers[powerCounter].modifiersObj.length; modCounter++) {
 					if( this.selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost != 0) {
@@ -4693,7 +4728,8 @@ Gear: Binoculars (in cabin), body armor (+4, hidden in cabin), blaster pistol (R
 
 				html += "</ul>";
 			}
-
+			if( this.SPCCurrentPowerPoints != 0 )
+				html += "<strong>Remaining Power Points</strong>: " + this.SPCCurrentPowerPoints + "<br />\n";
 		}
 
 	return html;
@@ -4973,7 +5009,9 @@ savageCharacter.prototype.importJSON = function( jsonString ) {
 					boostedSkill = importObject.spcPowers[ importCounter ].boostedSkill;
 					boostedSkillSpecialty = importObject.spcPowers[ importCounter ].boostedSkillSpecialty;
 
-					this.addSPCPower( powerID, customName, descriptionText, level, modifiers, genericModifiers, boostedAttribute,  boostedSkill, boostedSkillSpecialty );
+					switchableWith = importObject.spcPowers[importCounter].switchableWith;
+
+					this.addSPCPower( powerID, customName, descriptionText, level, modifiers, genericModifiers, switchableWith, boostedAttribute,  boostedSkill, boostedSkillSpecialty );
 				}
 			}
 
@@ -5338,12 +5376,20 @@ savageCharacter.prototype.exportJSON = function(noUUID) {
 					}
 				}
 
+				switchableWith = "";
+				if( this.selectedSPCPowers[powerCounter].switchableWith && this.selectedSPCPowers[powerCounter].switchableWith.tag ) {
+					switchableWith = {
+						"tag": this.selectedSPCPowers[powerCounter].switchableWith.tag,
+						"internalID": this.selectedSPCPowers[powerCounter].switchableWith.internalID
+					};
+				}
 
 				var exportItem = {
 					id: this.selectedSPCPowers[powerCounter].id,
 					level: this.selectedSPCPowers[powerCounter].selectedLevel,
 					desc: this.selectedSPCPowers[powerCounter].description,
 					customName: this.selectedSPCPowers[powerCounter].custom_name,
+					switchableWith: switchableWith,
 					modifiers: modifierObj,
 					genericModifiers: genericModifiersObj,
 					boostedAttribute: this.selectedSPCPowers[powerCounter].boosted_attribute,
@@ -5413,7 +5459,7 @@ savageCharacter.prototype.exportJSON = function(noUUID) {
 		}
 	}
 
-
+//	console.log( exportObject );
 	return JSON.stringify( exportObject );
 }
 
@@ -6172,7 +6218,7 @@ savageCharacter.prototype.setUsedDuringCombat = function( itemType, gearIndex ) 
 		this.selectedMundaneGear[gearIndex].droppedDuringCombat = false;
 }
 
-savageCharacter.prototype.addSPCPower = function( powerID, customName, descriptionText, level, modifiers, genericModifiers, boostedAttribute, boostedSkill, boostedSkillSpecialty ) {
+savageCharacter.prototype.addSPCPower = function( powerID, customName, descriptionText, level, modifiers, genericModifiers, switchableWith, boostedAttribute, boostedSkill, boostedSkillSpecialty ) {
 	if( !descriptionText )
 		descriptionText = "";
 	if( !level )
@@ -6214,6 +6260,18 @@ savageCharacter.prototype.addSPCPower = function( powerID, customName, descripti
 			addPower.boosted_attribute = "";
 			addPower.boosted_skill = "";
 			addPower.boosted_skill_specialty = "";
+			addPower.switchableWith = "";
+
+			if( switchableWith && switchableWith.internalID ) {
+
+				if( this.selectedSPCPowers[switchableWith.internalID] )
+					addPower.switchableWith = this.selectedSPCPowers[switchableWith.internalID];
+				// for( var slcCounter = 0; slcCounter < this.selectedSPCPowers.length; slcCounter++) {
+				//
+				// 	if( this.selectedSPCPowers.)
+				// }
+			}
+
 			if( boostedAttribute )
 				addPower.boosted_attribute = boostedAttribute;
 
@@ -8165,7 +8223,7 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 
 
 			$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel++;
-			if( $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level < 0 && $scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel > $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level) {
+			if( $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level > 1 && $scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel >= $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level) {
 				$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel = $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level;
 			}
 			$scope.validateAndSave();
@@ -8187,6 +8245,21 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 			$scope.validateAndSave();
 		}
 
+		$scope.getTypeOf = function(val){ return typeof val; };
+
+		$scope.isAnArray = function(val){
+			if(  typeof(val) == "object" || typeof(val) == "object")
+			 	return true;
+			else {
+				return false;
+			}
+		};
+
+		$scope.isSwitchablePower = function(item){
+		    // return function(item){
+		      return item["switchable"] > 0;
+		    // }
+		};
 
 	}
 ;
@@ -39460,6 +39533,10 @@ availableLanguages.push ({
 			SPC_SELECT_SKILL: 'Select Skill',
 			CHARGEN_STARTING_WEALTH: 'Starting Wealth',
 			GENERAL_STAT_BLOCK: 'Stat Block',
+			GENERAL_NOT_TALLIED_PARENTH: '(not tallied)',
+			SPC_SWITCHABLE_WITH: 'Switchable with power',
+			GENERAL_NOT_SWITCHABLE_PAREN: '(Not Switchable)',
+			CHARGEN_VALIDATION_SPC_SWITCH: 'Super Power \'{value}\' cannot be more points than the parent switchable power minus the Switchable Modification.',
 
 	}
 
@@ -43840,7 +43917,7 @@ var savageWorldsSPCPowers = Array(
 		 'tag': 'armor',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
-		 'modifiers': '[{"name":{"en-US":"Hardy"},"points":"3","per_level":"0"},{"name":{"en-US":"Heavy Armor"},"points":"4","per_level":"0"},{"name":{"en-US":"Partial Protection"},"points":"0","per_level":"0"}]',
+		 'modifiers': '[{"name":{"en-US":"Hardy"},"points":"3","per_level":"0"},{"name":{"en-US":"Heavy Armor"},"points":"4","per_level":"0"},{"name":{"en-US":"Partial Protection"},"points":"[0,-1,-2]","per_level":"0"}]',
 charEffect: function( charObject, powerObject ) {
 	// Affect Character Object Code here
 	charObject.derived.armor += powerObject.selectedLevel * 2;
@@ -43870,11 +43947,11 @@ charEffect: function( charObject, powerObject ) {
 		 'page': 'p22',
 		 'cost': '2',
 		 'per_level': '1',
-		 'max_level': '6',
+		 'max_level': '5',
 		 'tag': 'attack-ranged',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
-		 'modifiers': '[{"name":{"en-US":"Area Effect"},"points":"0","per_level":"0"},{"name":{"en-US":"Armor Piercing"},"points":"1","per_level":"0"},{"name":{"en-US":"Cone"},"points":"0","per_level":"0"},{"name":{"en-US":"Enhanced Damage"},"points":"4","per_level":"0"},{"name":{"en-US":"Focus"},"points":"3","per_level":"0"},{"name":{"en-US":"Heavy Weapon"},"points":"1","per_level":"0"},{"name":{"en-US":"Lethal"},"points":"-1","per_level":"0"},{"name":{"en-US":"Range"},"points":"0","per_level":"0"},{"name":{"en-US":"Rate of Fire"},"points":"0","per_level":"0"},{"name":{"en-US":"Requires Material"},"points":"0","per_level":"0"}]',
+		 'modifiers': '[{"name":{"en-US":"Area Effect"},"points":"0","per_level":"0"},{"name":{"en-US":"Armor Piercing"},"points":"1","per_level":"0"},{"name":{"en-US":"Cone"},"points":"[0,1]","per_level":"0"},{"name":{"en-US":"Enhanced Damage"},"points":"4","per_level":"0"},{"name":{"en-US":"Focus"},"points":"3","per_level":"0"},{"name":{"en-US":"Heavy Weapon"},"points":"1","per_level":"0"},{"name":{"en-US":"Lethal"},"points":"-1","per_level":"0"},{"name":{"en-US":"Range"},"points":"0","per_level":"0"},{"name":{"en-US":"Rate of Fire"},"points":"0","per_level":"0"},{"name":{"en-US":"Requires Material"},"points":"0","per_level":"0"}]',
 },
 {
 		 'id': 9,
@@ -43904,7 +43981,7 @@ charEffect: function( charObject, powerObject ) {
 		 'tag': 'broadcast',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
-		 'modifiers': '[{"name":{"en-US":"Manipulation"},"points":"0","per_level":"0"},{"name":{"en-US":"One Channel"},"points":"-1","per_level":"0"},{"name":{"en-US":"Range"},"points":"1","per_level":"0"}]',
+		 'modifiers': '[{"name":{"en-US":"Manipulation"},"points":"[2,4]","per_level":"0"},{"name":{"en-US":"One Channel"},"points":"-1","per_level":"0"},{"name":{"en-US":"Range"},"points":"1","per_level":"0"}]',
 },
 {
 		 'id': 11,
