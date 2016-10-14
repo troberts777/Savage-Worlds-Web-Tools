@@ -8,11 +8,19 @@ webApp = angular.module(
 		'$translateProvider',
 		function ($routeProvider, $translateProvider, $scope, $http) {
 
-			users_preferred_language = "en-US";
+			users_preferred_language = "en-us";
 			if( window.navigator.userLanguage )
 				users_preferred_language = window.navigator.userLanguage;
 			if( navigator.language )
 				users_preferred_language = navigator.language;
+
+			upl = users_preferred_language.split("-", 2);
+			if(upl[0] && upl[1]) {
+				users_preferred_language = upl[0] + "-" + upl[1].toUpperCase();
+			} else {
+					users_preferred_language = "en-US";
+			}
+
 			if( localStorage && localStorage["users_preferred_language"] ) {
 				users_preferred_language = localStorage["users_preferred_language"];
 			} else {
@@ -249,4 +257,3 @@ webApp = angular.module(
 		}
 	]
 );
-

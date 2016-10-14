@@ -43,6 +43,8 @@ savageCharacter.prototype.calcSPC = function() {
 			}
 		}
 
+		this.SPCStartingPowerPoints = this.SPCCurrentPowerPoints;
+
 		for( var powerCounter = 0; powerCounter < this.selectedSPCPowers.length; powerCounter++) {
 			this.selectedSPCPowers[powerCounter].currentCost = this.selectedSPCPowers[powerCounter].cost  / 1* this.selectedSPCPowers[powerCounter].selectedLevel / 1;
 			for( var modCounter = 0; modCounter < this.selectedSPCPowers[powerCounter].modifiersObj.length; modCounter++) {

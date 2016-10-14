@@ -234,7 +234,7 @@ charEffect: function( charObject, powerObject ) {
 		 'tag': 'copycat',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
-		 'modifiers': '[{"name":{"en-US":"Range"},"points":"2","per_level":"0"},{"name":{"en-US":"Devices"},"points":"2","per_level":"0"},{"name":{"en-US":"Duration"},"points":"3","per_level":"0"},{"name":{"en-US":"Magician"},"points":"2","per_level":"0"},{"name":{"en-US":"Nemesis"},"points":"1","per_level":"0"},{"name":{"en-US":"Overly Accurate"},"points":"-2","per_level":"0"},{"name":{"en-US":"Uncontrolled"},"points":"-2","per_level":"0"},{"name":{"en-US":"Versatility"},"points":"0","per_level":"0"}]',
+		 'modifiers': '[{"name":{"en-US":"Range"},"points":"2","per_level":"0"},{"name":{"en-US":"Devices"},"points":"2","per_level":"0"},{"name":{"en-US":"Duration"},"points":"3","per_level":"0"},{"name":{"en-US":"Magician"},"points":"2","per_level":"0"},{"name":{"en-US":"Nemesis"},"points":"1","per_level":"0"},{"name":{"en-US":"Overly Accurate"},"points":"-2","per_level":"0"},{"name":{"en-US":"Uncontrolled"},"points":"-2","per_level":"0"},{"name":{"en-US":"Versatility"},"points":"[0,1,2]","per_level":"0"}]',
 },
 {
 		 'id': 15,
@@ -294,7 +294,7 @@ charEffect: function( charObject, powerObject ) {
 		 'tag': 'deflection',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
-		 'modifiers': '[{"name":{"en-US":"Protector"},"points":"0","per_level":"0"}]',
+		 'modifiers': '[{"name":{"en-US":"Protector"},"points":"[0,1,2]","per_level":"0"}]',
 },
 {
 		 'id': 19,
@@ -399,7 +399,7 @@ charEffect: function( charObject, powerObject ) {
 		 'tag': 'ensnare',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
-		 'modifiers': '[{"name":{"en-US":"Area Effect"},"points":"0","per_level":"0"},{"name":{"en-US":"Very Strong"},"points":"2","per_level":"0"}]',
+		 'modifiers': '[{"name":{"en-US":"Area Effect"},"points":"[2,4]","per_level":"0"},{"name":{"en-US":"Very Strong"},"points":"2","per_level":"0"}]',
 },
 {
 		 'id': 26,
@@ -534,7 +534,7 @@ charEffect: function( charObject, powerObject ) {
 		 'tag': 'growth',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
-		 'modifiers': '[{"name":{"en-US":"Big Fists"},"points":"0","per_level":"0"},{"name":{"en-US":"Fast Growth"},"points":"2","per_level":"0"},{"name":{"en-US":"Long Stride"},"points":"2","per_level":"0"},{"name":{"en-US":"Monster"},"points":"-2","per_level":"0"}]',
+		 'modifiers': '[{"name":{"en-US":"Big Fists"},"points":"[0,1,2]","per_level":"0"},{"name":{"en-US":"Fast Growth"},"points":"2","per_level":"0"},{"name":{"en-US":"Long Stride"},"points":"2","per_level":"0"},{"name":{"en-US":"Monster"},"points":"-2","per_level":"0"}]',
 },
 {
 		 'id': 35,
@@ -549,7 +549,7 @@ charEffect: function( charObject, powerObject ) {
 		 'tag': 'healing',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
-		 'modifiers': '[{"name":{"en-US":"Cure"},"points":"3","per_level":"0"},{"name":{"en-US":"Refresh"},"points":"0","per_level":"0"},{"name":{"en-US":"Restoration"},"points":"2","per_level":"0"},{"name":{"en-US":"Resurrection"},"points":"8","per_level":"0"}]',
+		 'modifiers': '[{"name":{"en-US":"Cure"},"points":"3","per_level":"0"},{"name":{"en-US":"Refresh"},"points":"[0,3,5]","per_level":"0"},{"name":{"en-US":"Restoration"},"points":"2","per_level":"0"},{"name":{"en-US":"Resurrection"},"points":"8","per_level":"0"}]',
 },
 {
 		 'id': 36,
@@ -579,7 +579,7 @@ charEffect: function( charObject, powerObject ) {
 		 'tag': 'illusion',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
-		 'modifiers': '[{"name":{"en-US":"Film Quality"},"points":"1","per_level":"0"},{"name":{"en-US":"Obscurement"},"points":"0","per_level":"0"},{"name":{"en-US":"System Shock"},"points":"2","per_level":"0"},{"name":{"en-US":"Targeted"},"points":"-1","per_level":"0"}]',
+		 'modifiers': '[{"name":{"en-US":"Film Quality"},"points":"1","per_level":"0"},{"name":{"en-US":"Obscurement"},"points":"[0,2,4]","per_level":"0"},{"name":{"en-US":"System Shock"},"points":"2","per_level":"0"},{"name":{"en-US":"Targeted"},"points":"-1","per_level":"0"}]',
 },
 {
 		 'id': 77,
@@ -684,7 +684,7 @@ charEffect: function( charObject, powerObject ) {
 		 'tag': 'invisibility',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
-		 'modifiers': '[{"name":{"en-US":"Permanent"},"points":"-2","per_level":"0"},{"name":{"en-US":"Personal"},"points":"-2","per_level":"0"},{"name":{"en-US":"Projection"},"points":"0","per_level":"0"}]',
+		 'modifiers': '[{"name":{"en-US":"Permanent"},"points":"-2","per_level":"0"},{"name":{"en-US":"Personal"},"points":"-2","per_level":"0"},{"name":{"en-US":"Projection"},"points":"[0,4,6]","per_level":"0"}]',
 },
 {
 		 'id': 44,
@@ -759,7 +759,7 @@ charEffect: function( charObject, powerObject ) {
 		 'tag': 'mind-control',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
-		 'modifiers': '[{"name":{"en-US":"Memory Alteration"},"points":"0","per_level":"0"},{"name":{"en-US":"Multiple Minds"},"points":"2","per_level":"0"}]',
+		 'modifiers': '[{"name":{"en-US":"Memory Alteration"},"points":"[0,2,4]","per_level":"0"},{"name":{"en-US":"Multiple Minds"},"points":"2","per_level":"0"}]',
 },
 {
 		 'id': 49,
@@ -834,7 +834,7 @@ charEffect: function( charObject, powerObject ) {
 		 'tag': 'parry',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
-		 'modifiers': '[{"name":{"en-US":"Deflect"},"points":"4","per_level":"0"},{"name":{"en-US":"Protector"},"points":"0","per_level":"0"}]',
+		 'modifiers': '[{"name":{"en-US":"Deflect"},"points":"4","per_level":"0"},{"name":{"en-US":"Protector"},"points":"[0,1,2]","per_level":"0"}]',
 charEffect: function( charObject, powerObj ) {
 // Affect Character Object Code here
 //console.log( "powerObj", powerObj);
@@ -916,7 +916,7 @@ if( powerObj.selectedLevel )
 		 'tag': 'shape-change',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
-		 'modifiers': '[{"name":{"en-US":"Speech"},"points":"2","per_level":"0"},{"name":{"en-US":"Swarm"},"points":"0","per_level":"0"}]',
+		 'modifiers': '[{"name":{"en-US":"Speech"},"points":"2","per_level":"0"},{"name":{"en-US":"Swarm"},"points":"[0,2,4]","per_level":"0"}]',
 },
 {
 		 'id': 59,
@@ -996,7 +996,7 @@ if( powerObj.selectedLevel )
 {
 		 'id': 64,
 	 name: {
-		 'en-US': 'Sturn',
+		 'en-US': 'Stun',
 	},
 		 'book': 5,
 		 'page': 'p42',
@@ -1006,7 +1006,7 @@ if( powerObj.selectedLevel )
 		 'tag': 'stun',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
-		 'modifiers': '[{"name":{"en-US":"Area Effect"},"points":"0","per_level":"0"},{"name":{"en-US":"Selective"},"points":"2","per_level":"0"},{"name":{"en-US":"Strong"},"points":"1","per_level":"0"}]',
+		 'modifiers': '[{"name":{"en-US":"Area Effect"},"points":"[0,2,4]","per_level":"0"},{"name":{"en-US":"Selective"},"points":"2","per_level":"0"},{"name":{"en-US":"Strong"},"points":"1","per_level":"0"}]',
 },
 {
 		 'id': 65,
@@ -1096,7 +1096,7 @@ if( powerObj.selectedLevel )
 		 'tag': 'telepathy',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
-		 'modifiers': '[{"name":{"en-US":"Broadcast"},"points":"0","per_level":"0"},{"name":{"en-US":"Mind Reader"},"points":"3","per_level":"0"},{"name":{"en-US":"Switchboard"},"points":"2","per_level":"0"}]',
+		 'modifiers': '[{"name":{"en-US":"Broadcast"},"points":"[0,1,3]","per_level":"0"},{"name":{"en-US":"Mind Reader"},"points":"3","per_level":"0"},{"name":{"en-US":"Switchboard"},"points":"2","per_level":"0"}]',
 },
 {
 		 'id': 71,
@@ -1111,7 +1111,7 @@ if( powerObj.selectedLevel )
 		 'tag': 'teleport',
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
-		 'modifiers': '[{"name":{"en-US":"Range"},"points":"0","per_level":"0"},{"name":{"en-US":"Rapid Teleport"},"points":"3","per_level":"0"},{"name":{"en-US":"Teleport Other"},"points":"5","per_level":"0"},{"name":{"en-US":"Traverse"},"points":"3","per_level":"0"}]',
+		 'modifiers': '[{"name":{"en-US":"Range"},"points":"[0,2,4]","per_level":"0"},{"name":{"en-US":"Rapid Teleport"},"points":"3","per_level":"0"},{"name":{"en-US":"Teleport Other"},"points":"5","per_level":"0"},{"name":{"en-US":"Traverse"},"points":"3","per_level":"0"}]',
 },
 {
 		 'id': 72,
