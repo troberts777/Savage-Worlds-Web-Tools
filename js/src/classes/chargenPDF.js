@@ -11,6 +11,15 @@ function chargenPDF( characterObject) {
 	app_version = characterObject.appVersion;
 }
 
+chargenPDF.prototype.checkLineCol = function (lineN, colC) {
+	addPage = false;
+	if( lineN > 200)  {
+		lineN = 20;
+		colC = 155;
+
+	}
+	return [lineN, colC, addPage];
+}
 
 chargenPDF.prototype.createBasicLandscapePDF = function () {
 	this.currentDoc = new jsPDF("l");
@@ -58,6 +67,129 @@ chargenPDF.prototype.createBasicLandscapePDF = function () {
 
 	this.createHindrancesTable("Hindrances", 80, 172, 65, 28, 9);
 	this.createEdgesTable("Edges", 5, 172, 65, 28, 9);
+
+
+	if( this.currentCharacter.usesSPCCreation ) {
+		console.log( this.currentCharacter );
+		this.currentDoc.addPage();
+
+		this.currentDoc.lines([[0,0],[0,195]], 150, 5);
+
+		this.currentDoc.setFontSize(20);
+		this.currentDoc.setFontStyle("italic");
+		this.currentDoc.setFontStyle("bold");
+
+		this.currentDoc.text(20, 15, "Savage Worlds Character Sheet");
+		this.currentDoc.setFontSize(12);
+		this.currentDoc.setFontStyle("bold");
+		this.currentDoc.text(15, 21, "Super Powers of " + this.currentCharacter.name );
+		this.currentDoc.setFontStyle("normal");
+		if( this.currentCharacter.SPCRisingStars )
+			this.currentDoc.text(15, 26,  "• " + "Power Level " + this.currentCharacter.SPCPowerLevels[ this.currentCharacter.SPCSelectedPowerLevel / 1].name + " (Rising Stars)" );
+		else
+			this.currentDoc.text(15, 26,  "• " + "Power Level " + this.currentCharacter.SPCPowerLevels[ this.currentCharacter.SPCSelectedPowerLevel / 1].name );
+
+		this.currentDoc.text(15, 31,  "• " + "Available Points/Total Points: " + this.currentCharacter.SPCCurrentPowerPoints + " / " + this.currentCharacter.SPCStartingPowerPoints );
+		//this.currentDoc.lines([[0,0],[105,0]], 40, 31);
+
+
+
+		lineNumber = 35;
+		columnPoint = 10;
+
+
+		for( var powerCounter = 0; powerCounter < this.currentCharacter.selectedSPCPowers.length; powerCounter++) {
+			this.currentDoc.setFontSize(13);
+			currentPower = this.currentCharacter.selectedSPCPowers[powerCounter];
+			this.currentDoc.setFontStyle("bold");
+			//console.log( currentPower );
+			lineNumber += 4;
+				lineCol = this.checkLineCol( lineNumber, columnPoint);
+				lineNumber = lineCol[0];
+				columnPoint = lineCol[1];
+			if( currentPower.custom_name != "" && currentPower.custom_name != currentPower.select_option_name )
+				this.currentDoc.text(columnPoint, lineNumber, currentPower.custom_name + " (" + currentPower.select_option_name + ")");
+			else
+				this.currentDoc.text(columnPoint, lineNumber, currentPower.select_option_name );
+
+			this.currentDoc.setFontStyle("normal");
+			this.currentDoc.setFontSize(10);
+
+			// description
+			var splitDescription = this.currentDoc.splitTextToSize(currentPower.description, 100);
+			//console.log(splitDescription.length, splitDescription );
+
+			if( splitDescription.length > 0) {
+				lineNumber += 4;
+					lineCol = this.checkLineCol( lineNumber, columnPoint);
+					lineNumber = lineCol[0];
+					columnPoint = lineCol[1];
+				for( var  lcount = 0; lcount < splitDescription.length; lcount++) {
+					this.currentDoc.text(columnPoint, lineNumber, splitDescription[lcount]);
+					lineNumber += 4;
+						lineCol = this.checkLineCol( lineNumber, columnPoint);
+						lineNumber = lineCol[0];
+						columnPoint = lineCol[1];
+				}
+
+				lineNumber += 4;
+					lineCol = this.checkLineCol( lineNumber, columnPoint);
+					lineNumber = lineCol[0];
+					columnPoint = lineCol[1];
+			}
+
+			// Generic Modifiers
+			for( var modifierCount = 0; modifierCount < currentPower.genericModifiersObj.length; modifierCount++ ) {
+
+				if( currentPower.genericModifiersObj[modifierCount] && currentPower.genericModifiersObj[modifierCount].currentCost != 0) {
+					this.currentDoc.text(columnPoint + 5, lineNumber, "• " + currentPower.genericModifiersObj[modifierCount].local_name + " (ModCost: " + currentPower.genericModifiersObj[modifierCount].currentCost + ", Page: 18-19)" );
+					lineNumber += 4;
+						lineCol = this.checkLineCol( lineNumber, columnPoint);
+						lineNumber = lineCol[0];
+						columnPoint = lineCol[1];
+				}
+
+
+			}
+
+			// Power Modifiers
+			for( var modifierCount = 0; modifierCount < currentPower.modifiersObj.length; modifierCount++ ) {
+
+				if( currentPower.modifiersObj[modifierCount] && currentPower.modifiersObj[modifierCount].currentCost != 0) {
+					this.currentDoc.text(columnPoint + 5, lineNumber, "• " + currentPower.modifiersObj[modifierCount].local_name + " (ModCost: " + currentPower.modifiersObj[modifierCount].currentCost + ", Page: " + currentPower.page + ")" );
+					lineNumber += 4;
+						lineCol = this.checkLineCol( lineNumber, columnPoint);
+						lineNumber = lineCol[0];
+						columnPoint = lineCol[1];
+				}
+
+
+
+			}
+
+			// stats line
+			var statsLine = "";
+			if( currentPower.currentCost > 0 ) {
+				statsLine += "• " + "Points: " + currentPower.currentCost;
+			}
+			if( currentPower.per_level > 0 ) {
+				statsLine += ", Level: " + currentPower.selectedLevel;
+			}
+			if( currentPower.page != "") {
+				statsLine += ", Page: " + currentPower.page;
+			}
+
+			this.currentDoc.text(columnPoint + 5, lineNumber, statsLine );
+
+
+			// final spacing between powers..
+			lineNumber += 4;
+				lineCol = this.checkLineCol( lineNumber, columnPoint);
+				lineNumber = lineCol[0];
+				columnPoint = lineCol[1];
+			this.currentDoc.setFontStyle("normal");
+		}
+	}
 
 	// Footer
 	this.currentDoc.setFontSize(6);
@@ -306,8 +438,8 @@ chargenPDF.prototype.createAttributesAndSkillsTable = function( skillcols, left,
 		if(this.currentCharacter.skillList[skill_counter].attribute == "agility") {
 
 			currentSkill = this.currentCharacter.skillList[skill_counter];
-			console.log("currentSkill", currentSkill);
-			console.log( currentSkill.local_name, currentSkill.id + currentSkill.boost);
+			//console.log("currentSkill", currentSkill);
+			//console.log( currentSkill.local_name, currentSkill.id + currentSkill.boost);
 			if( currentSkill.value > 0 )
 				this.currentDoc.text(skillcols[0], top+13+currentSkillCount * skill_line_height, currentSkill.local_name + ": " + currentSkill.displayValue );
 			else

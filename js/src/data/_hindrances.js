@@ -417,6 +417,20 @@ charEffects: function (charObject) {
 },
 {
 	 name: {
+		 'en-US': 'Habit',
+	},
+	 tag: 'habit-major',
+	 page: 'p31',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 0,
+	 specify: 1,
+	 book: 1,
+
+},
+{
+	 name: {
 		 'en-US': 'Hard of Hearing',
 	},
 	 tag: 'hard-of-hearing-minor',

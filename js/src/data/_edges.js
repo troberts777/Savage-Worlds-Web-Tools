@@ -1901,7 +1901,16 @@ charEffects: function ( charObject ) {
 			attributes: {
 				smarts: 2
 			}
-		}
+		},
+		
+	
+charEffect: function( charObject ) {
+if( charObject.multipleLanguages )
+    charObject.knownLanguagesLimit = charObject.displayAttributes.smarts.value * 1.5;
+else
+    charObject.knownLanguagesLimit = charObject.displayAttributes.smarts.value;
+charObject.linguistSelected = true;
+}
 },
 {
 	 name: {

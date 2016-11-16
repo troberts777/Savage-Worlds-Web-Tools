@@ -1019,6 +1019,9 @@ savageCharacter.prototype.validate = function() {
 	this.skillPointsAvailable = 15;
 	this.skillPointsUsed = 0;
 
+	this.knownLanguagesLimit = 1;
+	this.linguistSelected = false;
+
 	this.encumbrance_multiplier = 5;
 
 	this.currentFunds = this.startingFunds;
@@ -2021,7 +2024,9 @@ savageCharacter.prototype.validate = function() {
 		this.selectedHandWeapons[gearCounter].toHitRollModifier -= this.loadModifier;
 	}
 
-	this.knownLanguagesLimit = this.displayAttributes.smarts.value / 2 + 1;
+
+	if( this.multipleLanguages == true && this.linguistSelected == false )
+		this.knownLanguagesLimit = this.displayAttributes.smarts.value / 2 + 1;
 	//console.log( "this.knownLanguagesLimit", this.knownLanguagesLimit );
 	for( langCounter = 0; langCounter < this.knownLanguagesLimit; langCounter++ ) {
 		if( typeof(this.knownLanguages[ langCounter]) == "undefined")
