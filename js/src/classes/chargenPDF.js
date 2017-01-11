@@ -695,10 +695,14 @@ chargenPDF.prototype.createWeaponTable = function( label, cols, left, top, numli
 	currentWeapons = this.currentCharacter.selectedHandWeapons;
 	currentWeapons = currentWeapons.concat(this.currentCharacter.selectedRangedWeapons);
 	for(w_counter = 0; w_counter < numlines; w_counter++) {
-
+		console.log( currentWeapons[w_counter] );
 		if(currentWeapons[w_counter]) {
-			if(currentWeapons[w_counter].name )
-				this.currentDoc.text(cols[0], top + 15 + w_counter * 4, currentWeapons[w_counter].local_name.toString());
+			if(currentWeapons[w_counter].name ) {
+				if( currentWeapons[w_counter].readiedLocation )
+					this.currentDoc.text(cols[0] - 2, top + 15 + w_counter * 4, "* " + currentWeapons[w_counter].local_name.toString());
+				else
+					this.currentDoc.text(cols[0], top + 15 + w_counter * 4, currentWeapons[w_counter].local_name.toString());
+			}
 
 			if(currentWeapons[w_counter].weight )
 				this.currentDoc.text(cols[1], top + 15 + w_counter * 4, currentWeapons[w_counter].weight.toString());

@@ -1590,10 +1590,14 @@ chargenPDF.prototype.createWeaponTable = function( label, cols, left, top, numli
 	currentWeapons = this.currentCharacter.selectedHandWeapons;
 	currentWeapons = currentWeapons.concat(this.currentCharacter.selectedRangedWeapons);
 	for(w_counter = 0; w_counter < numlines; w_counter++) {
-
+		console.log( currentWeapons[w_counter] );
 		if(currentWeapons[w_counter]) {
-			if(currentWeapons[w_counter].name )
-				this.currentDoc.text(cols[0], top + 15 + w_counter * 4, currentWeapons[w_counter].local_name.toString());
+			if(currentWeapons[w_counter].name ) {
+				if( currentWeapons[w_counter].readiedLocation )
+					this.currentDoc.text(cols[0] - 2, top + 15 + w_counter * 4, "* " + currentWeapons[w_counter].local_name.toString());
+				else
+					this.currentDoc.text(cols[0], top + 15 + w_counter * 4, currentWeapons[w_counter].local_name.toString());
+			}
 
 			if(currentWeapons[w_counter].weight )
 				this.currentDoc.text(cols[1], top + 15 + w_counter * 4, currentWeapons[w_counter].weight.toString());
@@ -3542,6 +3546,9 @@ savageCharacter.prototype.validate = function() {
 	this.skillPointsAvailable = 15;
 	this.skillPointsUsed = 0;
 
+	this.strainBoost = 0;
+	this.doubleStrain = 0;
+
 	this.knownLanguagesLimit = 1;
 	this.linguistSelected = false;
 
@@ -3589,6 +3596,7 @@ savageCharacter.prototype.validate = function() {
 		this.usesSanity = true;
 
 	this.usesStrain = false;
+
 	if( this.isSettingRuleEnabled( "cyberware-strain") )
 		this.usesStrain = true;
 
@@ -3756,6 +3764,7 @@ savageCharacter.prototype.validate = function() {
 		if( 1 + this.attributeBoost.vigor <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + this.attributeBoost.vigor )
 			this.diceValues.vigor.push( globalDiceValues[gdvc] );
 	}
+
 
 
 
@@ -4401,10 +4410,21 @@ savageCharacter.prototype.validate = function() {
 		vigor: getDiceValue( this.attributes.vigor + this.attributeBoost.vigor ),
 	};
 
+	
+	if( this.attributes.spirit + this.attributeBoost.spirit  <  this.attributes.vigor + this.attributeBoost.vigor  ) {
+		this.maxStrain = this.attributes.spirit + this.attributeBoost.spiri;
+	} else {
+		this.maxStrain = this.attributes.vigor + this.attributeBoost.vigor;
+	}
+	this.maxStrain += this.strainBoost;
+	if( this.doubleStrain > 0 )
+		this.maxStrain = this.maxStrain * 2;
+
 	// recalc derived toughness
 	this.derived.toughness_base = Math.floor(this.displayAttributes.vigor.value / 2) + 2;
 	//this.derived.toughness += this.attributeBoost.vigor; // will always be in steps of 2, so just add it ;)
 	this.derived.toughness += this.derived.toughness_base;
+
 
  	this.currentLoad = 0;
  	this.combatLoad = 0;
@@ -4520,6 +4540,11 @@ savageCharacter.prototype.validate = function() {
 			this.validationReport.push( invalidMessage );
 			this.isValid = false;
 		}
+	}
+
+	if( this.usesStrain ) {
+	this.currentStrain = 0;
+	this.maxStrain = 0;
 	}
 
 	if( this.derived.armor == 0) {
@@ -15997,6 +16022,530 @@ return true;
 },
 {
 	 name: {
+		 'en-US': 'Additional Action',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-kalian-action',
+	 page: 'p9',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Agile',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-rakashan-agile',
+	 page: 'p9',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.boostAttribute("agility");
+}
+},
+{
+	 name: {
+		 'en-US': 'Agility',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-avion-agility',
+	 page: 'p7',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.boostAttribute("agility", 1);
+}
+},
+{
+	 name: {
+		 'en-US': 'Aquatic',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-aquarian-aquatic',
+	 page: 'p7',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Armor',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-insectoid-armor',
+	 page: 'p9',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.derived.armor += 4;
+}
+},
+{
+	 name: {
+		 'en-US': 'Danger Sense',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-serran-danger-sense',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Environmental Resistance (Cold)',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-yeti-resistance',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Flight',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-avion-flight',
+	 page: 'p7',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Hardy',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-floran-hardy',
+	 page: 'p8',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Keen Senses',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-saurian-keen-senses',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Low Light Vision',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-rakashan-low-light',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Natural Weaponry',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-insectoid-natural-weapons',
+	 page: 'p9',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Natural Weaponry',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'scf-rakashan-natural-weaponry',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Natural Weaponry',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'scf-saurian-natural-weapon',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'No Vital Organs',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-floran-no-vitals',
+	 page: 'p8',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Parry +2',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-serran-parry',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.derived.parry += 2;
+}
+},
+{
+	 name: {
+		 'en-US': 'Regeneration',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-floran-regeneration',
+	 page: 'p8',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Size +2',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-aurax-size',
+	 page: 'p7',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+charObject.derived.toughness += 2;
+}
+},
+{
+	 name: {
+		 'en-US': 'Size +2',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-yeti-size',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.derived.toughness += 2;
+}
+},
+{
+	 name: {
+		 'en-US': 'Strong',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-aurax-strong',
+	 page: 'p7',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+charObject.boostAttribute("strength", 1);
+}
+},
+{
+	 name: {
+		 'en-US': 'Strong',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-yeti-strong',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.boostAttribute("strength");
+}
+},
+{
+	 name: {
+		 'en-US': 'Toughness',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-aquarian-toughness',
+	 page: '',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.derived.toughness += 2;
+}
+},
+{
+	 name: {
+		 'en-US': 'Undead',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-deader-undead',
+	 page: 'p8',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+charObject.derived.charisma += -2;
+charObject.derived.toughness += 2;
+}
+},
+{
+	 name: {
+		 'en-US': 'Atmosphereic Acclimation',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: 'low-g-wordler',
+	 tag: 'atmosphereic-acclimation',
+	 page: 'p12',
+	 racial: 0,
+	 reselectable: 1,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Cyber Tolerant',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: 'cyborg',
+	 conflicts_hindrance: 'ftl-sickness',
+	 tag: 'cyber-tolerant',
+	 page: 'p12',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.strainBoost += 4;
+}
+},
+{
+	 name: {
+		 'en-US': 'Cyborg',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: 'cyber-tolerant',
+	 conflicts_hindrance: '',
+	 tag: 'cyborg',
+	 page: 'p12',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.doubleStrain = 1;
+}
+},
+{
+	 name: {
+		 'en-US': 'Geared Up',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'geared-up',
+	 page: 'p12',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.currentFunds += 10000;
+}
+},
+{
+	 name: {
+		 'en-US': 'Gravitic Acclimation ',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'gravitic-acclimation ',
+	 page: 'p12',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+requires: function( characterObject) {
+// persuasionSkill = characterObject.getSkill("SKILL_PERSUASION");
+// if( persuasionSkill.value >= 8) // d4 = 1, d6 = 2, d8 = 3, d10 = 4, d12 = 5
+//     return true;
+//
+if( characterObject.displayAttributes.agility.value >= 6 )
+     return true;
+return false;
+},
+},
+{
+	 name: {
+		 'en-US': 'Rocket Jock',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'rocket-jock',
+	 page: 'pp12',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+requires: function( characterObject) {
+pilotingSkill = characterObject.getSkill("SKILL_PILOTING");
+shootingSkill = characterObject.getSkill("SKILL_SHOOTING");
+if( 
+    pilotingSkill.value >= 3 // d4 = 1, d6 = 2, d8 = 3, d10 = 4, d12 = 5
+     &&
+    shootingSkill.value >= 2 // d4 = 1, d6 = 2, d8 = 3, d10 = 4, d12 = 5
+) {
+     return true;
+}
+//
+//if( characterObject.displayAttributes.agility.value >= 8 )
+//     return true;
+return false;
+},
+},
+{
+	 name: {
 		 'en-US': 'The Best There Is',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -17531,6 +18080,450 @@ charEffects: function (charObject) {
 	 specify: 0,
 	 book: 3,
 
+},
+{
+	 name: {
+		 'en-US': 'Bloodthirsty',
+	},
+	 tag: 'sfc-rakashan-bloodthirsty',
+	 page: 'p9',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Cannot Speak',
+	},
+	 tag: 'sfc-insectoid-cannot-speak',
+	 page: 'p9',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Clumsy',
+	},
+	 tag: 'sfc-deader-clumsy',
+	 page: 'p8',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Cyber Resistant',
+	},
+	 tag: 'cyber-resistant',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'minor',
+	 racial: 0,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Dependency (Light)',
+	},
+	 tag: 'sfc-floran-dependency',
+	 page: 'p8',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Dependency (Water)',
+	},
+	 tag: 'sfc-aquarian-dependency',
+	 page: '',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Environmental Weakness (Cold)',
+	},
+	 tag: 'sfc-saurian-weakness-cold',
+	 page: 'p10',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Environmental Weakness (Fire/Heat)',
+	},
+	 tag: 'sfc-floran-env-weak',
+	 page: 'p8',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Environmental Weakness (Heat)',
+	},
+	 tag: 'sfc-yeti-weakness',
+	 page: 'p10',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Frail',
+	},
+	 tag: 'sfc-avion-frail',
+	 page: 'p7',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+charEffect: function( charObject ) {
+charObject.derived.toughness += -1;
+}
+},
+{
+	 name: {
+		 'en-US': 'Frail',
+	},
+	 tag: 'sfc-kalian-frail',
+	 page: 'p9',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.derived.toughness += -1;
+}
+},
+{
+	 name: {
+		 'en-US': 'FTL Sickness',
+	},
+	 tag: 'ftl-sickness',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'minor',
+	 racial: 0,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'High Tech (Major)',
+	},
+	 tag: 'high-tech-major',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 0,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'High Tech (Minor)',
+	},
+	 tag: 'high-tech-minor',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'minor',
+	 racial: 0,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'High Tech Hindrance',
+	},
+	 tag: 'sfc-floran-high-tech',
+	 page: 'p8',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Low Tech (Major)',
+	},
+	 tag: 'low-tech-major',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 0,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Low Tech (Minor)',
+	},
+	 tag: 'low-tech-minor',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 0,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Low Tech',
+	},
+	 tag: 'sfc-aurax-low-tech',
+	 page: 'p7',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Low Tech',
+	},
+	 tag: 'sfc-yeti-low-tech',
+	 page: 'p10',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Low-G Worlder',
+	},
+	 tag: 'low-g-wordler',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'minor',
+	 racial: 0,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Low-G Worlder',
+	},
+	 tag: 'sfc-avion-low-g-worlder',
+	 page: 'p7',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Outsider (Major)',
+	},
+	 tag: 'outsider-major',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 0,
+	 specify: 1,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Outsider Hindrance (Major)',
+	},
+	 tag: 'sfc-deader-outsider',
+	 page: 'p8',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Outsider Hindrance (Minor)',
+	},
+	 tag: 'sfc-insectoid-outsider',
+	 page: 'p9',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Poor Parry',
+	},
+	 tag: 'sfc-deader-poor-parry',
+	 page: 'p8',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.derived.parry += -2;
+}
+},
+{
+	 name: {
+		 'en-US': 'Racial Enemy',
+	},
+	 tag: 'sfc-rakashan-racial-enemy',
+	 page: 'p9',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Slow',
+	},
+	 tag: 'sfc-deader-slow',
+	 page: 'p8',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+charEffect: function( charObject ) {
+    charObject.derived.pace = 4;
+}
+},
+{
+	 name: {
+		 'en-US': 'Weak',
+	},
+	 tag: 'sfc-deader-weak',
+	 page: 'p8',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Weak',
+	},
+	 tag: 'sfc-serran-weak',
+	 page: 'p10',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Zero-G Sickness',
+	},
+	 tag: 'zero-g-sickness',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 0,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Zero-G Wordler',
+	},
+	 tag: 'zero-g-wordler',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 0,
+	 specify: 0,
+	 book: 4,
+
 }
 );
 
@@ -17580,9 +18573,6 @@ savageWorldsRaces = Array(
 	 id: 5,
 	 name: {
 		 'en-US': 'Avion',
-		 'pt-BR': '',
-		 'de-DE': '',
-		 'ru-RU': 'Авион',
 	},
 	 tag: '',
 	 page: 'p20',
@@ -17827,6 +18817,127 @@ savageWorldsRaces = Array(
 	 book: 3,
 	 edges: '["zombie-undead"]',
 	 hindrances: '["zombie-feast-of-flesh"]',
+},
+{
+	 id: 21,
+	 name: {
+		 'en-US': 'Aquarian',
+	},
+	 tag: '',
+	 page: '',
+	 book: 4,
+	 edges: '["sfc-aquarian-aquatic","sfc-aquarian-toughness"]',
+	 hindrances: '["sfc-aquarian-dependency"]',
+},
+{
+	 id: 22,
+	 name: {
+		 'en-US': 'Aurax ',
+	},
+	 tag: '',
+	 page: '',
+	 book: 4,
+	 edges: '["sfc-aurax-size","sfc-aurax-strong"]',
+	 hindrances: '["sfc-aurax-low-tech"]',
+},
+{
+	 id: 23,
+	 name: {
+		 'en-US': 'Avion',
+	},
+	 tag: '',
+	 page: '',
+	 book: 4,
+	 edges: '["sfc-avion-agility","sfc-avion-flight"]',
+	 hindrances: '["sfc-avion-frail","sfc-avion-low-g-worlder"]',
+},
+{
+	 id: 25,
+	 name: {
+		 'en-US': 'Deader',
+	},
+	 tag: '',
+	 page: '',
+	 book: 4,
+	 edges: '["sfc-deader-undead"]',
+	 hindrances: '["sfc-deader-clumsy","sfc-deader-outsider","sfc-deader-poor-parry","sfc-deader-slow","sfc-deader-weak"]',
+},
+{
+	 id: 26,
+	 name: {
+		 'en-US': 'Floran',
+	},
+	 tag: '',
+	 page: '',
+	 book: 4,
+	 edges: '["sfc-floran-hardy","sfc-floran-no-vitals","sfc-floran-regeneration"]',
+	 hindrances: '["sfc-floran-dependency","sfc-floran-env-weak","sfc-floran-high-tech"]',
+},
+{
+	 id: 28,
+	 name: {
+		 'en-US': 'Insectoid',
+	},
+	 tag: '',
+	 page: '',
+	 book: 4,
+	 edges: '["sfc-insectoid-armor","sfc-insectoid-natural-weapons"]',
+	 hindrances: '["sfc-insectoid-cannot-speak","sfc-insectoid-outsider"]',
+},
+{
+	 id: 29,
+	 name: {
+		 'en-US': 'Kalian',
+	},
+	 tag: '',
+	 page: '',
+	 book: 4,
+	 edges: '["sfc-kalian-action"]',
+	 hindrances: '["sfc-kalian-frail"]',
+},
+{
+	 id: 27,
+	 name: {
+		 'en-US': 'Rakashan',
+	},
+	 tag: '',
+	 page: '',
+	 book: 4,
+	 edges: '["sfc-rakashan-agile","sfc-rakashan-low-light","scf-rakashan-natural-weaponry"]',
+	 hindrances: '["sfc-rakashan-bloodthirsty","sfc-deader-poor-parry","sfc-rakashan-racial-enemy"]',
+},
+{
+	 id: 32,
+	 name: {
+		 'en-US': 'Saurian',
+	},
+	 tag: '',
+	 page: '',
+	 book: 4,
+	 edges: '["sfc-saurian-keen-senses","scf-saurian-natural-weapon"]',
+	 hindrances: '["sfc-saurian-weakness-cold"]',
+},
+{
+	 id: 30,
+	 name: {
+		 'en-US': 'Serran',
+	},
+	 tag: '',
+	 page: '',
+	 book: 4,
+	 edges: '["sfc-serran-danger-sense","sfc-serran-parry"]',
+	 hindrances: '["sfc-serran-weak"]',
+},
+{
+	 id: 31,
+	 name: {
+		 'en-US': 'Yeti',
+	},
+	 tag: '',
+	 page: '',
+	 book: 4,
+	 edges: '["sfc-yeti-resistance","sfc-yeti-size","sfc-yeti-strong"]',
+	 hindrances: '["sfc-yeti-weakness","sfc-yeti-low-tech"]',
 }
 );
 
@@ -32393,6 +33504,56 @@ DEVELOPERS: Do Not Edit or Pull Request this file, it is auto generated from a r
 var savageWorldsGearArmor = Array(
 {
 	 name: {
+		 'en-US': 'Body Armor',
+	},
+	 notes: {
+	},
+		 'tag': 'spc-body-armor',
+		 'book': 5,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 1,
+		 'type': 0,
+		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 1,
+		 'armor': 4,
+		 'armor2': 0,
+		 'covers_torso': 0,
+		 'covers_legs': 0,
+		 'covers_arms': 0,
+		 'covers_head': 0,
+		 'covers_face': 0,
+		 'weight': 4,
+		 'cost': 200,
+		 'is_rigid': 0
+},
+{
+	 name: {
+		 'en-US': 'Body Armor',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-body-armor',
+		 'book': 4,
+		 'page': 'p16',
+		 'class': 0,
+		 'general': 1,
+		 'type': 0,
+		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 1,
+		 'armor': 4,
+		 'armor2': 0,
+		 'covers_torso': 1,
+		 'covers_legs': 0,
+		 'covers_arms': 0,
+		 'covers_head': 0,
+		 'covers_face': 0,
+		 'weight': 4,
+		 'cost': 200,
+		 'is_rigid': 0
+},
+{
+	 name: {
 		 'en-US': 'Chain Hauberk (long coat)',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -32409,6 +33570,7 @@ var savageWorldsGearArmor = Array(
 		 'general': 1,
 		 'type': 1,
 		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
 		 'armor': 2,
 		 'armor2': 0,
 		 'covers_torso': 1,
@@ -32418,6 +33580,81 @@ var savageWorldsGearArmor = Array(
 		 'covers_face': 0,
 		 'weight': 25,
 		 'cost': 300,
+		 'is_rigid': 0
+},
+{
+	 name: {
+		 'en-US': 'Combat Armor',
+	},
+	 notes: {
+	},
+		 'tag': 'spc-combat-armor',
+		 'book': 5,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 1,
+		 'type': 0,
+		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 1,
+		 'armor': 6,
+		 'armor2': 0,
+		 'covers_torso': 0,
+		 'covers_legs': 0,
+		 'covers_arms': 0,
+		 'covers_head': 0,
+		 'covers_face': 0,
+		 'weight': 12,
+		 'cost': 800,
+		 'is_rigid': 0
+},
+{
+	 name: {
+		 'en-US': 'Combat Armor',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-combat-armor',
+		 'book': 4,
+		 'page': 'p16',
+		 'class': 0,
+		 'general': 1,
+		 'type': 0,
+		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 1,
+		 'armor': 6,
+		 'armor2': 0,
+		 'covers_torso': 1,
+		 'covers_legs': 1,
+		 'covers_arms': 1,
+		 'covers_head': 1,
+		 'covers_face': 1,
+		 'weight': 12,
+		 'cost': 800,
+		 'is_rigid': 0
+},
+{
+	 name: {
+		 'en-US': 'Energy Skin',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-energy-skin',
+		 'book': 4,
+		 'page': 'p16',
+		 'class': 0,
+		 'general': 1,
+		 'type': 0,
+		 'vs_lasers_only': 1,
+		 'neg_4ap_vs_ballistic': 0,
+		 'armor': 8,
+		 'armor2': 0,
+		 'covers_torso': 0,
+		 'covers_legs': 0,
+		 'covers_arms': 0,
+		 'covers_head': 0,
+		 'covers_face': 0,
+		 'weight': 5,
+		 'cost': 500,
 		 'is_rigid': 0
 },
 {
@@ -32438,6 +33675,7 @@ var savageWorldsGearArmor = Array(
 		 'general': 1,
 		 'type': 1,
 		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
 		 'armor': 2,
 		 'armor2': 4,
 		 'covers_torso': 1,
@@ -32447,6 +33685,56 @@ var savageWorldsGearArmor = Array(
 		 'covers_face': 0,
 		 'weight': 12,
 		 'cost': 80,
+		 'is_rigid': 0
+},
+{
+	 name: {
+		 'en-US': 'Force Field, Personal',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-force-field-personal',
+		 'book': 4,
+		 'page': 'p17',
+		 'class': 0,
+		 'general': 1,
+		 'type': 0,
+		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
+		 'armor': 4,
+		 'armor2': 0,
+		 'covers_torso': 1,
+		 'covers_legs': 1,
+		 'covers_arms': 1,
+		 'covers_head': 1,
+		 'covers_face': 1,
+		 'weight': 4,
+		 'cost': 2000,
+		 'is_rigid': 0
+},
+{
+	 name: {
+		 'en-US': 'Glide Suit',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-glide-suit',
+		 'book': 4,
+		 'page': 'p17',
+		 'class': 0,
+		 'general': 1,
+		 'type': 0,
+		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
+		 'armor': 1,
+		 'armor2': 0,
+		 'covers_torso': 1,
+		 'covers_legs': 1,
+		 'covers_arms': 1,
+		 'covers_head': 0,
+		 'covers_face': 0,
+		 'weight': 8,
+		 'cost': 1500,
 		 'is_rigid': 0
 },
 {
@@ -32467,6 +33755,7 @@ var savageWorldsGearArmor = Array(
 		 'general': 1,
 		 'type': 1,
 		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
 		 'armor': 8,
 		 'armor2': 0,
 		 'covers_torso': 1,
@@ -32496,6 +33785,7 @@ var savageWorldsGearArmor = Array(
 		 'general': 1,
 		 'type': 1,
 		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
 		 'armor': 6,
 		 'armor2': 0,
 		 'covers_torso': 1,
@@ -32525,6 +33815,7 @@ var savageWorldsGearArmor = Array(
 		 'general': 1,
 		 'type': 1,
 		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
 		 'armor': 4,
 		 'armor2': 8,
 		 'covers_torso': 1,
@@ -32554,6 +33845,7 @@ var savageWorldsGearArmor = Array(
 		 'general': 1,
 		 'type': 1,
 		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
 		 'armor': 2,
 		 'armor2': 4,
 		 'covers_torso': 1,
@@ -32583,6 +33875,7 @@ var savageWorldsGearArmor = Array(
 		 'general': 1,
 		 'type': 1,
 		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
 		 'armor': 1,
 		 'armor2': 0,
 		 'covers_torso': 1,
@@ -32612,6 +33905,7 @@ var savageWorldsGearArmor = Array(
 		 'general': 1,
 		 'type': 1,
 		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
 		 'armor': 3,
 		 'armor2': 0,
 		 'covers_torso': 0,
@@ -32641,6 +33935,7 @@ var savageWorldsGearArmor = Array(
 		 'general': 1,
 		 'type': 1,
 		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
 		 'armor': 3,
 		 'armor2': 0,
 		 'covers_torso': 0,
@@ -32670,6 +33965,7 @@ var savageWorldsGearArmor = Array(
 		 'general': 1,
 		 'type': 1,
 		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
 		 'armor': 3,
 		 'armor2': 0,
 		 'covers_torso': 0,
@@ -32699,6 +33995,7 @@ var savageWorldsGearArmor = Array(
 		 'general': 1,
 		 'type': 1,
 		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
 		 'armor': 3,
 		 'armor2': 0,
 		 'covers_torso': 1,
@@ -32728,6 +34025,7 @@ var savageWorldsGearArmor = Array(
 		 'general': 1,
 		 'type': 1,
 		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
 		 'armor': 3,
 		 'armor2': 0,
 		 'covers_torso': 0,
@@ -32757,6 +34055,7 @@ var savageWorldsGearArmor = Array(
 		 'general': 1,
 		 'type': 1,
 		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
 		 'armor': 3,
 		 'armor2': 0,
 		 'covers_torso': 0,
@@ -32786,6 +34085,7 @@ var savageWorldsGearArmor = Array(
 		 'general': 1,
 		 'type': 1,
 		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
 		 'armor': 12,
 		 'armor2': 0,
 		 'covers_torso': 1,
@@ -32815,6 +34115,7 @@ var savageWorldsGearArmor = Array(
 		 'general': 1,
 		 'type': 1,
 		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
 		 'armor': 14,
 		 'armor2': 0,
 		 'covers_torso': 1,
@@ -32844,6 +34145,7 @@ var savageWorldsGearArmor = Array(
 		 'general': 1,
 		 'type': 1,
 		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
 		 'armor': 10,
 		 'armor2': 0,
 		 'covers_torso': 1,
@@ -32873,6 +34175,7 @@ var savageWorldsGearArmor = Array(
 		 'general': 1,
 		 'type': 1,
 		 'vs_lasers_only': 1,
+		 'neg_4ap_vs_ballistic': 0,
 		 'armor': 10,
 		 'armor2': 0,
 		 'covers_torso': 1,
@@ -32902,6 +34205,7 @@ var savageWorldsGearArmor = Array(
 		 'general': 1,
 		 'type': 0,
 		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
 		 'armor': 3,
 		 'armor2': 2,
 		 'covers_torso': 1,
@@ -32931,6 +34235,7 @@ var savageWorldsGearArmor = Array(
 		 'general': 1,
 		 'type': 0,
 		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
 		 'armor': 2,
 		 'armor2': 1,
 		 'covers_torso': 1,
@@ -32940,6 +34245,81 @@ var savageWorldsGearArmor = Array(
 		 'covers_face': 0,
 		 'weight': 20,
 		 'cost': 200,
+		 'is_rigid': 0
+},
+{
+	 name: {
+		 'en-US': 'Smart Suit',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-smart-suit',
+		 'book': 4,
+		 'page': 'p17',
+		 'class': 0,
+		 'general': 1,
+		 'type': 0,
+		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
+		 'armor': 2,
+		 'armor2': 0,
+		 'covers_torso': 1,
+		 'covers_legs': 1,
+		 'covers_arms': 1,
+		 'covers_head': 0,
+		 'covers_face': 1,
+		 'weight': 12,
+		 'cost': 2000,
+		 'is_rigid': 0
+},
+{
+	 name: {
+		 'en-US': 'Spacesuit',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-spacesuit',
+		 'book': 4,
+		 'page': 'p17',
+		 'class': 0,
+		 'general': 1,
+		 'type': 0,
+		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
+		 'armor': 1,
+		 'armor2': 0,
+		 'covers_torso': 1,
+		 'covers_legs': 1,
+		 'covers_arms': 1,
+		 'covers_head': 1,
+		 'covers_face': 1,
+		 'weight': 20,
+		 'cost': 2000,
+		 'is_rigid': 0
+},
+{
+	 name: {
+		 'en-US': 'Spacesuit, Combat',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-combat-spacesuit',
+		 'book': 4,
+		 'page': 'p17',
+		 'class': 0,
+		 'general': 1,
+		 'type': 0,
+		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 1,
+		 'armor': 4,
+		 'armor2': 0,
+		 'covers_torso': 1,
+		 'covers_legs': 1,
+		 'covers_arms': 1,
+		 'covers_head': 1,
+		 'covers_face': 1,
+		 'weight': 26,
+		 'cost': 2500,
 		 'is_rigid': 0
 },
 {
@@ -32960,6 +34340,7 @@ var savageWorldsGearArmor = Array(
 		 'general': 1,
 		 'type': 1,
 		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
 		 'armor': 3,
 		 'armor2': 0,
 		 'covers_torso': 0,
@@ -32989,6 +34370,7 @@ var savageWorldsGearArmor = Array(
 		 'general': 1,
 		 'type': 1,
 		 'vs_lasers_only': 0,
+		 'neg_4ap_vs_ballistic': 0,
 		 'armor': 4,
 		 'armor2': 0,
 		 'covers_torso': 0,
@@ -33128,6 +34510,25 @@ DEVELOPERS: Do Not Edit or Pull Request this file, it is auto generated from a r
 var savageWorldsGearMundane = Array(
 {
 	 name: {
+		 'en-US': '3d Printer',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-3d-printer',
+		 'book': 4,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 10,
+		 'cost': 500
+},
+{
+	 name: {
 		 'en-US': 'Active Night Vision Goggles',
 	},
 	 notes: {
@@ -33148,6 +34549,25 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 4,
 		 'cost': 2500
+},
+{
+	 name: {
+		 'en-US': 'Adhesive Patches',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-adhesive-patches',
+		 'book': 4,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 20
 },
 {
 	 name: {
@@ -33247,6 +34667,25 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Auto Grapnel',
+	},
+	 notes: {
+	},
+		 'tag': 'spc-auto-grapnel',
+		 'book': 5,
+		 'page': 'p13',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 5,
+		 'cost': 600
+},
+{
+	 name: {
 		 'en-US': 'Backpack',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -33295,6 +34734,25 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Beacon',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-beacon',
+		 'book': 4,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 5,
+		 'cost': 2000
+},
+{
+	 name: {
 		 'en-US': 'Bedroll (sleeping bag; winterized)',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -33319,6 +34777,44 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Binoculars',
+	},
+	 notes: {
+	},
+		 'tag': 'spc-binoculars',
+		 'book': 5,
+		 'page': 'p13',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 0,
+		 'cost': 0
+},
+{
+	 name: {
+		 'en-US': 'Binoculars',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-binoculars',
+		 'book': 4,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 2,
+		 'cost': 250
+},
+{
+	 name: {
 		 'en-US': 'Blanket',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -33340,6 +34836,25 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 4,
 		 'cost': 10
+},
+{
+	 name: {
+		 'en-US': 'Boosters',
+	},
+	 notes: {
+	},
+		 'tag': 'spc-boosters',
+		 'book': 5,
+		 'page': 'p13',
+		 'class': 0,
+		 'general': 0,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 0,
+		 'cost': 0
 },
 {
 	 name: {
@@ -33487,6 +35002,25 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Camoflage Suit',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-camo-suit',
+		 'book': 4,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 2,
+		 'cost': 250
+},
+{
+	 name: {
 		 'en-US': 'Camouflage Fatigues',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -33604,6 +35138,44 @@ var savageWorldsGearMundane = Array(
 		 'is_container': 0,
 		 'weight_per': 0,
 		 'cost_per': 0,
+		 'weight': 0,
+		 'cost': 100
+},
+{
+	 name: {
+		 'en-US': 'Commlink',
+	},
+	 notes: {
+	},
+		 'tag': 'spc-commlink',
+		 'book': 5,
+		 'page': 'p13',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 0,
+		 'cost': 100
+},
+{
+	 name: {
+		 'en-US': 'Commlink',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-commlink',
+		 'book': 4,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
 		 'weight': 0,
 		 'cost': 100
 },
@@ -33729,6 +35301,25 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Cyber Deck',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-cyber-deck',
+		 'book': 4,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 0,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 2,
+		 'cost': 1000
+},
+{
+	 name: {
 		 'en-US': 'Desktop Computer',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -33774,6 +35365,63 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 10,
 		 'cost': 50
+},
+{
+	 name: {
+		 'en-US': 'Energy Sheet',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-energy-sheet',
+		 'book': 4,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 1,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 200
+},
+{
+	 name: {
+		 'en-US': 'Energy Tent',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-energy-tent',
+		 'book': 4,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 2,
+		 'cost': 500
+},
+{
+	 name: {
+		 'en-US': 'Exoskeleton',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-exoskeleton',
+		 'book': 4,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 2,
+		 'cost': 10000
 },
 {
 	 name: {
@@ -33918,6 +35566,25 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 1,
 		 'cost': 3
+},
+{
+	 name: {
+		 'en-US': 'Force Field Generator, Personal ',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-force-field-gen-personal',
+		 'book': 4,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 30,
+		 'cost': 500000
 },
 {
 	 name: {
@@ -34161,6 +35828,25 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Hoverboard',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-hoverboard',
+		 'book': 4,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 2,
+		 'cost': 200
+},
+{
+	 name: {
 		 'en-US': 'Kirlian camera, still',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -34230,6 +35916,25 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 2,
 		 'cost': 1400
+},
+{
+	 name: {
+		 'en-US': 'Language Translator',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-lang-trans',
+		 'book': 4,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 2000
 },
 {
 	 name: {
@@ -34305,6 +36010,25 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Laser Sight',
+	},
+	 notes: {
+	},
+		 'tag': 'spc-laser-sight',
+		 'book': 5,
+		 'page': 'p13',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 50
+},
+{
+	 name: {
 		 'en-US': 'Lighter',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -34374,6 +36098,101 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 0,
 		 'cost': 200
+},
+{
+	 name: {
+		 'en-US': 'Matter Cutter',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-matter-cutter',
+		 'book': 4,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 15,
+		 'cost': 50000
+},
+{
+	 name: {
+		 'en-US': 'Matter Remober',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-matter-remover',
+		 'book': 4,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 10,
+		 'cost': 40000
+},
+{
+	 name: {
+		 'en-US': 'Medi-Gel',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-medi-gel',
+		 'book': 4,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 20
+},
+{
+	 name: {
+		 'en-US': 'Medi-Scanner',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-medi-scanner',
+		 'book': 4,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 2,
+		 'cost': 600
+},
+{
+	 name: {
+		 'en-US': 'Mineral Detector',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-mineral-detector',
+		 'book': 4,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 4,
+		 'cost': 100
 },
 {
 	 name: {
@@ -34545,6 +36364,44 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Nullifier Shackles',
+	},
+	 notes: {
+	},
+		 'tag': 'spc-nullifier-shackles',
+		 'book': 5,
+		 'page': '',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 6000
+},
+{
+	 name: {
+		 'en-US': 'Nutri-Bar',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-nutri-bar',
+		 'book': 4,
+		 'page': 'p16',
+		 'class': 0,
+		 'general': 6,
+		 'type': 17,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 0,
+		 'cost': 5
+},
+{
+	 name: {
 		 'en-US': 'Oil',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -34641,6 +36498,63 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Personal Data Device (PDD)',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-pdd',
+		 'book': 4,
+		 'page': 'p16',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 500
+},
+{
+	 name: {
+		 'en-US': 'Projected Light Device',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-proj-light-device',
+		 'book': 4,
+		 'page': 'p16',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 1000
+},
+{
+	 name: {
+		 'en-US': 'Psionic Shield',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-psionic-shield',
+		 'book': 4,
+		 'page': 'p16',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 1000
+},
+{
+	 name: {
 		 'en-US': 'Quarrel',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -34689,6 +36603,63 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Rebreather',
+	},
+	 notes: {
+	},
+		 'tag': 'spc-rebreather',
+		 'book': 5,
+		 'page': 'p13',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 250
+},
+{
+	 name: {
+		 'en-US': 'Rebreather',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-rebreather',
+		 'book': 4,
+		 'page': 'p16',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 250
+},
+{
+	 name: {
+		 'en-US': 'Rocket Packs',
+	},
+	 notes: {
+	},
+		 'tag': 'spc-rocket-packs',
+		 'book': 5,
+		 'page': 'p13',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 30,
+		 'cost': 25000
+},
+{
+	 name: {
 		 'en-US': 'Rope, 10"',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -34734,6 +36705,82 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 10,
 		 'cost': 10
+},
+{
+	 name: {
+		 'en-US': 'Scope',
+	},
+	 notes: {
+	},
+		 'tag': 'spc-scope',
+		 'book': 5,
+		 'page': 'p13',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 300
+},
+{
+	 name: {
+		 'en-US': 'Scope',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-scope',
+		 'book': 4,
+		 'page': 'p16',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 300
+},
+{
+	 name: {
+		 'en-US': 'Sensor Suite, Medium',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-sensor-suite-med',
+		 'book': 4,
+		 'page': 'p16',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 18,
+		 'cost': 5000
+},
+{
+	 name: {
+		 'en-US': 'Sensor Suite, Small',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-sensor-suite-small',
+		 'book': 4,
+		 'page': 'p16',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 2,
+		 'cost': 500
 },
 {
 	 name: {
@@ -34854,6 +36901,25 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 1,
 		 'cost': 1
+},
+{
+	 name: {
+		 'en-US': 'Stealth Suit',
+	},
+	 notes: {
+	},
+		 'tag': 'spc-stealth-suit',
+		 'book': 5,
+		 'page': 'p13',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 1,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 5,
+		 'cost': 600
 },
 {
 	 name: {
@@ -35073,6 +37139,25 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Wall Walker System',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-wall-walker-system',
+		 'book': 4,
+		 'page': 'p16',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 2,
+		 'cost': 300
+},
+{
+	 name: {
 		 'en-US': 'War Horse Barding',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -35142,6 +37227,25 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 1,
 		 'cost': 5
+},
+{
+	 name: {
+		 'en-US': 'Weapon Gimble',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-weapon-gimbple',
+		 'book': 4,
+		 'page': 'p16',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 5,
+		 'cost': 100
 },
 {
 	 name: {
@@ -35300,8 +37404,6 @@ var savageWorldsGearShields = Array(
 {
 	 name: {
 		 'en-US': 'Medium Shield',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'tag': 'medium-shield',
 		 'book': 1,
@@ -35313,6 +37415,66 @@ var savageWorldsGearShields = Array(
 		 'parry': 1,
 		 'weight': 12,
 		 'cost': 50
+},
+{
+	 name: {
+		 'en-US': 'Polymer Shield, Large',
+	},
+		 'tag': 'sfc-polymer-shield-large',
+		 'book': 4,
+		 'page': 'p17',
+		 'class': 0,
+		 'general': 1,
+		 'type': 2,
+		 'armor': 4,
+		 'parry': 2,
+		 'weight': 6,
+		 'cost': 400
+},
+{
+	 name: {
+		 'en-US': 'Polymer Shield, Medium',
+	},
+		 'tag': 'sfc-polymer-shield-medium',
+		 'book': 4,
+		 'page': 'p17',
+		 'class': 0,
+		 'general': 1,
+		 'type': 2,
+		 'armor': 4,
+		 'parry': 1,
+		 'weight': 4,
+		 'cost': 300
+},
+{
+	 name: {
+		 'en-US': 'Polymer Shield, Small',
+	},
+		 'tag': 'sfc-polymer-shield-small',
+		 'book': 4,
+		 'page': 'p17',
+		 'class': 0,
+		 'general': 1,
+		 'type': 2,
+		 'armor': 2,
+		 'parry': 1,
+		 'weight': 2,
+		 'cost': 200
+},
+{
+	 name: {
+		 'en-US': 'Riot Shield',
+	},
+		 'tag': 'spc-riot-shield',
+		 'book': 5,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 1,
+		 'type': 2,
+		 'armor': 4,
+		 'parry': 2,
+		 'weight': 5,
+		 'cost': 150
 },
 {
 	 name: {
@@ -36091,6 +38253,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'axe',
 		 'book': 1,
@@ -36105,6 +38270,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 6,
 		 'rof': 0,
 		 'cost': 200,
@@ -36118,6 +38284,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': 'Basically a shotgun shell on a stick used in melee; must be reloaded with a fresh shell (1 action)',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'bangstick',
 		 'book': 1,
@@ -36132,6 +38301,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 0,
 		 'rof': 0,
 		 'cost': 5,
@@ -36145,6 +38315,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'bastard-sword',
 		 'book': 2,
@@ -36159,6 +38332,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 0,
 		 'parry_modifier': -1,
+		 'heavy_weapon': 0,
 		 'min_str': 8,
 		 'rof': 0,
 		 'cost': 350,
@@ -36172,6 +38346,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'battle-axe',
 		 'book': 1,
@@ -36186,6 +38363,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 8,
 		 'rof': 0,
 		 'cost': 300,
@@ -36199,6 +38377,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'bayonet',
 		 'book': 1,
@@ -36213,6 +38394,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 0,
 		 'rof': 0,
 		 'cost': 25,
@@ -36226,6 +38408,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': 'Carried by most law-enforcement officials',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'billy-club-baton',
 		 'book': 1,
@@ -36240,6 +38425,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 0,
 		 'rof': 0,
 		 'cost': 10,
@@ -36253,6 +38439,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': 'A hero wearing brass knuckles is considered to be an Unarmed Attacker',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'brass-knuckles',
 		 'book': 1,
@@ -36267,6 +38456,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 0,
 		 'rof': 0,
 		 'cost': 20,
@@ -36280,6 +38470,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': 'A natural 1 on the Fighting die (regardless of the Wild Die) hits the user instead',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'chainsaw',
 		 'book': 1,
@@ -36294,6 +38487,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 0,
 		 'rof': 0,
 		 'cost': 200,
@@ -36307,6 +38501,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': 'Reach 1, See notes',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'corpse-catcher',
 		 'book': 3,
@@ -36321,6 +38518,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 1,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 6,
 		 'rof': 0,
 		 'cost': 300,
@@ -36334,6 +38532,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': 'Reach 1, Parry &ndash;1, 2 hands, can be used as a weapon in each hand without Reach, ignores Shield/Weapon Parry or Cover bonus',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'dwarven-axechain',
 		 'book': 2,
@@ -36348,6 +38549,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 0,
 		 'parry_modifier': -1,
+		 'heavy_weapon': 0,
 		 'min_str': 0,
 		 'rof': 0,
 		 'cost': 500,
@@ -36361,6 +38563,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': 'Ignores Shield Parry and Cover bonus',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'flail',
 		 'book': 1,
@@ -36375,6 +38580,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 6,
 		 'rof': 0,
 		 'cost': 200,
@@ -36388,6 +38594,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': 'Ignores Shield/ Weapon Parry or Cover bonus',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'flail',
 		 'book': 2,
@@ -36402,6 +38611,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 6,
 		 'rof': 0,
 		 'cost': 200,
@@ -36416,6 +38626,10 @@ var savageWorldsGearHandWeapons = Array(
 		 'ru-RU': '',
 	},
 	 notes: {
+		 'en-US': 'AP 1, Parry -1, 2 hands',
+		 'pt-BR': '',
+		 'de-DE': '',
+		 'ru-RU': '',
 	},
 		 'tag': 'great-axe',
 		 'book': 1,
@@ -36430,6 +38644,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 1,
 		 'requires_2_hands': 1,
 		 'parry_modifier': -1,
+		 'heavy_weapon': 0,
 		 'min_str': 10,
 		 'rof': 0,
 		 'cost': 500,
@@ -36443,6 +38658,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': 'AP 2 vs. rigid armor, &ndash;1 Parry, 2 hands, ignores Shield/Weapon Parry or Cover bonus',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'great-flail',
 		 'book': 2,
@@ -36457,6 +38675,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 2,
 		 'requires_2_hands': 1,
 		 'parry_modifier': -1,
+		 'heavy_weapon': 0,
 		 'min_str': 8,
 		 'rof': 0,
 		 'cost': 0,
@@ -36471,6 +38690,10 @@ var savageWorldsGearHandWeapons = Array(
 		 'ru-RU': '',
 	},
 	 notes: {
+		 'en-US': 'Parry -1, 2 Hands',
+		 'pt-BR': '',
+		 'de-DE': '',
+		 'ru-RU': '',
 	},
 		 'tag': 'great-sword',
 		 'book': 1,
@@ -36485,6 +38708,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 1,
 		 'parry_modifier': -1,
+		 'heavy_weapon': 0,
 		 'min_str': 10,
 		 'rof': 0,
 		 'cost': 400,
@@ -36498,6 +38722,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'halberd',
 		 'book': 1,
@@ -36512,6 +38739,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 1,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 8,
 		 'rof': 0,
 		 'cost': 250,
@@ -36525,6 +38753,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'katana',
 		 'book': 1,
@@ -36539,6 +38770,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 2,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 6,
 		 'rof': 0,
 		 'cost': 1000,
@@ -36552,6 +38784,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'knifedagger',
 		 'book': 1,
@@ -36566,6 +38801,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 25,
@@ -36579,6 +38815,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': 'mounted combat only, AP 2 when charging',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'lance',
 		 'book': 1,
@@ -36593,6 +38832,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 2,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 8,
 		 'rof': 0,
 		 'cost': 300,
@@ -36606,6 +38846,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': 'AP 12, Laser swords aren&rsquo;t terribly realistic, but are staples in many space-opera campaigns',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'laser-sword',
 		 'book': 1,
@@ -36620,6 +38863,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 12,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 0,
 		 'rof': 0,
 		 'cost': 1000,
@@ -36633,6 +38877,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': 'Ignores 1 point of Shield/ Weapon Parry or Cover bonus',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'light-flail',
 		 'book': 2,
@@ -36647,6 +38894,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 6,
 		 'rof': 0,
 		 'cost': 150,
@@ -36660,6 +38908,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': 'Includes Scimitars',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'long-sword',
 		 'book': 1,
@@ -36674,6 +38925,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 8,
 		 'rof': 0,
 		 'cost': 300,
@@ -36687,6 +38939,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'maul',
 		 'book': 1,
@@ -36701,6 +38956,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 2,
 		 'requires_2_hands': 1,
 		 'parry_modifier': -1,
+		 'heavy_weapon': 0,
 		 'min_str': 8,
 		 'rof': 0,
 		 'cost': 200,
@@ -36714,6 +38970,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': 'AP 2, Cannot be thrown',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'molecular-knife',
 		 'book': 1,
@@ -36728,6 +38987,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 2,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 0,
 		 'rof': 0,
 		 'cost': 250,
@@ -36741,6 +39001,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': 'AP4',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'molecular-sword',
 		 'book': 1,
@@ -36755,6 +39018,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 4,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 0,
 		 'rof': 0,
 		 'cost': 500,
@@ -36768,6 +39032,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'orcish-combat-axe',
 		 'book': 2,
@@ -36782,6 +39049,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 8,
 		 'rof': 0,
 		 'cost': 350,
@@ -36795,6 +39063,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'pike',
 		 'book': 1,
@@ -36809,6 +39080,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 1,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 8,
 		 'rof': 0,
 		 'cost': 400,
@@ -36822,6 +39094,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': 'Ap2',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'pump-crossbow',
 		 'book': 2,
@@ -36836,6 +39111,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 2,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 6,
 		 'rof': 1,
 		 'cost': 1200,
@@ -36849,6 +39125,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'rapier',
 		 'book': 1,
@@ -36863,6 +39142,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 1,
+		 'heavy_weapon': 0,
 		 'min_str': 0,
 		 'rof': 0,
 		 'cost': 150,
@@ -36876,6 +39156,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': 'Includes Calvary Sabers',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'short-sword',
 		 'book': 1,
@@ -36890,6 +39173,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 6,
 		 'rof': 0,
 		 'cost': 200,
@@ -36903,6 +39187,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'staff',
 		 'book': 1,
@@ -36917,6 +39204,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 1,
 		 'parry_modifier': 1,
+		 'heavy_weapon': 0,
 		 'min_str': 0,
 		 'rof': 0,
 		 'cost': 10,
@@ -36930,6 +39218,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': 'Contains supplies that add +1 to Survival rolls',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'survival-knife',
 		 'book': 1,
@@ -36944,6 +39235,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 0,
 		 'rof': 0,
 		 'cost': 50,
@@ -36957,6 +39249,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': '&ndash;2 to be Noticed if hidden',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'switchblade',
 		 'book': 1,
@@ -36971,6 +39266,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 0,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 0,
 		 'rof': 0,
 		 'cost': 10,
@@ -36984,6 +39280,9 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
 	},
 		 'tag': 'warhammer',
 		 'book': 1,
@@ -36998,6 +39297,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'ap': 1,
 		 'requires_2_hands': 0,
 		 'parry_modifier': 0,
+		 'heavy_weapon': 0,
 		 'min_str': 6,
 		 'rof': 0,
 		 'cost': 250,
@@ -37050,6 +39350,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 3,
 		 'cost': 5000,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 30,
 		 'reach': 0
@@ -37083,6 +39384,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 3,
 		 'cost': 1000,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 30,
 		 'reach': 0
@@ -37116,8 +39418,38 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 6,
 		 'rof': 3,
 		 'cost': 450,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 10,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Assault Rifle',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-slug-assault-rifle',
+		 'book': 4,
+		 'page': 'p22',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '24/48/96',
+		 'damage': '2d8+1',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 3,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 3,
+		 'cost': 1500,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 11,
 		 'reach': 0
 },
 {
@@ -37149,6 +39481,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 6,
 		 'rof': 1,
 		 'cost': 3000,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 15,
 		 'reach': 0
@@ -37182,6 +39515,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 6,
 		 'rof': 1,
 		 'cost': 75,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 2,
 		 'reach': 0
@@ -37215,6 +39549,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 8,
 		 'rof': 1,
 		 'cost': 750,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 35,
 		 'reach': 0
@@ -37248,8 +39583,96 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 3,
 		 'cost': 1000,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 54,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Blaster Pistol',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-blaster-pistol',
+		 'book': 4,
+		 'page': 'p21',
+		 'class': 0,
+		 'general': 3,
+		 'type': 14,
+		 'range': '12/24/48',
+		 'damage': '2d6+2',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 300,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 1,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Blaster Rifle',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-blaster-rifle',
+		 'book': 4,
+		 'page': 'p21',
+		 'class': 0,
+		 'general': 3,
+		 'type': 14,
+		 'range': '24/48/96',
+		 'damage': '2d8+2',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 1,
+		 'cost': 500,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 5,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Blaster SMG',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-blaster-smg',
+		 'book': 4,
+		 'page': 'p21',
+		 'class': 0,
+		 'general': 3,
+		 'type': 14,
+		 'range': '12/24/48',
+		 'damage': '2d6+2',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 3,
+		 'cost': 300,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 1,
 		 'reach': 0
 },
 {
@@ -37281,6 +39704,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 6,
 		 'rof': 1,
 		 'cost': 300,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 12,
 		 'reach': 0
@@ -37314,6 +39738,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 250,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 3,
 		 'reach': 0
@@ -37347,6 +39772,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 6,
 		 'rof': 1,
 		 'cost': 300,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 15,
 		 'reach': 0
@@ -37380,6 +39806,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 200,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 4,
 		 'reach': 0
@@ -37413,6 +39840,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 200,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 4,
 		 'reach': 0
@@ -37446,6 +39874,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 500,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 10,
 		 'reach': 0
@@ -37479,6 +39908,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 150,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 2,
 		 'reach': 0
@@ -37512,8 +39942,67 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 300,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 8,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Disintegrator Pistol',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-disintegrator-pistol',
+		 'book': 4,
+		 'page': 'p19',
+		 'class': 0,
+		 'general': 3,
+		 'type': 14,
+		 'range': '3/6/12',
+		 'damage': '3d10',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 3000,
+		 'heavy_weapon': 1,
+		 'ammo_item': 0,
+		 'weight': 5,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Disintegrator Rifle',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-disintegrator-rifle',
+		 'book': 4,
+		 'page': 'p19',
+		 'class': 0,
+		 'general': 3,
+		 'type': 14,
+		 'range': '5/10/20',
+		 'damage': '3d10',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 1,
+		 'cost': 10000,
+		 'heavy_weapon': 1,
+		 'ammo_item': 0,
+		 'weight': 12,
 		 'reach': 0
 },
 {
@@ -37545,6 +40034,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 150,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 11,
 		 'reach': 0
@@ -37578,6 +40068,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 3,
 		 'cost': 1000,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 26,
 		 'reach': 0
@@ -37611,6 +40102,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 6,
 		 'rof': 1,
 		 'cost': 500,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 4,
 		 'reach': 0
@@ -37644,8 +40136,38 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 200,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 5,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Flak Gun',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-flak-gun',
+		 'book': 4,
+		 'page': 'p19',
+		 'class': 0,
+		 'general': 3,
+		 'type': 11,
+		 'range': '12/24/48',
+		 'damage': '3d6+2',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 1,
+		 'cost': 500,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 15,
 		 'reach': 0
 },
 {
@@ -37677,6 +40199,36 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 100,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 4,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Flechette Gun',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-flechette-gun',
+		 'book': 4,
+		 'page': 'p19',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '12/24/48',
+		 'damage': '2d4+1',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 3,
+		 'cost': 600,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 4,
 		 'reach': 0
@@ -37710,8 +40262,38 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 150,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 3,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Foam Thrower',
+	},
+	 notes: {
+	},
+		 'tag': '',
+		 'book': 5,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '10/20/40',
+		 'damage': 'Special',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 2000,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 400,
 		 'reach': 0
 },
 {
@@ -37743,8 +40325,67 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 3,
 		 'cost': 500,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 40,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Gatling Blaster',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-gatling-blaster',
+		 'book': 4,
+		 'page': 'p21',
+		 'class': 0,
+		 'general': 3,
+		 'type': 14,
+		 'range': '24/48/96',
+		 'damage': '2d8+4',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 4,
+		 'cost': 800,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 12,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Gatling Laser',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-gatling-liser',
+		 'book': 4,
+		 'page': 'p20',
+		 'class': 0,
+		 'general': 3,
+		 'type': 14,
+		 'range': '50/100/200',
+		 'damage': '3d6+4',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 4,
+		 'cost': 1000,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 20,
 		 'reach': 0
 },
 {
@@ -37776,8 +40417,212 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 200,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 3,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Grenade Launcher',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-grenade-launcher',
+		 'book': 4,
+		 'page': 'p20',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '24/48/96',
+		 'damage': 'Per Grenade',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 1,
+		 'cost': 700,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 8,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Grenade, EMP',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-grenade-emp',
+		 'book': 4,
+		 'page': 'p20',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '5/10/20',
+		 'damage': 'Special',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 50,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 0,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Grenade, Fragmentation',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-grenade-frag',
+		 'book': 4,
+		 'page': 'p20',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '5/10/20',
+		 'damage': '3d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 50,
+		 'heavy_weapon': 1,
+		 'ammo_item': 0,
+		 'weight': 0,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Grenade, Smoke',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-grenade-smoke',
+		 'book': 4,
+		 'page': 'p20',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '5/10/20',
+		 'damage': 'Special',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 50,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 0,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Grenade, Thermal',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-grenade-thermal',
+		 'book': 4,
+		 'page': 'p20',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '5/10/20',
+		 'damage': '3d10',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 50,
+		 'heavy_weapon': 1,
+		 'ammo_item': 0,
+		 'weight': 0,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Gyrojet Pistol',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-gyrojet-pistol',
+		 'book': 4,
+		 'page': 'p20',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '12/24/48',
+		 'damage': 'By Type',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 400,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 3,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Gyrojet Rifle',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-gyrojet-rifle',
+		 'book': 1,
+		 'page': 'p20',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '24/48/96',
+		 'damage': 'By Type',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 1,
+		 'cost': 600,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 10,
 		 'reach': 0
 },
 {
@@ -37809,6 +40654,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 6,
 		 'rof': 3,
 		 'cost': 400,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 10,
 		 'reach': 0
@@ -37842,8 +40688,125 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 3,
 		 'cost': 300,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 10,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Hand Flamer',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-hand-flamer',
+		 'book': 4,
+		 'page': 'p19',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': 'Cone',
+		 'damage': '2d12',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 500,
+		 'heavy_weapon': 1,
+		 'ammo_item': 0,
+		 'weight': 5,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Heavy Flamer',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-heavy-flamer',
+		 'book': 4,
+		 'page': 'p19',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': 'See Notes',
+		 'damage': '3d12',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 1,
+		 'cost': 1000,
+		 'heavy_weapon': 1,
+		 'ammo_item': 0,
+		 'weight': 30,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Heavy MG',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-slug-heavy-mg',
+		 'book': 4,
+		 'page': 'p22',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '50/100/200',
+		 'damage': '2d10',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 4,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 8,
+		 'rof': 3,
+		 'cost': 700,
+		 'heavy_weapon': 1,
+		 'ammo_item': 0,
+		 'weight': 65,
+		 'reach': 1
+},
+{
+	 name: {
+		 'en-US': 'Heavy Pistol',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-slug-heavy-pistol',
+		 'book': 4,
+		 'page': 'p22',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '12/24/48',
+		 'damage': '2d6+1',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 4,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 400,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 4,
 		 'reach': 0
 },
 {
@@ -37875,6 +40838,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 30,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 2,
 		 'reach': 0
@@ -37908,6 +40872,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 50,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 4,
 		 'reach': 0
@@ -37941,8 +40906,38 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 5,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 1,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Hunting Rifle',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-slug-hunting-rifle',
+		 'book': 4,
+		 'page': 'p22',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '24/48/96',
+		 'damage': '2d8+1',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 4,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 600,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 6,
 		 'reach': 0
 },
 {
@@ -37974,6 +40969,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 6,
 		 'rof': 1,
 		 'cost': 300,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 9,
 		 'reach': 0
@@ -38007,6 +41003,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 6,
 		 'rof': 1,
 		 'cost': 300,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 8,
 		 'reach': 0
@@ -38040,6 +41037,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 25,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 1,
 		 'reach': 0
@@ -38073,6 +41071,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 8,
 		 'rof': 5,
 		 'cost': 500,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 15,
 		 'reach': 0
@@ -38106,8 +41105,38 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 200,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 4,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Laser Pistol',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-laser-pistol',
+		 'book': 4,
+		 'page': 'p20',
+		 'class': 0,
+		 'general': 3,
+		 'type': 14,
+		 'range': '15/30/60',
+		 'damage': '2d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 250,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 2,
 		 'reach': 0
 },
 {
@@ -38139,8 +41168,125 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 6,
 		 'rof': 3,
 		 'cost': 300,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 8,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Laser Rifle',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-laser-rifle',
+		 'book': 4,
+		 'page': 'p20',
+		 'class': 0,
+		 'general': 3,
+		 'type': 14,
+		 'range': '30/60/120',
+		 'damage': '3d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 3,
+		 'cost': 700,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 8,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Laser SMG',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-laser-smg',
+		 'book': 4,
+		 'page': 'p20',
+		 'class': 0,
+		 'general': 3,
+		 'type': 14,
+		 'range': '15/30/60',
+		 'damage': '2d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 4,
+		 'cost': 500,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 4,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Light MG',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-slug-light-mg',
+		 'book': 4,
+		 'page': 'p22',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '30/60/120',
+		 'damage': '2d8',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 8,
+		 'rof': 4,
+		 'cost': 700,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 20,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Light Pistol',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-slug-light-pistol',
+		 'book': 4,
+		 'page': 'p22',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '10/20/40',
+		 'damage': '2d6-1',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 200,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 1,
 		 'reach': 0
 },
 {
@@ -38172,6 +41318,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 3,
 		 'cost': 400,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 8,
 		 'reach': 0
@@ -38205,6 +41352,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 6,
 		 'rof': 1,
 		 'cost': 300,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 10,
 		 'reach': 0
@@ -38238,6 +41386,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 3,
 		 'cost': 750,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 32,
 		 'reach': 0
@@ -38271,6 +41420,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 3,
 		 'cost': 1000,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 84,
 		 'reach': 0
@@ -38304,8 +41454,38 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 8,
 		 'rof': 3,
 		 'cost': 1000,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 33,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Medium Pistol',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-slug-medium-pistol',
+		 'book': 4,
+		 'page': 'p22',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '12/24/48',
+		 'damage': '2d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 3,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 300,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 2,
 		 'reach': 0
 },
 {
@@ -38337,6 +41517,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 8,
 		 'rof': 3,
 		 'cost': 500,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 26,
 		 'reach': 0
@@ -38370,6 +41551,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 4,
 		 'cost': 500,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 26,
 		 'reach': 0
@@ -38403,6 +41585,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 200,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 3,
 		 'reach': 0
@@ -38436,8 +41619,38 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 200,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 3,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Minigun',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-minigun',
+		 'book': 4,
+		 'page': 'p22',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '24/48/96',
+		 'damage': '2d8+4',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 3,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 8,
+		 'rof': 4,
+		 'cost': 10000,
+		 'heavy_weapon': 1,
+		 'ammo_item': 0,
+		 'weight': 85,
 		 'reach': 0
 },
 {
@@ -38469,8 +41682,67 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 3,
 		 'cost': 300,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 11,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Net Gun',
+	},
+	 notes: {
+	},
+		 'tag': '',
+		 'book': 5,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '5/10/20',
+		 'damage': 'Special',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 1,
+		 'cost': 500,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 10,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Nullifier Gun',
+	},
+	 notes: {
+	},
+		 'tag': '',
+		 'book': 5,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '12/24/48',
+		 'damage': 'Special',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 1000000,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 5,
 		 'reach': 0
 },
 {
@@ -38502,8 +41774,241 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 200,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 3,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Plasma Pistol',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-plasma-pistol',
+		 'book': 4,
+		 'page': 'p21',
+		 'class': 0,
+		 'general': 3,
+		 'type': 14,
+		 'range': '12/24/48',
+		 'damage': '2s10+2',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 600,
+		 'heavy_weapon': 1,
+		 'ammo_item': 0,
+		 'weight': 7,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Plasma Rifle',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-plasma-rifle',
+		 'book': 4,
+		 'page': 'p21',
+		 'class': 0,
+		 'general': 3,
+		 'type': 14,
+		 'range': '24/48/96',
+		 'damage': '3d10',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 1200,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 12,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Portable Missile Launcher',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-portable-missile-launcher',
+		 'book': 4,
+		 'page': 'p21',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '50/100/200',
+		 'damage': '6d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 20,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 700,
+		 'heavy_weapon': 1,
+		 'ammo_item': 0,
+		 'weight': 8,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Pulse Cannon',
+	},
+	 notes: {
+	},
+		 'tag': '',
+		 'book': 5,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 3,
+		 'type': 14,
+		 'range': '100/200/400',
+		 'damage': '3d10',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 10,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 3,
+		 'cost': 500000,
+		 'heavy_weapon': 1,
+		 'ammo_item': 0,
+		 'weight': 200,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Pulse Gatling',
+	},
+	 notes: {
+	},
+		 'tag': '',
+		 'book': 5,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 3,
+		 'type': 14,
+		 'range': '20/40/80',
+		 'damage': '3d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 4,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 3,
+		 'cost': 100000,
+		 'heavy_weapon': 1,
+		 'ammo_item': 0,
+		 'weight': 12,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Pulse Pistol',
+	},
+	 notes: {
+	},
+		 'tag': '',
+		 'book': 5,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 3,
+		 'type': 14,
+		 'range': '10/20/40',
+		 'damage': '2d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 500,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 2,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Pulse Rifle',
+	},
+	 notes: {
+	},
+		 'tag': '',
+		 'book': 5,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 3,
+		 'type': 14,
+		 'range': '20/40/80',
+		 'damage': '3d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 4,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 1,
+		 'cost': 1500,
+		 'heavy_weapon': 1,
+		 'ammo_item': 0,
+		 'weight': 6,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Pulse SMG',
+	},
+	 notes: {
+	},
+		 'tag': '',
+		 'book': 5,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 3,
+		 'type': 14,
+		 'range': '10/20/40',
+		 'damage': '2d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 3,
+		 'cost': 1000,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 2,
 		 'reach': 0
 },
 {
@@ -38535,6 +42040,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 150,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 8,
 		 'reach': 0
@@ -38568,6 +42074,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 6,
 		 'rof': 1,
 		 'cost': 1200,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 12,
 		 'reach': 0
@@ -38601,6 +42108,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 6,
 		 'rof': 3,
 		 'cost': 800,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 12,
 		 'reach': 0
@@ -38634,6 +42142,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 100,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 2,
 		 'reach': 0
@@ -38667,6 +42176,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 250,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 4,
 		 'reach': 0
@@ -38700,6 +42210,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 250,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 5,
 		 'reach': 0
@@ -38733,6 +42244,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 8,
 		 'rof': 4,
 		 'cost': 750,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 20,
 		 'reach': 0
@@ -38766,6 +42278,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 150,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 6,
 		 'reach': 0
@@ -38799,8 +42312,67 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 8,
 		 'rof': 1,
 		 'cost': 400,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 11,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Shotgun',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-slug-shotgun',
+		 'book': 4,
+		 'page': 'p22',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '12/24/48',
+		 'damage': '1-3d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 600,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 6,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Shotgun, Full-Auto',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-slug-shotgun-full-auto',
+		 'book': 4,
+		 'page': 'p22',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '12/24/48',
+		 'damage': '1-3d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 3,
+		 'cost': 900,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 18,
 		 'reach': 0
 },
 {
@@ -38832,8 +42404,38 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 10,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 1,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Sniper Rifle',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-slug-sniper-rifle',
+		 'book': 4,
+		 'page': 'p22',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '50/100/200',
+		 'damage': '2d10',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 4,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 700,
+		 'heavy_weapon': 1,
+		 'ammo_item': 0,
+		 'weight': 8,
 		 'reach': 0
 },
 {
@@ -38865,6 +42467,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 6,
 		 'rof': 1,
 		 'cost': 100,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 5,
 		 'reach': 0
@@ -38898,6 +42501,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 250,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 8,
 		 'reach': 0
@@ -38931,6 +42535,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 6,
 		 'rof': 1,
 		 'cost': 250,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 11,
 		 'reach': 0
@@ -38964,6 +42569,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 0,
 		 'cost': 10,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 2,
 		 'reach': 0
@@ -38997,6 +42603,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 3,
 		 'cost': 400,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 8,
 		 'reach': 0
@@ -39030,8 +42637,96 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 1,
 		 'cost': 450,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 10,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Stun Gun',
+	},
+	 notes: {
+	},
+		 'tag': '',
+		 'book': 5,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '5/10/20',
+		 'damage': '-',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 300,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 1,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Stun Gun',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-stun-gun',
+		 'book': 4,
+		 'page': 'p22',
+		 'class': 0,
+		 'general': 3,
+		 'type': 14,
+		 'range': '5/10/20',
+		 'damage': '-',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'throwable': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 1,
+		 'cost': 300,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 1,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Submachine Gun',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-slug-submachine-gun',
+		 'book': 4,
+		 'page': 'p22',
+		 'class': 0,
+		 'general': 3,
+		 'type': 0,
+		 'range': '12/24/48',
+		 'damage': '2d6',
+		 'damage_strength': 0,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'throwable': 0,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 3,
+		 'cost': 700,
+		 'heavy_weapon': 0,
+		 'ammo_item': 0,
+		 'weight': 7,
 		 'reach': 0
 },
 {
@@ -39063,6 +42758,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 3,
 		 'cost': 350,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 13,
 		 'reach': 0
@@ -39096,6 +42792,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 5,
 		 'cost': 100,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 2,
 		 'reach': 0
@@ -39129,6 +42826,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 0,
 		 'rof': 3,
 		 'cost': 300,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 9,
 		 'reach': 0
@@ -39162,6 +42860,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 6,
 		 'rof': 1,
 		 'cost': 650,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 15,
 		 'reach': 0
@@ -39195,6 +42894,7 @@ var savageWorldsGearRangedWeapons = Array(
 		 'min_str': 6,
 		 'rof': 1,
 		 'cost': 300,
+		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 10,
 		 'reach': 0

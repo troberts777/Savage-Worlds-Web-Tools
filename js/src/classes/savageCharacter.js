@@ -1019,6 +1019,9 @@ savageCharacter.prototype.validate = function() {
 	this.skillPointsAvailable = 15;
 	this.skillPointsUsed = 0;
 
+	this.strainBoost = 0;
+	this.doubleStrain = 0;
+
 	this.knownLanguagesLimit = 1;
 	this.linguistSelected = false;
 
@@ -1066,6 +1069,7 @@ savageCharacter.prototype.validate = function() {
 		this.usesSanity = true;
 
 	this.usesStrain = false;
+
 	if( this.isSettingRuleEnabled( "cyberware-strain") )
 		this.usesStrain = true;
 
@@ -1233,6 +1237,7 @@ savageCharacter.prototype.validate = function() {
 		if( 1 + this.attributeBoost.vigor <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + this.attributeBoost.vigor )
 			this.diceValues.vigor.push( globalDiceValues[gdvc] );
 	}
+
 
 
 
@@ -1878,10 +1883,21 @@ savageCharacter.prototype.validate = function() {
 		vigor: getDiceValue( this.attributes.vigor + this.attributeBoost.vigor ),
 	};
 
+	
+	if( this.attributes.spirit + this.attributeBoost.spirit  <  this.attributes.vigor + this.attributeBoost.vigor  ) {
+		this.maxStrain = this.attributes.spirit + this.attributeBoost.spiri;
+	} else {
+		this.maxStrain = this.attributes.vigor + this.attributeBoost.vigor;
+	}
+	this.maxStrain += this.strainBoost;
+	if( this.doubleStrain > 0 )
+		this.maxStrain = this.maxStrain * 2;
+
 	// recalc derived toughness
 	this.derived.toughness_base = Math.floor(this.displayAttributes.vigor.value / 2) + 2;
 	//this.derived.toughness += this.attributeBoost.vigor; // will always be in steps of 2, so just add it ;)
 	this.derived.toughness += this.derived.toughness_base;
+
 
  	this.currentLoad = 0;
  	this.combatLoad = 0;
@@ -1997,6 +2013,11 @@ savageCharacter.prototype.validate = function() {
 			this.validationReport.push( invalidMessage );
 			this.isValid = false;
 		}
+	}
+
+	if( this.usesStrain ) {
+	this.currentStrain = 0;
+	this.maxStrain = 0;
 	}
 
 	if( this.derived.armor == 0) {

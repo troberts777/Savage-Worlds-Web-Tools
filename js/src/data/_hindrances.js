@@ -1514,5 +1514,449 @@ charEffects: function (charObject) {
 	 specify: 0,
 	 book: 3,
 
+},
+{
+	 name: {
+		 'en-US': 'Bloodthirsty',
+	},
+	 tag: 'sfc-rakashan-bloodthirsty',
+	 page: 'p9',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Cannot Speak',
+	},
+	 tag: 'sfc-insectoid-cannot-speak',
+	 page: 'p9',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Clumsy',
+	},
+	 tag: 'sfc-deader-clumsy',
+	 page: 'p8',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Cyber Resistant',
+	},
+	 tag: 'cyber-resistant',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'minor',
+	 racial: 0,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Dependency (Light)',
+	},
+	 tag: 'sfc-floran-dependency',
+	 page: 'p8',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Dependency (Water)',
+	},
+	 tag: 'sfc-aquarian-dependency',
+	 page: '',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Environmental Weakness (Cold)',
+	},
+	 tag: 'sfc-saurian-weakness-cold',
+	 page: 'p10',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Environmental Weakness (Fire/Heat)',
+	},
+	 tag: 'sfc-floran-env-weak',
+	 page: 'p8',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Environmental Weakness (Heat)',
+	},
+	 tag: 'sfc-yeti-weakness',
+	 page: 'p10',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Frail',
+	},
+	 tag: 'sfc-avion-frail',
+	 page: 'p7',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+charEffect: function( charObject ) {
+charObject.derived.toughness += -1;
+}
+},
+{
+	 name: {
+		 'en-US': 'Frail',
+	},
+	 tag: 'sfc-kalian-frail',
+	 page: 'p9',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.derived.toughness += -1;
+}
+},
+{
+	 name: {
+		 'en-US': 'FTL Sickness',
+	},
+	 tag: 'ftl-sickness',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'minor',
+	 racial: 0,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'High Tech (Major)',
+	},
+	 tag: 'high-tech-major',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 0,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'High Tech (Minor)',
+	},
+	 tag: 'high-tech-minor',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'minor',
+	 racial: 0,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'High Tech Hindrance',
+	},
+	 tag: 'sfc-floran-high-tech',
+	 page: 'p8',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Low Tech (Major)',
+	},
+	 tag: 'low-tech-major',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 0,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Low Tech (Minor)',
+	},
+	 tag: 'low-tech-minor',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 0,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Low Tech',
+	},
+	 tag: 'sfc-aurax-low-tech',
+	 page: 'p7',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Low Tech',
+	},
+	 tag: 'sfc-yeti-low-tech',
+	 page: 'p10',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Low-G Worlder',
+	},
+	 tag: 'low-g-wordler',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'minor',
+	 racial: 0,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Low-G Worlder',
+	},
+	 tag: 'sfc-avion-low-g-worlder',
+	 page: 'p7',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Outsider (Major)',
+	},
+	 tag: 'outsider-major',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 0,
+	 specify: 1,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Outsider Hindrance (Major)',
+	},
+	 tag: 'sfc-deader-outsider',
+	 page: 'p8',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Outsider Hindrance (Minor)',
+	},
+	 tag: 'sfc-insectoid-outsider',
+	 page: 'p9',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Poor Parry',
+	},
+	 tag: 'sfc-deader-poor-parry',
+	 page: 'p8',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.derived.parry += -2;
+}
+},
+{
+	 name: {
+		 'en-US': 'Racial Enemy',
+	},
+	 tag: 'sfc-rakashan-racial-enemy',
+	 page: 'p9',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Slow',
+	},
+	 tag: 'sfc-deader-slow',
+	 page: 'p8',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+charEffect: function( charObject ) {
+    charObject.derived.pace = 4;
+}
+},
+{
+	 name: {
+		 'en-US': 'Weak',
+	},
+	 tag: 'sfc-deader-weak',
+	 page: 'p8',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Weak',
+	},
+	 tag: 'sfc-serran-weak',
+	 page: 'p10',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 1,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Zero-G Sickness',
+	},
+	 tag: 'zero-g-sickness',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 0,
+	 specify: 0,
+	 book: 4,
+
+},
+{
+	 name: {
+		 'en-US': 'Zero-G Wordler',
+	},
+	 tag: 'zero-g-wordler',
+	 page: 'p11',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'major',
+	 racial: 0,
+	 specify: 0,
+	 book: 4,
+
 }
 );

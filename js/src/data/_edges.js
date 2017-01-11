@@ -4072,6 +4072,530 @@ return true;
 },
 {
 	 name: {
+		 'en-US': 'Additional Action',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-kalian-action',
+	 page: 'p9',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Agile',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-rakashan-agile',
+	 page: 'p9',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.boostAttribute("agility");
+}
+},
+{
+	 name: {
+		 'en-US': 'Agility',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-avion-agility',
+	 page: 'p7',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.boostAttribute("agility", 1);
+}
+},
+{
+	 name: {
+		 'en-US': 'Aquatic',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-aquarian-aquatic',
+	 page: 'p7',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Armor',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-insectoid-armor',
+	 page: 'p9',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.derived.armor += 4;
+}
+},
+{
+	 name: {
+		 'en-US': 'Danger Sense',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-serran-danger-sense',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Environmental Resistance (Cold)',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-yeti-resistance',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Flight',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-avion-flight',
+	 page: 'p7',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Hardy',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-floran-hardy',
+	 page: 'p8',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Keen Senses',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-saurian-keen-senses',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Low Light Vision',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-rakashan-low-light',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Natural Weaponry',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-insectoid-natural-weapons',
+	 page: 'p9',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Natural Weaponry',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'scf-rakashan-natural-weaponry',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Natural Weaponry',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'scf-saurian-natural-weapon',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'No Vital Organs',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-floran-no-vitals',
+	 page: 'p8',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Parry +2',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-serran-parry',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.derived.parry += 2;
+}
+},
+{
+	 name: {
+		 'en-US': 'Regeneration',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-floran-regeneration',
+	 page: 'p8',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Size +2',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-aurax-size',
+	 page: 'p7',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+charObject.derived.toughness += 2;
+}
+},
+{
+	 name: {
+		 'en-US': 'Size +2',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-yeti-size',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.derived.toughness += 2;
+}
+},
+{
+	 name: {
+		 'en-US': 'Strong',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-aurax-strong',
+	 page: 'p7',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+charObject.boostAttribute("strength", 1);
+}
+},
+{
+	 name: {
+		 'en-US': 'Strong',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-yeti-strong',
+	 page: 'p10',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.boostAttribute("strength");
+}
+},
+{
+	 name: {
+		 'en-US': 'Toughness',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-aquarian-toughness',
+	 page: '',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.derived.toughness += 2;
+}
+},
+{
+	 name: {
+		 'en-US': 'Undead',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'sfc-deader-undead',
+	 page: 'p8',
+	 racial: 1,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+charObject.derived.charisma += -2;
+charObject.derived.toughness += 2;
+}
+},
+{
+	 name: {
+		 'en-US': 'Atmosphereic Acclimation',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: 'low-g-wordler',
+	 tag: 'atmosphereic-acclimation',
+	 page: 'p12',
+	 racial: 0,
+	 reselectable: 1,
+	 book: 4,
+	 child: 0,
+
+},
+{
+	 name: {
+		 'en-US': 'Cyber Tolerant',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: 'cyborg',
+	 conflicts_hindrance: 'ftl-sickness',
+	 tag: 'cyber-tolerant',
+	 page: 'p12',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.strainBoost += 4;
+}
+},
+{
+	 name: {
+		 'en-US': 'Cyborg',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: 'cyber-tolerant',
+	 conflicts_hindrance: '',
+	 tag: 'cyborg',
+	 page: 'p12',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.doubleStrain = 1;
+}
+},
+{
+	 name: {
+		 'en-US': 'Geared Up',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'geared-up',
+	 page: 'p12',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+charObject.currentFunds += 10000;
+}
+},
+{
+	 name: {
+		 'en-US': 'Gravitic Acclimation ',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'gravitic-acclimation ',
+	 page: 'p12',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+requires: function( characterObject) {
+// persuasionSkill = characterObject.getSkill("SKILL_PERSUASION");
+// if( persuasionSkill.value >= 8) // d4 = 1, d6 = 2, d8 = 3, d10 = 4, d12 = 5
+//     return true;
+//
+if( characterObject.displayAttributes.agility.value >= 6 )
+     return true;
+return false;
+},
+},
+{
+	 name: {
+		 'en-US': 'Rocket Jock',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'rocket-jock',
+	 page: 'pp12',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+requires: function( characterObject) {
+pilotingSkill = characterObject.getSkill("SKILL_PILOTING");
+shootingSkill = characterObject.getSkill("SKILL_SHOOTING");
+if( 
+    pilotingSkill.value >= 3 // d4 = 1, d6 = 2, d8 = 3, d10 = 4, d12 = 5
+     &&
+    shootingSkill.value >= 2 // d4 = 1, d6 = 2, d8 = 3, d10 = 4, d12 = 5
+) {
+     return true;
+}
+//
+//if( characterObject.displayAttributes.agility.value >= 8 )
+//     return true;
+return false;
+},
+},
+{
+	 name: {
 		 'en-US': 'The Best There Is',
 		 'pt-BR': '',
 		 'de-DE': '',

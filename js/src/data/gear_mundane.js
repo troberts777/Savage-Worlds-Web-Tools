@@ -14,6 +14,25 @@ DEVELOPERS: Do Not Edit or Pull Request this file, it is auto generated from a r
 var savageWorldsGearMundane = Array(
 {
 	 name: {
+		 'en-US': '3d Printer',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-3d-printer',
+		 'book': 4,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 10,
+		 'cost': 500
+},
+{
+	 name: {
 		 'en-US': 'Active Night Vision Goggles',
 	},
 	 notes: {
@@ -34,6 +53,25 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 4,
 		 'cost': 2500
+},
+{
+	 name: {
+		 'en-US': 'Adhesive Patches',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-adhesive-patches',
+		 'book': 4,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 20
 },
 {
 	 name: {
@@ -133,6 +171,25 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Auto Grapnel',
+	},
+	 notes: {
+	},
+		 'tag': 'spc-auto-grapnel',
+		 'book': 5,
+		 'page': 'p13',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 5,
+		 'cost': 600
+},
+{
+	 name: {
 		 'en-US': 'Backpack',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -181,6 +238,25 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Beacon',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-beacon',
+		 'book': 4,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 5,
+		 'cost': 2000
+},
+{
+	 name: {
 		 'en-US': 'Bedroll (sleeping bag; winterized)',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -205,6 +281,44 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Binoculars',
+	},
+	 notes: {
+	},
+		 'tag': 'spc-binoculars',
+		 'book': 5,
+		 'page': 'p13',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 0,
+		 'cost': 0
+},
+{
+	 name: {
+		 'en-US': 'Binoculars',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-binoculars',
+		 'book': 4,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 2,
+		 'cost': 250
+},
+{
+	 name: {
 		 'en-US': 'Blanket',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -226,6 +340,25 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 4,
 		 'cost': 10
+},
+{
+	 name: {
+		 'en-US': 'Boosters',
+	},
+	 notes: {
+	},
+		 'tag': 'spc-boosters',
+		 'book': 5,
+		 'page': 'p13',
+		 'class': 0,
+		 'general': 0,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 0,
+		 'cost': 0
 },
 {
 	 name: {
@@ -373,6 +506,25 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Camoflage Suit',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-camo-suit',
+		 'book': 4,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 2,
+		 'cost': 250
+},
+{
+	 name: {
 		 'en-US': 'Camouflage Fatigues',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -490,6 +642,44 @@ var savageWorldsGearMundane = Array(
 		 'is_container': 0,
 		 'weight_per': 0,
 		 'cost_per': 0,
+		 'weight': 0,
+		 'cost': 100
+},
+{
+	 name: {
+		 'en-US': 'Commlink',
+	},
+	 notes: {
+	},
+		 'tag': 'spc-commlink',
+		 'book': 5,
+		 'page': 'p13',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 0,
+		 'cost': 100
+},
+{
+	 name: {
+		 'en-US': 'Commlink',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-commlink',
+		 'book': 4,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
 		 'weight': 0,
 		 'cost': 100
 },
@@ -615,6 +805,25 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Cyber Deck',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-cyber-deck',
+		 'book': 4,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 0,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 2,
+		 'cost': 1000
+},
+{
+	 name: {
 		 'en-US': 'Desktop Computer',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -660,6 +869,63 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 10,
 		 'cost': 50
+},
+{
+	 name: {
+		 'en-US': 'Energy Sheet',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-energy-sheet',
+		 'book': 4,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 1,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 200
+},
+{
+	 name: {
+		 'en-US': 'Energy Tent',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-energy-tent',
+		 'book': 4,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 2,
+		 'cost': 500
+},
+{
+	 name: {
+		 'en-US': 'Exoskeleton',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-exoskeleton',
+		 'book': 4,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 2,
+		 'cost': 10000
 },
 {
 	 name: {
@@ -804,6 +1070,25 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 1,
 		 'cost': 3
+},
+{
+	 name: {
+		 'en-US': 'Force Field Generator, Personal ',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-force-field-gen-personal',
+		 'book': 4,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 30,
+		 'cost': 500000
 },
 {
 	 name: {
@@ -1047,6 +1332,25 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Hoverboard',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-hoverboard',
+		 'book': 4,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 2,
+		 'cost': 200
+},
+{
+	 name: {
 		 'en-US': 'Kirlian camera, still',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -1116,6 +1420,25 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 2,
 		 'cost': 1400
+},
+{
+	 name: {
+		 'en-US': 'Language Translator',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-lang-trans',
+		 'book': 4,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 2000
 },
 {
 	 name: {
@@ -1191,6 +1514,25 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Laser Sight',
+	},
+	 notes: {
+	},
+		 'tag': 'spc-laser-sight',
+		 'book': 5,
+		 'page': 'p13',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 50
+},
+{
+	 name: {
 		 'en-US': 'Lighter',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -1260,6 +1602,101 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 0,
 		 'cost': 200
+},
+{
+	 name: {
+		 'en-US': 'Matter Cutter',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-matter-cutter',
+		 'book': 4,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 15,
+		 'cost': 50000
+},
+{
+	 name: {
+		 'en-US': 'Matter Remober',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-matter-remover',
+		 'book': 4,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 10,
+		 'cost': 40000
+},
+{
+	 name: {
+		 'en-US': 'Medi-Gel',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-medi-gel',
+		 'book': 4,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 20
+},
+{
+	 name: {
+		 'en-US': 'Medi-Scanner',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-medi-scanner',
+		 'book': 4,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 2,
+		 'cost': 600
+},
+{
+	 name: {
+		 'en-US': 'Mineral Detector',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-mineral-detector',
+		 'book': 4,
+		 'page': 'p15',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 4,
+		 'cost': 100
 },
 {
 	 name: {
@@ -1431,6 +1868,44 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Nullifier Shackles',
+	},
+	 notes: {
+	},
+		 'tag': 'spc-nullifier-shackles',
+		 'book': 5,
+		 'page': '',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 6000
+},
+{
+	 name: {
+		 'en-US': 'Nutri-Bar',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-nutri-bar',
+		 'book': 4,
+		 'page': 'p16',
+		 'class': 0,
+		 'general': 6,
+		 'type': 17,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 0,
+		 'cost': 5
+},
+{
+	 name: {
 		 'en-US': 'Oil',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -1527,6 +2002,63 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Personal Data Device (PDD)',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-pdd',
+		 'book': 4,
+		 'page': 'p16',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 500
+},
+{
+	 name: {
+		 'en-US': 'Projected Light Device',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-proj-light-device',
+		 'book': 4,
+		 'page': 'p16',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 1000
+},
+{
+	 name: {
+		 'en-US': 'Psionic Shield',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-psionic-shield',
+		 'book': 4,
+		 'page': 'p16',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 1000
+},
+{
+	 name: {
 		 'en-US': 'Quarrel',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -1575,6 +2107,63 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Rebreather',
+	},
+	 notes: {
+	},
+		 'tag': 'spc-rebreather',
+		 'book': 5,
+		 'page': 'p13',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 250
+},
+{
+	 name: {
+		 'en-US': 'Rebreather',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-rebreather',
+		 'book': 4,
+		 'page': 'p16',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 250
+},
+{
+	 name: {
+		 'en-US': 'Rocket Packs',
+	},
+	 notes: {
+	},
+		 'tag': 'spc-rocket-packs',
+		 'book': 5,
+		 'page': 'p13',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 30,
+		 'cost': 25000
+},
+{
+	 name: {
 		 'en-US': 'Rope, 10"',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -1620,6 +2209,82 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 10,
 		 'cost': 10
+},
+{
+	 name: {
+		 'en-US': 'Scope',
+	},
+	 notes: {
+	},
+		 'tag': 'spc-scope',
+		 'book': 5,
+		 'page': 'p13',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 300
+},
+{
+	 name: {
+		 'en-US': 'Scope',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-scope',
+		 'book': 4,
+		 'page': 'p16',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 300
+},
+{
+	 name: {
+		 'en-US': 'Sensor Suite, Medium',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-sensor-suite-med',
+		 'book': 4,
+		 'page': 'p16',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 18,
+		 'cost': 5000
+},
+{
+	 name: {
+		 'en-US': 'Sensor Suite, Small',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-sensor-suite-small',
+		 'book': 4,
+		 'page': 'p16',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 2,
+		 'cost': 500
 },
 {
 	 name: {
@@ -1740,6 +2405,25 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 1,
 		 'cost': 1
+},
+{
+	 name: {
+		 'en-US': 'Stealth Suit',
+	},
+	 notes: {
+	},
+		 'tag': 'spc-stealth-suit',
+		 'book': 5,
+		 'page': 'p13',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 1,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 5,
+		 'cost': 600
 },
 {
 	 name: {
@@ -1959,6 +2643,25 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Wall Walker System',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-wall-walker-system',
+		 'book': 4,
+		 'page': 'p16',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 2,
+		 'cost': 300
+},
+{
+	 name: {
 		 'en-US': 'War Horse Barding',
 		 'pt-BR': '',
 		 'de-DE': '',
@@ -2028,6 +2731,25 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 1,
 		 'cost': 5
+},
+{
+	 name: {
+		 'en-US': 'Weapon Gimble',
+	},
+	 notes: {
+	},
+		 'tag': 'sfc-weapon-gimbple',
+		 'book': 4,
+		 'page': 'p16',
+		 'class': 0,
+		 'general': 6,
+		 'type': 0,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 5,
+		 'cost': 100
 },
 {
 	 name: {

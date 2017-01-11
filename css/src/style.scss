@@ -5,18 +5,18 @@ $fontSize: 14px;
 
 $lightBG: #ededed;
 
-$fontColor: #111;
-// $headerFooterBackground: #111;
-$headerFooterBackground: #333;
+$fontColor: #fff;
+$headerFooterBackground: #111;
+//$headerFooterBackground: #333;
 $headerFontColor: #fff;
 $subMenuBackground: #666;
-//$bodyBackground: #333;
-$bodyBackground: #beb590;
+$bodyBackground: #333;
+//$bodyBackground: #beb590;
 
-// $primaryBG: #dfab2d;
-// $primaryBGHover: #b48a25;
-$primaryBG: #444;
-$primaryBGHover: #555;
+$primaryBG: #dfab2d;
+$primaryBGHover: #b48a25;
+//$primaryBG: #444;
+//$primaryBGHover: #555;
 $primaryTextColor: #beb590;
 $primaryActiveTextColor: #fff;
 
@@ -532,6 +532,7 @@ body {
 	margin: 0 0 2px 0;
 	border-radius: 3px;
 	background: $subMenuBackground;
+	//background: #fff;
 	span {
 		padding: 3px 5px;
 		display: inline-block;

@@ -32,8 +32,6 @@ var savageWorldsGearShields = Array(
 {
 	 name: {
 		 'en-US': 'Medium Shield',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 		 'tag': 'medium-shield',
 		 'book': 1,
@@ -45,6 +43,66 @@ var savageWorldsGearShields = Array(
 		 'parry': 1,
 		 'weight': 12,
 		 'cost': 50
+},
+{
+	 name: {
+		 'en-US': 'Polymer Shield, Large',
+	},
+		 'tag': 'sfc-polymer-shield-large',
+		 'book': 4,
+		 'page': 'p17',
+		 'class': 0,
+		 'general': 1,
+		 'type': 2,
+		 'armor': 4,
+		 'parry': 2,
+		 'weight': 6,
+		 'cost': 400
+},
+{
+	 name: {
+		 'en-US': 'Polymer Shield, Medium',
+	},
+		 'tag': 'sfc-polymer-shield-medium',
+		 'book': 4,
+		 'page': 'p17',
+		 'class': 0,
+		 'general': 1,
+		 'type': 2,
+		 'armor': 4,
+		 'parry': 1,
+		 'weight': 4,
+		 'cost': 300
+},
+{
+	 name: {
+		 'en-US': 'Polymer Shield, Small',
+	},
+		 'tag': 'sfc-polymer-shield-small',
+		 'book': 4,
+		 'page': 'p17',
+		 'class': 0,
+		 'general': 1,
+		 'type': 2,
+		 'armor': 2,
+		 'parry': 1,
+		 'weight': 2,
+		 'cost': 200
+},
+{
+	 name: {
+		 'en-US': 'Riot Shield',
+	},
+		 'tag': 'spc-riot-shield',
+		 'book': 5,
+		 'page': 'p14',
+		 'class': 0,
+		 'general': 1,
+		 'type': 2,
+		 'armor': 4,
+		 'parry': 2,
+		 'weight': 5,
+		 'cost': 150
 },
 {
 	 name: {

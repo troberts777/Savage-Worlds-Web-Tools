@@ -44,9 +44,6 @@ savageWorldsRaces = Array(
 	 id: 5,
 	 name: {
 		 'en-US': 'Avion',
-		 'pt-BR': '',
-		 'de-DE': '',
-		 'ru-RU': 'Авион',
 	},
 	 tag: '',
 	 page: 'p20',
@@ -291,5 +288,126 @@ savageWorldsRaces = Array(
 	 book: 3,
 	 edges: '["zombie-undead"]',
 	 hindrances: '["zombie-feast-of-flesh"]',
+},
+{
+	 id: 21,
+	 name: {
+		 'en-US': 'Aquarian',
+	},
+	 tag: '',
+	 page: '',
+	 book: 4,
+	 edges: '["sfc-aquarian-aquatic","sfc-aquarian-toughness"]',
+	 hindrances: '["sfc-aquarian-dependency"]',
+},
+{
+	 id: 22,
+	 name: {
+		 'en-US': 'Aurax ',
+	},
+	 tag: '',
+	 page: '',
+	 book: 4,
+	 edges: '["sfc-aurax-size","sfc-aurax-strong"]',
+	 hindrances: '["sfc-aurax-low-tech"]',
+},
+{
+	 id: 23,
+	 name: {
+		 'en-US': 'Avion',
+	},
+	 tag: '',
+	 page: '',
+	 book: 4,
+	 edges: '["sfc-avion-agility","sfc-avion-flight"]',
+	 hindrances: '["sfc-avion-frail","sfc-avion-low-g-worlder"]',
+},
+{
+	 id: 25,
+	 name: {
+		 'en-US': 'Deader',
+	},
+	 tag: '',
+	 page: '',
+	 book: 4,
+	 edges: '["sfc-deader-undead"]',
+	 hindrances: '["sfc-deader-clumsy","sfc-deader-outsider","sfc-deader-poor-parry","sfc-deader-slow","sfc-deader-weak"]',
+},
+{
+	 id: 26,
+	 name: {
+		 'en-US': 'Floran',
+	},
+	 tag: '',
+	 page: '',
+	 book: 4,
+	 edges: '["sfc-floran-hardy","sfc-floran-no-vitals","sfc-floran-regeneration"]',
+	 hindrances: '["sfc-floran-dependency","sfc-floran-env-weak","sfc-floran-high-tech"]',
+},
+{
+	 id: 28,
+	 name: {
+		 'en-US': 'Insectoid',
+	},
+	 tag: '',
+	 page: '',
+	 book: 4,
+	 edges: '["sfc-insectoid-armor","sfc-insectoid-natural-weapons"]',
+	 hindrances: '["sfc-insectoid-cannot-speak","sfc-insectoid-outsider"]',
+},
+{
+	 id: 29,
+	 name: {
+		 'en-US': 'Kalian',
+	},
+	 tag: '',
+	 page: '',
+	 book: 4,
+	 edges: '["sfc-kalian-action"]',
+	 hindrances: '["sfc-kalian-frail"]',
+},
+{
+	 id: 27,
+	 name: {
+		 'en-US': 'Rakashan',
+	},
+	 tag: '',
+	 page: '',
+	 book: 4,
+	 edges: '["sfc-rakashan-agile","sfc-rakashan-low-light","scf-rakashan-natural-weaponry"]',
+	 hindrances: '["sfc-rakashan-bloodthirsty","sfc-deader-poor-parry","sfc-rakashan-racial-enemy"]',
+},
+{
+	 id: 32,
+	 name: {
+		 'en-US': 'Saurian',
+	},
+	 tag: '',
+	 page: '',
+	 book: 4,
+	 edges: '["sfc-saurian-keen-senses","scf-saurian-natural-weapon"]',
+	 hindrances: '["sfc-saurian-weakness-cold"]',
+},
+{
+	 id: 30,
+	 name: {
+		 'en-US': 'Serran',
+	},
+	 tag: '',
+	 page: '',
+	 book: 4,
+	 edges: '["sfc-serran-danger-sense","sfc-serran-parry"]',
+	 hindrances: '["sfc-serran-weak"]',
+},
+{
+	 id: 31,
+	 name: {
+		 'en-US': 'Yeti',
+	},
+	 tag: '',
+	 page: '',
+	 book: 4,
+	 edges: '["sfc-yeti-resistance","sfc-yeti-size","sfc-yeti-strong"]',
+	 hindrances: '["sfc-yeti-weakness","sfc-yeti-low-tech"]',
 }
 );
