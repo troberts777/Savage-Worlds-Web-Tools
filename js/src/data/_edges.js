@@ -1431,6 +1431,31 @@ requires: function( characterObject) {
 },
 {
 	 name: {
+		 'en-US': 'Filthy Rich',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'filthy-rich',
+	 page: 'p36',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 1,
+	 child: 0,
+
+requires: function( characterObject) {
+    if( characterObject.hasEdge('rich') || characterObject.hasEdge('noble') )
+        return true;
+    return false;
+},
+
+charEffects: function ( charObject ) {
+	charObject.currentFunds += (charObject.startingFunds / 1) * 4;
+}
+},
+{
+	 name: {
 		 'en-US': 'First Strike',
 	},
 	 required_edge: '',
@@ -2467,24 +2492,6 @@ requires: function( characterObject) {
 	 child: 0,
 charEffects: function ( charObject ) {
 	charObject.currentFunds += (charObject.startingFunds / 1) * 2;
-}
-},
-{
-	 name: {
-		 'en-US': 'Filthy Rich',
-	},
-	 required_edge: 'rich',
-	 required_rank: 0,
-	 conflicts_edge: '',
-	 conflicts_hindrance: '',
-	 tag: 'filthy-rich',
-	 page: 'p36',
-	 racial: 0,
-	 reselectable: 0,
-	 book: 1,
-	 child: 1,
-charEffects: function ( charObject ) {
-	charObject.currentFunds += (charObject.startingFunds / 1) * 4;
 }
 },
 {
