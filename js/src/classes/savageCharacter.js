@@ -2608,6 +2608,8 @@ savageCharacter.prototype.importJSON = function( jsonString ) {
 					this.enableSettingRule( importObject.settingRules[importCounter] );
 				}
 			}
+			
+			this.validate();
 
 			for( attribute in this.attributes ) {
 				if( importObject.attributes[ attribute ] ) {
@@ -3698,6 +3700,12 @@ savageCharacter.prototype.addGearHandWeapon = function( fromBook, gearTag, itemC
 	if(!droppedDuringCombat)
 		droppedDuringCombat = false;
 	for( var gearCounter = 0; gearCounter < this.availableHandWeapons.length; gearCounter++ ) {
+		//~ if(
+			//~ gearTag == this.availableHandWeapons[gearCounter].tag
+		//~ ) {
+			//~ console.log( this.availableHandWeapons[gearCounter].book );
+			//~ console.log(gearCounter);
+		//~ }
 		if(
 			gearTag == this.availableHandWeapons[gearCounter].tag
 				&&
