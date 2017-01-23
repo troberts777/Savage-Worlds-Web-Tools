@@ -281,6 +281,7 @@ scifiCreator.prototype.makeWeaponStatHTML = function( weapon_object ) {
 	return_val = " (";
 	return_val += weapon_object.range + ", ";
 	return_val += weapon_object.damage;
+
 	if( weapon_object.count >= 4)
 		return_val += " +2";
 	else if( weapon_object.count >= 3)
@@ -289,6 +290,8 @@ scifiCreator.prototype.makeWeaponStatHTML = function( weapon_object ) {
 		return_val += " +1";
 
 	return_val += ", ";
+
+	return_val += "ROF " + weapon_object.rof + ", ";
 	notes = this.getLocalName( weapon_object.notes );
 	if( notes != "")
 		return_val += notes + ", ";
