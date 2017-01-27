@@ -348,6 +348,7 @@ body {
 	input[type=number] {
 		background-color: $lightBG;
 		resize: none;
+		color: #333;
 	}
 	option[disabled], option:disabled {
 		color: #aaa;
