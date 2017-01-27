@@ -1,8 +1,7 @@
 <div class="status-bar">
 	<div class="row">
-		<div class="column small-12">
-			<button class="button tiny radius alert" ng-hide="savageCharacter.isValid" ng-click="showValidationReport()">!</button>
-			<button class="button tiny radius warning" ng-hide="savageCharacter.warningReport.length == 0" ng-click="showValidationReport()">!</button>
+		<div class="column small-12 text-center">
+
 			<span translate="CHARGEN_STATUS_SKILL_POINTS">Skill Points (used/availble)</span>: <span ng-bind="savageCharacter.skillPointsUsed"></span> / <span ng-bind="savageCharacter.skillPointsAvailable"></span>
 			<span class="separator">|</span>
 			<span translate="CHARGEN_STATUS_ATTRIBUTE_POINTS">Attribute Points (used/availble)</span>: <span ng-bind="savageCharacter.attributePointsUsed"></span> / <span ng-bind="savageCharacter.attributePointsAvailable"></span>

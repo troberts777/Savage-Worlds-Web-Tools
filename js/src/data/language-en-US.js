@@ -402,6 +402,8 @@ availableLanguages.push ({
 			SPC_SWITCHABLE_WITH: 'Switchable with power',
 			GENERAL_NOT_SWITCHABLE_PAREN: '(Not Switchable)',
 			CHARGEN_VALIDATION_SPC_SWITCH: 'Super Power \'{value}\' cannot be more points than the parent switchable power minus the Switchable Modification.',
+			GENERAL_VALIDATION_WARNING: 'Validation Warning - Click here for details',
+			GENERAL_VALIDATION_ERROR: 'Validation Error - Click here for details',
 
 	}
 

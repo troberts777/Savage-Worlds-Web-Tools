@@ -41,4 +41,12 @@
 		<a href="#/core/character-maker-advancements"><i class="fa fa-line-chart"></i><br /><span translate="GENERAL_ADVANCES">Advances</span></a>
 	</li>
 </ul>
+
 </div>
+	<div class="row">
+		<div class="column small-12 medium-8 medium-offset-2 text-center">
+			<div ng-hide="savageCharacter.isValid == false || savageCharacter.warningReport.length > 0">&nbsp;</div>
+			<button class="button expanded tiny radius alert no-bottom-margin" ng-hide="savageCharacter.isValid" ng-click="showValidationReport()"><span translate="GENERAL_VALIDATION_ERROR">Validation Error</span></button>
+			<button class="button expanded tiny radius warning no-bottom-margin" ng-hide="savageCharacter.warningReport.length == 0" ng-click="showValidationReport()"><span translate="GENERAL_VALIDATION_WARNING">Validation Warning</span></button>
+		</div>
+	</div>
