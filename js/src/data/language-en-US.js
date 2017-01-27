@@ -417,6 +417,9 @@ availableLanguages.push ({
 			GENERAL_SUCCESS_6_RAISES: 'Success w/ 6 Raises',
 			GENERAL_SUCCESS_6_RAISES_OR_MORE: 'Success w/ 6 or more raises',
 			GENERAL_QUERY_NUM_RAISES: 'Query # of Raises',
+			GENERAL_NO_FAILURES: 'Do not test failed rolls',
+			GENERAL_CORRECT: 'Correct',
+			GENERAL_INCORRECT: 'Incorrect',
 
 	}
 

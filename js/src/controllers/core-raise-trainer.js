@@ -22,6 +22,7 @@ var raiseTrainerArray = 	[
 		$scope.tnAlways4 = false;
 		$scope.selectedShowInlineStats = true;
 		$scope.currentQuestionDisplay = 0;
+		$scope.noFailures = false;
 
 		$scope.inlineCorrect = 0;
 		$scope.inlineNumQuestions = 0;
@@ -32,6 +33,23 @@ var raiseTrainerArray = 	[
 		dice_object.init();
 		dice_object.setAlwaysExplodingDice(true);
 		$scope.startTime = 0;
+
+
+		$translate([
+			'GENERAL_CORRECT'
+		]).then(
+			function (translation) {
+				$scope.generalCorrectWords = translation.GENERAL_CORRECT;
+			}
+		);
+
+		$translate([
+			'GENERAL_INCORRECT'
+		]).then(
+			function (translation) {
+				$scope.generalInorrectWords = translation.GENERAL_INCORRECT;
+			}
+		);
 
 		$scope.startTest = function() {
 			$scope.inlineCorrect = 0;
@@ -60,6 +78,27 @@ var raiseTrainerArray = 	[
 				$scope.showTest = false;
 				$scope.showResults = false;
 		}
+
+		$scope.removeSavedItem = function( itemIndex ) {
+			$translate([
+				'CREATOR_DELETION_CONFIRMATION'
+			]).then(
+				function (translation) {
+					$scope.confirmDialog(
+						translation.CREATOR_DELETION_CONFIRMATION,
+						function() {
+							$scope.showConfirmDialog = false;
+							$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+							$scope.saved_items.splice( itemIndex, 1);
+							localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
+						}
+					);
+				}
+			);
+		}
+
+
+
 
 		$scope.nextQuestion = function() {
 			$scope.currentQuestion++;
@@ -103,6 +142,18 @@ var raiseTrainerArray = 	[
 				} else {
 					$scope.testTargetNumber = getRandomIntInclusive(4,15);
 					$scope.testRollNumber = dice_object.rollDice("d10*");
+				}
+
+				if( $scope.noFailures ) {
+					isNotAFail = $scope.calcCurrentQuestion( $scope.testRollNumber, $scope.testTargetNumber );
+					while( isNotAFail == "fail" ) {
+						if(isNotAFail) {
+							$scope.testRollNumber = dice_object.rollDice("d6*");
+						} else {
+							$scope.testRollNumber = dice_object.rollDice("d10*");
+						}
+						isNotAFail = $scope.calcCurrentQuestion( $scope.testRollNumber, $scope.testTargetNumber );
+					}
 				}
 
 			}
@@ -149,6 +200,7 @@ var raiseTrainerArray = 	[
 		$scope.makeTestResults = function() {
 			$scope.testQuestions = Array();
 			for(var testCount = 0; testCount< $scope.numberOfQuestions / 1; testCount++) {
+
 				if( $scope.tnAlways4 ) {
 					var answer = {
 						roll: dice_object.rollDice("d6*"),
@@ -170,6 +222,18 @@ var raiseTrainerArray = 	[
 				}
 
 				answer.correct = $scope.calcCurrentQuestion( answer.roll, answer.target );
+
+				if( $scope.noFailures ) {
+					while( answer.correct == "fail" ) {
+						if( $scope.tnAlways4 ) {
+							answer.roll = dice_object.rollDice("d6*");
+						} else {
+							answer.roll = dice_object.rollDice("d10*");
+						}
+						answer.correct = $scope.calcCurrentQuestion( answer.roll, answer.target );
+					}
+				}
+
 
 				$scope.testQuestions.push(
 					answer
@@ -196,6 +260,13 @@ var raiseTrainerArray = 	[
 				$scope.selectedShowInlineStats = false;
 			else
 				$scope.selectedShowInlineStats = true;
+		}
+
+		$scope.noFailuresClick = function($event) {
+			if( $event )
+				$scope.noFailures = false;
+			else
+				$scope.noFailures = true;
 		}
 
 		$scope.adjustSuccessFails = function( answerObject ) {
@@ -243,9 +314,15 @@ var raiseTrainerArray = 	[
 				$scope.testQuestions[ $scope.currentQuestion ].answer = "fail";
 				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
 			} else {
+				$scope.lastQuestionResults = "TN " + $scope.testTargetNumber + " vs ROLL " + $scope.testRollNumber + " is " + $scope.calcCurrentQuestion($scope.testRollNumber, $scope.testTargetNumber);
+				$scope.lastQuestionResults += ". Your answer: " + "fail.<br />";
+
 				$scope.inlineNumQuestions++;
-				if( $scope.calcCurrentQuestion(testRollNumber, testTargetNumber) == "fail" ) {
+				if( $scope.calcCurrentQuestion($scope.testRollNumber, $scope.testTargetNumber) == "fail" ) {
 					$scope.inlineCorrect++;
+					$scope.lastQuestionResults += "<h4 class=\"color-green\">" + $scope.generalCorrectWords + "</h4>";
+				} else {
+					$scope.lastQuestionResults +="<h4 class=\"color-red\">" + $scope.generalInorrectWords + "</h4>";
 				}
 				$scope.inlineResultsPercentage = Math.ceil( $scope.inlineCorrect / $scope.inlineNumQuestions * 100 ) + "%";
 				$scope.nextQuestion();
@@ -257,23 +334,38 @@ var raiseTrainerArray = 	[
 				$scope.testQuestions[ $scope.currentQuestion ].answer = "success";
 				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
 			} else {
+				$scope.lastQuestionResults = "TN " + $scope.testTargetNumber + " vs ROLL " + $scope.testRollNumber + " is " + $scope.calcCurrentQuestion($scope.testRollNumber, $scope.testTargetNumber);
+				$scope.lastQuestionResults += ". Your answer: " + "success.<br />";
+
 				$scope.inlineNumQuestions++;
-				if( $scope.calcCurrentQuestion(testRollNumber, testTargetNumber) == "success" ) {
+				if( $scope.calcCurrentQuestion($scope.testRollNumber, $scope.testTargetNumber) == "success" ) {
 					$scope.inlineCorrect++;
+					$scope.lastQuestionResults += "<h4 class=\"color-green\">" + $scope.generalCorrectWords + "</h4>";
+				} else {
+					$scope.lastQuestionResults +="<h4 class=\"color-red\">" + $scope.generalInorrectWords + "</h4>";
 				}
 				$scope.inlineResultsPercentage = Math.ceil( $scope.inlineCorrect / $scope.inlineNumQuestions * 100 ) + "%";
 				$scope.nextQuestion();
 			}
 		}
+
+
+
 		$scope.clickSuccessRaise = function() {
 			if( $scope.numberOfQuestions / 1 > 0 ) {
 				$scope.testQuestions[ $scope.currentQuestion ].time = window.performance.now();
 				$scope.testQuestions[ $scope.currentQuestion ].answer = "raise";
 				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
 			} else {
+				$scope.lastQuestionResults = "TN " + $scope.testTargetNumber + " vs ROLL " + $scope.testRollNumber + " is " + $scope.calcCurrentQuestion($scope.testRollNumber, $scope.testTargetNumber);
+				$scope.lastQuestionResults += ". Your answer: " + "raise.<br />";
+
 				$scope.inlineNumQuestions++;
-				if( $scope.calcCurrentQuestion(testRollNumber, testTargetNumber) == "raise" ) {
+				if( $scope.calcCurrentQuestion($scope.testRollNumber, $scope.testTargetNumber) == "raise" ) {
 					$scope.inlineCorrect++;
+					$scope.lastQuestionResults += "<h4 class=\"color-green\">" + $scope.generalCorrectWords + "</h4>";
+				} else {
+					$scope.lastQuestionResults +="<h4 class=\"color-red\">" + $scope.generalInorrectWords + "</h4>";
 				}
 				$scope.inlineResultsPercentage = Math.ceil( $scope.inlineCorrect / $scope.inlineNumQuestions * 100 ) + "%";
 				$scope.nextQuestion();
@@ -285,9 +377,16 @@ var raiseTrainerArray = 	[
 				$scope.testQuestions[ $scope.currentQuestion ].answer = "2raises";
 				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
 			} else {
+
+				$scope.lastQuestionResults = "TN " + $scope.testTargetNumber + " vs ROLL " + $scope.testRollNumber + " is " + $scope.calcCurrentQuestion($scope.testRollNumber, $scope.testTargetNumber);
+				$scope.lastQuestionResults += ". Your answer: " + "2raises.<br />";
 				$scope.inlineNumQuestions++;
-				if( $scope.calcCurrentQuestion(testRollNumber, testTargetNumber) == "2raises" ) {
+
+				if( $scope.calcCurrentQuestion($scope.testRollNumber, $scope.testTargetNumber) == "2raises" ) {
 					$scope.inlineCorrect++;
+					$scope.lastQuestionResults += "<h4 class=\"color-green\">" + $scope.generalCorrectWords + "</h4>";
+				} else {
+					$scope.lastQuestionResults +="<h4 class=\"color-red\">" + $scope.generalInorrectWords + "</h4>";
 				}
 				$scope.inlineResultsPercentage = Math.ceil( $scope.inlineCorrect / $scope.inlineNumQuestions * 100 ) + "%";
 				$scope.nextQuestion();
@@ -301,9 +400,15 @@ var raiseTrainerArray = 	[
 				$scope.testQuestions[ $scope.currentQuestion ].answer = "3raises";
 				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
 			} else {
+				$scope.lastQuestionResults = "TN " + $scope.testTargetNumber + " vs ROLL " + $scope.testRollNumber + " is " + $scope.calcCurrentQuestion($scope.testRollNumber, $scope.testTargetNumber);
+				$scope.lastQuestionResults += ". Your answer: " + "2raises.<br />";
+
 				$scope.inlineNumQuestions++;
-				if( $scope.calcCurrentQuestion(testRollNumber, testTargetNumber) == "3raises" ) {
+				if( $scope.calcCurrentQuestion($scope.testRollNumber, $scope.testTargetNumber) == "3raises" ) {
 					$scope.inlineCorrect++;
+					$scope.lastQuestionResults += "<h4 class=\"color-green\">" + $scope.generalCorrectWords + "</h4>";
+				} else {
+					$scope.lastQuestionResults +="<h4 class=\"color-red\">" + $scope.generalInorrectWords + "</h4>";
 				}
 				$scope.inlineResultsPercentage = Math.ceil( $scope.inlineCorrect / $scope.inlineNumQuestions * 100 ) + "%";
 				$scope.nextQuestion();
@@ -317,9 +422,15 @@ var raiseTrainerArray = 	[
 				$scope.testQuestions[ $scope.currentQuestion ].answer = "4raises";
 				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
 			} else {
+				$scope.lastQuestionResults = "TN " + $scope.testTargetNumber + " vs ROLL " + $scope.testRollNumber + " is " + $scope.calcCurrentQuestion($scope.testRollNumber, $scope.testTargetNumber);
+				$scope.lastQuestionResults += ". Your answer: " + "4raises.<br />";
+
 				$scope.inlineNumQuestions++;
-				if( $scope.calcCurrentQuestion(testRollNumber, testTargetNumber) == "2raises" ) {
+				if( $scope.calcCurrentQuestion(testRollNumber, testTargetNumber) == "4raises" ) {
 					$scope.inlineCorrect++;
+					$scope.lastQuestionResults += "<h4 class=\"color-green\">" + $scope.generalCorrectWords + "</h4>";
+				} else {
+					$scope.lastQuestionResults +="<h4 class=\"color-red\">" + $scope.generalInorrectWords + "</h4>";
 				}
 				$scope.inlineResultsPercentage = Math.ceil( $scope.inlineCorrect / $scope.inlineNumQuestions * 100 ) + "%";
 				$scope.nextQuestion();
@@ -333,9 +444,15 @@ var raiseTrainerArray = 	[
 				$scope.testQuestions[ $scope.currentQuestion ].answer = "5raises";
 				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
 			} else {
+				$scope.lastQuestionResults = "TN " + $scope.testTargetNumber + " vs ROLL " + $scope.testRollNumber + " is " + $scope.calcCurrentQuestion($scope.testRollNumber, $scope.testTargetNumber);
+				$scope.lastQuestionResults += ". Your answer: " + "5raises.<br />";
+
 				$scope.inlineNumQuestions++;
 				if( $scope.calcCurrentQuestion(testRollNumber, testTargetNumber) == "5raises" ) {
 					$scope.inlineCorrect++;
+					$scope.lastQuestionResults += "<h4 class=\"color-green\">" + $scope.generalCorrectWords + "</h4>";
+				} else {
+					$scope.lastQuestionResults +="<h4 class=\"color-red\">" + $scope.generalInorrectWords + "</h4>";
 				}
 				$scope.inlineResultsPercentage = Math.ceil( $scope.inlineCorrect / $scope.inlineNumQuestions * 100 ) + "%";
 				$scope.nextQuestion();

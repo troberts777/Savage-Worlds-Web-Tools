@@ -7,7 +7,7 @@
 					<p>Are you tired of not getting how many raises or whether a roll is a raise or not? This app will help train you!</p>
 
 					<div class="row">
-						<div class="small-12 medium-6 columns">
+						<div class="small-12 medium-4 medium-offset-4 columns text-left">
 							<label><span translate="GENERAL_NUM_QUESTIONS">Number of Questions</span>:
 								<select class="inline-block" ng-model="numberOfQuestions" ng-click="numQuestionsChange( numberOfQuestions )" >
 									<option value="10">10</option>
@@ -17,7 +17,9 @@
 								</select>
 							</label>
 						</div>
-						<div class="small-12 medium-6 columns">
+					</div>
+					<div class="row">
+						<div class="small-12 medium-4 medium-offset-4 columns text-left">
 							<label>
 								<input type="checkbox" ng-checked="selectedShowInlineStats" ng-click="showInlineClick(selectedShowInlineStats)" />
 								<span translate="GENERAL_INLINE_STATS">Show Inline Statistics</span>
@@ -26,14 +28,17 @@
 						</div>
 					</div>
 					<div class="row">
-						<div class="small-12 medium-6 columns">
+						<div class="small-12 medium-4 medium-offset-4 columns text-left">
 							<label>
 								<input type="checkbox" ng-checked="tnAlways4" ng-click="tn4Click(tnAlways4)" />
 								<span translate="GENERAL_TN_ALWAYS_4">Target Number is always 4</span>
 
 							</label>
 						</div>
-						<div class="small-12 medium-6 columns">
+
+					</div>
+					<div class="row">
+						<div class="small-12 medium-6 medium-offset-4 columns text-left">
 							<label>
 								<input type="checkbox" ng-checked="queryNumRaises" ng-click="queryNumRaisesClick(tnAlways4)" />
 								<span translate="GENERAL_QUERY_NUM_RAISES">Query # of Raises</span>
@@ -41,8 +46,19 @@
 							</label>
 						</div>
 					</div>
+
 					<div class="row">
-						<div class="small-12 medium-12 columns">
+						<div class="small-12 medium-6 medium-offset-4 columns text-left">
+							<label>
+								<input type="checkbox" ng-checked="noFailures" ng-click="noFailuresClick(noFailures)" />
+								<span translate="GENERAL_NO_FAILURES">No Failures</span>
+
+							</label>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="small-12 medium-6 medium-offset-4 columns text-left">
 							<button type="button" class="button primary" ng-click="startTest()" translate="GENERAL_START_TEST">Start Test</button>
 						</div>
 					</div>
@@ -71,18 +87,27 @@
 							</fieldset>
 						</div>
 					</div>
-					<div class="row">
-						<div class="columns small-6 medium-4 text-center">
+					<div class="row" ng-show="!noFailures">
+						<div class="columns small-4 medium-4 text-center">
 							<button class="button primary expanded" ng-click="clickFailure()" translate="GENERAL_FAIL">Failure</button>
 						</div>
-						<div class="columns small-6 medium-4 text-center">
+						<div class="columns small-4 medium-4 text-center">
 							<button class="button primary expanded" ng-click="clickSuccess()" translate="GENERAL_SUCCESS">Success</button>
 						</div>
-						<div class="columns small-6 medium-4 text-center">
+						<div class="columns small-4 medium-4 text-center">
 							<button class="button primary expanded" ng-click="clickSuccessRaise()" translate="GENERAL_SUCCESS_1_RAISE">Success with a Raise</button>
 						</div>
 					</div>
-					<div class="row" ng-show="queryNumRaises">
+					<div class="row" ng-show="noFailures">
+
+						<div class="columns small-6 medium-6 text-center">
+							<button class="button primary expanded" ng-click="clickSuccess()" translate="GENERAL_SUCCESS">Success</button>
+						</div>
+						<div class="columns small-6 medium-6 text-center">
+							<button class="button primary expanded" ng-click="clickSuccessRaise()" translate="GENERAL_SUCCESS_1_RAISE">Success with a Raise</button>
+						</div>
+					</div>
+					<div class="row" ng-show="queryNumRaises = true">
 						<div class="columns small-6 medium-3 text-center">
 							<button class="button primary expanded" ng-click="clickSuccess2Raises()" translate="GENERAL_SUCCESS_2_RAISES">Success with 2 Raise</button>
 						</div>
@@ -103,6 +128,12 @@
 								<label><strong><span translate="TRAINER_CORRECT_ANSWERS">Correct Answers</span></strong>: <span ng-bind="inlineCorrect"></span></label>
 								<label><strong><span translate="TRAINER_TOTAL_QUESTIONS">Total Questions</span></strong>: <span ng-bind="inlineNumQuestions"></span></label>
 								<label><strong><span translate="GENERAL_PERCENTAGE">Percentage</span></strong>: <span ng-bind="inlineResultsPercentage"></span></label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="columns small-12 medium-12 text-center">
+								<br />
+								<strong><div ng-bind-html="lastQuestionResults"></div></strong>
 							</div>
 						</div>
 						<button type="button" class="button primary pull-right" ng-click="reset()" translate="GENERAL_RESET">Reset</button>
