@@ -404,6 +404,10 @@ availableLanguages.push ({
 			CHARGEN_VALIDATION_SPC_SWITCH: 'Super Power \'{value}\' cannot be more points than the parent switchable power minus the Switchable Modification.',
 			GENERAL_VALIDATION_WARNING: 'Validation Warning - Click here for details',
 			GENERAL_VALIDATION_ERROR: 'Validation Error - Click here for details',
+			GENERAL_INLINE_STATS: 'Show Inline Stats',
+			GENERAL_TN_ALWAYS_4: 'Target Number is always 4',
+			GENERAL_NUM_QUESTIONS: 'Number of Questions',
+			GENERAL_RESET: 'Reset',
 
 	}
 

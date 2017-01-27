@@ -17,9 +17,15 @@ var raiseTrainerArray = 	[
 		$scope.showWelcome = true;
 		$scope.showTest = false;
 		$scope.showResults = false;
-		$scope.numberOfQuestions = 20;
+		$scope.numberOfQuestions = "20";
 		$scope.currentQuestion = -1;
+		$scope.tnAlways4 = false;
+		$scope.selectedShowInlineStats = true;
 		$scope.currentQuestionDisplay = 0;
+
+		$scope.inlineCorrect = 0;
+		$scope.inlineNumQuestions = 0;
+
 		$scope.testQuestions = Array();
 		var dice_object = new classDice();
 		dice_object.init();
@@ -27,28 +33,77 @@ var raiseTrainerArray = 	[
 		$scope.startTime = 0;
 
 		$scope.startTest = function() {
-			$scope.makeTestResults();
-			$scope.currentQuestion = -1;
-			$scope.nextQuestion();
-			$scope.showWelcome = false;
-			$scope.showTest = true;
-			$scope.showResults = false;
-			$scope.startTime = window.performance.now();
+			$scope.inlineCorrect = 0;
+			$scope.inlineNumQuestions = -1;
+
+			if( $scope.numberOfQuestions / 1 > 0 ) {
+				$scope.makeTestResults();
+				$scope.currentQuestion = -1;
+				$scope.nextQuestion();
+				$scope.showWelcome = false;
+				$scope.showTest = true;
+				$scope.showResults = false;
+				$scope.startTime = window.performance.now();
+			} else {
+				$scope.inlineNumQuestions = 0;
+				$scope.showWelcome = false;
+				$scope.showTest = true;
+				$scope.showResults = false;
+				$scope.nextQuestion();
+
+			}
+		}
+
+		$scope.reset = function() {
+				$scope.showWelcome = true;
+				$scope.showTest = false;
+				$scope.showResults = false;
 		}
 
 		$scope.nextQuestion = function() {
 			$scope.currentQuestion++;
 
-			if( $scope.testQuestions[ $scope.currentQuestion ] ) {
-				$scope.currentQuestionDisplay = $scope.currentQuestion + 1 + "/" + $scope.numberOfQuestions;
-				$scope.testTargetNumber = $scope.testQuestions[ $scope.currentQuestion ].target;
-				$scope.testRollNumber = $scope.testQuestions[ $scope.currentQuestion ].roll;
+			if( $scope.numberOfQuestions / 1 > 0 ) {
+				if( $scope.testQuestions[ $scope.currentQuestion ] ) {
+					$scope.currentQuestionDisplay = $scope.currentQuestion + 1 + "/" + $scope.numberOfQuestions;
+					$scope.testTargetNumber = $scope.testQuestions[ $scope.currentQuestion ].target;
+					$scope.testRollNumber = $scope.testQuestions[ $scope.currentQuestion ].roll;
 
+
+					$scope.inlineNumQuestions++;
+					if(
+						$scope.testQuestions[ $scope.currentQuestion - 1]
+							&&
+						$scope.testQuestions[ $scope.currentQuestion - 1].correct
+							==
+						$scope.testQuestions[ $scope.currentQuestion - 1 ].answer
+					) {
+						$scope.inlineCorrect++;
+					}
+
+					if( $scope.inlineNumQuestions > 0 ) {
+						$scope.inlineResultsPercentage = (($scope.inlineCorrect / $scope.inlineNumQuestions )  * 100 ).toFixed(3) + " %";
+					} else {
+						$scope.inlineResultsPercentage = "0 %";
+					}
+
+				} else {
+					$scope.calculateResults();
+					$scope.showWelcome = false;
+					$scope.showTest = false;
+					$scope.showResults = true;
+				}
 			} else {
-				$scope.calculateResults();
-				$scope.showWelcome = false;
-				$scope.showTest = false;
-				$scope.showResults = true;
+
+				$scope.currentQuestionDisplay = $scope.currentQuestion + 1;
+				if( $scope.tnAlways4 ) {
+					$scope.testTargetNumber = 4;
+					$scope.testRollNumber = dice_object.rollDice("d6*");
+				} else {
+					$scope.testTargetNumber = getRandomIntInclusive(4,15);
+					$scope.testRollNumber = dice_object.rollDice("d10*");
+				}
+
 			}
 		}
 
@@ -92,15 +147,26 @@ var raiseTrainerArray = 	[
 
 		$scope.makeTestResults = function() {
 			$scope.testQuestions = Array();
-			for(var testCount = 0; testCount< $scope.numberOfQuestions; testCount++) {
-				var answer = {
-					roll: dice_object.rollDice("d10*"),
-					target: getRandomIntInclusive(4,15),
-					time: -1,
-					right: false,
-					answer: "",
-					correct: ""
-				};
+			for(var testCount = 0; testCount< $scope.numberOfQuestions / 1; testCount++) {
+				if( $scope.tnAlways4 ) {
+					var answer = {
+						roll: dice_object.rollDice("d6*"),
+						target: 4,
+						time: -1,
+						right: false,
+						answer: "",
+						correct: ""
+					};
+				} else {
+					var answer = {
+						roll: dice_object.rollDice("d10*"),
+						target: getRandomIntInclusive(4,15),
+						time: -1,
+						right: false,
+						answer: "",
+						correct: ""
+					};
+				}
 
 				if( answer.roll >= answer.target + 8) {
 					answer.correct = "2raises";
@@ -119,6 +185,26 @@ var raiseTrainerArray = 	[
 
 		}
 
+		$scope.tn4Click = function($event) {
+			if( $event )
+				$scope.tnAlways4 = false;
+			else
+				$scope.tnAlways4 = true;
+		}
+
+		$scope.numQuestionsChange = function( $event ) {
+			if( $event == 0 ) {
+				$scope.selectedShowInlineStats = true;
+			}
+		}
+
+		$scope.showInlineClick = function($event) {
+			if( $event )
+				$scope.selectedShowInlineStats = false;
+			else
+				$scope.selectedShowInlineStats = true;
+		}
+
 		$scope.adjustSuccessFails = function( answerObject ) {
 			if( answerObject.correct == answerObject.answer )
 				answerObject.right = true;
@@ -129,25 +215,73 @@ var raiseTrainerArray = 	[
 			return answerObject;
 		}
 
+		$scope.calcCurrentQuestion = function() {
+				if( $scope.testRollNumber >= $scope.testTargetNumber + 8) {
+					return "2raises";
+				} else if( $scope.testRollNumber >= $scope.testTargetNumber + 4) {
+					return "raise";
+				} else if( $scope.testRollNumber >= $scope.testTargetNumber ) {
+					return "success";
+				} else {
+					return "fail";
+				}
+		}
+
 		$scope.clickFailure = function() {
-			$scope.testQuestions[ $scope.currentQuestion ].time = window.performance.now();
-			$scope.testQuestions[ $scope.currentQuestion ].answer = "fail";
-			$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
+			if( $scope.numberOfQuestions / 1 > 0 ) {
+				$scope.testQuestions[ $scope.currentQuestion ].time = window.performance.now();
+				$scope.testQuestions[ $scope.currentQuestion ].answer = "fail";
+				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
+			} else {
+				$scope.inlineNumQuestions++;
+				if( $scope.calcCurrentQuestion() == "fail" ) {
+					$scope.inlineCorrect++;
+				}
+				$scope.inlineResultsPercentage = Math.ceil( $scope.inlineCorrect / $scope.inlineNumQuestions * 100 ) + "%";
+				$scope.nextQuestion();
+			}
 		}
 		$scope.clickSuccess = function() {
-			$scope.testQuestions[ $scope.currentQuestion ].time = window.performance.now();
-			$scope.testQuestions[ $scope.currentQuestion ].answer = "success";
-			$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
+			if( $scope.numberOfQuestions / 1 > 0 ) {
+				$scope.testQuestions[ $scope.currentQuestion ].time = window.performance.now();
+				$scope.testQuestions[ $scope.currentQuestion ].answer = "success";
+				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
+			} else {
+				$scope.inlineNumQuestions++;
+				if( $scope.calcCurrentQuestion() == "success" ) {
+					$scope.inlineCorrect++;
+				}
+				$scope.inlineResultsPercentage = Math.ceil( $scope.inlineCorrect / $scope.inlineNumQuestions * 100 ) + "%";
+				$scope.nextQuestion();
+			}
 		}
 		$scope.clickSuccessRaise = function() {
-			$scope.testQuestions[ $scope.currentQuestion ].time = window.performance.now();
-			$scope.testQuestions[ $scope.currentQuestion ].answer = "raise";
-			$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
+			if( $scope.numberOfQuestions / 1 > 0 ) {
+				$scope.testQuestions[ $scope.currentQuestion ].time = window.performance.now();
+				$scope.testQuestions[ $scope.currentQuestion ].answer = "raise";
+				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
+			} else {
+				$scope.inlineNumQuestions++;
+				if( $scope.calcCurrentQuestion() == "raise" ) {
+					$scope.inlineCorrect++;
+				}
+				$scope.inlineResultsPercentage = Math.ceil( $scope.inlineCorrect / $scope.inlineNumQuestions * 100 ) + "%";
+				$scope.nextQuestion();
+			}
 		}
 		$scope.clickSuccess2Raises = function() {
-			$scope.testQuestions[ $scope.currentQuestion ].time = window.performance.now();
-			$scope.testQuestions[ $scope.currentQuestion ].answer = "2raises";
-			$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
+			if( $scope.numberOfQuestions / 1 > 0 ) {
+				$scope.testQuestions[ $scope.currentQuestion ].time = window.performance.now();
+				$scope.testQuestions[ $scope.currentQuestion ].answer = "2raises";
+				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
+			} else {
+				$scope.inlineNumQuestions++;
+				if( $scope.calcCurrentQuestion() == "2raises" ) {
+					$scope.inlineCorrect++;
+				}
+				$scope.inlineResultsPercentage = Math.ceil( $scope.inlineCorrect / $scope.inlineNumQuestions * 100 ) + "%";
+				$scope.nextQuestion();
+			}
 
 		}
 	}

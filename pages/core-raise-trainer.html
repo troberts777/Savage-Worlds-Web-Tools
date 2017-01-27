@@ -5,7 +5,36 @@
 				<legend translate="INDEX_RAISE_TRAINER">Raise Trainer</legend>
 				<div ng-show="showWelcome">
 					<p>Are you tired of not getting how many raises or whether a roll is a raise or not? This app will help train you!</p>
-					<button type="button" class="button primary" ng-click="startTest()" translate="GENERAL_START_TEST">Start Test</button>
+
+					<div class="row">
+						<div class="small-12 medium-3 columns">
+							<label><span translate="GENERAL_NUM_QUESTIONS">Number of Questions</span>:
+								<select ng-model="numberOfQuestions" ng-click="numQuestionsChange( numberOfQuestions )" >
+									<option value="10">10</option>
+									<option value="20">20</option>
+									<option value="30">30</option>
+									<option value="0">Endless</option>
+								</select>
+							</label>
+						</div>
+						<div class="small-12 medium-3 columns">
+							<label>
+								<input type="checkbox" ng-checked="selectedShowInlineStats" ng-click="showInlineClick(selectedShowInlineStats)" />
+								<span translate="GENERAL_INLINE_STATS">Show Inline Statistics</span>
+
+							</label>
+						</div>
+						<div class="small-12 medium-3 columns">
+							<label>
+								<input type="checkbox" ng-checked="tnAlways4" ng-click="tn4Click(tnAlways4)" />
+								<span translate="GENERAL_TN_ALWAYS_4">Target Number is always 4</span>
+
+							</label>
+						</div>
+						<div class="small-12 medium-3 columns">
+							<button type="button" class="button primary" ng-click="startTest()" translate="GENERAL_START_TEST">Start Test</button>
+						</div>
+					</div>
 				</div>
 				<div ng-show="showTest">
 					<div class="row">
@@ -15,8 +44,8 @@
 					</div>
 					<div class="row">
 						<div class="columns small-5 text-right">
-							<fieldset>
-								<legend translate="RAISE_ROLL">Roll</legend>
+							<fieldset class="text-right">
+								<legend class="text-right display-block" style="width: 100%" translate="RAISE_ROLL">Roll</legend>
 								<h1 ng-bind="testRollNumber">0</h1>
 							</fieldset>
 
@@ -45,6 +74,18 @@
 							<button class="button primary expanded" ng-click="clickSuccess2Raises()" translate="GENERAL_SUCCESS_2_RAISES_OR_MORE">Success with 2 Raise</button>
 						</div>
 					</div>
+
+					<div ng-show="selectedShowInlineStats">
+						<div class="row">
+							<div class="columns small-12 medium-4 text-left">
+								<label><strong><span translate="TRAINER_CORRECT_ANSWERS">Correct Answers</span></strong>: <span ng-bind="inlineCorrect"></span></label>
+								<label><strong><span translate="TRAINER_TOTAL_QUESTIONS">Total Questions</span></strong>: <span ng-bind="inlineNumQuestions"></span></label>
+								<label><strong><span translate="GENERAL_PERCENTAGE">Percentage</span></strong>: <span ng-bind="inlineResultsPercentage"></span></label>
+							</div>
+						</div>
+						<button type="button" class="button primary pull-right" ng-click="reset()" translate="GENERAL_RESET">Reset</button>
+					</div>
+
 				</div>
 				<div ng-show="showResults">
 					<div class="row">
@@ -57,6 +98,7 @@
 							<label><strong><span translate="GENERAL_TOTAL_COMPLETION_TIME">Total Completion Time</span></strong>: <span ng-bind="totalAnswerTime"></span> <span translate="GENERAL_SECONDS">Seconds</span></label>
 							<br />
 							<button type="button" class="button primary expanded" ng-click="startTest()" translate="GENERAL_TRY_AGAIN">Try Again</button>
+							<button type="button" class="button primary expanded" ng-click="reset()" translate="GENERAL_RESET">Reset</button>
 						</div>
 						<div class="columns small-12 medium-8">
 							<table>
