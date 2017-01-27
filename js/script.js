@@ -9311,7 +9311,13 @@ var raiseTrainerArray = 	[
 					};
 				}
 
-				if( answer.roll >= answer.target + 8) {
+				if( answer.roll >= answer.target + 20) {
+					answer.correct = "5raises";
+				} else if( answer.roll >= answer.target + 16) {
+					answer.correct = "4raises";
+				} else if( answer.roll >= answer.target + 12) {
+					answer.correct = "3raises";
+				} else if( answer.roll >= answer.target + 8) {
 					answer.correct = "2raises";
 				} else if( answer.roll >= answer.target + 4) {
 					answer.correct = "raise";
@@ -9359,7 +9365,13 @@ var raiseTrainerArray = 	[
 		}
 
 		$scope.calcCurrentQuestion = function() {
-				if( $scope.testRollNumber >= $scope.testTargetNumber + 8) {
+				if( $scope.testRollNumber >= $scope.testTargetNumber + 20) {
+					return "5raises";
+				} else if( $scope.testRollNumber >= $scope.testTargetNumber + 16) {
+					return "4raises";
+				} else if( $scope.testRollNumber >= $scope.testTargetNumber + 12) {
+					return "3raises";
+				} else if( $scope.testRollNumber >= $scope.testTargetNumber + 8) {
 					return "2raises";
 				} else if( $scope.testRollNumber >= $scope.testTargetNumber + 4) {
 					return "raise";
@@ -9420,6 +9432,54 @@ var raiseTrainerArray = 	[
 			} else {
 				$scope.inlineNumQuestions++;
 				if( $scope.calcCurrentQuestion() == "2raises" ) {
+					$scope.inlineCorrect++;
+				}
+				$scope.inlineResultsPercentage = Math.ceil( $scope.inlineCorrect / $scope.inlineNumQuestions * 100 ) + "%";
+				$scope.nextQuestion();
+			}
+
+		}
+
+		$scope.clickSuccess3Raises = function() {
+			if( $scope.numberOfQuestions / 1 > 0 ) {
+				$scope.testQuestions[ $scope.currentQuestion ].time = window.performance.now();
+				$scope.testQuestions[ $scope.currentQuestion ].answer = "3raises";
+				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
+			} else {
+				$scope.inlineNumQuestions++;
+				if( $scope.calcCurrentQuestion() == "3raises" ) {
+					$scope.inlineCorrect++;
+				}
+				$scope.inlineResultsPercentage = Math.ceil( $scope.inlineCorrect / $scope.inlineNumQuestions * 100 ) + "%";
+				$scope.nextQuestion();
+			}
+
+		}
+
+		$scope.clickSuccess4Raises = function() {
+			if( $scope.numberOfQuestions / 1 > 0 ) {
+				$scope.testQuestions[ $scope.currentQuestion ].time = window.performance.now();
+				$scope.testQuestions[ $scope.currentQuestion ].answer = "4raises";
+				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
+			} else {
+				$scope.inlineNumQuestions++;
+				if( $scope.calcCurrentQuestion() == "2raises" ) {
+					$scope.inlineCorrect++;
+				}
+				$scope.inlineResultsPercentage = Math.ceil( $scope.inlineCorrect / $scope.inlineNumQuestions * 100 ) + "%";
+				$scope.nextQuestion();
+			}
+
+		}
+
+		$scope.clickSuccess5Raises = function() {
+			if( $scope.numberOfQuestions / 1 > 0 ) {
+				$scope.testQuestions[ $scope.currentQuestion ].time = window.performance.now();
+				$scope.testQuestions[ $scope.currentQuestion ].answer = "5raises";
+				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
+			} else {
+				$scope.inlineNumQuestions++;
+				if( $scope.calcCurrentQuestion() == "5raises" ) {
 					$scope.inlineCorrect++;
 				}
 				$scope.inlineResultsPercentage = Math.ceil( $scope.inlineCorrect / $scope.inlineNumQuestions * 100 ) + "%";
@@ -43745,6 +43805,14 @@ availableLanguages.push ({
 			GENERAL_TN_ALWAYS_4: 'Target Number is always 4',
 			GENERAL_NUM_QUESTIONS: 'Number of Questions',
 			GENERAL_RESET: 'Reset',
+			GENERAL_SUCCESS_3_RAISES: 'Success w/ 3 Raises',
+			GENERAL_SUCCESS_3_RAISES_OR_MORE: 'Success w/ 3 or more raises',
+			GENERAL_SUCCESS_4_RAISES: 'Success w/ 5 Raises',
+			GENERAL_SUCCESS_4_RAISES_OR_MORE: 'Success w/ 4 or more raises',
+			GENERAL_SUCCESS_5_RAISES: 'Success w/ 5 Raises',
+			GENERAL_SUCCESS_5_RAISES_OR_MORE: 'Success w/ 5 or more raises',
+			GENERAL_SUCCESS_6_RAISES: 'Success w/ 6 Raises',
+			GENERAL_SUCCESS_6_RAISES_OR_MORE: 'Success w/ 6 or more raises',
 
 	}
 
