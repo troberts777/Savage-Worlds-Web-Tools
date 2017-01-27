@@ -9412,6 +9412,14 @@ var raiseTrainerArray = 	[
 				$scope.noFailures = true;
 		}
 
+
+		$scope.queryNumRaisesClick = function($event) {
+			if( $event )
+				$scope.queryNumRaises = false;
+			else
+				$scope.queryNumRaises = true;
+		}
+
 		$scope.adjustSuccessFails = function( answerObject ) {
 			if( answerObject.correct == answerObject.answer )
 				answerObject.right = true;

@@ -40,7 +40,7 @@
 					<div class="row">
 						<div class="small-12 medium-6 medium-offset-4 columns text-left">
 							<label>
-								<input type="checkbox" ng-checked="queryNumRaises" ng-click="queryNumRaisesClick(tnAlways4)" />
+								<input type="checkbox" ng-checked="queryNumRaises" ng-click="queryNumRaisesClick(queryNumRaises)" />
 								<span translate="GENERAL_QUERY_NUM_RAISES">Query # of Raises</span>
 
 							</label>
@@ -107,7 +107,7 @@
 							<button class="button primary expanded" ng-click="clickSuccessRaise()" translate="GENERAL_SUCCESS_1_RAISE">Success with a Raise</button>
 						</div>
 					</div>
-					<div class="row" ng-show="queryNumRaises = true">
+					<div class="row" ng-show="queryNumRaises">
 						<div class="columns small-6 medium-3 text-center">
 							<button class="button primary expanded" ng-click="clickSuccess2Raises()" translate="GENERAL_SUCCESS_2_RAISES">Success with 2 Raise</button>
 						</div>
