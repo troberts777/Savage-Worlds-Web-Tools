@@ -1605,6 +1605,25 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
+		 'en-US': 'Lockpicks',
+	},
+	 notes: {
+	},
+		 'tag': 'fc-lockpicks',
+		 'book': 2,
+		 'page': 'p9',
+		 'class': 0,
+		 'general': 6,
+		 'type': 15,
+		 'is_ammo': 0,
+		 'is_container': 0,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 1,
+		 'cost': 100
+},
+{
+	 name: {
 		 'en-US': 'Matter Cutter',
 	},
 	 notes: {
@@ -2104,6 +2123,25 @@ var savageWorldsGearMundane = Array(
 		 'cost_per': 0,
 		 'weight': 2,
 		 'cost': 25
+},
+{
+	 name: {
+		 'en-US': 'Quiver',
+	},
+	 notes: {
+	},
+		 'tag': 'fc-quiver',
+		 'book': 2,
+		 'page': 'p9',
+		 'class': 0,
+		 'general': 6,
+		 'type': 15,
+		 'is_ammo': 0,
+		 'is_container': 1,
+		 'weight_per': 0,
+		 'cost_per': 1,
+		 'weight': 2,
+		 'cost': 10
 },
 {
 	 name: {
