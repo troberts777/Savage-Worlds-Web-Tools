@@ -7,9 +7,9 @@
 					<p>Are you tired of not getting how many raises or whether a roll is a raise or not? This app will help train you!</p>
 
 					<div class="row">
-						<div class="small-12 medium-3 columns">
+						<div class="small-12 medium-6 columns">
 							<label><span translate="GENERAL_NUM_QUESTIONS">Number of Questions</span>:
-								<select ng-model="numberOfQuestions" ng-click="numQuestionsChange( numberOfQuestions )" >
+								<select class="inline-block" ng-model="numberOfQuestions" ng-click="numQuestionsChange( numberOfQuestions )" >
 									<option value="10">10</option>
 									<option value="20">20</option>
 									<option value="30">30</option>
@@ -17,21 +17,32 @@
 								</select>
 							</label>
 						</div>
-						<div class="small-12 medium-3 columns">
+						<div class="small-12 medium-6 columns">
 							<label>
 								<input type="checkbox" ng-checked="selectedShowInlineStats" ng-click="showInlineClick(selectedShowInlineStats)" />
 								<span translate="GENERAL_INLINE_STATS">Show Inline Statistics</span>
 
 							</label>
 						</div>
-						<div class="small-12 medium-3 columns">
+					</div>
+					<div class="row">
+						<div class="small-12 medium-6 columns">
 							<label>
 								<input type="checkbox" ng-checked="tnAlways4" ng-click="tn4Click(tnAlways4)" />
 								<span translate="GENERAL_TN_ALWAYS_4">Target Number is always 4</span>
 
 							</label>
 						</div>
-						<div class="small-12 medium-3 columns">
+						<div class="small-12 medium-6 columns">
+							<label>
+								<input type="checkbox" ng-checked="queryNumRaises" ng-click="queryNumRaisesClick(tnAlways4)" />
+								<span translate="GENERAL_QUERY_NUM_RAISES">Query # of Raises</span>
+
+							</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="small-12 medium-12 columns">
 							<button type="button" class="button primary" ng-click="startTest()" translate="GENERAL_START_TEST">Start Test</button>
 						</div>
 					</div>
@@ -71,7 +82,7 @@
 							<button class="button primary expanded" ng-click="clickSuccessRaise()" translate="GENERAL_SUCCESS_1_RAISE">Success with a Raise</button>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row" ng-show="queryNumRaises">
 						<div class="columns small-6 medium-3 text-center">
 							<button class="button primary expanded" ng-click="clickSuccess2Raises()" translate="GENERAL_SUCCESS_2_RAISES">Success with 2 Raise</button>
 						</div>

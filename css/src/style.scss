@@ -82,6 +82,10 @@ body {
 	.display-block {
 		display: block;
 	}
+	.inline-block {
+		display: inline-block;
+	}
+
 	table {
 		background: $headerFooterBackground;
 		color: $primaryTextColor;

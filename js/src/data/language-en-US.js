@@ -416,6 +416,7 @@ availableLanguages.push ({
 			GENERAL_SUCCESS_5_RAISES_OR_MORE: 'Success w/ 5 or more raises',
 			GENERAL_SUCCESS_6_RAISES: 'Success w/ 6 Raises',
 			GENERAL_SUCCESS_6_RAISES_OR_MORE: 'Success w/ 6 or more raises',
+			GENERAL_QUERY_NUM_RAISES: 'Query # of Raises',
 
 	}
 

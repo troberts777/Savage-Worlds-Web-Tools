@@ -25,6 +25,7 @@ var raiseTrainerArray = 	[
 
 		$scope.inlineCorrect = 0;
 		$scope.inlineNumQuestions = 0;
+		$scope.queryNumRaises = false;
 
 		$scope.testQuestions = Array();
 		var dice_object = new classDice();
@@ -168,21 +169,7 @@ var raiseTrainerArray = 	[
 					};
 				}
 
-				if( answer.roll >= answer.target + 20) {
-					answer.correct = "5raises";
-				} else if( answer.roll >= answer.target + 16) {
-					answer.correct = "4raises";
-				} else if( answer.roll >= answer.target + 12) {
-					answer.correct = "3raises";
-				} else if( answer.roll >= answer.target + 8) {
-					answer.correct = "2raises";
-				} else if( answer.roll >= answer.target + 4) {
-					answer.correct = "raise";
-				} else if( answer.roll >= answer.target ) {
-					answer.correct = "success";
-				} else {
-					answer.correct = "fail";
-				}
+				answer.correct = $scope.calcCurrentQuestion( answer.roll, answer.target );
 
 				$scope.testQuestions.push(
 					answer
@@ -221,23 +208,34 @@ var raiseTrainerArray = 	[
 			return answerObject;
 		}
 
-		$scope.calcCurrentQuestion = function() {
-				if( $scope.testRollNumber >= $scope.testTargetNumber + 20) {
+		$scope.calcCurrentQuestion = function(rollNum, targetNum) {
+			if( $scope.queryNumRaises ) {
+				if( rollNum >= $scope.testTargetNumber + 20) {
 					return "5raises";
-				} else if( $scope.testRollNumber >= $scope.testTargetNumber + 16) {
+				} else if( rollNum >= targetNum + 16) {
 					return "4raises";
-				} else if( $scope.testRollNumber >= $scope.testTargetNumber + 12) {
+				} else if( rollNum >= targetNum + 12) {
 					return "3raises";
-				} else if( $scope.testRollNumber >= $scope.testTargetNumber + 8) {
+				} else if( rollNum >= targetNum + 8) {
 					return "2raises";
-				} else if( $scope.testRollNumber >= $scope.testTargetNumber + 4) {
+				} else if( rollNum >= targetNum + 4) {
 					return "raise";
-				} else if( $scope.testRollNumber >= $scope.testTargetNumber ) {
+				} else if( rollNum >= targetNum ) {
 					return "success";
 				} else {
 					return "fail";
 				}
+			} else {
+				if( rollNum >= targetNum + 4) {
+					return "raise";
+				} else if( rollNum >= targetNum ) {
+					return "success";
+				} else {
+					return "fail";
+				}
+			}
 		}
+
 
 		$scope.clickFailure = function() {
 			if( $scope.numberOfQuestions / 1 > 0 ) {
@@ -246,7 +244,7 @@ var raiseTrainerArray = 	[
 				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
 			} else {
 				$scope.inlineNumQuestions++;
-				if( $scope.calcCurrentQuestion() == "fail" ) {
+				if( $scope.calcCurrentQuestion(testRollNumber, testTargetNumber) == "fail" ) {
 					$scope.inlineCorrect++;
 				}
 				$scope.inlineResultsPercentage = Math.ceil( $scope.inlineCorrect / $scope.inlineNumQuestions * 100 ) + "%";
@@ -260,7 +258,7 @@ var raiseTrainerArray = 	[
 				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
 			} else {
 				$scope.inlineNumQuestions++;
-				if( $scope.calcCurrentQuestion() == "success" ) {
+				if( $scope.calcCurrentQuestion(testRollNumber, testTargetNumber) == "success" ) {
 					$scope.inlineCorrect++;
 				}
 				$scope.inlineResultsPercentage = Math.ceil( $scope.inlineCorrect / $scope.inlineNumQuestions * 100 ) + "%";
@@ -274,7 +272,7 @@ var raiseTrainerArray = 	[
 				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
 			} else {
 				$scope.inlineNumQuestions++;
-				if( $scope.calcCurrentQuestion() == "raise" ) {
+				if( $scope.calcCurrentQuestion(testRollNumber, testTargetNumber) == "raise" ) {
 					$scope.inlineCorrect++;
 				}
 				$scope.inlineResultsPercentage = Math.ceil( $scope.inlineCorrect / $scope.inlineNumQuestions * 100 ) + "%";
@@ -288,7 +286,7 @@ var raiseTrainerArray = 	[
 				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
 			} else {
 				$scope.inlineNumQuestions++;
-				if( $scope.calcCurrentQuestion() == "2raises" ) {
+				if( $scope.calcCurrentQuestion(testRollNumber, testTargetNumber) == "2raises" ) {
 					$scope.inlineCorrect++;
 				}
 				$scope.inlineResultsPercentage = Math.ceil( $scope.inlineCorrect / $scope.inlineNumQuestions * 100 ) + "%";
@@ -304,7 +302,7 @@ var raiseTrainerArray = 	[
 				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
 			} else {
 				$scope.inlineNumQuestions++;
-				if( $scope.calcCurrentQuestion() == "3raises" ) {
+				if( $scope.calcCurrentQuestion(testRollNumber, testTargetNumber) == "3raises" ) {
 					$scope.inlineCorrect++;
 				}
 				$scope.inlineResultsPercentage = Math.ceil( $scope.inlineCorrect / $scope.inlineNumQuestions * 100 ) + "%";
@@ -320,7 +318,7 @@ var raiseTrainerArray = 	[
 				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
 			} else {
 				$scope.inlineNumQuestions++;
-				if( $scope.calcCurrentQuestion() == "2raises" ) {
+				if( $scope.calcCurrentQuestion(testRollNumber, testTargetNumber) == "2raises" ) {
 					$scope.inlineCorrect++;
 				}
 				$scope.inlineResultsPercentage = Math.ceil( $scope.inlineCorrect / $scope.inlineNumQuestions * 100 ) + "%";
@@ -336,7 +334,7 @@ var raiseTrainerArray = 	[
 				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
 			} else {
 				$scope.inlineNumQuestions++;
-				if( $scope.calcCurrentQuestion() == "5raises" ) {
+				if( $scope.calcCurrentQuestion(testRollNumber, testTargetNumber) == "5raises" ) {
 					$scope.inlineCorrect++;
 				}
 				$scope.inlineResultsPercentage = Math.ceil( $scope.inlineCorrect / $scope.inlineNumQuestions * 100 ) + "%";
