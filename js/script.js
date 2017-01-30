@@ -9680,7 +9680,7 @@ var raiseTrainerArray = 	[
 		$scope.makeInlineResultsMessage = function( rollNumber, targetNumber, selectedAnswer, incrementSuccess ) {
 
 
-			returnValue = "TN " + targetNumber + " vs ROLL " + rollNumber + " is " + $scope.calcCurrentQuestionName(rollNumber, targetNumber);
+			returnValue = "Target Number " + targetNumber + " vs Roll " + rollNumber + " is " + $scope.calcCurrentQuestionName(rollNumber, targetNumber);
 
 			if( selectedAnswer == "5raises" ) {
 				returnValue += ".<br />Your answer: " + "success with 5+ raises.<br />";
