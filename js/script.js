@@ -44040,6 +44040,7 @@ availableLanguages.push ({
 			GENERAL_CORRECT: 'Correct',
 			GENERAL_INCORRECT: 'Incorrect',
 			GENERAL_NO_EXACT_SUCCESSES: 'No Exact Successes (TN 4 with a Roll of 4)',
+			GENERAL_SOURCE_CODE: 'Source Code',
 
 	}
 
