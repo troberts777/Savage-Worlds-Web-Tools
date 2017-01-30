@@ -59,6 +59,16 @@
 
 					<div class="row">
 						<div class="small-12 medium-6 medium-offset-4 columns text-left">
+							<label>
+								<input type="checkbox" ng-checked="noExactSuccesses" ng-click="noExactSuccessesClick(noFailures)" />
+								<span translate="GENERAL_NO_EXACT_SUCCESSES">No Exact Successes (TN 4 with a Roll of 4)</span>
+
+							</label>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="small-12 medium-6 medium-offset-4 columns text-left">
 							<button type="button" class="button primary" ng-click="startTest()" translate="GENERAL_START_TEST">Start Test</button>
 						</div>
 					</div>

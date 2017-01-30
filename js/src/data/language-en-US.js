@@ -420,6 +420,7 @@ availableLanguages.push ({
 			GENERAL_NO_FAILURES: 'Do not test failed rolls',
 			GENERAL_CORRECT: 'Correct',
 			GENERAL_INCORRECT: 'Incorrect',
+			GENERAL_NO_EXACT_SUCCESSES: 'No Exact Successes (TN 4 with a Roll of 4)',
 
 	}
 
