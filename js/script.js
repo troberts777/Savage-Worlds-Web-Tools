@@ -9200,6 +9200,7 @@ var raiseTrainerArray = 	[
 			$scope.inlineCorrect = 0;
 			$scope.inlineNumQuestions = -1;
 
+			$scope.inlineResultsPercentage = "0 %";
 			$scope.lastQuestionResults = "";
 
 			if( $scope.numberOfQuestions / 1 > 0 ) {
@@ -9566,7 +9567,7 @@ var raiseTrainerArray = 	[
 				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
 			} else {
 
-				$scope.lastQuestionResults = $scope.makeInlineResultsMessage( $scope.testRollNumber, $scope.testTargetNumber, "fail" ) ;
+				$scope.lastQuestionResults = $scope.makeInlineResultsMessage( $scope.testRollNumber, $scope.testTargetNumber, "fail", true ) ;
 
 				$scope.inlineNumQuestions++;
 
@@ -9581,7 +9582,7 @@ var raiseTrainerArray = 	[
 				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
 			} else {
 
-				$scope.lastQuestionResults = $scope.makeInlineResultsMessage( $scope.testRollNumber, $scope.testTargetNumber, "success" ) ;
+				$scope.lastQuestionResults = $scope.makeInlineResultsMessage( $scope.testRollNumber, $scope.testTargetNumber, "success", true ) ;
 
 				$scope.inlineNumQuestions++;
 
@@ -9599,7 +9600,7 @@ var raiseTrainerArray = 	[
 				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
 			} else {
 
-				$scope.lastQuestionResults = $scope.makeInlineResultsMessage( $scope.testRollNumber, $scope.testTargetNumber, "raise" ) ;
+				$scope.lastQuestionResults = $scope.makeInlineResultsMessage( $scope.testRollNumber, $scope.testTargetNumber, "raise", true ) ;
 
 				$scope.inlineNumQuestions++;
 
@@ -9614,7 +9615,7 @@ var raiseTrainerArray = 	[
 				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
 			} else {
 
-				$scope.lastQuestionResults = $scope.makeInlineResultsMessage( $scope.testRollNumber, $scope.testTargetNumber, "2raises" ) ;
+				$scope.lastQuestionResults = $scope.makeInlineResultsMessage( $scope.testRollNumber, $scope.testTargetNumber, "2raises", true ) ;
 
 
 				$scope.inlineNumQuestions++;
@@ -9632,7 +9633,7 @@ var raiseTrainerArray = 	[
 				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
 			} else {
 
-				$scope.lastQuestionResults = $scope.makeInlineResultsMessage( $scope.testRollNumber, $scope.testTargetNumber, "3raises" ) ;
+				$scope.lastQuestionResults = $scope.makeInlineResultsMessage( $scope.testRollNumber, $scope.testTargetNumber, "3raises", true ) ;
 
 				$scope.inlineNumQuestions++;
 
@@ -9649,7 +9650,7 @@ var raiseTrainerArray = 	[
 				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
 			} else {
 
-				$scope.lastQuestionResults = $scope.makeInlineResultsMessage( $scope.testRollNumber, $scope.testTargetNumber, "4raises" ) ;
+				$scope.lastQuestionResults = $scope.makeInlineResultsMessage( $scope.testRollNumber, $scope.testTargetNumber, "4raises", true ) ;
 
 				$scope.inlineNumQuestions++;
 
@@ -9666,7 +9667,7 @@ var raiseTrainerArray = 	[
 				$scope.testQuestions[ $scope.currentQuestion ].answer = $scope.adjustSuccessFails( $scope.testQuestions[ $scope.currentQuestion ].answer );
 			} else {
 
-				$scope.lastQuestionResults = $scope.makeInlineResultsMessage( $scope.testRollNumber, $scope.testTargetNumber, "5raises" ) ;
+				$scope.lastQuestionResults = $scope.makeInlineResultsMessage( $scope.testRollNumber, $scope.testTargetNumber, "5raises", true ) ;
 
 				$scope.inlineNumQuestions++;
 
@@ -9676,7 +9677,7 @@ var raiseTrainerArray = 	[
 
 		}
 
-		$scope.makeInlineResultsMessage = function( rollNumber, targetNumber, selectedAnswer ) {
+		$scope.makeInlineResultsMessage = function( rollNumber, targetNumber, selectedAnswer, incrementSuccess ) {
 
 
 			returnValue = "TN " + targetNumber + " vs ROLL " + rollNumber + " is " + $scope.calcCurrentQuestionName(rollNumber, targetNumber);
@@ -9700,6 +9701,8 @@ var raiseTrainerArray = 	[
 
 			if( $scope.calcCurrentQuestion(rollNumber, targetNumber) == selectedAnswer ) {
 				returnValue += "<h4 class=\"color-green\">" + $scope.generalCorrectWords + "</h4>";
+				if( incrementSuccess )
+					$scope.inlineCorrect++;
 			} else {
 				returnValue +="<h4 class=\"color-red\">" + $scope.generalInorrectWords + "</h4>";
 			}
