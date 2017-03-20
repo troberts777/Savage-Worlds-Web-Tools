@@ -833,7 +833,6 @@ return 1000  * selectedObject.size;
 getModEffect: function(selectedObject) {
 selectedObject.ts -=  5;
 selectedObject.acc -=  2;
-selectedObject.mods += selectedObject.baseMods / 2;
 }
 },
 {
