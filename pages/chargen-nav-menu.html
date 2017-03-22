@@ -27,14 +27,14 @@
 	<li ng-class="{active: $route.current.activetab == 'chargen-gear'}" >
 		<a href="#/core/character-maker-gear"><i class="fa fa-shopping-bag"></i><br /><span translate="GENERAL_GEAR">Gear</span></a>
 	</li>
-	<li ng-show="savageCharacter.usesStrain" ng-class="{active: $route.current.activetab == 'chargen-cyberware'}" >
+	<li ng-show="savageCharacter.usesStrain()" ng-class="{active: $route.current.activetab == 'chargen-cyberware'}" >
 		<a href="#/core/character-maker-cyberware"><i class="fa fa-usb"></i><br /><span translate="GENERAL_CYBERWARE">Cyberware</span></a>
 	</li>
-	<li ng-show="savageCharacter.hasArcaneBackground" ng-class="{active: $route.current.activetab == 'chargen-powers'}">
+	<li ng-show="savageCharacter.hasArcaneBackground()" ng-class="{active: $route.current.activetab == 'chargen-powers'}">
 		<a href="#/core/character-maker-powers"><i class="fa fa-magic"></i><br /><span translate="GENERAL_POWERS">Powers</span></a>
 	</li>
 
-	<li ng-show="savageCharacter.usesSPCCreation" ng-class="{active: $route.current.activetab == 'chargen-spc-powers'}">
+	<li ng-show="savageCharacter.usesSPCCreation()" ng-class="{active: $route.current.activetab == 'chargen-spc-powers'}">
 		<a href="#/core/character-maker-spc-powers"><i class="fa fa-star"></i><br /><span translate="GENERAL_SUPER_POWERS">Super Powers</span></a>
 	</li>
 	<li ng-class="{active: $route.current.activetab == 'chargen-advancements'}">
@@ -46,7 +46,7 @@
 	<div class="row">
 		<div class="column small-12 medium-8 medium-offset-2 text-center">
 			<div ng-hide="savageCharacter.isValid == false || savageCharacter.warningReport.length > 0">&nbsp;</div>
-			<button class="button expanded tiny radius alert no-bottom-margin" ng-hide="savageCharacter.isValid" ng-click="showValidationReport()"><span translate="GENERAL_VALIDATION_ERROR">Validation Error</span></button>
-			<button class="button expanded tiny radius warning no-bottom-margin" ng-hide="savageCharacter.warningReport.length == 0" ng-click="showValidationReport()"><span translate="GENERAL_VALIDATION_WARNING">Validation Warning</span></button>
+			<button class="button expanded tiny radius alert no-bottom-margin" ng-hide="savageCharacter.getValidationReport().length == 0" ng-click="showValidationReport()"><span translate="GENERAL_VALIDATION_ERROR">Validation Error</span></button>
+			<button class="button expanded tiny radius warning no-bottom-margin" ng-hide="savageCharacter.getWarningReport().length == 0" ng-click="showValidationReport()"><span translate="GENERAL_VALIDATION_WARNING">Validation Warning</span></button>
 		</div>
 	</div>

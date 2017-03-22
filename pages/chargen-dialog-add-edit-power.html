@@ -6,12 +6,12 @@
 	  		<div class="small-12 columns">
 			  	<label>
 			  		<span translate="CHARGEN_STEP1_SELECT_POWER_REQUIRED"></span>
-			  		<select ng-options="powerItem as powerItem.local_name group by powerItem.bookObj.local_name disable when powerItem.selectable == false for powerItem in savageCharacter.availablePowers track by powerItem.tag" ng-model="editingPower"></select>
+			  		<select ng-options="powerItem as powerItem.local_name group by powerItem.bookObj.local_name disable when powerItem.selectable == false for powerItem in savageCharacter.getAvailablePowers() track by powerItem.tag" ng-model="editingPower"></select>
 			  	</label>
 
 			  	<label>
 			  		<span translate="CHARGEN_STEP2_SELECT_TRAPPING_REQUIRED"></span>
-			  		<select ng-options="trappingItem as trappingItem.local_name group by trappingItem.bookObj.local_name for trappingItem in savageCharacter.availableTrappings track by trappingItem.tag" ng-model="editingPower.trapping"></select>
+			  		<select ng-options="trappingItem as trappingItem.local_name group by trappingItem.bookObj.local_name for trappingItem in savageCharacter.getAvailableTrappings() track by trappingItem.tag" ng-model="editingPower.trapping"></select>
 			  	</label>
 
 			  	<label>
@@ -25,10 +25,9 @@
 
 	  <div class="text-right">
 
-
-	  	<button class="button small primary" ng-click="closeDialogs()"  type="button" translate="GENERAL_CANCEL"></button>
+	  	<button class="button small secondary" ng-click="closeDialogs()"  type="button" translate="GENERAL_CANCEL"></button>
 	  	<button ng-show="editingPowerIndex == -1" class="button small primary" ng-click="addPower(editingPower)"  type="button" translate="GENERAL_ADD"></button>
-	  	<button ng-show="editingPowerIndex > -1" class="button small secondary" ng-click="savePower( editingPower, editingPowerIndex)"  type="button" translate="GENERAL_SAVE"></button>
+	  	<button ng-show="editingPowerIndex > -1" class="button small primary" ng-click="savePower( editingPower, editingPowerIndex)"  type="button" translate="GENERAL_SAVE"></button>
 	  </div>
 
 	</div>

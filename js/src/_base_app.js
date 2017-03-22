@@ -63,56 +63,50 @@ baseApp = angular.module(
 			// route for the core character maker page
 			.when('/core/character-maker-char-info', {
 				templateUrl : 'pages/core-character-maker-char-info.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenInfo',
 				activetab: 'chargen-char-info'
 			})
 
 			// route for the core character maker page traits
 			.when('/core/character-maker-traits', {
 				templateUrl : 'pages/core-character-maker-traits.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-traits'
 			})
 
-			// route for the core character maker page skills
-			.when('/core/character-maker-skills', {
-				templateUrl : 'pages/core-character-maker-skills.html',
-				controller  : 'coreChargenController',
-				activetab: 'chargen-skills'
-			})
 
 			// route for the core character maker page edges and hindrances
 			.when('/core/character-maker-hindrances-and-edges', {
 				templateUrl : 'pages/core-character-maker-hindrances-and-edges.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenEdgesHindrances',
 				activetab: 'chargen-hindrances-and-edges'
 			})
 
 			// route for the core character maker gear page
 			.when('/core/character-maker-gear', {
 				templateUrl : 'pages/core-character-maker-gear.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-gear'
 			})
 
 			// route for the core character maker powers page
 			.when('/core/character-maker-powers', {
 				templateUrl : 'pages/core-character-maker-powers.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenPowers',
 				activetab: 'chargen-powers'
 			})
 
 			// route for the core character maker cyberware page
 			.when('/core/character-maker-cyberware', {
 				templateUrl : 'pages/core-character-maker-cyberware.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-cyberware'
 			})
 
 			// route for the core character maker advancements page
 			.when('/core/character-maker-advancements', {
 				templateUrl : 'pages/core-character-maker-advancements.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-advancements'
 			})
 

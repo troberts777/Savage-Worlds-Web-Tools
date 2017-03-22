@@ -1,14 +1,14 @@
 <div class="modal-container" ng-show="validationDialogOpen == true">
 	<div class="reveal">
 
-	<h3 ng-show="savageCharacter.validationReport.length > 0" translate="CHARGEN_VALIDATION_REPORT">Validation Report</h3>
+	<h3 ng-show="savageCharacter.getValidationReport().length > 0" translate="CHARGEN_VALIDATION_REPORT">Validation Report</h3>
 	<ul>
-		<li ng-repeat="item in savageCharacter.validationReport track by $index">{{item}}</li>
+		<li ng-repeat="item in savageCharacter.getValidationReport() track by $index">{{item}}</li>
 	</ul>
 
-	<h3 ng-show="savageCharacter.warningReport.length > 0" translate="CHARGEN_VALIDATION_WARNINGS">Warnings</h3>
+	<h3 ng-show="savageCharacter.getWarningReport().length > 0" translate="CHARGEN_VALIDATION_WARNINGS">Warnings</h3>
 	<ul>
-		<li ng-repeat="item in savageCharacter.warningReport track by $index">{{item}}</li>
+		<li ng-repeat="item in savageCharacter.getWarningReport() track by $index">{{item}}</li>
 	</ul>
 
 	<div class="text-right">

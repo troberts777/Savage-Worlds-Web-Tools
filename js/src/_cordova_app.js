@@ -89,98 +89,98 @@ cordovaApp = angular.module(
 			// route for the core character maker page
 			.when('/core/character-maker-welcome', {
 				templateUrl : 'pages/core-character-maker-welcome.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenWelcome',
 				activetab: 'chargen-char-welcome'
 			})
 
 			// route for the core character maker page
 			.when('/core/character-maker-char-info', {
 				templateUrl : 'pages/core-character-maker-char-info.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenInfo',
 				activetab: 'chargen-char-info'
 			})
 
 			// route for the core character maker page traits
 			.when('/core/character-maker-traits', {
 				templateUrl : 'pages/core-character-maker-traits.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenTraits',
 				activetab: 'chargen-traits'
 			})
 
 			// route for the core character maker page skills
 			.when('/core/character-maker-skills', {
 				templateUrl : 'pages/core-character-maker-skills.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-skills'
 			})
 
 			// route for the core character maker page Rifts® Iconic frameworks
 			.when('/core/character-maker-iconic-frameworks', {
 				templateUrl : 'pages/core-character-maker-iconic-frameworks.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-iconic-frameworks'
 			})
 
 			// route for the core character maker page super power companion powers
 			.when('/core/character-maker-spc-powers', {
 				templateUrl : 'pages/core-character-maker-spc-powers.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-spc-powers'
 			})
 
 			// route for the core character maker page edges and hindrances
 			.when('/core/character-maker-hindrances-and-edges', {
 				templateUrl : 'pages/core-character-maker-hindrances-and-edges.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-hindrances-and-edges'
 			})
 
 			// route for the core character maker gear page
 			.when('/core/character-maker-gear', {
 				templateUrl : 'pages/core-character-maker-gear.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-gear'
 			})
 
 			// route for the core character maker weapons page
 			.when('/core/character-maker-weapons', {
 				templateUrl : 'pages/core-character-maker-weapons.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-weapons'
 			})
 
 			// route for the core character maker armor page
 			.when('/core/character-maker-armor', {
 				templateUrl : 'pages/core-character-maker-armor.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-armor'
 			})
 
 			// route for the core character maker armor list page
 			.when('/core/character-maker-armor-list', {
 				templateUrl : 'pages/core-character-maker-armor-list.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-armor'
 			})
 
 			// route for the core character maker armor list page
 			.when('/core/character-maker-gear-list', {
 				templateUrl : 'pages/core-character-maker-gear-list.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-gear'
 			})
 
 			// route for the core character maker armor list page
 			.when('/core/character-maker-ranged-weapons-list', {
 				templateUrl : 'pages/core-character-maker-ranged-weapons-list.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-weapons'
 			})
 
 			// route for the core character maker armor list page
 			.when('/core/character-maker-hand-weapons-list', {
 				templateUrl : 'pages/core-character-maker-hand-weapons-list.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-weapons'
 			})
 
@@ -188,21 +188,21 @@ cordovaApp = angular.module(
 			// route for the core character maker powers page
 			.when('/core/character-maker-powers', {
 				templateUrl : 'pages/core-character-maker-powers.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenPowers',
 				activetab: 'chargen-powers'
 			})
 
 			// route for the core character maker cyberware page
 			.when('/core/character-maker-cyberware', {
 				templateUrl : 'pages/core-character-maker-cyberware.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-cyberware'
 			})
 
 			// route for the core character maker advancements page
 			.when('/core/character-maker-advancements', {
 				templateUrl : 'pages/core-character-maker-advancements.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-advancements'
 			})
 

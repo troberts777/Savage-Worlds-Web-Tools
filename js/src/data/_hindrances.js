@@ -154,8 +154,8 @@ savageWorldsHindrances = Array(
 	 racial: 0,
 	 specify: 0,
 	 book: 1,
-charEffects: function ( charObject ) {
-			charObject.availableEdgePoints++;
+charEffects: function ( charObj ) {
+			charObj.availableEdgePoints++;
 		}
 },
 {
@@ -172,8 +172,8 @@ charEffects: function ( charObject ) {
 	 racial: 1,
 	 specify: 0,
 	 book: 1,
-charEffect: function( charObject ) {
-charObject.derived.charisma = charObject.derived.charisma - 4;
+charEffect: function( charObj ) {
+charObj.getDerived().charisma = charObj.getDerived().charisma - 4;
 }
 },
 {
@@ -346,17 +346,17 @@ charObject.derived.charisma = charObject.derived.charisma - 4;
 	 racial: 0,
 	 specify: 0,
 	 book: 1,
-charEffects: function (charObject) {
-			charObject.derived.pace--;
-			charObject.attributes.strength--;
-			charObject.attributes.vigor--;
+charEffects: function (charObj) {
+			charObj.getDerived().pace--;
+			charObj.attributes.strength--;
+			charObj.attributes.vigor--;
 
-			if(charObject.attributes.strength < 1)
-				charObject.attributes.strength = 1;
-			if(charObject.attributes.vigor < 1)
-				charObject.attributes.vigor = 1;
+			if(charObj.attributes.strength < 1)
+				charObj.attributes.strength = 1;
+			if(charObj.attributes.vigor < 1)
+				charObj.attributes.vigor = 1;
 
-			charObject.skill_points += 5;
+			charObj.skill_points += 5;
 		}
 },
 {
@@ -499,8 +499,8 @@ charEffects: function (charObject) {
 	 racial: 1,
 	 specify: 0,
 	 book: 1,
-charEffect: function( characterObject ) {
-	characterObject.derived.toughness -= 1;
+charEffect: function( charObj ) {
+	charObj.getDerived().toughness -= 1;
 }
 },
 {
@@ -529,8 +529,8 @@ charEffect: function( characterObject ) {
 	 racial: 0,
 	 specify: 0,
 	 book: 1,
-charEffects: function ( charObject ) {
-			charObject.derived.pace = charObject.derived.pace - 2;
+charEffects: function ( charObj ) {
+			charObj.getDerived().pace = charObj.getDerived().pace - 2;
 		}
 },
 {
@@ -573,9 +573,9 @@ charEffects: function ( charObject ) {
 	 racial: 0,
 	 specify: 0,
 	 book: 1,
-charEffects: function (charObject) {
-			charObject.derived.toughness++;
-			charObject.derived.pace--;
+charEffects: function (charObj) {
+			charObj.getDerived().toughness++;
+			charObj.getDerived().pace--;
 		}
 },
 {
@@ -634,8 +634,8 @@ charEffects: function (charObject) {
 	 racial: 1,
 	 specify: 0,
 	 book: 1,
-charEffect: function( charObject ) {
-charObject.derived.charisma = charObject.derived.charisma - 2;
+charEffect: function( charObj ) {
+charObj.getDerived().charisma = charObj.getDerived().charisma - 2;
 }
 },
 {
@@ -652,8 +652,8 @@ charObject.derived.charisma = charObject.derived.charisma - 2;
 	 racial: 1,
 	 specify: 0,
 	 book: 1,
-charEffect: function( charObject ) {
-charObject.derived.charisma = charObject.derived.charisma - 2;
+charEffect: function( charObj ) {
+charObj.getDerived().charisma = charObj.getDerived().charisma - 2;
 }
 
 },
@@ -671,8 +671,8 @@ charObject.derived.charisma = charObject.derived.charisma - 2;
 	 racial: 1,
 	 specify: 0,
 	 book: 1,
-charEffect: function( charObject ) {
-charObject.derived.charisma = charObject.derived.charisma - 2;
+charEffect: function( charObj ) {
+charObj.getDerived().charisma = charObj.getDerived().charisma - 2;
 }
 },
 {
@@ -689,8 +689,8 @@ charObject.derived.charisma = charObject.derived.charisma - 2;
 	 racial: 1,
 	 specify: 0,
 	 book: 1,
-charEffect: function( charObject ) {
-charObject.derived.charisma = charObject.derived.charisma - 2;
+charEffect: function( charObj ) {
+charObj.getDerived().charisma = charObj.getDerived().charisma - 2;
 }
 },
 {
@@ -851,8 +851,8 @@ charObject.derived.charisma = charObject.derived.charisma - 2;
 	 racial: 1,
 	 specify: 0,
 	 book: 1,
-charEffect: function( charObject ) {
-charObject.derived.toughness = charObject.derived.toughness -1;
+charEffect: function( charObj ) {
+charObj.getDerived().toughness = charObj.getDerived().toughness -1;
 }
 },
 {
@@ -869,8 +869,8 @@ charObject.derived.toughness = charObject.derived.toughness -1;
 	 racial: 1,
 	 specify: 0,
 	 book: 1,
-charEffect: function( charObject ) {
-charObject.derived.pace = 5;
+charEffect: function( charObj ) {
+charObj.getDerived().pace = 5;
 }
 },
 {
@@ -913,8 +913,8 @@ charObject.derived.pace = 5;
 	 racial: 0,
 	 specify: 0,
 	 book: 1,
-charEffects: function (charObject) {
-			charObject.derived.charisma = charObject.derived.charisma - 2;
+charEffects: function (charObj) {
+			charObj.getDerived().charisma = charObj.getDerived().charisma - 2;
 		}
 },
 {
@@ -1043,10 +1043,10 @@ charEffects: function (charObject) {
 	 racial: 0,
 	 specify: 0,
 	 book: 1,
-charEffects: function (charObject) {
-			charObject.attribute_points = 3;
-			charObject.skill_points = 10;
-			charObject.bennies_total += 1;
+charEffects: function (charObj) {
+			charObj.attribute_points = 3;
+			charObj.skill_points = 10;
+			charObj.bennies_total += 1;
 		}
 },
 {
@@ -1667,8 +1667,8 @@ charEffects: function (charObject) {
 	 racial: 1,
 	 specify: 0,
 	 book: 4,
-charEffect: function( charObject ) {
-charObject.derived.toughness += -1;
+charEffect: function( charObj ) {
+charObj.getDerived().toughness += -1;
 }
 },
 {
@@ -1683,9 +1683,9 @@ charObject.derived.toughness += -1;
 	 racial: 1,
 	 specify: 0,
 	 book: 4,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.toughness += -1;
+charObj.getDerived().toughness += -1;
 }
 },
 {
@@ -1882,9 +1882,9 @@ charObject.derived.toughness += -1;
 	 racial: 1,
 	 specify: 0,
 	 book: 4,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.parry += -2;
+charObj.getDerived().parry += -2;
 }
 },
 {
@@ -1913,8 +1913,8 @@ charObject.derived.parry += -2;
 	 racial: 1,
 	 specify: 0,
 	 book: 4,
-charEffect: function( charObject ) {
-    charObject.derived.pace = 4;
+charEffect: function( charObj ) {
+    charObj.getDerived().pace = 4;
 }
 },
 {

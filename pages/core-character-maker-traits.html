@@ -28,35 +28,34 @@
 
 							<label class="attribute-select">
 								<h4 translate="ATTRIBUTE_AGILITY">Agility</h4>
-						    	<select ng-options="diceItem as diceItem.local_label for diceItem in savageCharacter.diceValues.agility track by diceItem.id" ng-model="savageCharacter.displayAttributes.agility" ng-change="setAttribute('agility', savageCharacter.displayAttributes.agility.id)">
+						    	<select ng-options="diceItem as diceItem.local_label for diceItem in diceValues.agility track by diceItem.id" ng-model="displayAttributes.agility" ng-change="setAttribute('agility', displayAttributes.agility.id)">
 						    	</select>
 						    </label>
 
 
 							<label class="attribute-select">
 								<h4 translate="ATTRIBUTE_SMARTS">Smarts</h4>
-						    	<select ng-options="diceItem as diceItem.local_label for diceItem in savageCharacter.diceValues.smarts track by diceItem.id" ng-model="savageCharacter.displayAttributes.smarts" ng-change="setAttribute('smarts', savageCharacter.displayAttributes.smarts.id)">
+						    	<select ng-options="diceItem as diceItem.local_label for diceItem in diceValues.smarts track by diceItem.id" ng-model="displayAttributes.smarts" ng-change="setAttribute('smarts', displayAttributes.smarts.id)">
 						    	</select>
 						    </label>
 
-
 							<label class="attribute-select">
 								<h4 translate="ATTRIBUTE_SPIRIT">Spirit</h4>
-						    	<select ng-options="diceItem as diceItem.local_label for diceItem in savageCharacter.diceValues.spirit track by diceItem.id" ng-model="savageCharacter.displayAttributes.spirit" ng-change="setAttribute('spirit', savageCharacter.displayAttributes.spirit.id)">
+						    	<select ng-options="diceItem as diceItem.local_label for diceItem in diceValues.spirit track by diceItem.id" ng-model="displayAttributes.spirit" ng-change="setAttribute('spirit', displayAttributes.spirit.id)">
 						    	</select>
 						    </label>
 
 
 							<label class="attribute-select">
 								<h4 translate="ATTRIBUTE_STRENGTH">Strength</h4>
-						    	<select ng-options="diceItem as diceItem.local_label for diceItem in savageCharacter.diceValues.strength track by diceItem.id" ng-model="savageCharacter.displayAttributes.strength" ng-change="setAttribute('strength', savageCharacter.displayAttributes.strength.id)">
+						    	<select ng-options="diceItem as diceItem.local_label for diceItem in diceValues.strength track by diceItem.id" ng-model="displayAttributes.strength" ng-change="setAttribute('strength', displayAttributes.strength.id)">
 						    	</select>
 						    </label>
 
 
 							<label class="attribute-select">
 								<h4 translate="ATTRIBUTE_VIGOR">Vigor</h4>
-						    	<select ng-options="diceItem as diceItem.local_label for diceItem in savageCharacter.diceValues.vigor track by diceItem.id" ng-model="savageCharacter.displayAttributes.vigor" ng-change="setAttribute('vigor', savageCharacter.displayAttributes.vigor.id)">
+						    	<select ng-options="diceItem as diceItem.local_label for diceItem in diceValues.vigor track by diceItem.id" ng-model="displayAttributes.vigor" ng-change="setAttribute('vigor', displayAttributes.vigor.id)">
 						    	</select>
 						    </label>
 					    </fieldset>
@@ -71,7 +70,7 @@
 							<label class="derived-attribute">
 								<h4>
 									<span translate="GENERAL_PACE">Pace</span>:
-									<span ng-bind-html="savageCharacter.derived.pace"></span>
+									<span ng-bind-html="savageCharacter.getDerived().pace"></span>
 								</h4>
 
 							</label>
@@ -79,7 +78,7 @@
 							<label class="derived-attribute">
 								<h4>
 									<span translate="GENERAL_PARRY">Parry</span>:
-									<span ng-bind-html="savageCharacter.derived.parry"></span>
+									<span ng-bind-html="savageCharacter.getDerived().parry"></span>
 								</h4>
 							</label>
 
@@ -87,44 +86,44 @@
 
 								<h4>
 									<span translate="GENERAL_TOUGHNESS">Toughness</span>:
-									<span ng-bind-html="savageCharacter.derived.toughnessAndArmor"></span>
+									<span ng-bind-html="savageCharacter.getDerived().toughnessAndArmor"></span>
 								</h4>
 							</label>
 
 <!-- 							<label class="derived-attribute">
 								<h4>
 									<span translate="CREATOR_ARMOR">Armor</span>:
-									<span ng-bind-html="savageCharacter.derived.armor"></span>
+									<span ng-bind-html="savageCharacter.getDerived().armor"></span>
 								</h4>
 							</label> -->
 
-							<label class="derived-attribute" ng-show="savageCharacter.derived.charisma > 0">
+							<label class="derived-attribute" ng-show="savageCharacter.getDerived().charisma > 0">
 								<h4>
 									<span translate="GENERAL_CHARISMA">Charisma</span>:
-									<span ng-bind-html="savageCharacter.derived.charisma"></span>
+									<span ng-bind-html="savageCharacter.getDerived().charisma"></span>
 								</h4>
 							</label>
 
 							<label class="derived-attribute" ng-hide="savageCharacter.usesSanity == false">
 								<h4>
 									<span translate="GENERAL_SANITY">Sanity</span>:
-									<span ng-bind-html="savageCharacter.derived.sanity"></span>
+									<span ng-bind-html="savageCharacter.getDerived().sanity"></span>
 								</h4>
 							</label>
 
 							<label class="derived-attribute">
 								<h4>
 									<span translate="GENERAL_LOAD">Load</span>:
-									<span ng-bind-html="savageCharacter.currentLoad"></span>
-									(<span ng-bind-html="savageCharacter.loadModifier"></span>)
+									<span ng-bind-html="savageCharacter.getCurrentLoad()"></span>
+									(<span ng-bind-html="savageCharacter.getCurrentLoadModifier()"></span>)
 								</h4>
 							</label>
 
 							<label class="derived-attribute">
 								<h4>
 									<span translate="GENERAL_COMBAT_LOAD">Combat Load</span>:
-									<span ng-bind-html="savageCharacter.combatLoad"></span>
-									(<span ng-bind-html="savageCharacter.combatLoadModifier"></span>)
+									<span ng-bind-html="savageCharacter.getCombatLoad()"></span>
+									(<span ng-bind-html="savageCharacter.getCombatLoadModifier()"></span>)
 								</h4>
 							</label>
 
@@ -139,25 +138,25 @@
 					<div class="small-12 medium-6 large-6 columns">
 						<fieldset class="fieldset">
 							<legend translate="ATTRIBUTE_AGILITY">Agility Skills</legend>
-							<div ng-repeat="skill in savageCharacter.agilitySkills" ng-include="'pages/chargen-skill-item.html'"></div>
+							<div ng-repeat="skill in savageCharacter.getAgilitySkills()" ng-include="'pages/chargen-skill-item.html'"></div>
 						</fieldset>
 					</div>
 					<div class="small-12 medium-6 large-6 columns">
 						<fieldset class="fieldset">
 							<legend translate="ATTRIBUTE_SMARTS">Smarts Skills</legend>
-							<div ng-repeat="skill in savageCharacter.smartsSkills" ng-include="'pages/chargen-skill-item.html'"></div>
+							<div ng-repeat="skill in savageCharacter.getSmartsSkills()" ng-include="'pages/chargen-skill-item.html'"></div>
 						</fieldset>
 					</div>
 					<div class="small-12 medium-6 large-6 columns">
 						<fieldset class="fieldset">
 							<legend translate="ATTRIBUTE_SPIRIT">Spirit Skills</legend>
-							<div ng-repeat="skill in savageCharacter.spiritSkills" ng-include="'pages/chargen-skill-item.html'"></div>
+							<div ng-repeat="skill in savageCharacter.getSpiritSkills()" ng-include="'pages/chargen-skill-item.html'"></div>
 						</fieldset>
 					</div>
 					<div class="small-12 medium-6 large-6 columns">
 						<fieldset class="fieldset">
 							<legend translate="ATTRIBUTE_STRENGTH">Strength Skills</legend>
-							<div ng-repeat="skill in savageCharacter.strengthSkills" ng-include="'pages/chargen-skill-item.html'"></div>
+							<div ng-repeat="skill in savageCharacter.getStrengthSkills()" ng-include="'pages/chargen-skill-item.html'"></div>
 						</fieldset>
 					</div>
 				</div>

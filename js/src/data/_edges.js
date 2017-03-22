@@ -28,8 +28,8 @@ savageWorldsEdges = Array(
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( charObject ) {
-charObject.boostAttribute("smarts");
+charEffect: function( charObj ) {
+charObj.boostAttribute("smarts");
 }
 },
 {
@@ -48,9 +48,9 @@ charObject.boostAttribute("smarts");
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.boostAttribute("agility",1);
+charObj.boostAttribute("agility",1);
 }
 },
 {
@@ -69,8 +69,8 @@ charObject.boostAttribute("agility",1);
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( charObject ) {
-charObject.boostAttribute("agility", 1);
+charEffect: function( charObj ) {
+charObj.boostAttribute("agility", 1);
 }
 },
 {
@@ -89,8 +89,8 @@ charObject.boostAttribute("agility", 1);
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( charObject ) {
-charObject.addRacialSkill("SKILL_SWIMMING", 2);
+charEffect: function( charObj ) {
+charObj.addRacialSkill("SKILL_SWIMMING", 2);
 }
 },
 {
@@ -109,16 +109,14 @@ charObject.addRacialSkill("SKILL_SWIMMING", 2);
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.naturalWeapons = true;
+charObj.naturalWeapons = true;
 }
 },
 {
 	 name: {
 		 'en-US': 'Extra Edge',
-		 'pt-BR': '',
-		 'de-DE': 'Axtra Edgo',
 	},
 	 required_edge: '',
 	 required_rank: 0,
@@ -130,8 +128,8 @@ charObject.naturalWeapons = true;
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( characterObject ) {
-	characterObject.availableEdgePoints = characterObject.availableEdgePoints + 1;
+charEffect: function( charObj ) {
+	charObj.availableEdgePoints = charObj.incrementEdgePoints( 1 );
 },
 },
 {
@@ -276,9 +274,9 @@ charEffect: function( characterObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.naturalWeapons = true;
+charObj.naturalWeapons = true;
 }
 },
 {
@@ -297,9 +295,9 @@ charObject.naturalWeapons = true;
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( characterObject ) {
+charEffect: function( charObj ) {
 	// TODO kludge
-	characterObject.skillPointsAvailable = characterObject.skillPointsAvailable + 2;
+	charObj.skillPointsAvailable = charObj.skillPointsAvailable + 2;
 },
 },
 {
@@ -336,8 +334,8 @@ charEffect: function( characterObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( charObject ) {
-charObject.boostAttribute("spirit", 1);
+charEffect: function( charObj ) {
+charObj.boostAttribute("spirit", 1);
 }
 },
 {
@@ -356,8 +354,8 @@ charObject.boostAttribute("spirit", 1);
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( charObject ) {
-charObject.boostAttribute("strength", 1);
+charEffect: function( charObj ) {
+charObj.boostAttribute("strength", 1);
 }
 },
 {
@@ -376,9 +374,9 @@ charObject.boostAttribute("strength", 1);
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.toughness++;
+charObj.getDerived().toughness++;
 }
 },
 {
@@ -397,8 +395,8 @@ charObject.derived.toughness++;
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( charObject ) {
-charObject.boostAttribute("vigor",1);
+charEffect: function( charObj ) {
+charObj.boostAttribute("vigor",1);
 }
 },
 {
@@ -433,9 +431,9 @@ charObject.boostAttribute("vigor",1);
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 	) {
 		return true;
 	}
@@ -456,11 +454,11 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 			&&
-		characterObject.displayAttributes.strength.value >= 6
+		charObj.getAttributeDisplayValues().strength.value >= 6
 	) {
 		return true;
 	}
@@ -497,9 +495,9 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 	) {
 		return true;
 	}
@@ -509,8 +507,6 @@ requires: function( characterObject) {
 {
 	 name: {
 		 'en-US': 'Arcane Background',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 	 required_edge: '',
 	 required_rank: 0,
@@ -522,8 +518,8 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ){
-	charObject.hasArcaneBackground = 1;
+charEffects: function ( charObj ){
+	charObj.hasArcaneBackground(true);
 }
 },
 {
@@ -540,9 +536,9 @@ charEffects: function ( charObject ){
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 8
+		charObj.getAttributeDisplayValues().spirit.value >= 8
 	) {
 		return true;
 	}
@@ -581,9 +577,9 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 	) {
 		return true;
 	}
@@ -604,12 +600,12 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
-			charObject.derived.charisma = charObject.derived.charisma + 2;
+charEffects: function ( charObj ) {
+			charObj.getDerived().charisma = charObj.getDerived().charisma + 2;
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.vigor.value >= 6
+		charObj.getAttributeDisplayValues().vigor.value >= 6
 	) {
 		return true;
 	}
@@ -632,8 +628,8 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
-			charObject.derived.charisma = charObject.derived.charisma + 2;
+charEffects: function ( charObj ) {
+			charObj.getDerived().charisma = charObj.getDerived().charisma + 2;
 		}
 },
 {
@@ -650,12 +646,12 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
-			charObject.derived.charisma = charObject.derived.charisma + 2;
+charEffects: function ( charObj ) {
+			charObj.getDerived().charisma = charObj.getDerived().charisma + 2;
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.vigor.value >= 6
+		charObj.getAttributeDisplayValues().vigor.value >= 6
 	) {
 		return true;
 	}
@@ -678,8 +674,8 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
-			charObject.derived.charisma = charObject.derived.charisma + 2;
+charEffects: function ( charObj ) {
+			charObj.getDerived().charisma = charObj.getDerived().charisma + 2;
 		}
 },
 {
@@ -712,9 +708,9 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 8
+		charObj.getAttributeDisplayValues().spirit.value >= 8
 	) {
 		return true;
 	}
@@ -735,7 +731,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -755,10 +751,10 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
-fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
+requires: function( charObj) {
+fightingSkill = charObj.getSkill("SKILL_FIGHTING");
 	if(
 		fightingSkill.value >= 3
 	) {
@@ -784,7 +780,7 @@ fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -801,12 +797,12 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 6
+		charObj.getAttributeDisplayValues().spirit.value >= 6
 	) {
 		return true;
 	}
@@ -827,11 +823,11 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.strength.value >= 8
+		charObj.getAttributeDisplayValues().strength.value >= 8
 	) {
 		return true;
 	}
@@ -854,7 +850,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -871,15 +867,15 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
-			charObject.derived.toughness++;
-			charObject.encumbrance_multiplier = 8;
+charEffects: function ( charObj ) {
+			charObj.getDerived().toughness++;
+			charObj.encumbrance_multiplier = 8;
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.vigor.value >= 6
+		charObj.getAttributeDisplayValues().vigor.value >= 6
 			&&
-		characterObject.displayAttributes.strength.value >= 6
+		charObj.getAttributeDisplayValues().strength.value >= 6
 	) {
 		return true;
 	}
@@ -900,13 +896,13 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 			&&
-		characterObject.displayAttributes.spirit.value >= 8
+		charObj.getAttributeDisplayValues().spirit.value >= 8
 			&&
-		characterObject.displayAttributes.strength.value >= 6
+		charObj.getAttributeDisplayValues().strength.value >= 6
 	) {
 		return true;
 	}
@@ -927,17 +923,17 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( charObject) {
+requires: function( charObj) {
 	if(
-		charObject.displayAttributes.spirit.value >= 8
+		charObj.getAttributeDisplayValues().spirit.value >= 8
 	) {
 		return true;
 	}
 		return false;
 },
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.charisma = charObject.derived.charisma  + 2;
+charObj.getDerived().charisma = charObj.getDerived().charisma  + 2;
 }
 },
 {
@@ -957,7 +953,7 @@ charObject.derived.charisma = charObject.derived.charisma  + 2;
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -974,11 +970,11 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 6
+		charObj.getAttributeDisplayValues().smarts.value >= 6
 	) {
 		return true;
 	}
@@ -999,7 +995,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -1018,11 +1014,11 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 8
+		charObj.getAttributeDisplayValues().spirit.value >= 8
 	) {
 		return true;
 	}
@@ -1045,11 +1041,11 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 8
+		charObj.getAttributeDisplayValues().smarts.value >= 8
 	) {
 		return true;
 	}
@@ -1070,7 +1066,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -1089,7 +1085,7 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -1106,11 +1102,11 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 8
+		charObj.getAttributeDisplayValues().spirit.value >= 8
 	) {
 		return true;
 	}
@@ -1133,11 +1129,11 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 8
+		charObj.getAttributeDisplayValues().smarts.value >= 8
 	) {
 		return true;
 	}
@@ -1160,8 +1156,8 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 3,
 	 child: 1,
-requires: function( characterObject) {
-persuasionSkill = characterObject.getSkill("SKILL_PERSUASION");
+requires: function( charObj) {
+persuasionSkill = charObj.getSkill("SKILL_PERSUASION");
 if( persuasionSkill.value >= 8)
      return true;
 return false;
@@ -1181,9 +1177,9 @@ return false;
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 8
+		charObj.getAttributeDisplayValues().spirit.value >= 8
 	) {
 		return true;
 	}
@@ -1223,8 +1219,8 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
-fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
+requires: function( charObj) {
+fightingSkill = charObj.getSkill("SKILL_FIGHTING");
 if(
 	fightingSkill.value >= 3
 ) {
@@ -1249,7 +1245,7 @@ return false
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -1284,9 +1280,9 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
-throwingSkill = characterObject.getSkill("SKILL_THROWING");
-shootingSkill = characterObject.getSkill("SKILL_SHOOTING");
+requires: function( charObj) {
+throwingSkill = charObj.getSkill("SKILL_THROWING");
+shootingSkill = charObj.getSkill("SKILL_SHOOTING");
 if( throwingSkill.value >= 4 || shootingSkill.value >= 4)
      return true;
 return false;
@@ -1306,11 +1302,11 @@ return false;
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 	) {
 		return true;
 	}
@@ -1333,7 +1329,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -1350,11 +1346,11 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 8
+		charObj.getAttributeDisplayValues().spirit.value >= 8
 	) {
 		return true;
 	}
@@ -1375,11 +1371,11 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 	) {
 		return true;
 	}
@@ -1400,7 +1396,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -1417,12 +1413,12 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.vigor.value >= 8
+		charObj.getAttributeDisplayValues().vigor.value >= 8
 	) {
 		return true;
 	}
@@ -1444,14 +1440,14 @@ requires: function( characterObject) {
 	 book: 1,
 	 child: 0,
 
-requires: function( characterObject) {
-    if( characterObject.hasEdge('rich') || characterObject.hasEdge('noble') )
+requires: function( charObj) {
+    if( charObj.hasEdge('rich') || charObj.hasEdge('noble') )
         return true;
     return false;
 },
 
-charEffects: function ( charObject ) {
-	charObject.currentFunds += (charObject.startingFunds / 1) * 4;
+charEffects: function ( charObj ) {
+	charObj.currentFunds += (charObj.startingFunds / 1) * 4;
 }
 },
 {
@@ -1468,11 +1464,11 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 	) {
 		return true;
 	}
@@ -1495,7 +1491,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -1515,12 +1511,12 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
-charObject.derived.pace = charObject.derived.pace + 2;
+charEffects: function ( charObj ) {
+charObj.getDerived().pace = charObj.getDerived().pace + 2;
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 6
+		charObj.getAttributeDisplayValues().agility.value >= 6
 	) {
 		return true;
 	}
@@ -1544,12 +1540,12 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
-fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
+requires: function( charObj) {
+fightingSkill = charObj.getSkill("SKILL_FIGHTING");
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 &&
 fightingSkill.value >= 3
 	) {
@@ -1593,8 +1589,8 @@ fightingSkill.value >= 3
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
- fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
+requires: function( charObj) {
+ fightingSkill = charObj.getSkill("SKILL_FIGHTING");
  if( fightingSkill.value >= 4) // d4 = 1, d6 = 2, d8 = 3, d10 = 4, d12 = 5
      return true;
 
@@ -1617,7 +1613,7 @@ return false;
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -1634,9 +1630,9 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 8
+		charObj.getAttributeDisplayValues().smarts.value >= 8
 	) {
 		return true;
 	}
@@ -1657,7 +1653,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -1676,11 +1672,11 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 8
+		charObj.getAttributeDisplayValues().spirit.value >= 8
 	) {
 		return true;
 	}
@@ -1703,7 +1699,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -1720,9 +1716,9 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 8
+		charObj.getAttributeDisplayValues().spirit.value >= 8
 	) {
 		return true;
 	}
@@ -1745,9 +1741,9 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 8
+		charObj.getAttributeDisplayValues().spirit.value >= 8
 	) {
 		return true;
 	}
@@ -1770,11 +1766,11 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 6
+		charObj.getAttributeDisplayValues().smarts.value >= 6
 	) {
 		return true;
 	}
@@ -1795,9 +1791,9 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 8
+		charObj.getAttributeDisplayValues().smarts.value >= 8
 	) {
 		return true;
 	}
@@ -1818,9 +1814,9 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 10
+		charObj.getAttributeDisplayValues().smarts.value >= 10
 	) {
 		return true;
 	}
@@ -1841,7 +1837,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -1860,11 +1856,11 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 8
+		charObj.getAttributeDisplayValues().smarts.value >= 8
 	) {
 		return true;
 	}
@@ -1885,7 +1881,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -1902,19 +1898,19 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 			attributes: {
 				smarts: 2
 			}
 		},
 		
 	
-charEffect: function( charObject ) {
-if( charObject.multipleLanguages )
-    charObject.knownLanguagesLimit = charObject.displayAttributes.smarts.value * 1.5;
+charEffect: function( charObj ) {
+if( charObj.multipleLanguages )
+    charObj.knownLanguagesLimit = charObj.getAttributeDisplayValues().smarts.value * 1.5;
 else
-    charObject.knownLanguagesLimit = charObject.displayAttributes.smarts.value;
-charObject.linguistSelected = true;
+    charObj.knownLanguagesLimit = charObj.getAttributeDisplayValues().smarts.value;
+charObj.linguistSelected = true;
 }
 },
 {
@@ -1933,9 +1929,9 @@ charObject.linguistSelected = true;
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.vigor.value >= 8
+		charObj.getAttributeDisplayValues().vigor.value >= 8
 	) {
 		return true;
 	}
@@ -1956,7 +1952,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -1973,7 +1969,7 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -2010,7 +2006,7 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -2030,8 +2026,8 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
- fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
+requires: function( charObj) {
+ fightingSkill = charObj.getSkill("SKILL_FIGHTING");
  if( fightingSkill.value >= 2) // d4 = 1, d6 = 2, d8 = 3, d10 = 4, d12 = 5
      return true;
 
@@ -2054,7 +2050,7 @@ return false;
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -2089,9 +2085,9 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 6
+		charObj.getAttributeDisplayValues().smarts.value >= 6
 	) {
 		return true;
 	}
@@ -2112,9 +2108,9 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 8
+		charObj.getAttributeDisplayValues().smarts.value >= 8
 	) {
 		return true;
 	}
@@ -2137,8 +2133,8 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( charObject) {
-fightingSkill = charObject.getSkill("SKILL_FIGHTING");
+requires: function( charObj) {
+fightingSkill = charObj.getSkill("SKILL_FIGHTING");
 if( fightingSkill.value >= 4 )
      return true;
 return false;
@@ -2158,9 +2154,9 @@ return false;
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 10
+		charObj.getAttributeDisplayValues().smarts.value >= 10
 	) {
 		return true;
 	}
@@ -2183,11 +2179,11 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.vigor.value >= 8
+		charObj.getAttributeDisplayValues().vigor.value >= 8
 	) {
 		return true;
 	}
@@ -2208,7 +2204,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -2225,12 +2221,12 @@ charEffects: function ( charObject ) {
 	 reselectable: 1,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
-			charObject.totalPowersKnown++;
+charEffects: function ( charObj ) {
+			charObj.totalPowersKnown++;
 		},
-requires: function( charObject) {
-if( charObject.usesSPCCreation == false) {
-if( charObject.hasArcaneBackground)
+requires: function( charObj) {
+if( charObj.usesSPCCreation == false) {
+if( charObj.hasArcaneBackground)
 return true;
 else
 return false;
@@ -2253,7 +2249,7 @@ return false;
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -2270,9 +2266,9 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
-	charObject.currentFunds += (charObject.startingFunds / 1) * 2;
-	charObject.derived.charisma += 2;
+charEffects: function ( charObj ) {
+	charObj.currentFunds += (charObj.startingFunds / 1) * 2;
+	charObj.getDerived().charisma += 2;
 }
 },
 {
@@ -2291,18 +2287,18 @@ charEffects: function ( charObject ) {
 	 reselectable: 1,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
-	charObject.powerPointsAvailable += 5;
-	charObject.spcExtraPowerPoints += 5;
+charEffects: function ( charObj ) {
+	charObj.powerPointsAvailable += 5;
+	charObj.spcExtraPowerPoints += 5;
 },
-requires: function( charObject) {
-if( charObject.usesSPCCreation == false) {
-if( charObject.hasArcaneBackground)
+requires: function( charObj) {
+if( charObj.usesSPCCreation == false) {
+if( charObj.hasArcaneBackground)
 return true;
 else
 return false;
 } else {
-if( charObject.SPCRisingStars == true  )
+if( charObj.SPCRisingStars == true  )
      return true;
 else
     return false;
@@ -2395,11 +2391,11 @@ else
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 	) {
 		return true;
 	}
@@ -2420,11 +2416,11 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 	) {
 		return true;
 	}
@@ -2447,9 +2443,9 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 6
+		charObj.getAttributeDisplayValues().spirit.value >= 6
 	) {
 		return true;
 	}
@@ -2488,8 +2484,8 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
-	charObject.currentFunds += (charObject.startingFunds / 1) * 2;
+charEffects: function ( charObj ) {
+	charObj.currentFunds += (charObj.startingFunds / 1) * 2;
 }
 },
 {
@@ -2508,7 +2504,7 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -2577,11 +2573,11 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 	) {
 		return true;
 	}
@@ -2621,15 +2617,15 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 },
-requires: function( characterObject) {
-	fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
+requires: function( charObj) {
+	fightingSkill = charObj.getSkill("SKILL_FIGHTING");
 
 	if(
 		fightingSkill.value >= 3
 			&&
-		characterObject.displayAttributes.strength.value >= 8
+		charObj.getAttributeDisplayValues().strength.value >= 8
 	) {
 		return true;
 	}
@@ -2652,7 +2648,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -2669,9 +2665,9 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 	) {
 		return true;
 	}
@@ -2694,9 +2690,9 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.toughness = charObject.derived.toughness  + 1;
+charObj.getDerived().toughness = charObj.getDerived().toughness  + 1;
 }
 },
 {
@@ -2715,8 +2711,8 @@ charObject.derived.toughness = charObject.derived.toughness  + 1;
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
-			charObject.derived.toughness += 1;
+charEffects: function ( charObj ) {
+			charObj.getDerived().toughness += 1;
 		}
 },
 {
@@ -2736,11 +2732,11 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
-fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
-shootingSkill = characterObject.getSkill("SKILL_SHOOTING");
+requires: function( charObj) {
+fightingSkill = charObj.getSkill("SKILL_FIGHTING");
+shootingSkill = charObj.getSkill("SKILL_SHOOTING");
 	if(
 		fightingSkill.value >= 3
 ||
@@ -2767,7 +2763,7 @@ shootingSkill = characterObject.getSkill("SKILL_SHOOTING");
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -2784,11 +2780,11 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 	) {
 		return true;
 	}
@@ -2811,14 +2807,14 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function ( charObject ) {
-fightingSkill = charObject.getSkill("SKILL_FIGHTING");
+requires: function ( charObj ) {
+fightingSkill = charObj.getSkill("SKILL_FIGHTING");
 if( fightingSkill >= 5)
        return true;
 return false;
 },
-charEffects: function ( charObject ) {
-	charObject.derived.parry += 1;
+charEffects: function ( charObj ) {
+	charObj.getDerived().parry += 1;
 }
 },
 {
@@ -2837,8 +2833,8 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
-			charObject.derived.parry += 1;
+charEffects: function ( charObj ) {
+			charObj.getDerived().parry += 1;
 		}
 },
 {
@@ -2855,9 +2851,9 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 8
+		charObj.getAttributeDisplayValues().smarts.value >= 8
 	) {
 		return true;
 	}
@@ -2878,9 +2874,9 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 6
+		charObj.getAttributeDisplayValues().spirit.value >= 6
 	) {
 		return true;
 	}
@@ -2903,8 +2899,8 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject) {
-if( characterObject.race.id == 8 ||  characterObject.race.id == 1 ) {
+requires: function( charObj) {
+if( charObj.getRace().id == 8 ||  charObj.getRace().id == 1 ) {
 return true;
 }
 return false;
@@ -2926,11 +2922,11 @@ return false;
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject)  {
-fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
-faithSkill = characterObject.getSkill("SKILL_FAITH");
+requires: function( charObj)  {
+fightingSkill = charObj.getSkill("SKILL_FIGHTING");
+faithSkill = charObj.getSkill("SKILL_FAITH");
 
-if( !characterObject.hasArcane( "miracles" ) ) 
+if( !charObj.hasArcane( "miracles" ) ) 
      return false;
 if( !fightingSkill )
 return false;
@@ -2959,8 +2955,8 @@ return true;
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject) {
-noticeSkill =  characterObject.getSkill("SKILL_NOTICE");
+requires: function( charObj) {
+noticeSkill =  charObj.getSkill("SKILL_NOTICE");
 if( !noticeSkill )
 return false;
 if( noticeSkill.value < 4 )
@@ -2984,11 +2980,11 @@ return true;
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject) {
-climbingSkill = characterObject.getSkill( "SKILL_CLIMBING");
-fightingSkill = characterObject.getSkill( "SKILL_FIGHTING");
-stealthSkill = characterObject.getSkill( "SKILL_STEALTH");
-if( characterObject.displayAttributes.agility.value < 8 )
+requires: function( charObj) {
+climbingSkill = charObj.getSkill( "SKILL_CLIMBING");
+fightingSkill = charObj.getSkill( "SKILL_FIGHTING");
+stealthSkill = charObj.getSkill( "SKILL_STEALTH");
+if( charObj.getAttributeDisplayValues().agility.value < 8 )
      return false;
 
 if( !climbingSkill )
@@ -3023,11 +3019,11 @@ return true;
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject) {
-if( characterObject .race.id != 11 )
+requires: function( charObj) {
+if( charObj.getRace().id != 11 )
      return false;
 
-if( !characterObject.hasEdge("berserk") ) 
+if( !charObj.hasEdge("berserk") ) 
      return false;
 
 return true;
@@ -3049,8 +3045,8 @@ return true;
 	 reselectable: 0,
 	 book: 2,
 	 child: 1,
-requires: function( characterObject) {
-if( characterObject.displayAttributes.spirit.value >= 8 )
+requires: function( charObj) {
+if( charObj.getAttributeDisplayValues().spirit.value >= 8 )
     return true;
 return false;
 }
@@ -3071,9 +3067,9 @@ return false;
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject) {
-skillShooting = characterObject.getSkill("SKILL_SHOOTING");
-if( characterObject.race.id != 9 && characterObject.race.id != 7)
+requires: function( charObj) {
+skillShooting = charObj.getSkill("SKILL_SHOOTING");
+if( charObj.getRace().id != 9 && charObj.getRace().id != 7)
      return false;
 if( !skillShooting ) 
      return false;
@@ -3116,10 +3112,10 @@ return true;
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject) {
-arcaneSkill = characterObject.getSkill("SKILL_KNOWLEDGE", "Arcana");
+requires: function( charObj) {
+arcaneSkill = charObj.getSkill("SKILL_KNOWLEDGE", "Arcana");
 
-if( ! characterObject.hasArcane( "magic" ) ) 
+if( ! charObj.hasArcane( "magic" ) ) 
      return false;
 if( !arcaneSkill)
      return false;
@@ -3144,16 +3140,16 @@ return true;
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject) {
-ridingSkill = characterObject.getSkill( "SKILL_RIDING");
-fightingSkill = characterObject.getSkill( "SKILL_FIGHTING");
+requires: function( charObj) {
+ridingSkill = charObj.getSkill( "SKILL_RIDING");
+fightingSkill = charObj.getSkill( "SKILL_FIGHTING");
 
-if( characterObject.displayAttributes.spirit.value < 2 )
+if( charObj.getAttributeDisplayValues().spirit.value < 2 )
      return false;
-if( characterObject.displayAttributes.strength.value < 3 )
+if( charObj.getAttributeDisplayValues().strength.value < 3 )
      return false;
 
-if( characterObject.displayAttributes.vigor.value < 3 )
+if( charObj.getAttributeDisplayValues().vigor.value < 3 )
      return false;
 
 
@@ -3186,8 +3182,8 @@ return true;
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject) {
-fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
+requires: function( charObj) {
+fightingSkill = charObj.getSkill("SKILL_FIGHTING");
 if( !fightingSkill)
 return false;
 
@@ -3234,11 +3230,11 @@ return true;
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 
-if( characterObject.race.id != 10 )
+if( charObj.getRace().id != 10 )
      return false;
-if( characterObject.displayAttributes.agility.value < 8 )
+if( charObj.getAttributeDisplayValues().agility.value < 8 )
      return false;
 return true;
 },
@@ -3277,8 +3273,8 @@ return true;
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject) {
-if( characterObject.race.id == 6 )
+requires: function( charObj) {
+if( charObj.getRace().id == 6 )
      return true;
 return false;
 },
@@ -3317,8 +3313,8 @@ return false;
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject) {
-faithSkill = characterObject.getSkill( "SKILL_FAITH");
+requires: function( charObj) {
+faithSkill = charObj.getSkill( "SKILL_FAITH");
 
 if( !faithSkill )
      return false;
@@ -3362,8 +3358,8 @@ return true;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-				charEffect: function( characterObject) {
-					characterObject.derived.toughness += 4;
+				charEffect: function( charObj) {
+					charObj.getDerived().toughness += 4;
 				}
 },
 {
@@ -3436,8 +3432,8 @@ return true;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-charEffect: function( charObject) {
-charObject.boostAttribute("strength",4);
+charEffect: function( charObj) {
+charObj.boostAttribute("strength",4);
 }
 },
 {
@@ -3474,8 +3470,8 @@ charObject.boostAttribute("strength",4);
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-charEffect: function( characterObject) {
-characterObject.addRacialSkill("SKILL_FAITH", 2);
+charEffect: function( charObj) {
+charObj.addRacialSkill("SKILL_FAITH", 2);
 }
 },
 {
@@ -3674,8 +3670,8 @@ characterObject.addRacialSkill("SKILL_FAITH", 2);
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-charEffect: function( charObject ) {
-charObject.boostAttribute("strength");
+charEffect: function( charObj ) {
+charObj.boostAttribute("strength");
 }
 },
 {
@@ -3694,10 +3690,10 @@ charObject.boostAttribute("strength");
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.boostAttribute("strength",2);
-charObject.boostAttribute("vigor",2);
+charObj.boostAttribute("strength",2);
+charObj.boostAttribute("vigor",2);
 }
 },
 {
@@ -3716,9 +3712,9 @@ charObject.boostAttribute("vigor",2);
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.toughness = charObject.derived.toughness + 2;
+charObj.getDerived().toughness = charObj.getDerived().toughness + 2;
 }
 },
 {
@@ -3737,9 +3733,9 @@ charObject.derived.toughness = charObject.derived.toughness + 2;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.toughness = charObject.derived.toughness + 2;
+charObj.getDerived().toughness = charObj.getDerived().toughness + 2;
 }
 },
 {
@@ -3758,9 +3754,9 @@ charObject.derived.toughness = charObject.derived.toughness + 2;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.toughness = charObject.derived.toughness + 2;
+charObj.getDerived().toughness = charObj.getDerived().toughness + 2;
 }
 },
 {
@@ -3779,14 +3775,14 @@ charObject.derived.toughness = charObject.derived.toughness + 2;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-requires: function( characterObject)  {
-faithSkill = characterObject.getSkill("SKILL_FAITH");
+requires: function( charObj)  {
+faithSkill = charObj.getSkill("SKILL_FAITH");
 
-if( !characterObject.hasArcane( "miracles" ) ) 
+if( !charObj.hasArcane( "miracles" ) ) 
      return false;
 if( !faithSkill )
      return false;
-if( characterObject.displayAttributes.spirit.value < 8 )
+if( charObj.getAttributeDisplayValues().spirit.value < 8 )
      return false;
 if( faithSkill.value < 3 )  // functional value of d8
      return false;
@@ -3809,8 +3805,8 @@ return true;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-requires: function( characterObject) {
-if( characterObject.displayAttributes.spirit.value >= 8 )
+requires: function( charObj) {
+if( charObj.getAttributeDisplayValues().spirit.value >= 8 )
      return true;
 return false;
 },
@@ -3831,8 +3827,8 @@ return false;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-requires: function( characterObject) {
-if( characterObject.displayAttributes.spirit.value >= 6 )
+requires: function( charObj) {
+if( charObj.getAttributeDisplayValues().spirit.value >= 6 )
      return true;
 return false;
 },
@@ -3853,23 +3849,23 @@ return false;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-requires: function( characterObject)  {
-arcaneSkill = characterObject.getArcaneSkill();
+requires: function( charObj)  {
+arcaneSkill = charObj.getArcaneSkill();
 
-if( !characterObject.hasArcane( "miracles" )  &&  !characterObject.hasArcane( "magic" )) 
+if( !charObj.hasArcane( "miracles" )  &&  !charObj.hasArcane( "magic" )) 
      return false;
 if( !arcaneSkill)
      return false;
-if( characterObject.displayAttributes.spirit.value < 8 )
+if( charObj.getAttributeDisplayValues().spirit.value < 8 )
      return false;
 if( arcaneSkill.value < 3 )  // functional value of d8
      return false;
 return true;
 },
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
 //48 is the ID for the Zombie power
-charObject.powerAlterations[48] = {"adjusted_rank": 0};
+charObj.powerAlterations[48] = {"adjusted_rank": 0};
 }
 
 },
@@ -3907,11 +3903,11 @@ charObject.powerAlterations[48] = {"adjusted_rank": 0};
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-requires: function( characterObject)  {
-investigationSkill = characterObject.getSkill("SKILL_INVESTIGATION");
-occultSkill = characterObject.getSkill("SKILL_KNOWLEDGE","Occult");
+requires: function( charObj)  {
+investigationSkill = charObj.getSkill("SKILL_INVESTIGATION");
+occultSkill = charObj.getSkill("SKILL_KNOWLEDGE","Occult");
 
-if( characterObject.displayAttributes.smarts.value < 8 )
+if( charObj.getAttributeDisplayValues().smarts.value < 8 )
      return false;
 if( !investigationSkill)
      return false;
@@ -3941,8 +3937,8 @@ return true;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-requires: function( characterObject) {
-if( characterObject.displayAttributes.spirit.value >= 8 )
+requires: function( charObj) {
+if( charObj.getAttributeDisplayValues().spirit.value >= 8 )
      return true;
 return false;
 },
@@ -3963,8 +3959,8 @@ return false;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-requires: function( characterObject) {
-if( characterObject.displayAttributes.spirit.value >= 8 )
+requires: function( charObj) {
+if( charObj.getAttributeDisplayValues().spirit.value >= 8 )
      return true;
 return false;
 },
@@ -3985,14 +3981,14 @@ return false;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-requires: function( characterObject) {
-if( characterObject.displayAttributes.spirit.value >= 6 )
+requires: function( charObj) {
+if( charObj.getAttributeDisplayValues().spirit.value >= 6 )
      return true;
 return false;
 },
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.sanity = charObject.derived.sanity + 2;
+charObj.getDerived().sanity = charObj.getDerived().sanity + 2;
 }
 },
 {
@@ -4011,15 +4007,15 @@ charObject.derived.sanity = charObject.derived.sanity + 2;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-requires: function( characterObject)  {
-arcaneSkill = characterObject.getArcaneSkill();
-occultSkill = characterObject.getSkill("SKILL_KNOWLEDGE","Occult");
+requires: function( charObj)  {
+arcaneSkill = charObj.getArcaneSkill();
+occultSkill = charObj.getSkill("SKILL_KNOWLEDGE","Occult");
 
-if( !characterObject.hasArcane( "miracles" )  &&  !characterObject.hasArcane( "magic" )) 
+if( !charObj.hasArcane( "miracles" )  &&  !charObj.hasArcane( "magic" )) 
      return false;
 if( !arcaneSkill)
      return false;
-if( characterObject.displayAttributes.spirit.value < 8 )
+if( charObj.getAttributeDisplayValues().spirit.value < 8 )
      return false;
 if( arcaneSkill.value < 3 )  // functional value of d8
      return false;
@@ -4047,10 +4043,10 @@ return true;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-requires: function( characterObject) {
-if( characterObject.displayAttributes.spirit.value < 8 )
+requires: function( charObj) {
+if( charObj.getAttributeDisplayValues().spirit.value < 8 )
      return false;
-if( characterObject.displayAttributes.vigor.value < 8 )
+if( charObj.getAttributeDisplayValues().vigor.value < 8 )
      return false;
 return true;
 },
@@ -4103,9 +4099,9 @@ return true;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.boostAttribute("agility");
+charObj.boostAttribute("agility");
 }
 },
 {
@@ -4122,9 +4118,9 @@ charObject.boostAttribute("agility");
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.boostAttribute("agility", 1);
+charObj.boostAttribute("agility", 1);
 }
 },
 {
@@ -4157,9 +4153,9 @@ charObject.boostAttribute("agility", 1);
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.armor += 4;
+charObj.getDerived().armor += 4;
 }
 },
 {
@@ -4336,9 +4332,9 @@ charObject.derived.armor += 4;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.parry += 2;
+charObj.getDerived().parry += 2;
 }
 },
 {
@@ -4371,8 +4367,8 @@ charObject.derived.parry += 2;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
-charObject.derived.toughness += 2;
+charEffect: function( charObj ) {
+charObj.getDerived().toughness += 2;
 }
 },
 {
@@ -4389,9 +4385,9 @@ charObject.derived.toughness += 2;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.toughness += 2;
+charObj.getDerived().toughness += 2;
 }
 },
 {
@@ -4408,8 +4404,8 @@ charObject.derived.toughness += 2;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
-charObject.boostAttribute("strength", 1);
+charEffect: function( charObj ) {
+charObj.boostAttribute("strength", 1);
 }
 },
 {
@@ -4426,9 +4422,9 @@ charObject.boostAttribute("strength", 1);
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.boostAttribute("strength");
+charObj.boostAttribute("strength");
 }
 },
 {
@@ -4445,9 +4441,9 @@ charObject.boostAttribute("strength");
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.toughness += 2;
+charObj.getDerived().toughness += 2;
 }
 },
 {
@@ -4464,9 +4460,9 @@ charObject.derived.toughness += 2;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
-charObject.derived.charisma += -2;
-charObject.derived.toughness += 2;
+charEffect: function( charObj ) {
+charObj.getDerived().charisma += -2;
+charObj.getDerived().toughness += 2;
 }
 },
 {
@@ -4499,9 +4495,9 @@ charObject.derived.toughness += 2;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.strainBoost += 4;
+charObj.strainBoost += 4;
 }
 },
 {
@@ -4519,9 +4515,9 @@ charObject.strainBoost += 4;
 	 book: 4,
 	 child: 0,
 
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.doubleStrain = 1;
+charObj.doubleStrain = 1;
 }
 },
 {
@@ -4538,9 +4534,9 @@ charObject.doubleStrain = 1;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.currentFunds += 10000;
+charObj.currentFunds += 10000;
 }
 },
 {
@@ -4557,12 +4553,12 @@ charObject.currentFunds += 10000;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-requires: function( characterObject) {
-// persuasionSkill = characterObject.getSkill("SKILL_PERSUASION");
+requires: function( charObj) {
+// persuasionSkill = charObj.getSkill("SKILL_PERSUASION");
 // if( persuasionSkill.value >= 8) // d4 = 1, d6 = 2, d8 = 3, d10 = 4, d12 = 5
 //     return true;
 //
-if( characterObject.displayAttributes.agility.value >= 6 )
+if( charObj.getAttributeDisplayValues().agility.value >= 6 )
      return true;
 return false;
 },
@@ -4581,9 +4577,9 @@ return false;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-requires: function( characterObject) {
-pilotingSkill = characterObject.getSkill("SKILL_PILOTING");
-shootingSkill = characterObject.getSkill("SKILL_SHOOTING");
+requires: function( charObj) {
+pilotingSkill = charObj.getSkill("SKILL_PILOTING");
+shootingSkill = charObj.getSkill("SKILL_SHOOTING");
 if( 
     pilotingSkill.value >= 3 // d4 = 1, d6 = 2, d8 = 3, d10 = 4, d12 = 5
      &&
@@ -4592,7 +4588,7 @@ if(
      return true;
 }
 //
-//if( characterObject.displayAttributes.agility.value >= 8 )
+//if( charObj.getAttributeDisplayValues().agility.value >= 8 )
 //     return true;
 return false;
 },

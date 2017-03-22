@@ -111,9 +111,9 @@ var savageWorldsSPCPowers = Array(
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
 		 'modifiers': '[{"name":{"en-US":"Hardy"},"points":"3","per_level":"0"},{"name":{"en-US":"Heavy Armor"},"points":"4","per_level":"0"},{"name":{"en-US":"Partial Protection"},"points":"[0,-1,-2]","per_level":"0"}]',
-charEffect: function( charObject, powerObject ) {
+charEffect: function( charObj, powerObject ) {
 	// Affect Character Object Code here
-	charObject.derived.armor += powerObject.selectedLevel * 2;
+	charObj.getDerived().armor += powerObject.selectedLevel * 2;
 }
 },
 {
@@ -835,12 +835,12 @@ charEffect: function( charObject, powerObject ) {
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
 		 'modifiers': '[{"name":{"en-US":"Deflect"},"points":"4","per_level":"0"},{"name":{"en-US":"Protector"},"points":"[0,1,2]","per_level":"0"}]',
-charEffect: function( charObject, powerObj ) {
+charEffect: function( charObj, powerObj ) {
 // Affect Character Object Code here
 //console.log( "powerObj", powerObj);
 //console.log( "powerObj.level", powerObj.level);
 if( powerObj.selectedLevel )
-    charObject.derived.parry += parseInt(powerObj.selectedLevel);
+    charObj.getDerived().parry += parseInt(powerObj.selectedLevel);
 }
 },
 {
@@ -1127,9 +1127,9 @@ if( powerObj.selectedLevel )
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
 		 'modifiers': '[{"name":{"en-US":"Hardy"},"points":"3","per_level":"0"}]',
-charEffect: function( charObject, powerObject ) {
+charEffect: function( charObj, powerObject ) {
 	// Affect Character Object Code here
-	charObject.derived.toughness += powerObject.selectedLevel;
+	charObj.getDerived().toughness += powerObject.selectedLevel;
 }
 },
 {

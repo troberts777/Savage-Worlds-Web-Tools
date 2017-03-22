@@ -30,7 +30,7 @@
 				<legend translate="CHARGEN_INTRO_BOOKS" class="text-right">Books</legend>
 				<div class="text-center" >
 
-					<label ng-repeat="book in savageCharacter.books track by $index" ng-show="book.char_creator > 0" title="{{book.local_name}}" style="width: 25%;display: inline-block;margin: 0 3% 3% 0">
+					<label ng-repeat="book in savageCharacter.getBooks() track by $index" ng-show="book.char_creator > 0" title="{{book.local_name}}" style="width: 25%;display: inline-block;margin: 0 3% 3% 0">
 						<div style="white-space:nowrap"><input ng-disabled="book.id == 1" type="checkbox" style="margin: 0 5px 0 0; display: inline-block;width: auto" ng-model="book.inUse" ng-change="updateBook($index)" /> <span translate="GENERAL_IN_USE">In Use</span></div>
 						<img ng-show="book.imagepath != ''" ng-src="{{book.imagepath}}" style="width: 100%" />
 						<a class="pull-right button tiny primary expanded" href="{{book.buyme}}?ref=jdgwf-swt" target="buyme"><span class="glyphicon glyphicon-heart-empty"></span>  <span translate="EXTRAS_BUY_BOOK">Buy This Book</span></a>
@@ -45,9 +45,9 @@
 				<legend translate="CHARGEN_INTRO_SETTING_RULES" class="text-left">Settings</legend>
 					<label>
 						<span translate="CHARGEN_STARTING_WEALTH">Starting Wealth</span>:
-						<input type="number" ng-model="savageCharacter.startingFunds" ng-change="validateAndSave()" />
+						<input type="number" ng-model="startingWealth" ng-change="setStartingFunds( startingWealth )" />
 					</label>
-					<div ng-repeat="book in savageCharacter.books track by $index" ng-show="book.char_creator > 0">
+					<div ng-repeat="book in savageCharacter.getBooks() track by $index" ng-show="book.char_creator > 0">
 						<div ng-show="book.setting_rules.length > 0 && book.inUse">
 							<h4>{{book.local_name}}</h4>
 							<label ng-repeat="settingrule in book.setting_rules track by $index" ng-title="settingrule.local_name" style="display: block;margin: 0">

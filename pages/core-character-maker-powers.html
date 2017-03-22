@@ -21,20 +21,20 @@
 					<div class="column medium-5">
 						<fieldset class="fieldset">
 							<legend translate="CHARGEN_ARCANE_BACKGROUND">Arcane Background</legend>
-							<div ng-hide="savageCharacter.hasArcaneBackground" translate="CHARGEN_NO_ARCANE_EDGE">No arcane edge</div>
-							<div ng-show="savageCharacter.hasArcaneBackground">
-								<select ng-options="abItem as abItem.local_name group by abItem.bookObj.local_name disable when abItem.selectable == false for abItem in savageCharacter.availableArcaneBackgrounds track by abItem.tag" ng-model="savageCharacter.selectedArcaneBackground" ng-change="setArcaneBackground(savageCharacter.selectedArcaneBackground)"></select>
+							<div ng-hide="savageCharacter.hasArcaneBackground()" translate="CHARGEN_NO_ARCANE_EDGE">No arcane edge</div>
+							<div ng-show="savageCharacter.hasArcaneBackground()">
+								<select ng-options="abItem as abItem.local_name group by abItem.bookObj.local_name disable when abItem.selectable == false for abItem in savageCharacter.getAvailbleArcaneBackgrounds() track by abItem.tag" ng-model="selectedArcaneBackground" ng-change="setArcaneBackground(selectedArcaneBackground)"></select>
 
-								<div ng-show="savageCharacter.totalPowersKnown > 0">
-									<span translage="CHARGEN_POWERS_AVAILABLE">Available Powers</span>: {{savageCharacter.totalPowersKnown}}
+								<div ng-show="savageCharacter.getAvailableNumberOfPowers() > 0">
+									<span translage="CHARGEN_POWERS_AVAILABLE">Available Powers</span>: {{savageCharacter.getAvailableNumberOfPowers()}}
 								</div>
 
-								<div ng-show="savageCharacter.selectedPowers.length > 0">
-									<span translage="CHARGEN_POWERS_USED">Selected Powers</span>: {{savageCharacter.selectedPowers.length}}
+								<div ng-show="savageCharacter.getAvailableNumberOfPowers() > 0">
+									<span translage="CHARGEN_POWERS_USED">Selected Powers</span>: {{savageCharacter.getSelectedPowers().length}}
 								</div>
 
-								<div ng-show="savageCharacter.powerPointsAvailable > 0">
-									<span translage="CHARGEN_POWER_POINTS">Power Points</span>: {{savageCharacter.powerPointsAvailable}}
+								<div ng-show="savageCharacter.getPowerPointsAvailable() > 0">
+									<span translage="CHARGEN_POWER_POINTS">Power Points</span>: {{savageCharacter.getPowerPointsAvailable()}}
 								</div>
 
 							</div>
@@ -43,21 +43,21 @@
 					<div class="column medium-7">
 						<fieldset class="fieldset">
 							<legend translate="CHARGEN_SELECTED_POWERS">Selected Powers</legend>
-							<div ng-hide="savageCharacter.totalPowersKnown > 0" translate="CHARGEN_NO_POWERS_SELECTED">No powers selected</div>
-							<div ng-show="savageCharacter.totalPowersKnown > 0">
-								<div ng-show="savageCharacter.totalPowersKnown > savageCharacter.selectedPowers.length" class="text-right">
+							<div ng-hide="savageCharacter.getSelectedPowers().length > 0" translate="CHARGEN_NO_POWERS_SELECTED">No powers selected</div>
+							<div ng-show="savageCharacter.getAvailableNumberOfPowers() > 0">
+								<div ng-show="savageCharacter.getAvailableNumberOfPowers() > savageCharacter.getSelectedPowers().length" class="text-right">
 									<button class="button primary small" translate="CHARGEN_ADD_POWER" ng-click="newPowerDialog();">Add Power</button>
 								</div>
 
 								<ul class="edges-hindrances">
-									<div ng-show="savageCharacter.selectedArcaneBackground.freePower != null">
+									<div ng-show="savageCharacter.getSelectedArcaneBackground().freePower != null">
 										<li>
 											<span class="item-label">
-												{{savageCharacter.selectedArcaneBackground.freePower.local_name}} (<span translate="GENERAL_FREE"></span>)
+												{{savageCharacter.getSelectedArcaneBackground().freePower.local_name}} (<span translate="GENERAL_FREE"></span>)
 											</span>
 										</li>
 									</div>
-									<li ng-repeat="powerItem in savageCharacter.selectedPowers">
+									<li ng-repeat="powerItem in savageCharacter.getSelectedPowers()">
 
 
 										<button class="button primary tiny no-bottom-margin" ng-click="removePower($index);" translate="GENERAL_REMOVE">Remove</button>

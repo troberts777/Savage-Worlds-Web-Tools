@@ -1,0 +1,140 @@
+<!doctype html>
+<html ng-app="webApp" class="no-js ng-scope" lang="en-US">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<title ng-bind="title_tag">Savage Tools</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+		<link rel="icon" type="image/png" href="./images/sw_fan-78x50.png" />
+		<link rel="apple-touch-icon" href="./images/sw_fan-256.png">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<link rel="manifest" href="./manifest.json">
+
+
+		<link rel="stylesheet" href="./css/font-awesome-4.6.3/css/font-awesome.min.css">
+		<link rel="stylesheet" href="./css/foundation-6.2.0.min.css">
+		<link rel="stylesheet" href="./css/style.min.css">
+	</head>
+	<body>
+		<div class="ng-hide"><br />Loading...</div>
+		<div class="ng-cloak">
+			<header>
+				<div class="row">
+					<div class="columns small-12 medium-3 text-left app-menu">
+						<a href="#/"><i class="fa fa-home"></i></a>
+						<a href="#/settings/"><i class="fa fa-gear"></i></a>
+						<a href="#/credits/"><i class="fa fa-question"></i></a>
+					</div>
+					<div class="columns small-12 medium-9 medium-text-right small-text-left sub-menu">
+						<div ng-show="showSciFiCreatorMenu" ng-include="'pages/scifi-creator-menu.html'"></div>
+						<div ng-show="showChargenMenu" ng-include="'pages/chargen-menu.html'"></div>
+					</div>
+				</div>
+			</header>
+
+			<div>
+				<div ng-view></div>
+			</div>
+		</div>
+
+
+		<script src="./js/angular-1.5.3/angular.js"></script>
+		<script src="./js/sticky.min.js"></script>
+		<script src="./js/angular-1.5.3/angular-sanitize.js"></script>
+		<script src="./js/angular-1.5.3/angular-resource.js"></script>
+		<script src="./js/angular-1.5.3/angular-route.js"></script>
+		<script src="./js/angular-translate.min.js"></script>
+
+		<script src="./js/jspdf.min.js"></script>
+<!--
+		<script src="./js/script.js"></script>
+-->
+
+
+		<script src="./js/src/_cordova_app.js"></script>
+		<script src="./js/src/_web_app.js"></script>
+		<script src="./js/src/blank.js"></script>
+		<script src="./js/src/_base_app.js"></script>
+		<script src="./js/src/general_functions.js"></script>
+
+
+		<script src="./js/src/data/_edges.js"></script>
+		<script src="./js/src/data/_hindrances.js"></script>
+		<script src="./js/src/data/_races.js"></script>
+		<script src="./js/src/data/_savageWorldsBooksList.js"></script>
+		<script src="./js/src/data/_setting_rules.js"></script>
+		<script src="./js/src/data/_skill_list.js"></script>
+		<script src="./js/src/data/arcane_backgrounds.js"></script>
+		<script src="./js/src/data/arcane_trappings.js"></script>
+		<script src="./js/src/data/extras_peg_swd_ee.js"></script>
+		<script src="./js/src/data/extras_peg_swfc.js"></script>
+		<script src="./js/src/data/extras_peg_swhc.js"></script>
+		<script src="./js/src/data/extras_sfb.js"></script>
+		<script src="./js/src/data/gear_armor.js"></script>
+		<script src="./js/src/data/gear_classes.js"></script>
+		<script src="./js/src/data/gear_general.js"></script>
+		<script src="./js/src/data/gear_mundane.js"></script>
+		<script src="./js/src/data/gear_shields.js"></script>
+		<script src="./js/src/data/gear_types.js"></script>
+		<script src="./js/src/data/gear_weapons_hand.js"></script>
+		<script src="./js/src/data/gear_weapons_ranged.js"></script>
+		<script src="./js/src/data/gear_weapons.js"></script>
+		<script src="./js/src/data/language-de-DE.js"></script>
+		<script src="./js/src/data/language-en-US.js"></script>
+		<script src="./js/src/data/language-pt-BR.js"></script>
+		<script src="./js/src/data/language-ru-RU.js"></script>
+		<script src="./js/src/data/powers.js"></script>
+		<script src="./js/src/data/scifi_power_armor.js"></script>
+		<script src="./js/src/data/scifi_starship.js"></script>
+		<script src="./js/src/data/scifi_vehicle.js"></script>
+		<script src="./js/src/data/scifi_walker.js"></script>
+		<script src="./js/src/data/spc_powers.js"></script>
+		<script src="./js/src/data/vehicle_weapons.js"></script>
+
+
+
+		<script src="./js/src/classes/chargenPDF.js"></script>
+		<script src="./js/src/classes/classDice.js"></script>
+		<script src="./js/src/classes/diceValues.js"></script>
+		<script src="./js/src/classes/savageCharacter.js"></script>
+		<script src="./js/src/classes/savageCharacterRifts.js"></script>
+		<script src="./js/src/classes/scifiCreator.js"></script>
+
+
+		<script src="./js/src/controllers/core-chargen-global-functions.js"></script>
+		<script src="./js/src/controllers/core-chargen-delete.js"></script>
+		<script src="./js/src/controllers/core-chargen-welcome.js"></script>
+		<script src="./js/src/controllers/core-chargen-info.js"></script>
+		<script src="./js/src/controllers/core-chargen-traits.js"></script>
+		<script src="./js/src/controllers/core-chargen-edges-hindrances.js"></script>
+		<script src="./js/src/controllers/core-chargen-weapons.js"></script>
+		<script src="./js/src/controllers/core-chargen-armor.js"></script>
+		<script src="./js/src/controllers/core-chargen-gear.js"></script>
+
+		<script src="./js/src/controllers/core-chargen-powers.js"></script>
+
+		<script src="./js/src/controllers/core-dice.js"></script>
+		<script src="./js/src/controllers/core-extras.js"></script>
+		<script src="./js/src/controllers/core-massbattles.js"></script>
+		<script src="./js/src/controllers/core-raise-trainer.js"></script>
+		<script src="./js/src/controllers/core-raisecalc.js"></script>
+		<script src="./js/src/controllers/credits.js"></script>
+		<script src="./js/src/controllers/scifi-power-armor.js"></script>
+		<script src="./js/src/controllers/scifi-robot.js"></script>
+		<script src="./js/src/controllers/scifi-starship.js"></script>
+		<script src="./js/src/controllers/scifi-vehicle.js"></script>
+		<script src="./js/src/controllers/scifi-walker.js"></script>
+		<script src="./js/src/controllers/scifi-world.js"></script>
+		<script src="./js/src/controllers/settings.js"></script>
+		<script src="./js/src/controllers/welcome.js"></script>
+
+
+	</body>
+</html>
+
+

@@ -25,15 +25,15 @@
 							<fieldset class="fieldset">
 								<legend translate="GENERAL_HINDRANCES">Hindrances</legend>
 
-									<select ng-model="addHindranceTag" ng-options="hindrance as hindrance.select_option_name group by hindrance.bookObj.local_name disable when hindrance.selectable == false for hindrance in savageCharacter.availableHindrances track by hindrance.tag"></select>
+									<select ng-model="addHindranceTag" ng-options="hindrance as hindrance.select_option_name group by hindrance.bookObj.local_name disable when hindrance.selectable == false for hindrance in savageCharacter.getAvailableHindrances() track by hindrance.tag"></select>
 
-									<div class="text-center" ng-show="savageCharacter.totalPerkPoints == savageCharacter.optimizedPerkPoints" translate="CHARGEN_HINDRANCES_OPTIMIZED">
+									<div class="text-center" ng-show="savageCharacter.isPerkOptimized()" translate="CHARGEN_HINDRANCES_OPTIMIZED">
 										You have optimized your hindrances. Selecting more will not advance the character.
 									</div>
 									<button ng-hide="savageCharacter.XP.value > 0" class="button tiny expanded primary" ng-click="addHindrance()" translate="CHARGEN_ADD_HINDRANCE">Add Hindrance</button>
 
 									<ul class="edges-hindrances">
-										<li ng-repeat="hindrance in savageCharacter.installedHindrances">
+										<li ng-repeat="hindrance in savageCharacter.getInstalledHindrances()">
 											<button ng-hide="hindrance.racial > 0 || savageCharacter.XP.value > 0" ng-click="removeHindranceByTag(hindrance.tag)" class="primary button tiny" translate="GENERAL_REMOVE">Remove</button>
 
 											<span class="racial" ng-show="hindrance.racial > 0" translate="CHARGEN_RACIAL_PARENTHETICAL">(racial)</span>
@@ -48,13 +48,13 @@
 						<div class="column small-12 medium-4">
 							<fieldset class="fieldset">
 								<legend translate="GENERAL_PERKS">Perks</legend>
-								<div ng-show="savageCharacter.availablePerkPoints > 0">
-									<span translate="CHARGEN_PERK_POINTS">Perk Points</span>: <span ng-bind="savageCharacter.availablePerkPoints">X</span>
+								<div ng-show="savageCharacter.getAvailablePerkPoints() > 0">
+									<span translate="CHARGEN_PERK_POINTS">Perk Points</span>: <span ng-bind="savageCharacter.getAvailablePerkPoints()">X</span>
 									<!-- <select ng-model="addPerkTag" ng-options="perk as perk.label disable when perkNotAvailable(perk) for perk in savageCharacter.perkOptions track by perk.tag | filter:perkVisible"></select> -->
 
 									<select ng-model="addPerkTag">
 										<option ng-selected="{{perk.tag == addPerkTag}}"
-            								ng-repeat="perk in savageCharacter.perkOptions"
+            								ng-repeat="perk in savageCharacter.getPerkOptions()"
             								value="{{perk.tag}}"
             								ng-show="perkVisible(perk)"
             							>
@@ -64,11 +64,11 @@
 									<button class="button tiny primary expanded" ng-click="addPerk()" translate="CHARGEN_ADD_PERK">Add Perk</button>
 								</div>
 
-								<div ng-show="savageCharacter.availablePerkPoints == 0" translate="CHARGEN_NO_PERK_POINTS">
+								<div ng-show="savageCharacter.getAvailablePerkPoints() == 0" translate="CHARGEN_NO_PERK_POINTS">
 								</div>
 
 								<ul class="edges-hindrances">
-									<li ng-repeat="perk in savageCharacter.selectedPerks track by $index ">
+									<li ng-repeat="perk in savageCharacter.getSelectedPerks() track by $index ">
 										<button ng-hide="savageCharacter.XP.value > 0" ng-click="removePerkByTag(perk.tag)" class="primary button tiny" translate="GENERAL_REMOVE">Remove</button>
 
 										<span class="item-label">{{perk.label}}</span>
@@ -77,7 +77,7 @@
 
 
 
-								<strong><div class="text-center" ng-show="savageCharacter.usesSPCCreation" >
+								<strong><div class="text-center" ng-show="savageCharacter.usesSPCCreation()" >
 									<h4 translate="SPC_SUPER_KARMA_AVAILABLE">Super Karma Available</h4>
 									<p translate="SPC_SUPER_KARMA_BLURB">To take extra power points select a second Major Hindrance then choose "Extra Power Points" from above.</p>
 								</div></strong>
@@ -86,17 +86,17 @@
 						<div class="column small-12 medium-4">
 							<fieldset class="fieldset">
 								<legend translate="GENERAL_EDGES">Edges</legend>
-									<div ng-show="savageCharacter.availableEdgePoints > 0">
-										<select ng-model="addEdgeTag" ng-options="edge as edge.select_option_name group by edge.bookObj.local_name disable when edge.selectable == false for edge in savageCharacter.availableEdges track by edge.tag"></select>
+									<div ng-show="savageCharacter.getAvailableEdgePoints() > 0">
+										<select ng-model="addEdgeTag" ng-options="edge as edge.select_option_name group by edge.bookObj.local_name disable when edge.selectable == false for edge in savageCharacter.getAvailableEdges() track by edge.tag"></select>
 										<button class="button tiny primary expanded" ng-click="addEdge()" translate="CHARGEN_ADD_EDGE">Add Edge</button>
 									</div>
 									<div class="no-edges-available" ng-show="savageCharacter.availableEdgePoints == 0" translate="CHARGEN_NO_EDGES_AVAILABLE"></div>
 
 									<ul class="edges-hindrances">
-										<li ng-show="savageCharacter.usesSPCCreation">
+										<li ng-show="savageCharacter.usesSPCCreation()">
 											<span translate="CHARGEN_SPC_AB">Arcane Background (Super Powers, Setting Rule)</span>
 										</li>
-										<li ng-repeat="edge in savageCharacter.installedEdges">
+										<li ng-repeat="edge in savageCharacter.getInstalledEdges()">
 											<button ng-hide="edge.racial > 0 || savageCharacter.XP.value > 0" ng-click="removeEdgeByTag(edge.tag)" class="primary button tiny" translate="GENERAL_REMOVE">Remove</button>
 
 											<span class="racial" ng-show="edge.racial > 0" translate="CHARGEN_RACIAL_PARENTHETICAL">(racial)</span>

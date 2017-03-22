@@ -1,4 +1,4 @@
-var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $location, $route, $cordovaFile ) {
+var coreChargenPowersFunctions = function ($timeout, $rootScope, $translate, $scope, $location, $route, $cordovaFile ) {
 		$rootScope.showChargenMenu = true;
 		var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_chargen";
 		var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.chargen";
@@ -29,102 +29,67 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 				localStorage["users_chargen_pdf_layout"] = "landscape";
 
 
-			$scope.savageCharacter = new savageCharacter( localStorage["users_preferred_language"] );
+			$rootScope.savageCharacter = new savageCharacter( localStorage["users_preferred_language"] );
 
 			if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
-				$scope.savageCharacter.importJSON( localStorage[ currentItemLocalStorageVariable ] );
+				$rootScope.savageCharacter.importJSON( localStorage[ currentItemLocalStorageVariable ] );
 			}
 
-			$scope.charGenAttributes = $scope.savageCharacter.attributes;
+			$scope.charGenAttributes = $rootScope.savageCharacter.attributes;
 
-			$scope.addEdgeTag = $scope.savageCharacter.availableEdges[0];
-			$scope.addHindranceTag = $scope.savageCharacter.availableHindrances[0];
-			$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
+			$scope.addEdgeTag = $rootScope.savageCharacter.getAvailableEdges()[0];
+			$scope.addHindranceTag = $rootScope.savageCharacter.getAvailableHindrances()[0];
+			$scope.addPerkTag = $rootScope.savageCharacter.getPerkOptions()[0].tag;
 
 			$scope.gearAddedMessage = "";
 
 			$scope.savageWorldsSPCPowers = savageWorldsSPCPowers;
 
 			$scope.selectedSPCPower = savageWorldsSPCPowers[0];
+
+			$scope.startingWealth = $rootScope.savageCharacter.getStartingFunds();
+
+			$scope.selectedArcaneBackground = $rootScope.savageCharacter.getSelectedArcaneBackground();
+
 		}
 
 		$scope.init();
 
-		$scope.validateAndSave = function() {
-			$scope.savageCharacter.validate();
-			localStorage[currentItemLocalStorageVariable] = $scope.savageCharacter.exportJSON();
-		}
-		$scope.justSave = function() {
-			localStorage[currentItemLocalStorageVariable] = $scope.savageCharacter.exportJSON();
+
+
+		$scope.setArcaneBackground = function(abTag) {
+			$rootScope.savageCharacter.setArcaneBackground(abTag.tag);
+			$rootScope.validateAndSave();
+			$rootScope.validateAndSave();
 		}
 
 		$scope.newPowerDialog = function() {
 			$scope.propogatePowerDialog(-1);
 			$rootScope.closeDialogs();
 			$scope.propogatePowerDialog(-1);
-			$scope.addEditPowerDialogOpen = true;
-		}
-
-
-		$scope.makeRange = function(min, max, step) {
-			step = step || 1;
-			var input = [];
-			for (var i = min; i <= max; i += step) {
-			    input.push(i);
-			}
-			return input;
-		};
-		$scope.editPowerDialog = function(powerIndex) {
-
-			$scope.propogatePowerDialog(powerIndex);
-			$rootScope.closeDialogs();
-			$scope.propogatePowerDialog(powerIndex);
-			$scope.addEditPowerDialogOpen = true;
-		}
-
-		$scope.addSPCPower = function() {
-			$scope.savageCharacter.addSPCPower( $scope.selectedSPCPower.id );
-			$scope.validateAndSave();
+			$rootScope.addEditPowerDialogOpen = true;
 		}
 
 		$scope.propogatePowerDialog = function (indexNumber) {
 
 			if( indexNumber > -1 ) {
 				$scope.editingPowerIndex = indexNumber;
-				$scope.editingPower = $scope.savageCharacter.selectedPowers[indexNumber];
+				$scope.editingPower = $rootScope.savageCharacter.getSelectedPowers()[indexNumber];
 
 			} else {
-				for( availablePowersC = 0; availablePowersC < $scope.savageCharacter.availablePowers.length; availablePowersC++) {
-					$scope.savageCharacter.availablePowers[ availablePowersC ].trapping = $scope.savageCharacter.availableTrappings[0];
-					$scope.savageCharacter.availablePowers[ availablePowersC ].customName = "";
+				for( availablePowersC = 0; availablePowersC < $rootScope.savageCharacter.getAvailablePowers().length; availablePowersC++) {
+					$rootScope.savageCharacter.getAvailablePowers()[ availablePowersC ].trapping = $rootScope.savageCharacter.getAvailableTrappings()[0];
+					$rootScope.savageCharacter.getAvailablePowers()[ availablePowersC ].customName = "";
 				}
 
 				$scope.editingPowerIndex = -1;
-				$scope.editingPower = $scope.savageCharacter.availablePowers[0];
+				$scope.editingPower = $rootScope.savageCharacter.getAvailablePowers()[0];
 			}
 
-		}
-
-		$scope.perkVisible = function( currentPerk ) {
-			if(
-				currentPerk.spcOnly == true
-					&&
-				$scope.savageCharacter.secondMajorHindranceChosen == false
-			) {
-				return false;
-			} else {
-				return true;
-			}
-		}
-
-		$scope.updateSettingRule = function( settingTag ) {
-			// settingTag is not really used, but it's nice to know what's clicked for debugging.
-			// console.log( "updateSettingRule", settingTag );
-			$scope.validateAndSave();
 		}
 
 		$scope.addPower = function( editPower ) {
-			$scope.savageCharacter.addPower(
+			$rootScope.savageCharacter.addPower(
 				editPower.bookObj.id,
 				editPower.tag,
 				editPower.trapping.bookObj.id,
@@ -132,15 +97,15 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 				editPower.customName
 			);
 
-			$scope.validateAndSave();
+			$rootScope.validateAndSave();
 			$rootScope.closeDialogs();
 		}
 
 		$scope.savePower = function( editPower ) {
 
-			$scope.savageCharacter.selectedPowers[ $scope.editingPowerIndex ] = editPower;
+			$rootScope.savageCharacter.setSelectedPower( $scope.editingPowerIndex, editPower );
 
-			$scope.validateAndSave();
+			$rootScope.validateAndSave();
 			$rootScope.closeDialogs();
 
 		}
@@ -155,8 +120,8 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 						translation.CREATOR_DELETE_POWER_CONFIRMATION,
 						function() {
 							$scope.showConfirmDialog = false;
-							$scope.savageCharacter.removePower(powerIndex);
-							$scope.validateAndSave();
+							$rootScope.savageCharacter.removePower(powerIndex);
+							$rootScope.validateAndSave();
 						}
 					);
 				}
@@ -164,6 +129,57 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 
 
 		}
+
+		$scope.editPowerDialog = function(powerIndex) {
+
+			$scope.propogatePowerDialog(powerIndex);
+			$rootScope.closeDialogs();
+			$scope.propogatePowerDialog(powerIndex);
+			$rootScope.addEditPowerDialogOpen = true;
+		}
+
+/*
+
+
+
+		$scope.makeRange = function(min, max, step) {
+			step = step || 1;
+			var input = [];
+			for (var i = min; i <= max; i += step) {
+			    input.push(i);
+			}
+			return input;
+		};
+
+
+		$scope.addSPCPower = function() {
+			$rootScope.savageCharacter.addSPCPower( $scope.selectedSPCPower.id );
+			$rootScope.validateAndSave();
+		}
+
+
+
+		$scope.perkVisible = function( currentPerk ) {
+			if(
+				currentPerk.spcOnly == true
+					&&
+				$rootScope.savageCharacter.secondMajorHindranceChosen == false
+			) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+
+
+		$scope.updateSettingRule = function( settingTag ) {
+			// settingTag is not really used, but it's nice to know what's clicked for debugging.
+			// console.log( "updateSettingRule", settingTag );
+			$rootScope.validateAndSave();
+		}
+
+
 
 		$rootScope.clearGearLog = function() {
 			$scope.gearAddedMessage = "";
@@ -242,7 +258,7 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 			}
 
 			$rootScope.closeDialogs();
-			$scope.save_as_name = $scope.savageCharacter.name;
+			$scope.save_as_name = $rootScope.savageCharacter.name;
 			$rootScope.saveDialogOpen = true;
 		}
 		$rootScope.importDialog = function() {
@@ -264,9 +280,9 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 		}
 
 		$rootScope.exportDialog = function() {
-			$scope.exportBBCode = $scope.savageCharacter.exportBBCode();
-			$scope.exportHTMLCode = $scope.savageCharacter.exportHTMLCode();
-			$scope.exportJSON = $scope.savageCharacter.exportJSON(true);
+			$scope.exportBBCode = $rootScope.savageCharacter.exportBBCode();
+			$scope.exportHTMLCode = $rootScope.savageCharacter.exportHTMLCode();
+			$scope.exportJSON = $rootScope.savageCharacter.exportJSON(true);
 			$rootScope.closeDialogs();
 			$rootScope.exportDialogOpen = true;
 		}
@@ -279,12 +295,12 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 		$rootScope.makePDF = function() {
 
 			console.log( "makePDF called");
-			chargenPDFObject = new chargenPDF( $scope.savageCharacter );
+			chargenPDFObject = new chargenPDF( $rootScope.savageCharacter );
 
 			// if a cordova Application
 			document.addEventListener('deviceready', function () {
-				if( $scope.savageCharacter.name  != "" )
-					fileName = $scope.savageCharacter.name.toLowerCase().replace(" ", "-").replace("'", "").replace("\"", "") + ".SWT.pdf";
+				if( $rootScope.savageCharacter.name  != "" )
+					fileName = $rootScope.savageCharacter.name.toLowerCase().replace(" ", "-").replace("'", "").replace("\"", "") + ".SWT.pdf";
 				else
 					fileName = "Nameless.SWT.pdf";
 				if( $cordovaFile) {
@@ -356,7 +372,7 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 				else
 					chargenPDFObject.createBasicPortraitPDF();
 				chargenPDFObject.currentDoc.output('dataurlnewwindow');
-				//chargenPDFObject.currentDoc.output('save', $scope.savageCharacter.name + '.pdf');
+				//chargenPDFObject.currentDoc.output('save', $rootScope.savageCharacter.name + '.pdf');
 			}
 
 			console.log( "makePDF ended");
@@ -398,7 +414,7 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 		}
 
 		$scope.updateBook = function( book_id ) {
-			$scope.validateAndSave();
+			$rootScope.validateAndSave();
 		}
 
 
@@ -454,8 +470,8 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 
 		$scope.setAttribute = function( attributeName, diceID) {
 
-			$scope.savageCharacter.setAttribute(attributeName, diceID);
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.setAttribute(attributeName, diceID);
+			$rootScope.validateAndSave();
 		}
 
 		$scope.saveItem = function( save_over, saveName ) {
@@ -480,57 +496,57 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 				name: saveName,
 				datetime: Date(),
 				type: itemType,
-				data:  $scope.savageCharacter.exportJSON()
+				data:  $rootScope.savageCharacter.exportJSON()
 			};
 			return save_object;
 		}
 
 		$scope.incrementSkill = function( skillID ) {
-			$scope.savageCharacter.incrementSkill( skillID );
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.incrementSkill( skillID );
+			$rootScope.validateAndSave();
 		}
 
 		$scope.decrementSkill = function( skillID ) {
-			$scope.savageCharacter.decrementSkill( skillID );
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.decrementSkill( skillID );
+			$rootScope.validateAndSave();
 		}
 		$scope.addSpecialtySkill = function( skillID ) {
-			$scope.savageCharacter.addSpecialtySkill( skillID );
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.addSpecialtySkill( skillID );
+			$rootScope.validateAndSave();
 		}
 
 		$scope.incrementSpecialtySkill = function( skillID, specialtyIndex ) {
-			$scope.savageCharacter.incrementSpecialtySkill( skillID, specialtyIndex );
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.incrementSpecialtySkill( skillID, specialtyIndex );
+			$rootScope.validateAndSave();
 		}
 
 		$scope.decrementSpecialtySkill = function( skillID, specialtyIndex ) {
-			$scope.savageCharacter.decrementSpecialtySkill( skillID, specialtyIndex );
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.decrementSpecialtySkill( skillID, specialtyIndex );
+			$rootScope.validateAndSave();
 		}
 
 		$scope.updateSpecialtySkillName = function( skillID, specialtyIndex, updatedName ) {
-			$scope.savageCharacter.updateSpecialtySkillName( skillID, specialtyIndex, updatedName );
-			//$scope.validateAndSave();
+			$rootScope.savageCharacter.updateSpecialtySkillName( skillID, specialtyIndex, updatedName );
+			//$rootScope.validateAndSave();
 		}
 
 		$scope.addEdge = function( ){
 			if( $scope.addEdgeTag.tag ) {
-				$scope.savageCharacter.addEdge( $scope.addEdgeTag.book, $scope.addEdgeTag.tag);
-				$scope.validateAndSave();
-				$scope.addEdgeTag = $scope.savageCharacter.availableEdges[0];
-				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
+				$rootScope.savageCharacter.addEdge( $scope.addEdgeTag.book, $scope.addEdgeTag.tag);
+				$rootScope.validateAndSave();
+				$scope.addEdgeTag = $rootScope.savageCharacter.availableEdges[0];
+				$scope.addPerkTag = $rootScope.savageCharacter.perkOptions[0].tag;
 			}
 
 		}
 
 		$scope.addHindrance = function( ){
 			if( $scope.addHindranceTag.tag ) {
-				$scope.savageCharacter.addHindrance( $scope.addHindranceTag.book, $scope.addHindranceTag.tag);
-				$scope.validateAndSave();
+				$rootScope.savageCharacter.addHindrance( $scope.addHindranceTag.book, $scope.addHindranceTag.tag);
+				$rootScope.validateAndSave();
 
-				$scope.addHindranceTag = $scope.savageCharacter.availableHindrances[0];
-				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
+				$scope.addHindranceTag = $rootScope.savageCharacter.availableHindrances[0];
+				$scope.addPerkTag = $rootScope.savageCharacter.perkOptions[0].tag;
 			}
 
 
@@ -538,40 +554,34 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 
 		$scope.removeEdgeByTag = function( edgeTag ){
 			if( edgeTag ) {
-				$scope.savageCharacter.removeEdgeByTag( edgeTag );
-				$scope.validateAndSave();
-				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
+				$rootScope.savageCharacter.removeEdgeByTag( edgeTag );
+				$rootScope.validateAndSave();
+				$scope.addPerkTag = $rootScope.savageCharacter.perkOptions[0].tag;
 			}
 		}
 
 		$scope.removeHindranceByTag = function( hindranceTag ){
 			if( hindranceTag ) {
-				$scope.savageCharacter.removeHindranceByTag( hindranceTag );
-				$scope.validateAndSave();
-				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
+				$rootScope.savageCharacter.removeHindranceByTag( hindranceTag );
+				$rootScope.validateAndSave();
+				$scope.addPerkTag = $rootScope.savageCharacter.perkOptions[0].tag;
 			}
 		}
 
 		$scope.addPerk = function( ){
 			if( $scope.addPerkTag != "null" ) {
-				$scope.savageCharacter.addPerk( $scope.addPerkTag);
-				$scope.validateAndSave();
-				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
+				$rootScope.savageCharacter.addPerk( $scope.addPerkTag);
+				$rootScope.validateAndSave();
+				$scope.addPerkTag = $rootScope.savageCharacter.perkOptions[0].tag;
 			}
 
 		}
 
 		$scope.removePerkByTag = function( perkTag ){
 			if( perkTag ) {
-				$scope.savageCharacter.removePerk( perkTag );
-				$scope.validateAndSave();
+				$rootScope.savageCharacter.removePerk( perkTag );
+				$rootScope.validateAndSave();
 			}
-		}
-
-		$scope.setArcaneBackground = function(abTag) {
-			$scope.savageCharacter.setArcaneBackground(abTag.tag);
-			$scope.validateAndSave();
-			$scope.validateAndSave();
 		}
 
 
@@ -596,13 +606,13 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 		}
 
 		$scope.setXP = function(xpValue) {
-			$scope.savageCharacter.setXP(xpValue.value);
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.setXP(xpValue.value);
+			$rootScope.validateAndSave();
 		}
 
 		$scope.setAdvancementType = function(advIndex, advTag ) {
-			$scope.savageCharacter.setAdvancementType(advIndex, advTag);
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.setAdvancementType(advIndex, advTag);
+			$rootScope.validateAndSave();
 		}
 
 		$scope.filterNewSkill = function( currentItem ) {
@@ -654,7 +664,7 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 							&&
 						skillItem.value + skillItem.boost
 							&&
-						skillItem.value + skillItem.boost >= $scope.savageCharacter.attributes[ skillItem.attribute ]
+						skillItem.value + skillItem.boost >= $rootScope.savageCharacter.attributes[ skillItem.attribute ]
 					)
 
 				) {
@@ -667,7 +677,7 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 
 		$scope.filterLowerSkill = function( currentItem, otherOption ) {
 			return function (skillItem) {
-				//console.log( "#", skillItem.value + skillItem.boost ,skillItem.attribute, $scope.savageCharacter.displayAttributes[ skillItem.attribute ] )
+				//console.log( "#", skillItem.value + skillItem.boost ,skillItem.attribute, $rootScope.savageCharacter.displayAttributes[ skillItem.attribute ] )
 				if(
 					skillItem
 						&&
@@ -682,7 +692,7 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 							&&
 						skillItem.value + skillItem.boost > 0
 							&&
-						skillItem.value + skillItem.boost < $scope.savageCharacter.displayAttributes[ skillItem.attribute ].id
+						skillItem.value + skillItem.boost < $rootScope.savageCharacter.displayAttributes[ skillItem.attribute ].id
 						// 	&&
 						// skillItem.id != otherOption.id
 					)
@@ -692,7 +702,7 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 					// 		&&
 					// 	skillItem.value + skillItem.boost > 0
 					// 		&&
-					// 	skillItem.value + skillItem.boost < $scope.savageCharacter.attributes[ skillItem.attribute ].value
+					// 	skillItem.value + skillItem.boost < $rootScope.savageCharacter.attributes[ skillItem.attribute ].value
 					// 		&&
 					// 	skillItem.specify != otherOption.specify
 					// )
@@ -710,8 +720,8 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 			if( advTag && advTag.name )
 				specifyName = advTag.name;
 			//console.log( "setAdvancementOption1 = function(" , advIndex, advTag, specifyName, advBook );
-			$scope.savageCharacter.setAdvancementOption1(advIndex, advTag, specifyName, advBook);
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.setAdvancementOption1(advIndex, advTag, specifyName, advBook);
+			$rootScope.validateAndSave();
 		}
 
 		$scope.setAdvancementOption2 = function(advIndex, advTag, advBook ) {
@@ -721,8 +731,8 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 			else
 				if( advTag )
 					specifyName = advTag;
-			$scope.savageCharacter.setAdvancementOption2(advIndex, advTag, specifyName, advBook);
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.setAdvancementOption2(advIndex, advTag, specifyName, advBook);
+			$rootScope.validateAndSave();
 		}
 
 
@@ -731,14 +741,14 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 				itemCost = 0;
 			else
 				itemCost = -1;
-			$scope.savageCharacter.addGearMundane( bookID, gearTag, itemCost );
+			$rootScope.savageCharacter.addGearMundane( bookID, gearTag, itemCost );
 			$scope.showItemAdded();
-			$scope.validateAndSave();
+			$rootScope.validateAndSave();
 		}
 
 		$scope.removeMundane = function( indexItem ) {
-			$scope.savageCharacter.removeMundane( indexItem );
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.removeMundane( indexItem );
+			$rootScope.validateAndSave();
 		}
 
 		$scope.showItemAdded = function() {
@@ -755,14 +765,14 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 				itemCost = 0;
 			else
 				itemCost = -1;
-			$scope.savageCharacter.addGearArmor( bookID, gearTag, itemCost );
+			$rootScope.savageCharacter.addGearArmor( bookID, gearTag, itemCost );
 			$scope.showItemAdded();
-			$scope.validateAndSave();
+			$rootScope.validateAndSave();
 		}
 
 		$scope.removeArmor = function( indexItem ) {
-			$scope.savageCharacter.removeArmor( indexItem );
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.removeArmor( indexItem );
+			$rootScope.validateAndSave();
 		}
 
 		$scope.buyHandWeapon = function( bookID, gearTag, forFree) {
@@ -770,9 +780,9 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 				itemCost = 0;
 			else
 				itemCost = -1;
-			$scope.savageCharacter.addGearHandWeapon( bookID, gearTag, itemCost );
+			$rootScope.savageCharacter.addGearHandWeapon( bookID, gearTag, itemCost );
 			$scope.showItemAdded();
-			$scope.validateAndSave();
+			$rootScope.validateAndSave();
 		}
 
 
@@ -781,55 +791,55 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 				itemCost = 0;
 			else
 				itemCost = -1;
-			$scope.savageCharacter.addGearRangedWeapon( bookID, gearTag, itemCost );
+			$rootScope.savageCharacter.addGearRangedWeapon( bookID, gearTag, itemCost );
 			$scope.showItemAdded();
-			$scope.validateAndSave();
+			$rootScope.validateAndSave();
 		}
 
 		$scope.removeHandWeapon = function( indexItem ) {
-			$scope.savageCharacter.removeHandWeapon( indexItem );
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.removeHandWeapon( indexItem );
+			$rootScope.validateAndSave();
 		}
 
 		$scope.removeRangedWeapon = function( indexItem ) {
-			$scope.savageCharacter.removeRangedWeapon( indexItem );
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.removeRangedWeapon( indexItem );
+			$rootScope.validateAndSave();
 		}
 
 		$scope.equipPrimaryHandWeapon = function( indexItem ) {
 
-			$scope.savageCharacter.equipPrimaryHandWeapon( indexItem );
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.equipPrimaryHandWeapon( indexItem );
+			$rootScope.validateAndSave();
 		}
 
 		$scope.equipPrimaryRangedWeapon = function( indexItem ) {
 
-			$scope.savageCharacter.equipPrimaryRangedWeapon( indexItem );
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.equipPrimaryRangedWeapon( indexItem );
+			$rootScope.validateAndSave();
 		}
 
 		$scope.equipSecondaryHandWeapon = function( indexItem ) {
 
-			$scope.savageCharacter.equipSecondaryHandWeapon( indexItem );
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.equipSecondaryHandWeapon( indexItem );
+			$rootScope.validateAndSave();
 		}
 
 		$scope.equipSecondaryRangedWeapon = function( indexItem ) {
 
-			$scope.savageCharacter.equipSecondaryRangedWeapon( indexItem );
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.equipSecondaryRangedWeapon( indexItem );
+			$rootScope.validateAndSave();
 		}
 
 		$scope.unequipHandWeapon = function( indexItem ) {
 
-			$scope.savageCharacter.unequipHandWeapon( indexItem );
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.unequipHandWeapon( indexItem );
+			$rootScope.validateAndSave();
 		}
 
 		$scope.unequipRangedWeapon = function( indexItem ) {
 
-			$scope.savageCharacter.unequipRangedWeapon( indexItem );
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.unequipRangedWeapon( indexItem );
+			$rootScope.validateAndSave();
 		}
 
 		$scope.buyShield = function( bookID, gearTag, forFree) {
@@ -837,80 +847,86 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 				itemCost = 0;
 			else
 				itemCost = -1;
-			$scope.savageCharacter.addGearShield( bookID, gearTag, itemCost );
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.addGearShield( bookID, gearTag, itemCost );
+			$rootScope.validateAndSave();
 		}
 
 		$scope.removeShield = function( indexItem ) {
-			$scope.savageCharacter.removeShield( indexItem );
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.removeShield( indexItem );
+			$rootScope.validateAndSave();
 		}
 
 
 		$scope.equipPrimaryShield = function( indexItem ) {
 
-			$scope.savageCharacter.equipPrimaryShield( indexItem );
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.equipPrimaryShield( indexItem );
+			$rootScope.validateAndSave();
 		}
 
 		$scope.equipSecondaryShield = function( indexItem ) {
 
-			$scope.savageCharacter.equipSecondaryShield( indexItem );
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.equipSecondaryShield( indexItem );
+			$rootScope.validateAndSave();
 		}
 
 		$scope.unequipShield = function( indexItem ) {
 
-			$scope.savageCharacter.unequipShield( indexItem );
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.unequipShield( indexItem );
+			$rootScope.validateAndSave();
 		}
 
 		$scope.unequipArmor = function( indexItem ) {
-			$scope.savageCharacter.unequipArmor( indexItem );
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.unequipArmor( indexItem );
+			$rootScope.validateAndSave();
 		}
 
 		$scope.equipArmor = function( indexItem ) {
-			$scope.savageCharacter.equipArmor( indexItem );
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.equipArmor( indexItem );
+			$rootScope.validateAndSave();
 		}
 
 		$scope.setDroppedDuringCombat = function( itemType, indexItem, setValue ) {
 			if( setValue )
-				$scope.savageCharacter.setDroppedDuringCombat( itemType, indexItem );
+				$rootScope.savageCharacter.setDroppedDuringCombat( itemType, indexItem );
 			else
-				$scope.savageCharacter.setUsedDuringCombat( itemType, indexItem );
-			$scope.validateAndSave();
+				$rootScope.savageCharacter.setUsedDuringCombat( itemType, indexItem );
+			$rootScope.validateAndSave();
 		}
 
 		$scope.incrementSPCPowerLevel = function( powerIndex ) {
 			//console.log("incrementSPCPowerLevel", powerIndex);
 
 
-			$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel++;
-			if( $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level > 1 && $scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel >= $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level) {
-				$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel = $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level;
+			$rootScope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel++;
+			if( $rootScope.savageCharacter.selectedSPCPowers[powerIndex].max_level > 1 && $rootScope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel >= $rootScope.savageCharacter.selectedSPCPowers[powerIndex].max_level) {
+				$rootScope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel = $rootScope.savageCharacter.selectedSPCPowers[powerIndex].max_level;
 			}
-			$scope.validateAndSave();
+			$rootScope.validateAndSave();
 			return;
 		}
 
 		$scope.decrementSPCPowerLevel = function( powerIndex ) {
 			//console.log("decrementSPCPowerLevel", powerIndex);
-			$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel--;
-			if( $scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel < 1) {
-				$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel = 1;
+			$rootScope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel--;
+			if( $rootScope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel < 1) {
+				$rootScope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel = 1;
 			}
-			$scope.validateAndSave();
+			$rootScope.validateAndSave();
 			return;
 		}
 
 		$scope.removeSPCPower = function( powerIndex ) {
-			$scope.savageCharacter.selectedSPCPowers.splice( powerIndex, 1)
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.selectedSPCPowers.splice( powerIndex, 1)
+			$rootScope.validateAndSave();
 		}
 
 		$scope.getTypeOf = function(val){ return typeof val; };
+
+
+		$scope.setStartingFunds = function( newValue ) {
+			$rootScope.savageCharacter.setStartingFunds( newValue );
+			$rootScope.validateAndSave();
+		}
 
 		$scope.isAnArray = function(val){
 			if(  typeof(val) == "object" || typeof(val) == "object")
@@ -925,15 +941,13 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 		      return item["switchable"] > 0;
 		    // }
 		};
-
+*/
 	}
 ;
-// var cordovachargenArray = Array();
-// angular.extend( cordovachargenArray, corechargenArray );
-// cordovachargenArray.unshift('$cordovaFile');
+
 
 angular.module("webApp").controller(
-	"coreChargenController",
+	"controllerCoreChargenPowers",
 	[
 		'$timeout',
 		'$rootScope',
@@ -942,12 +956,12 @@ angular.module("webApp").controller(
 		'$location',
 		'$route',
 
-		corechargenFunctions
+		coreChargenPowersFunctions
 	]
 );
 
 angular.module("cordovaApp").controller(
-	"coreChargenController",
+	"controllerCoreChargenPowers",
 	[
 		'$timeout',
 		'$rootScope',
@@ -956,6 +970,6 @@ angular.module("cordovaApp").controller(
 		'$location',
 		'$route',
 		'$cordovaFile',
-		corechargenFunctions
+		coreChargenPowersFunctions
 	]
 );
