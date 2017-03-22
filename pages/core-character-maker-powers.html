@@ -25,8 +25,8 @@
 							<div ng-show="savageCharacter.hasArcaneBackground">
 								<select ng-options="abItem as abItem.local_name group by abItem.bookObj.local_name disable when abItem.selectable == false for abItem in savageCharacter.availableArcaneBackgrounds track by abItem.tag" ng-model="savageCharacter.selectedArcaneBackground" ng-change="setArcaneBackground(savageCharacter.selectedArcaneBackground)"></select>
 
-								<div ng-show="savageCharacter.selectedArcaneBackground.powers > 0">
-									<span translage="CHARGEN_POWERS_AVAILABLE">Available Powers</span>: {{savageCharacter.selectedArcaneBackground.powers}}
+								<div ng-show="savageCharacter.totalPowersKnown > 0">
+									<span translage="CHARGEN_POWERS_AVAILABLE">Available Powers</span>: {{savageCharacter.totalPowersKnown}}
 								</div>
 
 								<div ng-show="savageCharacter.selectedPowers.length > 0">
@@ -43,9 +43,9 @@
 					<div class="column medium-7">
 						<fieldset class="fieldset">
 							<legend translate="CHARGEN_SELECTED_POWERS">Selected Powers</legend>
-							<div ng-hide="savageCharacter.selectedArcaneBackground.powers > 0" translate="CHARGEN_NO_POWERS_SELECTED">No powers selected</div>
-							<div ng-show="savageCharacter.selectedArcaneBackground.powers > 0">
-								<div ng-show="savageCharacter.selectedArcaneBackground.powers > savageCharacter.selectedPowers.length" class="text-right">
+							<div ng-hide="savageCharacter.totalPowersKnown > 0" translate="CHARGEN_NO_POWERS_SELECTED">No powers selected</div>
+							<div ng-show="savageCharacter.totalPowersKnown > 0">
+								<div ng-show="savageCharacter.totalPowersKnown > savageCharacter.selectedPowers.length" class="text-right">
 									<button class="button primary small" translate="CHARGEN_ADD_POWER" ng-click="newPowerDialog();">Add Power</button>
 								</div>
 

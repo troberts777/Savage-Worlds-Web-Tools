@@ -201,6 +201,7 @@ savageCharacter.prototype.init = function(useLang){
 
 	this.selectedPowers = Array();
 	this.powerPointsAvailable = 0;
+	this.totalPowersKnown = 0;
 
 	this.usesSanity = false;
 	this.usesGutsSkill = false;
@@ -1085,6 +1086,11 @@ savageCharacter.prototype.validate = function() {
 		this.powerPointsAvailable = this.selectedArcaneBackground.power_points;
 	}
 
+	if(  this.selectedArcaneBackground && this.selectedArcaneBackground.powers ) {
+		this.totalPowersKnown = this.selectedArcaneBackground.powers;
+	}
+
+
 
 	// for( lBookCounter = 0; lBookCounter.u)
 
@@ -1883,7 +1889,7 @@ savageCharacter.prototype.validate = function() {
 		vigor: getDiceValue( this.attributes.vigor + this.attributeBoost.vigor ),
 	};
 
-	
+
 	if( this.attributes.spirit + this.attributeBoost.spirit  <  this.attributes.vigor + this.attributeBoost.vigor  ) {
 		this.maxStrain = this.attributes.spirit + this.attributeBoost.spiri;
 	} else {
@@ -2608,7 +2614,7 @@ savageCharacter.prototype.importJSON = function( jsonString ) {
 					this.enableSettingRule( importObject.settingRules[importCounter] );
 				}
 			}
-			
+
 			this.validate();
 
 			for( attribute in this.attributes ) {

@@ -2728,6 +2728,7 @@ savageCharacter.prototype.init = function(useLang){
 
 	this.selectedPowers = Array();
 	this.powerPointsAvailable = 0;
+	this.totalPowersKnown = 0;
 
 	this.usesSanity = false;
 	this.usesGutsSkill = false;
@@ -3612,6 +3613,11 @@ savageCharacter.prototype.validate = function() {
 		this.powerPointsAvailable = this.selectedArcaneBackground.power_points;
 	}
 
+	if(  this.selectedArcaneBackground && this.selectedArcaneBackground.powers ) {
+		this.totalPowersKnown = this.selectedArcaneBackground.powers;
+	}
+
+
 
 	// for( lBookCounter = 0; lBookCounter.u)
 
@@ -4410,7 +4416,7 @@ savageCharacter.prototype.validate = function() {
 		vigor: getDiceValue( this.attributes.vigor + this.attributeBoost.vigor ),
 	};
 
-	
+
 	if( this.attributes.spirit + this.attributeBoost.spirit  <  this.attributes.vigor + this.attributeBoost.vigor  ) {
 		this.maxStrain = this.attributes.spirit + this.attributeBoost.spiri;
 	} else {
@@ -5135,7 +5141,7 @@ savageCharacter.prototype.importJSON = function( jsonString ) {
 					this.enableSettingRule( importObject.settingRules[importCounter] );
 				}
 			}
-			
+
 			this.validate();
 
 			for( attribute in this.attributes ) {
@@ -14591,8 +14597,6 @@ charEffects: function ( charObject ) {
 {
 	 name: {
 		 'en-US': 'New Power',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 	 required_edge: '',
 	 required_rank: 0,
@@ -14605,7 +14609,7 @@ charEffects: function ( charObject ) {
 	 book: 1,
 	 child: 0,
 charEffects: function ( charObject ) {
-			charObject.powers_available++;
+			charObject.totalPowersKnown++;
 		},
 requires: function( charObject) {
 if( charObject.usesSPCCreation == false) {
@@ -17022,6 +17026,20 @@ savageWorldsHindrances = Array(
 	 conflicts_hindrance: '',
 	 severity: '-',
 	 racial: 1,
+	 specify: 0,
+	 book: 1,
+
+},
+{
+	 name: {
+		 'en-US': 'All Thumbs',
+	},
+	 tag: 'all-thumbs',
+	 page: 'p28',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'minor',
+	 racial: 0,
 	 specify: 0,
 	 book: 1,
 
@@ -47830,6 +47848,7 @@ return 1000  * selectedObject.size;
 getModEffect: function(selectedObject) {
 selectedObject.ts -=  5;
 selectedObject.acc -=  2;
+selectedObject.mods += selectedObject.baseMods / 2;
 }
 },
 {

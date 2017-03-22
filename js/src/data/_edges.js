@@ -2214,8 +2214,6 @@ charEffects: function ( charObject ) {
 {
 	 name: {
 		 'en-US': 'New Power',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 	 required_edge: '',
 	 required_rank: 0,
@@ -2228,7 +2226,7 @@ charEffects: function ( charObject ) {
 	 book: 1,
 	 child: 0,
 charEffects: function ( charObject ) {
-			charObject.powers_available++;
+			charObject.totalPowersKnown++;
 		},
 requires: function( charObject) {
 if( charObject.usesSPCCreation == false) {

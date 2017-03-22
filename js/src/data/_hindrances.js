@@ -30,6 +30,20 @@ savageWorldsHindrances = Array(
 },
 {
 	 name: {
+		 'en-US': 'All Thumbs',
+	},
+	 tag: 'all-thumbs',
+	 page: 'p28',
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 severity: 'minor',
+	 racial: 0,
+	 specify: 0,
+	 book: 1,
+
+},
+{
+	 name: {
 		 'en-US': 'Anemic',
 	},
 	 tag: 'anemic-minor',
