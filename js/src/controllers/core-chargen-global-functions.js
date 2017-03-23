@@ -136,6 +136,94 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 
 	}
 
+
+	$rootScope.makePDF = function() {
+
+		console.log( "makePDF called");
+		chargenPDFObject = new chargenPDF( $rootScope.savageCharacter );
+
+		// if a cordova Application
+		document.addEventListener('deviceready', function () {
+			if( $rootScope.savageCharacter.name  != "" )
+				fileName = $rootScope.savageCharacter.name.toLowerCase().replace(" ", "-").replace("'", "").replace("\"", "") + ".SWT.pdf";
+			else
+				fileName = "Nameless.SWT.pdf";
+			if( $cordovaFile) {
+
+				if( localStorage["users_chargen_pdf_layout"] == "landscape")
+					chargenPDFObject.createBasicLandscapePDF();
+				else
+					chargenPDFObject.createBasicPortraitPDF();
+
+				var pdfOutput = chargenPDFObject.currentDoc.output();
+				if( cordova.file ) {
+					if( cordova.file.documentsDirectory )
+						saveDirectory = cordova.file.documentsDirectory; 	// iOS, OS/X, Probably Windows
+					else if( cordova.file.syncedDataDirectory )
+						saveDirectory = cordova.file.syncedDataDirectory;	// Possibly Windows
+					else
+						saveDirectory = cordova.file.externalDataDirectory;	// Android....
+
+
+					$cordovaFile.writeFile(saveDirectory, fileName, pdfOutput, true)
+					.then(function (success) {
+						// console.log( "Saved file successfully.");
+						console.log( "saveDirectory:" +  saveDirectory);
+						console.log( "fileName: " + fileName);
+						if( cordova.plugins && cordova.plugins.fileOpener2 ) {
+							try {
+								cordova.plugins.fileOpener2.open(
+								    saveDirectory + fileName,
+								    'application/pdf',
+								    {
+								        error : function(e) {
+								            console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
+											console.log( "Could not open file - no default PDF viewer?");
+											$scope.notificationDialog( "Your file has been saved at '" + saveDirectory.replace("file://", "") + fileName + "'");
+								        },
+								        success : function () {
+								          //  console.log('file opened successfully');
+								        }
+								    }
+								);
+							}
+							catch( e ) {
+					            console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
+								console.log( "Could not open file - no default PDF viewer?");
+								$scope.notificationDialog( "Your file has been saved at '" + saveDirectory.replace("file://", "") + fileName + "'");
+							}
+						} else {
+							console.log( "cordova.plugins.fileOpener2 was not found" );
+							$scope.notificationDialog( "Your file has been saved at '" + saveDirectory.replace("file://", "") + fileName + "'");
+						}
+					}, function (error) {
+					// error
+						console.log( "Could not save file.");
+						console.log( "saveDirectory:" +  saveDirectory);
+						console.log( "fileName: " + fileName);
+					});
+				} else {
+					console.log( "ERROR: cordova.file is not defined!!");
+				}
+			}
+
+
+		});
+
+		// if just a standard browser
+		if( !$cordovaFile) {
+			if( localStorage["users_chargen_pdf_layout"] == "landscape")
+				chargenPDFObject.createBasicLandscapePDF();
+			else
+				chargenPDFObject.createBasicPortraitPDF();
+			chargenPDFObject.currentDoc.output('dataurlnewwindow');
+			//chargenPDFObject.currentDoc.output('save', $rootScope.savageCharacter.name + '.pdf');
+		}
+
+		console.log( "makePDF ended");
+	}
+
+
 	$rootScope.saveItem = function( save_over, saveName ) {
 
 		if( !localStorage[ savedItemsLocalStorageVariable ])

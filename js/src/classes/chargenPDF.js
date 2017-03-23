@@ -47,7 +47,7 @@ chargenPDF.prototype.createBasicLandscapePDF = function () {
 	this.currentDoc.text(20, 15, "Savage Worlds Character Sheet");
 	this.currentDoc.setFontSize(12);
 	this.currentDoc.setFontStyle("bold");
-	this.currentDoc.text(5, 30, "Character Name: " + this.currentCharacter.name );
+	this.currentDoc.text(5, 30, "Character Name: " + this.currentCharacter.getName() );
 	this.currentDoc.setFontStyle("normal");
 	this.currentDoc.lines([[0,0],[105,0]], 40, 31);
 
@@ -57,12 +57,12 @@ chargenPDF.prototype.createBasicLandscapePDF = function () {
 	this.currentDoc.lines([[0,0],[110,0]], 35, 41);
 
 	this.currentDoc.setFontStyle("bold");
-	this.currentDoc.text(5, 45, "Race: " + this.currentCharacter.race.local_name );
+	this.currentDoc.text(5, 45, "Race: " + this.currentCharacter.getRace().local_name );
 	this.currentDoc.setFontStyle("normal");
 	this.currentDoc.lines([[0,0],[75,0]], 17, 46);
 
 	this.currentDoc.setFontStyle("bold");
-	this.currentDoc.text(98, 45, "Gender: " + this.currentCharacter.gender.label);
+	this.currentDoc.text(98, 45, "Gender: " + this.currentCharacter.getGender().label);
 	this.currentDoc.setFontStyle("normal");
 	this.currentDoc.lines([[0,0],[30,0]], 115, 46);
 
@@ -83,7 +83,7 @@ chargenPDF.prototype.createBasicLandscapePDF = function () {
 
 
 	if( this.currentCharacter.usesSPCCreation ) {
-		console.log( this.currentCharacter );
+		//~ console.log( this.currentCharacter );
 		this.currentDoc.addPage();
 
 		this.currentDoc.lines([[0,0],[0,195]], 150, 5);
@@ -95,14 +95,14 @@ chargenPDF.prototype.createBasicLandscapePDF = function () {
 		this.currentDoc.text(20, 15, "Savage Worlds Character Sheet");
 		this.currentDoc.setFontSize(12);
 		this.currentDoc.setFontStyle("bold");
-		this.currentDoc.text(15, 21, "Super Powers of " + this.currentCharacter.name );
+		this.currentDoc.text(15, 21, "Super Powers of " + this.currentCharacter.getName() );
 		this.currentDoc.setFontStyle("normal");
 		if( this.currentCharacter.SPCRisingStars )
-			this.currentDoc.text(15, 26,  "• " + "Power Level " + this.currentCharacter.SPCPowerLevels[ this.currentCharacter.SPCSelectedPowerLevel / 1].name + " (Rising Stars)" );
+			this.currentDoc.text(15, 26,  "• " + "Power Level " + this.currentCharacter.getSPCPowerLevels()[ this.currentCharacter.getSPCSelectedPowerLevel() / 1].name + " (Rising Stars)" );
 		else
-			this.currentDoc.text(15, 26,  "• " + "Power Level " + this.currentCharacter.SPCPowerLevels[ this.currentCharacter.SPCSelectedPowerLevel / 1].name );
+			this.currentDoc.text(15, 26,  "• " + "Power Level " + this.currentCharacter.getSPCPowerLevels()[ this.currentCharacter.getSPCSelectedPowerLevel() / 1].name );
 
-		this.currentDoc.text(15, 31,  "• " + "Available Points/Total Points: " + this.currentCharacter.SPCCurrentPowerPoints + " / " + this.currentCharacter.SPCStartingPowerPoints );
+		this.currentDoc.text(15, 31,  "• " + "Available Points/Total Points: " + this.currentCharacter.getSPCCurrentPowerPoints() + " / " + this.currentCharacter.getSPCStartingPowerPoints() );
 		//this.currentDoc.lines([[0,0],[105,0]], 40, 31);
 
 
@@ -111,9 +111,9 @@ chargenPDF.prototype.createBasicLandscapePDF = function () {
 		columnPoint = 10;
 
 
-		for( var powerCounter = 0; powerCounter < this.currentCharacter.selectedSPCPowers.length; powerCounter++) {
+		for( var powerCounter = 0; powerCounter < this.currentCharacter.getSelectedSPCPowers().length; powerCounter++) {
 			this.currentDoc.setFontSize(13);
-			currentPower = this.currentCharacter.selectedSPCPowers[powerCounter];
+			currentPower = this.currentCharacter.getSelectedSPCPowers()[powerCounter];
 			this.currentDoc.setFontStyle("bold");
 			//console.log( currentPower );
 			lineNumber += 4;
@@ -236,7 +236,7 @@ chargenPDF.prototype.createBasicPortraitPDF = function () {
 	this.currentDoc.lines([[0,0],[130,0]], 35, 41);
 
 	this.currentDoc.setFontStyle("bold");
-	this.currentDoc.text(5, 45, "Race: " + this.currentCharacter.race.local_name );
+	this.currentDoc.text(5, 45, "Race: " + this.currentCharacter.getRace().local_name );
 	this.currentDoc.setFontStyle("normal");
 	this.currentDoc.lines([[0,0],[95,0]], 17, 46);
 
@@ -273,9 +273,9 @@ chargenPDF.prototype.createBasicPortraitPDF = function () {
 		this.currentDoc.text(15, 21, "Super Powers of " + this.currentCharacter.name );
 		this.currentDoc.setFontStyle("normal");
 		if( this.currentCharacter.SPCRisingStars )
-			this.currentDoc.text(15, 26,  "• " + "Power Level " + this.currentCharacter.SPCPowerLevels[ this.currentCharacter.SPCSelectedPowerLevel / 1].name + " (Rising Stars)" );
+			this.currentDoc.text(15, 26,  "• " + "Power Level " + this.currentCharacter.SPCPowerLevels[ this.currentCharacter.getSPCSelectedPowerLevel() / 1].name + " (Rising Stars)" );
 		else
-			this.currentDoc.text(15, 26,  "• " + "Power Level " + this.currentCharacter.SPCPowerLevels[ this.currentCharacter.SPCSelectedPowerLevel / 1].name );
+			this.currentDoc.text(15, 26,  "• " + "Power Level " + this.currentCharacter.SPCPowerLevels[ this.currentCharacter.getSPCSelectedPowerLevel() / 1].name );
 
 		this.currentDoc.text(15, 31,  "• " + "Available Points/Total Points: " + this.currentCharacter.SPCCurrentPowerPoints + " / " + this.currentCharacter.SPCStartingPowerPoints );
 		//this.currentDoc.lines([[0,0],[105,0]], 40, 31);
@@ -286,9 +286,9 @@ chargenPDF.prototype.createBasicPortraitPDF = function () {
 		columnPoint = 10;
 
 
-		for( var powerCounter = 0; powerCounter < this.currentCharacter.selectedSPCPowers.length; powerCounter++) {
+		for( var powerCounter = 0; powerCounter < this.currentCharacter.getSelectedSPCPowers().length; powerCounter++) {
 			this.currentDoc.setFontSize(13);
-			currentPower = this.currentCharacter.selectedSPCPowers[powerCounter];
+			currentPower = this.currentCharacter.getSelectedSPCPowers()[powerCounter];
 			this.currentDoc.setFontStyle("bold");
 			//console.log( currentPower );
 			lineNumber += 4;
@@ -433,10 +433,10 @@ chargenPDF.prototype.createDerivedStatsTable = function( left, top, height, widt
 	this.currentDoc.rect(left, top, height, width);
 	this.currentDoc.setFontSize(smallFontSize);
 	this.currentDoc.setFontStyle("bold");
-	this.currentDoc.text(left + 1, top+5, "Pace: " + this.currentCharacter.derived.pace);
-	this.currentDoc.text(left + 1, top+10, "Parry: " + this.currentCharacter.derived.parry);
-	this.currentDoc.text(left + 1, top+15, "Toughness: " + this.currentCharacter.derived.toughnessAndArmor);
-	this.currentDoc.text(left + 1, top+20, "Charisma: " + this.currentCharacter.derived.charisma);
+	this.currentDoc.text(left + 1, top+5, "Pace: " + this.currentCharacter.getDerived().pace);
+	this.currentDoc.text(left + 1, top+10, "Parry: " + this.currentCharacter.getDerived().parry);
+	this.currentDoc.text(left + 1, top+15, "Toughness: " + this.currentCharacter.getDerived().toughnessAndArmor);
+	this.currentDoc.text(left + 1, top+20, "Charisma: " + this.currentCharacter.getDerived().charisma);
 
 	this.currentDoc.text(left + 1, top+32, "Current / Combat Load");
 	this.currentDoc.setFontStyle("normal");
@@ -445,11 +445,11 @@ chargenPDF.prototype.createDerivedStatsTable = function( left, top, height, widt
 		left + 1,
 		top+36,
 
-		this.currentCharacter.currentLoad + " (" + this.currentCharacter.loadModifier + ")"
+		this.currentCharacter.getCurrentLoad() + " (" + this.currentCharacter.getCurrentLoadModifier() + ")"
 
 		+ " / " +
 
-		this.currentCharacter.combatLoad + " (" + this.currentCharacter.combatLoadModifier + ")"
+		this.currentCharacter.getCombatLoad() + " (" + this.currentCharacter.getCombatLoadModifier() + ")"
 
 	);
 	this.currentDoc.setFontSize(10);
@@ -492,8 +492,8 @@ chargenPDF.prototype.createAdvancementTrack = function( left, top, width, smallF
 		advLineLocation += advLineHeight;
 		current_xp = adv_slot * 5;
 
-		if(this.currentCharacter.selectedAdvancements[adv_slot - 1])
-			selectedAdvancement = this.currentCharacter.selectedAdvancements[adv_slot - 1];
+		if(this.currentCharacter.getSelectedAdvancements()[adv_slot - 1])
+			selectedAdvancement = this.currentCharacter.getSelectedAdvancements()[adv_slot - 1];
 		else
 			selectedAdvancement = null;
 
@@ -562,27 +562,27 @@ chargenPDF.prototype.createAttributesAndSkillsTable = function( skillcols, left,
 	// this.currentDoc.rect(5,50,200,80);
 	this.currentDoc.rect(left, top, height, width);
 	this.currentDoc.setFontStyle("bold");
-	this.currentDoc.text(skillcols[0], top+5, "Agility: " + getDiceValue( this.currentCharacter.displayAttributes.agility.id, this.useLang).local_label );
-	this.currentDoc.text(skillcols[1], top+5, "Smarts: " + getDiceValue( this.currentCharacter.displayAttributes.smarts.id, this.useLang).local_label );
-	this.currentDoc.text(skillcols[2], top+5, "Spirit: " + getDiceValue( this.currentCharacter.displayAttributes.spirit.id, this.useLang).local_label );
-	this.currentDoc.text(skillcols[3], top+5, "Strength: " + getDiceValue( this.currentCharacter.displayAttributes.strength.id, this.useLang).local_label );
-	this.currentDoc.text(skillcols[4], top+5, "Vigor: " + getDiceValue( this.currentCharacter.displayAttributes.vigor.id, this.useLang).local_label );
+	this.currentDoc.text(skillcols[0], top+5, "Agility: " + getDiceValue( this.currentCharacter.getAttributeDisplayValues().agility.id, this.useLang).local_label );
+	this.currentDoc.text(skillcols[1], top+5, "Smarts: " + getDiceValue( this.currentCharacter.getAttributeDisplayValues().smarts.id, this.useLang).local_label );
+	this.currentDoc.text(skillcols[2], top+5, "Spirit: " + getDiceValue( this.currentCharacter.getAttributeDisplayValues().spirit.id, this.useLang).local_label );
+	this.currentDoc.text(skillcols[3], top+5, "Strength: " + getDiceValue( this.currentCharacter.getAttributeDisplayValues().strength.id, this.useLang).local_label );
+	this.currentDoc.text(skillcols[4], top+5, "Vigor: " + getDiceValue( this.currentCharacter.getAttributeDisplayValues().vigor.id, this.useLang).local_label );
 
 	// Agility Skills
 
 	this.currentDoc.setFontSize(smallFontSize);
 	this.currentDoc.setFontStyle("normal");
 	currentSkillCount = 0;
-	for(skill_counter = 0; skill_counter < this.currentCharacter.skillList.length; skill_counter++) {
-		if(this.currentCharacter.skillList[skill_counter].attribute == "agility") {
+	for(skill_counter = 0; skill_counter < this.currentCharacter.getSkillList().length; skill_counter++) {
+		if(this.currentCharacter.getSkillList()[skill_counter].attribute == "agility") {
 
-			currentSkill = this.currentCharacter.skillList[skill_counter];
+			currentSkill = this.currentCharacter.getSkillList()[skill_counter];
 			//console.log("currentSkill", currentSkill);
 			//console.log( currentSkill.local_name, currentSkill.id + currentSkill.boost);
 			if( currentSkill.value > 0 )
 				this.currentDoc.text(skillcols[0], top+13+currentSkillCount * skill_line_height, currentSkill.local_name + ": " + currentSkill.displayValue );
 			else
-				this.currentDoc.text(skillcols[0], top+13+currentSkillCount * skill_line_height, this.currentCharacter.skillList[skill_counter].local_name + ": -");
+				this.currentDoc.text(skillcols[0], top+13+currentSkillCount * skill_line_height, this.currentCharacter.getSkillList()[skill_counter].local_name + ": -");
 			currentSkillCount++;
 		}
 	}
@@ -593,22 +593,22 @@ chargenPDF.prototype.createAttributesAndSkillsTable = function( skillcols, left,
 	currentSkillCount = 0;
 	if( this.currentCharacter.arcane_background_selected && this.currentCharacter.arcane_background_selected.skill) {
 
-		currentSkill = this.currentCharacter.skillList[skill_counter];
+		currentSkill = this.currentCharacter.getSkillList()[skill_counter];
 		if( currentSkill )
 			this.currentDoc.text(skillcols[1], top+13+currentSkillCount * skill_line_height, currentSkill.local_name + ": " + currentSkill.displayValue );
 		else
-			this.currentDoc.text(skillcols[1], top+13+currentSkillCount * skill_line_height, this.currentCharacter.skillList[skill_counter].local_name + ": -");
+			this.currentDoc.text(skillcols[1], top+13+currentSkillCount * skill_line_height, this.currentCharacter.getSkillList()[skill_counter].local_name + ": -");
 		currentSkillCount++;
 	}
 
-	for(skill_counter = 0; skill_counter < this.currentCharacter.skillList.length; skill_counter++) {
-		if(this.currentCharacter.skillList[skill_counter].attribute == "smarts") {
+	for(skill_counter = 0; skill_counter < this.currentCharacter.getSkillList().length; skill_counter++) {
+		if(this.currentCharacter.getSkillList()[skill_counter].attribute == "smarts") {
 			if(
-				this.currentCharacter.skillList[skill_counter].showSkill
+				this.currentCharacter.getSkillList()[skill_counter].showSkill
 			) {
 
-				if( this.currentCharacter.skillList[skill_counter].specialties && this.currentCharacter.skillList[skill_counter].specialties.length > 0) {
-					currentSkill = this.currentCharacter.skillList[skill_counter];
+				if( this.currentCharacter.getSkillList()[skill_counter].specialties && this.currentCharacter.getSkillList()[skill_counter].specialties.length > 0) {
+					currentSkill = this.currentCharacter.getSkillList()[skill_counter];
 					for( specialtyCounter = 0; specialtyCounter < currentSkill.specialties.length; specialtyCounter++) {
 						currentSpecialtySkill = currentSkill.specialties[specialtyCounter];
 						//this.currentDoc.text(skillcols[1], 63+currentSkillCount * skill_line_height, currentSkill.local_name + ": " + getDiceValue( currentSkill.value + currentSkill.boost ) );
@@ -617,12 +617,12 @@ chargenPDF.prototype.createAttributesAndSkillsTable = function( skillcols, left,
 						currentSkillCount++;
 					}
 				} else {
-					currentSkill = this.currentCharacter.skillList[skill_counter];
+					currentSkill = this.currentCharacter.getSkillList()[skill_counter];
 					if( currentSkill > 0 ) {
 						// this.currentDoc.text(skillcols[1], 63+currentSkillCount * skill_line_height, currentSkill.local_name[0] + currentSkill.local_name[1] +  currentSkill.local_name[2] + " (" + currentSkill.specify_text + "): " + getDiceValue( currentSkill.value + currentSkill.boost ) );
 						this.currentDoc.text(skillcols[1], top+13+currentSkillCount * skill_line_height, currentSkill.local_name + ": " + currentSkill.displayValue );
 					} else {
-						this.currentDoc.text(skillcols[1], top+13+currentSkillCount * skill_line_height, this.currentCharacter.skillList[skill_counter].local_name + ": -");
+						this.currentDoc.text(skillcols[1], top+13+currentSkillCount * skill_line_height, this.currentCharacter.getSkillList()[skill_counter].local_name + ": -");
 					}
 					currentSkillCount++;
 				}
@@ -635,16 +635,16 @@ chargenPDF.prototype.createAttributesAndSkillsTable = function( skillcols, left,
 	this.currentDoc.setFontSize(smallFontSize);
 	this.currentDoc.setFontStyle("normal");
 	currentSkillCount = 0;
-	for(skill_counter = 0; skill_counter < this.currentCharacter.skillList.length; skill_counter++) {
+	for(skill_counter = 0; skill_counter < this.currentCharacter.getSkillList().length; skill_counter++) {
 		if(
-			this.currentCharacter.skillList[skill_counter].showSkill
+			this.currentCharacter.getSkillList()[skill_counter].showSkill
 		) {
-			if(this.currentCharacter.skillList[skill_counter].attribute == "spirit") {
-				currentSkill = this.currentCharacter.skillList[skill_counter];
+			if(this.currentCharacter.getSkillList()[skill_counter].attribute == "spirit") {
+				currentSkill = this.currentCharacter.getSkillList()[skill_counter];
 				if( currentSkill > 0 )
 					this.currentDoc.text(skillcols[2], top+13+currentSkillCount * skill_line_height, currentSkill.local_name + ": " + currentSkill.displayValue );
 				else
-					this.currentDoc.text(skillcols[2], top+13+currentSkillCount * skill_line_height, this.currentCharacter.skillList[skill_counter].local_name + ": -");
+					this.currentDoc.text(skillcols[2], top+13+currentSkillCount * skill_line_height, this.currentCharacter.getSkillList()[skill_counter].local_name + ": -");
 				currentSkillCount++;
 			}
 		}
@@ -654,13 +654,13 @@ chargenPDF.prototype.createAttributesAndSkillsTable = function( skillcols, left,
 	this.currentDoc.setFontSize(smallFontSize);
 	this.currentDoc.setFontStyle("normal");
 	currentSkillCount = 0;
-	for(skill_counter = 0; skill_counter < this.currentCharacter.skillList.length; skill_counter++) {
-		if(this.currentCharacter.skillList[skill_counter].attribute == "strength") {
-			currentSkill = this.currentCharacter.skillList[skill_counter];
+	for(skill_counter = 0; skill_counter < this.currentCharacter.getSkillList().length; skill_counter++) {
+		if(this.currentCharacter.getSkillList()[skill_counter].attribute == "strength") {
+			currentSkill = this.currentCharacter.getSkillList()[skill_counter];
 			if( currentSkill > 0 )
 				this.currentDoc.text(skillcols[3], top+13+currentSkillCount * skill_line_height, currentSkill.local_name + ": " + currentSkill.displayValue );
 			else
-				this.currentDoc.text(skillcols[3], top+13+currentSkillCount * skill_line_height, this.currentCharacter.skillList[skill_counter].local_name + ": -");
+				this.currentDoc.text(skillcols[3], top+13+currentSkillCount * skill_line_height, this.currentCharacter.getSkillList()[skill_counter].local_name + ": -");
 			currentSkillCount++;
 		}
 	}
@@ -692,10 +692,10 @@ chargenPDF.prototype.createWeaponTable = function( label, cols, left, top, numli
 	this.currentDoc.text(cols[6], top + 10, "Shots");
 	this.currentDoc.setFontStyle("normal");
 
-	currentWeapons = this.currentCharacter.selectedHandWeapons;
-	currentWeapons = currentWeapons.concat(this.currentCharacter.selectedRangedWeapons);
+	currentWeapons = this.currentCharacter.getSelectedHandWeapons();
+	currentWeapons = currentWeapons.concat(this.currentCharacter.getSelectedRangedWeapons());
 	for(w_counter = 0; w_counter < numlines; w_counter++) {
-		console.log( currentWeapons[w_counter] );
+		//~ console.log( currentWeapons[w_counter] );
 		if(currentWeapons[w_counter]) {
 			if(currentWeapons[w_counter].name ) {
 				if( currentWeapons[w_counter].readiedLocation )
@@ -753,7 +753,7 @@ chargenPDF.prototype.createEquipmentTable = function(label, left, top, width, he
 	this.currentDoc.setFontStyle("normal");
 	this.currentDoc.setFontSize(10);
 
-	current_equipment = this.currentCharacter.selectedMundaneGear;
+	current_equipment = this.currentCharacter.getSelectedMundaneGear();
 	var droppedInCombatFootnote = "";
 	var currentLine = 0;
 	for(e_counter = 0; e_counter < 9; e_counter++) {
@@ -798,18 +798,18 @@ chargenPDF.prototype.createHindrancesTable = function(label, left, top, width, h
 	this.currentDoc.text(left + 5, top + 5, label);
 	this.currentDoc.setFontStyle("normal");
 	this.currentDoc.setFontSize(smallFontSize);
-	for(hind_counter = 0; hind_counter < this.currentCharacter.installedHindrances.length; hind_counter++) {
+	for(hind_counter = 0; hind_counter < this.currentCharacter.getInstalledHindrances().length; hind_counter++) {
 		majorMinor = "";
-		if( this.currentCharacter.installedHindrances[hind_counter].severity == "major")
+		if( this.currentCharacter.getInstalledHindrances()[hind_counter].severity == "major")
 			majorMinor = "major, ";
-		if( this.currentCharacter.installedHindrances[hind_counter].severity == "minor")
+		if( this.currentCharacter.getInstalledHindrances()[hind_counter].severity == "minor")
 			majorMinor = "minor, ";
-		if( this.currentCharacter.installedHindrances[hind_counter].racial > 0)
+		if( this.currentCharacter.getInstalledHindrances()[hind_counter].racial > 0)
 			majorMinor = "racial, ";
-		if(this.currentCharacter.installedHindrances[hind_counter].specify_text && this.currentCharacter.installedHindrances[hind_counter].specifyField != "")
-			this.currentDoc.text(left + 5, top + 10 + hind_counter * Math.floor(smallFontSize / 2) -1 , this.currentCharacter.installedHindrances[hind_counter].local_name + ": " + this.currentCharacter.installedHindrances[hind_counter].specifyField + " (" + majorMinor + this.currentCharacter.installedHindrances[hind_counter].bookObj.abbrev + " " + this.currentCharacter.installedHindrances[hind_counter].page + ")" );
+		if(this.currentCharacter.getInstalledHindrances()[hind_counter].specify_text && this.currentCharacter.getInstalledHindrances()[hind_counter].specifyField != "")
+			this.currentDoc.text(left + 5, top + 10 + hind_counter * Math.floor(smallFontSize / 2) -1 , this.currentCharacter.getInstalledHindrances()[hind_counter].local_name + ": " + this.currentCharacter.getInstalledHindrances()[hind_counter].specifyField + " (" + majorMinor + this.currentCharacter.getInstalledHindrances()[hind_counter].bookObj.abbrev + " " + this.currentCharacter.getInstalledHindrances()[hind_counter].page + ")" );
 		else
-			this.currentDoc.text(left + 5, top + 10 + hind_counter * Math.floor(smallFontSize / 2) -1 , this.currentCharacter.installedHindrances[hind_counter].local_name + " (" + majorMinor + this.currentCharacter.installedHindrances[hind_counter].bookObj.abbrev + " " + this.currentCharacter.installedHindrances[hind_counter].page + ")" );
+			this.currentDoc.text(left + 5, top + 10 + hind_counter * Math.floor(smallFontSize / 2) -1 , this.currentCharacter.getInstalledHindrances()[hind_counter].local_name + " (" + majorMinor + this.currentCharacter.getInstalledHindrances()[hind_counter].bookObj.abbrev + " " + this.currentCharacter.getInstalledHindrances()[hind_counter].page + ")" );
 	}
 	this.currentDoc.setFontSize(10);
 }
@@ -823,18 +823,18 @@ chargenPDF.prototype.createEdgesTable = function(label, left, top, width, height
 	this.currentDoc.text(left + 5, top + 5, label);
 	this.currentDoc.setFontStyle("normal");
 	this.currentDoc.setFontSize(smallFontSize);
-	if( this.currentCharacter.race.edges ) {
+	if( this.currentCharacter.getRace().edges ) {
 	}
-	for(edge_counter = 0; edge_counter < this.currentCharacter.installedEdges.length; edge_counter++) {
+	for(edge_counter = 0; edge_counter < this.currentCharacter.getInstalledEdges().length; edge_counter++) {
 		majorMinor = "";
 
-		if( this.currentCharacter.installedEdges[edge_counter].racial > 0)
+		if( this.currentCharacter.getInstalledEdges()[edge_counter].racial > 0)
 			majorMinor = "racial, ";
 
-		if(this.currentCharacter.installedEdges[edge_counter].specify_text && this.currentCharacter.installedEdges[edge_counter].specifyField != "")
-			this.currentDoc.text(left + 5, top + 10 + edge_counter * Math.floor(smallFontSize / 2) -1 , this.currentCharacter.installedEdges[edge_counter].local_name + ": " + this.currentCharacter.installedEdges[edge_counter].specifyField + " (" + majorMinor + this.currentCharacter.installedEdges[edge_counter].bookObj.abbrev + " " + this.currentCharacter.installedEdges[edge_counter].page + ")" );
+		if(this.currentCharacter.getInstalledEdges()[edge_counter].specify_text && this.currentCharacter.getInstalledEdges()[edge_counter].specifyField != "")
+			this.currentDoc.text(left + 5, top + 10 + edge_counter * Math.floor(smallFontSize / 2) -1 , this.currentCharacter.getInstalledEdges()[edge_counter].local_name + ": " + this.currentCharacter.getInstalledEdges()[edge_counter].specifyField + " (" + majorMinor + this.currentCharacter.getInstalledEdges()[edge_counter].bookObj.abbrev + " " + this.currentCharacter.getInstalledEdges()[edge_counter].page + ")" );
 		else
-			this.currentDoc.text(left + 5, top + 10 + edge_counter * Math.floor(smallFontSize / 2) -1 , this.currentCharacter.installedEdges[edge_counter].local_name + " (" + majorMinor + this.currentCharacter.installedEdges[edge_counter].bookObj.abbrev + " " + this.currentCharacter.installedEdges[edge_counter].page + ")" );
+			this.currentDoc.text(left + 5, top + 10 + edge_counter * Math.floor(smallFontSize / 2) -1 , this.currentCharacter.getInstalledEdges()[edge_counter].local_name + " (" + majorMinor + this.currentCharacter.getInstalledEdges()[edge_counter].bookObj.abbrev + " " + this.currentCharacter.getInstalledEdges()[edge_counter].page + ")" );
 	}
 	this.currentDoc.setFontSize(10);
 }
@@ -845,48 +845,48 @@ chargenPDF.prototype.createPowersTable = function(label, left, top, width, heigh
 	if(!smallFontSize)
 		smallFontSize = 7;
 
-	if( this.currentCharacter.hasArcaneBackground ) {
+	if( this.currentCharacter.hasArcaneBackground() ) {
 		this.currentDoc.rect(left, top ,width, height);
 		this.currentDoc.setFontStyle("bold");
 		this.currentDoc.setFontSize(14);
 
-		this.currentDoc.text(left + 1, top + 5, this.currentCharacter.selectedArcaneBackground.local_name + " - " + this.currentCharacter.powerPointsAvailable + " power points");
+		this.currentDoc.text(left + 1, top + 5, this.currentCharacter.getSelectedArcaneBackground().local_name + " - " + this.currentCharacter.getPowerPointsAvailable() + " power points");
 		this.currentDoc.setFontStyle("normal");
 		this.currentDoc.setFontSize(10);
 		current_location = top + 5;
-		for(p_counter = 0; p_counter < this.currentCharacter.selectedPowers.length; p_counter++) {
+		for(p_counter = 0; p_counter < this.currentCharacter.getSelectedPowers().length; p_counter++) {
 			current_location += 5;
-			if( this.currentCharacter.selectedPowers[p_counter].customName != "") {
-				power_name = this.currentCharacter.selectedPowers[p_counter].customName + " (" + this.currentCharacter.selectedPowers[p_counter].local_name;
-				if( this.currentCharacter.selectedPowers[p_counter].trapping.local_name != "" )
-					power_name += ", " + this.currentCharacter.selectedPowers[p_counter].trapping.local_name  + ")";
+			if( this.currentCharacter.getSelectedPowers()[p_counter].customName != "") {
+				power_name = this.currentCharacter.getSelectedPowers()[p_counter].customName + " (" + this.currentCharacter.getSelectedPowers()[p_counter].local_name;
+				if( this.currentCharacter.getSelectedPowers()[p_counter].trapping.local_name != "" )
+					power_name += ", " + this.currentCharacter.getSelectedPowers()[p_counter].trapping.local_name  + ")";
 				else
 					power_name += ")";
 				this.currentDoc.text(left+1, current_location , power_name );
 			} else {
-				if( this.currentCharacter.selectedPowers[p_counter].trapping != "" ) {
-					this.currentDoc.text(left+1, current_location , this.currentCharacter.selectedPowers[p_counter].local_name + " (" + this.currentCharacter.selectedPowers[p_counter].trapping.local_name  + ")" );
+				if( this.currentCharacter.getSelectedPowers()[p_counter].trapping != "" ) {
+					this.currentDoc.text(left+1, current_location , this.currentCharacter.getSelectedPowers()[p_counter].local_name + " (" + this.currentCharacter.getSelectedPowers()[p_counter].trapping.local_name  + ")" );
 				} else {
-					this.currentDoc.text(left+1, current_location , this.currentCharacter.selectedPowers[p_counter].local_name );
+					this.currentDoc.text(left+1, current_location , this.currentCharacter.getSelectedPowers()[p_counter].local_name );
 				}
 			}
 
 			details_line = "";
 
-			if(this.currentCharacter.selectedPowers[p_counter].cost) {
-				details_line += "C:" + this.currentCharacter.selectedPowers[p_counter].cost + " | ";
+			if(this.currentCharacter.getSelectedPowers()[p_counter].cost) {
+				details_line += "C:" + this.currentCharacter.getSelectedPowers()[p_counter].cost + " | ";
 			}
-			if(this.currentCharacter.selectedPowers[p_counter].range) {
-				details_line += "R:" + this.currentCharacter.selectedPowers[p_counter].range + " | ";
+			if(this.currentCharacter.getSelectedPowers()[p_counter].range) {
+				details_line += "R:" + this.currentCharacter.getSelectedPowers()[p_counter].range + " | ";
 			}
-			if(this.currentCharacter.selectedPowers[p_counter].damage) {
-				details_line += "Dm:" + this.currentCharacter.selectedPowers[p_counter].damage + " | ";
+			if(this.currentCharacter.getSelectedPowers()[p_counter].damage) {
+				details_line += "Dm:" + this.currentCharacter.getSelectedPowers()[p_counter].damage + " | ";
 			}
-			if(this.currentCharacter.selectedPowers[p_counter].local_duration) {
-				details_line += "Du:" + this.currentCharacter.selectedPowers[p_counter].local_duration + " | ";
+			if(this.currentCharacter.getSelectedPowers()[p_counter].local_duration) {
+				details_line += "Du:" + this.currentCharacter.getSelectedPowers()[p_counter].local_duration + " | ";
 			}
-			if(this.currentCharacter.selectedPowers[p_counter].bookObj) {
-				details_line += this.currentCharacter.selectedPowers[p_counter].bookObj.abbrev + " " + this.currentCharacter.selectedPowers[p_counter].page;
+			if(this.currentCharacter.getSelectedPowers()[p_counter].bookObj) {
+				details_line += this.currentCharacter.getSelectedPowers()[p_counter].bookObj.abbrev + " " + this.currentCharacter.getSelectedPowers()[p_counter].page;
 			}
 
 			if(details_line != "") {
@@ -920,7 +920,7 @@ chargenPDF.prototype.createArmorTable = function(label, left, top, width, height
 	this.currentDoc.setFontSize(9);
 
 
-	currentArmor = this.currentCharacter.selectedArmor;
+	currentArmor = this.currentCharacter.getSelectedArmor();
 	a_counter_total = 0;
 	for(a_counter = 0; a_counter < currentArmor.length; a_counter++) {
 		if(currentArmor[a_counter]) {
@@ -943,7 +943,7 @@ chargenPDF.prototype.createArmorTable = function(label, left, top, width, height
 
 	}
 
-	currentShields = this.currentCharacter.selectedShields;
+	currentShields = this.currentCharacter.getSelectedShields();
 	for(b_counter = 0; b_counter < currentShields.length; b_counter++) {
 		if(currentShields[b_counter]) {
 			armor_line = "";

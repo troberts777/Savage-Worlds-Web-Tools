@@ -60,6 +60,7 @@ function savageCharacter (useLang) {
 	var _SPCPowerLevels = Array();
 	var _SPCPowerLimit = 0;
 	var _SPCSelectedPowerLevel = 0;
+	var _SPCStartingPowerPoints = 0;
 
 	var _selectedArmor = Array();
 	var _selectedMundaneGear = Array();
@@ -775,7 +776,7 @@ function savageCharacter (useLang) {
 				}
 			}
 
-			this.SPCStartingPowerPoints = _SPCCurrentPowerPoints;
+			_SPCStartingPowerPoints = _SPCCurrentPowerPoints;
 
 			for( var powerCounter = 0; powerCounter < _selectedSPCPowers.length; powerCounter++) {
 				_selectedSPCPowers[powerCounter].currentCost = _selectedSPCPowers[powerCounter].cost  / 1* _selectedSPCPowers[powerCounter].selectedLevel / 1;
@@ -1061,6 +1062,11 @@ function savageCharacter (useLang) {
 	this.getAllSkills = function() {
 		return _allSkills;
 	}
+
+	this.getSkillList = function() {
+		return _skillList;
+	}
+
 
 	this.getSelectedShields = function() {
 		return _selectedShields;
@@ -3611,6 +3617,10 @@ function savageCharacter (useLang) {
 
 	this.getSPCPowerLimit = function() {
 		return _SPCPowerLimit;
+	}
+
+	this.getSPCStartingPowerPoints = function() {
+		return _SPCStartingPowerPoints;
 	}
 
 	this.getSPCPowerLevels = function() {
