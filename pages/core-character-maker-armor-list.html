@@ -3,8 +3,6 @@
 	<div class="row">
 	  		<div class="small-12 columns">
 
-<!-- 				<fieldset class="fieldset"> -->
-
 
 					<h3 class="text-center" translate="CHARGEN_ADDING_ARMOR">Armor</h3>
 
@@ -12,7 +10,6 @@
 					<label><span translate="CHARGEN_FILTER_GEAR">Search for Gear</span>: <input type="text" class="inline-block input-tighter-padding" ng-model="gearSearch.local_name" />
 						<div class="inline-block item-added-message" ng-show="showAddedMessage" translate="CHARGEN_ITEM_ADDED_TO_INVENTORY"></div>
 					</label>
-				<!-- </fieldset> -->
 			</div>
 		</div>
 </div>
@@ -36,7 +33,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="gearItem in filteredArmor = ( savageCharacter.availableArmor | filter:gearSearch )">
+						<tr ng-repeat="gearItem in filteredArmor = ( savageCharacter.getAvailableArmor() | filter:gearSearch )">
 							<td>{{gearItem.local_name}}</td>
 							<td>${{gearItem.cost}}</td>
 							<td>{{gearItem.weight}}</td>
@@ -54,7 +51,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-repeat="gearItem in filteredShields = ( savageCharacter.availableShields | filter:gearSearch )">
+						<tr ng-repeat="gearItem in filteredShields = ( savageCharacter.getAvailableShields() | filter:gearSearch )">
 							<td>{{gearItem.local_name}}</td>
 							<td>${{gearItem.cost}}</td>
 							<td>{{gearItem.weight}}</td>

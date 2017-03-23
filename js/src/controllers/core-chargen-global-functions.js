@@ -5,7 +5,6 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 	var optionsLocalStorageVariable = "com.jdg.swwt2.options.chargen";
 	var itemType = "character";
 
-
 	$rootScope.validateAndSave = function() {
 		$rootScope.savageCharacter.validate();
 		localStorage[currentItemLocalStorageVariable] = $rootScope.savageCharacter.exportJSON();
@@ -45,8 +44,6 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 		);
 	}
 
-
-
 	$rootScope.closeConfirmDialog = function( ) {
 		$rootScope.showConfirmDialog = false;
 		// reset confirm to nothing...
@@ -67,7 +64,6 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 		$rootScope.showConfirmDialog = true;
 		$rootScope.confirmDialogYes = onYes;
 	}
-
 
 	$rootScope.newDialog = function() {
 
@@ -157,7 +153,6 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 		$rootScope.closeDialogs();
 	}
 
-
 	$rootScope.makeSaveObject = function( saveName ) {
 		save_object = {
 			name: saveName,
@@ -176,9 +171,7 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 		$rootScope.exportDialogOpen = true;
 	}
 
-
 };
-
 
 angular.module("webApp").run(
 	[

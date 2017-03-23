@@ -9,8 +9,6 @@
 <div ng-include="'pages/dialog-confirm.html'"></div>
 <div ng-include="'pages/dialog-notify.html'"></div>
 
-<!-- <div ng-include="'pages/chargen-dialog-gear-list.html'"></div> -->
-
 <div ng-include="'pages/chargen-status-bar.html'"></div>
 <div class="main-content">
 	<div class="row">
@@ -20,7 +18,7 @@
 				<legend translate="GENERAL_GEAR">Gear</legend>
 					<a class="button tiny radius expanded primary" ng-click="clearGearLog()" href="#/core/character-maker-gear-list" translate="CHARGEN_ADD_GEAR">Add Gear</a>
 
-					<div ng-show="savageCharacter.selectedMundaneGear.length > 0">
+					<div ng-show="savageCharacter.getSelectedMundaneGear().length > 0">
 						<table class="gear-list">
 							<thead>
 								<tr>
@@ -31,7 +29,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr class="no-bottom-border" ng-repeat-start="gearItem in savageCharacter.selectedMundaneGear">
+								<tr class="no-bottom-border" ng-repeat-start="gearItem in savageCharacter.getSelectedMundaneGear()">
 									<td>{{gearItem.local_name}}<span ng-show="gearItem.count > 1"> (x{{gearItem.count}})</span></td>
 									<td>
 										<div ng-show="gearItem.purchaseCost != gearItem.cost">
@@ -70,7 +68,6 @@
 			</div>
 
 		</div>
-
 
 	</div>
 	<div class="bottom-status-padding">&nbsp;</div>

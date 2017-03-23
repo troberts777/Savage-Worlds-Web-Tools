@@ -14,12 +14,14 @@ webApp = angular.module(
 			if( navigator.language )
 				users_preferred_language = navigator.language;
 
-			upl = users_preferred_language.split("-", 2);
-			if(upl[0] && upl[1]) {
-				users_preferred_language = upl[0] + "-" + upl[1].toUpperCase();
-			} else {
-					users_preferred_language = "en-US";
-			}
+			//~ upl = users_preferred_language.split("-", 2);
+			//~ if(upl[0] && upl[1]) {
+				//~ users_preferred_language = upl[0] + "-" + upl[1].toUpperCase();
+			//~ } else {
+					//~ users_preferred_language = "en-US";
+			//~ }
+
+			users_preferred_language = "en-US";
 
 			if( localStorage && localStorage["users_preferred_language"] ) {
 				users_preferred_language = localStorage["users_preferred_language"];
@@ -109,14 +111,14 @@ webApp = angular.module(
 			// route for the core character maker page Rifts® Iconic frameworks
 			.when('/core/character-maker-iconic-frameworks', {
 				templateUrl : 'pages/core-character-maker-iconic-frameworks.html',
-				controller  : 'coreChargenDELETEController',
+				controller  : 'controllerCoreChargenRifts',
 				activetab: 'chargen-iconic-frameworks'
 			})
 
 			// route for the core character maker page super power companion powers
 			.when('/core/character-maker-spc-powers', {
 				templateUrl : 'pages/core-character-maker-spc-powers.html',
-				controller  : 'coreChargenDELETEController',
+				controller  : 'controllerCoreChargenSPC',
 				activetab: 'chargen-spc-powers'
 			})
 
@@ -130,52 +132,51 @@ webApp = angular.module(
 			// route for the core character maker gear page
 			.when('/core/character-maker-gear', {
 				templateUrl : 'pages/core-character-maker-gear.html',
-				controller  : 'coreChargenDELETEController',
+				controller  : 'controllerCoreChargenGear',
 				activetab: 'chargen-gear'
 			})
 
-			// route for the core character maker weapons page
+			// route for the core character maker weapons page (ranged and hand)
 			.when('/core/character-maker-weapons', {
 				templateUrl : 'pages/core-character-maker-weapons.html',
-				controller  : 'coreChargenDELETEController',
+				controller  : 'controllerCoreChargenGear',
 				activetab: 'chargen-weapons'
 			})
 
 			// route for the core character maker armor page
 			.when('/core/character-maker-armor', {
 				templateUrl : 'pages/core-character-maker-armor.html',
-				controller  : 'coreChargenDELETEController',
+				controller  : 'controllerCoreChargenGear',
 				activetab: 'chargen-armor'
 			})
 
-			// route for the core character maker armor list page
+			// route for the core character maker armor page
 			.when('/core/character-maker-armor-list', {
 				templateUrl : 'pages/core-character-maker-armor-list.html',
-				controller  : 'coreChargenDELETEController',
+				controller  : 'controllerCoreChargenGear',
 				activetab: 'chargen-armor'
 			})
 
-			// route for the core character maker armor list page
+			// route for the core character maker gear list page
 			.when('/core/character-maker-gear-list', {
 				templateUrl : 'pages/core-character-maker-gear-list.html',
-				controller  : 'coreChargenDELETEController',
+				controller  : 'controllerCoreChargenGear',
 				activetab: 'chargen-gear'
 			})
 
-			// route for the core character maker armor list page
+			// route for the core character maker ranged weapons list page
 			.when('/core/character-maker-ranged-weapons-list', {
 				templateUrl : 'pages/core-character-maker-ranged-weapons-list.html',
-				controller  : 'coreChargenDELETEController',
+				controller  : 'controllerCoreChargenGear',
 				activetab: 'chargen-weapons'
 			})
 
-			// route for the core character maker armor list page
+			// route for the core character maker hand weapon list page
 			.when('/core/character-maker-hand-weapons-list', {
 				templateUrl : 'pages/core-character-maker-hand-weapons-list.html',
-				controller  : 'coreChargenDELETEController',
+				controller  : 'controllerCoreChargenGear',
 				activetab: 'chargen-weapons'
 			})
-
 
 			// route for the core character maker powers page
 			.when('/core/character-maker-powers', {
@@ -187,24 +188,24 @@ webApp = angular.module(
 			// route for the core character maker cyberware page
 			.when('/core/character-maker-cyberware', {
 				templateUrl : 'pages/core-character-maker-cyberware.html',
-				controller  : 'coreChargenDELETEController',
+				controller  : 'controllerCoreChargenCyberware',
 				activetab: 'chargen-cyberware'
 			})
 
 			// route for the core character maker advancements page
 			.when('/core/character-maker-advancements', {
 				templateUrl : 'pages/core-character-maker-advancements.html',
-				controller  : 'coreChargenDELETEController',
+				controller  : 'controllerCoreChargenAdvances',
 				activetab: 'chargen-advancements'
 			})
 
-			// route for the core mass batles page
+			// route for the core mass battles page
 			.when('/core/mass-battles', {
 				templateUrl : 'pages/core-mass-battles.html',
 				controller  : 'coreMassbattlesController'
 			})
 
-			// route for the core mass bartles page
+			// route for the core raise calc page
 			.when('/core/raise-calculator', {
 				templateUrl : 'pages/core-raise-calculator.html',
 				controller  : 'coreRaiseCalcController'

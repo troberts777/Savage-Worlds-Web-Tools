@@ -362,7 +362,7 @@ var raiseTrainerArray = 	[
 
 		$scope.calcCurrentQuestion = function(rollNum, targetNum) {
 			if( $scope.queryNumRaises ) {
-				if( rollNum >= $scope.testTargetNumber + 20) {
+				if( rollNum >= targetNum + 20) {
 					return "5raises";
 				} else if( rollNum >= targetNum + 16) {
 					return "4raises";
@@ -390,7 +390,7 @@ var raiseTrainerArray = 	[
 
 		$scope.calcCurrentQuestionName = function(rollNum, targetNum) {
 			if( $scope.queryNumRaises ) {
-				if( rollNum >= $scope.testTargetNumber + 20) {
+				if( rollNum >= targetNum + 20) {
 					return "success with 5+ raises";
 				} else if( rollNum >= targetNum + 16) {
 					return "succcess with 4 raises";

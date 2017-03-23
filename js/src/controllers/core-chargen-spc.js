@@ -1,4 +1,4 @@
-var coreChargenInfoFunctions = function ($timeout, $rootScope, $translate, $scope, $location, $route, $cordovaFile ) {
+var coreChargenSPCFunctions = function ($timeout, $rootScope, $translate, $scope, $location, $route, $cordovaFile ) {
 		$rootScope.showChargenMenu = true;
 		var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_chargen";
 		var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.chargen";
@@ -32,47 +32,64 @@ var coreChargenInfoFunctions = function ($timeout, $rootScope, $translate, $scop
 				$rootScope.savageCharacter.importJSON( localStorage[ currentItemLocalStorageVariable ] );
 			}
 
-			$scope.characterName = $rootScope.savageCharacter.getName();
-			$scope.characterDescripton = $rootScope.savageCharacter.getDescripton();
-			$scope.characterBackground = $rootScope.savageCharacter.getBackground();
+			$scope.SPCSelectedPowerLevel = $rootScope.savageCharacter.getSPCSelectedPowerLevel();
+			$scope.SPCPowerLevels = $rootScope.savageCharacter.getSPCPowerLevels();
+			$scope.SPCRisingStars = $rootScope.savageCharacter.getSPCRisingStars();
 
-			$scope.selectedGender = $rootScope.savageCharacter.getGender();
-			$scope.selectedRace = $rootScope.savageCharacter.getRace();
-
+			$scope.savageWorldsSPCPowers = savageWorldsSPCPowers;
+			$scope.selectedSPCPower = savageWorldsSPCPowers[0];
 		}
 
 		$scope.init();
 
-		$scope.updateName = function( newValue ) {
-			$rootScope.savageCharacter.setName( newValue );
-			$rootScope.justSave();
-		}
-
-		$scope.updateBackground = function( newValue ) {
-			$rootScope.savageCharacter.setBackground( newValue );
-			$rootScope.justSave();
-		}
-
-		$scope.updateDescription = function( newValue ) {
-			$rootScope.savageCharacter.setDescripton( newValue );
-			$rootScope.justSave();
-		}
-
-		$scope.updateRace = function( raceObj ) {
-			$rootScope.savageCharacter.setRace( raceObj.id );
+		$scope.setRisingStars = function(powerLevel) {
+			$rootScope.savageCharacter.setSPCRisingStars( powerLevel );
 			$rootScope.validateAndSave();
 		}
 
-		$scope.updateGender = function( genderObj ) {
-			$rootScope.savageCharacter.setGender( genderObj.id );
-			$rootScope.justSave();
+		$scope.setCampaignPowerLevel = function(powerLevel) {
+			$rootScope.savageCharacter.setSPCCampaignPowerLevel( powerLevel );
+			$rootScope.validateAndSave();
 		}
+
+		$scope.addSPCPower = function() {
+			$rootScope.savageCharacter.addSPCPower( $scope.selectedSPCPower.id );
+			$rootScope.validateAndSave();
+		}
+
+
+		$scope.incrementSPCPowerLevel = function( powerIndex ) {
+			$rootScope.savageCharacter.incrementSPCPowerLevel( powerIndex );
+
+			$rootScope.validateAndSave();
+			return;
+		}
+
+		$scope.decrementSPCPowerLevel = function( powerIndex ) {
+			$rootScope.savageCharacter.decrementSPCPowerLevel( powerIndex );
+			$rootScope.validateAndSave();
+			return;
+		}
+
+		$scope.removeSPCPower = function( powerIndex ) {
+			$rootScope.savageCharacter.getSelectedSPCPowers().splice( powerIndex, 1)
+			$rootScope.validateAndSave();
+		}
+
+
+		$scope.isAnArray = function(val){
+			if(  typeof(val) == "object" || typeof(val) == "object")
+			 	return true;
+			else {
+				return false;
+			}
+		};
 
 	}
 ;
 
 angular.module("webApp").controller(
-	"controllerCoreChargenInfo",
+	"controllerCoreChargenSPC",
 	[
 		'$timeout',
 		'$rootScope',
@@ -81,12 +98,12 @@ angular.module("webApp").controller(
 		'$location',
 		'$route',
 
-		coreChargenInfoFunctions
+		coreChargenSPCFunctions
 	]
 );
 
 angular.module("cordovaApp").controller(
-	"controllerCoreChargenInfo",
+	"controllerCoreChargenSPC",
 	[
 		'$timeout',
 		'$rootScope',
@@ -95,6 +112,6 @@ angular.module("cordovaApp").controller(
 		'$location',
 		'$route',
 		'$cordovaFile',
-		coreChargenInfoFunctions
+		coreChargenSPCFunctions
 	]
 );

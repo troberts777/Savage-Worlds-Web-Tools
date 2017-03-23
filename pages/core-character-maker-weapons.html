@@ -9,8 +9,6 @@
 <div ng-include="'pages/dialog-confirm.html'"></div>
 <div ng-include="'pages/dialog-notify.html'"></div>
 
-<!-- <div ng-include="'pages/chargen-dialog-hand-weapons-list.html'"></div>
-<div ng-include="'pages/chargen-dialog-ranged-weapons-list.html'"></div> -->
 
 <div ng-include="'pages/chargen-status-bar.html'"></div>
 <div class="main-content">
@@ -20,7 +18,7 @@
 			<fieldset class="fieldset">
 				<legend translate="CHARGEN_HAND_WEAPONS">Hand Weapons</legend>
 					<a class="button tiny radius expanded primary" href="#/core/character-maker-hand-weapons-list" ng-click="clearGearLog()" translate="CHARGEN_ADD_HAND_WEAPON">Add Hand Weapon</a>
-					<div ng-show="savageCharacter.selectedHandWeapons.length > 0">
+					<div ng-show="savageCharacter.getSelectedHandWeapons().length > 0">
 						<table class="gear-list">
 							<thead>
 									<tr>
@@ -32,7 +30,7 @@
 							</thead>
 							<tbody>
 
-								<tr class="no-bottom-border" ng-repeat-start="gearItem in savageCharacter.selectedHandWeapons">
+								<tr class="no-bottom-border" ng-repeat-start="gearItem in savageCharacter.getSelectedHandWeapons()">
 									<td>{{gearItem.local_name}}</td>
 									<td>
 										<div ng-show="gearItem.purchaseCost != gearItem.cost">
@@ -83,7 +81,7 @@
 				<fieldset class="fieldset">
 				<legend translate="CHARGEN_RANGED_WEAPONS">Ranged Weapons</legend>
 					<a class="button tiny radius expanded primary" href="#/core/character-maker-ranged-weapons-list" ng-click="clearGearLog()" translate="CHARGEN_ADD_RANGED_WEAPON">Add Ranged Weapon</a>
-					<div ng-show="savageCharacter.selectedRangedWeapons.length > 0">
+					<div ng-show="savageCharacter.getSelectedRangedWeapons().length > 0">
 						<table class="gear-list">
 							<thead>
 								<tr>
@@ -95,7 +93,7 @@
 							</thead>
 							<tbody>
 
-								<tr class="no-bottom-border" ng-repeat-start="gearItem in savageCharacter.selectedRangedWeapons">
+								<tr class="no-bottom-border" ng-repeat-start="gearItem in savageCharacter.getSelectedRangedWeapons()">
 									<td>{{gearItem.local_name}}</td>
 									<td>
 										<div ng-show="gearItem.purchaseCost != gearItem.cost">
@@ -145,7 +143,6 @@
 			</div>
 
 		</div>
-
 
 	</div>
 	<div class="bottom-status-padding">&nbsp;</div>

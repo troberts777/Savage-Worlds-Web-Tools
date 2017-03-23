@@ -30,7 +30,6 @@
 
 			  	<div class="small-12 medium-6 columns">
 
-
 			  		<label><span translate="GENERAL_RACE">Race</span>:
 			  			<select ng-options="raceItem as raceItem.local_name group by raceItem.bookObj.local_name for raceItem in savageCharacter.getRaceOptions() track by raceItem.id" ng-model="selectedRace" ng-change="updateRace(selectedRace)"></select>
 			  		</label>

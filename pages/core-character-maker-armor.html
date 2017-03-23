@@ -9,7 +9,6 @@
 <div ng-include="'pages/dialog-confirm.html'"></div>
 <div ng-include="'pages/dialog-notify.html'"></div>
 
-<!-- <div ng-include="'pages/chargen-dialog-armor-list.html'"></div> -->
 
 <div ng-include="'pages/chargen-status-bar.html'"></div>
 <div class="main-content">
@@ -19,7 +18,7 @@
 			<fieldset class="fieldset">
 				<legend translate="CHARGEN_ARMOR">Armor</legend>
 					<a class="button tiny radius expanded primary" ng-click="clearGearLog()" href="#/core/character-maker-armor-list" translate="CHARGEN_ADD_ARMOR">Add Armor</a>
-					<div ng-show="savageCharacter.selectedArmor.length > 0">
+					<div ng-show="savageCharacter.getSelectedArmor().length > 0">
 						<h4 translate="CHARGEN_ARMOR">Armor</h4>
 						<table class="gear-list">
 							<thead>
@@ -31,7 +30,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr class="no-bottom-border" ng-repeat-start="gearItem in savageCharacter.selectedArmor">
+								<tr class="no-bottom-border" ng-repeat-start="gearItem in savageCharacter.getSelectedArmor()">
 									<td>{{gearItem.local_name}}</td>
 									<td>
 										<div ng-show="gearItem.purchaseCost != gearItem.cost">
@@ -68,12 +67,11 @@
 									</td>
 								</tr>
 
-
 							</tbody>
 						</table>
 					</div>
 
-					<div ng-show="savageCharacter.selectedShields.length > 0">
+					<div ng-show="savageCharacter.getSelectedShields().length > 0">
 						<h4 translate="CHARGEN_SHIELDS">Shields</h4>
 						<table class="gear-list">
 							<thead>
@@ -86,7 +84,7 @@
 							</thead>
 							<tbody>
 
-								<tr class="no-bottom-border" ng-repeat-start="gearItem in savageCharacter.selectedShields">
+								<tr class="no-bottom-border" ng-repeat-start="gearItem in savageCharacter.getSelectedShields()">
 									<td>{{gearItem.local_name}}</td>
 									<td>
 										<div ng-show="gearItem.purchaseCost != gearItem.cost">
@@ -127,7 +125,6 @@
 			</div>
 
 		</div>
-
 
 	</div>
 	<div class="bottom-status-padding">&nbsp;</div>

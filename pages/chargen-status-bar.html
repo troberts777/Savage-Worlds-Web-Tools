@@ -11,9 +11,9 @@
 				<span translate="CHARGEN_STATUS_POWERS">Powers (used/availble)</span>: <span ng-bind="savageCharacter.getSelectedPowers().length"></span> / <span ng-bind="savageCharacter.getAvailableNumberOfPowers()"></span>
 			</span>
 
-			<span ng-show="savageCharacter.XP.value >= 5">
+			<span ng-show="savageCharacter.getXP().value >= 5">
 				<span class="separator">|</span>
-				<span translate="CHARGEN_STATUS_ADVANCEMENTS">Advancements (used/availble)</span>: <span ng-bind="savageCharacter.selectedAdvancements.length"></span> / <span ng-bind="savageCharacter.availableAdvancements"></span>
+				<span translate="CHARGEN_STATUS_ADVANCEMENTS">Advancements (used/availble)</span>: <span ng-bind="savageCharacter.getSelectedAvancements()"></span> / <span ng-bind="savageCharacter.getAvailableAdvancements()"></span>
 			</span>
 
 			<span class="separator">|</span>
@@ -22,7 +22,7 @@
 
 			<span ng-show="savageCharacter.usesSPCCreation()">
 				<span class="separator">|</span>
-				<span translate="CHARGEN_POWER_POINTS">Power Points</span>: <span ng-bind="savageCharacter.SPCCurrentPowerPoints"></span> / <span ng-bind="savageCharacter.SPCStartingPowerPoints"></span>
+				<span translate="CHARGEN_POWER_POINTS">Power Points</span>: <span ng-bind="savageCharacter.getSPCCurrentPowerPoints()"></span> / <span ng-bind="savageCharacter.SPCStartingPowerPoints"></span>
 			</span>
 		</div>
 	</div>

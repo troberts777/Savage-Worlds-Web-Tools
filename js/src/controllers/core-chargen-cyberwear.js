@@ -1,4 +1,4 @@
-var coreChargenWelcomeFunctions = function ($timeout, $rootScope, $translate, $scope, $location, $route, $cordovaFile ) {
+var coreChargenCyberwareFunctions = function ($timeout, $rootScope, $translate, $scope, $location, $route, $cordovaFile ) {
 		$rootScope.showChargenMenu = true;
 		var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_chargen";
 		var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.chargen";
@@ -23,34 +23,25 @@ var coreChargenWelcomeFunctions = function ($timeout, $rootScope, $translate, $s
 
 			localizeDiceValues();
 
+			if( !localStorage["users_chargen_pdf_layout"] || localStorage["users_chargen_pdf_layout"] == "")
+				localStorage["users_chargen_pdf_layout"] = "landscape";
+
 			$rootScope.savageCharacter = new savageCharacter( localStorage["users_preferred_language"] );
 
 			if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
 				$rootScope.savageCharacter.importJSON( localStorage[ currentItemLocalStorageVariable ] );
 			}
 
-			$scope.startingWealth = $rootScope.savageCharacter.getStartingFunds();
 
 		}
 
 		$scope.init();
 
-		$scope.updateSettingRule = function( settingTag ) {
-			// settingTag is not really used, but it's nice to know what's clicked for debugging.
-			// console.log( "updateSettingRule", settingTag );
-			$rootScope.validateAndSave();
-		}
-
-		$scope.setStartingFunds = function( newValue ) {
-			$rootScope.savageCharacter.setStartingFunds( newValue );
-			$rootScope.validateAndSave();
-		}
-
 	}
 ;
 
 angular.module("webApp").controller(
-	"controllerCoreChargenWelcome",
+	"controllerCoreChargenCyberware",
 	[
 		'$timeout',
 		'$rootScope',
@@ -59,12 +50,12 @@ angular.module("webApp").controller(
 		'$location',
 		'$route',
 
-		coreChargenWelcomeFunctions
+		coreChargenCyberwareFunctions
 	]
 );
 
 angular.module("cordovaApp").controller(
-	"controllerCoreChargenWelcome",
+	"controllerCoreChargenCyberware",
 	[
 		'$timeout',
 		'$rootScope',
@@ -73,6 +64,6 @@ angular.module("cordovaApp").controller(
 		'$location',
 		'$route',
 		'$cordovaFile',
-		coreChargenWelcomeFunctions
+		coreChargenCyberwareFunctions
 	]
 );

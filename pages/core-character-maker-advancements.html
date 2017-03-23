@@ -20,10 +20,10 @@
 					<div class="column small-12 text-left">
 						<label class="inline-block">
 							<span translate="CHARGEN_XP">XP</span>:
-							<select class="no-bottom-margin inline-block " ng-options="xpItem as xpItem.label group by xpItem.rankName for xpItem in savageCharacter.xpOptions track by xpItem.value" ng-model="savageCharacter.XP" ng-change="setXP(savageCharacter.XP)"></select>
+							<select class="no-bottom-margin inline-block " ng-options="xpItem as xpItem.label group by xpItem.rankName for xpItem in savageCharacter.getXPOptions() track by xpItem.value" ng-model="selectedXP" ng-change="setXP(selectedXP)"></select>
 						</label>
 						&nbsp;
-						<span translate="CHARGEN_SELECTED_RANK">Rank</span>: <span ng-bind="savageCharacter.XP.rankName"></span>
+						<span translate="CHARGEN_SELECTED_RANK">Rank</span>: <span ng-bind="selectedXP.rankName"></span>
 
 					</div>
 				</div>
@@ -31,11 +31,11 @@
 			<fieldset class="fieldset">
 				<legend translate="GENERAL_ADVANCEMENT_SELECTIONS">Advancements</legend>
 					<div class="column small-12">
-						<div ng-show="savageCharacter.availableAdvancements == 0" translate="CHARGEN_NO_ADVANCEMENT_SLOTS_AVAILABLE"></div>
-						<div ng-hide="savageCharacter.availableAdvancements == 0">
+						<div ng-show="savageCharacter.getAvailableAdvancements() == 0" translate="CHARGEN_NO_ADVANCEMENT_SLOTS_AVAILABLE"></div>
+						<div ng-hide="savageCharacter.getAvailableAdvancements() == 0">
 
 							<ul class="edges-hindrances">
-								<div ng-repeat="advancementItem in savageCharacter.selectedAdvancements track by $index">
+								<div ng-repeat="advancementItem in savageCharacter.getSelectedAdvancements() track by $index">
 								<h3 ng-show="$index == 0" translate="CHARGEN_RANK_NOVICE">Novice</h3>
 								<h3 ng-show="$index == 3" translate="CHARGEN_RANK_SEASONED">Seasoned</h3>
 								<h3 ng-show="$index == 7" translate="CHARGEN_RANK_VETERAN">Veteran</h3>
@@ -63,11 +63,11 @@
 											class="no-bottom-margin inline-block pad-right"
 											ng-model="advancementItem.option1"
 
-											ng-options="skillItem as skillItem.local_name for skillItem in savageCharacter.allSkills  | filter:filterNewSkill(advancementItem.option1) track by skillItem.id"
+											ng-options="skillItem as skillItem.local_name for skillItem in savageCharacter.getAllSkills()  | filter:filterNewSkill(advancementItem.option1) track by skillItem.id"
 
 											ng-change="setAdvancementOption1($index, advancementItem.option1)"
 										></select>
-								
+
 										<span ng-show="advancementItem.option1.specify > 0 || advancementItem.option1.is_specialty">
 											&nbsp;<strong>:</strong>&nbsp;
 											<input class="inline-block no-bottom-margin" placeholder="{{specializionPlaceholder}}" ng-model="advancementItem.option2"
@@ -81,7 +81,7 @@
 											class="no-bottom-margin inline-block pad-right"
 											ng-model="advancementItem.option1"
 
-											ng-options="skillItem as skillItem.local_name for skillItem in savageCharacter.allSkills | filter:filterRaiseSkill(advancementItem.option1) track by skillItem.id"
+											ng-options="skillItem as skillItem.local_name for skillItem in savageCharacter.getAllSkills() | filter:filterRaiseSkill(advancementItem.option1) track by skillItem.id"
 
 											ng-change="setAdvancementOption1($index, advancementItem.option1)"
 										></select>
@@ -92,7 +92,7 @@
 											class="no-bottom-margin inline-block pad-right"
 											ng-model="advancementItem.option1"
 
-											ng-options="skillItem as skillItem.local_name for skillItem in savageCharacter.allSkills | filter:filterLowerSkill(advancementItem.option1, advancementItem.option2) track by skillItem.id"
+											ng-options="skillItem as skillItem.local_name for skillItem in savageCharacter.getAllSkills() | filter:filterLowerSkill(advancementItem.option1, advancementItem.option2) track by skillItem.id"
 
 											ng-change="setAdvancementOption1($index, advancementItem.option1)"
 										></select>
@@ -103,7 +103,7 @@
 											class="no-bottom-margin inline-block pad-right"
 											ng-model="advancementItem.option2"
 
-											ng-options="skillItem as skillItem.local_name for skillItem in savageCharacter.allSkills | filter:filterLowerSkill(advancementItem.option2, advancementItem.option1) track by skillItem.id"
+											ng-options="skillItem as skillItem.local_name for skillItem in savageCharacter.getAllSkills() | filter:filterLowerSkill(advancementItem.option2, advancementItem.option1) track by skillItem.id"
 
 											ng-change="setAdvancementOption2($index, advancementItem.option2)"
 										></select>
@@ -113,7 +113,7 @@
 										<select
 											ng-change="setAdvancementOption1($index, advancementItem.option1.tag, advancementItem.option1.book)" class="no-bottom-margin inline-block pad-right"
 											ng-model="advancementItem.option1"
-											ng-options="edge as edge.select_option_name group by edge.bookObj.local_name disable when edge.selectable == false && advancementItem.option1.tag != edge.tag for edge in savageCharacter.availableEdges track by edge.tag"
+											ng-options="edge as edge.select_option_name group by edge.bookObj.local_name disable when edge.selectable == false && advancementItem.option1.tag != edge.tag for edge in savageCharacter.getAvailableEdges() track by edge.tag"
 										></select>
 									</span>
 								</li>
@@ -125,7 +125,6 @@
 
 			</fieldset>
 		</div>
-
 
 	</div>
 </div>

@@ -18,16 +18,13 @@ var coreChargenTraitsFunctions = function ($timeout, $rootScope, $translate, $sc
 					$scope.specializionPlaceholder = translation.CHARGEN_SPECIALIZATION_PLACEHOLDER;
 					$scope.hindranceSpecificationPlaceholder = translation.CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER;
 
-
 				}
 			);
 
 			localizeDiceValues();
 
-
 			if( !localStorage["users_chargen_pdf_layout"] || localStorage["users_chargen_pdf_layout"] == "")
 				localStorage["users_chargen_pdf_layout"] = "landscape";
-
 
 			$rootScope.savageCharacter = new savageCharacter( localStorage["users_preferred_language"] );
 
@@ -35,16 +32,12 @@ var coreChargenTraitsFunctions = function ($timeout, $rootScope, $translate, $sc
 				$rootScope.savageCharacter.importJSON( localStorage[ currentItemLocalStorageVariable ] );
 			}
 
-
-
 			$scope.diceValues = $rootScope.savageCharacter.getDiceValues();
 			$scope.displayAttributes = $rootScope.savageCharacter.getAttributeDisplayValues();
 
 		}
 
 		$scope.init();
-
-
 
 		$scope.setAttribute = function( attributeTag, newValue ) {
 			$rootScope.savageCharacter.setAttribute( attributeTag, newValue );
@@ -80,10 +73,8 @@ var coreChargenTraitsFunctions = function ($timeout, $rootScope, $translate, $sc
 			$rootScope.justSave();
 		}
 
-
 	}
 ;
-
 
 angular.module("webApp").controller(
 	"controllerCoreChargenTraits",

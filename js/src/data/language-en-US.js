@@ -410,7 +410,7 @@ availableLanguages.push ({
 			GENERAL_RESET: 'Reset',
 			GENERAL_SUCCESS_3_RAISES: 'Success w/ 3 Raises',
 			GENERAL_SUCCESS_3_RAISES_OR_MORE: 'Success w/ 3 or more raises',
-			GENERAL_SUCCESS_4_RAISES: 'Success w/ 5 Raises',
+			GENERAL_SUCCESS_4_RAISES: 'Success w/ 4 Raises',
 			GENERAL_SUCCESS_4_RAISES_OR_MORE: 'Success w/ 4 or more raises',
 			GENERAL_SUCCESS_5_RAISES: 'Success w/ 5 Raises',
 			GENERAL_SUCCESS_5_RAISES_OR_MORE: 'Success w/ 5 or more raises',

@@ -1,177 +1,5 @@
 var availableLanguages = [];
 
-baseApp = angular.module(
-	'baseApp',
-	['ngRoute', 'ngResource', 'ngSanitize','pascalprecht.translate'],
-	[
-		'$routeProvider',
-		'$translateProvider',
-		function ($routeProvider, $translateProvider, $scope, $http) {
-
-			users_preferred_language = "en-US";
-			if( localStorage && localStorage["users_preferred_language"] ) {
-				users_preferred_language = localStorage["users_preferred_language"];
-			} else {
-				localStorage["users_preferred_language"] = users_preferred_language;
-			}
-
-			for( lang_count = 0; lang_count < availableLanguages.length; lang_count++) {
-				if( availableLanguages[lang_count].active ) {
-					$translateProvider.translations(
-						availableLanguages[lang_count].short_code ,
-						availableLanguages[lang_count].translations
-					);
-				}
-			}
-
-			$translateProvider.useSanitizeValueStrategy('sanitize');
-
-			$translateProvider.preferredLanguage(users_preferred_language);
-
-			$routeProvider
-
-			// route for the home/welcome page
-			.when('/', {
-				templateUrl : 'pages/welcome.html',
-				controller  : 'welcomeController'
-			})
-
-			// route for the credits page
-			.when('/credits', {
-				templateUrl : 'pages/credits.html',
-				controller  : 'creditsController'
-			})
-
-			// route for the credits page
-			.when('/settings', {
-				templateUrl : 'pages/settings.html',
-				controller  : 'settingsController'
-			})
-
-			// route for the core about page
-			.when('/core/dice', {
-				templateUrl : 'pages/core-dice.html',
-				controller  : 'coreDiceController'
-			})
-
-			// route for the core extras page
-			.when('/core/extras', {
-				templateUrl : 'pages/core-extras.html',
-				controller  : 'coreExtrasController'
-			})
-
-			// route for the core character maker page
-			.when('/core/character-maker-char-info', {
-				templateUrl : 'pages/core-character-maker-char-info.html',
-				controller  : 'coreChargenController',
-				activetab: 'chargen-char-info'
-			})
-
-			// route for the core character maker page traits
-			.when('/core/character-maker-traits', {
-				templateUrl : 'pages/core-character-maker-traits.html',
-				controller  : 'coreChargenController',
-				activetab: 'chargen-traits'
-			})
-
-			// route for the core character maker page skills
-			.when('/core/character-maker-skills', {
-				templateUrl : 'pages/core-character-maker-skills.html',
-				controller  : 'coreChargenController',
-				activetab: 'chargen-skills'
-			})
-
-			// route for the core character maker page edges and hindrances
-			.when('/core/character-maker-hindrances-and-edges', {
-				templateUrl : 'pages/core-character-maker-hindrances-and-edges.html',
-				controller  : 'coreChargenController',
-				activetab: 'chargen-hindrances-and-edges'
-			})
-
-			// route for the core character maker gear page
-			.when('/core/character-maker-gear', {
-				templateUrl : 'pages/core-character-maker-gear.html',
-				controller  : 'coreChargenController',
-				activetab: 'chargen-gear'
-			})
-
-			// route for the core character maker powers page
-			.when('/core/character-maker-powers', {
-				templateUrl : 'pages/core-character-maker-powers.html',
-				controller  : 'coreChargenController',
-				activetab: 'chargen-powers'
-			})
-
-			// route for the core character maker cyberware page
-			.when('/core/character-maker-cyberware', {
-				templateUrl : 'pages/core-character-maker-cyberware.html',
-				controller  : 'coreChargenController',
-				activetab: 'chargen-cyberware'
-			})
-
-			// route for the core character maker advancements page
-			.when('/core/character-maker-advancements', {
-				templateUrl : 'pages/core-character-maker-advancements.html',
-				controller  : 'coreChargenController',
-				activetab: 'chargen-advancements'
-			})
-
-			// route for the core mass batles page
-			.when('/core/mass-battles', {
-				templateUrl : 'pages/core-mass-battles.html',
-				controller  : 'coreMassbattlesController'
-			})
-
-			// route for the core mass bartles page
-			.when('/core/raise-calculator', {
-				templateUrl : 'pages/core-raise-calculator.html',
-				controller  : 'coreRaiseCalcController'
-			})
-
-			// route for the scifi power armor maker page
-			.when('/scifi/power-armor-maker', {
-				templateUrl : 'pages/scifi-power-armor-maker.html',
-				controller  : 'scifiPowerarmorController'
-			})
-
-			// route for the scifi robot maker page
-			.when('/scifi/robot-maker', {
-				templateUrl : 'pages/scifi-robot-maker.html',
-				controller  : 'scifiRobotController'
-			})
-
-			// route for the scifi starship maker page
-			.when('/scifi/starship-maker', {
-				templateUrl : 'pages/scifi-starship-maker.html',
-				controller  : 'scifiStarshipController'
-			})
-
-			// route for the scifi vehicle page
-			.when('/scifi/vehicle-maker', {
-				templateUrl : 'pages/scifi-vehicle-maker.html',
-				controller  : 'scifiVehicleController'
-			})
-
-			// route for the scifi walker maker page
-			.when('/scifi/walker-maker', {
-				templateUrl : 'pages/scifi-walker-maker.html',
-				controller  : 'scifiWalkerController'
-			})
-
-			// route for the scifi world maker page
-			.when('/scifi/world-maker', {
-				templateUrl : 'pages/scifi-world-maker.html',
-				controller  : 'scifiWorldController'
-			})
-
-			;
-		}
-	]
-);
-
-
-var availableLanguages = [];
-
 cordovaApp = angular.module(
 	'cordovaApp',
 	['ngCordova', 'ngRoute', 'ngResource', 'ngSanitize','pascalprecht.translate'],
@@ -261,120 +89,119 @@ cordovaApp = angular.module(
 			// route for the core character maker page
 			.when('/core/character-maker-welcome', {
 				templateUrl : 'pages/core-character-maker-welcome.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenWelcome',
 				activetab: 'chargen-char-welcome'
 			})
 
 			// route for the core character maker page
 			.when('/core/character-maker-char-info', {
 				templateUrl : 'pages/core-character-maker-char-info.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenInfo',
 				activetab: 'chargen-char-info'
 			})
 
 			// route for the core character maker page traits
 			.when('/core/character-maker-traits', {
 				templateUrl : 'pages/core-character-maker-traits.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenTraits',
 				activetab: 'chargen-traits'
 			})
 
 			// route for the core character maker page skills
 			.when('/core/character-maker-skills', {
 				templateUrl : 'pages/core-character-maker-skills.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-skills'
 			})
 
 			// route for the core character maker page Rifts® Iconic frameworks
 			.when('/core/character-maker-iconic-frameworks', {
 				templateUrl : 'pages/core-character-maker-iconic-frameworks.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-iconic-frameworks'
 			})
 
 			// route for the core character maker page super power companion powers
 			.when('/core/character-maker-spc-powers', {
 				templateUrl : 'pages/core-character-maker-spc-powers.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-spc-powers'
 			})
 
 			// route for the core character maker page edges and hindrances
 			.when('/core/character-maker-hindrances-and-edges', {
 				templateUrl : 'pages/core-character-maker-hindrances-and-edges.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-hindrances-and-edges'
 			})
 
 			// route for the core character maker gear page
 			.when('/core/character-maker-gear', {
 				templateUrl : 'pages/core-character-maker-gear.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-gear'
 			})
 
 			// route for the core character maker weapons page
 			.when('/core/character-maker-weapons', {
 				templateUrl : 'pages/core-character-maker-weapons.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-weapons'
 			})
 
 			// route for the core character maker armor page
 			.when('/core/character-maker-armor', {
 				templateUrl : 'pages/core-character-maker-armor.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-armor'
 			})
 
 			// route for the core character maker armor list page
 			.when('/core/character-maker-armor-list', {
 				templateUrl : 'pages/core-character-maker-armor-list.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-armor'
 			})
 
 			// route for the core character maker armor list page
 			.when('/core/character-maker-gear-list', {
 				templateUrl : 'pages/core-character-maker-gear-list.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-gear'
 			})
 
 			// route for the core character maker armor list page
 			.when('/core/character-maker-ranged-weapons-list', {
 				templateUrl : 'pages/core-character-maker-ranged-weapons-list.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-weapons'
 			})
 
 			// route for the core character maker armor list page
 			.when('/core/character-maker-hand-weapons-list', {
 				templateUrl : 'pages/core-character-maker-hand-weapons-list.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-weapons'
 			})
-
 
 			// route for the core character maker powers page
 			.when('/core/character-maker-powers', {
 				templateUrl : 'pages/core-character-maker-powers.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenPowers',
 				activetab: 'chargen-powers'
 			})
 
 			// route for the core character maker cyberware page
 			.when('/core/character-maker-cyberware', {
 				templateUrl : 'pages/core-character-maker-cyberware.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-cyberware'
 			})
 
 			// route for the core character maker advancements page
 			.when('/core/character-maker-advancements', {
 				templateUrl : 'pages/core-character-maker-advancements.html',
-				controller  : 'coreChargenController',
+				controller  : 'coreChargenDELETEController',
 				activetab: 'chargen-advancements'
 			})
 
@@ -447,12 +274,14 @@ webApp = angular.module(
 			if( navigator.language )
 				users_preferred_language = navigator.language;
 
-			upl = users_preferred_language.split("-", 2);
-			if(upl[0] && upl[1]) {
-				users_preferred_language = upl[0] + "-" + upl[1].toUpperCase();
-			} else {
-					users_preferred_language = "en-US";
-			}
+			//~ upl = users_preferred_language.split("-", 2);
+			//~ if(upl[0] && upl[1]) {
+				//~ users_preferred_language = upl[0] + "-" + upl[1].toUpperCase();
+			//~ } else {
+					//~ users_preferred_language = "en-US";
+			//~ }
+
+			users_preferred_language = "en-US";
 
 			if( localStorage && localStorage["users_preferred_language"] ) {
 				users_preferred_language = localStorage["users_preferred_language"];
@@ -521,130 +350,122 @@ webApp = angular.module(
 			// route for the core character maker page
 			.when('/core/character-maker-welcome', {
 				templateUrl : 'pages/core-character-maker-welcome.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenWelcome',
 				activetab: 'chargen-char-welcome'
 			})
 
 			// route for the core character maker page
 			.when('/core/character-maker-char-info', {
 				templateUrl : 'pages/core-character-maker-char-info.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenInfo',
 				activetab: 'chargen-char-info'
 			})
 
 			// route for the core character maker page traits
 			.when('/core/character-maker-traits', {
 				templateUrl : 'pages/core-character-maker-traits.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenTraits',
 				activetab: 'chargen-traits'
-			})
-
-			// route for the core character maker page skills
-			.when('/core/character-maker-skills', {
-				templateUrl : 'pages/core-character-maker-skills.html',
-				controller  : 'coreChargenController',
-				activetab: 'chargen-skills'
 			})
 
 			// route for the core character maker page Rifts® Iconic frameworks
 			.when('/core/character-maker-iconic-frameworks', {
 				templateUrl : 'pages/core-character-maker-iconic-frameworks.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenRifts',
 				activetab: 'chargen-iconic-frameworks'
 			})
 
 			// route for the core character maker page super power companion powers
 			.when('/core/character-maker-spc-powers', {
 				templateUrl : 'pages/core-character-maker-spc-powers.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenSPC',
 				activetab: 'chargen-spc-powers'
 			})
 
 			// route for the core character maker page edges and hindrances
 			.when('/core/character-maker-hindrances-and-edges', {
 				templateUrl : 'pages/core-character-maker-hindrances-and-edges.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenEdgesHindrances',
 				activetab: 'chargen-hindrances-and-edges'
 			})
 
 			// route for the core character maker gear page
 			.when('/core/character-maker-gear', {
 				templateUrl : 'pages/core-character-maker-gear.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenGear',
 				activetab: 'chargen-gear'
 			})
 
-			// route for the core character maker weapons page
+			// route for the core character maker weapons page (ranged and hand)
 			.when('/core/character-maker-weapons', {
 				templateUrl : 'pages/core-character-maker-weapons.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenGear',
 				activetab: 'chargen-weapons'
 			})
 
 			// route for the core character maker armor page
 			.when('/core/character-maker-armor', {
 				templateUrl : 'pages/core-character-maker-armor.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenGear',
 				activetab: 'chargen-armor'
 			})
 
-			// route for the core character maker armor list page
+			// route for the core character maker armor page
 			.when('/core/character-maker-armor-list', {
 				templateUrl : 'pages/core-character-maker-armor-list.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenGear',
 				activetab: 'chargen-armor'
 			})
 
-			// route for the core character maker armor list page
+			// route for the core character maker gear list page
 			.when('/core/character-maker-gear-list', {
 				templateUrl : 'pages/core-character-maker-gear-list.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenGear',
 				activetab: 'chargen-gear'
 			})
 
-			// route for the core character maker armor list page
+			// route for the core character maker ranged weapons list page
 			.when('/core/character-maker-ranged-weapons-list', {
 				templateUrl : 'pages/core-character-maker-ranged-weapons-list.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenGear',
 				activetab: 'chargen-weapons'
 			})
 
-			// route for the core character maker armor list page
+			// route for the core character maker hand weapon list page
 			.when('/core/character-maker-hand-weapons-list', {
 				templateUrl : 'pages/core-character-maker-hand-weapons-list.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenGear',
 				activetab: 'chargen-weapons'
 			})
-
 
 			// route for the core character maker powers page
 			.when('/core/character-maker-powers', {
 				templateUrl : 'pages/core-character-maker-powers.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenPowers',
 				activetab: 'chargen-powers'
 			})
 
 			// route for the core character maker cyberware page
 			.when('/core/character-maker-cyberware', {
 				templateUrl : 'pages/core-character-maker-cyberware.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenCyberware',
 				activetab: 'chargen-cyberware'
 			})
 
 			// route for the core character maker advancements page
 			.when('/core/character-maker-advancements', {
 				templateUrl : 'pages/core-character-maker-advancements.html',
-				controller  : 'coreChargenController',
+				controller  : 'controllerCoreChargenAdvances',
 				activetab: 'chargen-advancements'
 			})
 
-			// route for the core mass batles page
+			// route for the core mass battles page
 			.when('/core/mass-battles', {
 				templateUrl : 'pages/core-mass-battles.html',
 				controller  : 'coreMassbattlesController'
 			})
 
-			// route for the core mass bartles page
+			// route for the core raise calc page
 			.when('/core/raise-calculator', {
 				templateUrl : 'pages/core-raise-calculator.html',
 				controller  : 'coreRaiseCalcController'
@@ -2530,9 +2351,7 @@ function getDiceValue( diceID, language ) {
 function savageCharacter (useLang) {
 	this.appVersion = "2.0.0.2016101101";
 
-
 	var _useLang = "en-US";
-
 
 	var _name = "";
 	var _background = "";
@@ -2564,9 +2383,10 @@ function savageCharacter (useLang) {
 
 	var _innateAttacks = Array();
 
-
 	var _uuid = -1;
 
+
+	var allSkills = Array();
 	var _options = Array();
 
 	var _selectedAdvancements = Array();
@@ -2586,8 +2406,8 @@ function savageCharacter (useLang) {
 	var _SPCCurrentPowerPoints = 0;
 	var _SPCTakenExtraPowerPoints = false;
 	var _SPCPowerLevels = Array();
+	var _SPCPowerLimit = 0;
 	var _SPCSelectedPowerLevel = 0;
-
 
 	var _selectedArmor = Array();
 	var _selectedMundaneGear = Array();
@@ -2599,12 +2419,9 @@ function savageCharacter (useLang) {
 
 	var _spcGenericModifiers = Array();
 
-
 	var _attributes = {};
 
-
 	var _attributeBoost = {};
-
 
 	var _derived = {};
 
@@ -2624,14 +2441,11 @@ function savageCharacter (useLang) {
 
 	var _race = {};
 
-
 	var _genderOptions = Array();
 
 	var _selectedPerks = Array();
 
 	var _skillList = Array();
-
-
 
 	var _gender = {};
 
@@ -2643,8 +2457,62 @@ function savageCharacter (useLang) {
 	var _installedHindrances = Array();
 	var _installedEdges = Array();
 
-
 	var _bornAHero = false;
+
+	var _selectedArcaneBackground = null;
+
+	var _load = {
+		currentLoad: 0,
+		loadModifier: 0,
+		combatLoad: 0,
+		combatLoadModifier: 0
+	}
+
+	var _agilitySkills = Array();
+	var _smartsSkills = Array();
+	var _spiritSkills = Array();
+	var _vigorSkills = Array();
+	var _strengthSkills = Array();
+
+	var _availablePerkPoints = 0;
+	var	_totalPerkPoints = 0;
+	var _optimizedPerkPoints = 0;
+	var _availableEdgePoints = 0;
+
+	var _isValid = true;
+	var _validSPCoverLimitShown = false;
+	var _validationReport = Array();
+	var _warningReport = Array();
+
+	var _skillPointsAvailable = 15;
+	var _skillPointsUsed = 0;
+
+	var _strainBoost = 0;
+	var _doubleStrain = 0;
+
+	var _linguistSelected = false;
+
+	var _encumbranceMultiplier = 5;
+
+	var _currentStrain = 0;
+	var _maxStrain = 0;
+	var _availableMundaneGear = Array();
+	var _availableArmor = Array();
+	var _availableHandWeapons = Array();
+	var _availableRangedWeapons = Array();
+	var _availableShields = Array();
+
+	var _availableArcaneBackgrounds = Array();
+	var _availablePowers = Array();
+	var _availableTrappings = Array();
+
+	var _secondMajorHindranceChosen = false;
+	var _attributePointsUsed = 0;
+	var _hasArcaneBackground = false;
+
+	var _currentArcaneBackground = {};
+	var _attributePointsAvailable = 5;
+	var _attributePointsUsed = 0;
 
 	this.init = function(useLang){
 
@@ -2685,7 +2553,8 @@ function savageCharacter (useLang) {
 
 		_innateAttacks = Array();
 
-		this.xpOptions = Array();
+		_xpOptions = Array();
+
 		for( var optCounter = 0; optCounter <= 100; optCounter++) {
 			var xpObj = {
 				value: optCounter,
@@ -2711,8 +2580,8 @@ function savageCharacter (useLang) {
 			}
 
 			if( optCounter == 0 )
-				this.XP = xpObj;
-			this.xpOptions.push( xpObj );
+				_XP = xpObj;
+			_xpOptions.push( xpObj );
 		}
 
 		_uuid = this.makeUUID();
@@ -2785,7 +2654,8 @@ function savageCharacter (useLang) {
 				cost: 2,
 				spcOnly: false,
 				effect: function(savageCharObj) {
-					savageCharObj.attributePointsAvailable = savageCharObj.attributePointsAvailable + 1;
+					//savageCharObj.attributePointsAvailable = savageCharObj.attributePointsAvailable + 1;
+					savageCharObj.incrementAttributePointsAvailable( 1 );
 				}
 			},
 			{
@@ -2794,7 +2664,7 @@ function savageCharacter (useLang) {
 				cost: 2,
 				spcOnly: false,
 				effect: function(savageCharObj) {
-					savageCharObj.availableEdgePoints = savageCharObj.availableEdgePoints + 1;
+					savageCharObj.incrementAvailbleEdgePoints( 1 );
 				}
 			},
 			{
@@ -2803,7 +2673,8 @@ function savageCharacter (useLang) {
 				cost: 1,
 				spcOnly: false,
 				effect: function(savageCharObj) {
-					savageCharObj.skillPointsAvailable = savageCharObj.skillPointsAvailable + 1;
+					//savageCharObj.skillPointsAvailable = savageCharObj.skillPointsAvailable + 1;
+					savageCharObj.incrementSkillPointsAvailable( 1 );
 				}
 			},
 			{
@@ -2812,7 +2683,8 @@ function savageCharacter (useLang) {
 				cost: 1,
 				spcOnly: false,
 				effect: function(savageCharObj) {
-					savageCharObj.startingFunds = savageCharObj.startingFunds * 2;
+					//savageCharObj.startingFunds = savageCharObj.startingFunds * 2;
+					savageCharObj.setStartingFunds( savageCharObj.getStartingFunds() * 2 );
 				}
 			},
 			{
@@ -2821,7 +2693,8 @@ function savageCharacter (useLang) {
 				cost: 2,
 				spcOnly: true,
 				effect: function(savageCharObj) {
-					savageCharObj.SPCTakenExtraPowerPoints = true;
+					//savageCharObj.SPCTakenExtraPowerPoints = true;
+					savageCharObj.setTakenSPCExtraPowerPoints( true );
 				}
 			}
 		);
@@ -2880,17 +2753,17 @@ function savageCharacter (useLang) {
 			"currentCost": 0
 		});
 
-		this.books = Array();
+		_books = Array();
 
 		for( bookCounter = 0; bookCounter < savageWorldsBooksList.length; bookCounter++ ) {
-			this.books[bookCounter] = get_book_by_id( savageWorldsBooksList[bookCounter].id );
-			if( this.books[bookCounter].id == 1 ) {
-				this.books[bookCounter].inUse = true;
+			_books[bookCounter] = get_book_by_id( savageWorldsBooksList[bookCounter].id );
+			if( _books[bookCounter].id == 1 ) {
+				_books[bookCounter].inUse = true;
 			} else {
-				this.books[bookCounter].inUse = false;
+				_books[bookCounter].inUse = false;
 			}
-			for( var setting_c = 0; setting_c < this.books[bookCounter].setting_rules.length; setting_c++) {
-				this.books[bookCounter].setting_rules[setting_c].inUse = false;
+			for( var setting_c = 0; setting_c < _books[bookCounter].setting_rules.length; setting_c++) {
+				_books[bookCounter].setting_rules[setting_c].inUse = false;
 			}
 		}
 
@@ -2906,7 +2779,6 @@ function savageCharacter (useLang) {
 			if( savageWorldsEdges[edgeCounter].child == 2 ) {
 				savageWorldsEdges[edgeCounter].select_option_name = "↳ " + savageWorldsEdges[edgeCounter].select_option_name;
 			}
-
 
 			//savageWorldsEdges[edgeCounter].local_description = this.getLocalName( savageWorldsEdges[edgeCounter].description );
 			savageWorldsEdges[edgeCounter].bookObj = get_book_by_id( savageWorldsEdges[edgeCounter].book );
@@ -2995,10 +2867,6 @@ function savageCharacter (useLang) {
 			// 	savageWorldsGearTypes[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearTypes[eqCounter].type );
 			// }
 
-
-
-
-
 			// Localize Mundane
 			for( var eqCounter = 0; eqCounter < savageWorldsGearMundane.length; eqCounter++ ) {
 				savageWorldsGearMundane[eqCounter].local_name = this.getLocalName( savageWorldsGearMundane[eqCounter].name );
@@ -3064,7 +2932,6 @@ function savageCharacter (useLang) {
 				savageWorldsGearRangedWeapons[eqCounter].bookObj = get_book_by_id( savageWorldsGearRangedWeapons[eqCounter].book );
 			}
 
-
 		_attributes = {
 			agility: 1,
 			smarts: 1,
@@ -3072,7 +2939,6 @@ function savageCharacter (useLang) {
 			strength: 1,
 			vigor: 1
 		}
-
 
 		_attributeBoost = {
 			agility: 0,
@@ -3092,10 +2958,6 @@ function savageCharacter (useLang) {
 			currentLoad: 0,
 			sanity: 0
 		};
-
-
-
-
 
 		localizeDice( _useLang);
 
@@ -3127,8 +2989,8 @@ function savageCharacter (useLang) {
 			}
 
 		}
-		_race = this.getRace(1);
 
+		_race = this._getRaceById(1);
 
 		_genderOptions = Array(
 			{
@@ -3153,7 +3015,6 @@ function savageCharacter (useLang) {
 			angular.extend( _skillList[skillCounter], savageWorldsSkillList[skillCounter]);
 		}
 
-
 		_gender = _genderOptions[0];
 
 		_skillValues = {};
@@ -3163,7 +3024,6 @@ function savageCharacter (useLang) {
 
 		_installedHindrances = Array();
 		_installedEdges = Array();
-
 
 		_bornAHero = false;
 
@@ -3185,7 +3045,7 @@ function savageCharacter (useLang) {
 					tag: "edge",
 					takenAt: -1,
 					label: this.getTranslation("CHARGEN_ADVANCEMENT_NEW_EDGE"),
-					option1: this.availableEdges[0],
+					option1: _availableEdges[0],
 					option2: "",
 				}
 			);
@@ -3232,29 +3092,27 @@ function savageCharacter (useLang) {
 		this.hasSPCSwitchablePowers = false;
 		this.switchableSPCPowers = Array()
 
-
 		if( _usesSPCCreation ) {
-			this.SPCPowerLimit = 0;
+			_SPCPowerLimit = 0;
 			_SPCCurrentPowerPoints = 0;
 			if( _SPCRisingStars ) {
 				_SPCCurrentPowerPoints = _SPCPowerLevels[ _SPCSelectedPowerLevel ].rising_stars_power_points;
 				_SPCCurrentPowerPoints += _spcExtraPowerPoints;
-				this.SPCPowerLimit = _SPCCurrentPowerPoints;
+				_SPCPowerLimit = _SPCCurrentPowerPoints;
 			} else {
 				_SPCCurrentPowerPoints = _SPCPowerLevels[ _SPCSelectedPowerLevel ].power_points;
 				_SPCCurrentPowerPoints += _spcExtraPowerPoints;
-				this.SPCPowerLimit = Math.ceil( _SPCCurrentPowerPoints / 3 );
+				_SPCPowerLimit = Math.ceil( _SPCCurrentPowerPoints / 3 );
 			}
 			if( this.hasEdge("the-best-there-is"))  {
 				if( !_SPCRisingStars ) {
-					this.SPCPowerLimit = Math.ceil( _SPCCurrentPowerPoints / 2 );
+					_SPCPowerLimit = Math.ceil( _SPCCurrentPowerPoints / 2 );
 				} else {
-					this.SPCPowerLimit = Math.ceil( _SPCCurrentPowerPoints / 2 );
-					if( this.SPCPowerLimit < _SPCCurrentPowerPoints)
-						this.SPCPowerLimit = _SPCCurrentPowerPoints;
+					_SPCPowerLimit = Math.ceil( _SPCCurrentPowerPoints / 2 );
+					if( _SPCPowerLimit < _SPCCurrentPowerPoints)
+						_SPCPowerLimit = _SPCCurrentPowerPoints;
 				}
 			}
-
 
 			// for the extra power points perk....
 			if( _SPCTakenExtraPowerPoints ) {
@@ -3305,33 +3163,31 @@ function savageCharacter (useLang) {
 					}
 				}
 
-				if( _selectedSPCPowers[powerCounter].currentCost > this.SPCPowerLimit) {
-					if( this.validSPCoverLimitShown  == false ) {
-						this.validationReport.push(
+				if( _selectedSPCPowers[powerCounter].currentCost > _SPCPowerLimit) {
+					if( _validSPCoverLimitShown  == false ) {
+						_validationReport.push(
 							this.getTranslation("CHARGEN_VALIDATION_SPC_OVER_LIMIT").replace(
 								"{value}", _selectedSPCPowers[powerCounter].local_name
 							)
 						);
-						this.isValid = false;
-						this.validSPCoverLimitShown = true;
+						_isValid = false;
+						_validSPCoverLimitShown = true;
 					}
 
 				}
 
 				if( _selectedSPCPowers[powerCounter].switchableWith ) {
 					if( _selectedSPCPowers[powerCounter].currentCost > _selectedSPCPowers[powerCounter].switchableWith.currentCost - 2) {
-						this.validationReport.push(
+						_validationReport.push(
 							this.getTranslation("CHARGEN_VALIDATION_SPC_SWITCH").replace(
 								"{value}", _selectedSPCPowers[powerCounter].local_name
 							)
 						);
-						this.isValid = false;
+						_isValid = false;
 					}
 				} else {
 					_SPCCurrentPowerPoints -= _selectedSPCPowers[powerCounter].currentCost;
 				}
-
-
 
 				if( _selectedSPCPowers[powerCounter].charEffect ) {
 					_selectedSPCPowers[powerCounter].charEffect( this, _selectedSPCPowers[powerCounter]);
@@ -3339,12 +3195,11 @@ function savageCharacter (useLang) {
 			}
 
 			if( _SPCCurrentPowerPoints < 0 ) {
-				this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_SPC_OVER_POWER_POINTS") );
-				this.isValid = false;
+				_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_SPC_OVER_POWER_POINTS") );
+				_isValid = false;
 			}
 		}
 	}
-
 
 	this.makeUUID = function(){
 		var d = new Date().getTime();
@@ -3361,13 +3216,12 @@ function savageCharacter (useLang) {
 
 	this.refreshAvailable = function( ) {
 
-		this.agilitySkills = Array();
-		this.allSkills = Array();
-		this.smartsSkills = Array();
-		this.spiritSkills = Array();
-		this.strengthSkills = Array();
-		this.vigorSkills = Array(); // I'm not aware of any vigor skills, but I' m prepared on the backend ;)
-
+		_agilitySkills = Array();
+		_allSkills = Array();
+		_smartsSkills = Array();
+		_spiritSkills = Array();
+		_strengthSkills = Array();
+		_vigorSkills = Array(); // I'm not aware of any vigor skills, but I' m prepared on the backend ;)
 
 		for( skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
 			var showSkill = true;
@@ -3412,7 +3266,6 @@ function savageCharacter (useLang) {
 				}
 			}
 
-
 			if( _skillList[skillCounter].id == "SKILL_GUTS" ) {
 				if( _usesGutsSkill == false ) {
 					_skillList[skillCounter].showSkill = false;
@@ -3426,21 +3279,21 @@ function savageCharacter (useLang) {
 			}
 
 			if( _skillList[skillCounter].showSkill && _skillList[skillCounter].attribute == "agility" ) {
-				this.agilitySkills.push( _skillList[skillCounter] );
+				_agilitySkills.push( _skillList[skillCounter] );
 			}
 			if( _skillList[skillCounter].showSkill && _skillList[skillCounter].attribute == "smarts" ) {
-				this.smartsSkills.push( _skillList[skillCounter] );
+				_smartsSkills.push( _skillList[skillCounter] );
 			}
 			if( _skillList[skillCounter].showSkill && _skillList[skillCounter].attribute == "spirit" ) {
-				this.spiritSkills.push( _skillList[skillCounter] );
+				_spiritSkills.push( _skillList[skillCounter] );
 			}
 			if( _skillList[skillCounter].showSkill && _skillList[skillCounter].attribute == "strength" ) {
-				this.strengthSkills.push( _skillList[skillCounter] );
+				_strengthSkills.push( _skillList[skillCounter] );
 			}
 			if( _skillList[skillCounter].showSkill && _skillList[skillCounter].attribute == "vigor" ) {
-				this.vigorSkills.push( _skillList[skillCounter] );
+				_vigorSkills.push( _skillList[skillCounter] );
 			}
-			this.allSkills.push( _skillList[skillCounter] );
+			_allSkills.push( _skillList[skillCounter] );
 
 			for( skc = 0; skc < _skillList[skillCounter].specialties.length; skc++ ) {
 				_skillList[skillCounter].specialties[skc].is_specialty = _skillList[skillCounter].id
@@ -3450,11 +3303,11 @@ function savageCharacter (useLang) {
 				_skillList[skillCounter].specialties[skc].attribute = _skillList[skillCounter].attribute
 				if( !_skillList[skillCounter].specialties[skc].boost )
 					_skillList[skillCounter].specialties[skc].boost = 0;
-				this.allSkills.push( _skillList[skillCounter].specialties[skc] );
+				_allSkills.push( _skillList[skillCounter].specialties[skc] );
 			}
 		}
 
-		this.allSkills.unshift( {id: 'undefined',local_name: this.getTranslation('GENERAL_SELECT')} );
+		_allSkills.unshift( {id: 'undefined',local_name: this.getTranslation('GENERAL_SELECT')} );
 
 		_raceOptions = Array();
 		for( var raceCount = 0; raceCount < savageWorldsRaces.length; raceCount++ ) {
@@ -3467,7 +3320,13 @@ function savageCharacter (useLang) {
 			}
 		}
 
+	}
 
+	this.isPerkOptimized = function() {
+		if( _totalPerkPoints == _optimizedPerkPoints )
+			return true;
+		else
+			return false;
 	}
 
 	this.getArcaneSkill = function() {
@@ -3481,6 +3340,119 @@ function savageCharacter (useLang) {
 		return null;
 	}
 
+	this.getDerived = function() {
+		return _derived;
+	}
+
+	this.getAvailableEdges = function() {
+		return _availableEdges;
+	}
+
+	this.getAvailablePerks = function() {
+		return _availablePerks;
+	}
+
+	this.getSelectedSPCPowers = function() {
+		return _selectedSPCPowers;
+	}
+
+	this.getAvailableHindrances = function() {
+		return _availableHindrances;
+	}
+
+	this.getAvailableHandWeapons = function() {
+		return _availableHandWeapons;
+	}
+
+	this.getAvailableRangedWeapons = function() {
+		return _availableRangedWeapons;
+	}
+
+	this.getSelectedRangedWeapons = function() {
+		return _selectedRangedWeapons;
+	}
+
+	this.getSelectedAvancements = function() {
+		var _return = 0;
+		for( var aC = 0; aC < _selectedAdvancements.length; aC++) {
+			if( _selectedAdvancements[aC].tag != 'none')
+				_return++;
+		}
+		return _return;
+	}
+
+	this.getSelectedHandWeapons = function() {
+		return _selectedHandWeapons;
+	}
+
+	this.getSelectedArmor = function() {
+		return _selectedArmor;
+	}
+
+	this.getXP = function() {
+		return _XP;
+	}
+
+	this.getXPOptions = function() {
+		return _xpOptions;
+	}
+
+
+	this.getSelectedAdvancements = function() {
+		return _selectedAdvancements;
+	}
+
+	this.getAvailableAdvancements = function() {
+		return _selectedAdvancements.length;
+	}
+
+	this.getAllSkills = function() {
+		return _allSkills;
+	}
+
+	this.getSelectedShields = function() {
+		return _selectedShields;
+	}
+
+	this.getAvailableArmor = function() {
+		return _availableArmor;
+	}
+
+	this.getAvailableShields = function() {
+		return _availableShields;
+	}
+
+	this.getAvailableMundaneGear = function() {
+		return _availableMundaneGear;
+	}
+
+
+
+	this.getSelectedMundaneGear = function() {
+		return _selectedMundaneGear;
+	}
+
+
+	this.getSelectedEdges = function() {
+		return _selecteddges;
+	}
+
+	this.getInstalledEdges = function() {
+		return _installedEdges;
+	}
+
+	this.getInstalledHindrances = function() {
+		return _installedHindrances;
+	}
+
+	this.getSelectedHindrances = function() {
+		return _selectedHindrances;
+	}
+
+	this.getSelectedPerks = function() {
+		return _selectedPerks;
+	}
+
 	this.setGender = function( genderID ) {
 		for(var gc = 0; gc < _genderOptions.length; gc++) {
 			if( genderID == _genderOptions[gc].id ) {
@@ -3492,16 +3464,16 @@ function savageCharacter (useLang) {
 	}
 
 	this.setXP = function( xpValue ) {
-		for(var xpc = 0; xpc < this.xpOptions.length; xpc++) {
-			if( xpValue == this.xpOptions[xpc].value ) {
-				this.XP = this.xpOptions[xpc];
+		for(var xpc = 0; xpc < _xpOptions.length; xpc++) {
+			if( xpValue == _xpOptions[xpc].value ) {
+				_XP = _xpOptions[xpc];
 				return true;
 			}
 		}
 		return false;
 	}
 
-	this.getRace = function( raceID ) {
+	this._getRaceById = function( raceID ) {
 
 		for(var gc = 0; gc < _raceOptions.length; gc++) {
 
@@ -3523,7 +3495,6 @@ function savageCharacter (useLang) {
 	}
 
 	this.removePower = function(powerIndex) {
-
 
 		if(
 			_selectedPowers[ powerIndex ]
@@ -3583,7 +3554,6 @@ function savageCharacter (useLang) {
 		}
 		return false;
 	}
-
 
 	this.removeEdge = function(indexNumber) {
 		if( _edges[indexNumber] ) {
@@ -3653,34 +3623,34 @@ function savageCharacter (useLang) {
 
 	// Validate does both calculation and validation of the character as per the base rules and settings
 	this.validate = function() {
-		this.isValid = true;
-		this.validSPCoverLimitShown = false;
-		this.validationReport = Array();
-		this.warningReport = Array();
+		_isValid = true;
+		_validSPCoverLimitShown = false;
+		_validationReport = Array();
+		_warningReport = Array();
 		_powerAlterations = Array();
-		this.skillPointsAvailable = 15;
-		this.skillPointsUsed = 0;
+		_skillPointsAvailable = 15;
+		_skillPointsUsed = 0;
 
-		this.strainBoost = 0;
-		this.doubleStrain = 0;
+		_strainBoost = 0;
+		_doubleStrain = 0;
 
 		_knownLanguagesLimit = 1;
-		this.linguistSelected = false;
+		_linguistSelected = false;
 
-		this.encumbrance_multiplier = 5;
+		_encumbranceMultiplier = 5;
 
 		_currentFunds = _startingFunds;
 		_spcExtraPowerPoints = 0;
 
-		this.attributePointsAvailable = 5;
-		this.attributePointsUsed = 0;
+		_attributePointsAvailable = 5;
+		_attributePointsUsed = 0;
 
-		this.availableEdgePoints = 0;
+		_availableEdgePoints = 0;
 		_installedHindrances = Array();
 		_installedEdges = Array();
-		this.hasArcaneBackground = false;
+		_hasArcaneBackground = false;
 
-		this.currentArcaneBackground = {};
+		_currentArcaneBackground = {};
 
 		//_startingFunds = 500;
 
@@ -3692,7 +3662,6 @@ function savageCharacter (useLang) {
 
 		swDeluxe = get_book_by_id( 1 ) ;
 		swDeluxe.inUse = true;
-
 
 		_bornAHero = false;
 		if( this.isSettingRuleEnabled( "born-a-hero") )
@@ -3715,7 +3684,7 @@ function savageCharacter (useLang) {
 		if( this.isSettingRuleEnabled( "cyberware-strain") )
 			_usesStrain = true;
 
-		this.diceValues = {
+		_diceValues = {
 			agility: Array(),
 			smarts: Array(),
 			spirit: Array(),
@@ -3723,15 +3692,13 @@ function savageCharacter (useLang) {
 			vigor: Array(),
 		}
 
-		if(  this.selectedArcaneBackground && this.selectedArcaneBackground.power_points ) {
-			_powerPointsAvailable = this.selectedArcaneBackground.power_points;
+		if(  _selectedArcaneBackground && _selectedArcaneBackground.power_points ) {
+			_powerPointsAvailable = _selectedArcaneBackground.power_points;
 		}
 
-		if(  this.selectedArcaneBackground && this.selectedArcaneBackground.powers ) {
-			_totalPowersKnown = this.selectedArcaneBackground.powers;
+		if(  _selectedArcaneBackground && _selectedArcaneBackground.powers ) {
+			_totalPowersKnown = _selectedArcaneBackground.powers;
 		}
-
-
 
 		// for( lBookCounter = 0; lBookCounter.u)
 
@@ -3743,7 +3710,7 @@ function savageCharacter (useLang) {
 			vigor: 0,
 		};
 
-		this.displayAttributes = {
+		_displayAttributes = {
 			agility: getDiceValue( _attributes.agility + _attributeBoost.agility ),
 			smarts: getDiceValue( _attributes.smarts + _attributeBoost.smarts ),
 			spirit: getDiceValue( _attributes.spirit + _attributeBoost.spirit ),
@@ -3751,12 +3718,11 @@ function savageCharacter (useLang) {
 			vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
 		};
 
-
 		// Calc init derived stats
-		_derived.toughness = 0; // Math.floor(this.displayAttributes.vigor.value / 2) + 2;
+		_derived.toughness = 0; // Math.floor(_displayAttributes.vigor.value / 2) + 2;
 		_derived.armor = 0;
-		_derived.currentLoad = 0;
-		_derived.combatLoad = 0;
+		_load.currentLoad = 0;
+		_load.combatLoad = 0;
 		fightingSkill = this.getSkill("SKILL_FIGHTING");
 		_derived.parry = 2;
 		if( fightingSkill.value > 0 ) {
@@ -3765,20 +3731,17 @@ function savageCharacter (useLang) {
 		}
 		_derived.pace = 6;
 		_derived.charisma = 0;
-		_derived.sanity = Math.floor(this.displayAttributes.spirit.value / 2) + 2;
+		_derived.sanity = Math.floor(_displayAttributes.spirit.value / 2) + 2;
 
 		// Calculate used attribute points
-		this.attributePointsUsed += _attributes.agility - 1;
-		this.attributePointsUsed += _attributes.smarts - 1;
-		this.attributePointsUsed += _attributes.spirit - 1;
-		this.attributePointsUsed += _attributes.strength - 1;
-		this.attributePointsUsed += _attributes.vigor - 1;
+		_attributePointsUsed += _attributes.agility - 1;
+		_attributePointsUsed += _attributes.smarts - 1;
+		_attributePointsUsed += _attributes.spirit - 1;
+		_attributePointsUsed += _attributes.strength - 1;
+		_attributePointsUsed += _attributes.vigor - 1;
 
-
-		// this.attributePointsAvailable = this.attributePointsAvailable - this.attributePointsUsed;
-		// this.skillPointsAvailable = this.skillPointsAvailable - this.skillPointsUsed;
-
-
+		// _attributePointsAvailable = _attributePointsAvailable - _attributePointsUsed;
+		// _skillPointsAvailable = _skillPointsAvailable - _skillPointsUsed;
 
 		for( skillCounter = 0; skillCounter < _skillList.length; skillCounter++) {
 			_skillList[skillCounter].boost = 0;
@@ -3825,7 +3788,7 @@ function savageCharacter (useLang) {
 			}
 		}
 
-		this.displayAttributes = {
+		_displayAttributes = {
 			agility: getDiceValue( _attributes.agility + _attributeBoost.agility ),
 			smarts: getDiceValue( _attributes.smarts + _attributeBoost.smarts ),
 			spirit: getDiceValue( _attributes.spirit + _attributeBoost.spirit ),
@@ -3833,68 +3796,62 @@ function savageCharacter (useLang) {
 			vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
 		};
 
-
 		// Calculate used skill points
 		for( skillCounter = 0; skillCounter < _skillList.length; skillCounter++) {
 			if( _skillList[skillCounter].value ) {
 
 				effectiveCurrentValue =  _skillList[skillCounter].value + _skillList[skillCounter].boost ;
-				if(  effectiveCurrentValue > this.displayAttributes[_skillList[skillCounter].attribute].id ) {
-					regularCost = this.displayAttributes[_skillList[skillCounter].attribute].id;
-					doubleCost = effectiveCurrentValue - this.displayAttributes[_skillList[skillCounter].attribute].id;
+				if(  effectiveCurrentValue > _displayAttributes[_skillList[skillCounter].attribute].id ) {
+					regularCost = _displayAttributes[_skillList[skillCounter].attribute].id;
+					doubleCost = effectiveCurrentValue - _displayAttributes[_skillList[skillCounter].attribute].id;
 					if( _skillList[skillCounter].boost > 0 ) {
 						regularCost = regularCost - _skillList[skillCounter].boost;
 						if ( regularCost < 0)
 							regularCost = 0;
 					}
 					if( !_skillList[skillCounter].advskill || _skillList[skillCounter].advskill == 0)
-						this.skillPointsUsed += regularCost + doubleCost * 2;
+						_skillPointsUsed += regularCost + doubleCost * 2;
 				} else {
 					if( !_skillList[skillCounter].advskill || _skillList[skillCounter].advskill == 0)
-						this.skillPointsUsed += _skillList[skillCounter].value;
+						_skillPointsUsed += _skillList[skillCounter].value;
 				}
 			}
 
 			for( specialtyCounter = 0; specialtyCounter < _skillList[skillCounter].specialties.length; specialtyCounter++ ) {
 				//effectiveCurrentValue =  _skillList[skillCounter].value + _skillList[skillCounter].boost ;
 				if( _skillList[skillCounter].specialties[specialtyCounter].value ) {
-					if( _skillList[skillCounter].specialties[specialtyCounter].value + _skillList[skillCounter].specialties[specialtyCounter].boost > this.displayAttributes[_skillList[skillCounter].attribute].id ) {
-						regularCost = this.displayAttributes[_skillList[skillCounter].attribute].id;
-						doubleCost = _skillList[skillCounter].specialties[specialtyCounter].value - this.displayAttributes[_skillList[skillCounter].attribute].id;
+					if( _skillList[skillCounter].specialties[specialtyCounter].value + _skillList[skillCounter].specialties[specialtyCounter].boost > _displayAttributes[_skillList[skillCounter].attribute].id ) {
+						regularCost = _displayAttributes[_skillList[skillCounter].attribute].id;
+						doubleCost = _skillList[skillCounter].specialties[specialtyCounter].value - _displayAttributes[_skillList[skillCounter].attribute].id;
 						if(  !_skillList[skillCounter].advskill || _skillList[skillCounter].advskill == 0)
-							this.skillPointsUsed += regularCost + doubleCost * 2;
+							_skillPointsUsed += regularCost + doubleCost * 2;
 					} else {
 						if(  !_skillList[skillCounter].advskill || _skillList[skillCounter].advskill == 0)
-							this.skillPointsUsed += _skillList[skillCounter].specialties[specialtyCounter].value;
+							_skillPointsUsed += _skillList[skillCounter].specialties[specialtyCounter].value;
 					}
 				}
 			}
 		}
 
-
 		for(gdvc = 0; gdvc < globalDiceValues.length; gdvc++) {
 			if( 1 + _attributeBoost.agility <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.agility )
-				this.diceValues.agility.push( globalDiceValues[gdvc] );
+				_diceValues.agility.push( globalDiceValues[gdvc] );
 			if( 1 + _attributeBoost.smarts <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.smarts )
-				this.diceValues.smarts.push( globalDiceValues[gdvc] );
+				_diceValues.smarts.push( globalDiceValues[gdvc] );
 			if( 1 + _attributeBoost.spirit <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.spirit )
-				this.diceValues.spirit.push( globalDiceValues[gdvc] );
+				_diceValues.spirit.push( globalDiceValues[gdvc] );
 			if( 1 + _attributeBoost.strength <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.strength )
-				this.diceValues.strength.push( globalDiceValues[gdvc] );
+				_diceValues.strength.push( globalDiceValues[gdvc] );
 			if( 1 + _attributeBoost.vigor <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.vigor )
-				this.diceValues.vigor.push( globalDiceValues[gdvc] );
+				_diceValues.vigor.push( globalDiceValues[gdvc] );
 		}
-
-
-
-
 
 		// Process Selected Hindrances
 		var majorPerk = 0;
 		var minorPerk1 = 0;
 		var minorPerk2 = 0;
 		var majorPerk2 = 0;
-		this.secondMajorHindranceChosen = false;
+		_secondMajorHindranceChosen = false;
 		for( var hindranceCounter = 0; hindranceCounter < _selectedHindrances.length; hindranceCounter++) {
 
 			if( typeof(_selectedHindrances[hindranceCounter].charEffect) == "function" ) {
@@ -3914,7 +3871,7 @@ function savageCharacter (useLang) {
 					} else if( majorPerk2 == 0) {
 						majorPerk = 2;
 						majorPerk2 = 2;
-						this.secondMajorHindranceChosen = true;
+						_secondMajorHindranceChosen = true;
 					}
 				} else {
 					majorPerk = 2;
@@ -3932,53 +3889,51 @@ function savageCharacter (useLang) {
 			}
 		}
 
-
-
 		// Calculate Perks Available
 		if( _usesSPCCreation ) {
-			this.totalPerkPoints = majorPerk + majorPerk2 + minorPerk2 + minorPerk1;
-			this.availablePerkPoints = majorPerk + majorPerk2 + minorPerk2 + minorPerk1;
-			this.optimizedPerkPoints = 6;
+			_totalPerkPoints = majorPerk + majorPerk2 + minorPerk2 + minorPerk1;
+			_availablePerkPoints = majorPerk + majorPerk2 + minorPerk2 + minorPerk1;
+			_optimizedPerkPoints = 6;
 
 		}
 		else {
-			this.totalPerkPoints = majorPerk + minorPerk2 + minorPerk1;
-			this.availablePerkPoints = majorPerk + minorPerk2 + minorPerk1;
-			this.optimizedPerkPoints = 4;
+			_totalPerkPoints = majorPerk + minorPerk2 + minorPerk1;
+			_availablePerkPoints = majorPerk + minorPerk2 + minorPerk1;
+			_optimizedPerkPoints = 4;
 		}
 
 		_SPCTakenExtraPowerPoints = false;
 		// Process Selected Perks
 		for( var perkCounter = 0; perkCounter < _selectedPerks.length; perkCounter++) {
 			_selectedPerks[perkCounter].effect(this);
-			this.availablePerkPoints = this.availablePerkPoints - _selectedPerks[perkCounter].cost;
+			_availablePerkPoints = _availablePerkPoints - _selectedPerks[perkCounter].cost;
 		}
 
-		if( this.attributePointsUsed > this.attributePointsAvailable ) {
-			this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_ATTRIBUTES") );
-			this.isValid = false;
+		if( _attributePointsUsed > _attributePointsAvailable ) {
+			_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_ATTRIBUTES") );
+			_isValid = false;
 		}
 
-		if( this.selectedArcaneBackground && this.selectedArcaneBackground.powers && _selectedPowers.length > this.selectedArcaneBackground.powers ) {
-			this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_POWERS") );
-			this.isValid = false;
+		if( _selectedArcaneBackground && _selectedArcaneBackground.powers && _selectedPowers.length > _selectedArcaneBackground.powers ) {
+			_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_POWERS") );
+			_isValid = false;
 		}
 
-		if( this.skillPointsUsed > this.skillPointsAvailable ) {
-			this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_SKILLS") );
-			this.isValid = false;
+		if( _skillPointsUsed > _skillPointsAvailable ) {
+			_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_SKILLS") );
+			_isValid = false;
 		}
 
 		if( _SPCTakenExtraPowerPoints && majorPerk2 == 0 ) {
-			this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_SPC_EP_REQUIRES_2MAJOR") );
-			this.isValid = false;
+			_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_SPC_EP_REQUIRES_2MAJOR") );
+			_isValid = false;
 		}
 
 		// Process Selected Edges
 		for( var edgeCounter = 0; edgeCounter < _selectedEdges.length; edgeCounter++) {
 
 			_installedEdges.push( _selectedEdges[edgeCounter] );
-			this.availableEdgePoints = this.availableEdgePoints - 1;
+			_availableEdgePoints = _availableEdgePoints - 1;
 			if( typeof(_selectedEdges[edgeCounter].charEffect) == "function" ) {
 				_selectedEdges[edgeCounter].charEffect( this );
 			}
@@ -3988,29 +3943,27 @@ function savageCharacter (useLang) {
 
 		}
 
-
-		if( this.availablePerkPoints < 0 ) {
-			this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_PERKS") );
-			this.isValid = false;
+		if( _availablePerkPoints < 0 ) {
+			_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_PERKS") );
+			_isValid = false;
 		}
 
-		if( this.availableEdgePoints < 0 ) {
-			this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_EDGES") );
-			this.isValid = false;
+		if( _availableEdgePoints < 0 ) {
+			_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_EDGES") );
+			_isValid = false;
 		}
 
-		if( this.hasArcaneBackground > 0 && this.selectedArcaneBackground.tag == "" ) {
-			this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_NO_ARCANE_BG") );
-			this.isValid = false;
+		if( _hasArcaneBackground > 0 && _selectedArcaneBackground.tag == "" ) {
+			_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_NO_ARCANE_BG") );
+			_isValid = false;
 		}
 
 		// Apply Arcane Background
-		this.availableArcaneBackgrounds = Array();
-		this.availablePowers = Array();
-		this.availableTrappings = Array();
+		_availableArcaneBackgrounds = Array();
+		_availablePowers = Array();
+		_availableTrappings = Array();
 
-
-		this.availableArcaneBackgrounds.push(
+		_availableArcaneBackgrounds.push(
 			{
 				local_name: "- " + this.getTranslation("CHARGEN_SELECT_ARCANE_BG") + " -",
 				select_option_name:  "- " + this.getTranslation("CHARGEN_SELECT_ARCANE_BG") + " -",
@@ -4024,8 +3977,7 @@ function savageCharacter (useLang) {
 			}
 		);
 
-
-		this.availablePowers.push(
+		_availablePowers.push(
 			{
 				local_name: "- " + this.getTranslation("CHARGEN_SELECT_POWER") + " -",
 				select_option_name:  "- " + this.getTranslation("CHARGEN_SELECT_POWER") + " -",
@@ -4037,11 +3989,10 @@ function savageCharacter (useLang) {
 			}
 		);
 
-
-		if( this.hasArcaneBackground ) {
-			this.selectedArcaneBackground.freePower = null;
+		if( _hasArcaneBackground ) {
+			_selectedArcaneBackground.freePower = null;
 			for( var abCounter = 0 ; abCounter < savageWorldsArcaneBackgrounds.length ; abCounter++)
-				this.availableArcaneBackgrounds.push( savageWorldsArcaneBackgrounds[abCounter] );
+				_availableArcaneBackgrounds.push( savageWorldsArcaneBackgrounds[abCounter] );
 
 			for( var abCounter = 0 ; abCounter < savageWorldsPowers.length ; abCounter++) {
 
@@ -4052,13 +4003,13 @@ function savageCharacter (useLang) {
 				) {
 
 					if( typeof(_powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank) != "undefined" ) {
-						//console.log("!", _powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank, this.XP.rankValue);
-						if( _powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank <= this.XP.rankValue  )
+						//console.log("!", _powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank, _XP.rankValue);
+						if( _powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank <= _XP.rankValue  )
 							 savageWorldsPowers[abCounter].selectable = true;
 						else
 							 savageWorldsPowers[abCounter].selectable = false;
 					} else {
-						if( savageWorldsPowers[abCounter].rank <= this.XP.rankValue  )
+						if( savageWorldsPowers[abCounter].rank <= _XP.rankValue  )
 							 savageWorldsPowers[abCounter].selectable = true;
 						else
 							 savageWorldsPowers[abCounter].selectable = false;
@@ -4067,72 +4018,72 @@ function savageCharacter (useLang) {
 				//	console.log("savageWorldsPowers[abCounter]", abCounter, savageWorldsPowers[abCounter]);
 				} else {
 
-					if( savageWorldsPowers[abCounter].rank <= this.XP.rankValue  )
+					if( savageWorldsPowers[abCounter].rank <= _XP.rankValue  )
 						 savageWorldsPowers[abCounter].selectable = true;
 					else
 						 savageWorldsPowers[abCounter].selectable = false;
 				}
 
-				if( this.selectedArcaneBackground && this.selectedArcaneBackground.power_list && this.selectedArcaneBackground.power_list.length > 0 ) {
-					if( this.selectedArcaneBackground.power_list.indexOf( savageWorldsPowers[abCounter].tag ) < 0 ) {
+				if( _selectedArcaneBackground && _selectedArcaneBackground.power_list && _selectedArcaneBackground.power_list.length > 0 ) {
+					if( _selectedArcaneBackground.power_list.indexOf( savageWorldsPowers[abCounter].tag ) < 0 ) {
 						savageWorldsPowers[abCounter].selectable = false;
 					}
 				}
 
-				this.availablePowers.push( savageWorldsPowers[abCounter] );
-				if( this.selectedArcaneBackground.free_power != "" && this.selectedArcaneBackground.free_power == savageWorldsPowers[abCounter].tag) {
-					this.selectedArcaneBackground.freePower = savageWorldsPowers[abCounter];
+				_availablePowers.push( savageWorldsPowers[abCounter] );
+				if( _selectedArcaneBackground.free_power != "" && _selectedArcaneBackground.free_power == savageWorldsPowers[abCounter].tag) {
+					_selectedArcaneBackground.freePower = savageWorldsPowers[abCounter];
 				}
 			}
 			for( var abCounter = 0 ; abCounter < savageWorldsArcaneTrappings.length ; abCounter++)
-				this.availableTrappings.push( savageWorldsArcaneTrappings[abCounter] );
+				_availableTrappings.push( savageWorldsArcaneTrappings[abCounter] );
 
 		} else {
-			this.selectedArcaneBackground = this.availableArcaneBackgrounds[0];
+			_selectedArcaneBackground = _availableArcaneBackgrounds[0];
 		}
 
-		if( !this.selectedArcaneBackground )
-			this.selectedArcaneBackground = this.availableArcaneBackgrounds[0];
+		if( !_selectedArcaneBackground )
+			_selectedArcaneBackground = _availableArcaneBackgrounds[0];
 
 		// Process Available Gear
-		this.availableMundaneGear = Array();
+		_availableMundaneGear = Array();
 		for( var gearCounter = 0; gearCounter < savageWorldsGearMundane.length; gearCounter++) {
 			if( this.bookInUse( savageWorldsGearMundane[gearCounter].book ) ) {
-				this.availableMundaneGear.push( savageWorldsGearMundane[gearCounter] );
+				_availableMundaneGear.push( savageWorldsGearMundane[gearCounter] );
 			}
 		}
 
-		this.availableArmor = Array();
+		_availableArmor = Array();
 		for( var gearCounter = 0; gearCounter < savageWorldsGearArmor.length; gearCounter++) {
 			if( this.bookInUse( savageWorldsGearArmor[gearCounter].book ) ) {
-				this.availableArmor.push( savageWorldsGearArmor[gearCounter] );
+				_availableArmor.push( savageWorldsGearArmor[gearCounter] );
 			}
 		}
 
-		this.availableHandWeapons = Array();
+		_availableHandWeapons = Array();
 		for( var gearCounter = 0; gearCounter < savageWorldsGearHandWeapons.length; gearCounter++) {
 			if( this.bookInUse( savageWorldsGearHandWeapons[gearCounter].book ) ) {
-				this.availableHandWeapons.push( savageWorldsGearHandWeapons[gearCounter] );
+				_availableHandWeapons.push( savageWorldsGearHandWeapons[gearCounter] );
 			}
 		}
 
-		this.availableRangedWeapons = Array();
+		_availableRangedWeapons = Array();
 		for( var gearCounter = 0; gearCounter < savageWorldsGearRangedWeapons.length; gearCounter++) {
 			if( this.bookInUse( savageWorldsGearRangedWeapons[gearCounter].book ) ) {
-				this.availableRangedWeapons.push( savageWorldsGearRangedWeapons[gearCounter] );
+				_availableRangedWeapons.push( savageWorldsGearRangedWeapons[gearCounter] );
 			}
 		}
 
-		this.availableShields = Array();
+		_availableShields = Array();
 		for( var gearCounter = 0; gearCounter < savageWorldsGearShields.length; gearCounter++) {
 			if( this.bookInUse( savageWorldsGearShields[gearCounter].book ) ) {
-				this.availableShields.push( savageWorldsGearShields[gearCounter] );
+				_availableShields.push( savageWorldsGearShields[gearCounter] );
 			}
 		}
 
 		// Process Available Hindrances
-		this.availableHindrances = Array();
-		this.availableHindrances.push(
+		_availableHindrances = Array();
+		_availableHindrances.push(
 		{
 			local_name: "- " + this.getTranslation("CHARGEN_SELECT_HINDRANCE") + " -",
 			select_option_name:  "- " + this.getTranslation("CHARGEN_SELECT_HINDRANCE") + " -",
@@ -4167,14 +4118,14 @@ function savageCharacter (useLang) {
 						savageWorldsHindrances[hindranceCounter].selectable = false;
 					}
 
-					this.availableHindrances.push( savageWorldsHindrances[hindranceCounter] );
+					_availableHindrances.push( savageWorldsHindrances[hindranceCounter] );
 				}
 			}
 		}
 
 		// Process Available Edges
-		this.availableEdges = Array();
-		this.availableEdges.push(
+		_availableEdges = Array();
+		_availableEdges.push(
 			{
 				local_name:  "- " + this.getTranslation("CHARGEN_SELECT_EDGE") + " -",
 				select_option_name:  "- " + this.getTranslation("CHARGEN_SELECT_EDGE") + " -",
@@ -4209,13 +4160,13 @@ function savageCharacter (useLang) {
 						}
 					}
 
-					if( savageWorldsEdges[edgeCounter].required_rank > this.XP.rankValue ) {
+					if( savageWorldsEdges[edgeCounter].required_rank > _XP.rankValue ) {
 						if(
 							( _bornAHero == false )
 								||
-							(	_bornAHero == true && this.isMARS() == false && this.XP.value > 0 )
+							(	_bornAHero == true && this.isMARS() == false && _XP.value > 0 )
 								||
-							(	_bornAHero == true && this.isMARS() == true && this.XP.value > 20 )
+							(	_bornAHero == true && this.isMARS() == true && _XP.value > 20 )
 
 						) {
 								savageWorldsEdges[edgeCounter].selectable = false;
@@ -4276,13 +4227,13 @@ function savageCharacter (useLang) {
 						}
 					}
 
-					this.availableEdges.push( savageWorldsEdges[edgeCounter] );
+					_availableEdges.push( savageWorldsEdges[edgeCounter] );
 				}
 			}
 		}
 
 		// Advancements...
-		this.availableAdvancements = Math.floor(this.XP.value / 5);
+		this.availableAdvancements = Math.floor(_XP.value / 5);
 
 		this.allocateAdvancementSlots();
 
@@ -4296,26 +4247,25 @@ function savageCharacter (useLang) {
 		}
 
 		if( _selectedAdvancements.length > this.availableAdvancements) {
-			this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_ADVANCEMENTS") );
-			this.isValid = false;
+			_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_ADVANCEMENTS") );
+			_isValid = false;
 		}
 
 		// check to make sure a requirement wasn't removed from edges...
 		for( edgeCounter = 0; edgeCounter < _selectedEdges.length; edgeCounter++) {
 
-
 			if( typeof(_selectedEdges[edgeCounter].requires) == "function" ) {
 				if( _selectedEdges[edgeCounter].requires(this) == false ) {
-					this.validationReport.push( _selectedEdges[edgeCounter].local_name + ": " + this.getTranslation("CHARGEN_VALIDATION_EDGE_DOESNT_MEET_REQUIREMENTS") );
-					this.isValid = false;
+					_validationReport.push( _selectedEdges[edgeCounter].local_name + ": " + this.getTranslation("CHARGEN_VALIDATION_EDGE_DOESNT_MEET_REQUIREMENTS") );
+					_isValid = false;
 				}
 			}
 
 			if( _selectedEdges[edgeCounter].required_edge != ""  ) {
 				if( !this.hasEdge( _selectedEdges[edgeCounter].required_edge )) {
 					theEdge = this.getEdge( _selectedEdges[edgeCounter].required_edge  );
-					this.validationReport.push( _selectedEdges[edgeCounter].local_name + ": " + this.getTranslation("CHARGEN_VALIDATION_REQUIRES_EDGE").replace( "{value}", theEdge.local_name) );
-					this.isValid = false;
+					_validationReport.push( _selectedEdges[edgeCounter].local_name + ": " + this.getTranslation("CHARGEN_VALIDATION_REQUIRES_EDGE").replace( "{value}", theEdge.local_name) );
+					_isValid = false;
 				}
 			}
 
@@ -4323,8 +4273,8 @@ function savageCharacter (useLang) {
 				if( this.hasEdge( _selectedEdges[edgeCounter].conflicts_edge )) {
 
 					theEdge = this.getEdge( _selectedEdges[edgeCounter].conflicts_edge  );
-					this.validationReport.push( _selectedEdges[edgeCounter].local_name + ": " + this.getTranslation("CHARGEN_VALIDATION_CONFLICTS_EDGE").replace( "{value}", theEdge.local_name) );
-					this.isValid = false;
+					_validationReport.push( _selectedEdges[edgeCounter].local_name + ": " + this.getTranslation("CHARGEN_VALIDATION_CONFLICTS_EDGE").replace( "{value}", theEdge.local_name) );
+					_isValid = false;
 
 				}
 			}
@@ -4332,13 +4282,10 @@ function savageCharacter (useLang) {
 			if( _selectedEdges[edgeCounter].conflicts_hindrance != ""  ) {
 				if( hindranceTag = this.hasHindrance( _selectedEdges[edgeCounter].conflicts_hindrance ) ) {
 					theHindrance = this.getHindrance( hindranceTag  );
-					this.validationReport.push( _selectedEdges[edgeCounter].local_name + ": " + this.getTranslation("CHARGEN_VALIDATION_CONFLICTS_HINDRANCE").replace( "{value}", theHindrance.local_name) );
-					this.isValid = false;
+					_validationReport.push( _selectedEdges[edgeCounter].local_name + ": " + this.getTranslation("CHARGEN_VALIDATION_CONFLICTS_HINDRANCE").replace( "{value}", theHindrance.local_name) );
+					_isValid = false;
 				}
 			}
-
-
-
 
 		}
 		for( var powerCounter = 0; powerCounter < _selectedPowers.length; powerCounter++ ) {
@@ -4349,8 +4296,6 @@ function savageCharacter (useLang) {
 			}
 
 	 	}
-
-
 
 	 	var attributeIncreaseNovice = false;
 	 	var attributeIncreaseSeasoned = false;
@@ -4376,8 +4321,8 @@ function savageCharacter (useLang) {
 					if( !_selectedAdvancements[advCounter].option1.requires(this) ) {
 						invalidMessage = this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_INVALID_EDGE");
 						invalidMessage = invalidMessage.replace("{value}", _selectedAdvancements[advCounter].option1.local_name );
-						this.validationReport.push( invalidMessage );
-						this.isValid = false;
+						_validationReport.push( invalidMessage );
+						_isValid = false;
 					}
 				}
 
@@ -4389,8 +4334,8 @@ function savageCharacter (useLang) {
 					if( !this.hasEdge( _selectedAdvancements[advCounter].option1.required_edge, advCounter ) ) {
 						invalidMessage = this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_INVALID_EDGE");
 						invalidMessage = invalidMessage.replace("{value}", _selectedAdvancements[advCounter].option1.local_name );
-						this.validationReport.push( invalidMessage );
-						this.isValid = false;
+						_validationReport.push( invalidMessage );
+						_isValid = false;
 					}
 				}
 
@@ -4405,27 +4350,27 @@ function savageCharacter (useLang) {
 
 	 			if( advCounter < 3 ) {
 	 				if( attributeIncreaseNovice ) {
-	 					this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_NOVICE") );
-	 					this.isValid = false;
+	 					_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_NOVICE") );
+	 					_isValid = false;
 	 				}
 	 				attributeIncreaseNovice = true;
 	 			} else if( advCounter < 7 ) {
 	 				if( attributeIncreaseSeasoned ) {
-	 					this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_SEASONED") );
-	 					this.isValid = false;
+	 					_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_SEASONED") );
+	 					_isValid = false;
 	 				}
 	 				attributeIncreaseSeasoned = true;
 	 			} else if( advCounter < 11 ) {
 
 	 				if( attributeIncreaseVeteran ) {
-	 					this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_VETERAN") );
-	 					this.isValid = false;
+	 					_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_VETERAN") );
+	 					_isValid = false;
 	 				}
 	 				attributeIncreaseVeteran = true;
 	 			} else if( advCounter < 15 ) {
 	 				if( attributeIncreaseHeroic ) {
-	 					this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_HEROIC") );
-	 					this.isValid = false;
+	 					_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_HEROIC") );
+	 					_isValid = false;
 	 				}
 	 				attributeIncreaseHeroic = true;
 	 			} else {
@@ -4435,8 +4380,8 @@ function savageCharacter (useLang) {
 	 						&&
 	 					_selectedAdvancements[advCounter - 1].tag != "attribute"
 	 				) {
-	 					this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_LEGENDARY") );
-	 					this.isValid = false;
+	 					_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_LEGENDARY") );
+	 					_isValid = false;
 	 				}
 	 			}
 	 		}
@@ -4447,7 +4392,6 @@ function savageCharacter (useLang) {
 	 			// TODO
 	 			if( _selectedAdvancements[advCounter].option1 )
 	 				this.boostSkill( _selectedAdvancements[advCounter].option1.id );
-
 
 	 		}
 	 		// End of Skill Increase Advancement
@@ -4493,14 +4437,14 @@ function savageCharacter (useLang) {
 	 					else
 	 						this.boostSkill( _selectedAdvancements[advCounter].option1 );
 	 				} else {
-	 					_selectedAdvancements[advCounter].option1 = this.allSkills[0];
+	 					_selectedAdvancements[advCounter].option1 = _allSkills[0];
 	 				}
 	 			}
 	 		}
 	 		// End of New Skill Advancement
 
 		 	// recalculate attributes from advancement boosts
-			this.displayAttributes = {
+			_displayAttributes = {
 				agility: getDiceValue( _attributes.agility + _attributeBoost.agility ),
 				smarts: getDiceValue( _attributes.smarts + _attributeBoost.smarts ),
 				spirit: getDiceValue( _attributes.spirit + _attributeBoost.spirit ),
@@ -4522,7 +4466,7 @@ function savageCharacter (useLang) {
 		this.refreshAvailable();
 
 	 	// recalculate attributes from advancement boosts
-		this.displayAttributes = {
+		_displayAttributes = {
 			agility: getDiceValue( _attributes.agility + _attributeBoost.agility ),
 			smarts: getDiceValue( _attributes.smarts + _attributeBoost.smarts ),
 			spirit: getDiceValue( _attributes.spirit + _attributeBoost.spirit ),
@@ -4530,52 +4474,50 @@ function savageCharacter (useLang) {
 			vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
 		};
 
-
 		if( _attributes.spirit + _attributeBoost.spirit  <  _attributes.vigor + _attributeBoost.vigor  ) {
-			this.maxStrain = _attributes.spirit + _attributeBoost.spiri;
+			_maxStrain = _attributes.spirit + _attributeBoost.spiri;
 		} else {
-			this.maxStrain = _attributes.vigor + _attributeBoost.vigor;
+			_maxStrain = _attributes.vigor + _attributeBoost.vigor;
 		}
-		this.maxStrain += this.strainBoost;
-		if( this.doubleStrain > 0 )
-			this.maxStrain = this.maxStrain * 2;
+		_maxStrain += _strainBoost;
+		if( _doubleStrain > 0 )
+			_maxStrain = _maxStrain * 2;
 
 		// recalc derived toughness
-		_derived.toughness_base = Math.floor(this.displayAttributes.vigor.value / 2) + 2;
+		_derived.toughness_base = Math.floor(_displayAttributes.vigor.value / 2) + 2;
 		//_derived.toughness += _attributeBoost.vigor; // will always be in steps of 2, so just add it ;)
 		_derived.toughness += _derived.toughness_base;
 
-
-	 	this.currentLoad = 0;
-	 	this.combatLoad = 0;
+	 	_load.currentLoad = 0;
+	 	_load.combatLoad = 0;
 	 	// subtract gear costs....
 	 	for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++) {
 	 		_currentFunds -= _selectedHandWeapons[gearCounter].purchaseCost;
-	 		this.currentLoad += _selectedHandWeapons[gearCounter].weight;
+	 		_load.currentLoad += _selectedHandWeapons[gearCounter].weight;
 	 		if( _selectedHandWeapons[gearCounter].droppedDuringCombat == false )
-	 			this.combatLoad += _selectedHandWeapons[gearCounter].weight;
+	 			_load.combatLoad += _selectedHandWeapons[gearCounter].weight;
 	 		_selectedHandWeapons[gearCounter].toHitRollModifier = 0;
 	 		_selectedHandWeapons[gearCounter].currentParry = _selectedHandWeapons[gearCounter].parry;
 
-			if( _selectedHandWeapons[gearCounter].readiedLocation && _selectedHandWeapons[gearCounter].min_str > this.displayAttributes.strength.value ) {
-				this.warningReport.push( this.getTranslation("CHARGEN_BELOW_STR_WEAPON") );
+			if( _selectedHandWeapons[gearCounter].readiedLocation && _selectedHandWeapons[gearCounter].min_str > _displayAttributes.strength.value ) {
+				_warningReport.push( this.getTranslation("CHARGEN_BELOW_STR_WEAPON") );
 
 				if( _selectedHandWeapons[gearCounter].damage_strength > 0) {
 					var damageBit = _selectedHandWeapons[gearCounter].damage;
 
-					damageBit = this.setCharAt( damageBit, 1, this.displayAttributes.strength.value);
+					damageBit = this.setCharAt( damageBit, 1, _displayAttributes.strength.value);
 
 					if( _selectedHandWeapons[gearCounter].currentParry > 0 )
 						_selectedHandWeapons[gearCounter].currentParry = 0;
 
-					_selectedHandWeapons[gearCounter].displayDamage = this.displayAttributes.strength.local_label + " + " +  damageBit;
+					_selectedHandWeapons[gearCounter].displayDamage = _displayAttributes.strength.local_label + " + " +  damageBit;
 				} else {
 					_selectedHandWeapons[gearCounter].displayDamage = _selectedHandWeapons[gearCounter].damage;
 					_selectedHandWeapons[gearCounter].toHitRollModifier = -1;
 				}
 			} else {
 				if( _selectedHandWeapons[gearCounter].damage_strength > 0) {
-					_selectedHandWeapons[gearCounter].displayDamage = this.displayAttributes.strength.local_label + " + " + _selectedHandWeapons[gearCounter].damage;
+					_selectedHandWeapons[gearCounter].displayDamage = _displayAttributes.strength.local_label + " + " + _selectedHandWeapons[gearCounter].damage;
 				} else {
 					_selectedHandWeapons[gearCounter].displayDamage = _selectedHandWeapons[gearCounter].damage;
 				}
@@ -4586,31 +4528,31 @@ function savageCharacter (useLang) {
 	 	}
 		for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++) {
 	 		_currentFunds -= _selectedRangedWeapons[gearCounter].purchaseCost;
-	 		this.currentLoad += _selectedRangedWeapons[gearCounter].weight;
+	 		_load.currentLoad += _selectedRangedWeapons[gearCounter].weight;
 	 		if( _selectedRangedWeapons[gearCounter].droppedDuringCombat == false )
-	 			this.combatLoad += _selectedRangedWeapons[gearCounter].weight;
+	 			_load.combatLoad += _selectedRangedWeapons[gearCounter].weight;
 	 		_selectedRangedWeapons[gearCounter].toHitRollModifier = 0;
 	 		_selectedRangedWeapons[gearCounter].currentParry = _selectedRangedWeapons[gearCounter].parry;
 
-			if( _selectedRangedWeapons[gearCounter].readiedLocation && _selectedRangedWeapons[gearCounter].min_str > this.displayAttributes.strength.value ) {
-				this.warningReport.push( this.getTranslation("CHARGEN_BELOW_STR_WEAPON") );
+			if( _selectedRangedWeapons[gearCounter].readiedLocation && _selectedRangedWeapons[gearCounter].min_str > _displayAttributes.strength.value ) {
+				_warningReport.push( this.getTranslation("CHARGEN_BELOW_STR_WEAPON") );
 
 				if( _selectedHandWeapons[gearCounter].damage_strength > 0) {
 					var damageBit = _selectedRangedWeapons[gearCounter].damage;
 
-					damageBit = this.setCharAt( damageBit, 1, this.displayAttributes.strength.value);
+					damageBit = this.setCharAt( damageBit, 1, _displayAttributes.strength.value);
 
 					if( _selectedRangedWeapons[gearCounter].currentParry > 0 )
 						_selectedRangedWeapons[gearCounter].currentParry = 0;
 
-					_selectedRangedWeapons[gearCounter].displayDamage = this.displayAttributes.strength.local_label + " + " +  damageBit;
+					_selectedRangedWeapons[gearCounter].displayDamage = _displayAttributes.strength.local_label + " + " +  damageBit;
 				} else {
 					_selectedRangedWeapons[gearCounter].displayDamage = _selectedRangedWeapons[gearCounter].damage;
 					_selectedRangedWeapons[gearCounter].toHitRollModifier = -1;
 				}
 			} else {
 				if( _selectedRangedWeapons[gearCounter].damage_strength > 0) {
-					_selectedRangedWeapons[gearCounter].displayDamage = this.displayAttributes.strength.local_label + " + " + _selectedRangedWeapons[gearCounter].damage;
+					_selectedRangedWeapons[gearCounter].displayDamage = _displayAttributes.strength.local_label + " + " + _selectedRangedWeapons[gearCounter].damage;
 				} else {
 					_selectedRangedWeapons[gearCounter].displayDamage = _selectedRangedWeapons[gearCounter].damage;
 				}
@@ -4628,43 +4570,43 @@ function savageCharacter (useLang) {
 		 			}
 		 		}
 		 	}
-	 		this.currentLoad += _selectedArmor[gearCounter].weight;
+	 		_load.currentLoad += _selectedArmor[gearCounter].weight;
 	 		if( _selectedArmor[gearCounter].droppedDuringCombat == false )
-	 			this.combatLoad += _selectedArmor[gearCounter].weight;
+	 			_load.combatLoad += _selectedArmor[gearCounter].weight;
 	 	}
 	 	for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++) {
 	 		_currentFunds -= _selectedShields[gearCounter].purchaseCost;
-	 		this.currentLoad += _selectedShields[gearCounter].weight;
+	 		_load.currentLoad += _selectedShields[gearCounter].weight;
 			if( _selectedShields[gearCounter].readiedLocation && _selectedShields[gearCounter].readiedLocation != "")
 				_derived.parry += _selectedShields[gearCounter].parry;
 	 		if( _selectedShields[gearCounter].droppedDuringCombat == false )
-	 			this.combatLoad += _selectedShields[gearCounter].weight;
+	 			_load.combatLoad += _selectedShields[gearCounter].weight;
 	 	}
 	 	for( var gearCounter = 0; gearCounter < _selectedMundaneGear.length; gearCounter++) {
 	 		_currentFunds -= _selectedMundaneGear[gearCounter].purchaseCost * _selectedMundaneGear[gearCounter].count;
 	 		_selectedMundaneGear[gearCounter].totalWeight = _selectedMundaneGear[gearCounter].weight * _selectedMundaneGear[gearCounter].count;
 	 		_selectedMundaneGear[gearCounter].totalPurchaseCost = _selectedMundaneGear[gearCounter].purchaseCost * _selectedMundaneGear[gearCounter].count;
-	 		this.currentLoad += _selectedMundaneGear[gearCounter].weight * _selectedMundaneGear[gearCounter].count;
+	 		_load.currentLoad += _selectedMundaneGear[gearCounter].weight * _selectedMundaneGear[gearCounter].count;
 	 		if( _selectedMundaneGear[gearCounter].droppedDuringCombat == false )
-	 			this.combatLoad += _selectedMundaneGear[gearCounter].weight * _selectedMundaneGear[gearCounter].count;
+	 			_load.combatLoad += _selectedMundaneGear[gearCounter].weight * _selectedMundaneGear[gearCounter].count;
 	 	}
 
 		if( _currentFunds < 0 ) {
-			this.validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_FUNDS") );
-			this.isValid = false;
+			_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_FUNDS") );
+			_isValid = false;
 		}
 
 		if( _usesSPCCreation ) {
 			if( this.hasEdge("arcane-background") ) {
 				var invalidMessage = this.getTranslation("CHARGEN_SPC_CANNOT_HAVE_AB");
-				this.validationReport.push( invalidMessage );
-				this.isValid = false;
+				_validationReport.push( invalidMessage );
+				_isValid = false;
 			}
 		}
 
 		if( _usesStrain ) {
-		this.currentStrain = 0;
-		this.maxStrain = 0;
+			_currentStrain = 0;
+			_maxStrain = 0;
 		}
 
 		if( _derived.armor == 0) {
@@ -4673,75 +4615,69 @@ function savageCharacter (useLang) {
 			_derived.toughnessAndArmor = ( _derived.toughness + _derived.armor ) + " (" + _derived.armor + ")";
 		}
 
-		this.loadLimit = this.displayAttributes.strength.value * this.encumbrance_multiplier;
+		_loadLimit = _displayAttributes.strength.value * _encumbranceMultiplier;
 		// if( this.hasEdge("brawny") )
-		// 	this.loadLimit = this.displayAttributes.strength.value * 8;
+		// 	_loadLimit = _displayAttributes.strength.value * 8;
 
-		if( this.loadLimit > 0 ) {
-			this.loadModifier = Math.floor( this.currentLoad / this.loadLimit ) * -1 ;
-			this.combatLoadModifier = Math.floor( this.combatLoad / this.loadLimit ) * -1 ;
+		if( _loadLimit > 0 ) {
+			_load.loadModifier = Math.floor( _load.currentLoad / _loadLimit ) * -1 ;
+			_load.combatLoadModifier = Math.floor( _load.combatLoad / _loadLimit ) * -1 ;
 		} else {
-			this.loadModifier = 0;
+			_load.loadModifier = 0;
+			_load.combatLoadModifier = 0;
 		}
 
-		if( this.loadModifier < -3 ) {
-			this.warningReport.push( this.getTranslation("CHARGEN_CHARACTER_OVERLOADED") );
+		if( _load.loadModifier < -3 ) {
+			_warningReport.push( this.getTranslation("CHARGEN_CHARACTER_OVERLOADED") );
 		}
 
 		for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++) {
-			_selectedHandWeapons[gearCounter].toHitRollModifier -= this.loadModifier;
+			_selectedHandWeapons[gearCounter].toHitRollModifier -= _load.loadModifier;
 		}
 
-
-		if( _multipleLanguages == true && this.linguistSelected == false )
-			_knownLanguagesLimit = this.displayAttributes.smarts.value / 2 + 1;
+		if( _multipleLanguages == true && _linguistSelected == false )
+			_knownLanguagesLimit = _displayAttributes.smarts.value / 2 + 1;
 		//console.log( "_knownLanguagesLimit", _knownLanguagesLimit );
 		for( langCounter = 0; langCounter < _knownLanguagesLimit; langCounter++ ) {
 			if( typeof(_knownLanguages[ langCounter]) == "undefined")
 				_knownLanguages[ langCounter ] = "";
 		}
 
-
 		_activeSkills = {};
-		for( var skCount = 0; skCount <  this.agilitySkills.length; skCount++ ) {
-			//console.log( this.agilitySkills[skCount].local_name, this.agilitySkills[skCount].displayValue );
-			if( this.agilitySkills[skCount].displayValue && this.agilitySkills[skCount].displayValue != "")
-				_activeSkills[ this.agilitySkills[skCount].local_name ] = this.agilitySkills[skCount].displayValue;
+		for( var skCount = 0; skCount <  _agilitySkills.length; skCount++ ) {
+			//console.log( _agilitySkills[skCount].local_name, _agilitySkills[skCount].displayValue );
+			if( _agilitySkills[skCount].displayValue && _agilitySkills[skCount].displayValue != "")
+				_activeSkills[ _agilitySkills[skCount].local_name ] = _agilitySkills[skCount].displayValue;
 		}
 
-		for( var skCount = 0; skCount <  this.smartsSkills.length; skCount++ ) {
-			//console.log( this.smartsSkills[skCount].local_name, this.smartsSkills[skCount].displayValue );
-			if( this.smartsSkills[skCount].displayValue && this.smartsSkills[skCount].displayValue != "")
-				_activeSkills[ this.smartsSkills[skCount].local_name ] = this.smartsSkills[skCount].displayValue;
+		for( var skCount = 0; skCount <  _smartsSkills.length; skCount++ ) {
+			//console.log( _smartsSkills[skCount].local_name, _smartsSkills[skCount].displayValue );
+			if( _smartsSkills[skCount].displayValue && _smartsSkills[skCount].displayValue != "")
+				_activeSkills[ _smartsSkills[skCount].local_name ] = _smartsSkills[skCount].displayValue;
 
-			if( this.smartsSkills[skCount].specialties.length > 0 ) {
-				for( var spCount = 0; spCount <  this.smartsSkills[skCount].specialties.length; spCount++ ) {
-					skillName = this.smartsSkills[skCount].local_name + " (" + this.smartsSkills[skCount].specialties[spCount].name + ")";
-					_activeSkills[ skillName ] = this.smartsSkills[skCount].specialties[spCount].displayValue;
+			if( _smartsSkills[skCount].specialties.length > 0 ) {
+				for( var spCount = 0; spCount <  _smartsSkills[skCount].specialties.length; spCount++ ) {
+					skillName = _smartsSkills[skCount].local_name + " (" + _smartsSkills[skCount].specialties[spCount].name + ")";
+					_activeSkills[ skillName ] = _smartsSkills[skCount].specialties[spCount].displayValue;
 				}
 			}
 		}
 
-		for( var skCount = 0; skCount <  this.spiritSkills.length; skCount++ ) {
-			//console.log( this.spiritSkills[skCount].local_name, this.spiritSkills[skCount].displayValue );
-			if( this.spiritSkills[skCount].displayValue && this.spiritSkills[skCount].displayValue != "")
-				_activeSkills[ this.spiritSkills[skCount].local_name ] = this.spiritSkills[skCount].displayValue;
+		for( var skCount = 0; skCount <  _spiritSkills.length; skCount++ ) {
+			//console.log( _spiritSkills[skCount].local_name, _spiritSkills[skCount].displayValue );
+			if( _spiritSkills[skCount].displayValue && _spiritSkills[skCount].displayValue != "")
+				_activeSkills[ _spiritSkills[skCount].local_name ] = _spiritSkills[skCount].displayValue;
 		}
 
-		for( var skCount = 0; skCount <  this.strengthSkills.length; skCount++ ) {
-			//console.log( this.strengthSkills[skCount].local_name, this.strengthSkills[skCount].displayValue );
-			if( this.strengthSkills[skCount].displayValue && this.strengthSkills[skCount].displayValue != "")
-				_activeSkills[ this.strengthSkills[skCount].local_name ] = this.strengthSkills[skCount].displayValue;
+		for( var skCount = 0; skCount <  _strengthSkills.length; skCount++ ) {
+			//console.log( _strengthSkills[skCount].local_name, _strengthSkills[skCount].displayValue );
+			if( _strengthSkills[skCount].displayValue && _strengthSkills[skCount].displayValue != "")
+				_activeSkills[ _strengthSkills[skCount].local_name ] = _strengthSkills[skCount].displayValue;
 		}
-
-
-
 
 		//console.log( _activeSkills );
 
 	}
-
-
 
 	this.setCharAt = function(str,index,chr) {
 	    if(index > str.length-1) return str;
@@ -4837,11 +4773,9 @@ function savageCharacter (useLang) {
 		if( _background != "")
 			html += _background.replace("\n", "<br />\n") + "<br />\n<br />\n";
 
-
-
 		html += "<b>" + _race.local_name + " " + _gender.label + "</b><br />\n";
 
-		html += "<b>" + this.getTranslation("CHARGEN_RANK") + ":</b> " + this.XP.rankName + "<br />\n";
+		html += "<b>" + this.getTranslation("CHARGEN_RANK") + ":</b> " + _XP.rankName + "<br />\n";
 
 		/*
 	Attributes: Agility d8, Smarts d6, Spirit d6, Strength d6, Vigor d8
@@ -4855,11 +4789,11 @@ function savageCharacter (useLang) {
 		// Traits
 			// Attributes
 			html += "<strong>" + this.getTranslation("GENERAL_ATTRIBUTES") + ":</strong> ";
-				html += this.getTranslation("ATTRIBUTE_AGILITY") + ": " +  this.displayAttributes.agility.local_label + ", ";
-				html += this.getTranslation("ATTRIBUTE_SMARTS") + ": " +  this.displayAttributes.smarts.local_label + ", ";
-				html += this.getTranslation("ATTRIBUTE_SPIRIT") + ": " +   this.displayAttributes.spirit.local_label + ", ";
-				html += this.getTranslation("ATTRIBUTE_STRENGTH") + ": " +   this.displayAttributes.strength.local_label + ", ";
-				html += this.getTranslation("ATTRIBUTE_VIGOR") + ": " +   this.displayAttributes.vigor.local_label + " ";
+				html += this.getTranslation("ATTRIBUTE_AGILITY") + ": " +  _displayAttributes.agility.local_label + ", ";
+				html += this.getTranslation("ATTRIBUTE_SMARTS") + ": " +  _displayAttributes.smarts.local_label + ", ";
+				html += this.getTranslation("ATTRIBUTE_SPIRIT") + ": " +   _displayAttributes.spirit.local_label + ", ";
+				html += this.getTranslation("ATTRIBUTE_STRENGTH") + ": " +   _displayAttributes.strength.local_label + ", ";
+				html += this.getTranslation("ATTRIBUTE_VIGOR") + ": " +   _displayAttributes.vigor.local_label + " ";
 			html += "<br />\n";
 
 			// Skills
@@ -4896,7 +4830,6 @@ function savageCharacter (useLang) {
 			if( _derived.armor != 0 )
 				html += "(" + _derived.armor + ")";
 
-
 			html += "<br />\n";
 			// Edges
 
@@ -4913,7 +4846,6 @@ function savageCharacter (useLang) {
 					eCounter++;
 				}
 			}
-
 
 			if( eCounter == 0 ) {
 				html += "(none)";
@@ -4938,8 +4870,6 @@ function savageCharacter (useLang) {
 					hCounter++;
 				}
 			}
-
-
 
 			if(hCounter == 0) {
 				html += "(none)";
@@ -4972,13 +4902,13 @@ function savageCharacter (useLang) {
 					// TODO: range, rof, ap, and damage
 					html += " (";
 					//~ console.log(_selectedHandWeapons[gCount]);
-					html += "Damage:  " + _selectedHandWeapons[gCount].displayDamage.toString();
-					if( _selectedHandWeapons[gCount].range )
-						html += ", Range:  " +  _selectedHandWeapons[gCount].reach;
-					if( _selectedHandWeapons[gCount].ap > 0 )
-						html += ", AP: " +  _selectedHandWeapons[gCount].ap;
-					if( _selectedHandWeapons[gCount].rof > 0 )
-						html += ", ROF: " +  _selectedHandWeapons[gCount].rof;
+					html += "Damage:  " + _selectedRangedWeapons[gCount].displayDamage.toString();
+					if( _selectedRangedWeapons[gCount].range )
+						html += ", Range:  " +  _selectedRangedWeapons[gCount].reach;
+					if( _selectedRangedWeapons[gCount].ap > 0 )
+						html += ", AP: " +  _selectedRangedWeapons[gCount].ap;
+					if( _selectedRangedWeapons[gCount].rof > 0 )
+						html += ", ROF: " +  _selectedRangedWeapons[gCount].rof;
 					html += " )";
 
 					html += ", ";
@@ -5088,7 +5018,7 @@ function savageCharacter (useLang) {
 						boostedSkillSpecialty: _selectedSPCPowers[powerCounter].boosted_specialty
 					}
 
-					//exportObject.spcPowers.push( exportItem );
+					//_exportObject.spcPowers.push( exportItem );
 					if(
 						_selectedSPCPowers[powerCounter].custom_name != ""
 							&&
@@ -5111,13 +5041,9 @@ function savageCharacter (useLang) {
 						}
 					}
 
-
 					if( _selectedSPCPowers[powerCounter].per_level ) {
 						html += " - Level " + _selectedSPCPowers[powerCounter].selectedLevel;
 					}
-
-
-
 
 					html += " - " + _selectedSPCPowers[powerCounter].currentCost + " points</strong>";
 					if( _selectedSPCPowers[powerCounter].switchableWith ) {
@@ -5129,13 +5055,10 @@ function savageCharacter (useLang) {
 					if( _selectedSPCPowers[powerCounter].description != "")
 						html += _selectedSPCPowers[powerCounter].description.replace("\n", "<br />\n") + "<br />\n";
 
-
-
 					html += "<ul>";
 					if( _selectedSPCPowers[powerCounter].switchableWith ) {
 						html += "<li>Switchable With: " + _selectedSPCPowers[powerCounter].switchableWith.local_name + "</li>";
 					}
-
 
 					for( var modCounter = 0; modCounter < _selectedSPCPowers[powerCounter].modifiersObj.length; modCounter++) {
 						if( _selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost != 0) {
@@ -5227,200 +5150,202 @@ function savageCharacter (useLang) {
 	this.importJSON = function( jsonString ) {
 
 		if( jsonString ) {
-			importObject = JSON.parse(jsonString);
-			if( importObject ) {
-				this.init( _useLang );
-				_name = importObject.name;
-				_background = importObject.background;
-				if( importObject.uuid )
-					_uuid = importObject.uuid;
-				_description = importObject.description;
+			var _importObject = JSON.parse(jsonString);
 
-				if( importObject.books ) {
-					for( var importCounter = 0; importCounter < importObject.books.length; importCounter++ ) {
-						for( var bookCounter = 0; bookCounter < this.books.length; bookCounter++ ) {
-							//this.books[bookCounter].inUse = false;
-							if ( importObject.books[importCounter] == this.books[bookCounter].short_name ) {
-								this.books[bookCounter].inUse = true;
+			if( _importObject ) {
+				this.init( _useLang );
+				if( _importObject.name )
+					_name = _importObject.name;
+				if( _importObject.background )
+					_background = _importObject.background;
+				if( _importObject.uuid )
+					_uuid = _importObject.uuid;
+				if( _importObject.description )
+					_description = _importObject.description;
+
+				if( _importObject.books ) {
+					for( var importCounter = 0; importCounter < _importObject.books.length; importCounter++ ) {
+						for( var bookCounter = 0; bookCounter < _books.length; bookCounter++ ) {
+							//_books[bookCounter].inUse = false;
+							if ( _importObject.books[importCounter] == _books[bookCounter].short_name ) {
+								_books[bookCounter].inUse = true;
 							}
 						}
 					}
 				}
 
-				if( importObject.startingFunds )
-					_startingFunds = importObject.startingFunds;
+				if( _importObject.startingFunds )
+					_startingFunds = _importObject.startingFunds;
 
-				if( importObject.settingRules ) {
-					for( var importCounter = 0; importCounter < importObject.settingRules.length; importCounter++ ) {
-						this.enableSettingRule( importObject.settingRules[importCounter] );
+				if( _importObject.settingRules ) {
+					for( var importCounter = 0; importCounter < _importObject.settingRules.length; importCounter++ ) {
+						this.enableSettingRule( _importObject.settingRules[importCounter] );
 					}
 				}
 
 				this.validate();
 
 				for( attribute in _attributes ) {
-					if( importObject.attributes[ attribute ] ) {
+					if( _importObject.attributes[ attribute ] ) {
 						attribute = attribute.toLowerCase().trim();
 						if( _attributes[attribute] )
-							_attributes[attribute] =  importObject.attributes[ attribute ];
+							_attributes[attribute] =  _importObject.attributes[ attribute ];
 					}
 				}
 
-				if( importObject.knownLanguages ) {
-					_knownLanguages = importObject.knownLanguages;
+				if( _importObject.knownLanguages ) {
+					_knownLanguages = _importObject.knownLanguages;
 				}
 
-				if( importObject.gender )
-					this.setGender( importObject.gender  );
+				if( _importObject.gender )
+					this.setGender( _importObject.gender  );
 
-				if( importObject.xp )
-					this.setXP( importObject.xp  );
+				if( _importObject.xp )
+					this.setXP( _importObject.xp  );
 
-				if( importObject.race ){
-					this.setRace( importObject.race  );
+				if( _importObject.race ){
+					this.setRace( _importObject.race  );
 				}
 
-
-				if( importObject.skills ) {
-					for( var importCounter = 0; importCounter < importObject.skills.length; importCounter++ ) {
+				if( _importObject.skills ) {
+					for( var importCounter = 0; importCounter < _importObject.skills.length; importCounter++ ) {
 						this.setSkill(
-							importObject.skills[importCounter].id,
-							importObject.skills[importCounter].value
+							_importObject.skills[importCounter].id,
+							_importObject.skills[importCounter].value
 						);
 
-						if( importObject.skills[importCounter].specialties ) {
+						if( _importObject.skills[importCounter].specialties ) {
 							this.setSpecialties(
-								importObject.skills[importCounter].id,
-								importObject.skills[importCounter].specialties
+								_importObject.skills[importCounter].id,
+								_importObject.skills[importCounter].specialties
 							);
 						}
 					}
 				}
 
-				if( importObject.edges ) {
+				if( _importObject.edges ) {
 					_selectedEdges = Array();
-					for( var importCounter = 0; importCounter < importObject.edges.length; importCounter++ ) {
+					for( var importCounter = 0; importCounter < _importObject.edges.length; importCounter++ ) {
 						this.addEdge(
-							importObject.edges[importCounter].book,
-							importObject.edges[importCounter].tag
+							_importObject.edges[importCounter].book,
+							_importObject.edges[importCounter].tag
 						);
 					}
 				}
 
-				if( importObject.powers ) {
+				if( _importObject.powers ) {
 
-					for( var powerCounter = 0; powerCounter < importObject.powers.length; powerCounter++ ) {
+					for( var powerCounter = 0; powerCounter < _importObject.powers.length; powerCounter++ ) {
 						this.addPower(
-							importObject.powers[powerCounter].powerBook,
-							importObject.powers[powerCounter].powerTag,
-							importObject.powers[powerCounter].trapBook,
-							importObject.powers[powerCounter].trapTag,
-							importObject.powers[powerCounter].customName
+							_importObject.powers[powerCounter].powerBook,
+							_importObject.powers[powerCounter].powerTag,
+							_importObject.powers[powerCounter].trapBook,
+							_importObject.powers[powerCounter].trapTag,
+							_importObject.powers[powerCounter].customName
 						);
 					}
 				}
 
-				if( importObject.hindrances ) {
+				if( _importObject.hindrances ) {
 					_selectedHindrances = Array();
-					for( var importCounter = 0; importCounter < importObject.hindrances.length; importCounter++ ) {
+					for( var importCounter = 0; importCounter < _importObject.hindrances.length; importCounter++ ) {
 						this.addHindrance(
-							importObject.hindrances[importCounter].book,
-							importObject.hindrances[importCounter].tag,
-							importObject.hindrances[importCounter].specify
+							_importObject.hindrances[importCounter].book,
+							_importObject.hindrances[importCounter].tag,
+							_importObject.hindrances[importCounter].specify
 						);
 					}
 				}
 
-				if( importObject.perks ) {
+				if( _importObject.perks ) {
 					_selectedPerks = Array();
-					for( var importCounter = 0; importCounter < importObject.perks.length; importCounter++ ) {
+					for( var importCounter = 0; importCounter < _importObject.perks.length; importCounter++ ) {
 						this.addPerk(
-							importObject.perks[importCounter]
+							_importObject.perks[importCounter]
 						);
 					}
 				}
 
-				if( importObject.arcanebg ) {
-					this.setArcaneBackground( importObject.arcanebg );
+				if( _importObject.arcanebg ) {
+					this.setArcaneBackground( _importObject.arcanebg );
 				}
 
-				if( importObject.gearMundane ) {
+				if( _importObject.gearMundane ) {
 					_selectedMundaneGear = Array();
-					for( var importCounter = 0; importCounter < importObject.gearMundane.length; importCounter++ ) {
+					for( var importCounter = 0; importCounter < _importObject.gearMundane.length; importCounter++ ) {
 						itemCount = 1;
-						if( importObject.gearMundane[importCounter].count )
-							itemCount = importObject.gearMundane[importCounter].count;
+						if( _importObject.gearMundane[importCounter].count )
+							itemCount = _importObject.gearMundane[importCounter].count;
 						this.addGearMundane(
-							importObject.gearMundane[importCounter].book,
-							importObject.gearMundane[importCounter].tag,
-							importObject.gearMundane[importCounter].cost,
-							importObject.gearMundane[importCounter].dropped,
+							_importObject.gearMundane[importCounter].book,
+							_importObject.gearMundane[importCounter].tag,
+							_importObject.gearMundane[importCounter].cost,
+							_importObject.gearMundane[importCounter].dropped,
 							itemCount
 						);
 					}
 				}
 
-				if( importObject.gearShields ) {
+				if( _importObject.gearShields ) {
 					_selectedShields = Array();
-					for( var importCounter = 0; importCounter < importObject.gearShields.length; importCounter++ ) {
+					for( var importCounter = 0; importCounter < _importObject.gearShields.length; importCounter++ ) {
 						this.addGearShield(
-							importObject.gearShields[importCounter].book,
-							importObject.gearShields[importCounter].tag,
-							importObject.gearShields[importCounter].cost,
-							importObject.gearShields[importCounter].loc,
-							importObject.gearShields[importCounter].dropped
+							_importObject.gearShields[importCounter].book,
+							_importObject.gearShields[importCounter].tag,
+							_importObject.gearShields[importCounter].cost,
+							_importObject.gearShields[importCounter].loc,
+							_importObject.gearShields[importCounter].dropped
 						);
 					}
 				}
 
-				if( importObject.gearHandWeapons ) {
+				if( _importObject.gearHandWeapons ) {
 					_selectedHandWeapons = Array();
-					for( var importCounter = 0; importCounter < importObject.gearHandWeapons.length; importCounter++ ) {
+					for( var importCounter = 0; importCounter < _importObject.gearHandWeapons.length; importCounter++ ) {
 						this.addGearHandWeapon(
-							importObject.gearHandWeapons[importCounter].book,
-							importObject.gearHandWeapons[importCounter].tag,
-							importObject.gearHandWeapons[importCounter].cost,
-							importObject.gearHandWeapons[importCounter].loc,
-							importObject.gearHandWeapons[importCounter].dropped
+							_importObject.gearHandWeapons[importCounter].book,
+							_importObject.gearHandWeapons[importCounter].tag,
+							_importObject.gearHandWeapons[importCounter].cost,
+							_importObject.gearHandWeapons[importCounter].loc,
+							_importObject.gearHandWeapons[importCounter].dropped
 						);
 					}
 				}
 
-				if( importObject.gearRangedWeapons ) {
+				if( _importObject.gearRangedWeapons ) {
 					_selectedRangedWeapons = Array();
-					for( var importCounter = 0; importCounter < importObject.gearRangedWeapons.length; importCounter++ ) {
+					for( var importCounter = 0; importCounter < _importObject.gearRangedWeapons.length; importCounter++ ) {
 						this.addGearRangedWeapon(
-							importObject.gearRangedWeapons[importCounter].book,
-							importObject.gearRangedWeapons[importCounter].tag,
-							importObject.gearRangedWeapons[importCounter].cost,
-							importObject.gearRangedWeapons[importCounter].loc,
-							importObject.gearRangedWeapons[importCounter].dropped
+							_importObject.gearRangedWeapons[importCounter].book,
+							_importObject.gearRangedWeapons[importCounter].tag,
+							_importObject.gearRangedWeapons[importCounter].cost,
+							_importObject.gearRangedWeapons[importCounter].loc,
+							_importObject.gearRangedWeapons[importCounter].dropped
 						);
 					}
 				}
 
-				if( importObject.gearArmor ) {
+				if( _importObject.gearArmor ) {
 					_selectedArmor = Array();
-					for( var importCounter = 0; importCounter < importObject.gearArmor.length; importCounter++ ) {
+					for( var importCounter = 0; importCounter < _importObject.gearArmor.length; importCounter++ ) {
 						this.addGearArmor(
-							importObject.gearArmor[importCounter].book,
-							importObject.gearArmor[importCounter].tag,
-							importObject.gearArmor[importCounter].cost,
-							importObject.gearArmor[importCounter].readied,
-							importObject.gearArmor[importCounter].dropped
+							_importObject.gearArmor[importCounter].book,
+							_importObject.gearArmor[importCounter].tag,
+							_importObject.gearArmor[importCounter].cost,
+							_importObject.gearArmor[importCounter].readied,
+							_importObject.gearArmor[importCounter].dropped
 						);
 					}
 				}
 
-
-				if(importObject.spcpowerlevel)
-					_SPCSelectedPowerLevel = importObject.spcpowerlevel;
+				if(_importObject.spcpowerlevel)
+					_SPCSelectedPowerLevel = _importObject.spcpowerlevel;
 
 				if(
-					importObject.risingstars
+					_importObject.risingstars
 						&&
 					(
-						importObject.risingstars > 1 || importObject.risingstars == "1"
+						_importObject.risingstars > 1 || _importObject.risingstars == "1"
 					)
 				){
 					_SPCRisingStars = true;
@@ -5428,83 +5353,84 @@ function savageCharacter (useLang) {
 					_SPCRisingStars = false;
 				}
 
-				if( importObject.spcPowers ) {
+				if( _importObject.spcPowers ) {
 					//powerID, descriptionText, level, modifiers
-					//~ console.log( importObject.spcPowers );
-					for( var importCounter = 0; importCounter < importObject.spcPowers.length; importCounter++ ) {
-						//console.log(" *", importObject.spcPowers[ importCounter ])
-						powerID = importObject.spcPowers[ importCounter ].id;
-						descriptionText = importObject.spcPowers[ importCounter ].desc;
-						customName = importObject.spcPowers[ importCounter ].customName;
-						level = importObject.spcPowers[ importCounter ].level;
-						modifiers = importObject.spcPowers[ importCounter ].modifiers;
-						if( importObject.spcPowers[ importCounter ].genericModifiers )
-							genericModifiers = importObject.spcPowers[ importCounter ].genericModifiers;
+					//~ console.log( _importObject.spcPowers );
+					for( var importCounter = 0; importCounter < _importObject.spcPowers.length; importCounter++ ) {
+						//console.log(" *", _importObject.spcPowers[ importCounter ])
+						powerID = _importObject.spcPowers[ importCounter ].id;
+						descriptionText = _importObject.spcPowers[ importCounter ].desc;
+						customName = _importObject.spcPowers[ importCounter ].customName;
+						level = _importObject.spcPowers[ importCounter ].level;
+						modifiers = _importObject.spcPowers[ importCounter ].modifiers;
+						if( _importObject.spcPowers[ importCounter ].genericModifiers )
+							genericModifiers = _importObject.spcPowers[ importCounter ].genericModifiers;
 						else
 							genericModifiers = null;
 
-						boostedAttribute = importObject.spcPowers[ importCounter ].boostedAttribute;
-						boostedSkill = importObject.spcPowers[ importCounter ].boostedSkill;
-						boostedSkillSpecialty = importObject.spcPowers[ importCounter ].boostedSkillSpecialty;
+						boostedAttribute = _importObject.spcPowers[ importCounter ].boostedAttribute;
+						boostedSkill = _importObject.spcPowers[ importCounter ].boostedSkill;
+						boostedSkillSpecialty = _importObject.spcPowers[ importCounter ].boostedSkillSpecialty;
 
-						switchableWith = importObject.spcPowers[importCounter].switchableWith;
+						switchableWith = _importObject.spcPowers[importCounter].switchableWith;
 
 						this.addSPCPower( powerID, customName, descriptionText, level, modifiers, genericModifiers, switchableWith, boostedAttribute,  boostedSkill, boostedSkillSpecialty );
 					}
 				}
 
-				if( importObject.advancements ) {
+				if( _importObject.advancements ) {
 					_selectedAdvancements = Array();
 					this.validate();
-					for( var importCounter = 0; importCounter < importObject.advancements.length; importCounter++ ) {
+					for( var importCounter = 0; importCounter < _importObject.advancements.length; importCounter++ ) {
 						this.setAdvancementType(
-							importObject.advancements[importCounter].takenAt,
-							importObject.advancements[importCounter].tag
+							_importObject.advancements[importCounter].takenAt,
+							_importObject.advancements[importCounter].tag
 						);
 
-						if( importObject.advancements[importCounter].option1 ) {
-							option1name = null;
-							if( importObject.advancements[importCounter].option1name )
-								option1name = importObject.advancements[importCounter].option1name;
 
-							if( importObject.advancements[importCounter].option1book ){
+						if( _importObject.advancements[importCounter].option1 ) {
+							option1name = null;
+							if( _importObject.advancements[importCounter].option1name )
+								option1name = _importObject.advancements[importCounter].option1name;
+
+							if( _importObject.advancements[importCounter].option1book ){
 								this.setAdvancementOption1(
-									importObject.advancements[importCounter].takenAt,
-									importObject.advancements[importCounter].option1,
+									_importObject.advancements[importCounter].takenAt,
+									_importObject.advancements[importCounter].option1,
 									option1name,
-									importObject.advancements[importCounter].option1book
+									_importObject.advancements[importCounter].option1book
 								 );
 							} else {
 								this.setAdvancementOption1(
-									importObject.advancements[importCounter].takenAt,
-									importObject.advancements[importCounter].option1,
+									_importObject.advancements[importCounter].takenAt,
+									_importObject.advancements[importCounter].option1,
 									option1name
 								);
 							}
 						}
 
-						if( importObject.advancements[importCounter].option2 ) {
+						if( _importObject.advancements[importCounter].option2 ) {
 							option2name = null;
-							if( importObject.advancements[importCounter].option2name )
-								option2name = importObject.advancements[importCounter].option2name;
-							if( importObject.advancements[importCounter].option2book ){
+							if( _importObject.advancements[importCounter].option2name )
+								option2name = _importObject.advancements[importCounter].option2name;
+							if( _importObject.advancements[importCounter].option2book ){
 								this.setAdvancementOption2(
-									importObject.advancements[importCounter].takenAt,
-									importObject.advancements[importCounter].option2,
+									_importObject.advancements[importCounter].takenAt,
+									_importObject.advancements[importCounter].option2,
 									option2name,
-									importObject.advancements[importCounter].option2book
+									_importObject.advancements[importCounter].option2book
 								 );
 							} else {
-
 								this.setAdvancementOption2(
-									importObject.advancements[importCounter].takenAt,
-									importObject.advancements[importCounter].option2,
+									_importObject.advancements[importCounter].takenAt,
+									_importObject.advancements[importCounter].option2,
 									option2name
 								);
 							}
 						}
 					}
 				}
+
 				_isNew = false;
 				this.validate();
 				return true;
@@ -5513,7 +5439,6 @@ function savageCharacter (useLang) {
 
 		return false;
 	}
-
 
 	this.setAdvancementOption1 = function( advIndex, optionItem, specifyName, bookID ) {
 
@@ -5529,16 +5454,17 @@ function savageCharacter (useLang) {
 						||
 					_selectedAdvancements[advIndex].tag == "skill"
 				) {
-					//console.log( "setAdvancementOption1", advIndex, optionItem)
 					if( optionItem.id ) {
 						_selectedAdvancements[advIndex].option1 = optionItem;
 					} else {
-						_selectedAdvancements[advIndex].option1 = this.getSkill( optionItem , specifyName);
+						if(_selectedAdvancements[advIndex].tag == "skill")
+							_selectedAdvancements[advIndex].option1 = this.getSkill( optionItem );
+						else
+							_selectedAdvancements[advIndex].option1 = this.getSkill( optionItem , specifyName);
 					}
 				} else {
 					_selectedAdvancements[advIndex].option1 = optionItem;
 				}
-
 
 			}
 			if( bookID )
@@ -5548,18 +5474,12 @@ function savageCharacter (useLang) {
 	}
 
 	this.setAdvancementOption2 = function( advIndex, optionItem, specifyName, bookID ) {
-		//console.log( "setAdvancementOption2", advIndex, optionItem, specifyName, bookID);
 		if( optionItem && _selectedAdvancements[advIndex] ) {
 			if(
 				_selectedAdvancements[advIndex].tag == "skill"
 
 			) {
-				//if( optionItem.id ) {
-				//	console.log("specifyName", specifyName) ;
-					_selectedAdvancements[advIndex].option2 = specifyName;
-				//} else {
-				//	_selectedAdvancements[advIndex].option2 = this.getSkill( optionItem , specifyName);
-				//}
+				_selectedAdvancements[advIndex].option2 = specifyName;
 			} else {
 				if(
 					_selectedAdvancements[advIndex].tag == "incskill"
@@ -5617,23 +5537,21 @@ function savageCharacter (useLang) {
 	}
 
 	this.exportJSON = function(noUUID) {
-
-		var exportObject = {};
-		exportObject.name = _name;
-		exportObject.background = _background;
-		exportObject.description = _description;
+		var _exportObject = {};
+		_exportObject.name = _name;
+		_exportObject.background = _background;
+		_exportObject.description = _description;
 
 		if(!noUUID)
-			exportObject.uuid = _uuid;
+			_exportObject.uuid = _uuid;
 
-		exportObject.xp = this.XP.value;
-		exportObject.gender = _gender.id;
-		exportObject.race = _race.id;
+		_exportObject.xp = _XP.value;
+		_exportObject.gender = _gender.id;
+		_exportObject.race = _race.id;
 
-		exportObject.startingFunds = _startingFunds;
+		_exportObject.startingFunds = _startingFunds;
 
-
-		exportObject.attributes = {
+		_exportObject.attributes = {
 			agility: _attributes.agility,
 			smarts: _attributes.smarts,
 			spirit: _attributes.spirit,
@@ -5641,20 +5559,19 @@ function savageCharacter (useLang) {
 			vigor: _attributes.vigor,
 		}
 
-		exportObject.books = Array();
+		_exportObject.books = Array();
 
-		for( var bookCounter = 0; bookCounter < this.books.length; bookCounter++ ) {
-			if ( this.books[bookCounter].inUse  )
-				exportObject.books.push( this.books[bookCounter].short_name );
+		for( var bookCounter = 0; bookCounter < _books.length; bookCounter++ ) {
+			if ( _books[bookCounter].inUse  )
+				_exportObject.books.push( _books[bookCounter].short_name );
 		}
 
-		exportObject.perks = Array();
+		_exportObject.perks = Array();
 		for( var perkCounter = 0; perkCounter < _selectedPerks.length; perkCounter++ ) {
-			exportObject.perks.push( _selectedPerks[perkCounter].tag );
+			_exportObject.perks.push( _selectedPerks[perkCounter].tag );
 		}
 
-
-		exportObject.skills = Array();
+		_exportObject.skills = Array();
 
 		for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
 			if(
@@ -5679,20 +5596,20 @@ function savageCharacter (useLang) {
 
 					}
 				}
-				exportObject.skills.push( skillObj );
+				_exportObject.skills.push( skillObj );
 			}
-			exportObject.edges = Array();
+			_exportObject.edges = Array();
 			for( var edgeCounter = 0; edgeCounter < _selectedEdges.length; edgeCounter++ ) {
-				exportObject.edges.push( {
+				_exportObject.edges.push( {
 					book: _selectedEdges[edgeCounter].book,
 					tag: _selectedEdges[edgeCounter].tag,
 				});
 			}
 
 			if( _selectedPowers.length > 0 ) {
-				exportObject.powers = Array();
+				_exportObject.powers = Array();
 				for( var powerCounter = 0; powerCounter < _selectedPowers.length; powerCounter++ ) {
-					exportObject.powers.push( {
+					_exportObject.powers.push( {
 						powerBook: _selectedPowers[powerCounter].book,
 						powerTag: _selectedPowers[powerCounter].tag,
 						trapBook: _selectedPowers[powerCounter].trapping.book,
@@ -5702,22 +5619,21 @@ function savageCharacter (useLang) {
 				}
 			}
 
-			exportObject.hindrances = Array();
+			_exportObject.hindrances = Array();
 			for( var hindranceCounter = 0; hindranceCounter < _selectedHindrances.length; hindranceCounter++ ) {
-				exportObject.hindrances.push( {
+				_exportObject.hindrances.push( {
 					book: _selectedHindrances[hindranceCounter].book,
 					tag: _selectedHindrances[hindranceCounter].tag,
 					specify: _selectedHindrances[hindranceCounter].specifyField,
 				});
 			}
 
-			if( this.selectedArcaneBackground.tag != "")
-				exportObject.arcanebg = this.selectedArcaneBackground.tag;
+			if( _selectedArcaneBackground.tag != "")
+				_exportObject.arcanebg = _selectedArcaneBackground.tag;
 
-
-			exportObject.gearMundane = Array();
+			_exportObject.gearMundane = Array();
 			for( var gearCounter = 0; gearCounter < _selectedMundaneGear.length; gearCounter++ ) {
-				exportObject.gearMundane.push( {
+				_exportObject.gearMundane.push( {
 					book: _selectedMundaneGear[gearCounter].book,
 					tag: _selectedMundaneGear[gearCounter].tag,
 					cost: _selectedMundaneGear[gearCounter].purchaseCost,
@@ -5726,9 +5642,9 @@ function savageCharacter (useLang) {
 				});
 			}
 
-			exportObject.gearShields = Array();
+			_exportObject.gearShields = Array();
 			for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
-				exportObject.gearShields.push( {
+				_exportObject.gearShields.push( {
 					book: _selectedShields[gearCounter].book,
 					tag: _selectedShields[gearCounter].tag,
 					cost: _selectedShields[gearCounter].purchaseCost,
@@ -5737,9 +5653,9 @@ function savageCharacter (useLang) {
 				});
 			}
 
-			exportObject.gearHandWeapons = Array();
+			_exportObject.gearHandWeapons = Array();
 			for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++ ) {
-				exportObject.gearHandWeapons.push( {
+				_exportObject.gearHandWeapons.push( {
 					book: _selectedHandWeapons[gearCounter].book,
 					tag: _selectedHandWeapons[gearCounter].tag,
 					cost: _selectedHandWeapons[gearCounter].purchaseCost,
@@ -5748,9 +5664,9 @@ function savageCharacter (useLang) {
 				});
 			}
 
-			exportObject.gearRangedWeapons = Array();
+			_exportObject.gearRangedWeapons = Array();
 			for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++ ) {
-				exportObject.gearRangedWeapons.push( {
+				_exportObject.gearRangedWeapons.push( {
 					book: _selectedRangedWeapons[gearCounter].book,
 					tag: _selectedRangedWeapons[gearCounter].tag,
 					cost: _selectedRangedWeapons[gearCounter].purchaseCost,
@@ -5759,9 +5675,9 @@ function savageCharacter (useLang) {
 				});
 			}
 
-			exportObject.gearArmor = Array();
+			_exportObject.gearArmor = Array();
 			for( var gearCounter = 0; gearCounter < _selectedArmor.length; gearCounter++ ) {
-				exportObject.gearArmor.push( {
+				_exportObject.gearArmor.push( {
 					book: _selectedArmor[gearCounter].book,
 					tag: _selectedArmor[gearCounter].tag,
 					cost: _selectedArmor[gearCounter].purchaseCost,
@@ -5770,29 +5686,29 @@ function savageCharacter (useLang) {
 				});
 			}
 
-			exportObject.settingRules = Array();
+			_exportObject.settingRules = Array();
 			for( var bookCounter = 0; bookCounter < savageWorldsBooksList.length; bookCounter++ ) {
 				for( var settingCounter = 0; settingCounter < savageWorldsBooksList[bookCounter].setting_rules.length; settingCounter++ ) {
 					if( savageWorldsBooksList[bookCounter].inUse && savageWorldsBooksList[bookCounter].setting_rules[settingCounter].inUse ) {
-						exportObject.settingRules.push( savageWorldsBooksList[bookCounter].setting_rules[settingCounter].tag );
+						_exportObject.settingRules.push( savageWorldsBooksList[bookCounter].setting_rules[settingCounter].tag );
 					}
 				}
 
 			}
 
-			exportObject.spcpowerlevel = _SPCSelectedPowerLevel;
+			_exportObject.spcpowerlevel = _SPCSelectedPowerLevel;
 			if(_SPCRisingStars )
-				exportObject.risingstars = 1;
+				_exportObject.risingstars = 1;
 			else
-				exportObject.risingstars = 0;
+				_exportObject.risingstars = 0;
 
-			exportObject.knownLanguages = Array();
+			_exportObject.knownLanguages = Array();
 			for( var langCounter = 0; langCounter < _knownLanguagesLimit + 1; langCounter++ ) {
-				exportObject.knownLanguages.push( _knownLanguages[langCounter] );
+				_exportObject.knownLanguages.push( _knownLanguages[langCounter] );
 			}
 
 			if( _usesSPCCreation ) {
-				exportObject.spcPowers = Array()
+				_exportObject.spcPowers = Array()
 
 				for( var powerCounter = 0; powerCounter < _selectedSPCPowers.length; powerCounter++) {
 
@@ -5835,11 +5751,11 @@ function savageCharacter (useLang) {
 						boostedSkillSpecialty: _selectedSPCPowers[powerCounter].boosted_specialty
 					}
 
-					exportObject.spcPowers.push( exportItem );
+					_exportObject.spcPowers.push( exportItem );
 				}
 			}
 
-			exportObject.advancements = Array();
+			_exportObject.advancements = Array();
 			for( var advCounter = 0; advCounter < _selectedAdvancements.length; advCounter++ ) {
 				if( _selectedAdvancements[advCounter].tag != "none") {
 					var exportItem = {
@@ -5890,15 +5806,14 @@ function savageCharacter (useLang) {
 						exportItem.option2book = _selectedAdvancements[advCounter].option2book;
 					}
 
-					exportObject.advancements.push(
+					_exportObject.advancements.push(
 						exportItem
 					)
 				}
 			}
 		}
 
-	//	console.log( exportObject );
-		return JSON.stringify( exportObject );
+		return JSON.stringify( _exportObject );
 	}
 
 	this.getTranslation = function(langKey) {
@@ -5916,10 +5831,10 @@ function savageCharacter (useLang) {
 	}
 
 	this.bookInUse = function( bookID ) {
-		// console.log(this.books);
-		for( var bookCounter = 0; bookCounter < this.books.length; bookCounter++) {
-			if( this.books[bookCounter].id == bookID ) {
-				if( this.books[bookCounter].inUse == true ){
+		// console.log(_books);
+		for( var bookCounter = 0; bookCounter < _books.length; bookCounter++) {
+			if( _books[bookCounter].id == bookID ) {
+				if( _books[bookCounter].inUse == true ){
 					return true;
 				}
 			}
@@ -5929,13 +5844,13 @@ function savageCharacter (useLang) {
 
 	this.hasArcane = function( arcaneTag ) {
 		if( typeof( arcaneTag ) == "string") {
-			if( this.selectedArcaneBackground && this.selectedArcaneBackground.tag == arcaneTag)
+			if( _selectedArcaneBackground && _selectedArcaneBackground.tag == arcaneTag)
 				return true;
 		} else {
 			// for possible future use.
 			if( typeof( arcaneTag ) == "array") {
 				for(var atc = 0; atc > arcaneTag.length; atc++ ) {
-					if( this.selectedArcaneBackground && this.selectedArcaneBackground.tag == arcaneTag[atc])
+					if( _selectedArcaneBackground && _selectedArcaneBackground.tag == arcaneTag[atc])
 						return true;
 				}
 			}
@@ -5947,12 +5862,284 @@ function savageCharacter (useLang) {
 		return _perkOptions;
 	}
 
+	this.getRaceOptions = function() {
+		return _raceOptions;
+	}
+
+	this.getAvailableEdges = function() {
+		return _availableEdges;
+	}
+
+	this.getAvailablePowers = function() {
+		return _availablePowers;
+	}
+
+	this.getAvailableTrappings = function() {
+		return _availableTrappings;
+	}
+
+	this.setSelectedPower = function( powerIndex, powerObject ) {
+		if( _selectedPowers[ powerIndex ] )
+			return _selectedPowers[ powerIndex ] = powerObject;
+		else
+			return false;
+	}
+
+	this.getStartingFunds = function() {
+		return _startingFunds;
+	}
+
+	this.getGenderOptions = function() {
+		return _genderOptions;
+	}
+
+	this.setStartingFunds = function( newValue ) {
+		_startingFunds = newValue / 1;
+	}
+
+	this.getRace = function() {
+		return _race;
+	}
+
+	this.getGender = function() {
+		return _gender;
+	}
+
+	this.getName = function() {
+		return _name;
+	}
+
+	this.getDescripton = function() {
+		return _description;
+	}
+
+	this.getDiceValues = function() {
+		return _diceValues;
+	}
+
+	this.usesSPCCreation = function() {
+		return _usesSPCCreation;
+	}
+
+	this.getAvailableEdgePoints = function() {
+		return _availableEdgePoints;
+	}
+
+	this.getBackground = function() {
+		return _background;
+	}
+
+	this.setName = function( newValue ) {
+		return _name = newValue;
+	}
+
+	this.setDescripton = function( newValue ) {
+		return _description = newValue;
+	}
+
+	this.setBackground = function( newValue ) {
+		return _background = newValue;
+	}
+
+	this.getAttributeDisplayValues = function() {
+		return _displayAttributes;
+	}
+
+	this.getSPCSelectedPowerLevel = function() {
+		return _SPCSelectedPowerLevel;
+	}
+
+	this.setSPCCampaignPowerLevel = function( newValue ) {
+		return _SPCSelectedPowerLevel = newValue;
+	}
+
+	this.getSPCCurrentPowerPoints = function() {
+		return _SPCCurrentPowerPoints;
+	}
+
+	this.getSPCPowerLimit = function() {
+		return _SPCPowerLimit;
+	}
+
+	this.getSPCPowerLevels = function() {
+		return _SPCPowerLevels;
+	}
+
+	this.getAttributes = function() {
+		return _attributes;
+	}
+
+	this.getBooks = function() {
+		return _books;
+	}
+
+	this.getCurrentLoad = function() {
+		return _load.currentLoad;
+	}
+
+	this.getCurrentLoadModifier = function() {
+		return _load.loadModifier;
+	}
+
+	this.getSPCRisingStars = function() {
+		return _SPCRisingStars;
+	}
+
+	this.incrementSPCPowerLevel = function( powerIndex ) {
+		_selectedSPCPowers[powerIndex].selectedLevel++;
+		if( _selectedSPCPowers[powerIndex].max_level > 1 && _selectedSPCPowers[powerIndex].selectedLevel >= _selectedSPCPowers[powerIndex].max_level) {
+			_selectedSPCPowers[powerIndex].selectedLevel = _selectedSPCPowers[powerIndex].max_level;
+		}
+		return _selectedSPCPowers[powerIndex];
+	}
+
+	this.decrementSPCPowerLevel = function( powerIndex ) {
+		_selectedSPCPowers[powerIndex].selectedLevel--;
+		if( _selectedSPCPowers[powerIndex].selectedLevel < 1) {
+			_selectedSPCPowers[powerIndex].selectedLevel = 1;
+		}
+		return _selectedSPCPowers[powerIndex];
+	}
+
+	this.setSPCRisingStars = function( newValue ) {
+		return _SPCRisingStars = newValue;
+	}
+
+	this.getCombatLoadModifier = function() {
+		return _load.combatLoadModifier;
+	}
+
+	this.getCombatLoad = function() {
+		return _load.combatLoad;
+	}
+
+	this.usesStrain = function( setValue ) {
+		if( typeof( setValue ) != "undefined" )
+			_usesStrain = setValue;
+		return _usesStrain;
+	}
+
+	this.hasArcaneBackground = function( setValue ) {
+
+		if( typeof( setValue ) != "undefined" )
+			_hasArcaneBackground = setValue;
+
+		return _hasArcaneBackground;
+	}
+
+	this.getWarningReport = function() {
+		return _warningReport;
+	}
+
+	this.getValidationReport = function() {
+		return _validationReport;
+	}
+
+	this.incrementAttributePointsAvailable = function( incValue ) {
+		_attributePointsAvailable += incValue / 1;
+	}
+
+	this.secondMajorHindranceChosen = function() {
+		return _secondMajorHindranceChosen;
+	}
+
+	this.incrementAvailbleEdgePoints = function( incValue ) {
+		_availableEdgePoints += incValue / 1;
+	}
+
+	this.incrementSkillPointsAvailable = function( incValue ) {
+		_skillPointsAvailable += incValue / 1;
+	}
+
+	this.incrementEdgePoints = function( incValue ) {
+		_availableEdgePoints += incValue / 1;
+	}
+
+	this.getAvailbleArcaneBackgrounds = function() {
+		return _availableArcaneBackgrounds;
+	}
+
+	this.setTakenSPCExtraPowerPoints = function( newValue ) {
+		if( newValue )
+			_SPCTakenExtraPowerPoints = true;
+		else
+			_SPCTakenExtraPowerPoints = false;
+	}
+
+	this.getTakenSPCExtraPowerPoints = function() {
+		return _SPCTakenExtraPowerPoints;
+	}
+
+	this.isValid = function() {
+		return _isValid;
+	}
+
 	this.getLocalName = function( incomingStringArray ) {
 			if( incomingStringArray[ _useLang] ) {
 				return incomingStringArray[ _useLang];
 			} else {
 				return incomingStringArray[ "en-US" ];
 			}
+	}
+
+	this.getAgilitySkills = function() {
+		return _agilitySkills;
+	}
+
+	this.getAvailableSkillPoints = function() {
+		return _skillPointsAvailable;
+	}
+
+	this.getUsedSkillPoints = function() {
+		return _skillPointsUsed;
+	}
+
+	this.getAvailableAttributePoints = function() {
+		return _attributePointsAvailable;
+	}
+
+	this.getUsedAttributePoints = function() {
+		return _attributePointsUsed;
+	}
+
+	this.getSmartsSkills = function() {
+		return _smartsSkills;
+	}
+
+	this.getPowerPointsAvailable = function() {
+		return _powerPointsAvailable;
+	}
+
+	this.getSelectedPowers = function() {
+		return _selectedPowers;
+	}
+
+	this.getSelectedArcaneBackground = function() {
+		return _selectedArcaneBackground;
+	}
+
+	this.getAvailablePerkPoints = function() {
+		return _availablePerkPoints;
+	}
+
+	this.getAvailableNumberOfPowers = function() {
+		return _totalPowersKnown;
+	}
+
+	this.getCurrentFunds = function() {
+		return _currentFunds;
+	}
+
+	this.getSpiritSkills = function() {
+		return _spiritSkills;
+	}
+
+	this.getVigorSkills = function() {
+		return _vigorSkills;
+	}
+
+	this.getStrengthSkills = function() {
+		return _strengthSkills;
 	}
 
 	this.incrementSkill = function( skillID ) {
@@ -6036,37 +6223,37 @@ function savageCharacter (useLang) {
 	}
 
 	this.getSkill = function( skillID, specifyName ) {
-		for( var skillCounter = 0; skillCounter < this.allSkills.length; skillCounter++ ) {
+		for( var skillCounter = 0; skillCounter < _allSkills.length; skillCounter++ ) {
 			if(
-				this.allSkills[skillCounter].id == skillID
+				_allSkills[skillCounter].id == skillID
 					||
-				this.allSkills[skillCounter] == skillID
+				_allSkills[skillCounter] == skillID
 					||
 				(
 					skillID.id
 						&&
 					(
-						this.allSkills[skillCounter].id == skillID.id
+						_allSkills[skillCounter].id == skillID.id
 							||
-						this.allSkills[skillCounter] == skillID.id
+						_allSkills[skillCounter] == skillID.id
 					)
 				)
 			) {
 				if( specifyName ) {
 					if( specifyName ) {
-						if( this.allSkills[skillCounter].specialties ) {
+						if( _allSkills[skillCounter].specialties ) {
 
-							for( var specC = 0; specC < this.allSkills[skillCounter].specialties.length; specC++ ) {
+							for( var specC = 0; specC < _allSkills[skillCounter].specialties.length; specC++ ) {
 
-								if( this.allSkills[skillCounter].specialties[specC].name.trim().toLowerCase() == specifyName.trim().toLowerCase() ) {
-									return this.allSkills[skillCounter].specialties[specC];
+								if( _allSkills[skillCounter].specialties[specC].name.trim().toLowerCase() == specifyName.trim().toLowerCase() ) {
+									return _allSkills[skillCounter].specialties[specC];
 								}
 							}
 						}
 						return null;
 					}
 				} else {
-					return this.allSkills[skillCounter];
+					return _allSkills[skillCounter];
 				}
 
 			}
@@ -6085,7 +6272,6 @@ function savageCharacter (useLang) {
 		}
 		return false;
 	}
-
 
 	this.incrementSpecialtySkill = function( skillID, specialtyIndex ) {
 		for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
@@ -6262,11 +6448,10 @@ function savageCharacter (useLang) {
 		return false;
 	}
 
-
 	this.setArcaneBackground = function( abTag ) {
 		for( abCounter = 0; abCounter < savageWorldsArcaneBackgrounds.length; abCounter++) {
 			if( abTag == savageWorldsArcaneBackgrounds[abCounter].tag ) {
-				this.selectedArcaneBackground = savageWorldsArcaneBackgrounds[abCounter];
+				_selectedArcaneBackground = savageWorldsArcaneBackgrounds[abCounter];
 				return true;
 			}
 		}
@@ -6278,11 +6463,11 @@ function savageCharacter (useLang) {
 			itemCount = 1;
 		if(!droppedDuringCombat)
 			droppedDuringCombat = false;
-		for( var gearCounter = 0; gearCounter < this.availableMundaneGear.length; gearCounter++ ) {
+		for( var gearCounter = 0; gearCounter < _availableMundaneGear.length; gearCounter++ ) {
 			if(
-				gearTag == this.availableMundaneGear[gearCounter].tag
+				gearTag == _availableMundaneGear[gearCounter].tag
 					&&
-				fromBook == this.availableMundaneGear[gearCounter].book
+				fromBook == _availableMundaneGear[gearCounter].book
 			) {
 				mundaneGearIndex = this.getMundaneGear( gearTag );
 				if( mundaneGearIndex > -1 ) {
@@ -6290,9 +6475,8 @@ function savageCharacter (useLang) {
 					return true;
 				} else {
 
-
 					var pushedItem = {};
-					angular.extend( pushedItem, this.availableMundaneGear[gearCounter]);
+					angular.extend( pushedItem, _availableMundaneGear[gearCounter]);
 					pushedItem.droppedDuringCombat = droppedDuringCombat;
 					if( itemCost > -1 ) {
 						pushedItem.purchaseCost = itemCost;
@@ -6321,14 +6505,14 @@ function savageCharacter (useLang) {
 	this.addGearRangedWeapon = function( fromBook, gearTag, itemCost, readiedLocation, droppedDuringCombat ) {
 		if(!droppedDuringCombat)
 			droppedDuringCombat = false;
-		for( var gearCounter = 0; gearCounter < this.availableRangedWeapons.length; gearCounter++ ) {
+		for( var gearCounter = 0; gearCounter < _availableRangedWeapons.length; gearCounter++ ) {
 			if(
-				gearTag == this.availableRangedWeapons[gearCounter].tag
+				gearTag == _availableRangedWeapons[gearCounter].tag
 					&&
-				fromBook == this.availableRangedWeapons[gearCounter].book
+				fromBook == _availableRangedWeapons[gearCounter].book
 			) {
 				var pushedItem = {};
-				angular.extend( pushedItem, this.availableRangedWeapons[gearCounter]);
+				angular.extend( pushedItem, _availableRangedWeapons[gearCounter]);
 				pushedItem.droppedDuringCombat = droppedDuringCombat;
 				if( itemCost > -1 ) {
 					pushedItem.purchaseCost = itemCost;
@@ -6350,20 +6534,20 @@ function savageCharacter (useLang) {
 	this.addGearHandWeapon = function( fromBook, gearTag, itemCost, readiedLocation, droppedDuringCombat ) {
 		if(!droppedDuringCombat)
 			droppedDuringCombat = false;
-		for( var gearCounter = 0; gearCounter < this.availableHandWeapons.length; gearCounter++ ) {
+		for( var gearCounter = 0; gearCounter < _availableHandWeapons.length; gearCounter++ ) {
 			//~ if(
-				//~ gearTag == this.availableHandWeapons[gearCounter].tag
+				//~ gearTag == _availableHandWeapons[gearCounter].tag
 			//~ ) {
-				//~ console.log( this.availableHandWeapons[gearCounter].book );
+				//~ console.log( _availableHandWeapons[gearCounter].book );
 				//~ console.log(gearCounter);
 			//~ }
 			if(
-				gearTag == this.availableHandWeapons[gearCounter].tag
+				gearTag == _availableHandWeapons[gearCounter].tag
 					&&
-				fromBook == this.availableHandWeapons[gearCounter].book
+				fromBook == _availableHandWeapons[gearCounter].book
 			) {
 				var pushedItem = {};
-				angular.extend( pushedItem, this.availableHandWeapons[gearCounter]);
+				angular.extend( pushedItem, _availableHandWeapons[gearCounter]);
 				pushedItem.droppedDuringCombat = droppedDuringCombat;
 				if( itemCost > -1 ) {
 					pushedItem.purchaseCost = itemCost;
@@ -6385,14 +6569,14 @@ function savageCharacter (useLang) {
 	this.addGearShield = function( fromBook, gearTag, itemCost, readiedLocation, droppedDuringCombat ) {
 		if(!droppedDuringCombat)
 			droppedDuringCombat = false;
-		for( var gearCounter = 0; gearCounter < this.availableShields.length; gearCounter++ ) {
+		for( var gearCounter = 0; gearCounter < _availableShields.length; gearCounter++ ) {
 			if(
-				gearTag == this.availableShields[gearCounter].tag
+				gearTag == _availableShields[gearCounter].tag
 					&&
-				fromBook == this.availableShields[gearCounter].book
+				fromBook == _availableShields[gearCounter].book
 			) {
 				var pushedItem = {};
-				angular.extend( pushedItem, this.availableShields[gearCounter]);
+				angular.extend( pushedItem, _availableShields[gearCounter]);
 				pushedItem.droppedDuringCombat = droppedDuringCombat;
 				if( itemCost > -1 ) {
 					pushedItem.purchaseCost = itemCost;
@@ -6414,14 +6598,14 @@ function savageCharacter (useLang) {
 	this.addGearArmor = function( fromBook, gearTag, itemCost, isReadied, droppedDuringCombat ) {
 		if(!droppedDuringCombat)
 			droppedDuringCombat = false;
-		for( var gearCounter = 0; gearCounter < this.availableArmor.length; gearCounter++ ) {
+		for( var gearCounter = 0; gearCounter < _availableArmor.length; gearCounter++ ) {
 			if(
-				gearTag == this.availableArmor[gearCounter].tag
+				gearTag == _availableArmor[gearCounter].tag
 					&&
-				fromBook == this.availableArmor[gearCounter].book
+				fromBook == _availableArmor[gearCounter].book
 			) {
 				var pushedItem = {};
-				angular.extend( pushedItem, this.availableArmor[gearCounter]);
+				angular.extend( pushedItem, _availableArmor[gearCounter]);
 				pushedItem.droppedDuringCombat = droppedDuringCombat;
 				if( itemCost > -1 ) {
 					pushedItem.purchaseCost = itemCost;
@@ -6530,7 +6714,6 @@ function savageCharacter (useLang) {
 
 	}
 
-
 	this.equipSecondaryHandWeapon = function( gearIndex ) {
 		// unequip all items in primary hand....
 		for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
@@ -6547,7 +6730,6 @@ function savageCharacter (useLang) {
 			if( _selectedRangedWeapons[gearCounter].readiedLocation == "secondary" )
 				_selectedRangedWeapons[gearCounter].readiedLocation = "";
 		}
-
 
 		_selectedHandWeapons[gearIndex].readiedLocation = "secondary";
 		_selectedHandWeapons[gearIndex].droppedDuringCombat = false;
@@ -6570,11 +6752,9 @@ function savageCharacter (useLang) {
 				_selectedRangedWeapons[gearCounter].readiedLocation = "";
 		}
 
-
 		_selectedRangedWeapons[gearIndex].readiedLocation = "secondary";
 		_selectedRangedWeapons[gearIndex].droppedDuringCombat = false;
 	}
-
 
 	this.equipPrimaryShield = function( gearIndex ) {
 		// unequip all items in primary hand....
@@ -6596,7 +6776,6 @@ function savageCharacter (useLang) {
 		_selectedShields[gearIndex].readiedLocation = "primary";
 		_selectedShields[gearIndex].droppedDuringCombat = false;
 	}
-
 
 	this.equipSecondaryShield = function( gearIndex ) {
 		// unequip all items in primary hand....
@@ -6736,7 +6915,6 @@ function savageCharacter (useLang) {
 		}
 		return false;
 	}
-
 
 	this.init(useLang);
 }
@@ -7788,7 +7966,7 @@ scifiCreator.prototype.hasOption = function(option_tag) {
 
 
 
-var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $location, $route, $cordovaFile ) {
+var coreChargenAdvancesFunctions = function ($timeout, $rootScope, $translate, $scope, $location, $route, $cordovaFile ) {
 		$rootScope.showChargenMenu = true;
 		var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_chargen";
 		var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.chargen";
@@ -7808,592 +7986,55 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 					$scope.specializionPlaceholder = translation.CHARGEN_SPECIALIZATION_PLACEHOLDER;
 					$scope.hindranceSpecificationPlaceholder = translation.CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER;
 
-
 				}
 			);
 
 			localizeDiceValues();
 
-
 			if( !localStorage["users_chargen_pdf_layout"] || localStorage["users_chargen_pdf_layout"] == "")
 				localStorage["users_chargen_pdf_layout"] = "landscape";
 
-
-			$scope.savageCharacter = new savageCharacter( localStorage["users_preferred_language"] );
+			$rootScope.savageCharacter = new savageCharacter( localStorage["users_preferred_language"] );
 
 			if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
-				$scope.savageCharacter.importJSON( localStorage[ currentItemLocalStorageVariable ] );
+				$rootScope.savageCharacter.importJSON( localStorage[ currentItemLocalStorageVariable ] );
 			}
 
-			$scope.charGenAttributes = $scope.savageCharacter.attributes;
-
-			$scope.addEdgeTag = $scope.savageCharacter.availableEdges[0];
-			$scope.addHindranceTag = $scope.savageCharacter.availableHindrances[0];
-			$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
-
-			$scope.gearAddedMessage = "";
-
-			$scope.savageWorldsSPCPowers = savageWorldsSPCPowers;
-
-			$scope.selectedSPCPower = savageWorldsSPCPowers[0];
+			$scope.selectedXP = $rootScope.savageCharacter.getXP();
 		}
 
 		$scope.init();
 
-		$scope.validateAndSave = function() {
-			$scope.savageCharacter.validate();
-			localStorage[currentItemLocalStorageVariable] = $scope.savageCharacter.exportJSON();
-		}
-		$scope.justSave = function() {
-			localStorage[currentItemLocalStorageVariable] = $scope.savageCharacter.exportJSON();
-		}
-
-		$scope.newPowerDialog = function() {
-			$scope.propogatePowerDialog(-1);
-			$rootScope.closeDialogs();
-			$scope.propogatePowerDialog(-1);
-			$scope.addEditPowerDialogOpen = true;
-		}
-
-
-		$scope.makeRange = function(min, max, step) {
-			step = step || 1;
-			var input = [];
-			for (var i = min; i <= max; i += step) {
-			    input.push(i);
-			}
-			return input;
-		};
-		$scope.editPowerDialog = function(powerIndex) {
-
-			$scope.propogatePowerDialog(powerIndex);
-			$rootScope.closeDialogs();
-			$scope.propogatePowerDialog(powerIndex);
-			$scope.addEditPowerDialogOpen = true;
-		}
-
-		$scope.addSPCPower = function() {
-			$scope.savageCharacter.addSPCPower( $scope.selectedSPCPower.id );
-			$scope.validateAndSave();
-		}
-
-		$scope.propogatePowerDialog = function (indexNumber) {
-
-			if( indexNumber > -1 ) {
-				$scope.editingPowerIndex = indexNumber;
-				$scope.editingPower = $scope.savageCharacter.selectedPowers[indexNumber];
-
-			} else {
-				for( availablePowersC = 0; availablePowersC < $scope.savageCharacter.availablePowers.length; availablePowersC++) {
-					$scope.savageCharacter.availablePowers[ availablePowersC ].trapping = $scope.savageCharacter.availableTrappings[0];
-					$scope.savageCharacter.availablePowers[ availablePowersC ].customName = "";
-				}
-
-				$scope.editingPowerIndex = -1;
-				$scope.editingPower = $scope.savageCharacter.availablePowers[0];
-			}
-
-		}
-
-		$scope.perkVisible = function( currentPerk ) {
-			if(
-				currentPerk.spcOnly == true
-					&&
-				$scope.savageCharacter.secondMajorHindranceChosen == false
-			) {
-				return false;
-			} else {
-				return true;
-			}
-		}
-
-		$scope.updateSettingRule = function( settingTag ) {
-			// settingTag is not really used, but it's nice to know what's clicked for debugging.
-			// console.log( "updateSettingRule", settingTag );
-			$scope.validateAndSave();
-		}
-
-		$scope.addPower = function( editPower ) {
-			$scope.savageCharacter.addPower(
-				editPower.bookObj.id,
-				editPower.tag,
-				editPower.trapping.bookObj.id,
-				editPower.trapping.tag,
-				editPower.customName
-			);
-
-			$scope.validateAndSave();
-			$rootScope.closeDialogs();
-		}
-
-		$scope.savePower = function( editPower ) {
-
-			$scope.savageCharacter.selectedPowers[ $scope.editingPowerIndex ] = editPower;
-
-			$scope.validateAndSave();
-			$rootScope.closeDialogs();
-
-		}
-
-
-		$scope.removePower = function(powerIndex) {
-			$translate([
-				'CREATOR_DELETE_POWER_CONFIRMATION'
-			]).then(
-				function (translation) {
-					$scope.confirmDialog(
-						translation.CREATOR_DELETE_POWER_CONFIRMATION,
-						function() {
-							$scope.showConfirmDialog = false;
-							$scope.savageCharacter.removePower(powerIndex);
-							$scope.validateAndSave();
-						}
-					);
-				}
-			);
-
-
-		}
-
-		$rootScope.clearGearLog = function() {
-			$scope.gearAddedMessage = "";
-		}
-
-		$rootScope.closeDialogs = function() {
-			$rootScope.newDialogOpen = false;
-			$rootScope.loadDialogOpen = false;
-			$rootScope.saveDialogOpen = false;
-			$rootScope.importDialogOpen = false;
-			$scope.addEditPowerDialogOpen = false;
-			$rootScope.exportDialogOpen = false;
-			$rootScope.optionsDialogOpen = false;
-			$scope.validationDialogOpen = false;
-			// $scope.gearDialogOpen = false;
-			// $scope.armorDialogOpen = false;
-			// $scope.rangedWeaponDialogOpen = false;
-			// $scope.handWeaponDialogOpen = false;
-			$scope.showNotifyDialog = false;
-		}
-
-		// $rootScope.rangedWeaponDialog = function() {
-
-		// 	$rootScope.closeDialogs();
-		// 	$scope.rangedWeaponDialogOpen = true;
-		// }
-
-		// $rootScope.handWeaponDialog = function() {
-
-		// 	$rootScope.closeDialogs();
-		// 	$scope.handWeaponDialogOpen = true;
-		// }
-
-		//$rootScope.armorDialog = function() {
-
-			// $rootScope.closeDialogs();
-			// $scope.armorDialogOpen = true;
-		//}
-
-		// $rootScope.gearDialog = function() {
-
-		// 	$rootScope.closeDialogs();
-		// 	$scope.gearDialogOpen = true;
-		// }
-
-		$rootScope.newDialog = function() {
-
-			$rootScope.closeDialogs();
-			$rootScope.newDialogOpen = true;
-		}
-
-		$rootScope.loadDialog = function() {
-
-			if( !localStorage[ savedItemsLocalStorageVariable ])
-				localStorage[ savedItemsLocalStorageVariable ] = "[]";
-
-			$scope.load_item = 0;
-			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-			for( sic = 0; sic < $scope.saved_items.length; sic++) {
-				$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
-			}
-
-			$rootScope.closeDialogs();
-
-			$rootScope.closeDialogs();
-			$rootScope.loadDialogOpen = true;
-		}
-		$rootScope.saveDialog = function() {
-			if( !localStorage[ savedItemsLocalStorageVariable ])
-				localStorage[ savedItemsLocalStorageVariable ] = "[]";
-
-			$scope.save_over = -1;
-			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-			for( sic = 0; sic < $scope.saved_items.length; sic++) {
-				$scope.saved_items[sic].datetime = new Date($scope.saved_items[sic].datetime);
-			}
-
-			$rootScope.closeDialogs();
-			$scope.save_as_name = $scope.savageCharacter.name;
-			$rootScope.saveDialogOpen = true;
-		}
-		$rootScope.importDialog = function() {
-			$scope.importJSON = "";
-			$rootScope.closeDialogs();
-			$rootScope.importDialogOpen = true;
-		}
-
-		$scope.updateImportData = function(importJSON) {
-			$scope.importJSON = importJSON;
-		}
-
-		$scope.importData = function(importJSON) {
-
-			localStorage[ currentItemLocalStorageVariable ] = $scope.importJSON;
-			$rootScope.closeDialogs();
-			$location.path( "core/character-maker-char-info" );
-			$scope.init();
-		}
-
-		$rootScope.exportDialog = function() {
-			$scope.exportBBCode = $scope.savageCharacter.exportBBCode();
-			$scope.exportHTMLCode = $scope.savageCharacter.exportHTMLCode();
-			$scope.exportJSON = $scope.savageCharacter.exportJSON(true);
-			$rootScope.closeDialogs();
-			$rootScope.exportDialogOpen = true;
-		}
-
-		$rootScope.optionsDialog = function() {
-			$rootScope.closeDialogs();
-			$rootScope.optionsDialogOpen = true;
-		}
-
-		$rootScope.makePDF = function() {
-
-			console.log( "makePDF called");
-			chargenPDFObject = new chargenPDF( $scope.savageCharacter );
-
-			// if a cordova Application
-			document.addEventListener('deviceready', function () {
-				if( $scope.savageCharacter.name  != "" )
-					fileName = $scope.savageCharacter.name.toLowerCase().replace(" ", "-").replace("'", "").replace("\"", "") + ".SWT.pdf";
-				else
-					fileName = "Nameless.SWT.pdf";
-				if( $cordovaFile) {
-
-					if( localStorage["users_chargen_pdf_layout"] == "landscape")
-						chargenPDFObject.createBasicLandscapePDF();
-					else
-						chargenPDFObject.createBasicPortraitPDF();
-
-					var pdfOutput = chargenPDFObject.currentDoc.output();
-					if( cordova.file ) {
-						if( cordova.file.documentsDirectory )
-							saveDirectory = cordova.file.documentsDirectory; 	// iOS, OS/X, Probably Windows
-						else if( cordova.file.syncedDataDirectory )
-							saveDirectory = cordova.file.syncedDataDirectory;	// Possibly Windows
-						else
-							saveDirectory = cordova.file.externalDataDirectory;	// Android....
-
-
-						$cordovaFile.writeFile(saveDirectory, fileName, pdfOutput, true)
-						.then(function (success) {
-							// console.log( "Saved file successfully.");
-							console.log( "saveDirectory:" +  saveDirectory);
-							console.log( "fileName: " + fileName);
-							if( cordova.plugins && cordova.plugins.fileOpener2 ) {
-								try {
-									cordova.plugins.fileOpener2.open(
-									    saveDirectory + fileName,
-									    'application/pdf',
-									    {
-									        error : function(e) {
-									            console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
-												console.log( "Could not open file - no default PDF viewer?");
-												$scope.notificationDialog( "Your file has been saved at '" + saveDirectory.replace("file://", "") + fileName + "'");
-									        },
-									        success : function () {
-									          //  console.log('file opened successfully');
-									        }
-									    }
-									);
-								}
-								catch( e ) {
-						            console.log('Error status: ' + e.status + ' - Error message: ' + e.message);
-									console.log( "Could not open file - no default PDF viewer?");
-									$scope.notificationDialog( "Your file has been saved at '" + saveDirectory.replace("file://", "") + fileName + "'");
-								}
-							} else {
-								console.log( "cordova.plugins.fileOpener2 was not found" );
-								$scope.notificationDialog( "Your file has been saved at '" + saveDirectory.replace("file://", "") + fileName + "'");
-							}
-						}, function (error) {
-						// error
-							console.log( "Could not save file.");
-							console.log( "saveDirectory:" +  saveDirectory);
-							console.log( "fileName: " + fileName);
-						});
-					} else {
-						console.log( "ERROR: cordova.file is not defined!!");
-					}
-				}
-
-
-			});
-
-			// if just a standard browser
-			if( !$cordovaFile) {
-				if( localStorage["users_chargen_pdf_layout"] == "landscape")
-					chargenPDFObject.createBasicLandscapePDF();
-				else
-					chargenPDFObject.createBasicPortraitPDF();
-				chargenPDFObject.currentDoc.output('dataurlnewwindow');
-				//chargenPDFObject.currentDoc.output('save', $scope.savageCharacter.name + '.pdf');
-			}
-
-			console.log( "makePDF ended");
-		}
-
-
-		$scope.loadItem = function( load_item ) {
-			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-			if( $scope.saved_items[ load_item ] )
-				localStorage[ currentItemLocalStorageVariable ] = $scope.saved_items[ load_item ].data;
-			$location.path( "core/character-maker-char-info" );
-			$rootScope.closeDialogs();
-			$scope.init();
-		}
-
-		$scope.clearCurrent = function(  ) {
-
-			localStorage[ currentItemLocalStorageVariable ] = "";
-			$rootScope.closeDialogs();
-			$location.path( "core/character-maker-welcome" );
-			$scope.init();
-		}
-
-		$scope.goToCharInfo = function(  ) {
-
-			localStorage[ currentItemLocalStorageVariable ] = "";
-			$rootScope.closeDialogs();
-			$location.path( "core/character-maker-char-info" );
-			$scope.init();
-		}
-
-		$scope.updateLoad = function( load_item ) {
-			$scope.load_item = load_item;
-		}
-
-		$scope.updateSave = function( save_over ) {
-			$scope.save_over = save_over;
-
-		}
-
-		$scope.updateBook = function( book_id ) {
-			$scope.validateAndSave();
-		}
-
-
-		$scope.closeConfirmDialog = function( ) {
-			$scope.showConfirmDialog = false;
-			// reset confirm to nothing...
-			$scope.confirmDialogYes = function() {
-				$scope.showConfirmDialog = false;
-			}
-		}
-
-		$scope.confirmDialogYes = function() {
-			// empty to be replaced...
-			$scope.showConfirmDialog = false;
-		}
-
-		$scope.confirmDialogQuestion = "";
-
-		$scope.confirmDialog = function( confirmationMessage, onYes ) {
-			$scope.confirmDialogQuestion = confirmationMessage;
-			$scope.showConfirmDialog = true;
-			$scope.confirmDialogYes = onYes;
-		}
-
-		$scope.dialogMessage = "";
-		$scope.notificationDialog = function( dialogMessage ) {
-			$scope.dialogMessage = dialogMessage;
-			$scope.showNotifyDialog = true;
-		}
-
-		$scope.showValidationReport = function() {
-			$rootScope.closeDialogs();
-			$scope.validationDialogOpen = true;
-		}
-
-		$scope.removeSavedItem = function( itemIndex ) {
-			$translate([
-				'CREATOR_DELETION_CONFIRMATION'
-			]).then(
-				function (translation) {
-					$scope.confirmDialog(
-						translation.CREATOR_DELETION_CONFIRMATION,
-						function() {
-							$scope.showConfirmDialog = false;
-							$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-							$scope.saved_items.splice( itemIndex, 1);
-							localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
-						}
-					);
-				}
-			);
-		}
-
-		$scope.setAttribute = function( attributeName, diceID) {
-
-			$scope.savageCharacter.setAttribute(attributeName, diceID);
-			$scope.validateAndSave();
-		}
-
-		$scope.saveItem = function( save_over, saveName ) {
-
-			if( !localStorage[ savedItemsLocalStorageVariable ])
-				localStorage[ savedItemsLocalStorageVariable ] = "[]";
-
-			$scope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
-
-			if( save_over > -1 ) {
-				$scope.saved_items[ save_over ] = $scope.makeSaveObject( saveName );
-			} else {
-				$scope.saved_items.push( $scope.makeSaveObject( saveName ));
-			}
-			localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
-
-			$rootScope.closeDialogs();
-		}
-
-		$scope.makeSaveObject = function( saveName ) {
-			save_object = {
-				name: saveName,
-				datetime: Date(),
-				type: itemType,
-				data:  $scope.savageCharacter.exportJSON()
-			};
-			return save_object;
-		}
-
-		$scope.incrementSkill = function( skillID ) {
-			$scope.savageCharacter.incrementSkill( skillID );
-			$scope.validateAndSave();
-		}
-
-		$scope.decrementSkill = function( skillID ) {
-			$scope.savageCharacter.decrementSkill( skillID );
-			$scope.validateAndSave();
-		}
-		$scope.addSpecialtySkill = function( skillID ) {
-			$scope.savageCharacter.addSpecialtySkill( skillID );
-			$scope.validateAndSave();
-		}
-
-		$scope.incrementSpecialtySkill = function( skillID, specialtyIndex ) {
-			$scope.savageCharacter.incrementSpecialtySkill( skillID, specialtyIndex );
-			$scope.validateAndSave();
-		}
-
-		$scope.decrementSpecialtySkill = function( skillID, specialtyIndex ) {
-			$scope.savageCharacter.decrementSpecialtySkill( skillID, specialtyIndex );
-			$scope.validateAndSave();
-		}
-
-		$scope.updateSpecialtySkillName = function( skillID, specialtyIndex, updatedName ) {
-			$scope.savageCharacter.updateSpecialtySkillName( skillID, specialtyIndex, updatedName );
-			//$scope.validateAndSave();
-		}
-
-		$scope.addEdge = function( ){
-			if( $scope.addEdgeTag.tag ) {
-				$scope.savageCharacter.addEdge( $scope.addEdgeTag.book, $scope.addEdgeTag.tag);
-				$scope.validateAndSave();
-				$scope.addEdgeTag = $scope.savageCharacter.availableEdges[0];
-				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
-			}
-
-		}
-
-		$scope.addHindrance = function( ){
-			if( $scope.addHindranceTag.tag ) {
-				$scope.savageCharacter.addHindrance( $scope.addHindranceTag.book, $scope.addHindranceTag.tag);
-				$scope.validateAndSave();
-
-				$scope.addHindranceTag = $scope.savageCharacter.availableHindrances[0];
-				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
-			}
-
-
-		}
-
-		$scope.removeEdgeByTag = function( edgeTag ){
-			if( edgeTag ) {
-				$scope.savageCharacter.removeEdgeByTag( edgeTag );
-				$scope.validateAndSave();
-				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
-			}
-		}
-
-		$scope.removeHindranceByTag = function( hindranceTag ){
-			if( hindranceTag ) {
-				$scope.savageCharacter.removeHindranceByTag( hindranceTag );
-				$scope.validateAndSave();
-				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
-			}
-		}
-
-		$scope.addPerk = function( ){
-			if( $scope.addPerkTag != "null" ) {
-				$scope.savageCharacter.addPerk( $scope.addPerkTag);
-				$scope.validateAndSave();
-				$scope.addPerkTag = $scope.savageCharacter.perkOptions[0].tag;
-			}
-
-		}
-
-		$scope.removePerkByTag = function( perkTag ){
-			if( perkTag ) {
-				$scope.savageCharacter.removePerk( perkTag );
-				$scope.validateAndSave();
-			}
-		}
-
-		$scope.setArcaneBackground = function(abTag) {
-			$scope.savageCharacter.setArcaneBackground(abTag.tag);
-			$scope.validateAndSave();
-			$scope.validateAndSave();
-		}
-
-
-		// $scope.openGearDialog = function() {
-		// 	$location.path( "/core/character-maker-gear" );
-		// }
-
-		// $scope.openGearDialog = function() {
-		// 	$location.path( "/core/character-maker-weapons" );
-		// }
-
-		// $scope.openGearDialog = function() {
-		// 	$location.path( "/core/character-maker-armor" );
-		// }
-
-		$scope.openAdvancementsDialog = function() {
-			$location.path( "/core/character-maker-advancements" );
-		}
-
-		$scope.closePageDialog = function() {
-			$location.path( "/core/character-maker" );
-		}
-
 		$scope.setXP = function(xpValue) {
-			$scope.savageCharacter.setXP(xpValue.value);
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.setXP(xpValue.value);
+			$rootScope.validateAndSave();
 		}
 
 		$scope.setAdvancementType = function(advIndex, advTag ) {
-			$scope.savageCharacter.setAdvancementType(advIndex, advTag);
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.setAdvancementType(advIndex, advTag);
+			$rootScope.validateAndSave();
 		}
+
+		$scope.setAdvancementOption1 = function(advIndex, advTag, advBook ) {
+			specifyName = null;
+			if( advTag && advTag.name )
+				specifyName = advTag.name;
+			$rootScope.savageCharacter.setAdvancementOption1(advIndex, advTag, specifyName, advBook);
+			$rootScope.validateAndSave();
+		}
+
+		$scope.setAdvancementOption2 = function(advIndex, advTag, advBook ) {
+			specifyName = null;
+			if( advTag && advTag.name )
+				specifyName = advTag.name;
+			else
+				if( advTag )
+					specifyName = advTag;
+			$rootScope.savageCharacter.setAdvancementOption2(advIndex, advTag, specifyName, advBook);
+			$rootScope.validateAndSave();
+		}
+
+
 
 		$scope.filterNewSkill = function( currentItem ) {
 
@@ -8444,7 +8085,7 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 							&&
 						skillItem.value + skillItem.boost
 							&&
-						skillItem.value + skillItem.boost >= $scope.savageCharacter.attributes[ skillItem.attribute ]
+						skillItem.value + skillItem.boost >= $rootScope.savageCharacter.getAttributes()[ skillItem.attribute ]
 					)
 
 				) {
@@ -8457,7 +8098,6 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 
 		$scope.filterLowerSkill = function( currentItem, otherOption ) {
 			return function (skillItem) {
-				//console.log( "#", skillItem.value + skillItem.boost ,skillItem.attribute, $scope.savageCharacter.displayAttributes[ skillItem.attribute ] )
 				if(
 					skillItem
 						&&
@@ -8472,20 +8112,10 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 							&&
 						skillItem.value + skillItem.boost > 0
 							&&
-						skillItem.value + skillItem.boost < $scope.savageCharacter.displayAttributes[ skillItem.attribute ].id
-						// 	&&
-						// skillItem.id != otherOption.id
+						skillItem.value + skillItem.boost < $rootScope.savageCharacter.getAttributeDisplayValues()[ skillItem.attribute ].id
+
 					)
-					// 	||
-					// (
-					// 	skillItem.specify
-					// 		&&
-					// 	skillItem.value + skillItem.boost > 0
-					// 		&&
-					// 	skillItem.value + skillItem.boost < $scope.savageCharacter.attributes[ skillItem.attribute ].value
-					// 		&&
-					// 	skillItem.specify != otherOption.specify
-					// )
+
 
 				) {
 					return true;
@@ -8495,24 +8125,425 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 			}
 		}
 
-		$scope.setAdvancementOption1 = function(advIndex, advTag, advBook ) {
-			specifyName = null;
-			if( advTag && advTag.name )
-				specifyName = advTag.name;
-			//console.log( "setAdvancementOption1 = function(" , advIndex, advTag, specifyName, advBook );
-			$scope.savageCharacter.setAdvancementOption1(advIndex, advTag, specifyName, advBook);
-			$scope.validateAndSave();
+
+	}
+;
+
+angular.module("webApp").controller(
+	"controllerCoreChargenAdvances",
+	[
+		'$timeout',
+		'$rootScope',
+		'$translate',
+		'$scope',
+		'$location',
+		'$route',
+
+		coreChargenAdvancesFunctions
+	]
+);
+
+angular.module("cordovaApp").controller(
+	"controllerCoreChargenAdvances",
+	[
+		'$timeout',
+		'$rootScope',
+		'$translate',
+		'$scope',
+		'$location',
+		'$route',
+		'$cordovaFile',
+		coreChargenAdvancesFunctions
+	]
+);
+
+var coreChargenCyberwareFunctions = function ($timeout, $rootScope, $translate, $scope, $location, $route, $cordovaFile ) {
+		$rootScope.showChargenMenu = true;
+		var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_chargen";
+		var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.chargen";
+		var optionsLocalStorageVariable = "com.jdg.swwt2.options.chargen";
+		var itemType = "character";
+
+		$scope.$route = $route;
+
+		$scope.init = function() {
+			$translate([
+				'APP_TITLE', 'INDEX_BUTTON_CORE_CHAR', 'CHARGEN_SPECIALIZATION_PLACEHOLDER', 'CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER'
+			]).then(
+				function (translation) {
+
+					$rootScope.title_tag = translation.INDEX_BUTTON_CORE_CHAR + " | " + translation.APP_TITLE;
+					$rootScope.subtitle_tag = translation.INDEX_BUTTON_CORE_CHAR;
+					$scope.specializionPlaceholder = translation.CHARGEN_SPECIALIZATION_PLACEHOLDER;
+					$scope.hindranceSpecificationPlaceholder = translation.CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER;
+
+				}
+			);
+
+			localizeDiceValues();
+
+			if( !localStorage["users_chargen_pdf_layout"] || localStorage["users_chargen_pdf_layout"] == "")
+				localStorage["users_chargen_pdf_layout"] = "landscape";
+
+			$rootScope.savageCharacter = new savageCharacter( localStorage["users_preferred_language"] );
+
+			if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
+				$rootScope.savageCharacter.importJSON( localStorage[ currentItemLocalStorageVariable ] );
+			}
+
+
 		}
 
-		$scope.setAdvancementOption2 = function(advIndex, advTag, advBook ) {
-			specifyName = null;
-			if( advTag && advTag.name )
-				specifyName = advTag.name;
+		$scope.init();
+
+	}
+;
+
+angular.module("webApp").controller(
+	"controllerCoreChargenCyberware",
+	[
+		'$timeout',
+		'$rootScope',
+		'$translate',
+		'$scope',
+		'$location',
+		'$route',
+
+		coreChargenCyberwareFunctions
+	]
+);
+
+angular.module("cordovaApp").controller(
+	"controllerCoreChargenCyberware",
+	[
+		'$timeout',
+		'$rootScope',
+		'$translate',
+		'$scope',
+		'$location',
+		'$route',
+		'$cordovaFile',
+		coreChargenCyberwareFunctions
+	]
+);
+
+var controllerCoreChargenEdgesHindrancesFunctions = function ($timeout, $rootScope, $translate, $scope, $location, $route, $cordovaFile ) {
+		$rootScope.showChargenMenu = true;
+		var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_chargen";
+		var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.chargen";
+		var optionsLocalStorageVariable = "com.jdg.swwt2.options.chargen";
+		var itemType = "character";
+
+		$scope.$route = $route;
+
+		$scope.init = function() {
+			$translate([
+				'APP_TITLE', 'INDEX_BUTTON_CORE_CHAR', 'CHARGEN_SPECIALIZATION_PLACEHOLDER', 'CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER'
+			]).then(
+				function (translation) {
+
+					$rootScope.title_tag = translation.INDEX_BUTTON_CORE_CHAR + " | " + translation.APP_TITLE;
+					$rootScope.subtitle_tag = translation.INDEX_BUTTON_CORE_CHAR;
+					$scope.specializionPlaceholder = translation.CHARGEN_SPECIALIZATION_PLACEHOLDER;
+					$scope.hindranceSpecificationPlaceholder = translation.CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER;
+
+				}
+			);
+
+			localizeDiceValues();
+
+			if( !localStorage["users_chargen_pdf_layout"] || localStorage["users_chargen_pdf_layout"] == "")
+				localStorage["users_chargen_pdf_layout"] = "landscape";
+
+			$rootScope.savageCharacter = new savageCharacter( localStorage["users_preferred_language"] );
+
+			if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
+				$rootScope.savageCharacter.importJSON( localStorage[ currentItemLocalStorageVariable ] );
+			}
+
+			$scope.charGenAttributes = $rootScope.savageCharacter.attributes;
+
+			$scope.addEdgeTag = $rootScope.savageCharacter.getAvailableEdges()[0];
+			$scope.addHindranceTag = $rootScope.savageCharacter.getAvailableHindrances()[0];
+			$scope.addPerkTag = $rootScope.savageCharacter.getPerkOptions()[0].tag;
+
+			$scope.gearAddedMessage = "";
+
+			$scope.savageWorldsSPCPowers = savageWorldsSPCPowers;
+
+			$scope.selectedSPCPower = savageWorldsSPCPowers[0];
+
+			$scope.startingWealth = $rootScope.savageCharacter.getStartingFunds();
+		}
+
+		$scope.init();
+
+		$scope.addEdge = function( ){
+			if( $scope.addEdgeTag.tag ) {
+				$rootScope.savageCharacter.addEdge( $scope.addEdgeTag.book, $scope.addEdgeTag.tag);
+				$rootScope.validateAndSave();
+				$scope.addEdgeTag = $rootScope.savageCharacter.getAvailableEdges()[0];
+				$scope.addPerkTag = $rootScope.savageCharacter.getPerkOptions()[0].tag;
+			}
+
+		}
+
+		$scope.addHindrance = function( ){
+			if( $scope.addHindranceTag.tag ) {
+				$rootScope.savageCharacter.addHindrance( $scope.addHindranceTag.book, $scope.addHindranceTag.tag);
+				$rootScope.validateAndSave();
+
+				$scope.addHindranceTag = $rootScope.savageCharacter.getAvailableHindrances()[0];
+				$scope.addPerkTag = $rootScope.savageCharacter.getPerkOptions()[0].tag;
+			}
+
+		}
+
+		$scope.removeEdgeByTag = function( edgeTag ){
+			if( edgeTag ) {
+				$rootScope.savageCharacter.removeEdgeByTag( edgeTag );
+				$rootScope.validateAndSave();
+				$scope.addPerkTag = $rootScope.savageCharacter.getPerkOptions()[0].tag;
+			}
+		}
+
+		$scope.removeHindranceByTag = function( hindranceTag ){
+			if( hindranceTag ) {
+				$rootScope.savageCharacter.removeHindranceByTag( hindranceTag );
+				$rootScope.validateAndSave();
+				$scope.addPerkTag = $rootScope.savageCharacter.getPerkOptions()[0].tag;
+			}
+		}
+
+		$scope.addPerk = function( ){
+			if( $scope.addPerkTag != "null" ) {
+				$rootScope.savageCharacter.addPerk( $scope.addPerkTag);
+				$rootScope.validateAndSave();
+				$scope.addPerkTag = $rootScope.savageCharacter.getPerkOptions()[0].tag;
+			}
+
+		}
+
+		$scope.removePerkByTag = function( perkTag ){
+			if( perkTag ) {
+				$rootScope.savageCharacter.removePerk( perkTag );
+				$rootScope.validateAndSave();
+			}
+		}
+		$scope.perkVisible = function( currentPerk ) {
+			if(
+				currentPerk.spcOnly == true
+					&&
+				$rootScope.savageCharacter.secondMajorHindranceChosen() == false
+			) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+
+	}
+;
+
+angular.module("webApp").controller(
+	"controllerCoreChargenEdgesHindrances",
+	[
+		'$timeout',
+		'$rootScope',
+		'$translate',
+		'$scope',
+		'$location',
+		'$route',
+
+		controllerCoreChargenEdgesHindrancesFunctions
+	]
+);
+
+angular.module("cordovaApp").controller(
+	"controllerCoreChargenEdgesHindrances",
+	[
+		'$timeout',
+		'$rootScope',
+		'$translate',
+		'$scope',
+		'$location',
+		'$route',
+		'$cordovaFile',
+		controllerCoreChargenEdgesHindrancesFunctions
+	]
+);
+
+var coreChargenGearFunctions = function ($timeout, $rootScope, $translate, $scope, $location, $route, $cordovaFile ) {
+		$rootScope.showChargenMenu = true;
+		var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_chargen";
+		var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.chargen";
+		var optionsLocalStorageVariable = "com.jdg.swwt2.options.chargen";
+		var itemType = "character";
+
+		$scope.$route = $route;
+
+		$scope.init = function() {
+			$translate([
+				'APP_TITLE', 'INDEX_BUTTON_CORE_CHAR', 'CHARGEN_SPECIALIZATION_PLACEHOLDER', 'CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER'
+			]).then(
+				function (translation) {
+
+					$rootScope.title_tag = translation.INDEX_BUTTON_CORE_CHAR + " | " + translation.APP_TITLE;
+					$rootScope.subtitle_tag = translation.INDEX_BUTTON_CORE_CHAR;
+					$scope.specializionPlaceholder = translation.CHARGEN_SPECIALIZATION_PLACEHOLDER;
+					$scope.hindranceSpecificationPlaceholder = translation.CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER;
+
+				}
+			);
+
+			localizeDiceValues();
+
+			if( !localStorage["users_chargen_pdf_layout"] || localStorage["users_chargen_pdf_layout"] == "")
+				localStorage["users_chargen_pdf_layout"] = "landscape";
+
+			$rootScope.savageCharacter = new savageCharacter( localStorage["users_preferred_language"] );
+
+			if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
+				$rootScope.savageCharacter.importJSON( localStorage[ currentItemLocalStorageVariable ] );
+			}
+
+
+		}
+
+		$rootScope.clearGearLog = function() {
+			$scope.gearAddedMessage = "";
+		}
+
+
+		$scope.buyArmor = function( bookID, gearTag, forFree) {
+			if( forFree == true)
+				itemCost = 0;
 			else
-				if( advTag )
-					specifyName = advTag;
-			$scope.savageCharacter.setAdvancementOption2(advIndex, advTag, specifyName, advBook);
-			$scope.validateAndSave();
+				itemCost = -1;
+			$rootScope.savageCharacter.addGearArmor( bookID, gearTag, itemCost );
+			$scope.showItemAdded();
+			$rootScope.validateAndSave();
+		}
+
+		$scope.removeArmor = function( indexItem ) {
+			$rootScope.savageCharacter.removeArmor( indexItem );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.buyHandWeapon = function( bookID, gearTag, forFree) {
+			if( forFree == true)
+				itemCost = 0;
+			else
+				itemCost = -1;
+			$rootScope.savageCharacter.addGearHandWeapon( bookID, gearTag, itemCost );
+			$scope.showItemAdded();
+			$rootScope.validateAndSave();
+		}
+
+		$scope.buyRangedWeapon = function( bookID, gearTag, forFree) {
+			if( forFree == true)
+				itemCost = 0;
+			else
+				itemCost = -1;
+			$rootScope.savageCharacter.addGearRangedWeapon( bookID, gearTag, itemCost );
+			$scope.showItemAdded();
+			$rootScope.validateAndSave();
+		}
+
+		$scope.removeHandWeapon = function( indexItem ) {
+			$rootScope.savageCharacter.removeHandWeapon( indexItem );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.removeRangedWeapon = function( indexItem ) {
+			$rootScope.savageCharacter.removeRangedWeapon( indexItem );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.equipPrimaryHandWeapon = function( indexItem ) {
+
+			$rootScope.savageCharacter.equipPrimaryHandWeapon( indexItem );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.equipPrimaryRangedWeapon = function( indexItem ) {
+
+			$rootScope.savageCharacter.equipPrimaryRangedWeapon( indexItem );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.equipSecondaryHandWeapon = function( indexItem ) {
+
+			$rootScope.savageCharacter.equipSecondaryHandWeapon( indexItem );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.equipSecondaryRangedWeapon = function( indexItem ) {
+
+			$rootScope.savageCharacter.equipSecondaryRangedWeapon( indexItem );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.unequipHandWeapon = function( indexItem ) {
+
+			$rootScope.savageCharacter.unequipHandWeapon( indexItem );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.unequipRangedWeapon = function( indexItem ) {
+
+			$rootScope.savageCharacter.unequipRangedWeapon( indexItem );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.buyShield = function( bookID, gearTag, forFree) {
+			if( forFree == true)
+				itemCost = 0;
+			else
+				itemCost = -1;
+			$rootScope.savageCharacter.addGearShield( bookID, gearTag, itemCost );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.removeShield = function( indexItem ) {
+			$rootScope.savageCharacter.removeShield( indexItem );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.equipPrimaryShield = function( indexItem ) {
+
+			$rootScope.savageCharacter.equipPrimaryShield( indexItem );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.equipSecondaryShield = function( indexItem ) {
+
+			$rootScope.savageCharacter.equipSecondaryShield( indexItem );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.unequipShield = function( indexItem ) {
+
+			$rootScope.savageCharacter.unequipShield( indexItem );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.unequipArmor = function( indexItem ) {
+			$rootScope.savageCharacter.unequipArmor( indexItem );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.equipArmor = function( indexItem ) {
+			$rootScope.savageCharacter.equipArmor( indexItem );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.setDroppedDuringCombat = function( itemType, indexItem, setValue ) {
+			if( setValue )
+				$rootScope.savageCharacter.setDroppedDuringCombat( itemType, indexItem );
+			else
+				$rootScope.savageCharacter.setUsedDuringCombat( itemType, indexItem );
+			$rootScope.validateAndSave();
 		}
 
 
@@ -8521,14 +8552,14 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 				itemCost = 0;
 			else
 				itemCost = -1;
-			$scope.savageCharacter.addGearMundane( bookID, gearTag, itemCost );
+			$rootScope.savageCharacter.addGearMundane( bookID, gearTag, itemCost );
 			$scope.showItemAdded();
-			$scope.validateAndSave();
+			$rootScope.validateAndSave();
 		}
 
 		$scope.removeMundane = function( indexItem ) {
-			$scope.savageCharacter.removeMundane( indexItem );
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.removeMundane( indexItem );
+			$rootScope.validateAndSave();
 		}
 
 		$scope.showItemAdded = function() {
@@ -8540,167 +8571,651 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 			);
 		}
 
-		$scope.buyArmor = function( bookID, gearTag, forFree) {
-			if( forFree == true)
-				itemCost = 0;
-			else
-				itemCost = -1;
-			$scope.savageCharacter.addGearArmor( bookID, gearTag, itemCost );
-			$scope.showItemAdded();
-			$scope.validateAndSave();
+		$scope.init();
+
+	}
+;
+
+angular.module("webApp").controller(
+	"controllerCoreChargenGear",
+	[
+		'$timeout',
+		'$rootScope',
+		'$translate',
+		'$scope',
+		'$location',
+		'$route',
+
+		coreChargenGearFunctions
+	]
+);
+
+angular.module("cordovaApp").controller(
+	"controllerCoreChargenGear",
+	[
+		'$timeout',
+		'$rootScope',
+		'$translate',
+		'$scope',
+		'$location',
+		'$route',
+		'$cordovaFile',
+		coreChargenGearFunctions
+	]
+);
+
+var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $location, $route, $cordovaFile ) {
+
+	var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_chargen";
+	var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.chargen";
+	var optionsLocalStorageVariable = "com.jdg.swwt2.options.chargen";
+	var itemType = "character";
+
+	$rootScope.validateAndSave = function() {
+		$rootScope.savageCharacter.validate();
+		localStorage[currentItemLocalStorageVariable] = $rootScope.savageCharacter.exportJSON();
+	}
+	$rootScope.justSave = function() {
+		localStorage[currentItemLocalStorageVariable] = $rootScope.savageCharacter.exportJSON();
+	}
+
+	$rootScope.closeDialogs = function() {
+		$rootScope.newDialogOpen = false;
+		$rootScope.loadDialogOpen = false;
+		$rootScope.saveDialogOpen = false;
+		$rootScope.importDialogOpen = false;
+		$rootScope.addEditPowerDialogOpen = false;
+		$rootScope.exportDialogOpen = false;
+		$rootScope.optionsDialogOpen = false;
+		$rootScope.validationDialogOpen = false;
+		$rootScope.showNotifyDialog = false;
+	}
+
+	$rootScope.removeSavedItem = function( itemIndex ) {
+		console.log( "rsi", itemIndex );
+		$translate([
+			'CREATOR_DELETION_CONFIRMATION'
+		]).then(
+			function (translation) {
+				$rootScope.confirmDialog(
+					translation.CREATOR_DELETION_CONFIRMATION,
+					function() {
+						$rootScope.showConfirmDialog = false;
+						$rootScope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+						$rootScope.saved_items.splice( itemIndex, 1);
+						localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $rootScope.saved_items );
+					}
+				);
+			}
+		);
+	}
+
+	$rootScope.closeConfirmDialog = function( ) {
+		$rootScope.showConfirmDialog = false;
+		// reset confirm to nothing...
+		$rootScope.confirmDialogYes = function() {
+			$rootScope.showConfirmDialog = false;
+		}
+	}
+
+	$rootScope.confirmDialogYes = function() {
+		// empty to be replaced...
+		$rootScope.showConfirmDialog = false;
+	}
+
+	$rootScope.confirmDialogQuestion = "";
+
+	$rootScope.confirmDialog = function( confirmationMessage, onYes ) {
+		$rootScope.confirmDialogQuestion = confirmationMessage;
+		$rootScope.showConfirmDialog = true;
+		$rootScope.confirmDialogYes = onYes;
+	}
+
+	$rootScope.newDialog = function() {
+
+		$rootScope.closeDialogs();
+		$rootScope.newDialogOpen = true;
+	}
+
+	$rootScope.loadDialog = function() {
+
+		if( !localStorage[ savedItemsLocalStorageVariable ])
+			localStorage[ savedItemsLocalStorageVariable ] = "[]";
+
+		$rootScope.load_item = 0;
+		$rootScope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+		for( sic = 0; sic < $rootScope.saved_items.length; sic++) {
+			$rootScope.saved_items[sic].datetime = new Date($rootScope.saved_items[sic].datetime);
 		}
 
-		$scope.removeArmor = function( indexItem ) {
-			$scope.savageCharacter.removeArmor( indexItem );
-			$scope.validateAndSave();
+		$rootScope.closeDialogs();
+
+		$rootScope.closeDialogs();
+		$rootScope.loadDialogOpen = true;
+	}
+	$rootScope.saveDialog = function() {
+		if( !localStorage[ savedItemsLocalStorageVariable ])
+			localStorage[ savedItemsLocalStorageVariable ] = "[]";
+
+		$rootScope.save_over = -1;
+		$rootScope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+		for( sic = 0; sic < $rootScope.saved_items.length; sic++) {
+			$rootScope.saved_items[sic].datetime = new Date($rootScope.saved_items[sic].datetime);
 		}
 
-		$scope.buyHandWeapon = function( bookID, gearTag, forFree) {
-			if( forFree == true)
-				itemCost = 0;
-			else
-				itemCost = -1;
-			$scope.savageCharacter.addGearHandWeapon( bookID, gearTag, itemCost );
-			$scope.showItemAdded();
-			$scope.validateAndSave();
+		$rootScope.closeDialogs();
+		$rootScope.save_as_name = $rootScope.savageCharacter.getName();
+		$rootScope.saveDialogOpen = true;
+	}
+	$rootScope.importDialog = function() {
+		$rootScope.importJSON = "";
+		$rootScope.closeDialogs();
+		$rootScope.importDialogOpen = true;
+	}
+
+	$rootScope.clearCurrent = function(  ) {
+
+		localStorage[ currentItemLocalStorageVariable ] = "";
+		$rootScope.closeDialogs();
+		$location.path( "core/character-maker-welcome" );
+	}
+
+	$rootScope.loadItem = function( load_item ) {
+		$rootScope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+		if( $rootScope.saved_items[ load_item ] )
+			localStorage[ currentItemLocalStorageVariable ] = $rootScope.saved_items[ load_item ].data;
+		$location.path( "core/character-maker-char-info" );
+		$rootScope.closeDialogs();
+	}
+
+	$rootScope.showValidationReport = function() {
+		$rootScope.closeDialogs();
+		$rootScope.validationDialogOpen = true;
+	}
+
+	$rootScope.updateLoad = function( load_item ) {
+		$rootScope.load_item = load_item;
+	}
+
+	$rootScope.updateSave = function( save_over ) {
+		$rootScope.save_over = save_over;
+
+	}
+
+	$rootScope.saveItem = function( save_over, saveName ) {
+
+		if( !localStorage[ savedItemsLocalStorageVariable ])
+			localStorage[ savedItemsLocalStorageVariable ] = "[]";
+
+		$rootScope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
+
+		if( save_over > -1 ) {
+			$rootScope.saved_items[ save_over ] = $rootScope.makeSaveObject( saveName );
+		} else {
+			$rootScope.saved_items.push( $rootScope.makeSaveObject( saveName ));
+		}
+		localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $rootScope.saved_items );
+
+		$rootScope.closeDialogs();
+	}
+
+	$rootScope.makeSaveObject = function( saveName ) {
+		save_object = {
+			name: saveName,
+			datetime: Date(),
+			type: itemType,
+			data:  $rootScope.savageCharacter.exportJSON()
+		};
+		return save_object;
+	}
+
+	$rootScope.exportDialog = function() {
+		$rootScope.exportBBCode = $rootScope.savageCharacter.exportBBCode();
+		$rootScope.exportHTMLCode = $rootScope.savageCharacter.exportHTMLCode();
+		$rootScope.exportJSON = $rootScope.savageCharacter.exportJSON(true);
+		$rootScope.closeDialogs();
+		$rootScope.exportDialogOpen = true;
+	}
+
+};
+
+angular.module("webApp").run(
+	[
+		'$timeout',
+		'$rootScope',
+		'$translate',
+		'$location',
+		'$route',
+
+		coreChargenGlobalFunctions
+	]
+);
+
+angular.module("cordovaApp").run(
+	[
+		'$timeout',
+		'$rootScope',
+		'$translate',
+		'$location',
+		'$route',
+		'$cordovaFile',
+		coreChargenGlobalFunctions
+	]
+);
+
+var coreChargenInfoFunctions = function ($timeout, $rootScope, $translate, $scope, $location, $route, $cordovaFile ) {
+		$rootScope.showChargenMenu = true;
+		var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_chargen";
+		var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.chargen";
+		var optionsLocalStorageVariable = "com.jdg.swwt2.options.chargen";
+		var itemType = "character";
+
+		$scope.$route = $route;
+
+		$scope.init = function() {
+			$translate([
+				'APP_TITLE', 'INDEX_BUTTON_CORE_CHAR', 'CHARGEN_SPECIALIZATION_PLACEHOLDER', 'CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER'
+			]).then(
+				function (translation) {
+
+					$rootScope.title_tag = translation.INDEX_BUTTON_CORE_CHAR + " | " + translation.APP_TITLE;
+					$rootScope.subtitle_tag = translation.INDEX_BUTTON_CORE_CHAR;
+					$scope.specializionPlaceholder = translation.CHARGEN_SPECIALIZATION_PLACEHOLDER;
+					$scope.hindranceSpecificationPlaceholder = translation.CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER;
+
+				}
+			);
+
+			localizeDiceValues();
+
+			if( !localStorage["users_chargen_pdf_layout"] || localStorage["users_chargen_pdf_layout"] == "")
+				localStorage["users_chargen_pdf_layout"] = "landscape";
+
+			$rootScope.savageCharacter = new savageCharacter( localStorage["users_preferred_language"] );
+
+			if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
+				$rootScope.savageCharacter.importJSON( localStorage[ currentItemLocalStorageVariable ] );
+			}
+
+			$scope.characterName = $rootScope.savageCharacter.getName();
+			$scope.characterDescripton = $rootScope.savageCharacter.getDescripton();
+			$scope.characterBackground = $rootScope.savageCharacter.getBackground();
+
+			$scope.selectedGender = $rootScope.savageCharacter.getGender();
+			$scope.selectedRace = $rootScope.savageCharacter.getRace();
+
 		}
 
+		$scope.init();
 
-		$scope.buyRangedWeapon = function( bookID, gearTag, forFree) {
-			if( forFree == true)
-				itemCost = 0;
-			else
-				itemCost = -1;
-			$scope.savageCharacter.addGearRangedWeapon( bookID, gearTag, itemCost );
-			$scope.showItemAdded();
-			$scope.validateAndSave();
+		$scope.updateName = function( newValue ) {
+			$rootScope.savageCharacter.setName( newValue );
+			$rootScope.justSave();
 		}
 
-		$scope.removeHandWeapon = function( indexItem ) {
-			$scope.savageCharacter.removeHandWeapon( indexItem );
-			$scope.validateAndSave();
+		$scope.updateBackground = function( newValue ) {
+			$rootScope.savageCharacter.setBackground( newValue );
+			$rootScope.justSave();
 		}
 
-		$scope.removeRangedWeapon = function( indexItem ) {
-			$scope.savageCharacter.removeRangedWeapon( indexItem );
-			$scope.validateAndSave();
+		$scope.updateDescription = function( newValue ) {
+			$rootScope.savageCharacter.setDescripton( newValue );
+			$rootScope.justSave();
 		}
 
-		$scope.equipPrimaryHandWeapon = function( indexItem ) {
-
-			$scope.savageCharacter.equipPrimaryHandWeapon( indexItem );
-			$scope.validateAndSave();
+		$scope.updateRace = function( raceObj ) {
+			$rootScope.savageCharacter.setRace( raceObj.id );
+			$rootScope.validateAndSave();
 		}
 
-		$scope.equipPrimaryRangedWeapon = function( indexItem ) {
-
-			$scope.savageCharacter.equipPrimaryRangedWeapon( indexItem );
-			$scope.validateAndSave();
+		$scope.updateGender = function( genderObj ) {
+			$rootScope.savageCharacter.setGender( genderObj.id );
+			$rootScope.justSave();
 		}
 
-		$scope.equipSecondaryHandWeapon = function( indexItem ) {
+	}
+;
 
-			$scope.savageCharacter.equipSecondaryHandWeapon( indexItem );
-			$scope.validateAndSave();
+angular.module("webApp").controller(
+	"controllerCoreChargenInfo",
+	[
+		'$timeout',
+		'$rootScope',
+		'$translate',
+		'$scope',
+		'$location',
+		'$route',
+
+		coreChargenInfoFunctions
+	]
+);
+
+angular.module("cordovaApp").controller(
+	"controllerCoreChargenInfo",
+	[
+		'$timeout',
+		'$rootScope',
+		'$translate',
+		'$scope',
+		'$location',
+		'$route',
+		'$cordovaFile',
+		coreChargenInfoFunctions
+	]
+);
+
+var coreChargenPowersFunctions = function ($timeout, $rootScope, $translate, $scope, $location, $route, $cordovaFile ) {
+		$rootScope.showChargenMenu = true;
+		var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_chargen";
+		var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.chargen";
+		var optionsLocalStorageVariable = "com.jdg.swwt2.options.chargen";
+		var itemType = "character";
+
+		$scope.$route = $route;
+
+		$scope.init = function() {
+			$translate([
+				'APP_TITLE', 'INDEX_BUTTON_CORE_CHAR', 'CHARGEN_SPECIALIZATION_PLACEHOLDER', 'CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER'
+			]).then(
+				function (translation) {
+
+					$rootScope.title_tag = translation.INDEX_BUTTON_CORE_CHAR + " | " + translation.APP_TITLE;
+					$rootScope.subtitle_tag = translation.INDEX_BUTTON_CORE_CHAR;
+					$scope.specializionPlaceholder = translation.CHARGEN_SPECIALIZATION_PLACEHOLDER;
+					$scope.hindranceSpecificationPlaceholder = translation.CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER;
+
+				}
+			);
+
+			localizeDiceValues();
+
+			if( !localStorage["users_chargen_pdf_layout"] || localStorage["users_chargen_pdf_layout"] == "")
+				localStorage["users_chargen_pdf_layout"] = "landscape";
+
+			$rootScope.savageCharacter = new savageCharacter( localStorage["users_preferred_language"] );
+
+			if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
+				$rootScope.savageCharacter.importJSON( localStorage[ currentItemLocalStorageVariable ] );
+			}
+
+			$scope.charGenAttributes = $rootScope.savageCharacter.attributes;
+
+			$scope.addEdgeTag = $rootScope.savageCharacter.getAvailableEdges()[0];
+			$scope.addHindranceTag = $rootScope.savageCharacter.getAvailableHindrances()[0];
+			$scope.addPerkTag = $rootScope.savageCharacter.getPerkOptions()[0].tag;
+
+			$scope.gearAddedMessage = "";
+
+			$scope.savageWorldsSPCPowers = savageWorldsSPCPowers;
+
+			$scope.selectedSPCPower = savageWorldsSPCPowers[0];
+
+			$scope.startingWealth = $rootScope.savageCharacter.getStartingFunds();
+
+			$scope.selectedArcaneBackground = $rootScope.savageCharacter.getSelectedArcaneBackground();
+
 		}
 
-		$scope.equipSecondaryRangedWeapon = function( indexItem ) {
+		$scope.init();
 
-			$scope.savageCharacter.equipSecondaryRangedWeapon( indexItem );
-			$scope.validateAndSave();
+		$scope.setArcaneBackground = function(abTag) {
+			$rootScope.savageCharacter.setArcaneBackground(abTag.tag);
+			$rootScope.validateAndSave();
+			$rootScope.validateAndSave();
 		}
 
-		$scope.unequipHandWeapon = function( indexItem ) {
-
-			$scope.savageCharacter.unequipHandWeapon( indexItem );
-			$scope.validateAndSave();
+		$scope.newPowerDialog = function() {
+			$scope.propogatePowerDialog(-1);
+			$rootScope.closeDialogs();
+			$scope.propogatePowerDialog(-1);
+			$rootScope.addEditPowerDialogOpen = true;
 		}
 
-		$scope.unequipRangedWeapon = function( indexItem ) {
+		$scope.propogatePowerDialog = function (indexNumber) {
 
-			$scope.savageCharacter.unequipRangedWeapon( indexItem );
-			$scope.validateAndSave();
+			if( indexNumber > -1 ) {
+				$scope.editingPowerIndex = indexNumber;
+				$scope.editingPower = $rootScope.savageCharacter.getSelectedPowers()[indexNumber];
+
+			} else {
+				for( availablePowersC = 0; availablePowersC < $rootScope.savageCharacter.getAvailablePowers().length; availablePowersC++) {
+					$rootScope.savageCharacter.getAvailablePowers()[ availablePowersC ].trapping = $rootScope.savageCharacter.getAvailableTrappings()[0];
+					$rootScope.savageCharacter.getAvailablePowers()[ availablePowersC ].customName = "";
+				}
+
+				$scope.editingPowerIndex = -1;
+				$scope.editingPower = $rootScope.savageCharacter.getAvailablePowers()[0];
+			}
+
 		}
 
-		$scope.buyShield = function( bookID, gearTag, forFree) {
-			if( forFree == true)
-				itemCost = 0;
-			else
-				itemCost = -1;
-			$scope.savageCharacter.addGearShield( bookID, gearTag, itemCost );
-			$scope.validateAndSave();
+		$scope.addPower = function( editPower ) {
+			$rootScope.savageCharacter.addPower(
+				editPower.bookObj.id,
+				editPower.tag,
+				editPower.trapping.bookObj.id,
+				editPower.trapping.tag,
+				editPower.customName
+			);
+
+			$rootScope.validateAndSave();
+			$rootScope.closeDialogs();
 		}
 
-		$scope.removeShield = function( indexItem ) {
-			$scope.savageCharacter.removeShield( indexItem );
-			$scope.validateAndSave();
+		$scope.savePower = function( editPower ) {
+
+			$rootScope.savageCharacter.setSelectedPower( $scope.editingPowerIndex, editPower );
+
+			$rootScope.validateAndSave();
+			$rootScope.closeDialogs();
+
 		}
 
+		$scope.removePower = function(powerIndex) {
+			$translate([
+				'CREATOR_DELETE_POWER_CONFIRMATION'
+			]).then(
+				function (translation) {
+					$scope.confirmDialog(
+						translation.CREATOR_DELETE_POWER_CONFIRMATION,
+						function() {
+							$rootScope.showConfirmDialog = false;
+							$rootScope.savageCharacter.removePower(powerIndex);
+							$rootScope.validateAndSave();
+						}
+					);
+				}
+			);
 
-		$scope.equipPrimaryShield = function( indexItem ) {
-
-			$scope.savageCharacter.equipPrimaryShield( indexItem );
-			$scope.validateAndSave();
 		}
 
-		$scope.equipSecondaryShield = function( indexItem ) {
+		$scope.editPowerDialog = function(powerIndex) {
 
-			$scope.savageCharacter.equipSecondaryShield( indexItem );
-			$scope.validateAndSave();
+			$scope.propogatePowerDialog(powerIndex);
+			$rootScope.closeDialogs();
+			$scope.propogatePowerDialog(powerIndex);
+			$rootScope.addEditPowerDialogOpen = true;
 		}
 
-		$scope.unequipShield = function( indexItem ) {
+	}
+;
 
-			$scope.savageCharacter.unequipShield( indexItem );
-			$scope.validateAndSave();
+angular.module("webApp").controller(
+	"controllerCoreChargenPowers",
+	[
+		'$timeout',
+		'$rootScope',
+		'$translate',
+		'$scope',
+		'$location',
+		'$route',
+
+		coreChargenPowersFunctions
+	]
+);
+
+angular.module("cordovaApp").controller(
+	"controllerCoreChargenPowers",
+	[
+		'$timeout',
+		'$rootScope',
+		'$translate',
+		'$scope',
+		'$location',
+		'$route',
+		'$cordovaFile',
+		coreChargenPowersFunctions
+	]
+);
+
+var coreChargenRiftsFunctions = function ($timeout, $rootScope, $translate, $scope, $location, $route, $cordovaFile ) {
+		$rootScope.showChargenMenu = true;
+		var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_chargen";
+		var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.chargen";
+		var optionsLocalStorageVariable = "com.jdg.swwt2.options.chargen";
+		var itemType = "character";
+
+		$scope.$route = $route;
+
+		$scope.init = function() {
+			$translate([
+				'APP_TITLE', 'INDEX_BUTTON_CORE_CHAR', 'CHARGEN_SPECIALIZATION_PLACEHOLDER', 'CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER'
+			]).then(
+				function (translation) {
+
+					$rootScope.title_tag = translation.INDEX_BUTTON_CORE_CHAR + " | " + translation.APP_TITLE;
+					$rootScope.subtitle_tag = translation.INDEX_BUTTON_CORE_CHAR;
+					$scope.specializionPlaceholder = translation.CHARGEN_SPECIALIZATION_PLACEHOLDER;
+					$scope.hindranceSpecificationPlaceholder = translation.CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER;
+
+				}
+			);
+
+			localizeDiceValues();
+
+			if( !localStorage["users_chargen_pdf_layout"] || localStorage["users_chargen_pdf_layout"] == "")
+				localStorage["users_chargen_pdf_layout"] = "landscape";
+
+			$rootScope.savageCharacter = new savageCharacter( localStorage["users_preferred_language"] );
+
+			if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
+				$rootScope.savageCharacter.importJSON( localStorage[ currentItemLocalStorageVariable ] );
+			}
+
+
 		}
 
-		$scope.unequipArmor = function( indexItem ) {
-			$scope.savageCharacter.unequipArmor( indexItem );
-			$scope.validateAndSave();
+		$scope.init();
+
+	}
+;
+
+angular.module("webApp").controller(
+	"controllerCoreChargenRifts",
+	[
+		'$timeout',
+		'$rootScope',
+		'$translate',
+		'$scope',
+		'$location',
+		'$route',
+
+		coreChargenRiftsFunctions
+	]
+);
+
+angular.module("cordovaApp").controller(
+	"controllerCoreChargenRifts",
+	[
+		'$timeout',
+		'$rootScope',
+		'$translate',
+		'$scope',
+		'$location',
+		'$route',
+		'$cordovaFile',
+		coreChargenRiftsFunctions
+	]
+);
+
+var coreChargenSPCFunctions = function ($timeout, $rootScope, $translate, $scope, $location, $route, $cordovaFile ) {
+		$rootScope.showChargenMenu = true;
+		var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_chargen";
+		var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.chargen";
+		var optionsLocalStorageVariable = "com.jdg.swwt2.options.chargen";
+		var itemType = "character";
+
+		$scope.$route = $route;
+
+		$scope.init = function() {
+			$translate([
+				'APP_TITLE', 'INDEX_BUTTON_CORE_CHAR', 'CHARGEN_SPECIALIZATION_PLACEHOLDER', 'CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER'
+			]).then(
+				function (translation) {
+
+					$rootScope.title_tag = translation.INDEX_BUTTON_CORE_CHAR + " | " + translation.APP_TITLE;
+					$rootScope.subtitle_tag = translation.INDEX_BUTTON_CORE_CHAR;
+					$scope.specializionPlaceholder = translation.CHARGEN_SPECIALIZATION_PLACEHOLDER;
+					$scope.hindranceSpecificationPlaceholder = translation.CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER;
+
+				}
+			);
+
+			localizeDiceValues();
+
+			if( !localStorage["users_chargen_pdf_layout"] || localStorage["users_chargen_pdf_layout"] == "")
+				localStorage["users_chargen_pdf_layout"] = "landscape";
+
+			$rootScope.savageCharacter = new savageCharacter( localStorage["users_preferred_language"] );
+
+			if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
+				$rootScope.savageCharacter.importJSON( localStorage[ currentItemLocalStorageVariable ] );
+			}
+
+			$scope.SPCSelectedPowerLevel = $rootScope.savageCharacter.getSPCSelectedPowerLevel();
+			$scope.SPCPowerLevels = $rootScope.savageCharacter.getSPCPowerLevels();
+			$scope.SPCRisingStars = $rootScope.savageCharacter.getSPCRisingStars();
+
+			$scope.savageWorldsSPCPowers = savageWorldsSPCPowers;
+			$scope.selectedSPCPower = savageWorldsSPCPowers[0];
 		}
 
-		$scope.equipArmor = function( indexItem ) {
-			$scope.savageCharacter.equipArmor( indexItem );
-			$scope.validateAndSave();
+		$scope.init();
+
+		$scope.setRisingStars = function(powerLevel) {
+			$rootScope.savageCharacter.setSPCRisingStars( powerLevel );
+			$rootScope.validateAndSave();
 		}
 
-		$scope.setDroppedDuringCombat = function( itemType, indexItem, setValue ) {
-			if( setValue )
-				$scope.savageCharacter.setDroppedDuringCombat( itemType, indexItem );
-			else
-				$scope.savageCharacter.setUsedDuringCombat( itemType, indexItem );
-			$scope.validateAndSave();
+		$scope.setCampaignPowerLevel = function(powerLevel) {
+			$rootScope.savageCharacter.setSPCCampaignPowerLevel( powerLevel );
+			$rootScope.validateAndSave();
 		}
+
+		$scope.addSPCPower = function() {
+			$rootScope.savageCharacter.addSPCPower( $scope.selectedSPCPower.id );
+			$rootScope.validateAndSave();
+		}
+
 
 		$scope.incrementSPCPowerLevel = function( powerIndex ) {
-			//console.log("incrementSPCPowerLevel", powerIndex);
+			$rootScope.savageCharacter.incrementSPCPowerLevel( powerIndex );
 
-
-			$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel++;
-			if( $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level > 1 && $scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel >= $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level) {
-				$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel = $scope.savageCharacter.selectedSPCPowers[powerIndex].max_level;
-			}
-			$scope.validateAndSave();
+			$rootScope.validateAndSave();
 			return;
 		}
 
 		$scope.decrementSPCPowerLevel = function( powerIndex ) {
-			//console.log("decrementSPCPowerLevel", powerIndex);
-			$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel--;
-			if( $scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel < 1) {
-				$scope.savageCharacter.selectedSPCPowers[powerIndex].selectedLevel = 1;
-			}
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.decrementSPCPowerLevel( powerIndex );
+			$rootScope.validateAndSave();
 			return;
 		}
 
 		$scope.removeSPCPower = function( powerIndex ) {
-			$scope.savageCharacter.selectedSPCPowers.splice( powerIndex, 1)
-			$scope.validateAndSave();
+			$rootScope.savageCharacter.getSelectedSPCPowers().splice( powerIndex, 1)
+			$rootScope.validateAndSave();
 		}
 
-		$scope.getTypeOf = function(val){ return typeof val; };
 
 		$scope.isAnArray = function(val){
 			if(  typeof(val) == "object" || typeof(val) == "object")
@@ -8710,20 +9225,11 @@ var corechargenFunctions = function ($timeout, $rootScope, $translate, $scope, $
 			}
 		};
 
-		$scope.isSwitchablePower = function(item){
-		    // return function(item){
-		      return item["switchable"] > 0;
-		    // }
-		};
-
 	}
 ;
-// var cordovachargenArray = Array();
-// angular.extend( cordovachargenArray, corechargenArray );
-// cordovachargenArray.unshift('$cordovaFile');
 
 angular.module("webApp").controller(
-	"coreChargenController",
+	"controllerCoreChargenSPC",
 	[
 		'$timeout',
 		'$rootScope',
@@ -8732,12 +9238,12 @@ angular.module("webApp").controller(
 		'$location',
 		'$route',
 
-		corechargenFunctions
+		coreChargenSPCFunctions
 	]
 );
 
 angular.module("cordovaApp").controller(
-	"coreChargenController",
+	"controllerCoreChargenSPC",
 	[
 		'$timeout',
 		'$rootScope',
@@ -8746,7 +9252,192 @@ angular.module("cordovaApp").controller(
 		'$location',
 		'$route',
 		'$cordovaFile',
-		corechargenFunctions
+		coreChargenSPCFunctions
+	]
+);
+
+var coreChargenTraitsFunctions = function ($timeout, $rootScope, $translate, $scope, $location, $route, $cordovaFile ) {
+		$rootScope.showChargenMenu = true;
+		var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_chargen";
+		var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.chargen";
+		var optionsLocalStorageVariable = "com.jdg.swwt2.options.chargen";
+		var itemType = "character";
+
+		$scope.$route = $route;
+
+		$scope.init = function() {
+			$translate([
+				'APP_TITLE', 'INDEX_BUTTON_CORE_CHAR', 'CHARGEN_SPECIALIZATION_PLACEHOLDER', 'CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER'
+			]).then(
+				function (translation) {
+
+					$rootScope.title_tag = translation.INDEX_BUTTON_CORE_CHAR + " | " + translation.APP_TITLE;
+					$rootScope.subtitle_tag = translation.INDEX_BUTTON_CORE_CHAR;
+					$scope.specializionPlaceholder = translation.CHARGEN_SPECIALIZATION_PLACEHOLDER;
+					$scope.hindranceSpecificationPlaceholder = translation.CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER;
+
+				}
+			);
+
+			localizeDiceValues();
+
+			if( !localStorage["users_chargen_pdf_layout"] || localStorage["users_chargen_pdf_layout"] == "")
+				localStorage["users_chargen_pdf_layout"] = "landscape";
+
+			$rootScope.savageCharacter = new savageCharacter( localStorage["users_preferred_language"] );
+
+			if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
+				$rootScope.savageCharacter.importJSON( localStorage[ currentItemLocalStorageVariable ] );
+			}
+
+			$scope.diceValues = $rootScope.savageCharacter.getDiceValues();
+			$scope.displayAttributes = $rootScope.savageCharacter.getAttributeDisplayValues();
+
+		}
+
+		$scope.init();
+
+		$scope.setAttribute = function( attributeTag, newValue ) {
+			$rootScope.savageCharacter.setAttribute( attributeTag, newValue );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.incrementSkill = function( skillID ) {
+			$rootScope.savageCharacter.incrementSkill( skillID );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.decrementSkill = function( skillID ) {
+			$rootScope.savageCharacter.decrementSkill( skillID );
+			$rootScope.validateAndSave();
+		}
+		$scope.addSpecialtySkill = function( skillID ) {
+			$rootScope.savageCharacter.addSpecialtySkill( skillID );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.incrementSpecialtySkill = function( skillID, specialtyIndex ) {
+			$rootScope.savageCharacter.incrementSpecialtySkill( skillID, specialtyIndex );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.decrementSpecialtySkill = function( skillID, specialtyIndex ) {
+			$rootScope.savageCharacter.decrementSpecialtySkill( skillID, specialtyIndex );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.updateSpecialtySkillName = function( skillID, specialtyIndex, updatedName ) {
+			$rootScope.savageCharacter.updateSpecialtySkillName( skillID, specialtyIndex, updatedName );
+			$rootScope.justSave();
+		}
+
+	}
+;
+
+angular.module("webApp").controller(
+	"controllerCoreChargenTraits",
+	[
+		'$timeout',
+		'$rootScope',
+		'$translate',
+		'$scope',
+		'$location',
+		'$route',
+
+		coreChargenTraitsFunctions
+	]
+);
+
+angular.module("cordovaApp").controller(
+	"controllerCoreChargenTraits",
+	[
+		'$timeout',
+		'$rootScope',
+		'$translate',
+		'$scope',
+		'$location',
+		'$route',
+		'$cordovaFile',
+		coreChargenTraitsFunctions
+	]
+);
+
+var coreChargenWelcomeFunctions = function ($timeout, $rootScope, $translate, $scope, $location, $route, $cordovaFile ) {
+		$rootScope.showChargenMenu = true;
+		var currentItemLocalStorageVariable = "com.jdg.swwt2.tmp.current_chargen";
+		var savedItemsLocalStorageVariable = "com.jdg.swwt2.saves.chargen";
+		var optionsLocalStorageVariable = "com.jdg.swwt2.options.chargen";
+		var itemType = "character";
+
+		$scope.$route = $route;
+
+		$scope.init = function() {
+			$translate([
+				'APP_TITLE', 'INDEX_BUTTON_CORE_CHAR', 'CHARGEN_SPECIALIZATION_PLACEHOLDER', 'CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER'
+			]).then(
+				function (translation) {
+
+					$rootScope.title_tag = translation.INDEX_BUTTON_CORE_CHAR + " | " + translation.APP_TITLE;
+					$rootScope.subtitle_tag = translation.INDEX_BUTTON_CORE_CHAR;
+					$scope.specializionPlaceholder = translation.CHARGEN_SPECIALIZATION_PLACEHOLDER;
+					$scope.hindranceSpecificationPlaceholder = translation.CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER;
+
+				}
+			);
+
+			localizeDiceValues();
+
+			$rootScope.savageCharacter = new savageCharacter( localStorage["users_preferred_language"] );
+
+			if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
+				$rootScope.savageCharacter.importJSON( localStorage[ currentItemLocalStorageVariable ] );
+			}
+
+			$scope.startingWealth = $rootScope.savageCharacter.getStartingFunds();
+
+		}
+
+		$scope.init();
+
+		$scope.updateSettingRule = function( settingTag ) {
+			// settingTag is not really used, but it's nice to know what's clicked for debugging.
+			// console.log( "updateSettingRule", settingTag );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.setStartingFunds = function( newValue ) {
+			$rootScope.savageCharacter.setStartingFunds( newValue );
+			$rootScope.validateAndSave();
+		}
+
+	}
+;
+
+angular.module("webApp").controller(
+	"controllerCoreChargenWelcome",
+	[
+		'$timeout',
+		'$rootScope',
+		'$translate',
+		'$scope',
+		'$location',
+		'$route',
+
+		coreChargenWelcomeFunctions
+	]
+);
+
+angular.module("cordovaApp").controller(
+	"controllerCoreChargenWelcome",
+	[
+		'$timeout',
+		'$rootScope',
+		'$translate',
+		'$scope',
+		'$location',
+		'$route',
+		'$cordovaFile',
+		coreChargenWelcomeFunctions
 	]
 );
 
@@ -9633,7 +10324,7 @@ var raiseTrainerArray = 	[
 
 		$scope.calcCurrentQuestion = function(rollNum, targetNum) {
 			if( $scope.queryNumRaises ) {
-				if( rollNum >= $scope.testTargetNumber + 20) {
+				if( rollNum >= targetNum + 20) {
 					return "5raises";
 				} else if( rollNum >= targetNum + 16) {
 					return "4raises";
@@ -9661,7 +10352,7 @@ var raiseTrainerArray = 	[
 
 		$scope.calcCurrentQuestionName = function(rollNum, targetNum) {
 			if( $scope.queryNumRaises ) {
-				if( rollNum >= $scope.testTargetNumber + 20) {
+				if( rollNum >= targetNum + 20) {
 					return "success with 5+ raises";
 				} else if( rollNum >= targetNum + 16) {
 					return "succcess with 4 raises";
@@ -12533,8 +13224,8 @@ savageWorldsEdges = Array(
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( charObject ) {
-charObject.boostAttribute("smarts");
+charEffect: function( charObj ) {
+charObj.boostAttribute("smarts");
 }
 },
 {
@@ -12553,9 +13244,9 @@ charObject.boostAttribute("smarts");
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.boostAttribute("agility",1);
+charObj.boostAttribute("agility",1);
 }
 },
 {
@@ -12574,8 +13265,8 @@ charObject.boostAttribute("agility",1);
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( charObject ) {
-charObject.boostAttribute("agility", 1);
+charEffect: function( charObj ) {
+charObj.boostAttribute("agility", 1);
 }
 },
 {
@@ -12594,8 +13285,8 @@ charObject.boostAttribute("agility", 1);
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( charObject ) {
-charObject.addRacialSkill("SKILL_SWIMMING", 2);
+charEffect: function( charObj ) {
+charObj.addRacialSkill("SKILL_SWIMMING", 2);
 }
 },
 {
@@ -12614,16 +13305,14 @@ charObject.addRacialSkill("SKILL_SWIMMING", 2);
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.naturalWeapons = true;
+charObj.naturalWeapons = true;
 }
 },
 {
 	 name: {
 		 'en-US': 'Extra Edge',
-		 'pt-BR': '',
-		 'de-DE': 'Axtra Edgo',
 	},
 	 required_edge: '',
 	 required_rank: 0,
@@ -12635,8 +13324,8 @@ charObject.naturalWeapons = true;
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( characterObject ) {
-	characterObject.availableEdgePoints = characterObject.availableEdgePoints + 1;
+charEffect: function( charObj ) {
+	charObj.availableEdgePoints = charObj.incrementEdgePoints( 1 );
 },
 },
 {
@@ -12781,9 +13470,9 @@ charEffect: function( characterObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.naturalWeapons = true;
+charObj.naturalWeapons = true;
 }
 },
 {
@@ -12802,9 +13491,9 @@ charObject.naturalWeapons = true;
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( characterObject ) {
+charEffect: function( charObj ) {
 	// TODO kludge
-	characterObject.skillPointsAvailable = characterObject.skillPointsAvailable + 2;
+	charObj.skillPointsAvailable = charObj.skillPointsAvailable + 2;
 },
 },
 {
@@ -12841,8 +13530,8 @@ charEffect: function( characterObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( charObject ) {
-charObject.boostAttribute("spirit", 1);
+charEffect: function( charObj ) {
+charObj.boostAttribute("spirit", 1);
 }
 },
 {
@@ -12861,8 +13550,8 @@ charObject.boostAttribute("spirit", 1);
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( charObject ) {
-charObject.boostAttribute("strength", 1);
+charEffect: function( charObj ) {
+charObj.boostAttribute("strength", 1);
 }
 },
 {
@@ -12881,9 +13570,9 @@ charObject.boostAttribute("strength", 1);
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.toughness++;
+charObj.getDerived().toughness++;
 }
 },
 {
@@ -12902,8 +13591,8 @@ charObject.derived.toughness++;
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( charObject ) {
-charObject.boostAttribute("vigor",1);
+charEffect: function( charObj ) {
+charObj.boostAttribute("vigor",1);
 }
 },
 {
@@ -12938,9 +13627,9 @@ charObject.boostAttribute("vigor",1);
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 	) {
 		return true;
 	}
@@ -12961,11 +13650,11 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 			&&
-		characterObject.displayAttributes.strength.value >= 6
+		charObj.getAttributeDisplayValues().strength.value >= 6
 	) {
 		return true;
 	}
@@ -13002,9 +13691,9 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 	) {
 		return true;
 	}
@@ -13014,8 +13703,6 @@ requires: function( characterObject) {
 {
 	 name: {
 		 'en-US': 'Arcane Background',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 	 required_edge: '',
 	 required_rank: 0,
@@ -13027,8 +13714,8 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ){
-	charObject.hasArcaneBackground = 1;
+charEffects: function ( charObj ){
+	charObj.hasArcaneBackground(true);
 }
 },
 {
@@ -13045,9 +13732,9 @@ charEffects: function ( charObject ){
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 8
+		charObj.getAttributeDisplayValues().spirit.value >= 8
 	) {
 		return true;
 	}
@@ -13086,9 +13773,9 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 	) {
 		return true;
 	}
@@ -13109,12 +13796,12 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
-			charObject.derived.charisma = charObject.derived.charisma + 2;
+charEffects: function ( charObj ) {
+			charObj.getDerived().charisma = charObj.getDerived().charisma + 2;
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.vigor.value >= 6
+		charObj.getAttributeDisplayValues().vigor.value >= 6
 	) {
 		return true;
 	}
@@ -13137,8 +13824,8 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
-			charObject.derived.charisma = charObject.derived.charisma + 2;
+charEffects: function ( charObj ) {
+			charObj.getDerived().charisma = charObj.getDerived().charisma + 2;
 		}
 },
 {
@@ -13155,12 +13842,12 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
-			charObject.derived.charisma = charObject.derived.charisma + 2;
+charEffects: function ( charObj ) {
+			charObj.getDerived().charisma = charObj.getDerived().charisma + 2;
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.vigor.value >= 6
+		charObj.getAttributeDisplayValues().vigor.value >= 6
 	) {
 		return true;
 	}
@@ -13183,8 +13870,8 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
-			charObject.derived.charisma = charObject.derived.charisma + 2;
+charEffects: function ( charObj ) {
+			charObj.getDerived().charisma = charObj.getDerived().charisma + 2;
 		}
 },
 {
@@ -13217,9 +13904,9 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 8
+		charObj.getAttributeDisplayValues().spirit.value >= 8
 	) {
 		return true;
 	}
@@ -13240,7 +13927,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -13260,10 +13947,10 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
-fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
+requires: function( charObj) {
+fightingSkill = charObj.getSkill("SKILL_FIGHTING");
 	if(
 		fightingSkill.value >= 3
 	) {
@@ -13289,7 +13976,7 @@ fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -13306,12 +13993,12 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 6
+		charObj.getAttributeDisplayValues().spirit.value >= 6
 	) {
 		return true;
 	}
@@ -13332,11 +14019,11 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.strength.value >= 8
+		charObj.getAttributeDisplayValues().strength.value >= 8
 	) {
 		return true;
 	}
@@ -13359,7 +14046,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -13376,15 +14063,15 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
-			charObject.derived.toughness++;
-			charObject.encumbrance_multiplier = 8;
+charEffects: function ( charObj ) {
+			charObj.getDerived().toughness++;
+			charObj.encumbrance_multiplier = 8;
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.vigor.value >= 6
+		charObj.getAttributeDisplayValues().vigor.value >= 6
 			&&
-		characterObject.displayAttributes.strength.value >= 6
+		charObj.getAttributeDisplayValues().strength.value >= 6
 	) {
 		return true;
 	}
@@ -13405,13 +14092,13 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 			&&
-		characterObject.displayAttributes.spirit.value >= 8
+		charObj.getAttributeDisplayValues().spirit.value >= 8
 			&&
-		characterObject.displayAttributes.strength.value >= 6
+		charObj.getAttributeDisplayValues().strength.value >= 6
 	) {
 		return true;
 	}
@@ -13432,17 +14119,17 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( charObject) {
+requires: function( charObj) {
 	if(
-		charObject.displayAttributes.spirit.value >= 8
+		charObj.getAttributeDisplayValues().spirit.value >= 8
 	) {
 		return true;
 	}
 		return false;
 },
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.charisma = charObject.derived.charisma  + 2;
+charObj.getDerived().charisma = charObj.getDerived().charisma  + 2;
 }
 },
 {
@@ -13462,7 +14149,7 @@ charObject.derived.charisma = charObject.derived.charisma  + 2;
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -13479,11 +14166,11 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 6
+		charObj.getAttributeDisplayValues().smarts.value >= 6
 	) {
 		return true;
 	}
@@ -13504,7 +14191,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -13523,11 +14210,11 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 8
+		charObj.getAttributeDisplayValues().spirit.value >= 8
 	) {
 		return true;
 	}
@@ -13550,11 +14237,11 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 8
+		charObj.getAttributeDisplayValues().smarts.value >= 8
 	) {
 		return true;
 	}
@@ -13575,7 +14262,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -13594,7 +14281,7 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -13611,11 +14298,11 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 8
+		charObj.getAttributeDisplayValues().spirit.value >= 8
 	) {
 		return true;
 	}
@@ -13638,11 +14325,11 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 8
+		charObj.getAttributeDisplayValues().smarts.value >= 8
 	) {
 		return true;
 	}
@@ -13665,8 +14352,8 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 3,
 	 child: 1,
-requires: function( characterObject) {
-persuasionSkill = characterObject.getSkill("SKILL_PERSUASION");
+requires: function( charObj) {
+persuasionSkill = charObj.getSkill("SKILL_PERSUASION");
 if( persuasionSkill.value >= 8)
      return true;
 return false;
@@ -13686,9 +14373,9 @@ return false;
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 8
+		charObj.getAttributeDisplayValues().spirit.value >= 8
 	) {
 		return true;
 	}
@@ -13728,8 +14415,8 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
-fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
+requires: function( charObj) {
+fightingSkill = charObj.getSkill("SKILL_FIGHTING");
 if(
 	fightingSkill.value >= 3
 ) {
@@ -13754,7 +14441,7 @@ return false
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -13789,9 +14476,9 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
-throwingSkill = characterObject.getSkill("SKILL_THROWING");
-shootingSkill = characterObject.getSkill("SKILL_SHOOTING");
+requires: function( charObj) {
+throwingSkill = charObj.getSkill("SKILL_THROWING");
+shootingSkill = charObj.getSkill("SKILL_SHOOTING");
 if( throwingSkill.value >= 4 || shootingSkill.value >= 4)
      return true;
 return false;
@@ -13811,11 +14498,11 @@ return false;
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 	) {
 		return true;
 	}
@@ -13838,7 +14525,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -13855,11 +14542,11 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 8
+		charObj.getAttributeDisplayValues().spirit.value >= 8
 	) {
 		return true;
 	}
@@ -13880,11 +14567,11 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 	) {
 		return true;
 	}
@@ -13905,7 +14592,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -13922,12 +14609,12 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.vigor.value >= 8
+		charObj.getAttributeDisplayValues().vigor.value >= 8
 	) {
 		return true;
 	}
@@ -13949,14 +14636,14 @@ requires: function( characterObject) {
 	 book: 1,
 	 child: 0,
 
-requires: function( characterObject) {
-    if( characterObject.hasEdge('rich') || characterObject.hasEdge('noble') )
+requires: function( charObj) {
+    if( charObj.hasEdge('rich') || charObj.hasEdge('noble') )
         return true;
     return false;
 },
 
-charEffects: function ( charObject ) {
-	charObject.currentFunds += (charObject.startingFunds / 1) * 4;
+charEffects: function ( charObj ) {
+	charObj.currentFunds += (charObj.startingFunds / 1) * 4;
 }
 },
 {
@@ -13973,11 +14660,11 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 	) {
 		return true;
 	}
@@ -14000,7 +14687,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -14020,12 +14707,12 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
-charObject.derived.pace = charObject.derived.pace + 2;
+charEffects: function ( charObj ) {
+charObj.getDerived().pace = charObj.getDerived().pace + 2;
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 6
+		charObj.getAttributeDisplayValues().agility.value >= 6
 	) {
 		return true;
 	}
@@ -14049,12 +14736,12 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
-fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
+requires: function( charObj) {
+fightingSkill = charObj.getSkill("SKILL_FIGHTING");
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 &&
 fightingSkill.value >= 3
 	) {
@@ -14098,8 +14785,8 @@ fightingSkill.value >= 3
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
- fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
+requires: function( charObj) {
+ fightingSkill = charObj.getSkill("SKILL_FIGHTING");
  if( fightingSkill.value >= 4) // d4 = 1, d6 = 2, d8 = 3, d10 = 4, d12 = 5
      return true;
 
@@ -14122,7 +14809,7 @@ return false;
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -14139,9 +14826,9 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 8
+		charObj.getAttributeDisplayValues().smarts.value >= 8
 	) {
 		return true;
 	}
@@ -14162,7 +14849,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -14181,11 +14868,11 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 8
+		charObj.getAttributeDisplayValues().spirit.value >= 8
 	) {
 		return true;
 	}
@@ -14208,7 +14895,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -14225,9 +14912,9 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 8
+		charObj.getAttributeDisplayValues().spirit.value >= 8
 	) {
 		return true;
 	}
@@ -14250,9 +14937,9 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 8
+		charObj.getAttributeDisplayValues().spirit.value >= 8
 	) {
 		return true;
 	}
@@ -14275,11 +14962,11 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 6
+		charObj.getAttributeDisplayValues().smarts.value >= 6
 	) {
 		return true;
 	}
@@ -14300,9 +14987,9 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 8
+		charObj.getAttributeDisplayValues().smarts.value >= 8
 	) {
 		return true;
 	}
@@ -14323,9 +15010,9 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 10
+		charObj.getAttributeDisplayValues().smarts.value >= 10
 	) {
 		return true;
 	}
@@ -14346,7 +15033,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -14365,11 +15052,11 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 8
+		charObj.getAttributeDisplayValues().smarts.value >= 8
 	) {
 		return true;
 	}
@@ -14390,7 +15077,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -14407,19 +15094,19 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 			attributes: {
 				smarts: 2
 			}
 		},
 		
 	
-charEffect: function( charObject ) {
-if( charObject.multipleLanguages )
-    charObject.knownLanguagesLimit = charObject.displayAttributes.smarts.value * 1.5;
+charEffect: function( charObj ) {
+if( charObj.multipleLanguages )
+    charObj.knownLanguagesLimit = charObj.getAttributeDisplayValues().smarts.value * 1.5;
 else
-    charObject.knownLanguagesLimit = charObject.displayAttributes.smarts.value;
-charObject.linguistSelected = true;
+    charObj.knownLanguagesLimit = charObj.getAttributeDisplayValues().smarts.value;
+charObj.linguistSelected = true;
 }
 },
 {
@@ -14438,9 +15125,9 @@ charObject.linguistSelected = true;
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.vigor.value >= 8
+		charObj.getAttributeDisplayValues().vigor.value >= 8
 	) {
 		return true;
 	}
@@ -14461,7 +15148,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -14478,7 +15165,7 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -14515,7 +15202,7 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -14535,8 +15222,8 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
- fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
+requires: function( charObj) {
+ fightingSkill = charObj.getSkill("SKILL_FIGHTING");
  if( fightingSkill.value >= 2) // d4 = 1, d6 = 2, d8 = 3, d10 = 4, d12 = 5
      return true;
 
@@ -14559,7 +15246,7 @@ return false;
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -14594,9 +15281,9 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 6
+		charObj.getAttributeDisplayValues().smarts.value >= 6
 	) {
 		return true;
 	}
@@ -14617,9 +15304,9 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 8
+		charObj.getAttributeDisplayValues().smarts.value >= 8
 	) {
 		return true;
 	}
@@ -14642,8 +15329,8 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( charObject) {
-fightingSkill = charObject.getSkill("SKILL_FIGHTING");
+requires: function( charObj) {
+fightingSkill = charObj.getSkill("SKILL_FIGHTING");
 if( fightingSkill.value >= 4 )
      return true;
 return false;
@@ -14663,9 +15350,9 @@ return false;
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 10
+		charObj.getAttributeDisplayValues().smarts.value >= 10
 	) {
 		return true;
 	}
@@ -14688,11 +15375,11 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.vigor.value >= 8
+		charObj.getAttributeDisplayValues().vigor.value >= 8
 	) {
 		return true;
 	}
@@ -14713,7 +15400,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -14730,12 +15417,12 @@ charEffects: function ( charObject ) {
 	 reselectable: 1,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
-			charObject.totalPowersKnown++;
+charEffects: function ( charObj ) {
+			charObj.totalPowersKnown++;
 		},
-requires: function( charObject) {
-if( charObject.usesSPCCreation == false) {
-if( charObject.hasArcaneBackground)
+requires: function( charObj) {
+if( charObj.usesSPCCreation == false) {
+if( charObj.hasArcaneBackground)
 return true;
 else
 return false;
@@ -14758,7 +15445,7 @@ return false;
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -14775,9 +15462,9 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
-	charObject.currentFunds += (charObject.startingFunds / 1) * 2;
-	charObject.derived.charisma += 2;
+charEffects: function ( charObj ) {
+	charObj.currentFunds += (charObj.startingFunds / 1) * 2;
+	charObj.getDerived().charisma += 2;
 }
 },
 {
@@ -14796,18 +15483,18 @@ charEffects: function ( charObject ) {
 	 reselectable: 1,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
-	charObject.powerPointsAvailable += 5;
-	charObject.spcExtraPowerPoints += 5;
+charEffects: function ( charObj ) {
+	charObj.powerPointsAvailable += 5;
+	charObj.spcExtraPowerPoints += 5;
 },
-requires: function( charObject) {
-if( charObject.usesSPCCreation == false) {
-if( charObject.hasArcaneBackground)
+requires: function( charObj) {
+if( charObj.usesSPCCreation == false) {
+if( charObj.hasArcaneBackground)
 return true;
 else
 return false;
 } else {
-if( charObject.SPCRisingStars == true  )
+if( charObj.SPCRisingStars == true  )
      return true;
 else
     return false;
@@ -14900,11 +15587,11 @@ else
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 	) {
 		return true;
 	}
@@ -14925,11 +15612,11 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 	) {
 		return true;
 	}
@@ -14952,9 +15639,9 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 6
+		charObj.getAttributeDisplayValues().spirit.value >= 6
 	) {
 		return true;
 	}
@@ -14993,8 +15680,8 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
-	charObject.currentFunds += (charObject.startingFunds / 1) * 2;
+charEffects: function ( charObj ) {
+	charObj.currentFunds += (charObj.startingFunds / 1) * 2;
 }
 },
 {
@@ -15013,7 +15700,7 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -15082,11 +15769,11 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 	) {
 		return true;
 	}
@@ -15126,15 +15813,15 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 },
-requires: function( characterObject) {
-	fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
+requires: function( charObj) {
+	fightingSkill = charObj.getSkill("SKILL_FIGHTING");
 
 	if(
 		fightingSkill.value >= 3
 			&&
-		characterObject.displayAttributes.strength.value >= 8
+		charObj.getAttributeDisplayValues().strength.value >= 8
 	) {
 		return true;
 	}
@@ -15157,7 +15844,7 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -15174,9 +15861,9 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 	) {
 		return true;
 	}
@@ -15199,9 +15886,9 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.toughness = charObject.derived.toughness  + 1;
+charObj.getDerived().toughness = charObj.getDerived().toughness  + 1;
 }
 },
 {
@@ -15220,8 +15907,8 @@ charObject.derived.toughness = charObject.derived.toughness  + 1;
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
-			charObject.derived.toughness += 1;
+charEffects: function ( charObj ) {
+			charObj.getDerived().toughness += 1;
 		}
 },
 {
@@ -15241,11 +15928,11 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
-fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
-shootingSkill = characterObject.getSkill("SKILL_SHOOTING");
+requires: function( charObj) {
+fightingSkill = charObj.getSkill("SKILL_FIGHTING");
+shootingSkill = charObj.getSkill("SKILL_SHOOTING");
 	if(
 		fightingSkill.value >= 3
 ||
@@ -15272,7 +15959,7 @@ shootingSkill = characterObject.getSkill("SKILL_SHOOTING");
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		}
 },
 {
@@ -15289,11 +15976,11 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-charEffects: function ( charObject ) {
+charEffects: function ( charObj ) {
 		},
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.agility.value >= 8
+		charObj.getAttributeDisplayValues().agility.value >= 8
 	) {
 		return true;
 	}
@@ -15316,14 +16003,14 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function ( charObject ) {
-fightingSkill = charObject.getSkill("SKILL_FIGHTING");
+requires: function ( charObj ) {
+fightingSkill = charObj.getSkill("SKILL_FIGHTING");
 if( fightingSkill >= 5)
        return true;
 return false;
 },
-charEffects: function ( charObject ) {
-	charObject.derived.parry += 1;
+charEffects: function ( charObj ) {
+	charObj.getDerived().parry += 1;
 }
 },
 {
@@ -15342,8 +16029,8 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 1,
-charEffects: function ( charObject ) {
-			charObject.derived.parry += 1;
+charEffects: function ( charObj ) {
+			charObj.getDerived().parry += 1;
 		}
 },
 {
@@ -15360,9 +16047,9 @@ charEffects: function ( charObject ) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.smarts.value >= 8
+		charObj.getAttributeDisplayValues().smarts.value >= 8
 	) {
 		return true;
 	}
@@ -15383,9 +16070,9 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 1,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 	if(
-		characterObject.displayAttributes.spirit.value >= 6
+		charObj.getAttributeDisplayValues().spirit.value >= 6
 	) {
 		return true;
 	}
@@ -15408,8 +16095,8 @@ requires: function( characterObject) {
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject) {
-if( characterObject.race.id == 8 ||  characterObject.race.id == 1 ) {
+requires: function( charObj) {
+if( charObj.getRace().id == 8 ||  charObj.getRace().id == 1 ) {
 return true;
 }
 return false;
@@ -15431,11 +16118,11 @@ return false;
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject)  {
-fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
-faithSkill = characterObject.getSkill("SKILL_FAITH");
+requires: function( charObj)  {
+fightingSkill = charObj.getSkill("SKILL_FIGHTING");
+faithSkill = charObj.getSkill("SKILL_FAITH");
 
-if( !characterObject.hasArcane( "miracles" ) ) 
+if( !charObj.hasArcane( "miracles" ) ) 
      return false;
 if( !fightingSkill )
 return false;
@@ -15464,8 +16151,8 @@ return true;
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject) {
-noticeSkill =  characterObject.getSkill("SKILL_NOTICE");
+requires: function( charObj) {
+noticeSkill =  charObj.getSkill("SKILL_NOTICE");
 if( !noticeSkill )
 return false;
 if( noticeSkill.value < 4 )
@@ -15489,11 +16176,11 @@ return true;
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject) {
-climbingSkill = characterObject.getSkill( "SKILL_CLIMBING");
-fightingSkill = characterObject.getSkill( "SKILL_FIGHTING");
-stealthSkill = characterObject.getSkill( "SKILL_STEALTH");
-if( characterObject.displayAttributes.agility.value < 8 )
+requires: function( charObj) {
+climbingSkill = charObj.getSkill( "SKILL_CLIMBING");
+fightingSkill = charObj.getSkill( "SKILL_FIGHTING");
+stealthSkill = charObj.getSkill( "SKILL_STEALTH");
+if( charObj.getAttributeDisplayValues().agility.value < 8 )
      return false;
 
 if( !climbingSkill )
@@ -15528,11 +16215,11 @@ return true;
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject) {
-if( characterObject .race.id != 11 )
+requires: function( charObj) {
+if( charObj.getRace().id != 11 )
      return false;
 
-if( !characterObject.hasEdge("berserk") ) 
+if( !charObj.hasEdge("berserk") ) 
      return false;
 
 return true;
@@ -15554,8 +16241,8 @@ return true;
 	 reselectable: 0,
 	 book: 2,
 	 child: 1,
-requires: function( characterObject) {
-if( characterObject.displayAttributes.spirit.value >= 8 )
+requires: function( charObj) {
+if( charObj.getAttributeDisplayValues().spirit.value >= 8 )
     return true;
 return false;
 }
@@ -15576,9 +16263,9 @@ return false;
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject) {
-skillShooting = characterObject.getSkill("SKILL_SHOOTING");
-if( characterObject.race.id != 9 && characterObject.race.id != 7)
+requires: function( charObj) {
+skillShooting = charObj.getSkill("SKILL_SHOOTING");
+if( charObj.getRace().id != 9 && charObj.getRace().id != 7)
      return false;
 if( !skillShooting ) 
      return false;
@@ -15621,10 +16308,10 @@ return true;
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject) {
-arcaneSkill = characterObject.getSkill("SKILL_KNOWLEDGE", "Arcana");
+requires: function( charObj) {
+arcaneSkill = charObj.getSkill("SKILL_KNOWLEDGE", "Arcana");
 
-if( ! characterObject.hasArcane( "magic" ) ) 
+if( ! charObj.hasArcane( "magic" ) ) 
      return false;
 if( !arcaneSkill)
      return false;
@@ -15649,16 +16336,16 @@ return true;
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject) {
-ridingSkill = characterObject.getSkill( "SKILL_RIDING");
-fightingSkill = characterObject.getSkill( "SKILL_FIGHTING");
+requires: function( charObj) {
+ridingSkill = charObj.getSkill( "SKILL_RIDING");
+fightingSkill = charObj.getSkill( "SKILL_FIGHTING");
 
-if( characterObject.displayAttributes.spirit.value < 2 )
+if( charObj.getAttributeDisplayValues().spirit.value < 2 )
      return false;
-if( characterObject.displayAttributes.strength.value < 3 )
+if( charObj.getAttributeDisplayValues().strength.value < 3 )
      return false;
 
-if( characterObject.displayAttributes.vigor.value < 3 )
+if( charObj.getAttributeDisplayValues().vigor.value < 3 )
      return false;
 
 
@@ -15691,8 +16378,8 @@ return true;
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject) {
-fightingSkill = characterObject.getSkill("SKILL_FIGHTING");
+requires: function( charObj) {
+fightingSkill = charObj.getSkill("SKILL_FIGHTING");
 if( !fightingSkill)
 return false;
 
@@ -15739,11 +16426,11 @@ return true;
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject) {
+requires: function( charObj) {
 
-if( characterObject.race.id != 10 )
+if( charObj.getRace().id != 10 )
      return false;
-if( characterObject.displayAttributes.agility.value < 8 )
+if( charObj.getAttributeDisplayValues().agility.value < 8 )
      return false;
 return true;
 },
@@ -15782,8 +16469,8 @@ return true;
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject) {
-if( characterObject.race.id == 6 )
+requires: function( charObj) {
+if( charObj.getRace().id == 6 )
      return true;
 return false;
 },
@@ -15822,8 +16509,8 @@ return false;
 	 reselectable: 0,
 	 book: 2,
 	 child: 0,
-requires: function( characterObject) {
-faithSkill = characterObject.getSkill( "SKILL_FAITH");
+requires: function( charObj) {
+faithSkill = charObj.getSkill( "SKILL_FAITH");
 
 if( !faithSkill )
      return false;
@@ -15867,8 +16554,8 @@ return true;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-				charEffect: function( characterObject) {
-					characterObject.derived.toughness += 4;
+				charEffect: function( charObj) {
+					charObj.getDerived().toughness += 4;
 				}
 },
 {
@@ -15941,8 +16628,8 @@ return true;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-charEffect: function( charObject) {
-charObject.boostAttribute("strength",4);
+charEffect: function( charObj) {
+charObj.boostAttribute("strength",4);
 }
 },
 {
@@ -15979,8 +16666,8 @@ charObject.boostAttribute("strength",4);
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-charEffect: function( characterObject) {
-characterObject.addRacialSkill("SKILL_FAITH", 2);
+charEffect: function( charObj) {
+charObj.addRacialSkill("SKILL_FAITH", 2);
 }
 },
 {
@@ -16179,8 +16866,8 @@ characterObject.addRacialSkill("SKILL_FAITH", 2);
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-charEffect: function( charObject ) {
-charObject.boostAttribute("strength");
+charEffect: function( charObj ) {
+charObj.boostAttribute("strength");
 }
 },
 {
@@ -16199,10 +16886,10 @@ charObject.boostAttribute("strength");
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.boostAttribute("strength",2);
-charObject.boostAttribute("vigor",2);
+charObj.boostAttribute("strength",2);
+charObj.boostAttribute("vigor",2);
 }
 },
 {
@@ -16221,9 +16908,9 @@ charObject.boostAttribute("vigor",2);
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.toughness = charObject.derived.toughness + 2;
+charObj.getDerived().toughness = charObj.getDerived().toughness + 2;
 }
 },
 {
@@ -16242,9 +16929,9 @@ charObject.derived.toughness = charObject.derived.toughness + 2;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.toughness = charObject.derived.toughness + 2;
+charObj.getDerived().toughness = charObj.getDerived().toughness + 2;
 }
 },
 {
@@ -16263,9 +16950,9 @@ charObject.derived.toughness = charObject.derived.toughness + 2;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.toughness = charObject.derived.toughness + 2;
+charObj.getDerived().toughness = charObj.getDerived().toughness + 2;
 }
 },
 {
@@ -16284,14 +16971,14 @@ charObject.derived.toughness = charObject.derived.toughness + 2;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-requires: function( characterObject)  {
-faithSkill = characterObject.getSkill("SKILL_FAITH");
+requires: function( charObj)  {
+faithSkill = charObj.getSkill("SKILL_FAITH");
 
-if( !characterObject.hasArcane( "miracles" ) ) 
+if( !charObj.hasArcane( "miracles" ) ) 
      return false;
 if( !faithSkill )
      return false;
-if( characterObject.displayAttributes.spirit.value < 8 )
+if( charObj.getAttributeDisplayValues().spirit.value < 8 )
      return false;
 if( faithSkill.value < 3 )  // functional value of d8
      return false;
@@ -16314,8 +17001,8 @@ return true;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-requires: function( characterObject) {
-if( characterObject.displayAttributes.spirit.value >= 8 )
+requires: function( charObj) {
+if( charObj.getAttributeDisplayValues().spirit.value >= 8 )
      return true;
 return false;
 },
@@ -16336,8 +17023,8 @@ return false;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-requires: function( characterObject) {
-if( characterObject.displayAttributes.spirit.value >= 6 )
+requires: function( charObj) {
+if( charObj.getAttributeDisplayValues().spirit.value >= 6 )
      return true;
 return false;
 },
@@ -16358,23 +17045,23 @@ return false;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-requires: function( characterObject)  {
-arcaneSkill = characterObject.getArcaneSkill();
+requires: function( charObj)  {
+arcaneSkill = charObj.getArcaneSkill();
 
-if( !characterObject.hasArcane( "miracles" )  &&  !characterObject.hasArcane( "magic" )) 
+if( !charObj.hasArcane( "miracles" )  &&  !charObj.hasArcane( "magic" )) 
      return false;
 if( !arcaneSkill)
      return false;
-if( characterObject.displayAttributes.spirit.value < 8 )
+if( charObj.getAttributeDisplayValues().spirit.value < 8 )
      return false;
 if( arcaneSkill.value < 3 )  // functional value of d8
      return false;
 return true;
 },
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
 //48 is the ID for the Zombie power
-charObject.powerAlterations[48] = {"adjusted_rank": 0};
+charObj.powerAlterations[48] = {"adjusted_rank": 0};
 }
 
 },
@@ -16412,11 +17099,11 @@ charObject.powerAlterations[48] = {"adjusted_rank": 0};
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-requires: function( characterObject)  {
-investigationSkill = characterObject.getSkill("SKILL_INVESTIGATION");
-occultSkill = characterObject.getSkill("SKILL_KNOWLEDGE","Occult");
+requires: function( charObj)  {
+investigationSkill = charObj.getSkill("SKILL_INVESTIGATION");
+occultSkill = charObj.getSkill("SKILL_KNOWLEDGE","Occult");
 
-if( characterObject.displayAttributes.smarts.value < 8 )
+if( charObj.getAttributeDisplayValues().smarts.value < 8 )
      return false;
 if( !investigationSkill)
      return false;
@@ -16446,8 +17133,8 @@ return true;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-requires: function( characterObject) {
-if( characterObject.displayAttributes.spirit.value >= 8 )
+requires: function( charObj) {
+if( charObj.getAttributeDisplayValues().spirit.value >= 8 )
      return true;
 return false;
 },
@@ -16468,8 +17155,8 @@ return false;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-requires: function( characterObject) {
-if( characterObject.displayAttributes.spirit.value >= 8 )
+requires: function( charObj) {
+if( charObj.getAttributeDisplayValues().spirit.value >= 8 )
      return true;
 return false;
 },
@@ -16490,14 +17177,14 @@ return false;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-requires: function( characterObject) {
-if( characterObject.displayAttributes.spirit.value >= 6 )
+requires: function( charObj) {
+if( charObj.getAttributeDisplayValues().spirit.value >= 6 )
      return true;
 return false;
 },
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.sanity = charObject.derived.sanity + 2;
+charObj.getDerived().sanity = charObj.getDerived().sanity + 2;
 }
 },
 {
@@ -16516,15 +17203,15 @@ charObject.derived.sanity = charObject.derived.sanity + 2;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-requires: function( characterObject)  {
-arcaneSkill = characterObject.getArcaneSkill();
-occultSkill = characterObject.getSkill("SKILL_KNOWLEDGE","Occult");
+requires: function( charObj)  {
+arcaneSkill = charObj.getArcaneSkill();
+occultSkill = charObj.getSkill("SKILL_KNOWLEDGE","Occult");
 
-if( !characterObject.hasArcane( "miracles" )  &&  !characterObject.hasArcane( "magic" )) 
+if( !charObj.hasArcane( "miracles" )  &&  !charObj.hasArcane( "magic" )) 
      return false;
 if( !arcaneSkill)
      return false;
-if( characterObject.displayAttributes.spirit.value < 8 )
+if( charObj.getAttributeDisplayValues().spirit.value < 8 )
      return false;
 if( arcaneSkill.value < 3 )  // functional value of d8
      return false;
@@ -16552,10 +17239,10 @@ return true;
 	 reselectable: 0,
 	 book: 3,
 	 child: 0,
-requires: function( characterObject) {
-if( characterObject.displayAttributes.spirit.value < 8 )
+requires: function( charObj) {
+if( charObj.getAttributeDisplayValues().spirit.value < 8 )
      return false;
-if( characterObject.displayAttributes.vigor.value < 8 )
+if( charObj.getAttributeDisplayValues().vigor.value < 8 )
      return false;
 return true;
 },
@@ -16608,9 +17295,9 @@ return true;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.boostAttribute("agility");
+charObj.boostAttribute("agility");
 }
 },
 {
@@ -16627,9 +17314,9 @@ charObject.boostAttribute("agility");
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.boostAttribute("agility", 1);
+charObj.boostAttribute("agility", 1);
 }
 },
 {
@@ -16662,9 +17349,9 @@ charObject.boostAttribute("agility", 1);
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.armor += 4;
+charObj.getDerived().armor += 4;
 }
 },
 {
@@ -16841,9 +17528,9 @@ charObject.derived.armor += 4;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.parry += 2;
+charObj.getDerived().parry += 2;
 }
 },
 {
@@ -16876,8 +17563,8 @@ charObject.derived.parry += 2;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
-charObject.derived.toughness += 2;
+charEffect: function( charObj ) {
+charObj.getDerived().toughness += 2;
 }
 },
 {
@@ -16894,9 +17581,9 @@ charObject.derived.toughness += 2;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.toughness += 2;
+charObj.getDerived().toughness += 2;
 }
 },
 {
@@ -16913,8 +17600,8 @@ charObject.derived.toughness += 2;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
-charObject.boostAttribute("strength", 1);
+charEffect: function( charObj ) {
+charObj.boostAttribute("strength", 1);
 }
 },
 {
@@ -16931,9 +17618,9 @@ charObject.boostAttribute("strength", 1);
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.boostAttribute("strength");
+charObj.boostAttribute("strength");
 }
 },
 {
@@ -16950,9 +17637,9 @@ charObject.boostAttribute("strength");
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.toughness += 2;
+charObj.getDerived().toughness += 2;
 }
 },
 {
@@ -16969,9 +17656,9 @@ charObject.derived.toughness += 2;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
-charObject.derived.charisma += -2;
-charObject.derived.toughness += 2;
+charEffect: function( charObj ) {
+charObj.getDerived().charisma += -2;
+charObj.getDerived().toughness += 2;
 }
 },
 {
@@ -17004,9 +17691,9 @@ charObject.derived.toughness += 2;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.strainBoost += 4;
+charObj.strainBoost += 4;
 }
 },
 {
@@ -17024,9 +17711,9 @@ charObject.strainBoost += 4;
 	 book: 4,
 	 child: 0,
 
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.doubleStrain = 1;
+charObj.doubleStrain = 1;
 }
 },
 {
@@ -17043,9 +17730,9 @@ charObject.doubleStrain = 1;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.currentFunds += 10000;
+charObj.currentFunds += 10000;
 }
 },
 {
@@ -17062,12 +17749,12 @@ charObject.currentFunds += 10000;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-requires: function( characterObject) {
-// persuasionSkill = characterObject.getSkill("SKILL_PERSUASION");
+requires: function( charObj) {
+// persuasionSkill = charObj.getSkill("SKILL_PERSUASION");
 // if( persuasionSkill.value >= 8) // d4 = 1, d6 = 2, d8 = 3, d10 = 4, d12 = 5
 //     return true;
 //
-if( characterObject.displayAttributes.agility.value >= 6 )
+if( charObj.getAttributeDisplayValues().agility.value >= 6 )
      return true;
 return false;
 },
@@ -17086,9 +17773,9 @@ return false;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-requires: function( characterObject) {
-pilotingSkill = characterObject.getSkill("SKILL_PILOTING");
-shootingSkill = characterObject.getSkill("SKILL_SHOOTING");
+requires: function( charObj) {
+pilotingSkill = charObj.getSkill("SKILL_PILOTING");
+shootingSkill = charObj.getSkill("SKILL_SHOOTING");
 if( 
     pilotingSkill.value >= 3 // d4 = 1, d6 = 2, d8 = 3, d10 = 4, d12 = 5
      &&
@@ -17097,7 +17784,7 @@ if(
      return true;
 }
 //
-//if( characterObject.displayAttributes.agility.value >= 8 )
+//if( charObj.getAttributeDisplayValues().agility.value >= 8 )
 //     return true;
 return false;
 },
@@ -17278,8 +17965,8 @@ savageWorldsHindrances = Array(
 	 racial: 0,
 	 specify: 0,
 	 book: 1,
-charEffects: function ( charObject ) {
-			charObject.availableEdgePoints++;
+charEffects: function ( charObj ) {
+			charObj.availableEdgePoints++;
 		}
 },
 {
@@ -17296,8 +17983,8 @@ charEffects: function ( charObject ) {
 	 racial: 1,
 	 specify: 0,
 	 book: 1,
-charEffect: function( charObject ) {
-charObject.derived.charisma = charObject.derived.charisma - 4;
+charEffect: function( charObj ) {
+charObj.getDerived().charisma = charObj.getDerived().charisma - 4;
 }
 },
 {
@@ -17470,17 +18157,17 @@ charObject.derived.charisma = charObject.derived.charisma - 4;
 	 racial: 0,
 	 specify: 0,
 	 book: 1,
-charEffects: function (charObject) {
-			charObject.derived.pace--;
-			charObject.attributes.strength--;
-			charObject.attributes.vigor--;
+charEffects: function (charObj) {
+			charObj.getDerived().pace--;
+			charObj.attributes.strength--;
+			charObj.attributes.vigor--;
 
-			if(charObject.attributes.strength < 1)
-				charObject.attributes.strength = 1;
-			if(charObject.attributes.vigor < 1)
-				charObject.attributes.vigor = 1;
+			if(charObj.attributes.strength < 1)
+				charObj.attributes.strength = 1;
+			if(charObj.attributes.vigor < 1)
+				charObj.attributes.vigor = 1;
 
-			charObject.skill_points += 5;
+			charObj.skill_points += 5;
 		}
 },
 {
@@ -17623,8 +18310,8 @@ charEffects: function (charObject) {
 	 racial: 1,
 	 specify: 0,
 	 book: 1,
-charEffect: function( characterObject ) {
-	characterObject.derived.toughness -= 1;
+charEffect: function( charObj ) {
+	charObj.getDerived().toughness -= 1;
 }
 },
 {
@@ -17653,8 +18340,8 @@ charEffect: function( characterObject ) {
 	 racial: 0,
 	 specify: 0,
 	 book: 1,
-charEffects: function ( charObject ) {
-			charObject.derived.pace = charObject.derived.pace - 2;
+charEffects: function ( charObj ) {
+			charObj.getDerived().pace = charObj.getDerived().pace - 2;
 		}
 },
 {
@@ -17697,9 +18384,9 @@ charEffects: function ( charObject ) {
 	 racial: 0,
 	 specify: 0,
 	 book: 1,
-charEffects: function (charObject) {
-			charObject.derived.toughness++;
-			charObject.derived.pace--;
+charEffects: function (charObj) {
+			charObj.getDerived().toughness++;
+			charObj.getDerived().pace--;
 		}
 },
 {
@@ -17758,8 +18445,8 @@ charEffects: function (charObject) {
 	 racial: 1,
 	 specify: 0,
 	 book: 1,
-charEffect: function( charObject ) {
-charObject.derived.charisma = charObject.derived.charisma - 2;
+charEffect: function( charObj ) {
+charObj.getDerived().charisma = charObj.getDerived().charisma - 2;
 }
 },
 {
@@ -17776,8 +18463,8 @@ charObject.derived.charisma = charObject.derived.charisma - 2;
 	 racial: 1,
 	 specify: 0,
 	 book: 1,
-charEffect: function( charObject ) {
-charObject.derived.charisma = charObject.derived.charisma - 2;
+charEffect: function( charObj ) {
+charObj.getDerived().charisma = charObj.getDerived().charisma - 2;
 }
 
 },
@@ -17795,8 +18482,8 @@ charObject.derived.charisma = charObject.derived.charisma - 2;
 	 racial: 1,
 	 specify: 0,
 	 book: 1,
-charEffect: function( charObject ) {
-charObject.derived.charisma = charObject.derived.charisma - 2;
+charEffect: function( charObj ) {
+charObj.getDerived().charisma = charObj.getDerived().charisma - 2;
 }
 },
 {
@@ -17813,8 +18500,8 @@ charObject.derived.charisma = charObject.derived.charisma - 2;
 	 racial: 1,
 	 specify: 0,
 	 book: 1,
-charEffect: function( charObject ) {
-charObject.derived.charisma = charObject.derived.charisma - 2;
+charEffect: function( charObj ) {
+charObj.getDerived().charisma = charObj.getDerived().charisma - 2;
 }
 },
 {
@@ -17975,8 +18662,8 @@ charObject.derived.charisma = charObject.derived.charisma - 2;
 	 racial: 1,
 	 specify: 0,
 	 book: 1,
-charEffect: function( charObject ) {
-charObject.derived.toughness = charObject.derived.toughness -1;
+charEffect: function( charObj ) {
+charObj.getDerived().toughness = charObj.getDerived().toughness -1;
 }
 },
 {
@@ -17993,8 +18680,8 @@ charObject.derived.toughness = charObject.derived.toughness -1;
 	 racial: 1,
 	 specify: 0,
 	 book: 1,
-charEffect: function( charObject ) {
-charObject.derived.pace = 5;
+charEffect: function( charObj ) {
+charObj.getDerived().pace = 5;
 }
 },
 {
@@ -18037,8 +18724,8 @@ charObject.derived.pace = 5;
 	 racial: 0,
 	 specify: 0,
 	 book: 1,
-charEffects: function (charObject) {
-			charObject.derived.charisma = charObject.derived.charisma - 2;
+charEffects: function (charObj) {
+			charObj.getDerived().charisma = charObj.getDerived().charisma - 2;
 		}
 },
 {
@@ -18167,10 +18854,10 @@ charEffects: function (charObject) {
 	 racial: 0,
 	 specify: 0,
 	 book: 1,
-charEffects: function (charObject) {
-			charObject.attribute_points = 3;
-			charObject.skill_points = 10;
-			charObject.bennies_total += 1;
+charEffects: function (charObj) {
+			charObj.attribute_points = 3;
+			charObj.skill_points = 10;
+			charObj.bennies_total += 1;
 		}
 },
 {
@@ -18791,8 +19478,8 @@ charEffects: function (charObject) {
 	 racial: 1,
 	 specify: 0,
 	 book: 4,
-charEffect: function( charObject ) {
-charObject.derived.toughness += -1;
+charEffect: function( charObj ) {
+charObj.getDerived().toughness += -1;
 }
 },
 {
@@ -18807,9 +19494,9 @@ charObject.derived.toughness += -1;
 	 racial: 1,
 	 specify: 0,
 	 book: 4,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.toughness += -1;
+charObj.getDerived().toughness += -1;
 }
 },
 {
@@ -19006,9 +19693,9 @@ charObject.derived.toughness += -1;
 	 racial: 1,
 	 specify: 0,
 	 book: 4,
-charEffect: function( charObject ) {
+charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObject.derived.parry += -2;
+charObj.getDerived().parry += -2;
 }
 },
 {
@@ -19037,8 +19724,8 @@ charObject.derived.parry += -2;
 	 racial: 1,
 	 specify: 0,
 	 book: 4,
-charEffect: function( charObject ) {
-    charObject.derived.pace = 4;
+charEffect: function( charObj ) {
+    charObj.getDerived().pace = 4;
 }
 },
 {
@@ -44169,7 +44856,7 @@ availableLanguages.push ({
 			GENERAL_RESET: 'Reset',
 			GENERAL_SUCCESS_3_RAISES: 'Success w/ 3 Raises',
 			GENERAL_SUCCESS_3_RAISES_OR_MORE: 'Success w/ 3 or more raises',
-			GENERAL_SUCCESS_4_RAISES: 'Success w/ 5 Raises',
+			GENERAL_SUCCESS_4_RAISES: 'Success w/ 4 Raises',
 			GENERAL_SUCCESS_4_RAISES_OR_MORE: 'Success w/ 4 or more raises',
 			GENERAL_SUCCESS_5_RAISES: 'Success w/ 5 Raises',
 			GENERAL_SUCCESS_5_RAISES_OR_MORE: 'Success w/ 5 or more raises',
@@ -48562,9 +49249,9 @@ var savageWorldsSPCPowers = Array(
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
 		 'modifiers': '[{"name":{"en-US":"Hardy"},"points":"3","per_level":"0"},{"name":{"en-US":"Heavy Armor"},"points":"4","per_level":"0"},{"name":{"en-US":"Partial Protection"},"points":"[0,-1,-2]","per_level":"0"}]',
-charEffect: function( charObject, powerObject ) {
+charEffect: function( charObj, powerObject ) {
 	// Affect Character Object Code here
-	charObject.derived.armor += powerObject.selectedLevel * 2;
+	charObj.getDerived().armor += powerObject.selectedLevel * 2;
 }
 },
 {
@@ -49286,12 +49973,12 @@ charEffect: function( charObject, powerObject ) {
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
 		 'modifiers': '[{"name":{"en-US":"Deflect"},"points":"4","per_level":"0"},{"name":{"en-US":"Protector"},"points":"[0,1,2]","per_level":"0"}]',
-charEffect: function( charObject, powerObj ) {
+charEffect: function( charObj, powerObj ) {
 // Affect Character Object Code here
 //console.log( "powerObj", powerObj);
 //console.log( "powerObj.level", powerObj.level);
 if( powerObj.selectedLevel )
-    charObject.derived.parry += parseInt(powerObj.selectedLevel);
+    charObj.getDerived().parry += parseInt(powerObj.selectedLevel);
 }
 },
 {
@@ -49578,9 +50265,9 @@ if( powerObj.selectedLevel )
 		 'boost_attribute': 0,
 		 'boost_skill': 0,
 		 'modifiers': '[{"name":{"en-US":"Hardy"},"points":"3","per_level":"0"}]',
-charEffect: function( charObject, powerObject ) {
+charEffect: function( charObj, powerObject ) {
 	// Affect Character Object Code here
-	charObject.derived.toughness += powerObject.selectedLevel;
+	charObj.getDerived().toughness += powerObject.selectedLevel;
 }
 },
 {

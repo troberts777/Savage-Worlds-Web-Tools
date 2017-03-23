@@ -184,7 +184,6 @@ cordovaApp = angular.module(
 				activetab: 'chargen-weapons'
 			})
 
-
 			// route for the core character maker powers page
 			.when('/core/character-maker-powers', {
 				templateUrl : 'pages/core-character-maker-powers.html',

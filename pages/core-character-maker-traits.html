@@ -10,7 +10,6 @@
 <div ng-include="'pages/dialog-notify.html'"></div>
 <div ng-include="'pages/chargen-dialog-add-edit-power.html'"></div>
 
-
 <div ng-include="'pages/chargen-status-bar.html'"></div>
 <div class="main-content">
 
@@ -32,7 +31,6 @@
 						    	</select>
 						    </label>
 
-
 							<label class="attribute-select">
 								<h4 translate="ATTRIBUTE_SMARTS">Smarts</h4>
 						    	<select ng-options="diceItem as diceItem.local_label for diceItem in diceValues.smarts track by diceItem.id" ng-model="displayAttributes.smarts" ng-change="setAttribute('smarts', displayAttributes.smarts.id)">
@@ -45,13 +43,11 @@
 						    	</select>
 						    </label>
 
-
 							<label class="attribute-select">
 								<h4 translate="ATTRIBUTE_STRENGTH">Strength</h4>
 						    	<select ng-options="diceItem as diceItem.local_label for diceItem in diceValues.strength track by diceItem.id" ng-model="displayAttributes.strength" ng-change="setAttribute('strength', displayAttributes.strength.id)">
 						    	</select>
 						    </label>
-
 
 							<label class="attribute-select">
 								<h4 translate="ATTRIBUTE_VIGOR">Vigor</h4>
@@ -60,8 +56,6 @@
 						    </label>
 					    </fieldset>
 					</div>
-
-
 
 					<div class="small-12 medium-6 columns">
 						<fieldset class="fieldset trait-fieldset">
@@ -163,8 +157,6 @@
 
 			</fieldset>
 		</fieldset>
-
-
 
 	<div class="bottom-status-padding">&nbsp;</div>
 </div>

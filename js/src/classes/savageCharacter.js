@@ -3,9 +3,7 @@
 function savageCharacter (useLang) {
 	this.appVersion = "2.0.0.2016101101";
 
-
 	var _useLang = "en-US";
-
 
 	var _name = "";
 	var _background = "";
@@ -37,9 +35,10 @@ function savageCharacter (useLang) {
 
 	var _innateAttacks = Array();
 
-
 	var _uuid = -1;
 
+
+	var allSkills = Array();
 	var _options = Array();
 
 	var _selectedAdvancements = Array();
@@ -59,8 +58,8 @@ function savageCharacter (useLang) {
 	var _SPCCurrentPowerPoints = 0;
 	var _SPCTakenExtraPowerPoints = false;
 	var _SPCPowerLevels = Array();
+	var _SPCPowerLimit = 0;
 	var _SPCSelectedPowerLevel = 0;
-
 
 	var _selectedArmor = Array();
 	var _selectedMundaneGear = Array();
@@ -72,12 +71,9 @@ function savageCharacter (useLang) {
 
 	var _spcGenericModifiers = Array();
 
-
 	var _attributes = {};
 
-
 	var _attributeBoost = {};
-
 
 	var _derived = {};
 
@@ -97,14 +93,11 @@ function savageCharacter (useLang) {
 
 	var _race = {};
 
-
 	var _genderOptions = Array();
 
 	var _selectedPerks = Array();
 
 	var _skillList = Array();
-
-
 
 	var _gender = {};
 
@@ -116,9 +109,7 @@ function savageCharacter (useLang) {
 	var _installedHindrances = Array();
 	var _installedEdges = Array();
 
-
 	var _bornAHero = false;
-
 
 	var _selectedArcaneBackground = null;
 
@@ -151,7 +142,6 @@ function savageCharacter (useLang) {
 	var _strainBoost = 0;
 	var _doubleStrain = 0;
 
-
 	var _linguistSelected = false;
 
 	var _encumbranceMultiplier = 5;
@@ -163,7 +153,6 @@ function savageCharacter (useLang) {
 	var _availableHandWeapons = Array();
 	var _availableRangedWeapons = Array();
 	var _availableShields = Array();
-
 
 	var _availableArcaneBackgrounds = Array();
 	var _availablePowers = Array();
@@ -243,7 +232,7 @@ function savageCharacter (useLang) {
 			}
 
 			if( optCounter == 0 )
-				this.XP = xpObj;
+				_XP = xpObj;
 			_xpOptions.push( xpObj );
 		}
 
@@ -443,7 +432,6 @@ function savageCharacter (useLang) {
 				savageWorldsEdges[edgeCounter].select_option_name = "↳ " + savageWorldsEdges[edgeCounter].select_option_name;
 			}
 
-
 			//savageWorldsEdges[edgeCounter].local_description = this.getLocalName( savageWorldsEdges[edgeCounter].description );
 			savageWorldsEdges[edgeCounter].bookObj = get_book_by_id( savageWorldsEdges[edgeCounter].book );
 		}
@@ -531,10 +519,6 @@ function savageCharacter (useLang) {
 			// 	savageWorldsGearTypes[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearTypes[eqCounter].type );
 			// }
 
-
-
-
-
 			// Localize Mundane
 			for( var eqCounter = 0; eqCounter < savageWorldsGearMundane.length; eqCounter++ ) {
 				savageWorldsGearMundane[eqCounter].local_name = this.getLocalName( savageWorldsGearMundane[eqCounter].name );
@@ -600,7 +584,6 @@ function savageCharacter (useLang) {
 				savageWorldsGearRangedWeapons[eqCounter].bookObj = get_book_by_id( savageWorldsGearRangedWeapons[eqCounter].book );
 			}
 
-
 		_attributes = {
 			agility: 1,
 			smarts: 1,
@@ -608,7 +591,6 @@ function savageCharacter (useLang) {
 			strength: 1,
 			vigor: 1
 		}
-
 
 		_attributeBoost = {
 			agility: 0,
@@ -628,10 +610,6 @@ function savageCharacter (useLang) {
 			currentLoad: 0,
 			sanity: 0
 		};
-
-
-
-
 
 		localizeDice( _useLang);
 
@@ -666,7 +644,6 @@ function savageCharacter (useLang) {
 
 		_race = this._getRaceById(1);
 
-
 		_genderOptions = Array(
 			{
 				id: "m",
@@ -690,7 +667,6 @@ function savageCharacter (useLang) {
 			angular.extend( _skillList[skillCounter], savageWorldsSkillList[skillCounter]);
 		}
 
-
 		_gender = _genderOptions[0];
 
 		_skillValues = {};
@@ -700,7 +676,6 @@ function savageCharacter (useLang) {
 
 		_installedHindrances = Array();
 		_installedEdges = Array();
-
 
 		_bornAHero = false;
 
@@ -769,29 +744,27 @@ function savageCharacter (useLang) {
 		this.hasSPCSwitchablePowers = false;
 		this.switchableSPCPowers = Array()
 
-
 		if( _usesSPCCreation ) {
-			this.SPCPowerLimit = 0;
+			_SPCPowerLimit = 0;
 			_SPCCurrentPowerPoints = 0;
 			if( _SPCRisingStars ) {
 				_SPCCurrentPowerPoints = _SPCPowerLevels[ _SPCSelectedPowerLevel ].rising_stars_power_points;
 				_SPCCurrentPowerPoints += _spcExtraPowerPoints;
-				this.SPCPowerLimit = _SPCCurrentPowerPoints;
+				_SPCPowerLimit = _SPCCurrentPowerPoints;
 			} else {
 				_SPCCurrentPowerPoints = _SPCPowerLevels[ _SPCSelectedPowerLevel ].power_points;
 				_SPCCurrentPowerPoints += _spcExtraPowerPoints;
-				this.SPCPowerLimit = Math.ceil( _SPCCurrentPowerPoints / 3 );
+				_SPCPowerLimit = Math.ceil( _SPCCurrentPowerPoints / 3 );
 			}
 			if( this.hasEdge("the-best-there-is"))  {
 				if( !_SPCRisingStars ) {
-					this.SPCPowerLimit = Math.ceil( _SPCCurrentPowerPoints / 2 );
+					_SPCPowerLimit = Math.ceil( _SPCCurrentPowerPoints / 2 );
 				} else {
-					this.SPCPowerLimit = Math.ceil( _SPCCurrentPowerPoints / 2 );
-					if( this.SPCPowerLimit < _SPCCurrentPowerPoints)
-						this.SPCPowerLimit = _SPCCurrentPowerPoints;
+					_SPCPowerLimit = Math.ceil( _SPCCurrentPowerPoints / 2 );
+					if( _SPCPowerLimit < _SPCCurrentPowerPoints)
+						_SPCPowerLimit = _SPCCurrentPowerPoints;
 				}
 			}
-
 
 			// for the extra power points perk....
 			if( _SPCTakenExtraPowerPoints ) {
@@ -842,7 +815,7 @@ function savageCharacter (useLang) {
 					}
 				}
 
-				if( _selectedSPCPowers[powerCounter].currentCost > this.SPCPowerLimit) {
+				if( _selectedSPCPowers[powerCounter].currentCost > _SPCPowerLimit) {
 					if( _validSPCoverLimitShown  == false ) {
 						_validationReport.push(
 							this.getTranslation("CHARGEN_VALIDATION_SPC_OVER_LIMIT").replace(
@@ -868,8 +841,6 @@ function savageCharacter (useLang) {
 					_SPCCurrentPowerPoints -= _selectedSPCPowers[powerCounter].currentCost;
 				}
 
-
-
 				if( _selectedSPCPowers[powerCounter].charEffect ) {
 					_selectedSPCPowers[powerCounter].charEffect( this, _selectedSPCPowers[powerCounter]);
 				}
@@ -881,7 +852,6 @@ function savageCharacter (useLang) {
 			}
 		}
 	}
-
 
 	this.makeUUID = function(){
 		var d = new Date().getTime();
@@ -899,12 +869,11 @@ function savageCharacter (useLang) {
 	this.refreshAvailable = function( ) {
 
 		_agilitySkills = Array();
-		this.allSkills = Array();
+		_allSkills = Array();
 		_smartsSkills = Array();
 		_spiritSkills = Array();
 		_strengthSkills = Array();
 		_vigorSkills = Array(); // I'm not aware of any vigor skills, but I' m prepared on the backend ;)
-
 
 		for( skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
 			var showSkill = true;
@@ -949,7 +918,6 @@ function savageCharacter (useLang) {
 				}
 			}
 
-
 			if( _skillList[skillCounter].id == "SKILL_GUTS" ) {
 				if( _usesGutsSkill == false ) {
 					_skillList[skillCounter].showSkill = false;
@@ -977,7 +945,7 @@ function savageCharacter (useLang) {
 			if( _skillList[skillCounter].showSkill && _skillList[skillCounter].attribute == "vigor" ) {
 				_vigorSkills.push( _skillList[skillCounter] );
 			}
-			this.allSkills.push( _skillList[skillCounter] );
+			_allSkills.push( _skillList[skillCounter] );
 
 			for( skc = 0; skc < _skillList[skillCounter].specialties.length; skc++ ) {
 				_skillList[skillCounter].specialties[skc].is_specialty = _skillList[skillCounter].id
@@ -987,11 +955,11 @@ function savageCharacter (useLang) {
 				_skillList[skillCounter].specialties[skc].attribute = _skillList[skillCounter].attribute
 				if( !_skillList[skillCounter].specialties[skc].boost )
 					_skillList[skillCounter].specialties[skc].boost = 0;
-				this.allSkills.push( _skillList[skillCounter].specialties[skc] );
+				_allSkills.push( _skillList[skillCounter].specialties[skc] );
 			}
 		}
 
-		this.allSkills.unshift( {id: 'undefined',local_name: this.getTranslation('GENERAL_SELECT')} );
+		_allSkills.unshift( {id: 'undefined',local_name: this.getTranslation('GENERAL_SELECT')} );
 
 		_raceOptions = Array();
 		for( var raceCount = 0; raceCount < savageWorldsRaces.length; raceCount++ ) {
@@ -1003,7 +971,6 @@ function savageCharacter (useLang) {
 				_raceOptions.push( newItem );
 			}
 		}
-
 
 	}
 
@@ -1037,9 +1004,86 @@ function savageCharacter (useLang) {
 		return _availablePerks;
 	}
 
+	this.getSelectedSPCPowers = function() {
+		return _selectedSPCPowers;
+	}
+
 	this.getAvailableHindrances = function() {
 		return _availableHindrances;
 	}
+
+	this.getAvailableHandWeapons = function() {
+		return _availableHandWeapons;
+	}
+
+	this.getAvailableRangedWeapons = function() {
+		return _availableRangedWeapons;
+	}
+
+	this.getSelectedRangedWeapons = function() {
+		return _selectedRangedWeapons;
+	}
+
+	this.getSelectedAvancements = function() {
+		var _return = 0;
+		for( var aC = 0; aC < _selectedAdvancements.length; aC++) {
+			if( _selectedAdvancements[aC].tag != 'none')
+				_return++;
+		}
+		return _return;
+	}
+
+	this.getSelectedHandWeapons = function() {
+		return _selectedHandWeapons;
+	}
+
+	this.getSelectedArmor = function() {
+		return _selectedArmor;
+	}
+
+	this.getXP = function() {
+		return _XP;
+	}
+
+	this.getXPOptions = function() {
+		return _xpOptions;
+	}
+
+
+	this.getSelectedAdvancements = function() {
+		return _selectedAdvancements;
+	}
+
+	this.getAvailableAdvancements = function() {
+		return _selectedAdvancements.length;
+	}
+
+	this.getAllSkills = function() {
+		return _allSkills;
+	}
+
+	this.getSelectedShields = function() {
+		return _selectedShields;
+	}
+
+	this.getAvailableArmor = function() {
+		return _availableArmor;
+	}
+
+	this.getAvailableShields = function() {
+		return _availableShields;
+	}
+
+	this.getAvailableMundaneGear = function() {
+		return _availableMundaneGear;
+	}
+
+
+
+	this.getSelectedMundaneGear = function() {
+		return _selectedMundaneGear;
+	}
+
 
 	this.getSelectedEdges = function() {
 		return _selecteddges;
@@ -1074,7 +1118,7 @@ function savageCharacter (useLang) {
 	this.setXP = function( xpValue ) {
 		for(var xpc = 0; xpc < _xpOptions.length; xpc++) {
 			if( xpValue == _xpOptions[xpc].value ) {
-				this.XP = _xpOptions[xpc];
+				_XP = _xpOptions[xpc];
 				return true;
 			}
 		}
@@ -1102,9 +1146,7 @@ function savageCharacter (useLang) {
 		return false;
 	}
 
-
 	this.removePower = function(powerIndex) {
-
 
 		if(
 			_selectedPowers[ powerIndex ]
@@ -1164,7 +1206,6 @@ function savageCharacter (useLang) {
 		}
 		return false;
 	}
-
 
 	this.removeEdge = function(indexNumber) {
 		if( _edges[indexNumber] ) {
@@ -1274,7 +1315,6 @@ function savageCharacter (useLang) {
 		swDeluxe = get_book_by_id( 1 ) ;
 		swDeluxe.inUse = true;
 
-
 		_bornAHero = false;
 		if( this.isSettingRuleEnabled( "born-a-hero") )
 			_bornAHero = true;
@@ -1312,8 +1352,6 @@ function savageCharacter (useLang) {
 			_totalPowersKnown = _selectedArcaneBackground.powers;
 		}
 
-
-
 		// for( lBookCounter = 0; lBookCounter.u)
 
 		_attributeBoost = {
@@ -1331,7 +1369,6 @@ function savageCharacter (useLang) {
 			strength: getDiceValue( _attributes.strength + _attributeBoost.strength ),
 			vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
 		};
-
 
 		// Calc init derived stats
 		_derived.toughness = 0; // Math.floor(_displayAttributes.vigor.value / 2) + 2;
@@ -1355,11 +1392,8 @@ function savageCharacter (useLang) {
 		_attributePointsUsed += _attributes.strength - 1;
 		_attributePointsUsed += _attributes.vigor - 1;
 
-
 		// _attributePointsAvailable = _attributePointsAvailable - _attributePointsUsed;
 		// _skillPointsAvailable = _skillPointsAvailable - _skillPointsUsed;
-
-
 
 		for( skillCounter = 0; skillCounter < _skillList.length; skillCounter++) {
 			_skillList[skillCounter].boost = 0;
@@ -1414,7 +1448,6 @@ function savageCharacter (useLang) {
 			vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
 		};
 
-
 		// Calculate used skill points
 		for( skillCounter = 0; skillCounter < _skillList.length; skillCounter++) {
 			if( _skillList[skillCounter].value ) {
@@ -1452,7 +1485,6 @@ function savageCharacter (useLang) {
 			}
 		}
 
-
 		for(gdvc = 0; gdvc < globalDiceValues.length; gdvc++) {
 			if( 1 + _attributeBoost.agility <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.agility )
 				_diceValues.agility.push( globalDiceValues[gdvc] );
@@ -1465,10 +1497,6 @@ function savageCharacter (useLang) {
 			if( 1 + _attributeBoost.vigor <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.vigor )
 				_diceValues.vigor.push( globalDiceValues[gdvc] );
 		}
-
-
-
-
 
 		// Process Selected Hindrances
 		var majorPerk = 0;
@@ -1512,8 +1540,6 @@ function savageCharacter (useLang) {
 				}
 			}
 		}
-
-
 
 		// Calculate Perks Available
 		if( _usesSPCCreation ) {
@@ -1569,7 +1595,6 @@ function savageCharacter (useLang) {
 
 		}
 
-
 		if( _availablePerkPoints < 0 ) {
 			_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_PERKS") );
 			_isValid = false;
@@ -1590,7 +1615,6 @@ function savageCharacter (useLang) {
 		_availablePowers = Array();
 		_availableTrappings = Array();
 
-
 		_availableArcaneBackgrounds.push(
 			{
 				local_name: "- " + this.getTranslation("CHARGEN_SELECT_ARCANE_BG") + " -",
@@ -1605,7 +1629,6 @@ function savageCharacter (useLang) {
 			}
 		);
 
-
 		_availablePowers.push(
 			{
 				local_name: "- " + this.getTranslation("CHARGEN_SELECT_POWER") + " -",
@@ -1617,7 +1640,6 @@ function savageCharacter (useLang) {
 				blank: true
 			}
 		);
-
 
 		if( _hasArcaneBackground ) {
 			_selectedArcaneBackground.freePower = null;
@@ -1633,13 +1655,13 @@ function savageCharacter (useLang) {
 				) {
 
 					if( typeof(_powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank) != "undefined" ) {
-						//console.log("!", _powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank, this.XP.rankValue);
-						if( _powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank <= this.XP.rankValue  )
+						//console.log("!", _powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank, _XP.rankValue);
+						if( _powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank <= _XP.rankValue  )
 							 savageWorldsPowers[abCounter].selectable = true;
 						else
 							 savageWorldsPowers[abCounter].selectable = false;
 					} else {
-						if( savageWorldsPowers[abCounter].rank <= this.XP.rankValue  )
+						if( savageWorldsPowers[abCounter].rank <= _XP.rankValue  )
 							 savageWorldsPowers[abCounter].selectable = true;
 						else
 							 savageWorldsPowers[abCounter].selectable = false;
@@ -1648,7 +1670,7 @@ function savageCharacter (useLang) {
 				//	console.log("savageWorldsPowers[abCounter]", abCounter, savageWorldsPowers[abCounter]);
 				} else {
 
-					if( savageWorldsPowers[abCounter].rank <= this.XP.rankValue  )
+					if( savageWorldsPowers[abCounter].rank <= _XP.rankValue  )
 						 savageWorldsPowers[abCounter].selectable = true;
 					else
 						 savageWorldsPowers[abCounter].selectable = false;
@@ -1790,13 +1812,13 @@ function savageCharacter (useLang) {
 						}
 					}
 
-					if( savageWorldsEdges[edgeCounter].required_rank > this.XP.rankValue ) {
+					if( savageWorldsEdges[edgeCounter].required_rank > _XP.rankValue ) {
 						if(
 							( _bornAHero == false )
 								||
-							(	_bornAHero == true && this.isMARS() == false && this.XP.value > 0 )
+							(	_bornAHero == true && this.isMARS() == false && _XP.value > 0 )
 								||
-							(	_bornAHero == true && this.isMARS() == true && this.XP.value > 20 )
+							(	_bornAHero == true && this.isMARS() == true && _XP.value > 20 )
 
 						) {
 								savageWorldsEdges[edgeCounter].selectable = false;
@@ -1863,7 +1885,7 @@ function savageCharacter (useLang) {
 		}
 
 		// Advancements...
-		this.availableAdvancements = Math.floor(this.XP.value / 5);
+		this.availableAdvancements = Math.floor(_XP.value / 5);
 
 		this.allocateAdvancementSlots();
 
@@ -1883,7 +1905,6 @@ function savageCharacter (useLang) {
 
 		// check to make sure a requirement wasn't removed from edges...
 		for( edgeCounter = 0; edgeCounter < _selectedEdges.length; edgeCounter++) {
-
 
 			if( typeof(_selectedEdges[edgeCounter].requires) == "function" ) {
 				if( _selectedEdges[edgeCounter].requires(this) == false ) {
@@ -1918,9 +1939,6 @@ function savageCharacter (useLang) {
 				}
 			}
 
-
-
-
 		}
 		for( var powerCounter = 0; powerCounter < _selectedPowers.length; powerCounter++ ) {
 			if(  _selectedPowers[powerCounter].trapping && _selectedPowers[powerCounter].trapping.tag != "" ) {
@@ -1930,8 +1948,6 @@ function savageCharacter (useLang) {
 			}
 
 	 	}
-
-
 
 	 	var attributeIncreaseNovice = false;
 	 	var attributeIncreaseSeasoned = false;
@@ -2029,7 +2045,6 @@ function savageCharacter (useLang) {
 	 			if( _selectedAdvancements[advCounter].option1 )
 	 				this.boostSkill( _selectedAdvancements[advCounter].option1.id );
 
-
 	 		}
 	 		// End of Skill Increase Advancement
 
@@ -2074,7 +2089,7 @@ function savageCharacter (useLang) {
 	 					else
 	 						this.boostSkill( _selectedAdvancements[advCounter].option1 );
 	 				} else {
-	 					_selectedAdvancements[advCounter].option1 = this.allSkills[0];
+	 					_selectedAdvancements[advCounter].option1 = _allSkills[0];
 	 				}
 	 			}
 	 		}
@@ -2111,7 +2126,6 @@ function savageCharacter (useLang) {
 			vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
 		};
 
-
 		if( _attributes.spirit + _attributeBoost.spirit  <  _attributes.vigor + _attributeBoost.vigor  ) {
 			_maxStrain = _attributes.spirit + _attributeBoost.spiri;
 		} else {
@@ -2125,7 +2139,6 @@ function savageCharacter (useLang) {
 		_derived.toughness_base = Math.floor(_displayAttributes.vigor.value / 2) + 2;
 		//_derived.toughness += _attributeBoost.vigor; // will always be in steps of 2, so just add it ;)
 		_derived.toughness += _derived.toughness_base;
-
 
 	 	_load.currentLoad = 0;
 	 	_load.combatLoad = 0;
@@ -2274,7 +2287,6 @@ function savageCharacter (useLang) {
 			_selectedHandWeapons[gearCounter].toHitRollModifier -= _load.loadModifier;
 		}
 
-
 		if( _multipleLanguages == true && _linguistSelected == false )
 			_knownLanguagesLimit = _displayAttributes.smarts.value / 2 + 1;
 		//console.log( "_knownLanguagesLimit", _knownLanguagesLimit );
@@ -2282,7 +2294,6 @@ function savageCharacter (useLang) {
 			if( typeof(_knownLanguages[ langCounter]) == "undefined")
 				_knownLanguages[ langCounter ] = "";
 		}
-
 
 		_activeSkills = {};
 		for( var skCount = 0; skCount <  _agilitySkills.length; skCount++ ) {
@@ -2316,14 +2327,9 @@ function savageCharacter (useLang) {
 				_activeSkills[ _strengthSkills[skCount].local_name ] = _strengthSkills[skCount].displayValue;
 		}
 
-
-
-
 		//console.log( _activeSkills );
 
 	}
-
-
 
 	this.setCharAt = function(str,index,chr) {
 	    if(index > str.length-1) return str;
@@ -2419,11 +2425,9 @@ function savageCharacter (useLang) {
 		if( _background != "")
 			html += _background.replace("\n", "<br />\n") + "<br />\n<br />\n";
 
-
-
 		html += "<b>" + _race.local_name + " " + _gender.label + "</b><br />\n";
 
-		html += "<b>" + this.getTranslation("CHARGEN_RANK") + ":</b> " + this.XP.rankName + "<br />\n";
+		html += "<b>" + this.getTranslation("CHARGEN_RANK") + ":</b> " + _XP.rankName + "<br />\n";
 
 		/*
 	Attributes: Agility d8, Smarts d6, Spirit d6, Strength d6, Vigor d8
@@ -2478,7 +2482,6 @@ function savageCharacter (useLang) {
 			if( _derived.armor != 0 )
 				html += "(" + _derived.armor + ")";
 
-
 			html += "<br />\n";
 			// Edges
 
@@ -2495,7 +2498,6 @@ function savageCharacter (useLang) {
 					eCounter++;
 				}
 			}
-
 
 			if( eCounter == 0 ) {
 				html += "(none)";
@@ -2520,8 +2522,6 @@ function savageCharacter (useLang) {
 					hCounter++;
 				}
 			}
-
-
 
 			if(hCounter == 0) {
 				html += "(none)";
@@ -2554,13 +2554,13 @@ function savageCharacter (useLang) {
 					// TODO: range, rof, ap, and damage
 					html += " (";
 					//~ console.log(_selectedHandWeapons[gCount]);
-					html += "Damage:  " + _selectedHandWeapons[gCount].displayDamage.toString();
-					if( _selectedHandWeapons[gCount].range )
-						html += ", Range:  " +  _selectedHandWeapons[gCount].reach;
-					if( _selectedHandWeapons[gCount].ap > 0 )
-						html += ", AP: " +  _selectedHandWeapons[gCount].ap;
-					if( _selectedHandWeapons[gCount].rof > 0 )
-						html += ", ROF: " +  _selectedHandWeapons[gCount].rof;
+					html += "Damage:  " + _selectedRangedWeapons[gCount].displayDamage.toString();
+					if( _selectedRangedWeapons[gCount].range )
+						html += ", Range:  " +  _selectedRangedWeapons[gCount].reach;
+					if( _selectedRangedWeapons[gCount].ap > 0 )
+						html += ", AP: " +  _selectedRangedWeapons[gCount].ap;
+					if( _selectedRangedWeapons[gCount].rof > 0 )
+						html += ", ROF: " +  _selectedRangedWeapons[gCount].rof;
 					html += " )";
 
 					html += ", ";
@@ -2693,13 +2693,9 @@ function savageCharacter (useLang) {
 						}
 					}
 
-
 					if( _selectedSPCPowers[powerCounter].per_level ) {
 						html += " - Level " + _selectedSPCPowers[powerCounter].selectedLevel;
 					}
-
-
-
 
 					html += " - " + _selectedSPCPowers[powerCounter].currentCost + " points</strong>";
 					if( _selectedSPCPowers[powerCounter].switchableWith ) {
@@ -2711,13 +2707,10 @@ function savageCharacter (useLang) {
 					if( _selectedSPCPowers[powerCounter].description != "")
 						html += _selectedSPCPowers[powerCounter].description.replace("\n", "<br />\n") + "<br />\n";
 
-
-
 					html += "<ul>";
 					if( _selectedSPCPowers[powerCounter].switchableWith ) {
 						html += "<li>Switchable With: " + _selectedSPCPowers[powerCounter].switchableWith.local_name + "</li>";
 					}
-
 
 					for( var modCounter = 0; modCounter < _selectedSPCPowers[powerCounter].modifiersObj.length; modCounter++) {
 						if( _selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost != 0) {
@@ -2810,6 +2803,7 @@ function savageCharacter (useLang) {
 
 		if( jsonString ) {
 			var _importObject = JSON.parse(jsonString);
+
 			if( _importObject ) {
 				this.init( _useLang );
 				if( _importObject.name )
@@ -2864,7 +2858,6 @@ function savageCharacter (useLang) {
 				if( _importObject.race ){
 					this.setRace( _importObject.race  );
 				}
-
 
 				if( _importObject.skills ) {
 					for( var importCounter = 0; importCounter < _importObject.skills.length; importCounter++ ) {
@@ -2997,7 +2990,6 @@ function savageCharacter (useLang) {
 					}
 				}
 
-
 				if(_importObject.spcpowerlevel)
 					_SPCSelectedPowerLevel = _importObject.spcpowerlevel;
 
@@ -3047,6 +3039,7 @@ function savageCharacter (useLang) {
 							_importObject.advancements[importCounter].tag
 						);
 
+
 						if( _importObject.advancements[importCounter].option1 ) {
 							option1name = null;
 							if( _importObject.advancements[importCounter].option1name )
@@ -3080,7 +3073,6 @@ function savageCharacter (useLang) {
 									_importObject.advancements[importCounter].option2book
 								 );
 							} else {
-
 								this.setAdvancementOption2(
 									_importObject.advancements[importCounter].takenAt,
 									_importObject.advancements[importCounter].option2,
@@ -3090,6 +3082,7 @@ function savageCharacter (useLang) {
 						}
 					}
 				}
+
 				_isNew = false;
 				this.validate();
 				return true;
@@ -3098,7 +3091,6 @@ function savageCharacter (useLang) {
 
 		return false;
 	}
-
 
 	this.setAdvancementOption1 = function( advIndex, optionItem, specifyName, bookID ) {
 
@@ -3114,16 +3106,17 @@ function savageCharacter (useLang) {
 						||
 					_selectedAdvancements[advIndex].tag == "skill"
 				) {
-					//console.log( "setAdvancementOption1", advIndex, optionItem)
 					if( optionItem.id ) {
 						_selectedAdvancements[advIndex].option1 = optionItem;
 					} else {
-						_selectedAdvancements[advIndex].option1 = this.getSkill( optionItem , specifyName);
+						if(_selectedAdvancements[advIndex].tag == "skill")
+							_selectedAdvancements[advIndex].option1 = this.getSkill( optionItem );
+						else
+							_selectedAdvancements[advIndex].option1 = this.getSkill( optionItem , specifyName);
 					}
 				} else {
 					_selectedAdvancements[advIndex].option1 = optionItem;
 				}
-
 
 			}
 			if( bookID )
@@ -3133,18 +3126,12 @@ function savageCharacter (useLang) {
 	}
 
 	this.setAdvancementOption2 = function( advIndex, optionItem, specifyName, bookID ) {
-		//console.log( "setAdvancementOption2", advIndex, optionItem, specifyName, bookID);
 		if( optionItem && _selectedAdvancements[advIndex] ) {
 			if(
 				_selectedAdvancements[advIndex].tag == "skill"
 
 			) {
-				//if( optionItem.id ) {
-				//	console.log("specifyName", specifyName) ;
-					_selectedAdvancements[advIndex].option2 = specifyName;
-				//} else {
-				//	_selectedAdvancements[advIndex].option2 = this.getSkill( optionItem , specifyName);
-				//}
+				_selectedAdvancements[advIndex].option2 = specifyName;
 			} else {
 				if(
 					_selectedAdvancements[advIndex].tag == "incskill"
@@ -3210,7 +3197,7 @@ function savageCharacter (useLang) {
 		if(!noUUID)
 			_exportObject.uuid = _uuid;
 
-		_exportObject.xp = this.XP.value;
+		_exportObject.xp = _XP.value;
 		_exportObject.gender = _gender.id;
 		_exportObject.race = _race.id;
 
@@ -3235,7 +3222,6 @@ function savageCharacter (useLang) {
 		for( var perkCounter = 0; perkCounter < _selectedPerks.length; perkCounter++ ) {
 			_exportObject.perks.push( _selectedPerks[perkCounter].tag );
 		}
-
 
 		_exportObject.skills = Array();
 
@@ -3296,7 +3282,6 @@ function savageCharacter (useLang) {
 
 			if( _selectedArcaneBackground.tag != "")
 				_exportObject.arcanebg = _selectedArcaneBackground.tag;
-
 
 			_exportObject.gearMundane = Array();
 			for( var gearCounter = 0; gearCounter < _selectedMundaneGear.length; gearCounter++ ) {
@@ -3480,7 +3465,6 @@ function savageCharacter (useLang) {
 			}
 		}
 
-	//	console.log( _exportObject );
 		return JSON.stringify( _exportObject );
 	}
 
@@ -3553,10 +3537,6 @@ function savageCharacter (useLang) {
 			return false;
 	}
 
-	this.getAvailableHindrances = function() {
-		return _availableHindrances;
-	}
-
 	this.getStartingFunds = function() {
 		return _startingFunds;
 	}
@@ -3617,6 +3597,29 @@ function savageCharacter (useLang) {
 		return _displayAttributes;
 	}
 
+	this.getSPCSelectedPowerLevel = function() {
+		return _SPCSelectedPowerLevel;
+	}
+
+	this.setSPCCampaignPowerLevel = function( newValue ) {
+		return _SPCSelectedPowerLevel = newValue;
+	}
+
+	this.getSPCCurrentPowerPoints = function() {
+		return _SPCCurrentPowerPoints;
+	}
+
+	this.getSPCPowerLimit = function() {
+		return _SPCPowerLimit;
+	}
+
+	this.getSPCPowerLevels = function() {
+		return _SPCPowerLevels;
+	}
+
+	this.getAttributes = function() {
+		return _attributes;
+	}
 
 	this.getBooks = function() {
 		return _books;
@@ -3628,6 +3631,30 @@ function savageCharacter (useLang) {
 
 	this.getCurrentLoadModifier = function() {
 		return _load.loadModifier;
+	}
+
+	this.getSPCRisingStars = function() {
+		return _SPCRisingStars;
+	}
+
+	this.incrementSPCPowerLevel = function( powerIndex ) {
+		_selectedSPCPowers[powerIndex].selectedLevel++;
+		if( _selectedSPCPowers[powerIndex].max_level > 1 && _selectedSPCPowers[powerIndex].selectedLevel >= _selectedSPCPowers[powerIndex].max_level) {
+			_selectedSPCPowers[powerIndex].selectedLevel = _selectedSPCPowers[powerIndex].max_level;
+		}
+		return _selectedSPCPowers[powerIndex];
+	}
+
+	this.decrementSPCPowerLevel = function( powerIndex ) {
+		_selectedSPCPowers[powerIndex].selectedLevel--;
+		if( _selectedSPCPowers[powerIndex].selectedLevel < 1) {
+			_selectedSPCPowers[powerIndex].selectedLevel = 1;
+		}
+		return _selectedSPCPowers[powerIndex];
+	}
+
+	this.setSPCRisingStars = function( newValue ) {
+		return _SPCRisingStars = newValue;
 	}
 
 	this.getCombatLoadModifier = function() {
@@ -3651,7 +3678,6 @@ function savageCharacter (useLang) {
 
 		return _hasArcaneBackground;
 	}
-
 
 	this.getWarningReport = function() {
 		return _warningReport;
@@ -3849,37 +3875,37 @@ function savageCharacter (useLang) {
 	}
 
 	this.getSkill = function( skillID, specifyName ) {
-		for( var skillCounter = 0; skillCounter < this.allSkills.length; skillCounter++ ) {
+		for( var skillCounter = 0; skillCounter < _allSkills.length; skillCounter++ ) {
 			if(
-				this.allSkills[skillCounter].id == skillID
+				_allSkills[skillCounter].id == skillID
 					||
-				this.allSkills[skillCounter] == skillID
+				_allSkills[skillCounter] == skillID
 					||
 				(
 					skillID.id
 						&&
 					(
-						this.allSkills[skillCounter].id == skillID.id
+						_allSkills[skillCounter].id == skillID.id
 							||
-						this.allSkills[skillCounter] == skillID.id
+						_allSkills[skillCounter] == skillID.id
 					)
 				)
 			) {
 				if( specifyName ) {
 					if( specifyName ) {
-						if( this.allSkills[skillCounter].specialties ) {
+						if( _allSkills[skillCounter].specialties ) {
 
-							for( var specC = 0; specC < this.allSkills[skillCounter].specialties.length; specC++ ) {
+							for( var specC = 0; specC < _allSkills[skillCounter].specialties.length; specC++ ) {
 
-								if( this.allSkills[skillCounter].specialties[specC].name.trim().toLowerCase() == specifyName.trim().toLowerCase() ) {
-									return this.allSkills[skillCounter].specialties[specC];
+								if( _allSkills[skillCounter].specialties[specC].name.trim().toLowerCase() == specifyName.trim().toLowerCase() ) {
+									return _allSkills[skillCounter].specialties[specC];
 								}
 							}
 						}
 						return null;
 					}
 				} else {
-					return this.allSkills[skillCounter];
+					return _allSkills[skillCounter];
 				}
 
 			}
@@ -3898,7 +3924,6 @@ function savageCharacter (useLang) {
 		}
 		return false;
 	}
-
 
 	this.incrementSpecialtySkill = function( skillID, specialtyIndex ) {
 		for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
@@ -4075,7 +4100,6 @@ function savageCharacter (useLang) {
 		return false;
 	}
 
-
 	this.setArcaneBackground = function( abTag ) {
 		for( abCounter = 0; abCounter < savageWorldsArcaneBackgrounds.length; abCounter++) {
 			if( abTag == savageWorldsArcaneBackgrounds[abCounter].tag ) {
@@ -4102,7 +4126,6 @@ function savageCharacter (useLang) {
 					_selectedMundaneGear[mundaneGearIndex].count++;
 					return true;
 				} else {
-
 
 					var pushedItem = {};
 					angular.extend( pushedItem, _availableMundaneGear[gearCounter]);
@@ -4343,7 +4366,6 @@ function savageCharacter (useLang) {
 
 	}
 
-
 	this.equipSecondaryHandWeapon = function( gearIndex ) {
 		// unequip all items in primary hand....
 		for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
@@ -4360,7 +4382,6 @@ function savageCharacter (useLang) {
 			if( _selectedRangedWeapons[gearCounter].readiedLocation == "secondary" )
 				_selectedRangedWeapons[gearCounter].readiedLocation = "";
 		}
-
 
 		_selectedHandWeapons[gearIndex].readiedLocation = "secondary";
 		_selectedHandWeapons[gearIndex].droppedDuringCombat = false;
@@ -4383,11 +4404,9 @@ function savageCharacter (useLang) {
 				_selectedRangedWeapons[gearCounter].readiedLocation = "";
 		}
 
-
 		_selectedRangedWeapons[gearIndex].readiedLocation = "secondary";
 		_selectedRangedWeapons[gearIndex].droppedDuringCombat = false;
 	}
-
 
 	this.equipPrimaryShield = function( gearIndex ) {
 		// unequip all items in primary hand....
@@ -4409,7 +4428,6 @@ function savageCharacter (useLang) {
 		_selectedShields[gearIndex].readiedLocation = "primary";
 		_selectedShields[gearIndex].droppedDuringCombat = false;
 	}
-
 
 	this.equipSecondaryShield = function( gearIndex ) {
 		// unequip all items in primary hand....
@@ -4549,7 +4567,6 @@ function savageCharacter (useLang) {
 		}
 		return false;
 	}
-
 
 	this.init(useLang);
 }
