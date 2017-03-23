@@ -4497,7 +4497,7 @@ charObj.getDerived().toughness += 2;
 	 child: 0,
 charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObj.strainBoost += 4;
+charObj.incrementStrain( 4 );
 }
 },
 {
@@ -4514,10 +4514,9 @@ charObj.strainBoost += 4;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-
 charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObj.doubleStrain = 1;
+charObj.doubleStrain();
 }
 },
 {

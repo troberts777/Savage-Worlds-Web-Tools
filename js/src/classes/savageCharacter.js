@@ -608,6 +608,7 @@ function savageCharacter (useLang) {
 			parry: 2,
 			toughness: 4,
 			armor: 0,
+			strain: 0,
 			currentLoad: 0,
 			sanity: 0
 		};
@@ -1375,6 +1376,9 @@ function savageCharacter (useLang) {
 			strength: getDiceValue( _attributes.strength + _attributeBoost.strength ),
 			vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
 		};
+
+		_derived._strainBonus = 0;
+		_derived._doubleStrain = false;
 
 		// Calc init derived stats
 		_derived.toughness = 0; // Math.floor(_displayAttributes.vigor.value / 2) + 2;
@@ -2262,10 +2266,7 @@ function savageCharacter (useLang) {
 			}
 		}
 
-		if( _usesStrain ) {
-			_currentStrain = 0;
-			_maxStrain = 0;
-		}
+
 
 		if( _derived.armor == 0) {
 			_derived.toughnessAndArmor = _derived.toughness;
@@ -2335,6 +2336,23 @@ function savageCharacter (useLang) {
 
 		//console.log( _activeSkills );
 
+		// Calcuate Strain and Cyberware
+		if( _usesStrain ) {
+			_derived.currentStrain = 0;
+			_derived.strain = 0;
+
+			//~ console.log(_displayAttributes.spirit);
+
+
+			if( _displayAttributes.spirit.value < _displayAttributes.vigor.value )
+				_derived.strain = _displayAttributes.spirit.value + _derived._strainBonus;
+			else
+				_derived.strain = _displayAttributes.vigor.value + _derived._strainBonus;
+
+			if( _derived._doubleStrain )
+				_derived.strain = _derived.strain * 2;
+
+		}
 	}
 
 	this.setCharAt = function(str,index,chr) {
@@ -3655,6 +3673,9 @@ function savageCharacter (useLang) {
 		return _selectedSPCPowers[powerIndex];
 	}
 
+
+
+
 	this.decrementSPCPowerLevel = function( powerIndex ) {
 		_selectedSPCPowers[powerIndex].selectedLevel--;
 		if( _selectedSPCPowers[powerIndex].selectedLevel < 1) {
@@ -3679,6 +3700,12 @@ function savageCharacter (useLang) {
 		if( typeof( setValue ) != "undefined" )
 			_usesStrain = setValue;
 		return _usesStrain;
+	}
+
+	this.usesSanity = function( setValue ) {
+		if( typeof( setValue ) != "undefined" )
+			_usesSanity = setValue;
+		return _usesSanity;
 	}
 
 	this.hasArcaneBackground = function( setValue ) {
@@ -3715,6 +3742,14 @@ function savageCharacter (useLang) {
 
 	this.incrementEdgePoints = function( incValue ) {
 		_availableEdgePoints += incValue / 1;
+	}
+
+	this.incrementStrain = function( incValue ) {
+		_derived._strainBonus += incValue / 1;
+	}
+
+	this.doubleStrain = function() {
+		_derived._doubleStrain = true
 	}
 
 	this.getAvailbleArcaneBackgrounds = function() {

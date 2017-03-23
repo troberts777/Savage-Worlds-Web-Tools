@@ -98,10 +98,19 @@
 								</h4>
 							</label>
 
-							<label class="derived-attribute" ng-hide="savageCharacter.usesSanity == false">
+							<label class="derived-attribute" ng-hide="savageCharacter.usesSanity() == false">
 								<h4>
 									<span translate="GENERAL_SANITY">Sanity</span>:
 									<span ng-bind-html="savageCharacter.getDerived().sanity"></span>
+								</h4>
+							</label>
+
+							<label class="derived-attribute" ng-hide="savageCharacter.usesStrain() == false">
+								<h4>
+									<span translate="GENERAL_STRAIN">Strain</span>:
+									<span ng-bind-html="savageCharacter.getDerived().currentStrain"></span>
+									/
+									<span ng-bind-html="savageCharacter.getDerived().strain"></span>
 								</h4>
 							</label>
 
@@ -123,7 +132,6 @@
 
 						</fieldset>
 					</div>
-
 			</div>
 			<fieldset class="fieldset">
 				<legend translate="GENERAL_SKILLS">Skills</legend>

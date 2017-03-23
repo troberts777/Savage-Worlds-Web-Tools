@@ -258,7 +258,7 @@ chargenPDF.prototype.createBasicPortraitPDF = function () {
 
 
 	if( this.currentCharacter.usesSPCCreation ) {
-		console.log( this.currentCharacter );
+		//~ console.log( this.currentCharacter );
 		this.currentDoc.addPage();
 
 		//this.currentDoc.lines([[0,0],[0,195]], 150, 5);
@@ -438,12 +438,18 @@ chargenPDF.prototype.createDerivedStatsTable = function( left, top, height, widt
 	this.currentDoc.text(left + 1, top+15, "Toughness: " + this.currentCharacter.getDerived().toughnessAndArmor);
 	this.currentDoc.text(left + 1, top+20, "Charisma: " + this.currentCharacter.getDerived().charisma);
 
-	this.currentDoc.text(left + 1, top+32, "Current / Combat Load");
+	if( this.currentCharacter.usesSanity() )
+		this.currentDoc.text(left + 1, top+25, "Sanity: " + this.currentCharacter.getDerived().sanity);
+
+	if( this.currentCharacter.usesStrain() )
+		this.currentDoc.text(left + 1, top+30, "Strain: " + this.currentCharacter.getDerived().currentStrain + " / " + this.currentCharacter.getDerived().strain);
+
+	this.currentDoc.text(left + 1, top+35, "Current / Combat Load");
 	this.currentDoc.setFontStyle("normal");
 
 	this.currentDoc.text(
 		left + 1,
-		top+36,
+		top+39,
 
 		this.currentCharacter.getCurrentLoad() + " (" + this.currentCharacter.getCurrentLoadModifier() + ")"
 
@@ -642,7 +648,7 @@ chargenPDF.prototype.createAttributesAndSkillsTable = function( skillcols, left,
 		) {
 			if(this.currentCharacter.getSkillList()[skill_counter].attribute == "spirit") {
 				currentSkill = this.currentCharacter.getSkillList()[skill_counter];
-				console.log("currentSkill", currentSkill);
+				//~ console.log("currentSkill", currentSkill);
 				if( currentSkill.displayValue )
 					this.currentDoc.text(skillcols[2], top+13+currentSkillCount * skill_line_height, currentSkill.local_name + ": " + currentSkill.displayValue );
 				else
