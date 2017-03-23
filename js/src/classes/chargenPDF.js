@@ -82,7 +82,7 @@ chargenPDF.prototype.createBasicLandscapePDF = function () {
 	this.createEdgesTable("Edges", 5, 172, 65, 28, 9);
 
 
-	if( this.currentCharacter.usesSPCCreation ) {
+	if( this.currentCharacter.usesSPCCreation() ) {
 		//~ console.log( this.currentCharacter );
 		this.currentDoc.addPage();
 
