@@ -139,7 +139,6 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 
 	$rootScope.makePDF = function() {
 
-		console.log( "makePDF called");
 		chargenPDFObject = new chargenPDF( $rootScope.savageCharacter );
 
 		// if a cordova Application
@@ -219,8 +218,6 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 			chargenPDFObject.currentDoc.output('dataurlnewwindow');
 			//chargenPDFObject.currentDoc.output('save', $rootScope.savageCharacter.name + '.pdf');
 		}
-
-		console.log( "makePDF ended");
 	}
 
 

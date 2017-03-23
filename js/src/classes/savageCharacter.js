@@ -1064,7 +1064,7 @@ function savageCharacter (useLang) {
 	}
 
 	this.getSkillList = function() {
-		return _skillList;
+		return _allSkills;
 	}
 
 

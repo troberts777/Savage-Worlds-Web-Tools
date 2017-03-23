@@ -1295,7 +1295,7 @@ chargenPDF.prototype.createAttributesAndSkillsTable = function( skillcols, left,
 			currentSkill = this.currentCharacter.getSkillList()[skill_counter];
 			//console.log("currentSkill", currentSkill);
 			//console.log( currentSkill.local_name, currentSkill.id + currentSkill.boost);
-			if( currentSkill.value > 0 )
+			if( currentSkill.displayValue )
 				this.currentDoc.text(skillcols[0], top+13+currentSkillCount * skill_line_height, currentSkill.local_name + ": " + currentSkill.displayValue );
 			else
 				this.currentDoc.text(skillcols[0], top+13+currentSkillCount * skill_line_height, this.currentCharacter.getSkillList()[skill_counter].local_name + ": -");
@@ -1334,7 +1334,7 @@ chargenPDF.prototype.createAttributesAndSkillsTable = function( skillcols, left,
 					}
 				} else {
 					currentSkill = this.currentCharacter.getSkillList()[skill_counter];
-					if( currentSkill > 0 ) {
+					if( currentSkill.displayValue ) {
 						// this.currentDoc.text(skillcols[1], 63+currentSkillCount * skill_line_height, currentSkill.local_name[0] + currentSkill.local_name[1] +  currentSkill.local_name[2] + " (" + currentSkill.specify_text + "): " + getDiceValue( currentSkill.value + currentSkill.boost ) );
 						this.currentDoc.text(skillcols[1], top+13+currentSkillCount * skill_line_height, currentSkill.local_name + ": " + currentSkill.displayValue );
 					} else {
@@ -1352,12 +1352,14 @@ chargenPDF.prototype.createAttributesAndSkillsTable = function( skillcols, left,
 	this.currentDoc.setFontStyle("normal");
 	currentSkillCount = 0;
 	for(skill_counter = 0; skill_counter < this.currentCharacter.getSkillList().length; skill_counter++) {
+
 		if(
 			this.currentCharacter.getSkillList()[skill_counter].showSkill
 		) {
 			if(this.currentCharacter.getSkillList()[skill_counter].attribute == "spirit") {
 				currentSkill = this.currentCharacter.getSkillList()[skill_counter];
-				if( currentSkill > 0 )
+				console.log("currentSkill", currentSkill);
+				if( currentSkill.displayValue )
 					this.currentDoc.text(skillcols[2], top+13+currentSkillCount * skill_line_height, currentSkill.local_name + ": " + currentSkill.displayValue );
 				else
 					this.currentDoc.text(skillcols[2], top+13+currentSkillCount * skill_line_height, this.currentCharacter.getSkillList()[skill_counter].local_name + ": -");
@@ -1373,7 +1375,7 @@ chargenPDF.prototype.createAttributesAndSkillsTable = function( skillcols, left,
 	for(skill_counter = 0; skill_counter < this.currentCharacter.getSkillList().length; skill_counter++) {
 		if(this.currentCharacter.getSkillList()[skill_counter].attribute == "strength") {
 			currentSkill = this.currentCharacter.getSkillList()[skill_counter];
-			if( currentSkill > 0 )
+			if( currentSkill.displayValue )
 				this.currentDoc.text(skillcols[3], top+13+currentSkillCount * skill_line_height, currentSkill.local_name + ": " + currentSkill.displayValue );
 			else
 				this.currentDoc.text(skillcols[3], top+13+currentSkillCount * skill_line_height, this.currentCharacter.getSkillList()[skill_counter].local_name + ": -");
@@ -3412,7 +3414,7 @@ function savageCharacter (useLang) {
 	}
 
 	this.getSkillList = function() {
-		return _skillList;
+		return _allSkills;
 	}
 
 
@@ -8755,7 +8757,6 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 
 	$rootScope.makePDF = function() {
 
-		console.log( "makePDF called");
 		chargenPDFObject = new chargenPDF( $rootScope.savageCharacter );
 
 		// if a cordova Application
@@ -8835,8 +8836,6 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 			chargenPDFObject.currentDoc.output('dataurlnewwindow');
 			//chargenPDFObject.currentDoc.output('save', $rootScope.savageCharacter.name + '.pdf');
 		}
-
-		console.log( "makePDF ended");
 	}
 
 
