@@ -15,9 +15,17 @@
 	<div class="row">
 		<div class="column small-12">
 	 		<div ng-include="'pages/chargen-nav-menu.html'"></div>
+
+			{{savageCharacter.hasNaturalweapons()}}
+			<fieldset ng-show="savageCharacter.hasNaturalWeapons().length > 0" class="fieldset">
+				<legend translate="CHARGEN_NATURAL_WEAPONS">Natural Weapons</legend>
+				<div ng-repeat="naturalWeapon in savageCharacter.hasNaturalWeapons() track by $index">{{naturalWeapon}}</div>
+			</fieldset>
+
 			<fieldset class="fieldset">
 				<legend translate="CHARGEN_HAND_WEAPONS">Hand Weapons</legend>
 					<a class="button tiny radius expanded primary" href="#/core/character-maker-hand-weapons-list" ng-click="clearGearLog()" translate="CHARGEN_ADD_HAND_WEAPON">Add Hand Weapon</a>
+
 					<div ng-show="savageCharacter.getSelectedHandWeapons().length > 0">
 						<table class="gear-list">
 							<thead>

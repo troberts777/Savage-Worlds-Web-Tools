@@ -13,7 +13,7 @@ function savageCharacter (useLang) {
 	var _startingFunds = 500;
 	var _currentFunds = 500;
 
-	var _naturalWeapons = false;
+	var _naturalWeapons = Array();
 
 	var _isNew = true;
 	var _multipleLanguages = false;
@@ -36,6 +36,8 @@ function savageCharacter (useLang) {
 	var _innateAttacks = Array();
 
 	var _uuid = -1;
+
+	var _availableCyberware = Array();
 
 
 	var allSkills = Array();
@@ -147,6 +149,8 @@ function savageCharacter (useLang) {
 
 	var _encumbranceMultiplier = 5;
 
+	var _installedCyberware = Array();
+
 	var _currentStrain = 0;
 	var _maxStrain = 0;
 	var _availableMundaneGear = Array();
@@ -184,7 +188,7 @@ function savageCharacter (useLang) {
 		_startingFunds = 500;
 		_currentFunds = 500;
 
-		_naturalWeapons = false;
+		_naturalWeapons = Array();
 
 		_isNew = true;
 		_multipleLanguages = false;
@@ -205,6 +209,8 @@ function savageCharacter (useLang) {
 		_knownLanguagesLimit = 0;
 
 		_innateAttacks = Array();
+
+		_installedCyberware = Array();
 
 		_xpOptions = Array();
 
@@ -484,6 +490,13 @@ function savageCharacter (useLang) {
 			savageWorldsArcaneTrappings[abCounter].select_option_name = savageWorldsArcaneTrappings[abCounter].local_name;
 	//		savageWorldsArcaneTrappings[abCounter].local_description = this.getLocalName( savageWorldsArcaneTrappings[abCounter].description );
 			savageWorldsArcaneTrappings[abCounter].bookObj = get_book_by_id( savageWorldsArcaneTrappings[abCounter].book );
+		}
+
+		// Localize Cyberware
+		for( var abCounter = 0; abCounter < savageWorldsCyberware.length; abCounter++ ) {
+			savageWorldsCyberware[abCounter].local_name = this.getLocalName( savageWorldsCyberware[abCounter].name );
+			savageWorldsCyberware[abCounter].local_description = this.getLocalName( savageWorldsCyberware[abCounter].description );
+			savageWorldsCyberware[abCounter].bookObj = get_book_by_id( savageWorldsCyberware[abCounter].book );
 		}
 
 		// Localize Powers
@@ -1002,6 +1015,10 @@ function savageCharacter (useLang) {
 		return _availableEdges;
 	}
 
+	this.getAvailableCyberware = function() {
+		return _availableCyberware;
+	}
+
 	this.getAvailablePerks = function() {
 		return _availablePerks;
 	}
@@ -1214,6 +1231,23 @@ function savageCharacter (useLang) {
 		return false;
 	}
 
+	this.addCyberEdge = function(bookId, edgeTag) {
+		for( var edgeCounter = 0; edgeCounter < savageWorldsEdges.length; edgeCounter++) {
+			if(
+				savageWorldsEdges[edgeCounter].tag == edgeTag
+					&&
+				savageWorldsEdges[edgeCounter].book == bookId
+			) {
+				var newEdge = {};
+				angular.extend( newEdge, savageWorldsEdges[ edgeCounter ] );
+				newEdge.cyber = true;
+				_selectedEdges.push( newEdge );
+				return true;
+			}
+		}
+		return false;
+	}
+
 	this.removeEdge = function(indexNumber) {
 		if( _edges[indexNumber] ) {
 			_edges = _edges.splice(indexNumber, 1);
@@ -1295,6 +1329,9 @@ function savageCharacter (useLang) {
 
 		_knownLanguagesLimit = 1;
 		_linguistSelected = false;
+
+		_naturalWeapons = Array();
+
 
 		_encumbranceMultiplier = 5;
 
@@ -1450,13 +1487,48 @@ function savageCharacter (useLang) {
 			}
 		}
 
-		_displayAttributes = {
-			agility: getDiceValue( _attributes.agility + _attributeBoost.agility ),
-			smarts: getDiceValue( _attributes.smarts + _attributeBoost.smarts ),
-			spirit: getDiceValue( _attributes.spirit + _attributeBoost.spirit ),
-			strength: getDiceValue( _attributes.strength + _attributeBoost.strength ),
-			vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
-		};
+		// Calcuate Strain and Cyberware
+		if( _usesStrain ) {
+			_derived.currentStrain = 0;
+			_derived.strain = 0;
+
+			for( var cyberC = 0; cyberC < _installedCyberware.length; cyberC++ ) {
+				_derived.currentStrain += _installedCyberware[ cyberC ].getStrainCost();
+				if( _installedCyberware[ cyberC ].getModEffect ) {
+					//~ console.log( "Cyberware - running getModEffect of "  + _installedCyberware[ cyberC ].local_name );
+					_installedCyberware[ cyberC ].getModEffect( this );
+				}
+			}
+
+			_displayAttributes = {
+				agility: getDiceValue( _attributes.agility + _attributeBoost.agility ),
+				smarts: getDiceValue( _attributes.smarts + _attributeBoost.smarts ),
+				spirit: getDiceValue( _attributes.spirit + _attributeBoost.spirit ),
+				strength: getDiceValue( _attributes.strength + _attributeBoost.strength ),
+				vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
+			};
+
+			if( _displayAttributes.spirit.value < _displayAttributes.vigor.value )
+				_derived.strain = _displayAttributes.spirit.value + _derived._strainBonus;
+			else
+				_derived.strain = _displayAttributes.vigor.value + _derived._strainBonus;
+
+			if( _derived._doubleStrain )
+				_derived.strain = _derived.strain * 2;
+
+
+
+
+		} else {
+
+			_displayAttributes = {
+				agility: getDiceValue( _attributes.agility + _attributeBoost.agility ),
+				smarts: getDiceValue( _attributes.smarts + _attributeBoost.smarts ),
+				spirit: getDiceValue( _attributes.spirit + _attributeBoost.spirit ),
+				strength: getDiceValue( _attributes.strength + _attributeBoost.strength ),
+				vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
+			};
+		}
 
 		// Calculate used skill points
 		for( skillCounter = 0; skillCounter < _skillList.length; skillCounter++) {
@@ -1595,7 +1667,8 @@ function savageCharacter (useLang) {
 		for( var edgeCounter = 0; edgeCounter < _selectedEdges.length; edgeCounter++) {
 
 			_installedEdges.push( _selectedEdges[edgeCounter] );
-			_availableEdgePoints = _availableEdgePoints - 1;
+			if( ! _selectedEdges[ edgeCounter ].cyber )
+				_availableEdgePoints = _availableEdgePoints - 1;
 			if( typeof(_selectedEdges[edgeCounter].charEffect) == "function" ) {
 				_selectedEdges[edgeCounter].charEffect( this );
 			}
@@ -1785,6 +1858,21 @@ function savageCharacter (useLang) {
 			}
 		}
 
+		// Process Availble Cyberware
+		_availableCyberware = Array();
+		for( cyberCounter = 0; cyberCounter < savageWorldsCyberware.length; cyberCounter++) {
+			_availableCyberware.push( savageWorldsCyberware[ cyberCounter ] );
+		}
+
+		for( cyberIndex = 0; cyberIndex < _installedCyberware.length; cyberIndex++) {
+
+			 _installedCyberware[ cyberIndex ].selectedEdge = null;
+			 for( var edgeC = 0; edgeC < _combatEdges.length; edgeC++ ) {
+				 if( _combatEdges[ edgeC ].tag == _installedCyberware[ cyberIndex ].option2 && _combatEdges[ edgeC ].book == _installedCyberware[ cyberIndex ].option1 )
+					_installedCyberware[ cyberIndex ].selectedEdge = _combatEdges[ edgeC ]
+			 }
+
+		}
 		// Process Available Edges
 		_availableEdges = Array();
 		_availableEdges.push(
@@ -1800,10 +1888,27 @@ function savageCharacter (useLang) {
 			}
 		);
 
+		_combatEdges = Array();
+		_combatEdges.push(
+			{
+				local_name:  "- " + this.getTranslation("CHARGEN_SELECT_EDGE") + " -",
+				select_option_name:  "- " + this.getTranslation("CHARGEN_SELECT_EDGE") + " -",
+				tag: "",
+				selectable: true,
+				bookObj: {
+					local_name: ""
+				},
+				blank: true
+			}
+		);
+
 		for( edgeCounter = 0; edgeCounter < savageWorldsEdges.length; edgeCounter++) {
 			if( savageWorldsEdges[edgeCounter].racial == 0 ) {
+
 				if( this.bookInUse( savageWorldsEdges[edgeCounter].book ) ) {
 					savageWorldsEdges[edgeCounter].selectable = true;
+
+					_combatEdges.push( savageWorldsEdges[edgeCounter] );
 
 					if( typeof(savageWorldsEdges[edgeCounter].requires) == "function" ) {
 						savageWorldsEdges[edgeCounter].selectable = savageWorldsEdges[edgeCounter].requires( this );
@@ -2125,6 +2230,8 @@ function savageCharacter (useLang) {
 
 		this.calcSPC();
 
+
+
 		this.refreshAvailable();
 
 	 	// recalculate attributes from advancement boosts
@@ -2336,23 +2443,13 @@ function savageCharacter (useLang) {
 
 		//console.log( _activeSkills );
 
-		// Calcuate Strain and Cyberware
-		if( _usesStrain ) {
-			_derived.currentStrain = 0;
-			_derived.strain = 0;
 
-			//~ console.log(_displayAttributes.spirit);
+	}
 
-
-			if( _displayAttributes.spirit.value < _displayAttributes.vigor.value )
-				_derived.strain = _displayAttributes.spirit.value + _derived._strainBonus;
-			else
-				_derived.strain = _displayAttributes.vigor.value + _derived._strainBonus;
-
-			if( _derived._doubleStrain )
-				_derived.strain = _derived.strain * 2;
-
-		}
+	this.setEncumbranceMultiplier = function( newValue ) {
+		// only modify up! This fixes problems with brawny edge overriding cyberware mule
+		if( newValue > _encumbranceMultiplier )
+			_encumbranceMultiplier = newValue / 1;
 	}
 
 	this.setCharAt = function(str,index,chr) {
@@ -3054,6 +3151,19 @@ function savageCharacter (useLang) {
 					}
 				}
 
+				if( _importObject.cyberware ) {
+					for( var importCounter = 0; importCounter < _importObject.cyberware.length; importCounter++ ) {
+						this.installCyberware(
+							_importObject.cyberware[ importCounter ].tag,
+							_importObject.cyberware[ importCounter].selectedRank,
+							_importObject.cyberware[ importCounter].option1,
+							_importObject.cyberware[ importCounter].option2,
+							_importObject.cyberware[ importCounter].option3,
+							_importObject.cyberware[ importCounter].customName
+						);
+					}
+				}
+
 				if( _importObject.advancements ) {
 					_selectedAdvancements = Array();
 					this.validate();
@@ -3276,10 +3386,12 @@ function savageCharacter (useLang) {
 			}
 			_exportObject.edges = Array();
 			for( var edgeCounter = 0; edgeCounter < _selectedEdges.length; edgeCounter++ ) {
-				_exportObject.edges.push( {
-					book: _selectedEdges[edgeCounter].book,
-					tag: _selectedEdges[edgeCounter].tag,
-				});
+				if( !_selectedEdges[edgeCounter].cyber ) {
+					_exportObject.edges.push( {
+						book: _selectedEdges[edgeCounter].book,
+						tag: _selectedEdges[edgeCounter].tag,
+					});
+				}
 			}
 
 			if( _selectedPowers.length > 0 ) {
@@ -3381,6 +3493,21 @@ function savageCharacter (useLang) {
 			_exportObject.knownLanguages = Array();
 			for( var langCounter = 0; langCounter < _knownLanguagesLimit + 1; langCounter++ ) {
 				_exportObject.knownLanguages.push( _knownLanguages[langCounter] );
+			}
+
+			if( _installedCyberware.length > 0 ) {
+				_exportObject.cyberware = Array()
+				for( var cyberC = 0; cyberC < _installedCyberware.length; cyberC++) {
+					var exportItem = {
+						tag: _installedCyberware[ cyberC ].tag,
+						selectedRank: _installedCyberware[ cyberC ].selectedRank,
+						option1: _installedCyberware[ cyberC ].option1,
+						option2: _installedCyberware[ cyberC ].option2,
+						option3: _installedCyberware[ cyberC ].option3,
+						customName: _installedCyberware[ cyberC ].customName,
+					}
+					_exportObject.cyberware.push( exportItem );
+				}
 			}
 
 			if( _usesSPCCreation ) {
@@ -3725,6 +3852,8 @@ function savageCharacter (useLang) {
 	}
 
 	this.incrementAttributePointsAvailable = function( incValue ) {
+		if( typeof( incValue ) == "undefined" )
+			incValue = 1;
 		_attributePointsAvailable += incValue / 1;
 	}
 
@@ -3733,19 +3862,43 @@ function savageCharacter (useLang) {
 	}
 
 	this.incrementAvailbleEdgePoints = function( incValue ) {
+		if( typeof( incValue ) == "undefined" )
+			incValue = 1;
 		_availableEdgePoints += incValue / 1;
 	}
 
 	this.incrementSkillPointsAvailable = function( incValue ) {
+		if( typeof( incValue ) == "undefined" )
+			incValue = 1;
 		_skillPointsAvailable += incValue / 1;
 	}
 
 	this.incrementEdgePoints = function( incValue ) {
+		if( typeof( incValue ) == "undefined" )
+			incValue = 1;
 		_availableEdgePoints += incValue / 1;
 	}
 
+	this.incrementPace = function( incValue ) {
+		if( typeof( incValue ) == "undefined" )
+			incValue = 1;
+		_derived.pace += incValue / 1;
+	}
+
 	this.incrementStrain = function( incValue ) {
+		if( typeof( incValue ) == "undefined" )
+			incValue = 1;
 		_derived._strainBonus += incValue / 1;
+	}
+
+	this.incrementArmor = function( incValue ) {
+		if( typeof( incValue ) == "undefined" )
+			incValue = 1;
+		_derived.armor += incValue / 1;
+	}
+
+	this.getCombatEdges = function( cyberIndex ) {
+		return _combatEdges;
 	}
 
 	this.doubleStrain = function() {
@@ -3851,6 +4004,117 @@ function savageCharacter (useLang) {
 
 		}
 		return false;
+	}
+
+	this.removeCyberware = function( cyberIndex ) {
+		if( _installedCyberware[ cyberIndex ] )
+			_installedCyberware.splice( cyberIndex, 1);
+	}
+
+	this.setCyberOption1 = function( cyberIndex, newValue ) {
+		if( _installedCyberware[ cyberIndex ] )
+			 _installedCyberware[ cyberIndex ].option1 = newValue;
+
+		return _installedCyberware[ cyberIndex ].option1;
+	}
+
+	this.setCyberEdge = function( cyberIndex, bookID, edgeTag ) {
+		if( _installedCyberware[ cyberIndex ] ) {
+			 _installedCyberware[ cyberIndex ].option1 = bookID;
+			 _installedCyberware[ cyberIndex ].option2 = edgeTag;
+			 _installedCyberware[ cyberIndex ].selectedEdge = null;
+			 for( var edgeC = 0; edgeC < _combatEdges.length; edgeC++ ) {
+				 if( _combatEdges[ edgeC ].tag == edgeTag && _combatEdges[ edgeC ].book == bookID )
+					_installedCyberware[ cyberIndex ].selectedEdge = _combatEdges[ edgeC ]
+			 }
+		}
+
+		return _installedCyberware[ cyberIndex ].option1;
+	}
+
+	this.setCyberOption2 = function( cyberIndex, newValue ) {
+		if( _installedCyberware[ cyberIndex ] )
+			 _installedCyberware[ cyberIndex ].option2 = newValue;
+
+		return _installedCyberware[ cyberIndex ].option2;
+	}
+
+	this.setCyberOption3 = function( cyberIndex, newValue ) {
+		if( _installedCyberware[ cyberIndex ] )
+			 _installedCyberware[ cyberIndex ].option3 = newValue;
+
+		return _installedCyberware[ cyberIndex ].option3;
+	}
+
+	this.setCyberCustomName = function( cyberIndex, newValue ) {
+		if( _installedCyberware[ cyberIndex ] )
+			 _installedCyberware[ cyberIndex ].customName = newValue;
+
+		return _installedCyberware[ cyberIndex ].customName;
+	}
+
+	this.installCyberware = function( cyberTag, selectedRank, option1, option2, option3, customName ) {
+		if( typeof( selectedRank ) == "undefined" )
+			selectedRank = 1;
+		if( typeof( option1 ) == "undefined" )
+			option1 = null;
+		if( typeof( option2 ) == "undefined" )
+			option2 = null;
+		if( typeof( option3 ) == "undefined" )
+			option3 = null;
+		if( typeof( customName ) == "undefined" )
+			customName = null;
+
+		for( var cyberC = 0; cyberC < _availableCyberware.length; cyberC++ ) {
+			if( _availableCyberware[cyberC].tag == cyberTag ) {
+
+				var cyberObject = angular.copy ( _availableCyberware[cyberC] );
+
+				cyberObject.selectedRank = selectedRank;
+				cyberObject.option1 = option1;
+				cyberObject.option2 = option2;
+				cyberObject.option3 = option3;
+				cyberObject.customName = customName;
+
+
+				_installedCyberware.push( cyberObject );
+
+				return cyberObject;
+				break;
+			}
+		}
+
+	}
+
+	this.getInstalledCyberware = function() {
+		return _installedCyberware;
+	}
+
+	this.cyberwareAvailable = function( cyberTag ) {
+
+		var maxAvailable = 0;
+		var currentInstalled = 0;
+		for( var cyberC = 0; cyberC < _availableCyberware.length; cyberC++ ) {
+
+			if( _availableCyberware[cyberC].tag == cyberTag ) {
+				if( _availableCyberware[cyberC].getMax() == "u" )
+					return true;
+				else
+					maxAvailable = _availableCyberware[cyberC].getMax();
+			}
+		}
+
+		for( var cyberC = 0; cyberC < _installedCyberware.length; cyberC++ ) {
+			if( _installedCyberware[cyberC].tag == cyberTag ) {
+				currentInstalled++;
+			}
+		}
+
+		if( maxAvailable > currentInstalled )
+			return true;
+		else
+			return false;
+
 	}
 
 	this.decrementSkill = function( skillID ) {
@@ -4375,6 +4639,18 @@ function savageCharacter (useLang) {
 		_selectedHandWeapons[gearIndex].droppedDuringCombat = false;
 		_selectedHandWeapons[gearIndex].readiedLocation = "primary";
 
+	}
+
+	this.hasNaturalWeapons = function( newValue ) {
+
+		if( typeof( newValue ) != "undefined" ) {
+			if( newValue === true )
+				_naturalWeapons.push("Natural Weapons");
+			else
+				_naturalWeapons.push(newValue);
+		}
+
+		return _naturalWeapons;
 	}
 
 	this.equipPrimaryRangedWeapon = function( gearIndex ) {

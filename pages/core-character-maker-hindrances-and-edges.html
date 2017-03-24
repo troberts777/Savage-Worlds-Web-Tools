@@ -93,9 +93,10 @@
 											<span translate="CHARGEN_SPC_AB">Arcane Background (Super Powers, Setting Rule)</span>
 										</li>
 										<li ng-repeat="edge in savageCharacter.getInstalledEdges()">
-											<button ng-hide="edge.racial > 0 || savageCharacter.XP.value > 0" ng-click="removeEdgeByTag(edge.tag)" class="primary button tiny" translate="GENERAL_REMOVE">Remove</button>
+											<button ng-hide="edge.cyber || edge.racial > 0 || savageCharacter.XP.value > 0" ng-click="removeEdgeByTag(edge.tag)" class="primary button tiny" translate="GENERAL_REMOVE">Remove</button>
 
 											<span class="racial" ng-show="edge.racial > 0" translate="CHARGEN_RACIAL_PARENTHETICAL">(racial)</span>
+											<span class="racial" ng-show="edge.cyber" translate="CHARGEN_CYBER_PARENTHETICAL">(cyber)</span>
 
 											<span class="item-label">{{edge.local_name}}</span>
 										</li>

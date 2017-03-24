@@ -15,6 +15,7 @@
 		<div class="columns small-12 medium-12 large-12">
 			<div ng-include="'pages/chargen-nav-menu.html'"></div>
 				<div class="row">
+<!--
 					<div class="columns small-12 text-center">
 					<fieldset class="fieldset" style="padding: 30px;">
 						<legend>Coming Soon</legend>
@@ -22,6 +23,90 @@
 						<h3>under construction</h3>
 
 					</fieldset>
+					</div>
+-->
+					<div class="columns medium-6 text-left">
+						<fieldset class="fieldset" style="padding: 30px;">
+							<legend translate="CHARGEN_AVAILABLE_CYBERWARE">Available Cyberware</legend>
+
+							<table>
+
+								<thead>
+									<tr>
+										<th translate="GENERAL_NAME">Name</th>
+										<th translate="CHARGEN_STRAIN_COST">Strain Cost</th>
+										<th translate="GENERA_MAXIMUM_ABBR">Max</th>
+										<th translate="GENERAL_COST">Cost</th>
+
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="cyberware in savageCharacter.getAvailableCyberware() track by $index">
+										<td>{{cyberware.local_name}}</td>
+										<td>{{cyberware.getStrainCost()}}</td>
+										<td>{{cyberware.getMax()}}</td>
+
+										<td ng-hide="cyberware.perRank">${{addCommas(cyberware.getCost())}}</td>
+										<td ng-show="cyberware.perRank">${{addCommas(cyberware.getCost())}} / rank</td>
+
+										<td class="text-right"><button ng-hide="savageCharacter.cyberwareAvailable(cyberware.tag) == false" ng-click="installCyberware( cyberware.tag ) " class="button primary tiny no-bottom-margin "><i class="fa fa-plus "></i></button></td>
+									</tr>
+								</tbody>
+							</table>
+						</fieldset>
+					</div>
+
+
+					<div class="columns medium-6 text-left">
+						<fieldset class="fieldset" style="padding: 30px;">
+							<legend translate="CHARGEN_INSTALLED_CYBERWARE">Installed Cyberware</legend>
+
+							<table>
+
+								<thead>
+									<tr>
+										<th>&nbsp;</th>
+										<th translate="GENERAL_NAME">Name</th>
+										<th translate="CHARGEN_STRAIN_COST">Strain Cost</th>
+										<th translate="GENERAL_COST">Cost</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="cyberware in savageCharacter.getInstalledCyberware() track by $index">
+										<td class="text-left"><button  ng-click="removeCyberware( $index ) " class="button primary tiny no-bottom-margin "><i class="fa fa-trash "></i></button></td>
+
+										<td>
+											{{cyberware.local_name}}
+											<div ng-show="cyberware.chooseAttribute">
+												<select ng-model="cyberware.option1" ng-change="setCyberOption1( $index,cyberware.option1)">
+													<option value="" translate="CHARGEN_CYBER_CHOOSE_ATTRIBUTE">- Choose an Attribute -</option>
+													<option value="agility" translate="ATTRIBUTE_AGILITY">agility</option>
+													<option value="smarts" translate="ATTRIBUTE_SMARTS">smarts</option>
+													<option value="spirit" translate="ATTRIBUTE_SPIRIT">spirit</option>
+													<option value="strength" translate="ATTRIBUTE_STRENGTH">strength</option>
+													<option value="vigor" translate="ATTRIBUTE_VIGOR">vigor</option>
+												</select>
+
+											</div>
+
+											<div ng-show="cyberware.chooseCombatEdge">
+												<select ng-options="item as item.local_name for item in savageCharacter.getCombatEdges($index)" ng-model="cyberware.selectedEdge" ng-change="setCombatEdge( $index, cyberware.selectedEdge )"></select>
+											</div>
+<!--
+											<br />1 - {{cyberware.option1}}
+											<br />2 - {{cyberware.option2}}
+-->
+										</td>
+										<td>{{cyberware.getStrainCost()}}</td>
+
+										<td ng-hide="cyberware.perRank">${{addCommas(cyberware.getCost())}}</td>
+										<td ng-show="cyberware.perRank">${{addCommas(cyberware.getCost())}} / rank</td>
+
+									</tr>
+								</tbody>
+							</table>
+						</fieldset>
 					</div>
 
 				</div>

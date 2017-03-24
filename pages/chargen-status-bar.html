@@ -16,6 +16,11 @@
 				<span translate="CHARGEN_STATUS_ADVANCEMENTS">Advancements (used/availble)</span>: <span ng-bind="savageCharacter.getSelectedAvancements()"></span> / <span ng-bind="savageCharacter.getAvailableAdvancements()"></span>
 			</span>
 
+			<span ng-show="savageCharacter.usesStrain()">
+				<span class="separator">|</span>
+				<span translate="CHARGEN_STATUS_STRAIN">Strain (used/availble)</span>: <span ng-bind="savageCharacter.getDerived().currentStrain"></span> / <span ng-bind="savageCharacter.getDerived().strain"></span>
+			</span>
+
 			<span class="separator">|</span>
 				<span translate="CHARGEN_CURRENT_FUNDS">Current Funds</span>: $<span ng-bind="savageCharacter.getCurrentFunds()"></span>
 			</span>

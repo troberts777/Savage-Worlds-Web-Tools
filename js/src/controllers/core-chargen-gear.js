@@ -39,6 +39,9 @@ var coreChargenGearFunctions = function ($timeout, $rootScope, $translate, $scop
 			$scope.gearAddedMessage = "";
 		}
 
+		$scope.addCommas = function( numericalValue ) {
+			return addCommas( numericalValue );
+		}
 
 		$scope.buyArmor = function( bookID, gearTag, forFree) {
 			if( forFree == true)

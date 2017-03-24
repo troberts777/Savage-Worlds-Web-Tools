@@ -40,7 +40,7 @@
 					<tbody>
 						<tr ng-repeat="gearItem in filteredWeapons = ( savageCharacter.getAvailableHandWeapons() | filter:gearSearch )">
 							<td>{{gearItem.local_name}}</td>
-							<td>${{gearItem.cost}}</td>
+							<td>${{addCommas(gearItem.cost)}}</td>
 							<td>{{gearItem.weight}}</td>
 							<td>{{gearItem.bookObj.local_name}}</td>
 							<td class="text-right">

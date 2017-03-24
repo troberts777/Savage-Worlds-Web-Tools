@@ -34,6 +34,13 @@ function get_book_by_id( book_id, language ) {
 	return null;
 }
 
+function addCommas( numericalValue ) {
+  return (numericalValue + "").replace(/\b(\d+)((\.\d+)*)\b/g, function(a, b, c) {
+    return (b.charAt(0) > 0 && !(c || ".").lastIndexOf(".") ? b.replace(/(\d)(?=(\d{3})+$)/g, "$1,") : b) + c;
+  });
+}
+
+
 function get_book_by_tag( book_tag, language ) {
 	if( !language )
 		language = localStorage["users_preferred_language"];
@@ -187,6 +194,15 @@ function get_gear_class_by_id( class_id ) {
 	for( var ldcv = 0 ; ldcv < savageWorldsGearClasses.length; ldcv++) {
 		if( savageWorldsGearClasses[ldcv].id == class_id ) {
 			return savageWorldsGearClasses[ldcv];
+		}
+	}
+	return null;
+}
+
+function get_first_edge_by_tag( tagname ) {
+	for( var ldcv = 0 ; ldcv < savageWorldsEdges.length; ldcv++) {
+		if( savageWorldsEdges[ldcv].tag  == tagname ) {
+			return savageWorldsEdges[ldcv];
 		}
 	}
 	return null;

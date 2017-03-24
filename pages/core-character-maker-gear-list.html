@@ -40,7 +40,7 @@
 					<tbody>
 						<tr ng-repeat="gearItem in filteredMundaneGear = ( savageCharacter.getAvailableMundaneGear() | filter:gearSearch )">
 							<td>{{gearItem.local_name}}</td>
-							<td>${{gearItem.cost}}</td>
+							<td>${{addCommas(gearItem.cost)}}</td>
 							<td>{{gearItem.weight}}</td>
 							<td>{{gearItem.bookObj.local_name}}</td>
 							<td class="text-right">

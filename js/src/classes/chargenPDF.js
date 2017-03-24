@@ -814,6 +814,8 @@ chargenPDF.prototype.createHindrancesTable = function(label, left, top, width, h
 			majorMinor = "minor, ";
 		if( this.currentCharacter.getInstalledHindrances()[hind_counter].racial > 0)
 			majorMinor = "racial, ";
+		if( this.currentCharacter.getInstalledHindrances()[hind_counter].cyber)
+			majorMinor = "cyber, ";
 		if(this.currentCharacter.getInstalledHindrances()[hind_counter].specify_text && this.currentCharacter.getInstalledHindrances()[hind_counter].specifyField != "")
 			this.currentDoc.text(left + 5, top + 10 + hind_counter * Math.floor(smallFontSize / 2) -1 , this.currentCharacter.getInstalledHindrances()[hind_counter].local_name + ": " + this.currentCharacter.getInstalledHindrances()[hind_counter].specifyField + " (" + majorMinor + this.currentCharacter.getInstalledHindrances()[hind_counter].bookObj.abbrev + " " + this.currentCharacter.getInstalledHindrances()[hind_counter].page + ")" );
 		else
@@ -838,7 +840,8 @@ chargenPDF.prototype.createEdgesTable = function(label, left, top, width, height
 
 		if( this.currentCharacter.getInstalledEdges()[edge_counter].racial > 0)
 			majorMinor = "racial, ";
-
+		if( this.currentCharacter.getInstalledEdges()[edge_counter].cyber)
+			majorMinor = "cyber, ";
 		if(this.currentCharacter.getInstalledEdges()[edge_counter].specify_text && this.currentCharacter.getInstalledEdges()[edge_counter].specifyField != "")
 			this.currentDoc.text(left + 5, top + 10 + edge_counter * Math.floor(smallFontSize / 2) -1 , this.currentCharacter.getInstalledEdges()[edge_counter].local_name + ": " + this.currentCharacter.getInstalledEdges()[edge_counter].specifyField + " (" + majorMinor + this.currentCharacter.getInstalledEdges()[edge_counter].bookObj.abbrev + " " + this.currentCharacter.getInstalledEdges()[edge_counter].page + ")" );
 		else

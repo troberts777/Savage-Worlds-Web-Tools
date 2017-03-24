@@ -96,8 +96,6 @@ charObj.addRacialSkill("SKILL_SWIMMING", 2);
 {
 	 name: {
 		 'en-US': 'Claws',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 	 required_edge: '',
 	 required_rank: 0,
@@ -111,7 +109,7 @@ charObj.addRacialSkill("SKILL_SWIMMING", 2);
 	 child: 0,
 charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObj.naturalWeapons = true;
+charObj.hasNaturalWeapons( "Claws - Str+d6" );
 }
 },
 {
@@ -261,8 +259,6 @@ charEffect: function( charObj ) {
 {
 	 name: {
 		 'en-US': 'Natural Weapons',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 	 required_edge: '',
 	 required_rank: 0,
@@ -276,7 +272,8 @@ charEffect: function( charObj ) {
 	 child: 0,
 charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObj.naturalWeapons = true;
+charObj.hasNaturalWeapons( "Bite - Str+d6" );
+
 }
 },
 {
@@ -860,7 +857,7 @@ charEffects: function ( charObj ) {
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
-	 conflicts_hindrance: 'obese',
+	 conflicts_hindrance: '',
 	 tag: 'brawny',
 	 page: 'p36',
 	 racial: 0,
@@ -869,7 +866,7 @@ charEffects: function ( charObj ) {
 	 child: 0,
 charEffects: function ( charObj ) {
 			charObj.getDerived().toughness++;
-			charObj.encumbrance_multiplier = 8;
+			charObj.selectedObject.setEncumbranceMultiplier( 8 );
 		},
 requires: function( charObj) {
 	if(
@@ -4268,7 +4265,11 @@ charObj.getDerived().armor += 4;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
+charEffect: function( charObj ) {
+// Affect Character Object Code here
+charObj.hasNaturalWeapons( "Pincers or Manidbles - Str+d6" );
 
+}
 },
 {
 	 name: {
@@ -4284,7 +4285,10 @@ charObj.getDerived().armor += 4;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-
+charEffect: function( charObj ) {
+// Affect Character Object Code here
+charObj.hasNaturalWeapons( "Claws - Str+d6 AP2" );
+}
 },
 {
 	 name: {
@@ -4300,7 +4304,11 @@ charObj.getDerived().armor += 4;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
+charEffect: function( charObj ) {
+// Affect Character Object Code here
+charObj.hasNaturalWeapons( "Bite - Str+d6" );
 
+}
 },
 {
 	 name: {

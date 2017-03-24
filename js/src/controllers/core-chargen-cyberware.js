@@ -37,6 +37,48 @@ var coreChargenCyberwareFunctions = function ($timeout, $rootScope, $translate, 
 
 		$scope.init();
 
+
+		$scope.addCommas = function( numericalValue ) {
+			return addCommas( numericalValue );
+		}
+
+		$scope.installCyberware = function( cyberTag ) {
+			$rootScope.savageCharacter.installCyberware( cyberTag );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.removeCyberware = function( cyberIndex ) {
+			$rootScope.savageCharacter.removeCyberware( cyberIndex );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.setCyberOption1 = function( cyberIndex, newValue ) {
+			$rootScope.savageCharacter.setCyberOption1( cyberIndex, newValue );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.setCyberOption2 = function( cyberIndex, newValue ) {
+			$rootScope.savageCharacter.setCyberOption2( cyberIndex, newValue );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.setCombatEdge = function( cyberIndex, edgeObject ) {
+			console.log("...",  cyberIndex, edgeObject);
+
+			console.log("edgeObject.book", edgeObject.book);
+			console.log("edgeObject.tag", edgeObject.tag);
+
+			$rootScope.savageCharacter.setCyberEdge( cyberIndex, edgeObject.book, edgeObject.tag  );
+
+
+			//~ $rootScope.savageCharacter.setCyberOption1( cyberIndex, edgeObject.book );
+			//~ $rootScope.savageCharacter.setCyberOption2( cyberIndex, edgeObject.tag );
+			$rootScope.validateAndSave();
+		}
+
+
+		//~ console.log("savageWorldsCyberware", savageWorldsCyberware);
+
 	}
 ;
 
