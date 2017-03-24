@@ -77,8 +77,8 @@
 										<td class="text-left"><button  ng-click="removeCyberware( $index ) " class="button primary tiny no-bottom-margin "><i class="fa fa-trash "></i></button></td>
 
 										<td>
-											<input type="text" ng-model="cyberware.customName" ng-keyup="setCyberCustomName($index, cyberware.customName)" placeholder="Custom Name" />
-											{{cyberware.local_name}}
+											<input type="text" class="no-bottom-margin" ng-model="cyberware.customName" ng-keyup="setCyberCustomName($index, cyberware.customName)" placeholder="Custom Name" />
+											<div class="text-right">{{cyberware.local_name}}</div>
 											<div ng-show="cyberware.chooseAttribute">
 												<select ng-model="cyberware.option1" ng-change="setCyberOption1( $index,cyberware.option1)">
 													<option value="" translate="CHARGEN_CYBER_CHOOSE_ATTRIBUTE">- Choose an Attribute -</option>
