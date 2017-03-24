@@ -62,6 +62,17 @@ var coreChargenCyberwareFunctions = function ($timeout, $rootScope, $translate, 
 			$rootScope.validateAndSave();
 		}
 
+		$scope.setCyberOption3 = function( cyberIndex, newValue ) {
+			$rootScope.savageCharacter.setCyberOption3( cyberIndex, newValue );
+			$rootScope.validateAndSave();
+		}
+
+
+		$scope.setCyberCustomName = function( cyberIndex, newValue ) {
+			$rootScope.savageCharacter.setCyberCustomName( cyberIndex, newValue );
+			$rootScope.justSave();
+		}
+
 		$scope.setCombatEdge = function( cyberIndex, edgeObject ) {
 			console.log("...",  cyberIndex, edgeObject);
 
