@@ -6408,6 +6408,10 @@ function savageCharacter (useLang) {
 		return _installedCyberware[ cyberIndex ].option1;
 	}
 
+	this.getLoadLimit = function() {
+		return _loadLimit;
+	}
+
 	this.setCyberOption2 = function( cyberIndex, newValue ) {
 		if( _installedCyberware[ cyberIndex ] )
 			 _installedCyberware[ cyberIndex ].option2 = newValue;
@@ -14927,9 +14931,9 @@ charEffects: function ( charObj ) {
 	 book: 1,
 	 child: 0,
 charEffects: function ( charObj ) {
-			charObj.getDerived().toughness++;
-			charObj.selectedObject.setEncumbranceMultiplier( 8 );
-		},
+	charObj.getDerived().toughness++;
+	charObj.setEncumbranceMultiplier( 8 );
+},
 requires: function( charObj) {
 	if(
 		charObj.getAttributeDisplayValues().vigor.value >= 6
@@ -14938,8 +14942,8 @@ requires: function( charObj) {
 	) {
 		return true;
 	}
-		return false;
-	}
+	return false;
+}
 },
 {
 	 name: {

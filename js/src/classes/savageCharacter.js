@@ -4033,6 +4033,10 @@ function savageCharacter (useLang) {
 		return _installedCyberware[ cyberIndex ].option1;
 	}
 
+	this.getLoadLimit = function() {
+		return _loadLimit;
+	}
+
 	this.setCyberOption2 = function( cyberIndex, newValue ) {
 		if( _installedCyberware[ cyberIndex ] )
 			 _installedCyberware[ cyberIndex ].option2 = newValue;

@@ -865,9 +865,9 @@ charEffects: function ( charObj ) {
 	 book: 1,
 	 child: 0,
 charEffects: function ( charObj ) {
-			charObj.getDerived().toughness++;
-			charObj.selectedObject.setEncumbranceMultiplier( 8 );
-		},
+	charObj.getDerived().toughness++;
+	charObj.setEncumbranceMultiplier( 8 );
+},
 requires: function( charObj) {
 	if(
 		charObj.getAttributeDisplayValues().vigor.value >= 6
@@ -876,8 +876,8 @@ requires: function( charObj) {
 	) {
 		return true;
 	}
-		return false;
-	}
+	return false;
+}
 },
 {
 	 name: {

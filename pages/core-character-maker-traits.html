@@ -118,6 +118,8 @@
 								<h4>
 									<span translate="GENERAL_LOAD">Load</span>:
 									<span ng-bind-html="savageCharacter.getCurrentLoad()"></span>
+									 /
+									<span ng-bind-html="savageCharacter.getLoadLimit()"></span>
 									(<span ng-bind-html="savageCharacter.getCurrentLoadModifier()"></span>)
 								</h4>
 							</label>
@@ -126,6 +128,8 @@
 								<h4>
 									<span translate="GENERAL_COMBAT_LOAD">Combat Load</span>:
 									<span ng-bind-html="savageCharacter.getCombatLoad()"></span>
+									 /
+									<span ng-bind-html="savageCharacter.getLoadLimit()"></span>
 									(<span ng-bind-html="savageCharacter.getCombatLoadModifier()"></span>)
 								</h4>
 							</label>
