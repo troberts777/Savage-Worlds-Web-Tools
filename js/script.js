@@ -18797,7 +18797,7 @@ charObj.doubleStrain();
 	 child: 0,
 charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObj.currentFunds += 10000;
+charObj.setCurrentFunds(  charObj.getCurrentFunds() + 10000 );
 }
 },
 {
