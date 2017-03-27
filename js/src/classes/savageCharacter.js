@@ -1516,15 +1516,8 @@ function savageCharacter (useLang) {
 						case "molec":
 
 							_installedCyberware[cyberC].localCost += 500;
-							var addAP = _installedCyberware[cyberC].localDamage;
 
-							if(addAP.indexOf("+") > 0 ) {
-								addAP = addAP.substring(0, addAP.indexOf("+") );
-							}
-
-							addAP = addAP.replace("d", "") / 1;
-
-							_installedCyberware[cyberC].localNotes += ", AP " + Math.floor(addAP / 2);
+							_installedCyberware[cyberC].localNotes += ", AP 3";
 
 							_installedCyberware[cyberC].localNotes += " (" + this.getTranslation("SCIFI_MOLECULAR") + ")";
 
