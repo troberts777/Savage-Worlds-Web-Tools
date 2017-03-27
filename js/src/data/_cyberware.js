@@ -348,10 +348,13 @@ return 5000;
 },
 getModEffect: function(selectedObject) {
     if( this.customName )
-        selectedObject.hasNaturalWeapons( this.customName + " - Str+d6" );
+        selectedObject.hasNaturalWeapons( this.customName + " - Str+" + this.dieDamage + this.localNotes );
     else
-        selectedObject.hasNaturalWeapons( "Cybernetic Melee Weapon - Str+d6" );
-}
+        selectedObject.hasNaturalWeapons( "Cybernetic Melee Weapon - Str+" + this.dieDamage + this.localNotes );
+},
+dieDamage: "d6",
+localNotes: "",
+sciFiMeleeWeapon: true
 },
 {
 	 name: {

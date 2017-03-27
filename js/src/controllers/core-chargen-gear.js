@@ -112,6 +112,11 @@ var coreChargenGearFunctions = function ($timeout, $rootScope, $translate, $scop
 			$rootScope.validateAndSave();
 		}
 
+		$scope.setSciFiMod = function(indexItem, sciFiModSelected ) {
+			$rootScope.savageCharacter.setSciFiMod( indexItem, sciFiModSelected );
+			$rootScope.validateAndSave();
+		}
+
 		$scope.unequipHandWeapon = function( indexItem ) {
 
 			$rootScope.savageCharacter.unequipHandWeapon( indexItem );

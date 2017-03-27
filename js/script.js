@@ -1432,51 +1432,80 @@ chargenPDF.prototype.createWeaponTable = function( label, cols, left, top, numli
 	this.currentDoc.text(cols[6], top + 10, "Shots");
 	this.currentDoc.setFontStyle("normal");
 
+	var natWeaponCount = 0;
+
+	naturalWeapons = this.currentCharacter.hasNaturalWeapons();
+	for(var nw_counter = 0; nw_counter < naturalWeapons.length; nw_counter++) {
+		natWeaponCount++;
+		this.currentDoc.text(cols[0] - 2, top + 15 + (  natWeaponCount  - 1) * 4, "* " + naturalWeapons[nw_counter].toString());
+		this.currentDoc.lines([[0,0],[cols[1]-cols[0] - 1,0]], cols[0], top + 16 + ( natWeaponCount   - 1) * 4);
+		this.currentDoc.lines([[0,0],[cols[2]-cols[1] - 1,0]], cols[1], top + 16 + ( natWeaponCount  - 1 ) * 4);
+		this.currentDoc.lines([[0,0],[cols[3]-cols[2] - 1,0]], cols[2], top + 16 + ( natWeaponCount  - 1 ) * 4);
+		this.currentDoc.lines([[0,0],[cols[4]-cols[3] - 1,0]], cols[3], top + 16 + ( natWeaponCount  - 1 ) * 4);
+		this.currentDoc.lines([[0,0],[cols[5]-cols[4] - 1,0]], cols[4], top + 16 + ( natWeaponCount  - 1 ) * 4);
+		this.currentDoc.lines([[0,0],[cols[6]-cols[5] - 1,0]], cols[5], top + 16 + ( natWeaponCount  - 1 ) * 4);
+		this.currentDoc.lines([[0,0],[width-cols[5] - 11,0]], cols[6], top + 16 + ( natWeaponCount  - 1 ) * 4);
+	}
+
 	currentWeapons = this.currentCharacter.getSelectedHandWeapons();
 	currentWeapons = currentWeapons.concat(this.currentCharacter.getSelectedRangedWeapons());
-	for(w_counter = 0; w_counter < numlines; w_counter++) {
+	for(var w_counter = 0; w_counter < numlines - natWeaponCount; w_counter++) {
 		//~ console.log( currentWeapons[w_counter] );
 		if(currentWeapons[w_counter]) {
-			if(currentWeapons[w_counter].name ) {
+			if( currentWeapons[w_counter].local_name ) {
 				if( currentWeapons[w_counter].readiedLocation )
-					this.currentDoc.text(cols[0] - 2, top + 15 + w_counter * 4, "* " + currentWeapons[w_counter].local_name.toString());
+					this.currentDoc.text(cols[0] - 2, top + 15 + ( w_counter + natWeaponCount ) * 4, "* " + currentWeapons[w_counter].local_name.toString());
 				else
-					this.currentDoc.text(cols[0], top + 15 + w_counter * 4, currentWeapons[w_counter].local_name.toString());
+					this.currentDoc.text(cols[0], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].local_name.toString());
 			}
 
-			if(currentWeapons[w_counter].weight )
-				this.currentDoc.text(cols[1], top + 15 + w_counter * 4, currentWeapons[w_counter].weight.toString());
+			if(currentWeapons[w_counter].localWeight ) {
+				this.currentDoc.text(cols[1], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].localWeight.toString());
+			} else {
+				if(currentWeapons[w_counter].weight )
+					this.currentDoc.text(cols[1], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].weight.toString());
+			}
 
-			if(currentWeapons[w_counter].damage )
-				this.currentDoc.text(cols[2], top + 15 + w_counter * 4, currentWeapons[w_counter].displayDamage.toString());
+			if(currentWeapons[w_counter].localDamage ) {
+				this.currentDoc.text(cols[2], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].localDamage.toString());
+			} else {
+				if(currentWeapons[w_counter].damage )
+					this.currentDoc.text(cols[2], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].displayDamage.toString());
+			}
 
-			if(currentWeapons[w_counter].ap )
-				this.currentDoc.text(cols[3], top + 15 + w_counter * 4, currentWeapons[w_counter].ap.toString());
-			else
-				this.currentDoc.text(cols[3], top + 15 + w_counter * 4, "-");
+			if(currentWeapons[w_counter].localAP ) {
+				this.currentDoc.text(cols[3], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].localAP.toString());
+			} else {
+				if(currentWeapons[w_counter].ap )
+					this.currentDoc.text(cols[3], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].ap.toString());
+				else
+					this.currentDoc.text(cols[3], top + 15 + ( w_counter + natWeaponCount ) * 4, "-");
+			}
+
+
 
 			if(currentWeapons[w_counter].range )
-				this.currentDoc.text(cols[4], top + 15 + w_counter * 4, currentWeapons[w_counter].range.toString());
+				this.currentDoc.text(cols[4], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].range.toString());
 
 			if(currentWeapons[w_counter].rof )
-				this.currentDoc.text(cols[5], top + 15 + w_counter * 4, currentWeapons[w_counter].rof.toString());
+				this.currentDoc.text(cols[5], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].rof.toString());
 
 			if(currentWeapons[w_counter].shots ) {
-				this.currentDoc.text(cols[6], top + 15 + w_counter * 4, currentWeapons[w_counter].shots.toString());
+				this.currentDoc.text(cols[6], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].shots.toString());
 			} else {
 				if(currentWeapons[w_counter].range )
-					this.currentDoc.text(cols[6], top + 15 + w_counter * 4, "1");
+					this.currentDoc.text(cols[6], top + 15 + ( w_counter + natWeaponCount ) * 4, "1");
 			}
 
 		}
 
-		this.currentDoc.lines([[0,0],[cols[1]-cols[0] - 1,0]], cols[0], top + 16 + w_counter * 4);
-		this.currentDoc.lines([[0,0],[cols[2]-cols[1] - 1,0]], cols[1], top + 16 + w_counter * 4);
-		this.currentDoc.lines([[0,0],[cols[3]-cols[2] - 1,0]], cols[2], top + 16 + w_counter * 4);
-		this.currentDoc.lines([[0,0],[cols[4]-cols[3] - 1,0]], cols[3], top + 16 + w_counter * 4);
-		this.currentDoc.lines([[0,0],[cols[5]-cols[4] - 1,0]], cols[4], top + 16 + w_counter * 4);
-		this.currentDoc.lines([[0,0],[cols[6]-cols[5] - 1,0]], cols[5], top + 16 + w_counter * 4);
-		this.currentDoc.lines([[0,0],[width-cols[5] - 11,0]], cols[6], top + 16 + w_counter * 4);
+		this.currentDoc.lines([[0,0],[cols[1]-cols[0] - 1,0]], cols[0], top + 16 + ( w_counter + natWeaponCount ) * 4);
+		this.currentDoc.lines([[0,0],[cols[2]-cols[1] - 1,0]], cols[1], top + 16 + ( w_counter + natWeaponCount ) * 4);
+		this.currentDoc.lines([[0,0],[cols[3]-cols[2] - 1,0]], cols[2], top + 16 + ( w_counter + natWeaponCount ) * 4);
+		this.currentDoc.lines([[0,0],[cols[4]-cols[3] - 1,0]], cols[3], top + 16 + ( w_counter + natWeaponCount ) * 4);
+		this.currentDoc.lines([[0,0],[cols[5]-cols[4] - 1,0]], cols[4], top + 16 + ( w_counter + natWeaponCount ) * 4);
+		this.currentDoc.lines([[0,0],[cols[6]-cols[5] - 1,0]], cols[5], top + 16 + ( w_counter + natWeaponCount ) * 4);
+		this.currentDoc.lines([[0,0],[width-cols[5] - 11,0]], cols[6], top + 16 + ( w_counter + natWeaponCount ) * 4);
 	}
 
 	this.currentDoc.setFontSize(10);
@@ -3863,10 +3892,74 @@ function savageCharacter (useLang) {
 
 			for( var cyberC = 0; cyberC < _installedCyberware.length; cyberC++ ) {
 				_derived.currentStrain += _installedCyberware[ cyberC ].getStrainCost();
+				_installedCyberware[ cyberC ].localCost = _installedCyberware[ cyberC ].getCost();
+
+				if( _installedCyberware[ cyberC ].tag == "weapon-melee" && _installedCyberware[ cyberC ].option1 != "" ) {
+					_installedCyberware[ cyberC ].localNotes = "";
+
+					switch( _installedCyberware[cyberC].option1 ) {
+						case "chain":
+							_installedCyberware[cyberC].localCost += 500;
+							_installedCyberware[ cyberC ].localNotes += ", AP 2";
+
+							_installedCyberware[cyberC].localNotes += " (" + this.getTranslation("SCIFI_CHAIN") + ")";
+							break;
+						case "vibro":
+							_installedCyberware[cyberC].localCost += 500;
+							_installedCyberware[ cyberC ].localNotes += ", AP 2";
+
+							_installedCyberware[cyberC].localNotes += " (" + this.getTranslation("SCIFI_VIBRO") + ")";
+							break;
+						case "energy":
+							_installedCyberware[ cyberC ].dieDamage = "d8";
+							_installedCyberware[ cyberC ].localNotes += ", AP 4";
+							_installedCyberware[cyberC].localCost += 500;
+
+							_installedCyberware[cyberC].localNotes += " (" + this.getTranslation("SCIFI_ENERGY") + ")";
+							break;
+						case "molec":
+
+							_installedCyberware[cyberC].localCost += 500;
+							var addAP = _installedCyberware[cyberC].localDamage;
+
+							if(addAP.indexOf("+") > 0 ) {
+								addAP = addAP.substring(0, addAP.indexOf("+") );
+							}
+
+							addAP = addAP.replace("d", "") / 1;
+
+							_installedCyberware[cyberC].localNotes += ", AP " + Math.floor(addAP / 2);
+
+							_installedCyberware[cyberC].localNotes += " (" + this.getTranslation("SCIFI_MOLECULAR") + ")";
+
+							break;
+						case "power":
+
+							_installedCyberware[cyberC].localCost += 500;
+							_installedCyberware[cyberC].localNotes += " + d6";
+
+							_installedCyberware[cyberC].localNotes += " (" + this.getTranslation("SCIFI_POWER") + ")";
+							break;
+						case "stun":
+
+							_installedCyberware[cyberC].localCost += 500;
+
+							_installedCyberware[cyberC].localNotes += " (" + this.getTranslation("SCIFI_STUN") + ")";
+							break;
+						default:
+							// no mods
+							break;
+					}
+
+				}
+
+
 				if( _installedCyberware[ cyberC ].getModEffect ) {
 					//~ console.log( "Cyberware - running getModEffect of "  + _installedCyberware[ cyberC ].local_name );
 					_installedCyberware[ cyberC ].getModEffect( this );
 				}
+
+				_currentFunds -= _installedCyberware[cyberC].localCost ;
 			}
 
 			_displayAttributes = {
@@ -4627,19 +4720,91 @@ function savageCharacter (useLang) {
 	 	_load.currentLoad = 0;
 	 	_load.combatLoad = 0;
 	 	// subtract gear costs....
+
 	 	for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++) {
+
+			_selectedHandWeapons[gearCounter].localCost = _selectedHandWeapons[gearCounter].purchaseCost;
+			_selectedHandWeapons[gearCounter].localWeight = _selectedHandWeapons[gearCounter].weight;
+			_selectedHandWeapons[gearCounter].localAP = _selectedHandWeapons[gearCounter].ap;
+			_selectedHandWeapons[gearCounter].localNotes = _selectedHandWeapons[gearCounter].notes;
+			_selectedHandWeapons[gearCounter].localDamage = _selectedHandWeapons[gearCounter].damage;
+
+			_selectedHandWeapons[gearCounter].local_name = this.getLocalName( _selectedHandWeapons[gearCounter].name );
+
+			switch( _selectedHandWeapons[gearCounter].sciFiMod ) {
+				case "chain":
+					_selectedHandWeapons[gearCounter].localCost += 500;
+					_selectedHandWeapons[gearCounter].localWeight += 2;
+					_selectedHandWeapons[gearCounter].localAP += 2;
+					_selectedHandWeapons[gearCounter].local_name = this.getTranslation("SCIFI_CHAIN") + "-" + _selectedHandWeapons[gearCounter].local_name;
+					break;
+				case "vibro":
+					_selectedHandWeapons[gearCounter].localCost += 500;
+					_selectedHandWeapons[gearCounter].localWeight += 2;
+					_selectedHandWeapons[gearCounter].localAP += 2;
+					_selectedHandWeapons[gearCounter].local_name = this.getTranslation("SCIFI_VIBRO") + "-" + _selectedHandWeapons[gearCounter].local_name;
+					break;
+				case "energy":
+					_selectedHandWeapons[gearCounter].local_name = this.getTranslation("SCIFI_ENERGY") + "-" + _selectedHandWeapons[gearCounter].local_name;
+
+
+					_selectedHandWeapons[gearCounter].localDamage = _selectedHandWeapons[gearCounter].localDamage.replace("d10", "d12");
+					_selectedHandWeapons[gearCounter].localDamage = _selectedHandWeapons[gearCounter].localDamage.replace("d8", "d10");
+					_selectedHandWeapons[gearCounter].localDamage = _selectedHandWeapons[gearCounter].localDamage.replace("d6", "d8");
+					_selectedHandWeapons[gearCounter].localDamage = _selectedHandWeapons[gearCounter].localDamage.replace("d4", "d6");
+
+					_selectedHandWeapons[gearCounter].localCost += 500;
+					_selectedHandWeapons[gearCounter].localWeight += 1;
+					_selectedHandWeapons[gearCounter].localAP += 4;
+					break;
+				case "molec":
+					_selectedHandWeapons[gearCounter].local_name = this.getTranslation("SCIFI_MOLECULAR") + "-" + _selectedHandWeapons[gearCounter].local_name;
+
+					_selectedHandWeapons[gearCounter].localCost += 500;
+					//_selectedHandWeapons[gearCounter].ap += 4;
+					var addAP = _selectedHandWeapons[gearCounter].localDamage;
+
+					if(addAP.indexOf("+") > 0 ) {
+						addAP = addAP.substring(0, addAP.indexOf("+") );
+					}
+
+					addAP = addAP.replace("d", "") / 1;
+
+					_selectedHandWeapons[gearCounter].localAP += Math.floor(addAP / 2);
+
+					break;
+				case "power":
+					_selectedHandWeapons[gearCounter].local_name = this.getTranslation("SCIFI_POWER") + "-" + _selectedHandWeapons[gearCounter].local_name;
+
+					_selectedHandWeapons[gearCounter].localCost += 500;
+					_selectedHandWeapons[gearCounter].localWeight += 1;
+					_selectedHandWeapons[gearCounter].localDamage += " + d6";
+					break;
+				case "stun":
+					_selectedHandWeapons[gearCounter].local_name = this.getTranslation("SCIFI_STUN") + "-" + _selectedHandWeapons[gearCounter].local_name;
+
+					_selectedHandWeapons[gearCounter].localCost += 500;
+					_selectedHandWeapons[gearCounter].localWeight += 1;
+					break;
+				default:
+					// no mods
+					break;
+			}
+
 	 		_currentFunds -= _selectedHandWeapons[gearCounter].purchaseCost;
-	 		_load.currentLoad += _selectedHandWeapons[gearCounter].weight;
+	 		_load.currentLoad += _selectedHandWeapons[gearCounter].localWeight;
 	 		if( _selectedHandWeapons[gearCounter].droppedDuringCombat == false )
-	 			_load.combatLoad += _selectedHandWeapons[gearCounter].weight;
+	 			_load.combatLoad += _selectedHandWeapons[gearCounter].localWeight;
 	 		_selectedHandWeapons[gearCounter].toHitRollModifier = 0;
 	 		_selectedHandWeapons[gearCounter].currentParry = _selectedHandWeapons[gearCounter].parry;
+
+
 
 			if( _selectedHandWeapons[gearCounter].readiedLocation && _selectedHandWeapons[gearCounter].min_str > _displayAttributes.strength.value ) {
 				_warningReport.push( this.getTranslation("CHARGEN_BELOW_STR_WEAPON") );
 
-				if( _selectedHandWeapons[gearCounter].damage_strength > 0) {
-					var damageBit = _selectedHandWeapons[gearCounter].damage;
+				if( _selectedHandWeapons[gearCounter].localDamage_strength > 0) {
+					var damageBit = _selectedHandWeapons[gearCounter].localDamage;
 
 					damageBit = this.setCharAt( damageBit, 1, _displayAttributes.strength.value);
 
@@ -4648,20 +4813,21 @@ function savageCharacter (useLang) {
 
 					_selectedHandWeapons[gearCounter].displayDamage = _displayAttributes.strength.local_label + " + " +  damageBit;
 				} else {
-					_selectedHandWeapons[gearCounter].displayDamage = _selectedHandWeapons[gearCounter].damage;
+					_selectedHandWeapons[gearCounter].displayDamage = _selectedHandWeapons[gearCounter].localDamage;
 					_selectedHandWeapons[gearCounter].toHitRollModifier = -1;
 				}
 			} else {
-				if( _selectedHandWeapons[gearCounter].damage_strength > 0) {
-					_selectedHandWeapons[gearCounter].displayDamage = _displayAttributes.strength.local_label + " + " + _selectedHandWeapons[gearCounter].damage;
+				if( _selectedHandWeapons[gearCounter].localDamage_strength > 0) {
+					_selectedHandWeapons[gearCounter].displayDamage = _displayAttributes.strength.local_label + " + " + _selectedHandWeapons[gearCounter].localDamage;
 				} else {
-					_selectedHandWeapons[gearCounter].displayDamage = _selectedHandWeapons[gearCounter].damage;
+					_selectedHandWeapons[gearCounter].displayDamage = _selectedHandWeapons[gearCounter].localDamage;
 				}
 			}
 
 			if( _selectedHandWeapons[gearCounter].readiedLocation != "")
 				_derived.parry += _selectedHandWeapons[gearCounter].parry_modifier;
 	 	}
+
 		for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++) {
 	 		_currentFunds -= _selectedRangedWeapons[gearCounter].purchaseCost;
 	 		_load.currentLoad += _selectedRangedWeapons[gearCounter].weight;
@@ -5440,12 +5606,16 @@ function savageCharacter (useLang) {
 				if( _importObject.gearHandWeapons ) {
 					_selectedHandWeapons = Array();
 					for( var importCounter = 0; importCounter < _importObject.gearHandWeapons.length; importCounter++ ) {
+						var _sciFiMod = "";
+						if( _importObject.gearHandWeapons[importCounter].sciFiMod )
+							_sciFiMod = _importObject.gearHandWeapons[importCounter].sciFiMod ;
 						this.addGearHandWeapon(
 							_importObject.gearHandWeapons[importCounter].book,
 							_importObject.gearHandWeapons[importCounter].tag,
 							_importObject.gearHandWeapons[importCounter].cost,
 							_importObject.gearHandWeapons[importCounter].loc,
-							_importObject.gearHandWeapons[importCounter].dropped
+							_importObject.gearHandWeapons[importCounter].dropped,
+							_sciFiMod
 						);
 					}
 				}
@@ -5812,7 +5982,8 @@ function savageCharacter (useLang) {
 					tag: _selectedHandWeapons[gearCounter].tag,
 					cost: _selectedHandWeapons[gearCounter].purchaseCost,
 					loc: _selectedHandWeapons[gearCounter].readiedLocation,
-					dropped: _selectedHandWeapons[gearCounter].droppedDuringCombat
+					dropped: _selectedHandWeapons[gearCounter].droppedDuringCombat,
+					sciFiMod: _selectedHandWeapons[gearCounter].sciFiMod
 				});
 			}
 
@@ -6387,12 +6558,6 @@ function savageCharacter (useLang) {
 			_installedCyberware.splice( cyberIndex, 1);
 	}
 
-	this.setCyberOption1 = function( cyberIndex, newValue ) {
-		if( _installedCyberware[ cyberIndex ] )
-			 _installedCyberware[ cyberIndex ].option1 = newValue;
-
-		return _installedCyberware[ cyberIndex ].option1;
-	}
 
 	this.setCyberEdge = function( cyberIndex, bookID, edgeTag ) {
 		if( _installedCyberware[ cyberIndex ] ) {
@@ -6410,6 +6575,13 @@ function savageCharacter (useLang) {
 
 	this.getLoadLimit = function() {
 		return _loadLimit;
+	}
+
+	this.setCyberOption1 = function( cyberIndex, newValue ) {
+		if( _installedCyberware[ cyberIndex ] )
+			 _installedCyberware[ cyberIndex ].option1 = newValue;
+
+		return _installedCyberware[ cyberIndex ].option1;
 	}
 
 	this.setCyberOption2 = function( cyberIndex, newValue ) {
@@ -6871,9 +7043,11 @@ function savageCharacter (useLang) {
 		return false;
 	}
 
-	this.addGearHandWeapon = function( fromBook, gearTag, itemCost, readiedLocation, droppedDuringCombat ) {
+	this.addGearHandWeapon = function( fromBook, gearTag, itemCost, readiedLocation, droppedDuringCombat, sciFiMod ) {
 		if(!droppedDuringCombat)
 			droppedDuringCombat = false;
+		if(!sciFiMod)
+			sciFiMod = "";
 		for( var gearCounter = 0; gearCounter < _availableHandWeapons.length; gearCounter++ ) {
 			//~ if(
 				//~ gearTag == _availableHandWeapons[gearCounter].tag
@@ -6899,6 +7073,9 @@ function savageCharacter (useLang) {
 				} else {
 					pushedItem.readiedLocation = "";
 				}
+
+				pushedItem.sciFiMod = sciFiMod;
+
 				_selectedHandWeapons.push( pushedItem );
 				return true;
 			}
@@ -7158,8 +7335,12 @@ function savageCharacter (useLang) {
 		_selectedHandWeapons[gearIndex].readiedLocation = "";
 	}
 
-	this.unequipRangedWeapon = function( gearIndex ) {
-		_selectedRangedWeapons[gearIndex].readiedLocation = "";
+	this.unequipHandWeapon = function( gearIndex ) {
+		_selectedHandWeapons[gearIndex].readiedLocation = "";
+	}
+
+	this.setSciFiMod = function( gearIndex, sciFiModSelected ) {
+		_selectedHandWeapons[gearIndex].sciFiMod = sciFiModSelected;
 	}
 
 	this.equipArmor = function( gearIndex ) {
@@ -8578,7 +8759,6 @@ var coreChargenCyberwareFunctions = function ($timeout, $rootScope, $translate, 
 			$rootScope.validateAndSave();
 		}
 
-
 		$scope.setCyberCustomName = function( cyberIndex, newValue ) {
 			$rootScope.savageCharacter.setCyberCustomName( cyberIndex, newValue );
 			$rootScope.justSave();
@@ -8889,6 +9069,11 @@ var coreChargenGearFunctions = function ($timeout, $rootScope, $translate, $scop
 		$scope.equipSecondaryRangedWeapon = function( indexItem ) {
 
 			$rootScope.savageCharacter.equipSecondaryRangedWeapon( indexItem );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.setSciFiMod = function(indexItem, sciFiModSelected ) {
+			$rootScope.savageCharacter.setSciFiMod( indexItem, sciFiModSelected );
 			$rootScope.validateAndSave();
 		}
 
@@ -14038,10 +14223,13 @@ return 5000;
 },
 getModEffect: function(selectedObject) {
     if( this.customName )
-        selectedObject.hasNaturalWeapons( this.customName + " - Str+d6" );
+        selectedObject.hasNaturalWeapons( this.customName + " - Str+" + this.dieDamage + this.localNotes );
     else
-        selectedObject.hasNaturalWeapons( "Cybernetic Melee Weapon - Str+d6" );
-}
+        selectedObject.hasNaturalWeapons( "Cybernetic Melee Weapon - Str+" + this.dieDamage + this.localNotes );
+},
+dieDamage: "d6",
+localNotes: "",
+sciFiMeleeWeapon: true
 },
 {
 	 name: {
@@ -45757,6 +45945,13 @@ availableLanguages.push ({
 			CHARGEN_CYBER_CHOOSE_EDGE: '- Choose an Edge -',
 			CHARGEN_CYBER_PARENTHETICAL: '(cyber)',
 			CHARGEN_NATURAL_WEAPONS: 'Natural Weapons',
+			SCIFI_VIBRO: 'Vibro',
+			SCIFI_CHAIN: 'Chain',
+			SCIFI_ENEGY: 'Energy',
+			SCIFI_MOLECULAR: 'Molecular',
+			SCIFI_POWER: 'Power',
+			SCIFI_STUN: 'Stun',
+			SCIFI_ENERGY: 'Energy',
 
 	}
 

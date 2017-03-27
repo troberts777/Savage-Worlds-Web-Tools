@@ -700,51 +700,80 @@ chargenPDF.prototype.createWeaponTable = function( label, cols, left, top, numli
 	this.currentDoc.text(cols[6], top + 10, "Shots");
 	this.currentDoc.setFontStyle("normal");
 
+	var natWeaponCount = 0;
+
+	naturalWeapons = this.currentCharacter.hasNaturalWeapons();
+	for(var nw_counter = 0; nw_counter < naturalWeapons.length; nw_counter++) {
+		natWeaponCount++;
+		this.currentDoc.text(cols[0] - 2, top + 15 + (  natWeaponCount  - 1) * 4, "* " + naturalWeapons[nw_counter].toString());
+		this.currentDoc.lines([[0,0],[cols[1]-cols[0] - 1,0]], cols[0], top + 16 + ( natWeaponCount   - 1) * 4);
+		this.currentDoc.lines([[0,0],[cols[2]-cols[1] - 1,0]], cols[1], top + 16 + ( natWeaponCount  - 1 ) * 4);
+		this.currentDoc.lines([[0,0],[cols[3]-cols[2] - 1,0]], cols[2], top + 16 + ( natWeaponCount  - 1 ) * 4);
+		this.currentDoc.lines([[0,0],[cols[4]-cols[3] - 1,0]], cols[3], top + 16 + ( natWeaponCount  - 1 ) * 4);
+		this.currentDoc.lines([[0,0],[cols[5]-cols[4] - 1,0]], cols[4], top + 16 + ( natWeaponCount  - 1 ) * 4);
+		this.currentDoc.lines([[0,0],[cols[6]-cols[5] - 1,0]], cols[5], top + 16 + ( natWeaponCount  - 1 ) * 4);
+		this.currentDoc.lines([[0,0],[width-cols[5] - 11,0]], cols[6], top + 16 + ( natWeaponCount  - 1 ) * 4);
+	}
+
 	currentWeapons = this.currentCharacter.getSelectedHandWeapons();
 	currentWeapons = currentWeapons.concat(this.currentCharacter.getSelectedRangedWeapons());
-	for(w_counter = 0; w_counter < numlines; w_counter++) {
+	for(var w_counter = 0; w_counter < numlines - natWeaponCount; w_counter++) {
 		//~ console.log( currentWeapons[w_counter] );
 		if(currentWeapons[w_counter]) {
-			if(currentWeapons[w_counter].name ) {
+			if( currentWeapons[w_counter].local_name ) {
 				if( currentWeapons[w_counter].readiedLocation )
-					this.currentDoc.text(cols[0] - 2, top + 15 + w_counter * 4, "* " + currentWeapons[w_counter].local_name.toString());
+					this.currentDoc.text(cols[0] - 2, top + 15 + ( w_counter + natWeaponCount ) * 4, "* " + currentWeapons[w_counter].local_name.toString());
 				else
-					this.currentDoc.text(cols[0], top + 15 + w_counter * 4, currentWeapons[w_counter].local_name.toString());
+					this.currentDoc.text(cols[0], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].local_name.toString());
 			}
 
-			if(currentWeapons[w_counter].weight )
-				this.currentDoc.text(cols[1], top + 15 + w_counter * 4, currentWeapons[w_counter].weight.toString());
+			if(currentWeapons[w_counter].localWeight ) {
+				this.currentDoc.text(cols[1], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].localWeight.toString());
+			} else {
+				if(currentWeapons[w_counter].weight )
+					this.currentDoc.text(cols[1], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].weight.toString());
+			}
 
-			if(currentWeapons[w_counter].damage )
-				this.currentDoc.text(cols[2], top + 15 + w_counter * 4, currentWeapons[w_counter].displayDamage.toString());
+			if(currentWeapons[w_counter].localDamage ) {
+				this.currentDoc.text(cols[2], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].localDamage.toString());
+			} else {
+				if(currentWeapons[w_counter].damage )
+					this.currentDoc.text(cols[2], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].displayDamage.toString());
+			}
 
-			if(currentWeapons[w_counter].ap )
-				this.currentDoc.text(cols[3], top + 15 + w_counter * 4, currentWeapons[w_counter].ap.toString());
-			else
-				this.currentDoc.text(cols[3], top + 15 + w_counter * 4, "-");
+			if(currentWeapons[w_counter].localAP ) {
+				this.currentDoc.text(cols[3], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].localAP.toString());
+			} else {
+				if(currentWeapons[w_counter].ap )
+					this.currentDoc.text(cols[3], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].ap.toString());
+				else
+					this.currentDoc.text(cols[3], top + 15 + ( w_counter + natWeaponCount ) * 4, "-");
+			}
+
+
 
 			if(currentWeapons[w_counter].range )
-				this.currentDoc.text(cols[4], top + 15 + w_counter * 4, currentWeapons[w_counter].range.toString());
+				this.currentDoc.text(cols[4], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].range.toString());
 
 			if(currentWeapons[w_counter].rof )
-				this.currentDoc.text(cols[5], top + 15 + w_counter * 4, currentWeapons[w_counter].rof.toString());
+				this.currentDoc.text(cols[5], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].rof.toString());
 
 			if(currentWeapons[w_counter].shots ) {
-				this.currentDoc.text(cols[6], top + 15 + w_counter * 4, currentWeapons[w_counter].shots.toString());
+				this.currentDoc.text(cols[6], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].shots.toString());
 			} else {
 				if(currentWeapons[w_counter].range )
-					this.currentDoc.text(cols[6], top + 15 + w_counter * 4, "1");
+					this.currentDoc.text(cols[6], top + 15 + ( w_counter + natWeaponCount ) * 4, "1");
 			}
 
 		}
 
-		this.currentDoc.lines([[0,0],[cols[1]-cols[0] - 1,0]], cols[0], top + 16 + w_counter * 4);
-		this.currentDoc.lines([[0,0],[cols[2]-cols[1] - 1,0]], cols[1], top + 16 + w_counter * 4);
-		this.currentDoc.lines([[0,0],[cols[3]-cols[2] - 1,0]], cols[2], top + 16 + w_counter * 4);
-		this.currentDoc.lines([[0,0],[cols[4]-cols[3] - 1,0]], cols[3], top + 16 + w_counter * 4);
-		this.currentDoc.lines([[0,0],[cols[5]-cols[4] - 1,0]], cols[4], top + 16 + w_counter * 4);
-		this.currentDoc.lines([[0,0],[cols[6]-cols[5] - 1,0]], cols[5], top + 16 + w_counter * 4);
-		this.currentDoc.lines([[0,0],[width-cols[5] - 11,0]], cols[6], top + 16 + w_counter * 4);
+		this.currentDoc.lines([[0,0],[cols[1]-cols[0] - 1,0]], cols[0], top + 16 + ( w_counter + natWeaponCount ) * 4);
+		this.currentDoc.lines([[0,0],[cols[2]-cols[1] - 1,0]], cols[1], top + 16 + ( w_counter + natWeaponCount ) * 4);
+		this.currentDoc.lines([[0,0],[cols[3]-cols[2] - 1,0]], cols[2], top + 16 + ( w_counter + natWeaponCount ) * 4);
+		this.currentDoc.lines([[0,0],[cols[4]-cols[3] - 1,0]], cols[3], top + 16 + ( w_counter + natWeaponCount ) * 4);
+		this.currentDoc.lines([[0,0],[cols[5]-cols[4] - 1,0]], cols[4], top + 16 + ( w_counter + natWeaponCount ) * 4);
+		this.currentDoc.lines([[0,0],[cols[6]-cols[5] - 1,0]], cols[5], top + 16 + ( w_counter + natWeaponCount ) * 4);
+		this.currentDoc.lines([[0,0],[width-cols[5] - 11,0]], cols[6], top + 16 + ( w_counter + natWeaponCount ) * 4);
 	}
 
 	this.currentDoc.setFontSize(10);

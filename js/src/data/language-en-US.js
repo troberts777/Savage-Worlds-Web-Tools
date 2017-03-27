@@ -434,6 +434,13 @@ availableLanguages.push ({
 			CHARGEN_CYBER_CHOOSE_EDGE: '- Choose an Edge -',
 			CHARGEN_CYBER_PARENTHETICAL: '(cyber)',
 			CHARGEN_NATURAL_WEAPONS: 'Natural Weapons',
+			SCIFI_VIBRO: 'Vibro',
+			SCIFI_CHAIN: 'Chain',
+			SCIFI_ENEGY: 'Energy',
+			SCIFI_MOLECULAR: 'Molecular',
+			SCIFI_POWER: 'Power',
+			SCIFI_STUN: 'Stun',
+			SCIFI_ENERGY: 'Energy',
 
 	}
 

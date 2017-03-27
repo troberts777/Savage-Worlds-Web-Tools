@@ -98,6 +98,18 @@
 
 											</div>
 
+											<div ng-show="cyberware.sciFiMeleeWeapon">
+												<select class="inline-block no-bottom-margin" ng-click="setCyberOption1($index, cyberware.option1 )" ng-model="cyberware.option1">
+													<option value="">No Modifictions</option>
+													<option value="vibro" translate="SCIFI_VIBRO">Vibro</option>
+													<option value="chain" translate="SCIFI_CHAIN">Chain</option>
+													<option value="energy" translate="SCIFI_ENEGY">Energy</option>
+													<option value="molec" translate="SCIFI_MOLECULAR">Molecular</option>
+													<option value="power" translate="SCIFI_POWER">Power</option>
+													<option value="stun" translate="SCIFI_STUN">Stun</option>
+												</select>
+											</div>
+
 											<div ng-show="cyberware.chooseCombatEdge">
 												<select ng-options="item as item.local_name for item in savageCharacter.getCombatEdges($index)" ng-model="cyberware.selectedEdge" ng-change="setCombatEdge( $index, cyberware.selectedEdge )"></select>
 											</div>
@@ -108,8 +120,8 @@
 										</td>
 										<td>{{cyberware.getStrainCost()}}</td>
 
-										<td ng-hide="cyberware.perRank">${{addCommas(cyberware.getCost())}}</td>
-										<td ng-show="cyberware.perRank">${{addCommas(cyberware.getCost())}} / rank</td>
+										<td ng-hide="cyberware.perRank">${{addCommas(cyberware.localCost)}}</td>
+										<td ng-show="cyberware.perRank">${{addCommas(cyberware.localCost)}} / rank</td>
 
 									</tr>
 								</tbody>

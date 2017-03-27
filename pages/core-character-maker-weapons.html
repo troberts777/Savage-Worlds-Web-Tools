@@ -41,20 +41,32 @@
 								<tr class="no-bottom-border" ng-repeat-start="gearItem in savageCharacter.getSelectedHandWeapons()">
 									<td>{{gearItem.local_name}}</td>
 									<td>
-										<div ng-show="gearItem.purchaseCost != gearItem.cost">
+										<div ng-show="gearItem.purchaseCost < gearItem.localCost && !gearItem.sciFiMod">
 											<div ng-show="gearItem.purchaseCost == 0">
 												<span class="alert label" translate="GENERAL_PURCHASED_FREE"></span>
 											</div>
-											<div ng-show="gearItem.purchaseCost != 0">
+											<div ng-show="gearItem.purchaseCost > 0">
 												${{gearItem.purchaseCost}} <span class="alert label" translate="GENERAL_REDUCED"></span>
 											</div>
 										</div>
-										<div ng-show="gearItem.purchaseCost == gearItem.cost">
-											${{gearItem.purchaseCost}}
+										<div ng-show="gearItem.purchaseCost >= gearItem.localCost">
+											${{gearItem.localCost}}
+										</div>
+										<div ng-show="gearItem.sciFiMod">
+											${{gearItem.localCost}}
 										</div>
 									</td>
-									<td>{{gearItem.weight}}</td>
+									<td>{{gearItem.localWeight}}</td>
 									<td class="text-right">
+										<select class="inline-block no-bottom-margin" ng-click="setSciFiMod($index, gearItem.sciFiMod )" ng-model="gearItem.sciFiMod">
+											<option value="">No Modifictions</option>
+											<option value="vibro" translate="SCIFI_VIBRO">Vibro</option>
+											<option value="chain" translate="SCIFI_CHAIN">Chain</option>
+											<option value="energy" translate="SCIFI_ENEGY">Energy</option>
+											<option value="molec" translate="SCIFI_MOLECULAR">Molecular</option>
+											<option value="power" translate="SCIFI_POWER">Power</option>
+											<option value="stun" translate="SCIFI_STUN">Stun</option>
+										</select>
 										<button class="button primary tiny radius no-bottom-margin" ng-click="removeHandWeapon($index);" translate="GENERAL_REMOVE">Remove</button>
 									</td>
 								</tr>
@@ -69,6 +81,8 @@
 
 									</td>
 									<td colspan="2" class="text-right">
+
+
 										<span ng-show="gearItem.requires_2_hands > 0">
 											<button ng-show="gearItem.readiedLocation != 'primary'" class="button primary tiny radius no-bottom-margin" ng-click="equipPrimaryHandWeapon($index);" translate="GENERAL_EQUIP">Equip</button>
 										</span>

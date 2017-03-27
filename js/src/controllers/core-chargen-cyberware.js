@@ -67,7 +67,6 @@ var coreChargenCyberwareFunctions = function ($timeout, $rootScope, $translate, 
 			$rootScope.validateAndSave();
 		}
 
-
 		$scope.setCyberCustomName = function( cyberIndex, newValue ) {
 			$rootScope.savageCharacter.setCyberCustomName( cyberIndex, newValue );
 			$rootScope.justSave();
