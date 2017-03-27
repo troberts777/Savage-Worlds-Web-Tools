@@ -52482,28 +52482,20 @@ return false;
 {
 	 name: {
 		 'en-US': 'Particle Accelerator, Heavy',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Particle Accelerators, Heavy',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Particle Accelerators',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 20, HW, Reaction Fire',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'en-US': 'AP 20, HW',
 	},
 		 'range': '100/200/400',
 		 'damage': '6d8+2',
 		 'rof': '1',
-		 'shots': '',
+		 'shots': '0',
 		 'missiles_per': '0',
 		 'linkable': '1',
 		 'mods': '6',
@@ -52546,28 +52538,20 @@ return false;
 {
 	 name: {
 		 'en-US': 'Particle Accelerator, Medium',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 	 name_plural: {
 		 'en-US': 'Particle Accelerators, Medium',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 	 classification: {
 		 'en-US': 'Particle Accelerators',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 10, HW, Reaction Fire',
-		 'pt-BR': '',
-		 'de-DE': '',
+		 'en-US': 'AP 10, HW',
 	},
 		 'range': '100/200/400',
 		 'damage': '4d8+2',
 		 'rof': '1',
-		 'shots': '',
+		 'shots': '0',
 		 'missiles_per': '0',
 		 'linkable': '1',
 		 'mods': '4',
