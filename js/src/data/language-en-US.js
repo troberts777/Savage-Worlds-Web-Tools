@@ -441,6 +441,7 @@ availableLanguages.push ({
 			SCIFI_POWER: 'Power',
 			SCIFI_STUN: 'Stun',
 			SCIFI_ENERGY: 'Energy',
+			CHARGEN_SELECT_LIGHT_WEAPON: '- Choose Purchased Weapon -',
 
 	}
 

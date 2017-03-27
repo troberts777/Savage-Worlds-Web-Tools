@@ -3683,6 +3683,29 @@ function savageCharacter (useLang) {
 		return false;
 	}
 
+	this.getCyberWeaponOptions = function() {
+		var _returnValue = Array();
+
+		_returnValue.push( {
+				id: "",
+				label: this.getTranslation("CHARGEN_SELECT_LIGHT_WEAPON")
+			}
+		);
+
+		for( var wC = 0; wC < _selectedRangedWeapons.length; wC++ ) {
+			if( _selectedRangedWeapons[ wC ].weight < 3 ) {
+				var pushItem = {
+					id: _selectedRangedWeapons[ wC ].tag,
+					label: _selectedRangedWeapons[ wC ].local_name,
+				};
+				if( _returnValue.indexOf( pushItem ) == -1 )
+					_returnValue.push( pushItem );
+			}
+		}
+
+		return _returnValue;
+	}
+
 	this.removeHindrance = function(indexNumber) {
 		if( this.hindrances[indexNumber] ) {
 			this.hindrances = this.hindrances.splice(indexNumber, 1);
@@ -4237,36 +4260,36 @@ function savageCharacter (useLang) {
 		// Process Available Gear
 		_availableMundaneGear = Array();
 		for( var gearCounter = 0; gearCounter < savageWorldsGearMundane.length; gearCounter++) {
-			if( this.bookInUse( savageWorldsGearMundane[gearCounter].book ) ) {
-				_availableMundaneGear.push( savageWorldsGearMundane[gearCounter] );
+			if( this.bookInUse( savageWorldsGearMundane[ gearCounter ].book ) ) {
+				_availableMundaneGear.push( savageWorldsGearMundane[ gearCounter ] );
 			}
 		}
 
 		_availableArmor = Array();
 		for( var gearCounter = 0; gearCounter < savageWorldsGearArmor.length; gearCounter++) {
-			if( this.bookInUse( savageWorldsGearArmor[gearCounter].book ) ) {
-				_availableArmor.push( savageWorldsGearArmor[gearCounter] );
+			if( this.bookInUse( savageWorldsGearArmor[ gearCounter ].book ) ) {
+				_availableArmor.push( savageWorldsGearArmor[ gearCounter ] );
 			}
 		}
 
 		_availableHandWeapons = Array();
 		for( var gearCounter = 0; gearCounter < savageWorldsGearHandWeapons.length; gearCounter++) {
-			if( this.bookInUse( savageWorldsGearHandWeapons[gearCounter].book ) ) {
-				_availableHandWeapons.push( savageWorldsGearHandWeapons[gearCounter] );
+			if( this.bookInUse( savageWorldsGearHandWeapons[ gearCounter ].book ) ) {
+				_availableHandWeapons.push( savageWorldsGearHandWeapons[ gearCounter ] );
 			}
 		}
 
 		_availableRangedWeapons = Array();
 		for( var gearCounter = 0; gearCounter < savageWorldsGearRangedWeapons.length; gearCounter++) {
-			if( this.bookInUse( savageWorldsGearRangedWeapons[gearCounter].book ) ) {
-				_availableRangedWeapons.push( savageWorldsGearRangedWeapons[gearCounter] );
+			if( this.bookInUse( savageWorldsGearRangedWeapons[ gearCounter ].book ) ) {
+				_availableRangedWeapons.push( savageWorldsGearRangedWeapons[ gearCounter ] );
 			}
 		}
 
 		_availableShields = Array();
 		for( var gearCounter = 0; gearCounter < savageWorldsGearShields.length; gearCounter++) {
-			if( this.bookInUse( savageWorldsGearShields[gearCounter].book ) ) {
-				_availableShields.push( savageWorldsGearShields[gearCounter] );
+			if( this.bookInUse( savageWorldsGearShields[ gearCounter ].book ) ) {
+				_availableShields.push( savageWorldsGearShields[ gearCounter ] );
 			}
 		}
 
@@ -4716,46 +4739,46 @@ function savageCharacter (useLang) {
 
 	 	for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++) {
 
-			_selectedHandWeapons[gearCounter].localCost = _selectedHandWeapons[gearCounter].purchaseCost;
-			_selectedHandWeapons[gearCounter].localWeight = _selectedHandWeapons[gearCounter].weight;
-			_selectedHandWeapons[gearCounter].localAP = _selectedHandWeapons[gearCounter].ap;
-			_selectedHandWeapons[gearCounter].localNotes = _selectedHandWeapons[gearCounter].notes;
-			_selectedHandWeapons[gearCounter].localDamage = _selectedHandWeapons[gearCounter].damage;
+			_selectedHandWeapons[ gearCounter ].localCost = _selectedHandWeapons[ gearCounter ].purchaseCost;
+			_selectedHandWeapons[ gearCounter ].localWeight = _selectedHandWeapons[ gearCounter ].weight;
+			_selectedHandWeapons[ gearCounter ].localAP = _selectedHandWeapons[ gearCounter ].ap;
+			_selectedHandWeapons[ gearCounter ].localNotes = _selectedHandWeapons[ gearCounter ].notes;
+			_selectedHandWeapons[ gearCounter ].localDamage = _selectedHandWeapons[ gearCounter ].damage;
 
-			_selectedHandWeapons[gearCounter].local_name = this.getLocalName( _selectedHandWeapons[gearCounter].name );
+			_selectedHandWeapons[ gearCounter ].local_name = this.getLocalName( _selectedHandWeapons[ gearCounter ].name );
 
-			switch( _selectedHandWeapons[gearCounter].sciFiMod ) {
+			switch( _selectedHandWeapons[ gearCounter ].sciFiMod ) {
 				case "chain":
-					_selectedHandWeapons[gearCounter].localCost += 500;
-					_selectedHandWeapons[gearCounter].localWeight += 2;
-					_selectedHandWeapons[gearCounter].localAP += 2;
-					_selectedHandWeapons[gearCounter].local_name = this.getTranslation("SCIFI_CHAIN") + "-" + _selectedHandWeapons[gearCounter].local_name;
+					_selectedHandWeapons[ gearCounter ].localCost += 500;
+					_selectedHandWeapons[ gearCounter ].localWeight += 2;
+					_selectedHandWeapons[ gearCounter ].localAP += 2;
+					_selectedHandWeapons[ gearCounter ].local_name = this.getTranslation("SCIFI_CHAIN") + "-" + _selectedHandWeapons[ gearCounter ].local_name;
 					break;
 				case "vibro":
-					_selectedHandWeapons[gearCounter].localCost += 500;
-					_selectedHandWeapons[gearCounter].localWeight += 2;
-					_selectedHandWeapons[gearCounter].localAP += 2;
-					_selectedHandWeapons[gearCounter].local_name = this.getTranslation("SCIFI_VIBRO") + "-" + _selectedHandWeapons[gearCounter].local_name;
+					_selectedHandWeapons[ gearCounter ].localCost += 500;
+					_selectedHandWeapons[ gearCounter ].localWeight += 2;
+					_selectedHandWeapons[ gearCounter ].localAP += 2;
+					_selectedHandWeapons[ gearCounter ].local_name = this.getTranslation("SCIFI_VIBRO") + "-" + _selectedHandWeapons[ gearCounter ].local_name;
 					break;
 				case "energy":
-					_selectedHandWeapons[gearCounter].local_name = this.getTranslation("SCIFI_ENERGY") + "-" + _selectedHandWeapons[gearCounter].local_name;
+					_selectedHandWeapons[ gearCounter ].local_name = this.getTranslation("SCIFI_ENERGY") + "-" + _selectedHandWeapons[ gearCounter ].local_name;
 
 
-					_selectedHandWeapons[gearCounter].localDamage = _selectedHandWeapons[gearCounter].localDamage.replace("d10", "d12");
-					_selectedHandWeapons[gearCounter].localDamage = _selectedHandWeapons[gearCounter].localDamage.replace("d8", "d10");
-					_selectedHandWeapons[gearCounter].localDamage = _selectedHandWeapons[gearCounter].localDamage.replace("d6", "d8");
-					_selectedHandWeapons[gearCounter].localDamage = _selectedHandWeapons[gearCounter].localDamage.replace("d4", "d6");
+					_selectedHandWeapons[ gearCounter ].localDamage = _selectedHandWeapons[ gearCounter ].localDamage.replace("d10", "d12");
+					_selectedHandWeapons[ gearCounter ].localDamage = _selectedHandWeapons[ gearCounter ].localDamage.replace("d8", "d10");
+					_selectedHandWeapons[ gearCounter ].localDamage = _selectedHandWeapons[ gearCounter ].localDamage.replace("d6", "d8");
+					_selectedHandWeapons[ gearCounter ].localDamage = _selectedHandWeapons[ gearCounter ].localDamage.replace("d4", "d6");
 
-					_selectedHandWeapons[gearCounter].localCost += 500;
-					_selectedHandWeapons[gearCounter].localWeight += 1;
-					_selectedHandWeapons[gearCounter].localAP += 4;
+					_selectedHandWeapons[ gearCounter ].localCost += 500;
+					_selectedHandWeapons[ gearCounter ].localWeight += 1;
+					_selectedHandWeapons[ gearCounter ].localAP += 4;
 					break;
 				case "molec":
-					_selectedHandWeapons[gearCounter].local_name = this.getTranslation("SCIFI_MOLECULAR") + "-" + _selectedHandWeapons[gearCounter].local_name;
+					_selectedHandWeapons[ gearCounter ].local_name = this.getTranslation("SCIFI_MOLECULAR") + "-" + _selectedHandWeapons[ gearCounter ].local_name;
 
-					_selectedHandWeapons[gearCounter].localCost += 500;
-					//_selectedHandWeapons[gearCounter].ap += 4;
-					var addAP = _selectedHandWeapons[gearCounter].localDamage;
+					_selectedHandWeapons[ gearCounter ].localCost += 500;
+					//_selectedHandWeapons[ gearCounter ].ap += 4;
+					var addAP = _selectedHandWeapons[ gearCounter ].localDamage;
 
 					if(addAP.indexOf("+") > 0 ) {
 						addAP = addAP.substring(0, addAP.indexOf("+") );
@@ -4763,127 +4786,157 @@ function savageCharacter (useLang) {
 
 					addAP = addAP.replace("d", "") / 1;
 
-					_selectedHandWeapons[gearCounter].localAP += Math.floor(addAP / 2);
+					_selectedHandWeapons[ gearCounter ].localAP += Math.floor(addAP / 2);
 
 					break;
 				case "power":
-					_selectedHandWeapons[gearCounter].local_name = this.getTranslation("SCIFI_POWER") + "-" + _selectedHandWeapons[gearCounter].local_name;
+					_selectedHandWeapons[ gearCounter ].local_name = this.getTranslation("SCIFI_POWER") + "-" + _selectedHandWeapons[ gearCounter ].local_name;
 
-					_selectedHandWeapons[gearCounter].localCost += 500;
-					_selectedHandWeapons[gearCounter].localWeight += 1;
-					_selectedHandWeapons[gearCounter].localDamage += " + d6";
+					_selectedHandWeapons[ gearCounter ].localCost += 500;
+					_selectedHandWeapons[ gearCounter ].localWeight += 1;
+					_selectedHandWeapons[ gearCounter ].localDamage += " + d6";
 					break;
 				case "stun":
-					_selectedHandWeapons[gearCounter].local_name = this.getTranslation("SCIFI_STUN") + "-" + _selectedHandWeapons[gearCounter].local_name;
+					_selectedHandWeapons[ gearCounter ].local_name = this.getTranslation("SCIFI_STUN") + "-" + _selectedHandWeapons[ gearCounter ].local_name;
 
-					_selectedHandWeapons[gearCounter].localCost += 500;
-					_selectedHandWeapons[gearCounter].localWeight += 1;
+					_selectedHandWeapons[ gearCounter ].localCost += 500;
+					_selectedHandWeapons[ gearCounter ].localWeight += 1;
 					break;
 				default:
 					// no mods
 					break;
 			}
 
-	 		_currentFunds -= _selectedHandWeapons[gearCounter].purchaseCost;
-	 		_load.currentLoad += _selectedHandWeapons[gearCounter].localWeight;
-	 		if( _selectedHandWeapons[gearCounter].droppedDuringCombat == false )
-	 			_load.combatLoad += _selectedHandWeapons[gearCounter].localWeight;
-	 		_selectedHandWeapons[gearCounter].toHitRollModifier = 0;
-	 		_selectedHandWeapons[gearCounter].currentParry = _selectedHandWeapons[gearCounter].parry;
+	 		_currentFunds -= _selectedHandWeapons[ gearCounter ].purchaseCost;
+	 		_load.currentLoad += _selectedHandWeapons[ gearCounter ].localWeight;
+	 		if( _selectedHandWeapons[ gearCounter ].droppedDuringCombat == false )
+	 			_load.combatLoad += _selectedHandWeapons[ gearCounter ].localWeight;
+	 		_selectedHandWeapons[ gearCounter ].toHitRollModifier = 0;
+	 		_selectedHandWeapons[ gearCounter ].currentParry = _selectedHandWeapons[ gearCounter ].parry;
 
 
 
-			if( _selectedHandWeapons[gearCounter].readiedLocation && _selectedHandWeapons[gearCounter].min_str > _displayAttributes.strength.value ) {
+			if( _selectedHandWeapons[ gearCounter ].readiedLocation && _selectedHandWeapons[ gearCounter ].min_str > _displayAttributes.strength.value ) {
 				_warningReport.push( this.getTranslation("CHARGEN_BELOW_STR_WEAPON") );
 
-				if( _selectedHandWeapons[gearCounter].localDamage_strength > 0) {
-					var damageBit = _selectedHandWeapons[gearCounter].localDamage;
+				if( _selectedHandWeapons[ gearCounter ].localDamage_strength > 0) {
+					var damageBit = _selectedHandWeapons[ gearCounter ].localDamage;
 
 					damageBit = this.setCharAt( damageBit, 1, _displayAttributes.strength.value);
 
-					if( _selectedHandWeapons[gearCounter].currentParry > 0 )
-						_selectedHandWeapons[gearCounter].currentParry = 0;
+					if( _selectedHandWeapons[ gearCounter ].currentParry > 0 )
+						_selectedHandWeapons[ gearCounter ].currentParry = 0;
 
-					_selectedHandWeapons[gearCounter].displayDamage = _displayAttributes.strength.local_label + " + " +  damageBit;
+					_selectedHandWeapons[ gearCounter ].displayDamage = _displayAttributes.strength.local_label + " + " +  damageBit;
 				} else {
-					_selectedHandWeapons[gearCounter].displayDamage = _selectedHandWeapons[gearCounter].localDamage;
-					_selectedHandWeapons[gearCounter].toHitRollModifier = -1;
+					_selectedHandWeapons[ gearCounter ].displayDamage = _selectedHandWeapons[ gearCounter ].localDamage;
+					_selectedHandWeapons[ gearCounter ].toHitRollModifier = -1;
 				}
 			} else {
-				if( _selectedHandWeapons[gearCounter].localDamage_strength > 0) {
-					_selectedHandWeapons[gearCounter].displayDamage = _displayAttributes.strength.local_label + " + " + _selectedHandWeapons[gearCounter].localDamage;
+				if( _selectedHandWeapons[ gearCounter ].localDamage_strength > 0) {
+					_selectedHandWeapons[ gearCounter ].displayDamage = _displayAttributes.strength.local_label + " + " + _selectedHandWeapons[ gearCounter ].localDamage;
 				} else {
-					_selectedHandWeapons[gearCounter].displayDamage = _selectedHandWeapons[gearCounter].localDamage;
+					_selectedHandWeapons[ gearCounter ].displayDamage = _selectedHandWeapons[ gearCounter ].localDamage;
 				}
 			}
 
-			if( _selectedHandWeapons[gearCounter].readiedLocation != "")
-				_derived.parry += _selectedHandWeapons[gearCounter].parry_modifier;
+			if( _selectedHandWeapons[ gearCounter ].readiedLocation != "")
+				_derived.parry += _selectedHandWeapons[ gearCounter ].parry_modifier;
 	 	}
 
 		for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++) {
-	 		_currentFunds -= _selectedRangedWeapons[gearCounter].purchaseCost;
-	 		_load.currentLoad += _selectedRangedWeapons[gearCounter].weight;
-	 		if( _selectedRangedWeapons[gearCounter].droppedDuringCombat == false )
-	 			_load.combatLoad += _selectedRangedWeapons[gearCounter].weight;
-	 		_selectedRangedWeapons[gearCounter].toHitRollModifier = 0;
-	 		_selectedRangedWeapons[gearCounter].currentParry = _selectedRangedWeapons[gearCounter].parry;
+	 		_currentFunds -= _selectedRangedWeapons[ gearCounter ].purchaseCost;
+	 		_load.currentLoad += _selectedRangedWeapons[ gearCounter ].weight;
+	 		if( _selectedRangedWeapons[ gearCounter ].droppedDuringCombat == false )
+	 			_load.combatLoad += _selectedRangedWeapons[ gearCounter ].weight;
+	 		_selectedRangedWeapons[ gearCounter ].toHitRollModifier = 0;
+	 		_selectedRangedWeapons[ gearCounter ].currentParry = _selectedRangedWeapons[ gearCounter ].parry;
 
-			if( _selectedRangedWeapons[gearCounter].readiedLocation && _selectedRangedWeapons[gearCounter].min_str > _displayAttributes.strength.value ) {
+
+
+			if( _selectedRangedWeapons[ gearCounter ].readiedLocation && _selectedRangedWeapons[ gearCounter ].min_str > _displayAttributes.strength.value ) {
 				_warningReport.push( this.getTranslation("CHARGEN_BELOW_STR_WEAPON") );
 
-				if( _selectedHandWeapons[gearCounter].damage_strength > 0) {
-					var damageBit = _selectedRangedWeapons[gearCounter].damage;
+				if( _selectedHandWeapons[ gearCounter ].damage_strength > 0) {
+					var damageBit = _selectedRangedWeapons[ gearCounter ].damage;
 
 					damageBit = this.setCharAt( damageBit, 1, _displayAttributes.strength.value);
 
-					if( _selectedRangedWeapons[gearCounter].currentParry > 0 )
-						_selectedRangedWeapons[gearCounter].currentParry = 0;
+					if( _selectedRangedWeapons[ gearCounter ].currentParry > 0 )
+						_selectedRangedWeapons[ gearCounter ].currentParry = 0;
 
-					_selectedRangedWeapons[gearCounter].displayDamage = _displayAttributes.strength.local_label + " + " +  damageBit;
+					_selectedRangedWeapons[ gearCounter ].displayDamage = _displayAttributes.strength.local_label + " + " +  damageBit;
 				} else {
-					_selectedRangedWeapons[gearCounter].displayDamage = _selectedRangedWeapons[gearCounter].damage;
-					_selectedRangedWeapons[gearCounter].toHitRollModifier = -1;
+					_selectedRangedWeapons[ gearCounter ].displayDamage = _selectedRangedWeapons[ gearCounter ].damage;
+					_selectedRangedWeapons[ gearCounter ].toHitRollModifier = -1;
 				}
 			} else {
-				if( _selectedRangedWeapons[gearCounter].damage_strength > 0) {
-					_selectedRangedWeapons[gearCounter].displayDamage = _displayAttributes.strength.local_label + " + " + _selectedRangedWeapons[gearCounter].damage;
+				if( _selectedRangedWeapons[ gearCounter ].damage_strength > 0) {
+					_selectedRangedWeapons[ gearCounter ].displayDamage = _displayAttributes.strength.local_label + " + " + _selectedRangedWeapons[ gearCounter ].damage;
 				} else {
-					_selectedRangedWeapons[gearCounter].displayDamage = _selectedRangedWeapons[gearCounter].damage;
+					_selectedRangedWeapons[ gearCounter ].displayDamage = _selectedRangedWeapons[ gearCounter ].damage;
 				}
 			}
 
-			if( _selectedRangedWeapons[gearCounter].readiedLocation != "")
-				_derived.parry += _selectedRangedWeapons[gearCounter].parry_modifier;
+			if( _selectedRangedWeapons[ gearCounter ].readiedLocation != "")
+				_derived.parry += _selectedRangedWeapons[ gearCounter ].parry_modifier;
 	 	}
+
+	 	var cyberParenthetical = this.getTranslation( "CHARGEN_CYBER_PARENTHETICAL" );
+
+	 	for( var cyberCounter = 0; cyberCounter < _installedCyberware.length; cyberCounter++) {
+			if( _installedCyberware[ cyberCounter ].chooseRangedWeapon ) {
+				for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++) {
+					if( _selectedRangedWeapons[ gearCounter ].tag == _installedCyberware[ cyberCounter ].option1.id ) {
+
+						_selectedRangedWeapons[ gearCounter ].local_name = this.getLocalName( _selectedRangedWeapons[ gearCounter ].name );
+
+						if( _installedCyberware[ cyberCounter ].customName ) {
+							if( _selectedRangedWeapons[ gearCounter ].local_name != _installedCyberware[ cyberCounter ].customName ) {
+								 _selectedRangedWeapons[ gearCounter ].local_name = _installedCyberware[ cyberCounter ].customName;
+							}
+						} else {
+							if( _selectedRangedWeapons[ gearCounter ].local_name + " " + cyberParenthetical != _installedCyberware[ cyberCounter ].local_name ) {
+								  _selectedRangedWeapons[ gearCounter ].local_name = _selectedRangedWeapons[ gearCounter ].local_name + " " + cyberParenthetical;
+							}
+						}
+						break;
+					}
+
+				}
+			}
+
+		}
+
+
 	 	for( var gearCounter = 0; gearCounter < _selectedArmor.length; gearCounter++) {
-	 		_currentFunds -= _selectedArmor[gearCounter].purchaseCost;
-	 		if( _selectedArmor[gearCounter].isReadied ) {
-		 		if( _selectedArmor[gearCounter].covers_torso > 0 ) {
-		 			if( _selectedArmor[gearCounter].armor > _derived.armor ) {
-		 				_derived.armor = _selectedArmor[gearCounter].armor;
+	 		_currentFunds -= _selectedArmor[ gearCounter ].purchaseCost;
+	 		if( _selectedArmor[ gearCounter ].isReadied ) {
+		 		if( _selectedArmor[ gearCounter ].covers_torso > 0 ) {
+		 			if( _selectedArmor[ gearCounter ].armor > _derived.armor ) {
+		 				_derived.armor = _selectedArmor[ gearCounter ].armor;
 		 			}
 		 		}
 		 	}
-	 		_load.currentLoad += _selectedArmor[gearCounter].weight;
-	 		if( _selectedArmor[gearCounter].droppedDuringCombat == false )
-	 			_load.combatLoad += _selectedArmor[gearCounter].weight;
+	 		_load.currentLoad += _selectedArmor[ gearCounter ].weight;
+	 		if( _selectedArmor[ gearCounter ].droppedDuringCombat == false )
+	 			_load.combatLoad += _selectedArmor[ gearCounter ].weight;
 	 	}
 	 	for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++) {
-	 		_currentFunds -= _selectedShields[gearCounter].purchaseCost;
-	 		_load.currentLoad += _selectedShields[gearCounter].weight;
-			if( _selectedShields[gearCounter].readiedLocation && _selectedShields[gearCounter].readiedLocation != "")
-				_derived.parry += _selectedShields[gearCounter].parry;
-	 		if( _selectedShields[gearCounter].droppedDuringCombat == false )
-	 			_load.combatLoad += _selectedShields[gearCounter].weight;
+	 		_currentFunds -= _selectedShields[ gearCounter ].purchaseCost;
+	 		_load.currentLoad += _selectedShields[ gearCounter ].weight;
+			if( _selectedShields[ gearCounter ].readiedLocation && _selectedShields[ gearCounter ].readiedLocation != "")
+				_derived.parry += _selectedShields[ gearCounter ].parry;
+	 		if( _selectedShields[ gearCounter ].droppedDuringCombat == false )
+	 			_load.combatLoad += _selectedShields[ gearCounter ].weight;
 	 	}
 	 	for( var gearCounter = 0; gearCounter < _selectedMundaneGear.length; gearCounter++) {
-	 		_currentFunds -= _selectedMundaneGear[gearCounter].purchaseCost * _selectedMundaneGear[gearCounter].count;
-	 		_selectedMundaneGear[gearCounter].totalWeight = _selectedMundaneGear[gearCounter].weight * _selectedMundaneGear[gearCounter].count;
-	 		_selectedMundaneGear[gearCounter].totalPurchaseCost = _selectedMundaneGear[gearCounter].purchaseCost * _selectedMundaneGear[gearCounter].count;
-	 		_load.currentLoad += _selectedMundaneGear[gearCounter].weight * _selectedMundaneGear[gearCounter].count;
-	 		if( _selectedMundaneGear[gearCounter].droppedDuringCombat == false )
-	 			_load.combatLoad += _selectedMundaneGear[gearCounter].weight * _selectedMundaneGear[gearCounter].count;
+	 		_currentFunds -= _selectedMundaneGear[ gearCounter ].purchaseCost * _selectedMundaneGear[ gearCounter ].count;
+	 		_selectedMundaneGear[ gearCounter ].totalWeight = _selectedMundaneGear[ gearCounter ].weight * _selectedMundaneGear[ gearCounter ].count;
+	 		_selectedMundaneGear[ gearCounter ].totalPurchaseCost = _selectedMundaneGear[ gearCounter ].purchaseCost * _selectedMundaneGear[ gearCounter ].count;
+	 		_load.currentLoad += _selectedMundaneGear[ gearCounter ].weight * _selectedMundaneGear[ gearCounter ].count;
+	 		if( _selectedMundaneGear[ gearCounter ].droppedDuringCombat == false )
+	 			_load.combatLoad += _selectedMundaneGear[ gearCounter ].weight * _selectedMundaneGear[ gearCounter ].count;
 	 	}
 
 		if( _currentFunds < 0 ) {
@@ -4923,7 +4976,7 @@ function savageCharacter (useLang) {
 		}
 
 		for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++) {
-			_selectedHandWeapons[gearCounter].toHitRollModifier -= _load.loadModifier;
+			_selectedHandWeapons[ gearCounter ].toHitRollModifier -= _load.loadModifier;
 		}
 
 		if( _multipleLanguages == true && _linguistSelected == false )
@@ -5949,56 +6002,56 @@ function savageCharacter (useLang) {
 			_exportObject.gearMundane = Array();
 			for( var gearCounter = 0; gearCounter < _selectedMundaneGear.length; gearCounter++ ) {
 				_exportObject.gearMundane.push( {
-					book: _selectedMundaneGear[gearCounter].book,
-					tag: _selectedMundaneGear[gearCounter].tag,
-					cost: _selectedMundaneGear[gearCounter].purchaseCost,
-					count: _selectedMundaneGear[gearCounter].count,
-					dropped: _selectedMundaneGear[gearCounter].droppedDuringCombat
+					book: _selectedMundaneGear[ gearCounter ].book,
+					tag: _selectedMundaneGear[ gearCounter ].tag,
+					cost: _selectedMundaneGear[ gearCounter ].purchaseCost,
+					count: _selectedMundaneGear[ gearCounter ].count,
+					dropped: _selectedMundaneGear[ gearCounter ].droppedDuringCombat
 				});
 			}
 
 			_exportObject.gearShields = Array();
 			for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
 				_exportObject.gearShields.push( {
-					book: _selectedShields[gearCounter].book,
-					tag: _selectedShields[gearCounter].tag,
-					cost: _selectedShields[gearCounter].purchaseCost,
-					loc: _selectedShields[gearCounter].readiedLocation,
-					dropped: _selectedShields[gearCounter].droppedDuringCombat
+					book: _selectedShields[ gearCounter ].book,
+					tag: _selectedShields[ gearCounter ].tag,
+					cost: _selectedShields[ gearCounter ].purchaseCost,
+					loc: _selectedShields[ gearCounter ].readiedLocation,
+					dropped: _selectedShields[ gearCounter ].droppedDuringCombat
 				});
 			}
 
 			_exportObject.gearHandWeapons = Array();
 			for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++ ) {
 				_exportObject.gearHandWeapons.push( {
-					book: _selectedHandWeapons[gearCounter].book,
-					tag: _selectedHandWeapons[gearCounter].tag,
-					cost: _selectedHandWeapons[gearCounter].purchaseCost,
-					loc: _selectedHandWeapons[gearCounter].readiedLocation,
-					dropped: _selectedHandWeapons[gearCounter].droppedDuringCombat,
-					sciFiMod: _selectedHandWeapons[gearCounter].sciFiMod
+					book: _selectedHandWeapons[ gearCounter ].book,
+					tag: _selectedHandWeapons[ gearCounter ].tag,
+					cost: _selectedHandWeapons[ gearCounter ].purchaseCost,
+					loc: _selectedHandWeapons[ gearCounter ].readiedLocation,
+					dropped: _selectedHandWeapons[ gearCounter ].droppedDuringCombat,
+					sciFiMod: _selectedHandWeapons[ gearCounter ].sciFiMod
 				});
 			}
 
 			_exportObject.gearRangedWeapons = Array();
 			for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++ ) {
 				_exportObject.gearRangedWeapons.push( {
-					book: _selectedRangedWeapons[gearCounter].book,
-					tag: _selectedRangedWeapons[gearCounter].tag,
-					cost: _selectedRangedWeapons[gearCounter].purchaseCost,
-					loc: _selectedRangedWeapons[gearCounter].readiedLocation,
-					dropped: _selectedRangedWeapons[gearCounter].droppedDuringCombat
+					book: _selectedRangedWeapons[ gearCounter ].book,
+					tag: _selectedRangedWeapons[ gearCounter ].tag,
+					cost: _selectedRangedWeapons[ gearCounter ].purchaseCost,
+					loc: _selectedRangedWeapons[ gearCounter ].readiedLocation,
+					dropped: _selectedRangedWeapons[ gearCounter ].droppedDuringCombat
 				});
 			}
 
 			_exportObject.gearArmor = Array();
 			for( var gearCounter = 0; gearCounter < _selectedArmor.length; gearCounter++ ) {
 				_exportObject.gearArmor.push( {
-					book: _selectedArmor[gearCounter].book,
-					tag: _selectedArmor[gearCounter].tag,
-					cost: _selectedArmor[gearCounter].purchaseCost,
-					readied: _selectedArmor[gearCounter].isReadied,
-					dropped: _selectedArmor[gearCounter].droppedDuringCombat
+					book: _selectedArmor[ gearCounter ].book,
+					tag: _selectedArmor[ gearCounter ].tag,
+					cost: _selectedArmor[ gearCounter ].purchaseCost,
+					readied: _selectedArmor[ gearCounter ].isReadied,
+					dropped: _selectedArmor[ gearCounter ].droppedDuringCombat
 				});
 			}
 
@@ -6970,9 +7023,9 @@ function savageCharacter (useLang) {
 			droppedDuringCombat = false;
 		for( var gearCounter = 0; gearCounter < _availableMundaneGear.length; gearCounter++ ) {
 			if(
-				gearTag == _availableMundaneGear[gearCounter].tag
+				gearTag == _availableMundaneGear[ gearCounter ].tag
 					&&
-				fromBook == _availableMundaneGear[gearCounter].book
+				fromBook == _availableMundaneGear[ gearCounter ].book
 			) {
 				mundaneGearIndex = this.getMundaneGear( gearTag );
 				if( mundaneGearIndex > -1 ) {
@@ -6981,7 +7034,7 @@ function savageCharacter (useLang) {
 				} else {
 
 					var pushedItem = {};
-					angular.extend( pushedItem, _availableMundaneGear[gearCounter]);
+					angular.extend( pushedItem, _availableMundaneGear[ gearCounter ]);
 					pushedItem.droppedDuringCombat = droppedDuringCombat;
 					if( itemCost > -1 ) {
 						pushedItem.purchaseCost = itemCost;
@@ -7012,12 +7065,12 @@ function savageCharacter (useLang) {
 			droppedDuringCombat = false;
 		for( var gearCounter = 0; gearCounter < _availableRangedWeapons.length; gearCounter++ ) {
 			if(
-				gearTag == _availableRangedWeapons[gearCounter].tag
+				gearTag == _availableRangedWeapons[ gearCounter ].tag
 					&&
-				fromBook == _availableRangedWeapons[gearCounter].book
+				fromBook == _availableRangedWeapons[ gearCounter ].book
 			) {
 				var pushedItem = {};
-				angular.extend( pushedItem, _availableRangedWeapons[gearCounter]);
+				angular.extend( pushedItem, _availableRangedWeapons[ gearCounter ]);
 				pushedItem.droppedDuringCombat = droppedDuringCombat;
 				if( itemCost > -1 ) {
 					pushedItem.purchaseCost = itemCost;
@@ -7043,18 +7096,18 @@ function savageCharacter (useLang) {
 			sciFiMod = "";
 		for( var gearCounter = 0; gearCounter < _availableHandWeapons.length; gearCounter++ ) {
 			//~ if(
-				//~ gearTag == _availableHandWeapons[gearCounter].tag
+				//~ gearTag == _availableHandWeapons[ gearCounter ].tag
 			//~ ) {
-				//~ console.log( _availableHandWeapons[gearCounter].book );
+				//~ console.log( _availableHandWeapons[ gearCounter ].book );
 				//~ console.log(gearCounter);
 			//~ }
 			if(
-				gearTag == _availableHandWeapons[gearCounter].tag
+				gearTag == _availableHandWeapons[ gearCounter ].tag
 					&&
-				fromBook == _availableHandWeapons[gearCounter].book
+				fromBook == _availableHandWeapons[ gearCounter ].book
 			) {
 				var pushedItem = {};
-				angular.extend( pushedItem, _availableHandWeapons[gearCounter]);
+				angular.extend( pushedItem, _availableHandWeapons[ gearCounter ]);
 				pushedItem.droppedDuringCombat = droppedDuringCombat;
 				if( itemCost > -1 ) {
 					pushedItem.purchaseCost = itemCost;
@@ -7081,12 +7134,12 @@ function savageCharacter (useLang) {
 			droppedDuringCombat = false;
 		for( var gearCounter = 0; gearCounter < _availableShields.length; gearCounter++ ) {
 			if(
-				gearTag == _availableShields[gearCounter].tag
+				gearTag == _availableShields[ gearCounter ].tag
 					&&
-				fromBook == _availableShields[gearCounter].book
+				fromBook == _availableShields[ gearCounter ].book
 			) {
 				var pushedItem = {};
-				angular.extend( pushedItem, _availableShields[gearCounter]);
+				angular.extend( pushedItem, _availableShields[ gearCounter ]);
 				pushedItem.droppedDuringCombat = droppedDuringCombat;
 				if( itemCost > -1 ) {
 					pushedItem.purchaseCost = itemCost;
@@ -7110,12 +7163,12 @@ function savageCharacter (useLang) {
 			droppedDuringCombat = false;
 		for( var gearCounter = 0; gearCounter < _availableArmor.length; gearCounter++ ) {
 			if(
-				gearTag == _availableArmor[gearCounter].tag
+				gearTag == _availableArmor[ gearCounter ].tag
 					&&
-				fromBook == _availableArmor[gearCounter].book
+				fromBook == _availableArmor[ gearCounter ].book
 			) {
 				var pushedItem = {};
-				angular.extend( pushedItem, _availableArmor[gearCounter]);
+				angular.extend( pushedItem, _availableArmor[ gearCounter ]);
 				pushedItem.droppedDuringCombat = droppedDuringCombat;
 				if( itemCost > -1 ) {
 					pushedItem.purchaseCost = itemCost;
@@ -7159,29 +7212,29 @@ function savageCharacter (useLang) {
 	this.equipPrimaryHandWeapon = function( gearIndex ) {
 		// unequip all items in primary hand....
 		for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
-			if( _selectedShields[gearCounter].readiedLocation == "primary" )
-				_selectedShields[gearCounter].readiedLocation = "";
+			if( _selectedShields[ gearCounter ].readiedLocation == "primary" )
+				_selectedShields[ gearCounter ].readiedLocation = "";
 			if( _selectedHandWeapons[gearIndex].requires_2_hands > 0 ) {
-				if( _selectedShields[gearCounter].readiedLocation == "secondary" )
-					_selectedShields[gearCounter].readiedLocation = "";
+				if( _selectedShields[ gearCounter ].readiedLocation == "secondary" )
+					_selectedShields[ gearCounter ].readiedLocation = "";
 			}
 		}
 
 		for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++ ) {
-			if( _selectedHandWeapons[gearCounter].readiedLocation == "primary" )
-				_selectedHandWeapons[gearCounter].readiedLocation = "";
+			if( _selectedHandWeapons[ gearCounter ].readiedLocation == "primary" )
+				_selectedHandWeapons[ gearCounter ].readiedLocation = "";
 			if( _selectedHandWeapons[gearIndex].requires_2_hands > 0 ) {
-				if( _selectedHandWeapons[gearCounter].readiedLocation == "secondary" )
-					_selectedHandWeapons[gearCounter].readiedLocation = "";
+				if( _selectedHandWeapons[ gearCounter ].readiedLocation == "secondary" )
+					_selectedHandWeapons[ gearCounter ].readiedLocation = "";
 			}
 		}
 
 		for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++ ) {
-			if( _selectedRangedWeapons[gearCounter].readiedLocation == "primary" )
-				_selectedRangedWeapons[gearCounter].readiedLocation = "";
+			if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "primary" )
+				_selectedRangedWeapons[ gearCounter ].readiedLocation = "";
 			if( _selectedRangedWeapons[gearIndex].requires_2_hands > 0 ) {
-				if( _selectedRangedWeapons[gearCounter].readiedLocation == "secondary" )
-					_selectedRangedWeapons[gearCounter].readiedLocation = "";
+				if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "secondary" )
+					_selectedRangedWeapons[ gearCounter ].readiedLocation = "";
 			}
 		}
 
@@ -7205,29 +7258,29 @@ function savageCharacter (useLang) {
 	this.equipPrimaryRangedWeapon = function( gearIndex ) {
 		// unequip all items in primary hand....
 		for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
-			if( _selectedShields[gearCounter].readiedLocation == "primary" )
-				_selectedShields[gearCounter].readiedLocation = "";
+			if( _selectedShields[ gearCounter ].readiedLocation == "primary" )
+				_selectedShields[ gearCounter ].readiedLocation = "";
 			if( _selectedHandWeapons[gearIndex].requires_2_hands > 0 ) {
-				if( _selectedShields[gearCounter].readiedLocation == "secondary" )
-					_selectedShields[gearCounter].readiedLocation = "";
+				if( _selectedShields[ gearCounter ].readiedLocation == "secondary" )
+					_selectedShields[ gearCounter ].readiedLocation = "";
 			}
 		}
 
 		for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++ ) {
-			if( _selectedHandWeapons[gearCounter].readiedLocation == "primary" )
-				_selectedHandWeapons[gearCounter].readiedLocation = "";
+			if( _selectedHandWeapons[ gearCounter ].readiedLocation == "primary" )
+				_selectedHandWeapons[ gearCounter ].readiedLocation = "";
 			if( _selectedHandWeapons[gearIndex].requires_2_hands > 0 ) {
-				if( _selectedHandWeapons[gearCounter].readiedLocation == "secondary" )
-					_selectedHandWeapons[gearCounter].readiedLocation = "";
+				if( _selectedHandWeapons[ gearCounter ].readiedLocation == "secondary" )
+					_selectedHandWeapons[ gearCounter ].readiedLocation = "";
 			}
 		}
 
 		for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++ ) {
-			if( _selectedRangedWeapons[gearCounter].readiedLocation == "primary" )
-				_selectedRangedWeapons[gearCounter].readiedLocation = "";
+			if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "primary" )
+				_selectedRangedWeapons[ gearCounter ].readiedLocation = "";
 			if( _selectedRangedWeapons[gearIndex].requires_2_hands > 0 ) {
-				if( _selectedRangedWeapons[gearCounter].readiedLocation == "secondary" )
-					_selectedRangedWeapons[gearCounter].readiedLocation = "";
+				if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "secondary" )
+					_selectedRangedWeapons[ gearCounter ].readiedLocation = "";
 			}
 		}
 
@@ -7239,18 +7292,18 @@ function savageCharacter (useLang) {
 	this.equipSecondaryHandWeapon = function( gearIndex ) {
 		// unequip all items in primary hand....
 		for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
-			if( _selectedShields[gearCounter].readiedLocation == "secondary" )
-				_selectedShields[gearCounter].readiedLocation = "";
+			if( _selectedShields[ gearCounter ].readiedLocation == "secondary" )
+				_selectedShields[ gearCounter ].readiedLocation = "";
 		}
 
 		for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++ ) {
-			if( _selectedHandWeapons[gearCounter].readiedLocation == "secondary" )
-				_selectedHandWeapons[gearCounter].readiedLocation = "";
+			if( _selectedHandWeapons[ gearCounter ].readiedLocation == "secondary" )
+				_selectedHandWeapons[ gearCounter ].readiedLocation = "";
 		}
 
 		for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++ ) {
-			if( _selectedRangedWeapons[gearCounter].readiedLocation == "secondary" )
-				_selectedRangedWeapons[gearCounter].readiedLocation = "";
+			if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "secondary" )
+				_selectedRangedWeapons[ gearCounter ].readiedLocation = "";
 		}
 
 		_selectedHandWeapons[gearIndex].readiedLocation = "secondary";
@@ -7260,18 +7313,18 @@ function savageCharacter (useLang) {
 	this.equipSecondaryRangedWeapon = function( gearIndex ) {
 		// unequip all items in primary hand....
 		for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
-			if( _selectedShields[gearCounter].readiedLocation == "secondary" )
-				_selectedShields[gearCounter].readiedLocation = "";
+			if( _selectedShields[ gearCounter ].readiedLocation == "secondary" )
+				_selectedShields[ gearCounter ].readiedLocation = "";
 		}
 
 		for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++ ) {
-			if( _selectedHandWeapons[gearCounter].readiedLocation == "secondary" )
-				_selectedHandWeapons[gearCounter].readiedLocation = "";
+			if( _selectedHandWeapons[ gearCounter ].readiedLocation == "secondary" )
+				_selectedHandWeapons[ gearCounter ].readiedLocation = "";
 		}
 
 		for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++ ) {
-			if( _selectedRangedWeapons[gearCounter].readiedLocation == "secondary" )
-				_selectedRangedWeapons[gearCounter].readiedLocation = "";
+			if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "secondary" )
+				_selectedRangedWeapons[ gearCounter ].readiedLocation = "";
 		}
 
 		_selectedRangedWeapons[gearIndex].readiedLocation = "secondary";
@@ -7281,18 +7334,18 @@ function savageCharacter (useLang) {
 	this.equipPrimaryShield = function( gearIndex ) {
 		// unequip all items in primary hand....
 		for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
-			if( _selectedShields[gearCounter].readiedLocation == "primary" )
-				_selectedShields[gearCounter].readiedLocation = "";
+			if( _selectedShields[ gearCounter ].readiedLocation == "primary" )
+				_selectedShields[ gearCounter ].readiedLocation = "";
 		}
 
 		for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++ ) {
-			if( _selectedHandWeapons[gearCounter].readiedLocation == "secondary" )
-				_selectedHandWeapons[gearCounter].readiedLocation = "";
+			if( _selectedHandWeapons[ gearCounter ].readiedLocation == "secondary" )
+				_selectedHandWeapons[ gearCounter ].readiedLocation = "";
 		}
 
 		for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++ ) {
-			if( _selectedRangedWeapons[gearCounter].readiedLocation == "secondary" )
-				_selectedRangedWeapons[gearCounter].readiedLocation = "";
+			if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "secondary" )
+				_selectedRangedWeapons[ gearCounter ].readiedLocation = "";
 		}
 
 		_selectedShields[gearIndex].readiedLocation = "primary";
@@ -7302,18 +7355,18 @@ function savageCharacter (useLang) {
 	this.equipSecondaryShield = function( gearIndex ) {
 		// unequip all items in primary hand....
 		for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
-			if( _selectedShields[gearCounter].readiedLocation == "secondary" )
-				_selectedShields[gearCounter].readiedLocation = "";
+			if( _selectedShields[ gearCounter ].readiedLocation == "secondary" )
+				_selectedShields[ gearCounter ].readiedLocation = "";
 		}
 
 		for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++ ) {
-			if( _selectedHandWeapons[gearCounter].readiedLocation == "secondary" )
-				_selectedHandWeapons[gearCounter].readiedLocation = "";
+			if( _selectedHandWeapons[ gearCounter ].readiedLocation == "secondary" )
+				_selectedHandWeapons[ gearCounter ].readiedLocation = "";
 		}
 
 		for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++ ) {
-			if( _selectedRangedWeapons[gearCounter].readiedLocation == "secondary" )
-				_selectedRangedWeapons[gearCounter].readiedLocation = "";
+			if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "secondary" )
+				_selectedRangedWeapons[ gearCounter ].readiedLocation = "";
 		}
 
 		_selectedShields[gearIndex].readiedLocation = "secondary";
@@ -14241,7 +14294,8 @@ getCost: function(selectedObject) {
 return 5000;
 },
 getModEffect: function(selectedObject) {
-}
+},
+chooseRangedWeapon: true
 }
 );
 
@@ -45945,6 +45999,7 @@ availableLanguages.push ({
 			SCIFI_POWER: 'Power',
 			SCIFI_STUN: 'Stun',
 			SCIFI_ENERGY: 'Energy',
+			CHARGEN_SELECT_LIGHT_WEAPON: '- Choose Purchased Weapon -',
 
 	}
 

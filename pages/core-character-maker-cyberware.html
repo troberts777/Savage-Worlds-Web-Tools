@@ -98,6 +98,10 @@
 
 											</div>
 
+											<div ng-show="cyberware.chooseRangedWeapon">
+												<select class="inline-block no-bottom-margin" ng-click="setCyberOption1($index, cyberware.option1 )" ng-model="cyberware.option1" ng-options="item as item.label for item in savageCharacter.getCyberWeaponOptions() track by item.id"></select>
+											</div>
+
 											<div ng-show="cyberware.sciFiMeleeWeapon">
 												<select class="inline-block no-bottom-margin" ng-click="setCyberOption1($index, cyberware.option1 )" ng-model="cyberware.option1">
 													<option value="">No Modifictions</option>

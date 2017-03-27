@@ -373,6 +373,7 @@ getCost: function(selectedObject) {
 return 5000;
 },
 getModEffect: function(selectedObject) {
-}
+},
+chooseRangedWeapon: true
 }
 );
