@@ -7,7 +7,6 @@ var coreChargenWelcomeFunctions = function ($timeout, $rootScope, $translate, $s
 
 		$scope.$route = $route;
 
-
 		$scope.init = function() {
 			$translate([
 				'APP_TITLE', 'INDEX_BUTTON_CORE_CHAR', 'CHARGEN_SPECIALIZATION_PLACEHOLDER', 'CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER'
@@ -31,7 +30,6 @@ var coreChargenWelcomeFunctions = function ($timeout, $rootScope, $translate, $s
 			}
 
 			$scope.startingWealth = $rootScope.savageCharacter.getStartingFunds();
-
 		}
 
 		$scope.init();

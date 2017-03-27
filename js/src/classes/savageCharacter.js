@@ -1668,6 +1668,9 @@ function savageCharacter (useLang) {
 		var minorPerk1 = 0;
 		var minorPerk2 = 0;
 		var majorPerk2 = 0;
+		var _usedPerkPoints = 0;
+		var _extraPerkPointCost = 0;
+		var _selectedPerkPoints = 0;
 		_secondMajorHindranceChosen = false;
 		for( var hindranceCounter = 0; hindranceCounter < _selectedHindrances.length; hindranceCounter++) {
 
@@ -1680,7 +1683,7 @@ function savageCharacter (useLang) {
 			_installedHindrances.push( _selectedHindrances[hindranceCounter] );
 
 			if( _selectedHindrances[hindranceCounter].severity == "major" ) {
-
+				_selectedPerkPoints += 2;
 				if( _usesSPCCreation ) {
 					if( majorPerk == 0 ) {
 						majorPerk = 2;
@@ -1696,6 +1699,7 @@ function savageCharacter (useLang) {
 			}
 
 			if( _selectedHindrances[hindranceCounter].severity == "minor" ) {
+				_selectedPerkPoints += 1;
 				if( minorPerk1 == 0 ) {
 					minorPerk1 = 1;
 					minorPerk2 = 0;
@@ -1724,6 +1728,7 @@ function savageCharacter (useLang) {
 		for( var perkCounter = 0; perkCounter < _selectedPerks.length; perkCounter++) {
 			_selectedPerks[perkCounter].effect(this);
 			_availablePerkPoints = _availablePerkPoints - _selectedPerks[perkCounter].cost;
+			_usedPerkPoints += _selectedPerks[perkCounter].cost;
 		}
 
 		if( _attributePointsUsed > _attributePointsAvailable ) {
@@ -1752,14 +1757,53 @@ function savageCharacter (useLang) {
 			_installedEdges.push( _selectedEdges[edgeCounter] );
 			if( ! _selectedEdges[ edgeCounter ].cyber )
 				_availableEdgePoints = _availableEdgePoints - 1;
+
 			if( typeof(_selectedEdges[edgeCounter].charEffect) == "function" ) {
 				_selectedEdges[edgeCounter].charEffect( this );
 			}
+
 			if( typeof(_selectedEdges[edgeCounter].charEffects) == "function" ) {
 				_selectedEdges[edgeCounter].charEffects( this );
 			}
 
+			if( _selectedEdges[edgeCounter].extraPerkPointCost ) {
+				_extraPerkPointCost += _selectedEdges[edgeCounter].extraPerkPointCost;
+			}
 		}
+
+		//~ console.log( "------------------------" );
+		//~ console.log( "_availablePerkPoints", _availablePerkPoints );
+		//~ console.log( "_extraPerkPointCost", _extraPerkPointCost );
+		//~ console.log( "_selectedPerkPoints", _selectedPerkPoints );
+		//~ console.log( "_totalPerkPoints",  _totalPerkPoints);
+		//~ console.log( "_optimizedPerkPoints", _optimizedPerkPoints );
+		//~ console.log( "_usedPerkPoints", _usedPerkPoints );
+		//~ console.log( "majorPerk", majorPerk );
+		//~ console.log( "majorPerk2", majorPerk2 );
+		//~ console.log( "minorPerk2", minorPerk2 );
+		//~ console.log( "minorPerk1", minorPerk1 );
+
+		//~ console.log( "test", _extraPerkPointCost + ">" + (_selectedPerkPoints - _usedPerkPoints ) );
+
+
+		if( _extraPerkPointCost > _selectedPerkPoints - _usedPerkPoints ) {
+			_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_EDGE_REQUIRES_HINDRANCES") );
+			_isValid = false;
+
+
+
+		}
+
+		if( _extraPerkPointCost ) {
+			_availablePerkPoints = _selectedPerkPoints - _extraPerkPointCost ;
+			//~ _availablePerkPoints -= 2;
+			if( _availablePerkPoints > _totalPerkPoints )
+				_availablePerkPoints = _totalPerkPoints;
+			if( _availablePerkPoints < 0 )
+				_availablePerkPoints = 0;
+		}
+
+		//~ console.log( "_availablePerkPoints", _availablePerkPoints );
 
 		if( _availablePerkPoints < 0 ) {
 			_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_PERKS") );

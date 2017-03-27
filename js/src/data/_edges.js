@@ -4572,6 +4572,27 @@ return false;
 },
 {
 	 name: {
+		 'en-US': 'Heavy-G Worlder',
+	},
+	 required_edge: '',
+	 required_rank: 0,
+	 conflicts_edge: '',
+	 conflicts_hindrance: '',
+	 tag: 'heavy-g-worlder',
+	 page: '',
+	 racial: 0,
+	 reselectable: 0,
+	 book: 4,
+	 child: 0,
+charEffect: function( charObject ) {
+// Affect Character Object Code here
+    charObject.boostAttribute("strength", 1);
+    charObject.incrementPace( 2 );
+},
+extraPerkPointCost: 2
+},
+{
+	 name: {
 		 'en-US': 'Rocket Jock',
 	},
 	 required_edge: '',

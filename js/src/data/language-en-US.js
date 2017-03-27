@@ -442,6 +442,7 @@ availableLanguages.push ({
 			SCIFI_STUN: 'Stun',
 			SCIFI_ENERGY: 'Energy',
 			CHARGEN_SELECT_LIGHT_WEAPON: '- Choose Purchased Weapon -',
+			CHARGEN_VALIDATION_EDGE_REQUIRES_HINDRANCES: 'A selected edge requires additional hindrances',
 
 	}
 
