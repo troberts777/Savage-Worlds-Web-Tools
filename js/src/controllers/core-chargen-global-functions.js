@@ -87,6 +87,7 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 		$rootScope.closeDialogs();
 		$rootScope.loadDialogOpen = true;
 	}
+
 	$rootScope.saveDialog = function() {
 		if( !localStorage[ savedItemsLocalStorageVariable ])
 			localStorage[ savedItemsLocalStorageVariable ] = "[]";
@@ -101,6 +102,7 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 		$rootScope.save_as_name = $rootScope.savageCharacter.getName();
 		$rootScope.saveDialogOpen = true;
 	}
+
 	$rootScope.importDialog = function() {
 		$rootScope.importJSON = "";
 		$rootScope.closeDialogs();
@@ -111,6 +113,7 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 
 		localStorage[ currentItemLocalStorageVariable ] = "";
 		$rootScope.closeDialogs();
+		$route.reload();
 		$location.path( "core/character-maker-welcome" );
 	}
 
@@ -118,6 +121,7 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 		$rootScope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
 		if( $rootScope.saved_items[ load_item ] )
 			localStorage[ currentItemLocalStorageVariable ] = $rootScope.saved_items[ load_item ].data;
+		$route.reload();
 		$location.path( "core/character-maker-char-info" );
 		$rootScope.closeDialogs();
 	}
@@ -135,7 +139,6 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 		$rootScope.save_over = save_over;
 
 	}
-
 
 	$rootScope.makePDF = function() {
 
@@ -162,7 +165,6 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 						saveDirectory = cordova.file.syncedDataDirectory;	// Possibly Windows
 					else
 						saveDirectory = cordova.file.externalDataDirectory;	// Android....
-
 
 					$cordovaFile.writeFile(saveDirectory, fileName, pdfOutput, true)
 					.then(function (success) {
@@ -206,7 +208,6 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 				}
 			}
 
-
 		});
 
 		// if just a standard browser
@@ -219,7 +220,6 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 			//chargenPDFObject.currentDoc.output('save', $rootScope.savageCharacter.name + '.pdf');
 		}
 	}
-
 
 	$rootScope.saveItem = function( save_over, saveName ) {
 

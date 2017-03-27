@@ -552,6 +552,13 @@ function get_book_by_id( book_id, language ) {
 	return null;
 }
 
+function addCommas( numericalValue ) {
+  return (numericalValue + "").replace(/\b(\d+)((\.\d+)*)\b/g, function(a, b, c) {
+    return (b.charAt(0) > 0 && !(c || ".").lastIndexOf(".") ? b.replace(/(\d)(?=(\d{3})+$)/g, "$1,") : b) + c;
+  });
+}
+
+
 function get_book_by_tag( book_tag, language ) {
 	if( !language )
 		language = localStorage["users_preferred_language"];
@@ -705,6 +712,15 @@ function get_gear_class_by_id( class_id ) {
 	for( var ldcv = 0 ; ldcv < savageWorldsGearClasses.length; ldcv++) {
 		if( savageWorldsGearClasses[ldcv].id == class_id ) {
 			return savageWorldsGearClasses[ldcv];
+		}
+	}
+	return null;
+}
+
+function get_first_edge_by_tag( tagname ) {
+	for( var ldcv = 0 ; ldcv < savageWorldsEdges.length; ldcv++) {
+		if( savageWorldsEdges[ldcv].tag  == tagname ) {
+			return savageWorldsEdges[ldcv];
 		}
 	}
 	return null;
@@ -1530,6 +1546,8 @@ chargenPDF.prototype.createHindrancesTable = function(label, left, top, width, h
 			majorMinor = "minor, ";
 		if( this.currentCharacter.getInstalledHindrances()[hind_counter].racial > 0)
 			majorMinor = "racial, ";
+		if( this.currentCharacter.getInstalledHindrances()[hind_counter].cyber)
+			majorMinor = "cyber, ";
 		if(this.currentCharacter.getInstalledHindrances()[hind_counter].specify_text && this.currentCharacter.getInstalledHindrances()[hind_counter].specifyField != "")
 			this.currentDoc.text(left + 5, top + 10 + hind_counter * Math.floor(smallFontSize / 2) -1 , this.currentCharacter.getInstalledHindrances()[hind_counter].local_name + ": " + this.currentCharacter.getInstalledHindrances()[hind_counter].specifyField + " (" + majorMinor + this.currentCharacter.getInstalledHindrances()[hind_counter].bookObj.abbrev + " " + this.currentCharacter.getInstalledHindrances()[hind_counter].page + ")" );
 		else
@@ -1554,7 +1572,8 @@ chargenPDF.prototype.createEdgesTable = function(label, left, top, width, height
 
 		if( this.currentCharacter.getInstalledEdges()[edge_counter].racial > 0)
 			majorMinor = "racial, ";
-
+		if( this.currentCharacter.getInstalledEdges()[edge_counter].cyber)
+			majorMinor = "cyber, ";
 		if(this.currentCharacter.getInstalledEdges()[edge_counter].specify_text && this.currentCharacter.getInstalledEdges()[edge_counter].specifyField != "")
 			this.currentDoc.text(left + 5, top + 10 + edge_counter * Math.floor(smallFontSize / 2) -1 , this.currentCharacter.getInstalledEdges()[edge_counter].local_name + ": " + this.currentCharacter.getInstalledEdges()[edge_counter].specifyField + " (" + majorMinor + this.currentCharacter.getInstalledEdges()[edge_counter].bookObj.abbrev + " " + this.currentCharacter.getInstalledEdges()[edge_counter].page + ")" );
 		else
@@ -2369,7 +2388,7 @@ function savageCharacter (useLang) {
 	var _startingFunds = 500;
 	var _currentFunds = 500;
 
-	var _naturalWeapons = false;
+	var _naturalWeapons = Array();
 
 	var _isNew = true;
 	var _multipleLanguages = false;
@@ -2393,6 +2412,7 @@ function savageCharacter (useLang) {
 
 	var _uuid = -1;
 
+	var _availableCyberware = Array();
 
 	var allSkills = Array();
 	var _options = Array();
@@ -2503,6 +2523,8 @@ function savageCharacter (useLang) {
 
 	var _encumbranceMultiplier = 5;
 
+	var _installedCyberware = Array();
+
 	var _currentStrain = 0;
 	var _maxStrain = 0;
 	var _availableMundaneGear = Array();
@@ -2540,7 +2562,7 @@ function savageCharacter (useLang) {
 		_startingFunds = 500;
 		_currentFunds = 500;
 
-		_naturalWeapons = false;
+		_naturalWeapons = Array();
 
 		_isNew = true;
 		_multipleLanguages = false;
@@ -2561,6 +2583,8 @@ function savageCharacter (useLang) {
 		_knownLanguagesLimit = 0;
 
 		_innateAttacks = Array();
+
+		_installedCyberware = Array();
 
 		_xpOptions = Array();
 
@@ -2693,7 +2717,7 @@ function savageCharacter (useLang) {
 				spcOnly: false,
 				effect: function(savageCharObj) {
 					//savageCharObj.startingFunds = savageCharObj.startingFunds * 2;
-					savageCharObj.setStartingFunds( savageCharObj.getStartingFunds() * 2 );
+					savageCharObj.addCurrentFunds( savageCharObj.getStartingFunds() );
 				}
 			},
 			{
@@ -2840,6 +2864,13 @@ function savageCharacter (useLang) {
 			savageWorldsArcaneTrappings[abCounter].select_option_name = savageWorldsArcaneTrappings[abCounter].local_name;
 	//		savageWorldsArcaneTrappings[abCounter].local_description = this.getLocalName( savageWorldsArcaneTrappings[abCounter].description );
 			savageWorldsArcaneTrappings[abCounter].bookObj = get_book_by_id( savageWorldsArcaneTrappings[abCounter].book );
+		}
+
+		// Localize Cyberware
+		for( var abCounter = 0; abCounter < savageWorldsCyberware.length; abCounter++ ) {
+			savageWorldsCyberware[abCounter].local_name = this.getLocalName( savageWorldsCyberware[abCounter].name );
+			savageWorldsCyberware[abCounter].local_description = this.getLocalName( savageWorldsCyberware[abCounter].description );
+			savageWorldsCyberware[abCounter].bookObj = get_book_by_id( savageWorldsCyberware[abCounter].book );
 		}
 
 		// Localize Powers
@@ -3358,6 +3389,10 @@ function savageCharacter (useLang) {
 		return _availableEdges;
 	}
 
+	this.getAvailableCyberware = function() {
+		return _availableCyberware;
+	}
+
 	this.getAvailablePerks = function() {
 		return _availablePerks;
 	}
@@ -3407,7 +3442,6 @@ function savageCharacter (useLang) {
 		return _xpOptions;
 	}
 
-
 	this.getSelectedAdvancements = function() {
 		return _selectedAdvancements;
 	}
@@ -3423,7 +3457,6 @@ function savageCharacter (useLang) {
 	this.getSkillList = function() {
 		return _allSkills;
 	}
-
 
 	this.getSelectedShields = function() {
 		return _selectedShields;
@@ -3442,11 +3475,9 @@ function savageCharacter (useLang) {
 	}
 
 
-
 	this.getSelectedMundaneGear = function() {
 		return _selectedMundaneGear;
 	}
-
 
 	this.getSelectedEdges = function() {
 		return _selecteddges;
@@ -3570,6 +3601,23 @@ function savageCharacter (useLang) {
 		return false;
 	}
 
+	this.addCyberEdge = function(bookId, edgeTag) {
+		for( var edgeCounter = 0; edgeCounter < savageWorldsEdges.length; edgeCounter++) {
+			if(
+				savageWorldsEdges[edgeCounter].tag == edgeTag
+					&&
+				savageWorldsEdges[edgeCounter].book == bookId
+			) {
+				var newEdge = {};
+				angular.extend( newEdge, savageWorldsEdges[ edgeCounter ] );
+				newEdge.cyber = true;
+				_selectedEdges.push( newEdge );
+				return true;
+			}
+		}
+		return false;
+	}
+
 	this.removeEdge = function(indexNumber) {
 		if( _edges[indexNumber] ) {
 			_edges = _edges.splice(indexNumber, 1);
@@ -3651,6 +3699,8 @@ function savageCharacter (useLang) {
 
 		_knownLanguagesLimit = 1;
 		_linguistSelected = false;
+
+		_naturalWeapons = Array();
 
 		_encumbranceMultiplier = 5;
 
@@ -3806,13 +3856,47 @@ function savageCharacter (useLang) {
 			}
 		}
 
-		_displayAttributes = {
-			agility: getDiceValue( _attributes.agility + _attributeBoost.agility ),
-			smarts: getDiceValue( _attributes.smarts + _attributeBoost.smarts ),
-			spirit: getDiceValue( _attributes.spirit + _attributeBoost.spirit ),
-			strength: getDiceValue( _attributes.strength + _attributeBoost.strength ),
-			vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
-		};
+		// Calcuate Strain and Cyberware
+		if( _usesStrain ) {
+			_derived.currentStrain = 0;
+			_derived.strain = 0;
+
+			for( var cyberC = 0; cyberC < _installedCyberware.length; cyberC++ ) {
+				_derived.currentStrain += _installedCyberware[ cyberC ].getStrainCost();
+				if( _installedCyberware[ cyberC ].getModEffect ) {
+					//~ console.log( "Cyberware - running getModEffect of "  + _installedCyberware[ cyberC ].local_name );
+					_installedCyberware[ cyberC ].getModEffect( this );
+				}
+			}
+
+			_displayAttributes = {
+				agility: getDiceValue( _attributes.agility + _attributeBoost.agility ),
+				smarts: getDiceValue( _attributes.smarts + _attributeBoost.smarts ),
+				spirit: getDiceValue( _attributes.spirit + _attributeBoost.spirit ),
+				strength: getDiceValue( _attributes.strength + _attributeBoost.strength ),
+				vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
+			};
+
+			if( _displayAttributes.spirit.value < _displayAttributes.vigor.value )
+				_derived.strain = _displayAttributes.spirit.value + _derived._strainBonus;
+			else
+				_derived.strain = _displayAttributes.vigor.value + _derived._strainBonus;
+
+			if( _derived._doubleStrain )
+				_derived.strain = _derived.strain * 2;
+
+
+
+		} else {
+
+			_displayAttributes = {
+				agility: getDiceValue( _attributes.agility + _attributeBoost.agility ),
+				smarts: getDiceValue( _attributes.smarts + _attributeBoost.smarts ),
+				spirit: getDiceValue( _attributes.spirit + _attributeBoost.spirit ),
+				strength: getDiceValue( _attributes.strength + _attributeBoost.strength ),
+				vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
+			};
+		}
 
 		// Calculate used skill points
 		for( skillCounter = 0; skillCounter < _skillList.length; skillCounter++) {
@@ -3951,7 +4035,8 @@ function savageCharacter (useLang) {
 		for( var edgeCounter = 0; edgeCounter < _selectedEdges.length; edgeCounter++) {
 
 			_installedEdges.push( _selectedEdges[edgeCounter] );
-			_availableEdgePoints = _availableEdgePoints - 1;
+			if( ! _selectedEdges[ edgeCounter ].cyber )
+				_availableEdgePoints = _availableEdgePoints - 1;
 			if( typeof(_selectedEdges[edgeCounter].charEffect) == "function" ) {
 				_selectedEdges[edgeCounter].charEffect( this );
 			}
@@ -4141,6 +4226,21 @@ function savageCharacter (useLang) {
 			}
 		}
 
+		// Process Availble Cyberware
+		_availableCyberware = Array();
+		for( cyberCounter = 0; cyberCounter < savageWorldsCyberware.length; cyberCounter++) {
+			_availableCyberware.push( savageWorldsCyberware[ cyberCounter ] );
+		}
+
+		for( cyberIndex = 0; cyberIndex < _installedCyberware.length; cyberIndex++) {
+
+			 _installedCyberware[ cyberIndex ].selectedEdge = null;
+			 for( var edgeC = 0; edgeC < _combatEdges.length; edgeC++ ) {
+				 if( _combatEdges[ edgeC ].tag == _installedCyberware[ cyberIndex ].option2 && _combatEdges[ edgeC ].book == _installedCyberware[ cyberIndex ].option1 )
+					_installedCyberware[ cyberIndex ].selectedEdge = _combatEdges[ edgeC ]
+			 }
+
+		}
 		// Process Available Edges
 		_availableEdges = Array();
 		_availableEdges.push(
@@ -4156,10 +4256,27 @@ function savageCharacter (useLang) {
 			}
 		);
 
+		_combatEdges = Array();
+		_combatEdges.push(
+			{
+				local_name:  "- " + this.getTranslation("CHARGEN_SELECT_EDGE") + " -",
+				select_option_name:  "- " + this.getTranslation("CHARGEN_SELECT_EDGE") + " -",
+				tag: "",
+				selectable: true,
+				bookObj: {
+					local_name: ""
+				},
+				blank: true
+			}
+		);
+
 		for( edgeCounter = 0; edgeCounter < savageWorldsEdges.length; edgeCounter++) {
 			if( savageWorldsEdges[edgeCounter].racial == 0 ) {
+
 				if( this.bookInUse( savageWorldsEdges[edgeCounter].book ) ) {
 					savageWorldsEdges[edgeCounter].selectable = true;
+
+					_combatEdges.push( savageWorldsEdges[edgeCounter] );
 
 					if( typeof(savageWorldsEdges[edgeCounter].requires) == "function" ) {
 						savageWorldsEdges[edgeCounter].selectable = savageWorldsEdges[edgeCounter].requires( this );
@@ -4481,6 +4598,7 @@ function savageCharacter (useLang) {
 
 		this.calcSPC();
 
+
 		this.refreshAvailable();
 
 	 	// recalculate attributes from advancement boosts
@@ -4623,7 +4741,6 @@ function savageCharacter (useLang) {
 		}
 
 
-
 		if( _derived.armor == 0) {
 			_derived.toughnessAndArmor = _derived.toughness;
 		} else {
@@ -4692,23 +4809,12 @@ function savageCharacter (useLang) {
 
 		//console.log( _activeSkills );
 
-		// Calcuate Strain and Cyberware
-		if( _usesStrain ) {
-			_derived.currentStrain = 0;
-			_derived.strain = 0;
+	}
 
-			//~ console.log(_displayAttributes.spirit);
-
-
-			if( _displayAttributes.spirit.value < _displayAttributes.vigor.value )
-				_derived.strain = _displayAttributes.spirit.value + _derived._strainBonus;
-			else
-				_derived.strain = _displayAttributes.vigor.value + _derived._strainBonus;
-
-			if( _derived._doubleStrain )
-				_derived.strain = _derived.strain * 2;
-
-		}
+	this.setEncumbranceMultiplier = function( newValue ) {
+		// only modify up! This fixes problems with brawny edge overriding cyberware mule
+		if( newValue > _encumbranceMultiplier )
+			_encumbranceMultiplier = newValue / 1;
 	}
 
 	this.setCharAt = function(str,index,chr) {
@@ -5410,6 +5516,19 @@ function savageCharacter (useLang) {
 					}
 				}
 
+				if( _importObject.cyberware ) {
+					for( var importCounter = 0; importCounter < _importObject.cyberware.length; importCounter++ ) {
+						this.installCyberware(
+							_importObject.cyberware[ importCounter ].tag,
+							_importObject.cyberware[ importCounter].selectedRank,
+							_importObject.cyberware[ importCounter].option1,
+							_importObject.cyberware[ importCounter].option2,
+							_importObject.cyberware[ importCounter].option3,
+							_importObject.cyberware[ importCounter].customName
+						);
+					}
+				}
+
 				if( _importObject.advancements ) {
 					_selectedAdvancements = Array();
 					this.validate();
@@ -5418,7 +5537,6 @@ function savageCharacter (useLang) {
 							_importObject.advancements[importCounter].takenAt,
 							_importObject.advancements[importCounter].tag
 						);
-
 
 						if( _importObject.advancements[importCounter].option1 ) {
 							option1name = null;
@@ -5632,10 +5750,12 @@ function savageCharacter (useLang) {
 			}
 			_exportObject.edges = Array();
 			for( var edgeCounter = 0; edgeCounter < _selectedEdges.length; edgeCounter++ ) {
-				_exportObject.edges.push( {
-					book: _selectedEdges[edgeCounter].book,
-					tag: _selectedEdges[edgeCounter].tag,
-				});
+				if( !_selectedEdges[edgeCounter].cyber ) {
+					_exportObject.edges.push( {
+						book: _selectedEdges[edgeCounter].book,
+						tag: _selectedEdges[edgeCounter].tag,
+					});
+				}
 			}
 
 			if( _selectedPowers.length > 0 ) {
@@ -5737,6 +5857,21 @@ function savageCharacter (useLang) {
 			_exportObject.knownLanguages = Array();
 			for( var langCounter = 0; langCounter < _knownLanguagesLimit + 1; langCounter++ ) {
 				_exportObject.knownLanguages.push( _knownLanguages[langCounter] );
+			}
+
+			if( _installedCyberware.length > 0 ) {
+				_exportObject.cyberware = Array()
+				for( var cyberC = 0; cyberC < _installedCyberware.length; cyberC++) {
+					var exportItem = {
+						tag: _installedCyberware[ cyberC ].tag,
+						selectedRank: _installedCyberware[ cyberC ].selectedRank,
+						option1: _installedCyberware[ cyberC ].option1,
+						option2: _installedCyberware[ cyberC ].option2,
+						option3: _installedCyberware[ cyberC ].option3,
+						customName: _installedCyberware[ cyberC ].customName,
+					}
+					_exportObject.cyberware.push( exportItem );
+				}
 			}
 
 			if( _usesSPCCreation ) {
@@ -5921,13 +6056,26 @@ function savageCharacter (useLang) {
 		return _startingFunds;
 	}
 
-	this.getGenderOptions = function() {
-		return _genderOptions;
+	this.addCurrentFunds = function( newValue ) {
+		return _currentFunds += newValue / 1;
 	}
 
 	this.setStartingFunds = function( newValue ) {
 		_startingFunds = newValue / 1;
 	}
+
+	this.setCurrentFunds = function( newValue ) {
+		_currentFunds = newValue / 1;
+	}
+
+	this.getCurrentFunds = function() {
+		return _currentFunds;
+	}
+
+	this.getGenderOptions = function() {
+		return _genderOptions;
+	}
+
 
 	this.getRace = function() {
 		return _race;
@@ -6031,7 +6179,6 @@ function savageCharacter (useLang) {
 
 
 
-
 	this.decrementSPCPowerLevel = function( powerIndex ) {
 		_selectedSPCPowers[powerIndex].selectedLevel--;
 		if( _selectedSPCPowers[powerIndex].selectedLevel < 1) {
@@ -6081,6 +6228,8 @@ function savageCharacter (useLang) {
 	}
 
 	this.incrementAttributePointsAvailable = function( incValue ) {
+		if( typeof( incValue ) == "undefined" )
+			incValue = 1;
 		_attributePointsAvailable += incValue / 1;
 	}
 
@@ -6089,19 +6238,43 @@ function savageCharacter (useLang) {
 	}
 
 	this.incrementAvailbleEdgePoints = function( incValue ) {
+		if( typeof( incValue ) == "undefined" )
+			incValue = 1;
 		_availableEdgePoints += incValue / 1;
 	}
 
 	this.incrementSkillPointsAvailable = function( incValue ) {
+		if( typeof( incValue ) == "undefined" )
+			incValue = 1;
 		_skillPointsAvailable += incValue / 1;
 	}
 
 	this.incrementEdgePoints = function( incValue ) {
+		if( typeof( incValue ) == "undefined" )
+			incValue = 1;
 		_availableEdgePoints += incValue / 1;
 	}
 
+	this.incrementPace = function( incValue ) {
+		if( typeof( incValue ) == "undefined" )
+			incValue = 1;
+		_derived.pace += incValue / 1;
+	}
+
 	this.incrementStrain = function( incValue ) {
+		if( typeof( incValue ) == "undefined" )
+			incValue = 1;
 		_derived._strainBonus += incValue / 1;
+	}
+
+	this.incrementArmor = function( incValue ) {
+		if( typeof( incValue ) == "undefined" )
+			incValue = 1;
+		_derived.armor += incValue / 1;
+	}
+
+	this.getCombatEdges = function( cyberIndex ) {
+		return _combatEdges;
 	}
 
 	this.doubleStrain = function() {
@@ -6207,6 +6380,116 @@ function savageCharacter (useLang) {
 
 		}
 		return false;
+	}
+
+	this.removeCyberware = function( cyberIndex ) {
+		if( _installedCyberware[ cyberIndex ] )
+			_installedCyberware.splice( cyberIndex, 1);
+	}
+
+	this.setCyberOption1 = function( cyberIndex, newValue ) {
+		if( _installedCyberware[ cyberIndex ] )
+			 _installedCyberware[ cyberIndex ].option1 = newValue;
+
+		return _installedCyberware[ cyberIndex ].option1;
+	}
+
+	this.setCyberEdge = function( cyberIndex, bookID, edgeTag ) {
+		if( _installedCyberware[ cyberIndex ] ) {
+			 _installedCyberware[ cyberIndex ].option1 = bookID;
+			 _installedCyberware[ cyberIndex ].option2 = edgeTag;
+			 _installedCyberware[ cyberIndex ].selectedEdge = null;
+			 for( var edgeC = 0; edgeC < _combatEdges.length; edgeC++ ) {
+				 if( _combatEdges[ edgeC ].tag == edgeTag && _combatEdges[ edgeC ].book == bookID )
+					_installedCyberware[ cyberIndex ].selectedEdge = _combatEdges[ edgeC ]
+			 }
+		}
+
+		return _installedCyberware[ cyberIndex ].option1;
+	}
+
+	this.setCyberOption2 = function( cyberIndex, newValue ) {
+		if( _installedCyberware[ cyberIndex ] )
+			 _installedCyberware[ cyberIndex ].option2 = newValue;
+
+		return _installedCyberware[ cyberIndex ].option2;
+	}
+
+	this.setCyberOption3 = function( cyberIndex, newValue ) {
+		if( _installedCyberware[ cyberIndex ] )
+			 _installedCyberware[ cyberIndex ].option3 = newValue;
+
+		return _installedCyberware[ cyberIndex ].option3;
+	}
+
+	this.setCyberCustomName = function( cyberIndex, newValue ) {
+		if( _installedCyberware[ cyberIndex ] )
+			 _installedCyberware[ cyberIndex ].customName = newValue;
+
+		return _installedCyberware[ cyberIndex ].customName;
+	}
+
+	this.installCyberware = function( cyberTag, selectedRank, option1, option2, option3, customName ) {
+		if( typeof( selectedRank ) == "undefined" )
+			selectedRank = 1;
+		if( typeof( option1 ) == "undefined" )
+			option1 = null;
+		if( typeof( option2 ) == "undefined" )
+			option2 = null;
+		if( typeof( option3 ) == "undefined" )
+			option3 = null;
+		if( typeof( customName ) == "undefined" )
+			customName = null;
+
+		for( var cyberC = 0; cyberC < _availableCyberware.length; cyberC++ ) {
+			if( _availableCyberware[cyberC].tag == cyberTag ) {
+
+				var cyberObject = angular.copy ( _availableCyberware[cyberC] );
+
+				cyberObject.selectedRank = selectedRank;
+				cyberObject.option1 = option1;
+				cyberObject.option2 = option2;
+				cyberObject.option3 = option3;
+				cyberObject.customName = customName;
+
+				_installedCyberware.push( cyberObject );
+
+				return cyberObject;
+				break;
+			}
+		}
+
+	}
+
+	this.getInstalledCyberware = function() {
+		return _installedCyberware;
+	}
+
+	this.cyberwareAvailable = function( cyberTag ) {
+
+		var maxAvailable = 0;
+		var currentInstalled = 0;
+		for( var cyberC = 0; cyberC < _availableCyberware.length; cyberC++ ) {
+
+			if( _availableCyberware[cyberC].tag == cyberTag ) {
+				if( _availableCyberware[cyberC].getMax() == "u" )
+					return true;
+				else
+					maxAvailable = _availableCyberware[cyberC].getMax();
+			}
+		}
+
+		for( var cyberC = 0; cyberC < _installedCyberware.length; cyberC++ ) {
+			if( _installedCyberware[cyberC].tag == cyberTag ) {
+				currentInstalled++;
+			}
+		}
+
+		if( maxAvailable > currentInstalled )
+			return true;
+		else
+			return false;
+
 	}
 
 	this.decrementSkill = function( skillID ) {
@@ -6731,6 +7014,18 @@ function savageCharacter (useLang) {
 		_selectedHandWeapons[gearIndex].droppedDuringCombat = false;
 		_selectedHandWeapons[gearIndex].readiedLocation = "primary";
 
+	}
+
+	this.hasNaturalWeapons = function( newValue ) {
+
+		if( typeof( newValue ) != "undefined" ) {
+			if( newValue === true )
+				_naturalWeapons.push("Natural Weapons");
+			else
+				_naturalWeapons.push(newValue);
+		}
+
+		return _naturalWeapons;
 	}
 
 	this.equipPrimaryRangedWeapon = function( gearIndex ) {
@@ -8249,6 +8544,59 @@ var coreChargenCyberwareFunctions = function ($timeout, $rootScope, $translate, 
 
 		$scope.init();
 
+
+		$scope.addCommas = function( numericalValue ) {
+			return addCommas( numericalValue );
+		}
+
+		$scope.installCyberware = function( cyberTag ) {
+			$rootScope.savageCharacter.installCyberware( cyberTag );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.removeCyberware = function( cyberIndex ) {
+			$rootScope.savageCharacter.removeCyberware( cyberIndex );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.setCyberOption1 = function( cyberIndex, newValue ) {
+			$rootScope.savageCharacter.setCyberOption1( cyberIndex, newValue );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.setCyberOption2 = function( cyberIndex, newValue ) {
+			$rootScope.savageCharacter.setCyberOption2( cyberIndex, newValue );
+			$rootScope.validateAndSave();
+		}
+
+		$scope.setCyberOption3 = function( cyberIndex, newValue ) {
+			$rootScope.savageCharacter.setCyberOption3( cyberIndex, newValue );
+			$rootScope.validateAndSave();
+		}
+
+
+		$scope.setCyberCustomName = function( cyberIndex, newValue ) {
+			$rootScope.savageCharacter.setCyberCustomName( cyberIndex, newValue );
+			$rootScope.justSave();
+		}
+
+		$scope.setCombatEdge = function( cyberIndex, edgeObject ) {
+			console.log("...",  cyberIndex, edgeObject);
+
+			console.log("edgeObject.book", edgeObject.book);
+			console.log("edgeObject.tag", edgeObject.tag);
+
+			$rootScope.savageCharacter.setCyberEdge( cyberIndex, edgeObject.book, edgeObject.tag  );
+
+
+			//~ $rootScope.savageCharacter.setCyberOption1( cyberIndex, edgeObject.book );
+			//~ $rootScope.savageCharacter.setCyberOption2( cyberIndex, edgeObject.tag );
+			$rootScope.validateAndSave();
+		}
+
+
+		//~ console.log("savageWorldsCyberware", savageWorldsCyberware);
+
 	}
 ;
 
@@ -8467,6 +8815,9 @@ var coreChargenGearFunctions = function ($timeout, $rootScope, $translate, $scop
 			$scope.gearAddedMessage = "";
 		}
 
+		$scope.addCommas = function( numericalValue ) {
+			return addCommas( numericalValue );
+		}
 
 		$scope.buyArmor = function( bookID, gearTag, forFree) {
 			if( forFree == true)
@@ -8746,6 +9097,7 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 		$rootScope.closeDialogs();
 		$rootScope.loadDialogOpen = true;
 	}
+
 	$rootScope.saveDialog = function() {
 		if( !localStorage[ savedItemsLocalStorageVariable ])
 			localStorage[ savedItemsLocalStorageVariable ] = "[]";
@@ -8760,6 +9112,7 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 		$rootScope.save_as_name = $rootScope.savageCharacter.getName();
 		$rootScope.saveDialogOpen = true;
 	}
+
 	$rootScope.importDialog = function() {
 		$rootScope.importJSON = "";
 		$rootScope.closeDialogs();
@@ -8770,6 +9123,7 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 
 		localStorage[ currentItemLocalStorageVariable ] = "";
 		$rootScope.closeDialogs();
+		$route.reload();
 		$location.path( "core/character-maker-welcome" );
 	}
 
@@ -8777,6 +9131,7 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 		$rootScope.saved_items = JSON.parse(localStorage[ savedItemsLocalStorageVariable ]);
 		if( $rootScope.saved_items[ load_item ] )
 			localStorage[ currentItemLocalStorageVariable ] = $rootScope.saved_items[ load_item ].data;
+		$route.reload();
 		$location.path( "core/character-maker-char-info" );
 		$rootScope.closeDialogs();
 	}
@@ -8794,7 +9149,6 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 		$rootScope.save_over = save_over;
 
 	}
-
 
 	$rootScope.makePDF = function() {
 
@@ -8821,7 +9175,6 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 						saveDirectory = cordova.file.syncedDataDirectory;	// Possibly Windows
 					else
 						saveDirectory = cordova.file.externalDataDirectory;	// Android....
-
 
 					$cordovaFile.writeFile(saveDirectory, fileName, pdfOutput, true)
 					.then(function (success) {
@@ -8865,7 +9218,6 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 				}
 			}
 
-
 		});
 
 		// if just a standard browser
@@ -8878,7 +9230,6 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 			//chargenPDFObject.currentDoc.output('save', $rootScope.savageCharacter.name + '.pdf');
 		}
 	}
-
 
 	$rootScope.saveItem = function( save_over, saveName ) {
 
@@ -9508,6 +9859,7 @@ var coreChargenWelcomeFunctions = function ($timeout, $rootScope, $translate, $s
 		var itemType = "character";
 
 		$scope.$route = $route;
+
 
 		$scope.init = function() {
 			$translate([
@@ -13345,6 +13697,382 @@ angular.module("cordovaApp").controller(
 	DEVELOPERS: Do Not Edit or Pull Request this file, it is auto generated from a rudimentary admin area!
 	*/
 
+savageWorldsCyberware = Array(
+{
+	 name: {
+		 'en-US': 'Adrenal Surge',
+	},
+	 description: {
+		 'en-US': 'The character\'s adrenal gland has been surgically augmented. He receives +2 to recover from being Shaken. This stacks with the Combat Reflexes Edge.',
+	},
+	 tag: 'adrenal-surge',
+	 book: 0,
+getMax: function(selectedObject) { return 1 },
+getStrainCost: function(selectedObject) {
+return 1;
+},
+getCost: function(selectedObject) {
+return 5000;
+},
+getModEffect: function(selectedObject) {
+}
+},
+{
+	 name: {
+		 'en-US': 'Aquatic Package',
+	},
+	 description: {
+		 'en-US': 'The recipient is fitted with gills and collapsible webbing is installed between his fingers and toes. He can breathe in any oxygen-filled liquid (most lakes, rivers, or oceans), and his underwater Pace is equal to his Swimming skill.',
+	},
+	 tag: 'aquatic-package',
+	 book: 0,
+getMax: function(selectedObject) { return 1 },
+getStrainCost: function(selectedObject) {
+return 2;
+},
+getCost: function(selectedObject) {
+return 5000;
+},
+getModEffect: function(selectedObject) {
+}
+},
+{
+	 name: {
+		 'en-US': 'Armor',
+	},
+	 description: {
+		 'en-US': 'Subdermal plates or fibers have been placed beneath the characteru2019s skin, granting him +2 Armor all over. This stacks with normal Armor, but not Heavy Armor (use the higher value).',
+	},
+	 tag: 'armor',
+	 book: 0,
+getMax: function(selectedObject) { return "u" },
+getStrainCost: function(selectedObject) {
+return 1;
+},
+getCost: function(selectedObject) {
+return 3000;
+},
+getModEffect: function(selectedObject) {
+    selectedObject.incrementArmor( 2 );
+}
+},
+{
+	 name: {
+		 'en-US': 'Attribute Increase',
+	},
+	 description: {
+		 'en-US': 'Each time this implant is chosen, an attribute may be increased a die step. Each step after d12 adds +1.',
+	},
+	 tag: 'attribute-increase',
+	 book: 0,
+getMax: function(selectedObject) { return "u" },
+getStrainCost: function(selectedObject) {
+return 2;
+},
+getCost: function(selectedObject) {
+return 3000;
+},
+getModEffect: function(selectedObject) {
+    if( this.option1 )
+        selectedObject.boostAttribute( this.option1 );
+},
+chooseAttribute: true
+},
+{
+	 name: {
+		 'en-US': 'Autodoc',
+	},
+	 description: {
+		 'en-US': 'Resident nanobots heal the recipient when wounded. They automatically heal one wound per day and add +4 to rolls to resist Bleeding Out. They have a 50% chance per day of healing any disease or poison once it gets into the blood stream (assuming the character is still alive).',
+	},
+	 tag: 'autodoc',
+	 book: 0,
+getMax: function(selectedObject) { return 1 },
+getStrainCost: function(selectedObject) {
+return 2;
+},
+getCost: function(selectedObject) {
+return 10000;
+},
+getModEffect: function(selectedObject) {
+}
+},
+{
+	 name: {
+		 'en-US': 'Combat Specialty',
+	},
+	 description: {
+		 'en-US': 'he character may take a Combat Edge, ignoring all requirements except the requirement of other Edges. The Edge benefits do not stack with the same Edge if the character has it naturally as well as through his cyberware.',
+	},
+	 tag: 'combat-specialty',
+	 book: 0,
+getMax: function(selectedObject) { return "u" },
+getStrainCost: function(selectedObject) {
+return 2;
+},
+getCost: function(selectedObject) {
+	if( this.chosenEdge ) {
+		selectedEdge =  selectedObject.getEdge( this.chosenEdge );
+		if( selectedEdge )
+			selectedRank = selectedEdge.rank;
+		else
+			selectedRank = 0;
+	} else {
+		selectedRank = 0;
+	}
+    return 5000 * ( selectedRank + 1);
+},
+getModEffect: function(selectedObject) {
+    if( this.option1 && this.option2  )
+        selectedObject.addCyberEdge( this.option1, this.option2 );
+},
+perRank: true,
+maxRank: 3,
+selectedRank: 1,
+chooseCombatEdge: true,
+chosenEdge: ""
+},
+{
+	 name: {
+		 'en-US': 'Communicator',
+	},
+	 description: {
+		 'en-US': 'A small radio has been built into the character&rsquo;s skull. It has a range of five miles and can communicate with standard radio equipment.',
+	},
+	 tag: 'communicator',
+	 book: 0,
+getMax: function(selectedObject) { return 1 },
+getStrainCost: function(selectedObject) {
+return 1;
+},
+getCost: function(selectedObject) {
+return 1000;
+},
+getModEffect: function(selectedObject) {
+}
+},
+{
+	 name: {
+		 'en-US': 'Cyberjack',
+	},
+	 description: {
+		 'en-US': 'Real hackers don&rsquo;t use keyboards&mdash;they tap directly into the system via a datajack in their head and &ldquo;run the matrix.&rdquo; This adds +4 to all Knowledge rolls dealing with electronics. If the character fails such a roll anyway, the intense feedback causes a level of Fatigue that fades in one hour and can cause Incapacitation but not death. If the system was particularly powerful or well-protected, failure (including during a failed Dramatic Task) causes 3d6 damage (or more for very high-end corporate or military computers). Armor offers no protection from this damage.',
+	},
+	 tag: 'cyberjack',
+	 book: 0,
+getMax: function(selectedObject) { return 1 },
+getStrainCost: function(selectedObject) {
+return 1;
+},
+getCost: function(selectedObject) {
+return 3000;
+},
+getModEffect: function(selectedObject) {
+}
+},
+{
+	 name: {
+		 'en-US': 'Face Changer',
+	},
+	 description: {
+		 'en-US': 'The muscles, bones, and vocal cords in the characteru2019s face and throat have been replaced with a morphable, synthetic substance, allowing her to alter her facial features with a thought. Each change takes five minutes and requires a Smarts roll. The character may raise or lower her Charisma by 1 point per success and raise. The implant may be used to duplicate a specific personu2019s face and speech (assuming theyu2019re of the same relative size) if a picture (and voice sample for the vocal cords) exists.',
+	},
+	 tag: 'face-changer',
+	 book: 0,
+getMax: function(selectedObject) { return 1 },
+getStrainCost: function(selectedObject) {
+return 3;
+},
+getCost: function(selectedObject) {
+return 15000;
+},
+getModEffect: function(selectedObject) {
+}
+},
+{
+	 name: {
+		 'en-US': 'Filters',
+	},
+	 description: {
+		 'en-US': 'Filters in the ears, nose, throat, and lungs remove most airborne toxins and increase oxygen intake. The hero adds +4 to rolls made to resist the effects of airborne disease, poison, or deadly gases, and Thin or Dense Atmosphere.',
+	},
+	 tag: 'filters',
+	 book: 0,
+getMax: function(selectedObject) { return 1 },
+getStrainCost: function(selectedObject) {
+return 1;
+},
+getCost: function(selectedObject) {
+return 5000;
+},
+getModEffect: function(selectedObject) {
+}
+},
+{
+	 name: {
+		 'en-US': 'Leg Enhancement',
+	},
+	 description: {
+		 'en-US': 'The character gains +2 Pace and increases his running die one step. He also increases his jumping distances by 1u201d. Each time this is taken after the first increases Pace by +2.',
+	},
+	 tag: 'leg-enhancement',
+	 book: 0,
+getMax: function(selectedObject) { return "u" },
+getStrainCost: function(selectedObject) {
+return 2;
+},
+getCost: function(selectedObject) {
+return 5000;
+},
+getModEffect: function(selectedObject) {
+    selectedObject.incrementPace( 2 );
+}
+},
+{
+	 name: {
+		 'en-US': 'Mule',
+	},
+	 description: {
+		 'en-US': 'The character&rsquo;s skeleton has been strengthened, increasing his Load Limit to 8&times; his Strength. If he has the Brawny Edge as well, it increases to 10&times; Strength.',
+	},
+	 tag: 'mule',
+	 book: 0,
+getMax: function(selectedObject) { return 1 },
+getStrainCost: function(selectedObject) {
+return 2;
+},
+getCost: function(selectedObject) {
+return 5000;
+},
+getModEffect: function(selectedObject) {
+    if( selectedObject.hasEdge("brawny") )
+        selectedObject.setEncumbranceMultiplier( 10 );
+    else
+        selectedObject.setEncumbranceMultiplier( 8 );
+}
+},
+{
+	 name: {
+		 'en-US': 'Skill Chip',
+	},
+	 description: {
+		 'en-US': 'Add or increase a skill a die type, but no more than +4 steps in any one skill. Skill chips may be swapped freely with no surgery. This is a free action, but takes an entire round before the new skill is active. Chips carried separately are the size of thumbnails and have no significant weight.',
+	},
+	 tag: 'skill-chip',
+	 book: 0,
+getMax: function(selectedObject) { return 1 },
+getStrainCost: function(selectedObject) {
+return 1;
+},
+getCost: function(selectedObject) {
+    if( this.option3 )
+        return 3000 * this.option3
+    else
+        return 3000;
+},
+getModEffect: function(selectedObject) {
+    if( this.option1 && this.option2 )
+        selectedObject.boostSkill( this.option1, this.option2, this.option3 );
+},
+selectSkill: true,
+maxRanks: 4
+},
+{
+	 name: {
+		 'en-US': 'Trait Bonus',
+	},
+	 description: {
+		 'en-US': 'This represents a host of various devices that add a flat +2 bonus to any skill or attribute (but only once per Trait). A targeting eye, for example, might add +2 to Shooting. This stacks with all other bonuses as usual.',
+	},
+	 tag: 'trait-bonus',
+	 book: 0,
+getMax: function(selectedObject) { return 1 },
+getStrainCost: function(selectedObject) {
+return 1;
+},
+getCost: function(selectedObject) {
+return 10000;
+},
+getModEffect: function(selectedObject) {
+
+}
+},
+{
+	 name: {
+		 'en-US': 'Vision Enhancement',
+	},
+	 description: {
+		 'en-US': 'Cybernetic eyes grant magnification (50&times;), thermal, and low-light vision. This adds +2 to appropriate sight-based Notice rolls and eliminates illumination penalties if in the appropriate mode. Changing modes is a free action.',
+	},
+	 tag: 'vision-enhancement',
+	 book: 0,
+getMax: function(selectedObject) { return 1 },
+getStrainCost: function(selectedObject) {
+return 1;
+},
+getCost: function(selectedObject) {
+return 10000;
+},
+getModEffect: function(selectedObject) {
+}
+},
+{
+	 name: {
+		 'en-US': 'Weapon, Melee',
+	},
+	 description: {
+		 'en-US': 'The character has retractable claws or blades attached directly to the bones in one forearm. The blades may be extended as a free and instant action, and cause Str+d6 damage. For additional cost, these may be given any of the Close Combat Weapon Modifications found on page 18.',
+	},
+	 tag: 'weapon-melee',
+	 book: 0,
+getMax: function(selectedObject) { return 2 },
+getStrainCost: function(selectedObject) {
+return 1;
+},
+getCost: function(selectedObject) {
+return 5000;
+},
+getModEffect: function(selectedObject) {
+    if( this.customName )
+        selectedObject.hasNaturalWeapons( this.customName + " - Str+d6" );
+    else
+        selectedObject.hasNaturalWeapons( "Cybernetic Melee Weapon - Str+d6" );
+}
+},
+{
+	 name: {
+		 'en-US': 'Weapon, Ranged',
+	},
+	 description: {
+		 'en-US': 'A small, concealed slugthrower or laser pistol has been installed in the characteru2019s forearm. Reloading is achieved by removing a flap of fake skin and manually inserting individual rounds or batteries. Other small weapons may be installed with the GMu2019s approval.',
+	},
+	 tag: 'weapon-ranged',
+	 book: 0,
+getMax: function(selectedObject) { return 2 },
+getStrainCost: function(selectedObject) {
+return 1;
+},
+getCost: function(selectedObject) {
+return 5000;
+},
+getModEffect: function(selectedObject) {
+}
+}
+);
+
+/*
+
+	Data here is NOT Licensed under the Creative Commons and is owned by Pinnacle Entertainment Group.
+
+	This product references the Savage Worlds game system, available from Pinnacle Entertainment Group at www.peginc.com.
+	Savage Worlds and all associated logos and trademarks are copyrights of Pinnacle Entertainment Group. Used with permission.
+	Pinnacle makes no representation or warranty as to the quality, viability, or suitability for purpose of this product.
+
+	The entries in this file are from Savage Worlds Role Playing Game and are owned by Pinnacle Entertainment Group.
+
+	DEVELOPERS: Do Not Edit or Pull Request this file, it is auto generated from a rudimentary admin area!
+	*/
+
 savageWorldsEdges = Array(
 {
 	 name: {
@@ -13430,8 +14158,6 @@ charObj.addRacialSkill("SKILL_SWIMMING", 2);
 {
 	 name: {
 		 'en-US': 'Claws',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 	 required_edge: '',
 	 required_rank: 0,
@@ -13445,7 +14171,7 @@ charObj.addRacialSkill("SKILL_SWIMMING", 2);
 	 child: 0,
 charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObj.naturalWeapons = true;
+charObj.hasNaturalWeapons( "Claws - Str+d6" );
 }
 },
 {
@@ -13595,8 +14321,6 @@ charEffect: function( charObj ) {
 {
 	 name: {
 		 'en-US': 'Natural Weapons',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 	 required_edge: '',
 	 required_rank: 0,
@@ -13610,7 +14334,8 @@ charEffect: function( charObj ) {
 	 child: 0,
 charEffect: function( charObj ) {
 // Affect Character Object Code here
-charObj.naturalWeapons = true;
+charObj.hasNaturalWeapons( "Bite - Str+d6" );
+
 }
 },
 {
@@ -14194,7 +14919,7 @@ charEffects: function ( charObj ) {
 	 required_edge: '',
 	 required_rank: 0,
 	 conflicts_edge: '',
-	 conflicts_hindrance: 'obese',
+	 conflicts_hindrance: '',
 	 tag: 'brawny',
 	 page: 'p36',
 	 racial: 0,
@@ -14203,7 +14928,7 @@ charEffects: function ( charObj ) {
 	 child: 0,
 charEffects: function ( charObj ) {
 			charObj.getDerived().toughness++;
-			charObj.encumbrance_multiplier = 8;
+			charObj.selectedObject.setEncumbranceMultiplier( 8 );
 		},
 requires: function( charObj) {
 	if(
@@ -17602,7 +18327,11 @@ charObj.getDerived().armor += 4;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
+charEffect: function( charObj ) {
+// Affect Character Object Code here
+charObj.hasNaturalWeapons( "Pincers or Manidbles - Str+d6" );
 
+}
 },
 {
 	 name: {
@@ -17618,7 +18347,10 @@ charObj.getDerived().armor += 4;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
-
+charEffect: function( charObj ) {
+// Affect Character Object Code here
+charObj.hasNaturalWeapons( "Claws - Str+d6 AP2" );
+}
 },
 {
 	 name: {
@@ -17634,7 +18366,11 @@ charObj.getDerived().armor += 4;
 	 reselectable: 0,
 	 book: 4,
 	 child: 0,
+charEffect: function( charObj ) {
+// Affect Character Object Code here
+charObj.hasNaturalWeapons( "Bite - Str+d6" );
 
+}
 },
 {
 	 name: {
@@ -44690,11 +45426,11 @@ availableLanguages.push ({
 			CHARGEN_INTRO_SETTING_RULES: 'Setting Rules',
 			CHARGEN_SPECIALIZATION_PLACEHOLDER: 'Skill Name',
 			CHARGEN_SPECIALIZATIONS: 'Specializations',
-			CHARGEN_STATUS_SKILL_POINTS: 'Skill Points (used/available)',
-			CHARGEN_STATUS_POWERS: 'Powers (used/available)',
+			CHARGEN_STATUS_SKILL_POINTS: 'Skill Points (used/avail)',
+			CHARGEN_STATUS_POWERS: 'Powers (used/avail)',
 			CHARGEN_SELECT_POWER: 'Select a Power',
-			CHARGEN_STATUS_ATTRIBUTE_POINTS: 'Attribute Points (used/available)',
-			CHARGEN_STATUS_ADVANCEMENTS: 'Advancements (used/available)',
+			CHARGEN_STATUS_ATTRIBUTE_POINTS: 'Attribute Points (used/avail)',
+			CHARGEN_STATUS_ADVANCEMENTS: 'Advancements (used/avail)',
 			CHARGEN_NO_ADVANCEMENT_SLOTS_AVAILABLE: 'You have no advancement slots available. Please set your XP to five or greater to activate your advancment track.',
 			CHARGEN_VALIDATION_REPORT: 'Validation Report',
 			CHARGEN_RACIAL_PARENTHETICAL: '(racial)',
@@ -45005,6 +45741,18 @@ availableLanguages.push ({
 			GENERAL_INCORRECT: 'Incorrect',
 			GENERAL_NO_EXACT_SUCCESSES: 'No Exact Successes (TN 4 with a Roll of 4)',
 			GENERAL_SOURCE_CODE: 'Source Code',
+			CHARGEN_STATUS_STRAIN: 'Strain (used/avail)',
+			CHARGEN_STRAIN_COST: 'Strain Cost',
+			CHARGEN_AVAILABLE_CYBERWARE: 'Available Cyberware',
+			CHARGEN_INSTALLED_CYBERWARE: 'Installed Cyberware',
+			GENERA_MAXIMUM: 'Maximum',
+			GENERA_MAXIMUM_ABBR: 'Max',
+			CHARGEN_MAXIMUM: 'Maximum',
+			CHARGEN_MAXIMUM_ABBR: 'Max',
+			CHARGEN_CYBER_CHOOSE_ATTRIBUTE: '- Choose an Attribute -',
+			CHARGEN_CYBER_CHOOSE_EDGE: '- Choose an Edge -',
+			CHARGEN_CYBER_PARENTHETICAL: '(cyber)',
+			CHARGEN_NATURAL_WEAPONS: 'Natural Weapons',
 
 	}
 

@@ -39,7 +39,6 @@ function savageCharacter (useLang) {
 
 	var _availableCyberware = Array();
 
-
 	var allSkills = Array();
 	var _options = Array();
 
@@ -343,7 +342,7 @@ function savageCharacter (useLang) {
 				spcOnly: false,
 				effect: function(savageCharObj) {
 					//savageCharObj.startingFunds = savageCharObj.startingFunds * 2;
-					savageCharObj.setStartingFunds( savageCharObj.getStartingFunds() * 2 );
+					savageCharObj.addCurrentFunds( savageCharObj.getStartingFunds() );
 				}
 			},
 			{
@@ -1068,7 +1067,6 @@ function savageCharacter (useLang) {
 		return _xpOptions;
 	}
 
-
 	this.getSelectedAdvancements = function() {
 		return _selectedAdvancements;
 	}
@@ -1084,7 +1082,6 @@ function savageCharacter (useLang) {
 	this.getSkillList = function() {
 		return _allSkills;
 	}
-
 
 	this.getSelectedShields = function() {
 		return _selectedShields;
@@ -1103,11 +1100,9 @@ function savageCharacter (useLang) {
 	}
 
 
-
 	this.getSelectedMundaneGear = function() {
 		return _selectedMundaneGear;
 	}
-
 
 	this.getSelectedEdges = function() {
 		return _selecteddges;
@@ -1332,7 +1327,6 @@ function savageCharacter (useLang) {
 
 		_naturalWeapons = Array();
 
-
 		_encumbranceMultiplier = 5;
 
 		_currentFunds = _startingFunds;
@@ -1515,7 +1509,6 @@ function savageCharacter (useLang) {
 
 			if( _derived._doubleStrain )
 				_derived.strain = _derived.strain * 2;
-
 
 
 
@@ -2231,7 +2224,6 @@ function savageCharacter (useLang) {
 		this.calcSPC();
 
 
-
 		this.refreshAvailable();
 
 	 	// recalculate attributes from advancement boosts
@@ -2374,7 +2366,6 @@ function savageCharacter (useLang) {
 		}
 
 
-
 		if( _derived.armor == 0) {
 			_derived.toughnessAndArmor = _derived.toughness;
 		} else {
@@ -2442,7 +2433,6 @@ function savageCharacter (useLang) {
 		}
 
 		//console.log( _activeSkills );
-
 
 	}
 
@@ -3173,7 +3163,6 @@ function savageCharacter (useLang) {
 							_importObject.advancements[importCounter].tag
 						);
 
-
 						if( _importObject.advancements[importCounter].option1 ) {
 							option1name = null;
 							if( _importObject.advancements[importCounter].option1name )
@@ -3692,13 +3681,26 @@ function savageCharacter (useLang) {
 		return _startingFunds;
 	}
 
-	this.getGenderOptions = function() {
-		return _genderOptions;
+	this.addCurrentFunds = function( newValue ) {
+		return _currentFunds += newValue / 1;
 	}
 
 	this.setStartingFunds = function( newValue ) {
 		_startingFunds = newValue / 1;
 	}
+
+	this.setCurrentFunds = function( newValue ) {
+		_currentFunds = newValue / 1;
+	}
+
+	this.getCurrentFunds = function() {
+		return _currentFunds;
+	}
+
+	this.getGenderOptions = function() {
+		return _genderOptions;
+	}
+
 
 	this.getRace = function() {
 		return _race;
@@ -3799,7 +3801,6 @@ function savageCharacter (useLang) {
 		}
 		return _selectedSPCPowers[powerIndex];
 	}
-
 
 
 
@@ -4075,7 +4076,6 @@ function savageCharacter (useLang) {
 				cyberObject.option2 = option2;
 				cyberObject.option3 = option3;
 				cyberObject.customName = customName;
-
 
 				_installedCyberware.push( cyberObject );
 
