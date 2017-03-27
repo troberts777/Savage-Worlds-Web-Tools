@@ -1452,11 +1452,18 @@ chargenPDF.prototype.createWeaponTable = function( label, cols, left, top, numli
 	for(var w_counter = 0; w_counter < numlines - natWeaponCount; w_counter++) {
 		//~ console.log( currentWeapons[w_counter] );
 		if(currentWeapons[w_counter]) {
-			if( currentWeapons[w_counter].local_name ) {
-				if( currentWeapons[w_counter].readiedLocation )
-					this.currentDoc.text(cols[0] - 2, top + 15 + ( w_counter + natWeaponCount ) * 4, "* " + currentWeapons[w_counter].local_name.toString());
+			if( currentWeapons[w_counter].customName ) {
+				if( currentWeapons[w_counter].readiedLocation || currentWeapons[w_counter].alwaysReady )
+					this.currentDoc.text(cols[0] - 2, top + 15 + ( w_counter + natWeaponCount ) * 4, "* " + currentWeapons[w_counter].customName.toString());
 				else
-					this.currentDoc.text(cols[0], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].local_name.toString());
+					this.currentDoc.text(cols[0], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].customName.toString());
+			} else {
+				if( currentWeapons[w_counter].local_name ) {
+					if( currentWeapons[w_counter].readiedLocation || currentWeapons[w_counter].alwaysReady )
+						this.currentDoc.text(cols[0] - 2, top + 15 + ( w_counter + natWeaponCount ) * 4, "* " + currentWeapons[w_counter].local_name.toString());
+					else
+						this.currentDoc.text(cols[0], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].local_name.toString());
+				}
 			}
 
 			if(currentWeapons[w_counter].localWeight ) {
@@ -3686,11 +3693,12 @@ function savageCharacter (useLang) {
 	this.getCyberWeaponOptions = function() {
 		var _returnValue = Array();
 
-		_returnValue.push( {
-				id: "",
-				label: this.getTranslation("CHARGEN_SELECT_LIGHT_WEAPON")
-			}
-		);
+		var pushItem = {
+			id: "",
+			label: this.getTranslation("CHARGEN_SELECT_LIGHT_WEAPON")
+		};
+
+		_returnValue.push( pushItem );
 
 		for( var wC = 0; wC < _selectedRangedWeapons.length; wC++ ) {
 			if( _selectedRangedWeapons[ wC ].weight < 3 ) {
@@ -3698,7 +3706,16 @@ function savageCharacter (useLang) {
 					id: _selectedRangedWeapons[ wC ].tag,
 					label: _selectedRangedWeapons[ wC ].local_name,
 				};
-				if( _returnValue.indexOf( pushItem ) == -1 )
+
+				var foundItem = false;
+				for( var rvC = 0; rvC < _returnValue.length; rvC++) {
+					if( _returnValue[ rvC ].id == _selectedRangedWeapons[ wC ].tag ) {
+						foundItem = true;
+						break;
+					}
+				}
+
+				if( !foundItem )
 					_returnValue.push( pushItem );
 			}
 		}
@@ -4889,18 +4906,35 @@ function savageCharacter (useLang) {
 				for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++) {
 					if( _selectedRangedWeapons[ gearCounter ].tag == _installedCyberware[ cyberCounter ].option1.id ) {
 
-						_selectedRangedWeapons[ gearCounter ].local_name = this.getLocalName( _selectedRangedWeapons[ gearCounter ].name );
+						_selectedRangedWeapons[ gearCounter ].alwaysReady = true;
+
+						if( !_selectedRangedWeapons[ gearCounter ].customName )
+							_selectedRangedWeapons[ gearCounter ].customName = this.getLocalName( _selectedRangedWeapons[ gearCounter ].name );
+						_selectedRangedWeapons[ gearCounter ].original_name = this.getLocalName( _selectedRangedWeapons[ gearCounter ].name );
 
 						if( _installedCyberware[ cyberCounter ].customName ) {
-							if( _selectedRangedWeapons[ gearCounter ].local_name != _installedCyberware[ cyberCounter ].customName ) {
-								 _selectedRangedWeapons[ gearCounter ].local_name = _installedCyberware[ cyberCounter ].customName;
+
+							if(
+								_selectedRangedWeapons[ gearCounter ].customName != _installedCyberware[ cyberCounter ].customName
+									&&
+								_selectedRangedWeapons[ gearCounter ].original_name == _selectedRangedWeapons[ gearCounter ].customName
+							) {
+								 _selectedRangedWeapons[ gearCounter ].customName = _installedCyberware[ cyberCounter ].customName;
+								 break;
 							}
+
 						} else {
-							if( _selectedRangedWeapons[ gearCounter ].local_name + " " + cyberParenthetical != _installedCyberware[ cyberCounter ].local_name ) {
-								  _selectedRangedWeapons[ gearCounter ].local_name = _selectedRangedWeapons[ gearCounter ].local_name + " " + cyberParenthetical;
+							if(
+								_selectedRangedWeapons[ gearCounter ].customName + " " + cyberParenthetical != _installedCyberware[ cyberCounter ].local_name
+									&&
+								_selectedRangedWeapons[ gearCounter ].original_name == _selectedRangedWeapons[ gearCounter ].customName
+							) {
+								  _selectedRangedWeapons[ gearCounter ].customName = _selectedRangedWeapons[ gearCounter ].local_name + " " + cyberParenthetical;
+								  break;
 							}
+
 						}
-						break;
+
 					}
 
 				}
@@ -8770,7 +8804,7 @@ var coreChargenCyberwareFunctions = function ($timeout, $rootScope, $translate, 
 				$rootScope.savageCharacter.importJSON( localStorage[ currentItemLocalStorageVariable ] );
 			}
 
-
+			//~ $scope.cyberWeaponOptions = $rootScope.savageCharacter.getCyberWeaponOptions();
 		}
 
 		$scope.init();
@@ -8811,16 +8845,7 @@ var coreChargenCyberwareFunctions = function ($timeout, $rootScope, $translate, 
 		}
 
 		$scope.setCombatEdge = function( cyberIndex, edgeObject ) {
-			console.log("...",  cyberIndex, edgeObject);
-
-			console.log("edgeObject.book", edgeObject.book);
-			console.log("edgeObject.tag", edgeObject.tag);
-
 			$rootScope.savageCharacter.setCyberEdge( cyberIndex, edgeObject.book, edgeObject.tag  );
-
-
-			//~ $rootScope.savageCharacter.setCyberOption1( cyberIndex, edgeObject.book );
-			//~ $rootScope.savageCharacter.setCyberOption2( cyberIndex, edgeObject.tag );
 			$rootScope.validateAndSave();
 		}
 

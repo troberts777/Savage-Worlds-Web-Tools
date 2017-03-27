@@ -99,7 +99,7 @@
 											</div>
 
 											<div ng-show="cyberware.chooseRangedWeapon">
-												<select class="inline-block no-bottom-margin" ng-click="setCyberOption1($index, cyberware.option1 )" ng-model="cyberware.option1" ng-options="item as item.label for item in savageCharacter.getCyberWeaponOptions() track by item.id"></select>
+												<select class="inline-block no-bottom-margin" ng-click="justSave()" ng-model="cyberware.option1" ng-options="item as item.label for item in savageCharacter.getCyberWeaponOptions() track by $index"></select>
 											</div>
 
 											<div ng-show="cyberware.sciFiMeleeWeapon">
@@ -117,10 +117,7 @@
 											<div ng-show="cyberware.chooseCombatEdge">
 												<select ng-options="item as item.local_name for item in savageCharacter.getCombatEdges($index)" ng-model="cyberware.selectedEdge" ng-change="setCombatEdge( $index, cyberware.selectedEdge )"></select>
 											</div>
-<!--
-											<br />1 - {{cyberware.option1}}
-											<br />2 - {{cyberware.option2}}
--->
+
 										</td>
 										<td>{{cyberware.getStrainCost()}}</td>
 

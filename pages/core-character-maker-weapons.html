@@ -116,7 +116,8 @@
 							<tbody>
 
 								<tr class="no-bottom-border" ng-repeat-start="gearItem in savageCharacter.getSelectedRangedWeapons()">
-									<td>{{gearItem.local_name}}</td>
+									<td ng-show="!gearItem.customName">{{gearItem.local_name}}</td>
+									<td ng-show="gearItem.customName">{{gearItem.customName}}</td>
 									<td>
 										<div ng-show="gearItem.purchaseCost != gearItem.cost">
 											<div ng-show="gearItem.purchaseCost == 0">

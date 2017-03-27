@@ -32,7 +32,7 @@ var coreChargenCyberwareFunctions = function ($timeout, $rootScope, $translate, 
 				$rootScope.savageCharacter.importJSON( localStorage[ currentItemLocalStorageVariable ] );
 			}
 
-
+			//~ $scope.cyberWeaponOptions = $rootScope.savageCharacter.getCyberWeaponOptions();
 		}
 
 		$scope.init();
@@ -73,16 +73,7 @@ var coreChargenCyberwareFunctions = function ($timeout, $rootScope, $translate, 
 		}
 
 		$scope.setCombatEdge = function( cyberIndex, edgeObject ) {
-			console.log("...",  cyberIndex, edgeObject);
-
-			console.log("edgeObject.book", edgeObject.book);
-			console.log("edgeObject.tag", edgeObject.tag);
-
 			$rootScope.savageCharacter.setCyberEdge( cyberIndex, edgeObject.book, edgeObject.tag  );
-
-
-			//~ $rootScope.savageCharacter.setCyberOption1( cyberIndex, edgeObject.book );
-			//~ $rootScope.savageCharacter.setCyberOption2( cyberIndex, edgeObject.tag );
 			$rootScope.validateAndSave();
 		}
 

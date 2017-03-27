@@ -720,11 +720,18 @@ chargenPDF.prototype.createWeaponTable = function( label, cols, left, top, numli
 	for(var w_counter = 0; w_counter < numlines - natWeaponCount; w_counter++) {
 		//~ console.log( currentWeapons[w_counter] );
 		if(currentWeapons[w_counter]) {
-			if( currentWeapons[w_counter].local_name ) {
-				if( currentWeapons[w_counter].readiedLocation )
-					this.currentDoc.text(cols[0] - 2, top + 15 + ( w_counter + natWeaponCount ) * 4, "* " + currentWeapons[w_counter].local_name.toString());
+			if( currentWeapons[w_counter].customName ) {
+				if( currentWeapons[w_counter].readiedLocation || currentWeapons[w_counter].alwaysReady )
+					this.currentDoc.text(cols[0] - 2, top + 15 + ( w_counter + natWeaponCount ) * 4, "* " + currentWeapons[w_counter].customName.toString());
 				else
-					this.currentDoc.text(cols[0], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].local_name.toString());
+					this.currentDoc.text(cols[0], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].customName.toString());
+			} else {
+				if( currentWeapons[w_counter].local_name ) {
+					if( currentWeapons[w_counter].readiedLocation || currentWeapons[w_counter].alwaysReady )
+						this.currentDoc.text(cols[0] - 2, top + 15 + ( w_counter + natWeaponCount ) * 4, "* " + currentWeapons[w_counter].local_name.toString());
+					else
+						this.currentDoc.text(cols[0], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].local_name.toString());
+				}
 			}
 
 			if(currentWeapons[w_counter].localWeight ) {

@@ -1282,11 +1282,12 @@ function savageCharacter (useLang) {
 	this.getCyberWeaponOptions = function() {
 		var _returnValue = Array();
 
-		_returnValue.push( {
-				id: "",
-				label: this.getTranslation("CHARGEN_SELECT_LIGHT_WEAPON")
-			}
-		);
+		var pushItem = {
+			id: "",
+			label: this.getTranslation("CHARGEN_SELECT_LIGHT_WEAPON")
+		};
+
+		_returnValue.push( pushItem );
 
 		for( var wC = 0; wC < _selectedRangedWeapons.length; wC++ ) {
 			if( _selectedRangedWeapons[ wC ].weight < 3 ) {
@@ -1294,7 +1295,16 @@ function savageCharacter (useLang) {
 					id: _selectedRangedWeapons[ wC ].tag,
 					label: _selectedRangedWeapons[ wC ].local_name,
 				};
-				if( _returnValue.indexOf( pushItem ) == -1 )
+
+				var foundItem = false;
+				for( var rvC = 0; rvC < _returnValue.length; rvC++) {
+					if( _returnValue[ rvC ].id == _selectedRangedWeapons[ wC ].tag ) {
+						foundItem = true;
+						break;
+					}
+				}
+
+				if( !foundItem )
 					_returnValue.push( pushItem );
 			}
 		}
@@ -2485,18 +2495,35 @@ function savageCharacter (useLang) {
 				for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++) {
 					if( _selectedRangedWeapons[ gearCounter ].tag == _installedCyberware[ cyberCounter ].option1.id ) {
 
-						_selectedRangedWeapons[ gearCounter ].local_name = this.getLocalName( _selectedRangedWeapons[ gearCounter ].name );
+						_selectedRangedWeapons[ gearCounter ].alwaysReady = true;
+
+						if( !_selectedRangedWeapons[ gearCounter ].customName )
+							_selectedRangedWeapons[ gearCounter ].customName = this.getLocalName( _selectedRangedWeapons[ gearCounter ].name );
+						_selectedRangedWeapons[ gearCounter ].original_name = this.getLocalName( _selectedRangedWeapons[ gearCounter ].name );
 
 						if( _installedCyberware[ cyberCounter ].customName ) {
-							if( _selectedRangedWeapons[ gearCounter ].local_name != _installedCyberware[ cyberCounter ].customName ) {
-								 _selectedRangedWeapons[ gearCounter ].local_name = _installedCyberware[ cyberCounter ].customName;
+
+							if(
+								_selectedRangedWeapons[ gearCounter ].customName != _installedCyberware[ cyberCounter ].customName
+									&&
+								_selectedRangedWeapons[ gearCounter ].original_name == _selectedRangedWeapons[ gearCounter ].customName
+							) {
+								 _selectedRangedWeapons[ gearCounter ].customName = _installedCyberware[ cyberCounter ].customName;
+								 break;
 							}
+
 						} else {
-							if( _selectedRangedWeapons[ gearCounter ].local_name + " " + cyberParenthetical != _installedCyberware[ cyberCounter ].local_name ) {
-								  _selectedRangedWeapons[ gearCounter ].local_name = _selectedRangedWeapons[ gearCounter ].local_name + " " + cyberParenthetical;
+							if(
+								_selectedRangedWeapons[ gearCounter ].customName + " " + cyberParenthetical != _installedCyberware[ cyberCounter ].local_name
+									&&
+								_selectedRangedWeapons[ gearCounter ].original_name == _selectedRangedWeapons[ gearCounter ].customName
+							) {
+								  _selectedRangedWeapons[ gearCounter ].customName = _selectedRangedWeapons[ gearCounter ].local_name + " " + cyberParenthetical;
+								  break;
 							}
+
 						}
-						break;
+
 					}
 
 				}
