@@ -443,6 +443,9 @@ availableLanguages.push ({
 			SCIFI_ENERGY: 'Energy',
 			CHARGEN_SELECT_LIGHT_WEAPON: '- Choose Purchased Weapon -',
 			CHARGEN_VALIDATION_EDGE_REQUIRES_HINDRANCES: 'A selected edge requires additional hindrances',
+			GENERAL_CURRENT: 'Current',
+			GENERAL_LIMIT: 'Limit',
+			CHARGEN_CYBER_SELECT_TRAIT_PLACEHOLDER: 'Enter your boosted trait',
 
 	}
 

@@ -9,7 +9,7 @@ var coreChargenCyberwareFunctions = function ($timeout, $rootScope, $translate, 
 
 		$scope.init = function() {
 			$translate([
-				'APP_TITLE', 'INDEX_BUTTON_CORE_CHAR', 'CHARGEN_SPECIALIZATION_PLACEHOLDER', 'CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER'
+				'APP_TITLE', 'INDEX_BUTTON_CORE_CHAR', 'CHARGEN_SPECIALIZATION_PLACEHOLDER', 'CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER', 'CHARGEN_CYBER_SELECT_TRAIT_PLACEHOLDER'
 			]).then(
 				function (translation) {
 
@@ -17,6 +17,7 @@ var coreChargenCyberwareFunctions = function ($timeout, $rootScope, $translate, 
 					$rootScope.subtitle_tag = translation.INDEX_BUTTON_CORE_CHAR;
 					$scope.specializionPlaceholder = translation.CHARGEN_SPECIALIZATION_PLACEHOLDER;
 					$scope.hindranceSpecificationPlaceholder = translation.CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER;
+					$scope.selectTraitPlaceholder = translation.CHARGEN_CYBER_SELECT_TRAIT_PLACEHOLDER
 				}
 			);
 

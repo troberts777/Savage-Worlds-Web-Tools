@@ -84,7 +84,6 @@
 							<legend translate="CHARGEN_INSTALLED_CYBERWARE">Installed Cyberware</legend>
 
 							<table>
-
 								<thead>
 									<tr>
 										<th>&nbsp;</th>
@@ -132,16 +131,16 @@
 												<input class="no-bottom-margin" type="text" ng-model="cyberware.option2" placeholder="{{specializionPlaceholder}}" ng-keyup="setCyberOption2($index, cyberware.option2)" ng-show="cyberware.option1 == 'SKILL_KNOWLEDGE'" />
 											</div>
 
-<!--
+
 											<div ng-show="cyberware.selectTrait">
-												<select
+												<input type="text"
+													placeholder="{{selectTraitPlaceholder}}"
 													class="inline-block no-bottom-margin"
-													ng-change="justSave()"
+													ng-keyup="justSave()"
 													ng-model="cyberware.option1"
-													ng-options="item as item.label for item in savageCharacter.getCyberTraitList() track by $index"
-												></select>
+												>
 											</div>
--->
+
 
 											<div ng-show="cyberware.maxRanks">
 												<label>

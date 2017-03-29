@@ -98,11 +98,11 @@ chargenPDF.prototype.createBasicLandscapePDF = function () {
 		this.currentDoc.text(15, 21, "Super Powers of " + this.currentCharacter.getName() );
 		this.currentDoc.setFontStyle("normal");
 		if( this.currentCharacter.SPCRisingStars )
-			this.currentDoc.text(15, 26,  "• " + "Power Level " + this.currentCharacter.getSPCPowerLevels()[ this.currentCharacter.getSPCSelectedPowerLevel() / 1].name + " (Rising Stars)" );
+			this.currentDoc.text(15, 26,  "• " + "Power Level " + this.currentCharacter.getgetSPCPowerLevels()()[ this.currentCharacter.getSPCSelectedPowerLevel() / 1].name + " (Rising Stars)" );
 		else
-			this.currentDoc.text(15, 26,  "• " + "Power Level " + this.currentCharacter.getSPCPowerLevels()[ this.currentCharacter.getSPCSelectedPowerLevel() / 1].name );
+			this.currentDoc.text(15, 26,  "• " + "Power Level " + this.currentCharacter.getgetSPCPowerLevels()()[ this.currentCharacter.getSPCSelectedPowerLevel() / 1].name );
 
-		this.currentDoc.text(15, 31,  "• " + "Available Points/Total Points: " + this.currentCharacter.getSPCCurrentPowerPoints() + " / " + this.currentCharacter.getSPCStartingPowerPoints() );
+		this.currentDoc.text(15, 31,  "• " + "Available Points/Total Points: " + this.currentCharacter.getgetSPCCurrentPowerPoints()() + " / " + this.currentCharacter.getgetSPCStartingPowerPoints()() );
 		//this.currentDoc.lines([[0,0],[105,0]], 40, 31);
 
 
@@ -226,7 +226,7 @@ chargenPDF.prototype.createBasicPortraitPDF = function () {
 
 	this.currentDoc.setFontSize(12);
 	this.currentDoc.setFontStyle("bold");
-	this.currentDoc.text(5, 30, "Character Name: " + this.currentCharacter.name );
+	this.currentDoc.text(5, 30, "Character Name: " + this.currentCharacter.getName() );
 	this.currentDoc.setFontStyle("normal");
 	this.currentDoc.lines([[0,0],[125,0]], 40, 31);
 
@@ -241,7 +241,7 @@ chargenPDF.prototype.createBasicPortraitPDF = function () {
 	this.currentDoc.lines([[0,0],[95,0]], 17, 46);
 
 	this.currentDoc.setFontStyle("bold");
-	this.currentDoc.text(133, 45, "Gender: " + this.currentCharacter.gender.label);
+	this.currentDoc.text(133, 45, "Gender: " + this.currentCharacter.getGender().label);
 	this.currentDoc.setFontStyle("normal");
 	this.currentDoc.lines([[0,0],[30,0]], 150, 46);
 
@@ -257,7 +257,7 @@ chargenPDF.prototype.createBasicPortraitPDF = function () {
 	this.createAdvancementTrack( 150,130,55 );
 
 
-	if( this.currentCharacter.usesSPCCreation ) {
+	if( this.currentCharacter.usesSPCCreation() ) {
 		//~ console.log( this.currentCharacter );
 		this.currentDoc.addPage();
 
@@ -270,17 +270,14 @@ chargenPDF.prototype.createBasicPortraitPDF = function () {
 		this.currentDoc.text(50, 15, "Savage Worlds Character Sheet");
 		this.currentDoc.setFontSize(12);
 		this.currentDoc.setFontStyle("bold");
-		this.currentDoc.text(15, 21, "Super Powers of " + this.currentCharacter.name );
+		this.currentDoc.text(15, 21, "Super Powers of " + this.currentCharacter.getName() );
 		this.currentDoc.setFontStyle("normal");
 		if( this.currentCharacter.SPCRisingStars )
-			this.currentDoc.text(15, 26,  "• " + "Power Level " + this.currentCharacter.SPCPowerLevels[ this.currentCharacter.getSPCSelectedPowerLevel() / 1].name + " (Rising Stars)" );
+			this.currentDoc.text(15, 26,  "• " + "Power Level " + this.currentCharacter.getSPCPowerLevels()[ this.currentCharacter.getSPCSelectedPowerLevel() / 1].name + " (Rising Stars)" );
 		else
-			this.currentDoc.text(15, 26,  "• " + "Power Level " + this.currentCharacter.SPCPowerLevels[ this.currentCharacter.getSPCSelectedPowerLevel() / 1].name );
+			this.currentDoc.text(15, 26,  "• " + "Power Level " + this.currentCharacter.getSPCPowerLevels()[ this.currentCharacter.getSPCSelectedPowerLevel() / 1].name );
 
-		this.currentDoc.text(15, 31,  "• " + "Available Points/Total Points: " + this.currentCharacter.SPCCurrentPowerPoints + " / " + this.currentCharacter.SPCStartingPowerPoints );
-		//this.currentDoc.lines([[0,0],[105,0]], 40, 31);
-
-
+		this.currentDoc.text(15, 31,  "• " + "Available Points/Total Points: " + this.currentCharacter.getSPCCurrentPowerPoints() + " / " + this.currentCharacter.getSPCStartingPowerPoints() );
 
 		lineNumber = 35;
 		columnPoint = 10;
