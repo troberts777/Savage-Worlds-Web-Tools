@@ -911,8 +911,10 @@ function savageCharacter (useLang) {
 
 			for( specialtyCounter = 0; specialtyCounter < _skillList[skillCounter].specialties.length; specialtyCounter++) {
 				_skillList[skillCounter].specialties[specialtyCounter].displayValue = "";
-				if( _skillList[skillCounter].specialties[specialtyCounter].value  > 0 ) {
-					diceValue = getDiceValue( _skillList[skillCounter].specialties[specialtyCounter].value );
+				if( typeof( _skillList[skillCounter].specialties[specialtyCounter].boost ) == "undefined" )
+					 _skillList[skillCounter].specialties[specialtyCounter].boost = 0;
+				if( _skillList[skillCounter].specialties[specialtyCounter].value + _skillList[skillCounter].specialties[specialtyCounter].boost  > 0 ) {
+					diceValue = getDiceValue( _skillList[skillCounter].specialties[specialtyCounter].value  + _skillList[skillCounter].specialties[specialtyCounter].boost );
 					_skillList[skillCounter].specialties[specialtyCounter].displayValue = diceValue.local_label;
 				}
 			}
@@ -967,7 +969,7 @@ function savageCharacter (useLang) {
 				_skillList[skillCounter].specialties[skc].id = _skillList[skillCounter].id
 				_skillList[skillCounter].specialties[skc].specify_name = _skillList[skillCounter].specialties[skc].name
 				_skillList[skillCounter].specialties[skc].attribute = _skillList[skillCounter].attribute
-				if( !_skillList[skillCounter].specialties[skc].boost )
+				if( ! _skillList[skillCounter].specialties[skc].boost )
 					_skillList[skillCounter].specialties[skc].boost = 0;
 				_allSkills.push( _skillList[skillCounter].specialties[skc] );
 			}
@@ -1279,6 +1281,14 @@ function savageCharacter (useLang) {
 		return false;
 	}
 
+
+	this.getCyberTraitList = function() {
+	}
+
+
+	this.getCyberSkillList = function() {
+	}
+
 	this.getCyberWeaponOptions = function() {
 		var _returnValue = Array();
 
@@ -1471,6 +1481,11 @@ function savageCharacter (useLang) {
 
 		for( skillCounter = 0; skillCounter < _skillList.length; skillCounter++) {
 			_skillList[skillCounter].boost = 0;
+			if( _skillList[ skillCounter].specialties ) {
+				for( skillCounter2 = 0; skillCounter2 < _skillList[ skillCounter].specialties.length; skillCounter2++) {
+					_skillList[ skillCounter].specialties[skillCounter2].boost = 0;
+				}
+			}
 		}
 
 		// Process Racial Hindrances
@@ -1521,7 +1536,7 @@ function savageCharacter (useLang) {
 
 			for( var cyberC = 0; cyberC < _installedCyberware.length; cyberC++ ) {
 				_derived.currentStrain += _installedCyberware[ cyberC ].getStrainCost();
-				_installedCyberware[ cyberC ].localCost = _installedCyberware[ cyberC ].getCost();
+				_installedCyberware[ cyberC ].localCost = _installedCyberware[ cyberC ].getCost( this );
 
 				if( _installedCyberware[ cyberC ].tag == "weapon-melee" && _installedCyberware[ cyberC ].option1 != "" ) {
 					_installedCyberware[ cyberC ].localNotes = "";
@@ -2501,8 +2516,6 @@ function savageCharacter (useLang) {
 	 			_load.combatLoad += _selectedRangedWeapons[ gearCounter ].weight;
 	 		_selectedRangedWeapons[ gearCounter ].toHitRollModifier = 0;
 	 		_selectedRangedWeapons[ gearCounter ].currentParry = _selectedRangedWeapons[ gearCounter ].parry;
-
-
 
 			if( _selectedRangedWeapons[ gearCounter ].readiedLocation && _selectedRangedWeapons[ gearCounter ].min_str > _displayAttributes.strength.value ) {
 				_warningReport.push( this.getTranslation("CHARGEN_BELOW_STR_WEAPON") );
@@ -4652,18 +4665,29 @@ function savageCharacter (useLang) {
 	}
 
 	this.boostSkill = function( skillID, specialtyName, boostNumber ) {
-
+		//~ console.log( "boostSkill", skillID, specialtyName, boostNumber );
 		if( !boostNumber )
 			boostNumber = 1;
 		for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
 			if( _skillList[skillCounter].id == skillID ) {
-				if( specialtyName ) {
+				if( specialtyName && _skillList[skillCounter].specify ) {
+
 					for( var skillCounter2 = 0; skillCounter2 < _skillList[skillCounter].specialties.length; skillCounter2++ ) {
 						if(  _skillList[skillCounter].specialties[skillCounter2].name == specialtyName ) {
 							_skillList[skillCounter].specialties[skillCounter2].boost += boostNumber;
 							return true;
 						}
 					}
+
+					// Specialy is not found - add it and boost it!
+					_skillList[skillCounter].specialties.push(
+						{
+							name: specialtyName,
+							value: 0,
+							boost: boostNumber
+						}
+					);
+					return true;
 				} else {
 					_skillList[skillCounter].boost += boostNumber;
 					return true;

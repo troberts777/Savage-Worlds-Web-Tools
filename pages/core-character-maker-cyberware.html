@@ -15,10 +15,12 @@
 		<div class="columns small-12 medium-12 large-12">
 			<div ng-include="'pages/chargen-nav-menu.html'"></div>
 
+<!--
 					<fieldset class="fieldset">
 						<legend>Coming Soon</legend>
 						<p class="text-center no-bottom-margin">This is a WORK IN PROGRESS. Things here may or may not work as expected. Cyberware is coming!</p>
 					</fieldset>
+-->
 
 				<div class="row">
 
@@ -66,6 +68,18 @@
 
 
 					<div class="columns medium-6 text-left">
+					<fieldset class="fieldset">
+						<legend translate="GENERAL_STRAIN">Strain</legend>
+						<div class="row">
+							<div class="columns small-6 text-center">
+								<h4 class="no-bottom-margin"><strong><span class="GENERAL_CURRENT">Current</span></strong>: {{savageCharacter.getDerived().currentStrain}}</h4>
+
+							</div>
+							<div class="columns small-6 text-center">
+								<h4 class="no-bottom-margin"><strong><span class="GENERAL_LIMIT">Limit</span></strong>: {{savageCharacter.getDerived().strain}}</h4>
+							</div>
+						</div>
+					</fieldset>
 						<fieldset class="fieldset" style="padding: 30px;">
 							<legend translate="CHARGEN_INSTALLED_CYBERWARE">Installed Cyberware</legend>
 
@@ -99,8 +113,50 @@
 											</div>
 
 											<div ng-show="cyberware.chooseRangedWeapon">
-												<select class="inline-block no-bottom-margin" ng-click="justSave()" ng-model="cyberware.option1" ng-options="item as item.label for item in savageCharacter.getCyberWeaponOptions() track by $index"></select>
+												<select
+													class="inline-block no-bottom-margin"
+													ng-click="justSave()"
+													ng-model="cyberware.option1"
+													ng-options="item as item.label for item in savageCharacter.getCyberWeaponOptions() track by $index"
+												></select>
 											</div>
+
+											<div ng-show="cyberware.selectSkill">
+												{{cyberware.option1}}
+												<select
+													class="no-bottom-margin"
+													ng-change="setCyberOption1( $index, cyberware.option1 )"
+													ng-model="cyberware.option1"
+													ng-options="item.id as item.local_name for item in savageCharacter.getAllSkills()  | filter:filterNoSpecialties(skillItem.option1) "
+												></select>
+
+												<input class="no-bottom-margin" type="text" ng-model="cyberware.option2" placeholder="{{specializionPlaceholder}}" ng-keyup="setCyberOption2($index, cyberware.option2)" ng-show="cyberware.option1 == 'SKILL_KNOWLEDGE'" />
+											</div>
+
+<!--
+											<div ng-show="cyberware.selectTrait">
+												<select
+													class="inline-block no-bottom-margin"
+													ng-change="justSave()"
+													ng-model="cyberware.option1"
+													ng-options="item as item.label for item in savageCharacter.getCyberTraitList() track by $index"
+												></select>
+											</div>
+-->
+
+											<div ng-show="cyberware.maxRanks">
+												<label>
+													Bonus:
+													<select
+														style="width: 3em"
+														class="inline-block no-bottom-margin"
+														ng-change="setCyberOption3($index, cyberware.option3)"
+														ng-model="cyberware.option3"
+														ng-options="rank for rank in makeRange(1,cyberware.maxRanks)"
+													></select>
+												</label>
+											</div>
+
 
 											<div ng-show="cyberware.sciFiMeleeWeapon">
 												<select class="inline-block no-bottom-margin" ng-click="setCyberOption1($index, cyberware.option1 )" ng-model="cyberware.option1">
@@ -115,14 +171,17 @@
 											</div>
 
 											<div ng-show="cyberware.chooseCombatEdge">
-												<select ng-options="item as item.local_name for item in savageCharacter.getCombatEdges($index)" ng-model="cyberware.selectedEdge" ng-change="setCombatEdge( $index, cyberware.selectedEdge )"></select>
+												<select
+													ng-options="item as item.local_name for item in savageCharacter.getCombatEdges($index)"
+													ng-model="cyberware.selectedEdge"
+													ng-change="setCombatEdge( $index, cyberware.selectedEdge )"
+												></select>
 											</div>
 
 										</td>
 										<td>{{cyberware.getStrainCost()}}</td>
 
-										<td ng-hide="cyberware.perRank">${{addCommas(cyberware.localCost)}}</td>
-										<td ng-show="cyberware.perRank">${{addCommas(cyberware.localCost)}} / rank</td>
+										<td>${{addCommas(cyberware.localCost)}}</td>
 
 									</tr>
 								</tbody>

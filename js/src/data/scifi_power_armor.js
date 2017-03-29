@@ -445,8 +445,7 @@ getCost: function(selectedObject) {
 return 50000 ;
 },
 getModEffect: function(selectedObject) {
-selectedObject.pace++;
-selectedObject.pace++;
+
 },
 getWeight: function(selectedObject) {
 return 0;

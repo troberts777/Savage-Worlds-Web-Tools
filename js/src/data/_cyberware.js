@@ -125,10 +125,12 @@ getStrainCost: function(selectedObject) {
 return 2;
 },
 getCost: function(selectedObject) {
-	if( this.chosenEdge ) {
-		selectedEdge =  selectedObject.getEdge( this.chosenEdge );
+	if( this.option2 ) {
+		selectedEdge =  selectedObject.getEdge( this.option2 );
+//		console.log("this.option2", this.option2);
+//		console.log("selectedEdge", selectedEdge);
 		if( selectedEdge )
-			selectedRank = selectedEdge.rank;
+			selectedRank = selectedEdge.required_rank;
 		else
 			selectedRank = 0;
 	} else {
@@ -274,7 +276,7 @@ getModEffect: function(selectedObject) {
 	},
 	 tag: 'skill-chip',
 	 book: 0,
-getMax: function(selectedObject) { return 1 },
+getMax: function(selectedObject) { return "u" },
 getStrainCost: function(selectedObject) {
 return 1;
 },
@@ -287,9 +289,12 @@ getCost: function(selectedObject) {
 getModEffect: function(selectedObject) {
     if( this.option1 && this.option2 )
         selectedObject.boostSkill( this.option1, this.option2, this.option3 );
+    else
+         selectedObject.boostSkill( this.option1, '', this.option3 );    
 },
 selectSkill: true,
-maxRanks: 4
+maxRanks: 4,
+option3: 1
 },
 {
 	 name: {
@@ -309,7 +314,8 @@ return 10000;
 },
 getModEffect: function(selectedObject) {
 
-}
+},
+selectTrait: true
 },
 {
 	 name: {

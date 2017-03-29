@@ -2,11 +2,11 @@
 	<span ng-bind="skill.local_name">SkillName</span>
 	<span ng-show="skill.displayValue" ng-bind="skill.displayValue">dXX</span>
 	<div class="controls">
-		<div ng-hide="skill.specify > 0 || savageCharacter.XP.value > 0">
+		<div ng-hide="skill.specify > 0 || savageCharacter.getXP().value > 0">
 			<button ng-show="skill.value > 0" ng-click="decrementSkill(skill.id)" class="button tiny primary">-</button>
 			<button ng-show="skill.value < 5" ng-click="incrementSkill(skill.id)" class="button tiny primary">+</button>
 		</div>
-		<div ng-show="skill.specify > 0 && savageCharacter.XP.value == 0">
+		<div ng-show="skill.specify > 0 && savageCharacter.getXP().value == 0">
 			<button ng-click="addSpecialtySkill(skill.id)" class="button tiny primary" translate="GENERAL_ADD">Add</button>
 		</div>
 	</div>
@@ -14,15 +14,14 @@
 	<div ng-show="skill.specialties.length > 0">
 <!-- 		<h5 translate="CHARGEN_SPECIALIZATIONS">Sub Skills</h5> -->
 		<div class="specialty-skill text-right" ng-repeat="specialty in skill.specialties track by $index">
-
-			<input ng-hide="savageCharacter.XP.value > 0" class="inline-block no-bottom-margin" placeholder="{{specializionPlaceholder}}" type="text" ng-model="specialty.name" ng-keyup="updateSpecialtySkillName(skill.id, $index, specialty.name)" />
-			<span class="text-right" ng-show="savageCharacter.XP.value > 0">{{specialty.name}}</span>
+			<input ng-hide="savageCharacter.getXP().value > 0" class="inline-block no-bottom-margin" placeholder="{{specializionPlaceholder}}" type="text" ng-model="specialty.name" ng-keyup="updateSpecialtySkillName(skill.id, $index, specialty.name)" />
+			<span class="text-right" ng-show="savageCharacter.getXP().value > 0">{{specialty.name}}</span>
 			<div class="controls">
 				<span ng-show="specialty.displayValue" ng-bind="specialty.displayValue">dXX</span>
 
-				<button ng-show="savageCharacter.XP.value == 0" ng-click="decrementSpecialtySkill(skill.id, $index)" class="button tiny primary">-</button>
+				<button ng-show="savageCharacter.getXP().value == 0" ng-click="decrementSpecialtySkill(skill.id, $index)" class="button tiny primary">-</button>
 
-				<button ng-show="specialty.value < 5 && savageCharacter.XP.value == 0" ng-click="incrementSpecialtySkill(skill.id, $index)" class="button tiny primary">+</button>
+				<button ng-show="specialty.value < 5 && savageCharacter.getXP().value == 0" ng-click="incrementSpecialtySkill(skill.id, $index)" class="button tiny primary">+</button>
 			</div>
 
 		</div>

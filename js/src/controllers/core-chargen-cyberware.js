@@ -17,7 +17,6 @@ var coreChargenCyberwareFunctions = function ($timeout, $rootScope, $translate, 
 					$rootScope.subtitle_tag = translation.INDEX_BUTTON_CORE_CHAR;
 					$scope.specializionPlaceholder = translation.CHARGEN_SPECIALIZATION_PLACEHOLDER;
 					$scope.hindranceSpecificationPlaceholder = translation.CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER;
-
 				}
 			);
 
@@ -34,6 +33,7 @@ var coreChargenCyberwareFunctions = function ($timeout, $rootScope, $translate, 
 
 			//~ $scope.cyberWeaponOptions = $rootScope.savageCharacter.getCyberWeaponOptions();
 		}
+		$scope.meowTest = "SKILL_DRIVING";
 
 		$scope.init();
 
@@ -53,7 +53,10 @@ var coreChargenCyberwareFunctions = function ($timeout, $rootScope, $translate, 
 		}
 
 		$scope.setCyberOption1 = function( cyberIndex, newValue ) {
-			$rootScope.savageCharacter.setCyberOption1( cyberIndex, newValue );
+			if( newValue.id )
+				$rootScope.savageCharacter.setCyberOption1( cyberIndex, newValue.id );
+			else
+				$rootScope.savageCharacter.setCyberOption1( cyberIndex, newValue );
 			$rootScope.validateAndSave();
 		}
 
@@ -78,7 +81,24 @@ var coreChargenCyberwareFunctions = function ($timeout, $rootScope, $translate, 
 		}
 
 
-		//~ console.log("savageWorldsCyberware", savageWorldsCyberware);
+		$scope.filterNoSpecialties = function( currentItem ) {
+			return function (skillItem) {
+				if(
+					!skillItem.is_specialty
+				) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+		$scope.makeRange = function(start, end) {
+		    var result = [];
+		    for (var i = start; i <= end; i++) {
+		        result.push(i);
+		    }
+		    return result;
+		};
 
 	}
 ;

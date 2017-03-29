@@ -3322,8 +3322,10 @@ function savageCharacter (useLang) {
 
 			for( specialtyCounter = 0; specialtyCounter < _skillList[skillCounter].specialties.length; specialtyCounter++) {
 				_skillList[skillCounter].specialties[specialtyCounter].displayValue = "";
-				if( _skillList[skillCounter].specialties[specialtyCounter].value  > 0 ) {
-					diceValue = getDiceValue( _skillList[skillCounter].specialties[specialtyCounter].value );
+				if( typeof( _skillList[skillCounter].specialties[specialtyCounter].boost ) == "undefined" )
+					 _skillList[skillCounter].specialties[specialtyCounter].boost = 0;
+				if( _skillList[skillCounter].specialties[specialtyCounter].value + _skillList[skillCounter].specialties[specialtyCounter].boost  > 0 ) {
+					diceValue = getDiceValue( _skillList[skillCounter].specialties[specialtyCounter].value  + _skillList[skillCounter].specialties[specialtyCounter].boost );
 					_skillList[skillCounter].specialties[specialtyCounter].displayValue = diceValue.local_label;
 				}
 			}
@@ -3378,7 +3380,7 @@ function savageCharacter (useLang) {
 				_skillList[skillCounter].specialties[skc].id = _skillList[skillCounter].id
 				_skillList[skillCounter].specialties[skc].specify_name = _skillList[skillCounter].specialties[skc].name
 				_skillList[skillCounter].specialties[skc].attribute = _skillList[skillCounter].attribute
-				if( !_skillList[skillCounter].specialties[skc].boost )
+				if( ! _skillList[skillCounter].specialties[skc].boost )
 					_skillList[skillCounter].specialties[skc].boost = 0;
 				_allSkills.push( _skillList[skillCounter].specialties[skc] );
 			}
@@ -3690,6 +3692,14 @@ function savageCharacter (useLang) {
 		return false;
 	}
 
+
+	this.getCyberTraitList = function() {
+	}
+
+
+	this.getCyberSkillList = function() {
+	}
+
 	this.getCyberWeaponOptions = function() {
 		var _returnValue = Array();
 
@@ -3882,6 +3892,11 @@ function savageCharacter (useLang) {
 
 		for( skillCounter = 0; skillCounter < _skillList.length; skillCounter++) {
 			_skillList[skillCounter].boost = 0;
+			if( _skillList[ skillCounter].specialties ) {
+				for( skillCounter2 = 0; skillCounter2 < _skillList[ skillCounter].specialties.length; skillCounter2++) {
+					_skillList[ skillCounter].specialties[skillCounter2].boost = 0;
+				}
+			}
 		}
 
 		// Process Racial Hindrances
@@ -3932,7 +3947,7 @@ function savageCharacter (useLang) {
 
 			for( var cyberC = 0; cyberC < _installedCyberware.length; cyberC++ ) {
 				_derived.currentStrain += _installedCyberware[ cyberC ].getStrainCost();
-				_installedCyberware[ cyberC ].localCost = _installedCyberware[ cyberC ].getCost();
+				_installedCyberware[ cyberC ].localCost = _installedCyberware[ cyberC ].getCost( this );
 
 				if( _installedCyberware[ cyberC ].tag == "weapon-melee" && _installedCyberware[ cyberC ].option1 != "" ) {
 					_installedCyberware[ cyberC ].localNotes = "";
@@ -4912,8 +4927,6 @@ function savageCharacter (useLang) {
 	 			_load.combatLoad += _selectedRangedWeapons[ gearCounter ].weight;
 	 		_selectedRangedWeapons[ gearCounter ].toHitRollModifier = 0;
 	 		_selectedRangedWeapons[ gearCounter ].currentParry = _selectedRangedWeapons[ gearCounter ].parry;
-
-
 
 			if( _selectedRangedWeapons[ gearCounter ].readiedLocation && _selectedRangedWeapons[ gearCounter ].min_str > _displayAttributes.strength.value ) {
 				_warningReport.push( this.getTranslation("CHARGEN_BELOW_STR_WEAPON") );
@@ -7063,18 +7076,29 @@ function savageCharacter (useLang) {
 	}
 
 	this.boostSkill = function( skillID, specialtyName, boostNumber ) {
-
+		//~ console.log( "boostSkill", skillID, specialtyName, boostNumber );
 		if( !boostNumber )
 			boostNumber = 1;
 		for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
 			if( _skillList[skillCounter].id == skillID ) {
-				if( specialtyName ) {
+				if( specialtyName && _skillList[skillCounter].specify ) {
+
 					for( var skillCounter2 = 0; skillCounter2 < _skillList[skillCounter].specialties.length; skillCounter2++ ) {
 						if(  _skillList[skillCounter].specialties[skillCounter2].name == specialtyName ) {
 							_skillList[skillCounter].specialties[skillCounter2].boost += boostNumber;
 							return true;
 						}
 					}
+
+					// Specialy is not found - add it and boost it!
+					_skillList[skillCounter].specialties.push(
+						{
+							name: specialtyName,
+							value: 0,
+							boost: boostNumber
+						}
+					);
+					return true;
 				} else {
 					_skillList[skillCounter].boost += boostNumber;
 					return true;
@@ -8833,7 +8857,6 @@ var coreChargenCyberwareFunctions = function ($timeout, $rootScope, $translate, 
 					$rootScope.subtitle_tag = translation.INDEX_BUTTON_CORE_CHAR;
 					$scope.specializionPlaceholder = translation.CHARGEN_SPECIALIZATION_PLACEHOLDER;
 					$scope.hindranceSpecificationPlaceholder = translation.CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER;
-
 				}
 			);
 
@@ -8850,6 +8873,7 @@ var coreChargenCyberwareFunctions = function ($timeout, $rootScope, $translate, 
 
 			//~ $scope.cyberWeaponOptions = $rootScope.savageCharacter.getCyberWeaponOptions();
 		}
+		$scope.meowTest = "SKILL_DRIVING";
 
 		$scope.init();
 
@@ -8869,7 +8893,10 @@ var coreChargenCyberwareFunctions = function ($timeout, $rootScope, $translate, 
 		}
 
 		$scope.setCyberOption1 = function( cyberIndex, newValue ) {
-			$rootScope.savageCharacter.setCyberOption1( cyberIndex, newValue );
+			if( newValue.id )
+				$rootScope.savageCharacter.setCyberOption1( cyberIndex, newValue.id );
+			else
+				$rootScope.savageCharacter.setCyberOption1( cyberIndex, newValue );
 			$rootScope.validateAndSave();
 		}
 
@@ -8894,7 +8921,24 @@ var coreChargenCyberwareFunctions = function ($timeout, $rootScope, $translate, 
 		}
 
 
-		//~ console.log("savageWorldsCyberware", savageWorldsCyberware);
+		$scope.filterNoSpecialties = function( currentItem ) {
+			return function (skillItem) {
+				if(
+					!skillItem.is_specialty
+				) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+		$scope.makeRange = function(start, end) {
+		    var result = [];
+		    for (var i = start; i <= end; i++) {
+		        result.push(i);
+		    }
+		    return result;
+		};
 
 	}
 ;
@@ -14113,10 +14157,12 @@ getStrainCost: function(selectedObject) {
 return 2;
 },
 getCost: function(selectedObject) {
-	if( this.chosenEdge ) {
-		selectedEdge =  selectedObject.getEdge( this.chosenEdge );
+	if( this.option2 ) {
+		selectedEdge =  selectedObject.getEdge( this.option2 );
+//		console.log("this.option2", this.option2);
+//		console.log("selectedEdge", selectedEdge);
 		if( selectedEdge )
-			selectedRank = selectedEdge.rank;
+			selectedRank = selectedEdge.required_rank;
 		else
 			selectedRank = 0;
 	} else {
@@ -14262,7 +14308,7 @@ getModEffect: function(selectedObject) {
 	},
 	 tag: 'skill-chip',
 	 book: 0,
-getMax: function(selectedObject) { return 1 },
+getMax: function(selectedObject) { return "u" },
 getStrainCost: function(selectedObject) {
 return 1;
 },
@@ -14275,9 +14321,12 @@ getCost: function(selectedObject) {
 getModEffect: function(selectedObject) {
     if( this.option1 && this.option2 )
         selectedObject.boostSkill( this.option1, this.option2, this.option3 );
+    else
+         selectedObject.boostSkill( this.option1, '', this.option3 );    
 },
 selectSkill: true,
-maxRanks: 4
+maxRanks: 4,
+option3: 1
 },
 {
 	 name: {
@@ -14297,7 +14346,8 @@ return 10000;
 },
 getModEffect: function(selectedObject) {
 
-}
+},
+selectTrait: true
 },
 {
 	 name: {
@@ -47971,8 +48021,7 @@ getCost: function(selectedObject) {
 return 50000 ;
 },
 getModEffect: function(selectedObject) {
-selectedObject.pace++;
-selectedObject.pace++;
+
 },
 getWeight: function(selectedObject) {
 return 0;
