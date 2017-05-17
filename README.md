@@ -24,12 +24,11 @@ Fully Functional Tools Include:
 * Walker Creator
 * Power Armor Creator
 * Character Creator (Novice and basic advancements are fully functional)
-	* TODO: Cyberware
+	* TODO: Cyberware (done, needs PDF and Exports)
 * Monster/Extras Search
 	* TODO:
 		* Add calculated point cost for Showdown (Pie in the sky :) )
 		* Data Entry still needed
-			* Horror Companion - has only a test entry (13) / of approx 130 entries
 			* Savage Free Bestiary - has 7 entries
 			* Sci-Fi Companion - has no entries
 			* Super Powers Companion - has no entries
