@@ -725,10 +725,16 @@ chargenPDF.prototype.createWeaponTable = function( label, cols, left, top, numli
 					this.currentDoc.text(cols[0], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].customName.toString());
 			} else {
 				if( currentWeapons[w_counter].local_name ) {
+					localName = currentWeapons[w_counter].local_name.toString();
+
+					if( currentWeapons[w_counter].purchaseCost == 0 )
+						localName += " (free)";
+					else if ( currentWeapons[w_counter].purchaseCost < currentWeapons[w_counter].cost )
+						localName += " (reduced)";
 					if( currentWeapons[w_counter].readiedLocation || currentWeapons[w_counter].alwaysReady )
-						this.currentDoc.text(cols[0] - 2, top + 15 + ( w_counter + natWeaponCount ) * 4, "* " + currentWeapons[w_counter].local_name.toString());
+						this.currentDoc.text(cols[0] - 2, top + 15 + ( w_counter + natWeaponCount ) * 4, "* " + localName);
 					else
-						this.currentDoc.text(cols[0], top + 15 + ( w_counter + natWeaponCount ) * 4, currentWeapons[w_counter].local_name.toString());
+						this.currentDoc.text(cols[0], top + 15 + ( w_counter + natWeaponCount ) * 4, localName);
 				}
 			}
 
@@ -802,8 +808,16 @@ chargenPDF.prototype.createEquipmentTable = function(label, left, top, width, he
 		if(current_equipment[e_counter]) {
 
 			equipment_line = "";
+
+			localName = current_equipment[e_counter].local_name.toString();
+
+			if( current_equipment[e_counter].purchaseCost == 0 )
+				localName += " (free)";
+			else if ( current_equipment[e_counter].purchaseCost < current_equipment[e_counter].cost )
+				localName += " (reduced)";
+
 			if(current_equipment[e_counter].name )
-				equipment_line += current_equipment[e_counter].local_name
+				equipment_line += localName;
 			if(current_equipment[e_counter].count && current_equipment[e_counter].count > 1 )
 				equipment_line += " x" + current_equipment[e_counter].count;
 			if(current_equipment[e_counter].weight ) {
@@ -974,8 +988,16 @@ chargenPDF.prototype.createArmorTable = function(label, left, top, width, height
 	for(a_counter = 0; a_counter < currentArmor.length; a_counter++) {
 		if(currentArmor[a_counter]) {
 			armor_line = "";
+
+			localName = currentArmor[a_counter].local_name.toString();
+
+			if( currentArmor[a_counter].purchaseCost == 0 )
+				localName += " (free)";
+			else if ( currentArmor[a_counter].purchaseCost < currentArmor[a_counter].cost )
+				localName += " (reduced)";
+
 			if(currentArmor[a_counter].name )
-				armor_line += currentArmor[a_counter].local_name;
+				armor_line += localName;
 			if(currentArmor[a_counter].armor )
 				armor_line += " - armor " + currentArmor[a_counter].armor;
 			if(currentArmor[a_counter].weight )
@@ -996,8 +1018,17 @@ chargenPDF.prototype.createArmorTable = function(label, left, top, width, height
 	for(b_counter = 0; b_counter < currentShields.length; b_counter++) {
 		if(currentShields[b_counter]) {
 			armor_line = "";
+
+			localName = currentShields[b_counter].local_name.toString();
+
+			if( currentShields[b_counter].purchaseCost == 0 )
+				localName += " (free)";
+			else if ( currentShields[b_counter].purchaseCost < currentShields[b_counter].cost )
+				localName += " (reduced)";
+
+
 			if(currentShields[b_counter].name )
-				armor_line += currentShields[b_counter].local_name;
+				armor_line += localName;
 			if(currentShields[b_counter].parry )
 				armor_line += " - parry " + currentShields[b_counter].parry;
 			if(currentShields[b_counter].parry )
