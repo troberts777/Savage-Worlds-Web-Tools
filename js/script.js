@@ -14432,7 +14432,7 @@ chosenEdge: ""
 		 'en-US': 'Communicator',
 	},
 	 description: {
-		 'en-US': 'A small radio has been built into the character&rsquo;s skull. It has a range of five miles and can communicate with standard radio equipment.',
+		 'en-US': 'A small radio has been built into the character\'s skull. It has a range of five miles and can communicate with standard radio equipment.',
 	},
 	 tag: 'communicator',
 	 book: 0,
@@ -14451,7 +14451,7 @@ getModEffect: function(selectedObject) {
 		 'en-US': 'Cyberjack',
 	},
 	 description: {
-		 'en-US': 'Real hackers don&rsquo;t use keyboards&mdash;they tap directly into the system via a datajack in their head and &ldquo;run the matrix.&rdquo; This adds +4 to all Knowledge rolls dealing with electronics. If the character fails such a roll anyway, the intense feedback causes a level of Fatigue that fades in one hour and can cause Incapacitation but not death. If the system was particularly powerful or well-protected, failure (including during a failed Dramatic Task) causes 3d6 damage (or more for very high-end corporate or military computers). Armor offers no protection from this damage.',
+		 'en-US': 'Real hackers don\'t use keyboards—they tap directly into the system via a datajack in their head and “run the matrix.” This adds +4 to all Knowledge rolls dealing with electronics. If the character fails such a roll anyway, the intense feedback causes a level of Fatigue that fades in one hour and can cause Incapacitation but not death. If the system was particularly powerful or well-protected, failure (including during a failed Dramatic Task) causes 3d6 damage (or more for very high-end corporate or military computers). Armor offers no protection from this damage.',
 	},
 	 tag: 'cyberjack',
 	 book: 0,
@@ -14528,7 +14528,7 @@ getModEffect: function(selectedObject) {
 		 'en-US': 'Mule',
 	},
 	 description: {
-		 'en-US': 'The character&rsquo;s skeleton has been strengthened, increasing his Load Limit to 8&times; his Strength. If he has the Brawny Edge as well, it increases to 10&times; Strength.',
+		 'en-US': 'The character\'s skeleton has been strengthened, increasing his Load Limit to 8× his Strength. If he has the Brawny Edge as well, it increases to 10× Strength.',
 	},
 	 tag: 'mule',
 	 book: 0,
@@ -14601,7 +14601,7 @@ selectTrait: true
 		 'en-US': 'Vision Enhancement',
 	},
 	 description: {
-		 'en-US': 'Cybernetic eyes grant magnification (50&times;), thermal, and low-light vision. This adds +2 to appropriate sight-based Notice rolls and eliminates illumination penalties if in the appropriate mode. Changing modes is a free action.',
+		 'en-US': 'Cybernetic eyes grant magnification (50×), thermal, and low-light vision. This adds +2 to appropriate sight-based Notice rolls and eliminates illumination penalties if in the appropriate mode. Changing modes is a free action.',
 	},
 	 tag: 'vision-enhancement',
 	 book: 0,
@@ -21930,7 +21930,7 @@ savageWorldsSettingRules[0] = {
 	page: "p108",
 	name: {
 		 'en-US': 'Born a Hero',
-		 'pt-BR': 'Nasce um Her&oacute;i',
+		 'pt-BR': 'Nasce um Herói',
 		 'de-DE': '',
 		 'ru-RU': '',
 	},
@@ -21946,7 +21946,7 @@ savageWorldsSettingRules[1] = {
 	page: "p109",
 	name: {
 		 'en-US': 'Multiple Languages',
-		 'pt-BR': 'M&uacute;ltiplos Idiomas',
+		 'pt-BR': 'Múltiplos Idiomas',
 		 'de-DE': '',
 		 'ru-RU': '',
 	},
@@ -21978,7 +21978,7 @@ savageWorldsSettingRules[3] = {
 	page: "p110",
 	name: {
 		 'en-US': 'Skill Specialization',
-		 'pt-BR': 'Especializa&ccedil;&atilde;o de Per&iacute;cias',
+		 'pt-BR': 'Especialização de Perícias',
 		 'de-DE': '',
 		 'ru-RU': '',
 	},
@@ -22010,7 +22010,7 @@ savageWorldsSettingRules[5] = {
 	page: "p29",
 	name: {
 		 'en-US': 'Cyberware and Strain',
-		 'pt-BR': 'Cyberware &amp; Tens&atilde;o',
+		 'pt-BR': 'Cyberware & Tensão',
 		 'de-DE': '',
 		 'ru-RU': '',
 	},
@@ -22091,7 +22091,7 @@ savageWorldsSettingRules[6] = {
 		 'id': 'SKILL_FAITH',
 	 name: {
 		 'en-US': 'Faith',
-		 'pt-BR': 'F&eacute;',
+		 'pt-BR': 'Fé',
 		 'de-DE': 'Glauben',
 	},
 		 'book': '1',
@@ -22139,8 +22139,8 @@ savageWorldsSettingRules[6] = {
 		 'id': 'SKILL_INTIMIDATION',
 	 name: {
 		 'en-US': 'Intimidation',
-		 'pt-BR': 'Intimida&ccedil;&atilde;o',
-		 'de-DE': 'Einsch&uuml;chterung',
+		 'pt-BR': 'Intimidação',
+		 'de-DE': 'Einschüchterung',
 	},
 		 'book': '1',
 		 'attribute': 'spirit',
@@ -22151,7 +22151,7 @@ savageWorldsSettingRules[6] = {
 		 'id': 'SKILL_INVESTIGATION',
 	 name: {
 		 'en-US': 'Investigation',
-		 'pt-BR': 'Investiga&ccedil;&atilde;o',
+		 'pt-BR': 'Investigação',
 		 'de-DE': 'Untersuchung',
 	},
 		 'book': '1',
@@ -22176,7 +22176,7 @@ savageWorldsSettingRules[6] = {
 	 name: {
 		 'en-US': 'Lockpicking',
 		 'pt-BR': '',
-		 'de-DE': 'Schl&ouml;sserknacken',
+		 'de-DE': 'Schlösserknacken',
 	},
 		 'book': '1',
 		 'attribute': 'agility',
@@ -22187,7 +22187,7 @@ savageWorldsSettingRules[6] = {
 		 'id': 'SKILL_NOTICE',
 	 name: {
 		 'en-US': 'Notice',
-		 'pt-BR': 'Aviso pr&eacute;vio',
+		 'pt-BR': 'Aviso prévio',
 		 'de-DE': 'Beachten',
 	},
 		 'book': '1',
@@ -22199,8 +22199,8 @@ savageWorldsSettingRules[6] = {
 		 'id': 'SKILL_PERSUASION',
 	 name: {
 		 'en-US': 'Persuasion',
-		 'pt-BR': 'Persuas&atilde;o',
-		 'de-DE': ' &Uuml;berzeugung',
+		 'pt-BR': 'Persuasão',
+		 'de-DE': ' Überzeugung',
 	},
 		 'book': '1',
 		 'attribute': 'spirit',
@@ -22247,7 +22247,7 @@ savageWorldsSettingRules[6] = {
 		 'id': 'SKILL_RIDING',
 	 name: {
 		 'en-US': 'Riding',
-		 'pt-BR': 'Equita&ccedil;&atilde;o',
+		 'pt-BR': 'Equitação',
 		 'de-DE': 'Reiten',
 	},
 		 'book': '1',
@@ -22260,7 +22260,7 @@ savageWorldsSettingRules[6] = {
 	 name: {
 		 'en-US': 'Shooting',
 		 'pt-BR': 'Tiroteio',
-		 'de-DE': 'Schie&szlig;en',
+		 'de-DE': 'Schießen',
 	},
 		 'book': '1',
 		 'attribute': 'agility',
@@ -22307,8 +22307,8 @@ savageWorldsSettingRules[6] = {
 		 'id': 'SKILL_SURVIVAL',
 	 name: {
 		 'en-US': 'Survival',
-		 'pt-BR': 'Sobreviv&ecirc;ncia',
-		 'de-DE': '&Uuml;berleben',
+		 'pt-BR': 'Sobrevivência',
+		 'de-DE': 'Überleben',
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
@@ -22319,7 +22319,7 @@ savageWorldsSettingRules[6] = {
 		 'id': 'SKILL_SWIMMING',
 	 name: {
 		 'en-US': 'Swimming',
-		 'pt-BR': 'Nata&ccedil;&atilde;o',
+		 'pt-BR': 'Natação',
 		 'de-DE': 'Schwimmen',
 	},
 		 'book': '1',
@@ -22470,7 +22470,7 @@ var savageWorldsArcaneBackgrounds = Array(
 		 'de-DE': '',
 	},
 	 backlash: {
-		 'en-US': 'Protector: Those who cast miracles are champions of their particular religions. Good priests vow to protect the innocent, fight evil, and obey all other tenets of their particular religion. Evil priests typically vow to defeat those who oppose their religion, or simply to cause as much misery and strife as possible. The player and Game Master should come up with a simple list of what is important to the character&rsquo;s religion and use this as a guide. Champions who violate their beliefs are temporarily or permanently forsaken by their chosen deity. Minor sins give the character a &ndash;2 to his Faith rolls for one week. Major sins rob him of all arcane powers for one week. Mortal sins cause the character to be forsaken until the penitent hero completes some great quest or task of atonement to regain his lost powers.',
+		 'en-US': 'Protector: Those who cast miracles are champions of their particular religions. Good priests vow to protect the innocent, fight evil, and obey all other tenets of their particular religion. Evil priests typically vow to defeat those who oppose their religion, or simply to cause as much misery and strife as possible. The player and Game Master should come up with a simple list of what is important to the character\'s religion and use this as a guide. Champions who violate their beliefs are temporarily or permanently forsaken by their chosen deity. Minor sins give the character a –2 to his Faith rolls for one week. Major sins rob him of all arcane powers for one week. Mortal sins cause the character to be forsaken until the penitent hero completes some great quest or task of atonement to regain his lost powers.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -22959,7 +22959,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bear Hug: Bears don&rsquo;t actually &ldquo;hug&rdquo; their victims, but they do attempt to use their weight to pin their prey and rend it with their claws and teeth. A bear that hits with a raise has pinned his foe. The opponent may only attempt to escape the &ldquo;hug&rdquo; on his action, which requires a raise on an opposed Strength roll.\nClaws: Str+d6\nSize +2: These creatures can standup to 8&rsquo;tall and weigh over 1000 pounds.',
+		 'en-US': 'Bear Hug: Bears don\'t actually “hug” their victims, but they do attempt to use their weight to pin their prey and rend it with their claws and teeth. A bear that hits with a raise has pinned his foe. The opponent may only attempt to escape the “hug” on his action, which requires a raise on an opposed Strength roll.\nClaws: Str+d6\nSize +2: These creatures can standup to 8\'tall and weigh over 1000 pounds.',
 	},
 	 tags: {
 		 'en-US': 'animal,',
@@ -23000,7 +23000,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Horns: Str+d6\nGore: Bulls charge maneuver to gore their opponents with their long horns. If they can move at least 6&rdquo; before attacking, they add +4 to their damage total.\nSize +2: Bulls are large creatures.',
+		 'en-US': 'Horns: Str+d6\nGore: Bulls charge maneuver to gore their opponents with their long horns. If they can move at least 6” before attacking, they add +4 to their damage total.\nSize +2: Bulls are large creatures.',
 	},
 	 tags: {
 		 'en-US': 'animal,',
@@ -23012,7 +23012,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Bulls are usually only aggressive toward humans when enraged. Of course, if you&rsquo;re looking up the statistics here, it&rsquo;s probably already seeing red.',
+		 'en-US': 'Bulls are usually only aggressive toward humans when enraged. Of course, if you\'re looking up the statistics here, it\'s probably already seeing red.',
 	},
 		attributes: '{"agility":"d6","smarts":"d4 (A)","spirit":"d8","strength":"d12+2","vigor":"d12"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d4"},"SKILL_NOTICE":{"value":"d6"}}',
@@ -23053,7 +23053,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'This is an ordinary house cat, the sort that might be a familiar for a spellcaster, a Beast Master&rsquo;s animal friend, or an alternate form for the shape change power.',
+		 'en-US': 'This is an ordinary house cat, the sort that might be a familiar for a spellcaster, a Beast Master\'s animal friend, or an alternate form for the shape change power.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d10","strength":"d4","vigor":"d6"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d8"}}',
@@ -23082,7 +23082,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str+d4.\nFleet-Footed: Roll a d10 when running instead of a d6.\nGo for the Throat: Dogs instinctively go for an opponent&rsquo;s soft spots. With a raise on its attack roll, it hits the target&rsquo;s most weakly armored location.\nSize -1: Dogs are relatively small.',
+		 'en-US': 'Bite: Str+d4.\nFleet-Footed: Roll a d10 when running instead of a d6.\nGo for the Throat: Dogs instinctively go for an opponent\'s soft spots. With a raise on its attack roll, it hits the target\'s most weakly armored location.\nSize -1: Dogs are relatively small.',
 	},
 	 tags: {
 		 'en-US': 'animal,',
@@ -23123,7 +23123,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor+4: Scaly hide.\nClaws/Bite: Str+d8.\nFear-2: Anyone who sees a mighty dragon must make a Fear check at &ndash;2.\nFiery Breath: Dragons breathe fire using the Cone Template. Every target within this cone may make an Agility roll at &ndash;2 to avoid the attack. Those who fail suffer 2d10 damage and must check to see if they catch fire. A dragon may not attack with its claws or bite in the round it breathes fire.\nFlight: Dragons have a Flying Pace of 24&rdquo; and Climb 0.\nHardy: The creature does not suffer a wound from being Shaken twice.\nHuge: Attackers add +4 to their Fighting or Shooting rolls when attacking a dragon due to its massive size.\nImproved Frenzy: If a dragon does not use its Fiery Breath ability, it may make two Fighting attacks with no penalty.\nLevel Headed: Act on best of two cards.\nSize +8: Dragons are massive creatures. This version is over 40&rsquo; long from nose to tail, and weighs well over 30,000 pounds.\nTail Lash: The dragon can sweep all opponents in its rear facing in a 3&rdquo; long by 6&rdquo; wide square. This is a standard Fighting attack, and damage is equal to the dragon&rsquo;s Strength &ndash;2.',
+		 'en-US': 'Armor+4: Scaly hide.\nClaws/Bite: Str+d8.\nFear-2: Anyone who sees a mighty dragon must make a Fear check at –2.\nFiery Breath: Dragons breathe fire using the Cone Template. Every target within this cone may make an Agility roll at –2 to avoid the attack. Those who fail suffer 2d10 damage and must check to see if they catch fire. A dragon may not attack with its claws or bite in the round it breathes fire.\nFlight: Dragons have a Flying Pace of 24” and Climb 0.\nHardy: The creature does not suffer a wound from being Shaken twice.\nHuge: Attackers add +4 to their Fighting or Shooting rolls when attacking a dragon due to its massive size.\nImproved Frenzy: If a dragon does not use its Fiery Breath ability, it may make two Fighting attacks with no penalty.\nLevel Headed: Act on best of two cards.\nSize +8: Dragons are massive creatures. This version is over 40\' long from nose to tail, and weighs well over 30,000 pounds.\nTail Lash: The dragon can sweep all opponents in its rear facing in a 3” long by 6” wide square. This is a standard Fighting attack, and damage is equal to the dragon\'s Strength –2.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -23164,7 +23164,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor+4: Scaly hide.\nClaws/Bite: Str+d8.\nFear: Drakes are frightening creatures to behold.\nFiery Breath: Drakes breathe fire using the Cone Template. Every target within this cone may make an Agility roll at &ndash;2 to avoid the attack. Those who fail suffer 2d10 damage and must check to see if they catch fire (see Fire). A drake may not attack with its claws or bite in the round it breathes fire.\nLarge: Attackers add +2 to their attack rolls when attacking a drake due to its large size.\nSize +5: Drakes are over 20&rsquo; long from snout to tail, and weigh in at over 3000 pounds.\nTail Lash: A drake can sweep all opponents in its rear facing in a 3&rdquo; long by 6&rdquo; wide rectangle. This is a standard Fighting attack, and damage is equal to the creature&rsquo;s Strength &ndash;2.',
+		 'en-US': 'Armor+4: Scaly hide.\nClaws/Bite: Str+d8.\nFear: Drakes are frightening creatures to behold.\nFiery Breath: Drakes breathe fire using the Cone Template. Every target within this cone may make an Agility roll at –2 to avoid the attack. Those who fail suffer 2d10 damage and must check to see if they catch fire (see Fire). A drake may not attack with its claws or bite in the round it breathes fire.\nLarge: Attackers add +2 to their attack rolls when attacking a drake due to its large size.\nSize +5: Drakes are over 20\' long from snout to tail, and weigh in at over 3000 pounds.\nTail Lash: A drake can sweep all opponents in its rear facing in a 3” long by 6” wide rectangle. This is a standard Fighting attack, and damage is equal to the creature\'s Strength –2.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -23246,7 +23246,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Elemental: No additional damage from called shots;Fearless; Immune to disease and poison.\nInvulnerability: Fire Elementals are immune to all non-magical attacks, but suffer 1d6 damage when doused in at least a gallon of water, +2 per additional gallon.\nFiery Touch: Str+d6; chance of catching fire.\nFlame Strike: Fire elementals can project a searing blast of flame using the Cone Template. Characters within the cone must beat the spirit&rsquo;s Shooting roll with Agility or suffer 2d10 damage, plus the chance of catching fire.',
+		 'en-US': 'Elemental: No additional damage from called shots;Fearless; Immune to disease and poison.\nInvulnerability: Fire Elementals are immune to all non-magical attacks, but suffer 1d6 damage when doused in at least a gallon of water, +2 per additional gallon.\nFiery Touch: Str+d6; chance of catching fire.\nFlame Strike: Fire elementals can project a searing blast of flame using the Cone Template. Characters within the cone must beat the spirit\'s Shooting roll with Agility or suffer 2d10 damage, plus the chance of catching fire.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -23287,7 +23287,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Ethereal: Ghosts are immaterial and can only be harmed by magical attacks.\nFear -2: Ghosts cause Fear checks at &ndash;2 when they let themselves be seen.',
+		 'en-US': 'Ethereal: Ghosts are immaterial and can only be harmed by magical attacks.\nFear -2: Ghosts cause Fear checks at –2 when they let themselves be seen.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -23328,7 +23328,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor +4: Scaly Hide.\nBite: Str+d8.\nBurrow (20"): Giant worms can disappear and reappear on the following action anywhere within 20".\nGargantuan: The worms are Huge and thus suffer +4 to ranged attacks against them. Their attacks count as Heavy Weapons, and they add their Size to Strength rolls.\nHardy: The creature does not suffer a wound from being Shaken twice.\nSize +10: Giant worms are usually well over 50&rsquo;long and 10&rsquo; or more in diameter.\nSlam: Giant worms attempt to rise up and crush their prey beneath their massive bodies. This is an opposed roll of the creature&rsquo;s Fighting versus the target&rsquo;s Agility. If the worm wins, the victim suffers 4d6 damage.',
+		 'en-US': 'Armor +4: Scaly Hide.\nBite: Str+d8.\nBurrow (20"): Giant worms can disappear and reappear on the following action anywhere within 20".\nGargantuan: The worms are Huge and thus suffer +4 to ranged attacks against them. Their attacks count as Heavy Weapons, and they add their Size to Strength rolls.\nHardy: The creature does not suffer a wound from being Shaken twice.\nSize +10: Giant worms are usually well over 50\'long and 10\' or more in diameter.\nSlam: Giant worms attempt to rise up and crush their prey beneath their massive bodies. This is an opposed roll of the creature\'s Fighting versus the target\'s Agility. If the worm wins, the victim suffers 4d6 damage.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -23340,7 +23340,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Massive worms tunneling beneath the earth to gobble up unsuspecting adventurers are sometimes found in lonesome flatlands. The things sense vibrations through the earth, hearing a walking person at about 200 yards. The stats below are for a monster some 50&rsquo; long.',
+		 'en-US': 'Massive worms tunneling beneath the earth to gobble up unsuspecting adventurers are sometimes found in lonesome flatlands. The things sense vibrations through the earth, hearing a walking person at about 200 yards. The stats below are for a monster some 50\' long.',
 	},
 		attributes: '{"agility":"d6","smarts":"d6 (A)","spirit":"d10","strength":"d12+10","vigor":"d12"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"},"SKILL_STEALTH":{"value":"d10"}}',
@@ -23369,7 +23369,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Infravision: Goblins halve penalties for dark lighting against living targets (round down).\nSize -1: Goblins stand 3-4&rsquo; tall.',
+		 'en-US': 'Infravision: Goblins halve penalties for dark lighting against living targets (round down).\nSize -1: Goblins stand 3-4\' tall.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -23381,7 +23381,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Goblins of myth and legend are far more sinister creatures than some games and fiction portray. In the original tales, they were terrifying creatures that stole into homes in the middle of the night to steal and eat unruly children. The statistics here work for both dark &ldquo;fairy tale&rdquo; goblins as well as those found alongside orcs in contemporary roleplaying games.',
+		 'en-US': 'Goblins of myth and legend are far more sinister creatures than some games and fiction portray. In the original tales, they were terrifying creatures that stole into homes in the middle of the night to steal and eat unruly children. The statistics here work for both dark “fairy tale” goblins as well as those found alongside orcs in contemporary roleplaying games.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6","spirit":"d6","strength":"d4","vigor":"d6"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_TAUNT":{"value":"d6"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"},"SKILL_THROWING":{"value":"d6"},"SKILL_SWIMMING":{"value":"d6"}}',
@@ -23463,7 +23463,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'War horses are large beasts trained for aggression. They are trained to fight with both hooves, either to their front or their rear. In combat, the animal attacks any round its rider doesn&rsquo;t make a trick maneuver of some kind.',
+		 'en-US': 'War horses are large beasts trained for aggression. They are trained to fight with both hooves, either to their front or their rear. In combat, the animal attacks any round its rider doesn\'t make a trick maneuver of some kind.',
 	},
 		attributes: '{"agility":"d6","smarts":"d4 (A)","spirit":"d6","strength":"d12+2","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"}}',
@@ -23504,7 +23504,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Perhaps the most diabolical creature in any fantasy land is the lich&mdash;a necromancer so consumed with the black arts that he eventually becomes undead himself.',
+		 'en-US': 'Perhaps the most diabolical creature in any fantasy land is the lich—a necromancer so consumed with the black arts that he eventually becomes undead himself.',
 	},
 		attributes: '{"agility":"d6","smarts":"d12+2","spirit":"d10","strength":"d10","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_KNOWLEDGE":{"value":"d12+2","special":{"en-US":"Occult"}},"SKILL_NOTICE":{"value":"d10"},"SKILL_SPELLCASTING":{"value":"d12"}}',
@@ -23533,7 +23533,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bite or Claw: Str+d6.\nImproved Frenzy: Lions may make two Fighting attacks each action at no penalty.\nLow Light Vision: Lions ignore penalties for Dim and Dark lighting.\nPounce: Lions often pounce on their prey to best bring their mass and claws to bear. It can leap 1d6&rdquo; to gain +4 to its attack and damage. Its Parry is reduced by &ndash;2 until its next action when performing the maneuver however.\nSize +2: Male lions can weigh over 500 pounds.',
+		 'en-US': 'Bite or Claw: Str+d6.\nImproved Frenzy: Lions may make two Fighting attacks each action at no penalty.\nLow Light Vision: Lions ignore penalties for Dim and Dark lighting.\nPounce: Lions often pounce on their prey to best bring their mass and claws to bear. It can leap 1d6” to gain +4 to its attack and damage. Its Parry is reduced by –2 until its next action when performing the maneuver however.\nSize +2: Male lions can weigh over 500 pounds.',
 	},
 	 tags: {
 		 'en-US': 'animal,',
@@ -23615,7 +23615,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Horns: Str+d4\nFleet-Footed: Minotaurs roll d10s instead of d6s when running.\nGore: Minotaurs use this maneuver to gore their opponents with their horns. If they can charge at least 6&rdquo; before attacking, they add +4 to their damage total.\nSize +2: Minotaurs stand over 7&rsquo; tall.',
+		 'en-US': 'Horns: Str+d4\nFleet-Footed: Minotaurs roll d10s instead of d6s when running.\nGore: Minotaurs use this maneuver to gore their opponents with their horns. If they can charge at least 6” before attacking, they add +4 to their damage total.\nSize +2: Minotaurs stand over 7\' tall.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -23627,7 +23627,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Minotaurs stand over 7&rsquo; tall and have massive, bull-like heads and horns. In many fantasy worlds, they are used as guardians of labyrinths. In others, they are simply another race of creatures occupying a fantastically savage setting. In all cases, they are fierce beasts eager for battle and the taste of their opponents&rsquo; flesh.',
+		 'en-US': 'Minotaurs stand over 7\' tall and have massive, bull-like heads and horns. In many fantasy worlds, they are used as guardians of labyrinths. In others, they are simply another race of creatures occupying a fantastically savage setting. In all cases, they are fierce beasts eager for battle and the taste of their opponents\' flesh.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d12+2","vigor":"d12"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d10"},"SKILL_THROWING":{"value":"d6"}}',
@@ -23697,7 +23697,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Size +3: Most ogres are over 8&rsquo; tall with pot-bellies and massive arms and legs.\nSweep: May attack all adjacent characters at &ndash;2.',
+		 'en-US': 'Size +3: Most ogres are over 8\' tall with pot-bellies and massive arms and legs.\nSweep: May attack all adjacent characters at –2.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -23709,7 +23709,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Ogres are kin to orcs and lesser giants. They are often taken in by orc clans, who respect the dumb brutes for their savagery and strength. Orcs often pit their &ldquo;pet&rdquo; ogres in savage combats against their rivals&rsquo; ogres.',
+		 'en-US': 'Ogres are kin to orcs and lesser giants. They are often taken in by orc clans, who respect the dumb brutes for their savagery and strength. Orcs often pit their “pet” ogres in savage combats against their rivals\' ogres.',
 	},
 		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d12+3","vigor":"d12"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d4"},"SKILL_THROWING":{"value":"d6"}}',
@@ -23738,7 +23738,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Infravision: Halves penalties for poor light vs. warm targets.\nSize +1: Orcs are slightly larger than humans.\nSweep: May attack all adjacent characters at &ndash;2 penalty.',
+		 'en-US': 'Infravision: Halves penalties for poor light vs. warm targets.\nSize +1: Orcs are slightly larger than humans.\nSweep: May attack all adjacent characters at –2 penalty.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -23750,7 +23750,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'The leader of small orc clans is always the most deadly brute in the bunch. Orc chieftains generally have a magical item or two in settings where such things are relatively common (most &ldquo;swords and sorcery&rdquo; worlds).',
+		 'en-US': 'The leader of small orc clans is always the most deadly brute in the bunch. Orc chieftains generally have a magical item or two in settings where such things are relatively common (most “swords and sorcery” worlds).',
 	},
 		attributes: '{"agility":"d8","smarts":"d6","spirit":"d6","strength":"d10","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d12"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"},"SKILL_THROWING":{"value":"d8"}}',
@@ -23943,7 +23943,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str.\nConstrict: Large constrictors have very little chance of entangling active man-sized prey in the real world&mdash; they must attack while their victim is sleeping, stunned, paralyzed, and so on. Constrictors in pulp and other fantastic genres might be far more deadly. These creatures bite when they succeed at a Fighting roll, and entangle when they succeed with a raise. The round they entangle and each round thereafter, they cause damage to their prey equal to Str+d6. The prey may attempt to escape on his action by getting a raise on an opposed Strength roll.',
+		 'en-US': 'Bite: Str.\nConstrict: Large constrictors have very little chance of entangling active man-sized prey in the real world— they must attack while their victim is sleeping, stunned, paralyzed, and so on. Constrictors in pulp and other fantastic genres might be far more deadly. These creatures bite when they succeed at a Fighting roll, and entangle when they succeed with a raise. The round they entangle and each round thereafter, they cause damage to their prey equal to Str+d6. The prey may attempt to escape on his action by getting a raise on an opposed Strength roll.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -23955,7 +23955,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Pythons, boa constrictors, and other snakes over 15&rsquo; long are rarely deadly to man in the real world because they aren&rsquo;t particularly aggressive toward such large prey. In games, however, such snakes might be provoked, drugged, or just plain mean.',
+		 'en-US': 'Pythons, boa constrictors, and other snakes over 15\' long are rarely deadly to man in the real world because they aren\'t particularly aggressive toward such large prey. In games, however, such snakes might be provoked, drugged, or just plain mean.',
 	},
 		attributes: '{"agility":"d4","smarts":"d4 (A)","spirit":"d8","strength":"d6","vigor":"d6"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"}}',
@@ -23984,7 +23984,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str.\nPoison: See the Poison rules on [object Object] page 89.\nQuick: Snakes are notoriously fast. They may discard Action Cards of 5 or lower and draw another. They must keep the replacement card, however.\nSize-2: Most venomous snakes are 4-6&rsquo; in length, but only a few inches thick.\nSmall: Anyone attacking a snake must subtract 2 from his attack rolls.',
+		 'en-US': 'Bite: Str.\nPoison: See the Poison rules on [object Object] page 89.\nQuick: Snakes are notoriously fast. They may discard Action Cards of 5 or lower and draw another. They must keep the replacement card, however.\nSize-2: Most venomous snakes are 4-6\' in length, but only a few inches thick.\nSmall: Anyone attacking a snake must subtract 2 from his attack rolls.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -24025,7 +24025,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str+d4.\nPoison (-4): See the Poison rules on [object Object] page 89.\nWall Walker: Can walk on vertical surfaces at Pace 8.\nWebbing: The spiders can cast webs from their thorax that are the size of Small Burst Templates. This is a Shooting roll with a range of 3/6/12. Anything in the web must cut or break their way free (Toughness 7). Webbed characters can still fight, but all physical actions are at &ndash;4.',
+		 'en-US': 'Bite: Str+d4.\nPoison (-4): See the Poison rules on [object Object] page 89.\nWall Walker: Can walk on vertical surfaces at Pace 8.\nWebbing: The spiders can cast webs from their thorax that are the size of Small Burst Templates. This is a Shooting roll with a range of 3/6/12. Anything in the web must cut or break their way free (Toughness 7). Webbed characters can still fight, but all physical actions are at –4.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -24066,7 +24066,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bite or Sting: Swarms inflict hundreds of tiny bites every round to their victims, hitting automatically and causing 2d4 damage to everyone in the template. Damage is applied to the least armored location (victims in completely sealed suits are immune).\nSplit: Some swarms are clever enough to split into two smaller swarms (Small Burst Templates) should their foes split up. The Toughness of these smaller swarms is lowered by &ndash;2 (to 5 each).\nSwarm: Parry +2; Because the swarm is composed of scores, hundreds, or thousands of creatures, cutting and piercing weapons do no real damage. Area-effect weapons work normally, and a character can stomp to inflict his damage in Strength each round. Swarms are usually foiled by jumping in water (unless they are aquatic pests, such as piranha).',
+		 'en-US': 'Bite or Sting: Swarms inflict hundreds of tiny bites every round to their victims, hitting automatically and causing 2d4 damage to everyone in the template. Damage is applied to the least armored location (victims in completely sealed suits are immune).\nSplit: Some swarms are clever enough to split into two smaller swarms (Small Burst Templates) should their foes split up. The Toughness of these smaller swarms is lowered by –2 (to 5 each).\nSwarm: Parry +2; Because the swarm is composed of scores, hundreds, or thousands of creatures, cutting and piercing weapons do no real damage. Area-effect weapons work normally, and a character can stomp to inflict his damage in Strength each round. Swarms are usually foiled by jumping in water (unless they are aquatic pests, such as piranha).',
 	},
 	 tags: {
 		 'en-US': '',
@@ -24078,7 +24078,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Sometimes the most deadly foes come in the smallest packages. The swarm described below can be of most anything&mdash; from biting ants to stinging wasps to filthy rats.',
+		 'en-US': 'Sometimes the most deadly foes come in the smallest packages. The swarm described below can be of most anything— from biting ants to stinging wasps to filthy rats.',
 	},
 		attributes: '{"agility":"d10","smarts":"d4 (A)","spirit":"d12","strength":"d8","vigor":"d10"}',
 		skills: '{"SKILL_NOTICE":{"value":"d6"}}',
@@ -24107,7 +24107,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor+1: Rubbery hide.\nClaws: Str+d4.\nImproved Sweep: May attack all adjacent foes at no penalty.\nFast Regeneration: Trollsmayattemptanaturalhealing roll every round unless their wounds were caused by fire or flame. This occurs whether the troll is a Wild Card leader or an Extra. If the latter, a downed troll actually returns to action if it heals itself (and is not Shaken&mdash;even if it was before being Incapacitated).\nSize+2: Trolls are tall, lanky creatures over 8&rsquo; tall.',
+		 'en-US': 'Armor+1: Rubbery hide.\nClaws: Str+d4.\nImproved Sweep: May attack all adjacent foes at no penalty.\nFast Regeneration: Trollsmayattemptanaturalhealing roll every round unless their wounds were caused by fire or flame. This occurs whether the troll is a Wild Card leader or an Extra. If the latter, a downed troll actually returns to action if it heals itself (and is not Shaken—even if it was before being Incapacitated).\nSize+2: Trolls are tall, lanky creatures over 8\' tall.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -24148,7 +24148,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Change Form: As an action, a vampire can change into a wolf or bat with a Smarts roll at &ndash;2. Changing back into humanoid form requires a Smarts roll.\nCharm: Vampires can use the puppet power on the opposite sex using their Smarts as their arcane skill. They can cast and maintain the power indefinitely, but may only affect one target at a time.\nChildren of the Night: Ancient vampires have the ability to summon and control wolves or rats. This requires an action and a Smarts roll at &ndash;2. If successful, 1d6 wolves or 1d6 swarms of rats (see Swarm) come from the surrounding wilds in 1d6+2 rounds.\nClaws: Str +d4.\nImproved Frenzy: Vampires may make two attacks per round without penalty.\nInvulnerability: Vampires can only be harmed by their Weaknesses. They may be Shaken by other attacks, but never wounded.\nLevel Headed: Vampires act on the best of two cards.\nMist: Greater vampires have the ability to turn into mist. This requires an action and a Smarts roll at &ndash;2.\nSire: Anyone slain by a vampire has a 50% chance of rising as a vampire themselves in 1d4 days.\nUndead: +2 Toughness; +2 to recover from being Shaken; called shots do no extra damage (except to the heart&mdash;see below). No wound penalties.\nWeakness (Sunlight): Vampires catch fire if any part of their skin is exposed to direct sunlight. After that they suffer 2d10 damage per round until they are dust. Armor does not protect.\nWeakness (Holy Symbol): A character may keep a vampire at bay by displaying a holy symbol. A vampire who wants to directly attack the victim must beat her in an opposed test of Spirit.\nWeakness (Holy Water): A vampire sprinkled with holy water is Fatigued. If immersed, he combusts as if it were direct sunlight (see above).\nWeakness (Invitation Only): Vampires cannot enter a private dwelling without being invited. They may enter public domains as they please.\nWeakness (Stake Through the Heart): A vampire hit with a called shot to the heart (&ndash;4) must make a Vigor roll versus the damage total. If successful, it takes damage normally. If it fails, it disintegrates to dust.',
+		 'en-US': 'Change Form: As an action, a vampire can change into a wolf or bat with a Smarts roll at –2. Changing back into humanoid form requires a Smarts roll.\nCharm: Vampires can use the puppet power on the opposite sex using their Smarts as their arcane skill. They can cast and maintain the power indefinitely, but may only affect one target at a time.\nChildren of the Night: Ancient vampires have the ability to summon and control wolves or rats. This requires an action and a Smarts roll at –2. If successful, 1d6 wolves or 1d6 swarms of rats (see Swarm) come from the surrounding wilds in 1d6+2 rounds.\nClaws: Str +d4.\nImproved Frenzy: Vampires may make two attacks per round without penalty.\nInvulnerability: Vampires can only be harmed by their Weaknesses. They may be Shaken by other attacks, but never wounded.\nLevel Headed: Vampires act on the best of two cards.\nMist: Greater vampires have the ability to turn into mist. This requires an action and a Smarts roll at –2.\nSire: Anyone slain by a vampire has a 50% chance of rising as a vampire themselves in 1d4 days.\nUndead: +2 Toughness; +2 to recover from being Shaken; called shots do no extra damage (except to the heart—see below). No wound penalties.\nWeakness (Sunlight): Vampires catch fire if any part of their skin is exposed to direct sunlight. After that they suffer 2d10 damage per round until they are dust. Armor does not protect.\nWeakness (Holy Symbol): A character may keep a vampire at bay by displaying a holy symbol. A vampire who wants to directly attack the victim must beat her in an opposed test of Spirit.\nWeakness (Holy Water): A vampire sprinkled with holy water is Fatigued. If immersed, he combusts as if it were direct sunlight (see above).\nWeakness (Invitation Only): Vampires cannot enter a private dwelling without being invited. They may enter public domains as they please.\nWeakness (Stake Through the Heart): A vampire hit with a called shot to the heart (–4) must make a Vigor roll versus the damage total. If successful, it takes damage normally. If it fails, it disintegrates to dust.',
 	},
 	 tags: {
 		 'en-US': 'undead,',
@@ -24160,7 +24160,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Blood-drinkers of lore are common in many fantasy games. The statistics below are for a vampire somewhat below the legendary Dracula, but far above those bloodsuckers fresh from the grave (detailed next). The abilities listed below are standard&mdash;the GM may want to add other Edges as befits the vampire&rsquo;s previous lifestyle.',
+		 'en-US': 'Blood-drinkers of lore are common in many fantasy games. The statistics below are for a vampire somewhat below the legendary Dracula, but far above those bloodsuckers fresh from the grave (detailed next). The abilities listed below are standard—the GM may want to add other Edges as befits the vampire\'s previous lifestyle.',
 	},
 		attributes: '{"agility":"d8","smarts":"d10","spirit":"d10","strength":"d12+3","vigor":"d12"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_SWIMMING":{"value":"d8"},"SKILL_THROWING":{"value":"d8"}}',
@@ -24189,7 +24189,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Claws: Str +d4.\nFrenzy: Vampires can make two attacks per round with a &ndash;2 penalty to each attack.\nLevel Headed: Vampires act on the best of two cards.\nInvulnerability: Vampires can only be harmed by their Weaknesses. They may be Shaken by other attacks, but never wounded.\nSire: Anyone slain by a vampire has a 50% chance of rising as a vampire themselves in 1d4 days.\nUndead: +2 Toughness; +2 to recover from being Shaken; called shots do no extra damage (except to the heart&mdash;see below). No wound penalties.\nWeakness (Sunlight): Vampires catch fire if any part of their skin is exposed to direct sunlight. After that they suffer 2d10 damage per round until they are dust. Armor does not protect.\nWeakness (Holy Symbol): A character may keep a vampire at bay by displaying a holy symbol. A vampire who wants to directly attack the victim must beat her in an opposed test of Spirit.\nWeakness (Holy Water): A vampire sprinkled with holy water is Fatigued. If immersed, he combusts as if it were direct sunlight (see above).\nWeakness (Invitation Only): Vampires cannot enter a private dwelling without being invited. They may enter public domains as they please.\nWeakness (Stake Through the Heart): A vampire hit with a called shot to the heart (&ndash;4) must make a Vigor roll versus the damage total. If successful, it takes damage normally. If it fails, it disintegrates to dust.',
+		 'en-US': 'Claws: Str +d4.\nFrenzy: Vampires can make two attacks per round with a –2 penalty to each attack.\nLevel Headed: Vampires act on the best of two cards.\nInvulnerability: Vampires can only be harmed by their Weaknesses. They may be Shaken by other attacks, but never wounded.\nSire: Anyone slain by a vampire has a 50% chance of rising as a vampire themselves in 1d4 days.\nUndead: +2 Toughness; +2 to recover from being Shaken; called shots do no extra damage (except to the heart—see below). No wound penalties.\nWeakness (Sunlight): Vampires catch fire if any part of their skin is exposed to direct sunlight. After that they suffer 2d10 damage per round until they are dust. Armor does not protect.\nWeakness (Holy Symbol): A character may keep a vampire at bay by displaying a holy symbol. A vampire who wants to directly attack the victim must beat her in an opposed test of Spirit.\nWeakness (Holy Water): A vampire sprinkled with holy water is Fatigued. If immersed, he combusts as if it were direct sunlight (see above).\nWeakness (Invitation Only): Vampires cannot enter a private dwelling without being invited. They may enter public domains as they please.\nWeakness (Stake Through the Heart): A vampire hit with a called shot to the heart (–4) must make a Vigor roll versus the damage total. If successful, it takes damage normally. If it fails, it disintegrates to dust.',
 	},
 	 tags: {
 		 'en-US': 'undead,',
@@ -24230,7 +24230,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Aquatic: Pace 12\nElemental: No additional damage from called shots;Fearless; Immune to disease and poison.\nInvulnerability: Water elementals are immune to all non-magical attacks except fire. A torch or lantern causes them 1d6 damage but is instantly put out if it hits.\nSeep: Water elementals can squeeze through any porous gap as if it were Difficult Ground.\nSlam: Str+d6; nonleathal damage.\nWaterspout: Water spirits can project a torrent of water using the Cone Template. Those in the area may make an Agility roll opposed by the spirit&rsquo;s Shooting to avoid it or suffer 2d8 nonlethal damage. This puts out any normal fires.',
+		 'en-US': 'Aquatic: Pace 12\nElemental: No additional damage from called shots;Fearless; Immune to disease and poison.\nInvulnerability: Water elementals are immune to all non-magical attacks except fire. A torch or lantern causes them 1d6 damage but is instantly put out if it hits.\nSeep: Water elementals can squeeze through any porous gap as if it were Difficult Ground.\nSlam: Str+d6; nonleathal damage.\nWaterspout: Water spirits can project a torrent of water using the Cone Template. Those in the area may make an Agility roll opposed by the spirit\'s Shooting to avoid it or suffer 2d8 nonlethal damage. This puts out any normal fires.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -24271,7 +24271,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Claws: Str +d8.\nInfection: Anyone slain by a werewolf has a 50% chance of rising as a werewolf themselves. The character involuntarily transforms every full moon. He gains control of his lycanthropy only after 1d6 years as a werewolf.\nInvulnerability: Werewolves can only be Shaken by weapons that are not silver&mdash;not wounded.\nInfravision: Werewolves can see heat and halve penalties for bad lighting when attacking living targets.\nWeakness: Werewolves suffer normal damage from silver weapons.',
+		 'en-US': 'Claws: Str +d8.\nInfection: Anyone slain by a werewolf has a 50% chance of rising as a werewolf themselves. The character involuntarily transforms every full moon. He gains control of his lycanthropy only after 1d6 years as a werewolf.\nInvulnerability: Werewolves can only be Shaken by weapons that are not silver—not wounded.\nInfravision: Werewolves can see heat and halve penalties for bad lighting when attacking living targets.\nWeakness: Werewolves suffer normal damage from silver weapons.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -24312,7 +24312,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Claws: Str.\nFearless: Zombies are immune to Fear and Intimidation.\nUndead: +2 Toughness; +2 to recover from being Shaken; called shots do no extra damage (except to the head).\nWeakness (Head):: Shots to a zombie&rsquo;s head are +2 damage.',
+		 'en-US': 'Claws: Str.\nFearless: Zombies are immune to Fear and Intimidation.\nUndead: +2 Toughness; +2 to recover from being Shaken; called shots do no extra damage (except to the head).\nWeakness (Head):: Shots to a zombie\'s head are +2 damage.',
 	},
 	 tags: {
 		 'en-US': 'undead,',
@@ -24383,7 +24383,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Elemental: No additional damage from called shots;Fearless; Immune to disease and poison.\nEthereal: Air Elementals can maneuver through any non-solid surface. They can seep through the cracks in doors, bubble through water, and rush through sails.\nFlight: Air Elementals fly at a rate of 6&rdquo; with a Climb of 3. They may not run.\nInvulnerability: Immune to all non-magical attacks except fire.\nPush: The air elemental can use an action to push a single adjacent target 1d6&rdquo; directly away with a concentrated blast of air. The victim makes a Strength roll, with each success and raise reducing the amount moved by 1&rdquo; (to a minimum of 0).\nWind Blast: Air Elementals can send directed blasts of air at foes using the Cone Template and a Shooting roll. Foes may make an opposed Agility roll to avoid the blast. The damage is 2d6 points of nonlethal damage.\nWhirlwind: As long as the air elemental does not move that turn it may attempt to pick up a foe. Make an opposed Strength check and if the air elemental wins then its foe is pulled into the swirling maelstrom of its body. While trapped, the target is at &ndash;2 on all rolls including damage, to hit and Strength rolls to free himself. The air elemental cannot move as long as it wants to keep foes trapped inside its form.',
+		 'en-US': 'Elemental: No additional damage from called shots;Fearless; Immune to disease and poison.\nEthereal: Air Elementals can maneuver through any non-solid surface. They can seep through the cracks in doors, bubble through water, and rush through sails.\nFlight: Air Elementals fly at a rate of 6” with a Climb of 3. They may not run.\nInvulnerability: Immune to all non-magical attacks except fire.\nPush: The air elemental can use an action to push a single adjacent target 1d6” directly away with a concentrated blast of air. The victim makes a Strength roll, with each success and raise reducing the amount moved by 1” (to a minimum of 0).\nWind Blast: Air Elementals can send directed blasts of air at foes using the Cone Template and a Shooting roll. Foes may make an opposed Agility roll to avoid the blast. The damage is 2d6 points of nonlethal damage.\nWhirlwind: As long as the air elemental does not move that turn it may attempt to pick up a foe. Make an opposed Strength check and if the air elemental wins then its foe is pulled into the swirling maelstrom of its body. While trapped, the target is at –2 on all rolls including damage, to hit and Strength rolls to free himself. The air elemental cannot move as long as it wants to keep foes trapped inside its form.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -24424,7 +24424,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager per 3 arachnaurs',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str+d4.\nPoison (-2): The bite of an arachnaur causes instant paralysis for those who fail their Vigor roll. It lasts for 1d6 rounds.\nSize +1: Arachnaurs measure 7\' in length.\nWebbing: Arachnaurs can cast webs from their thorax that are the size of Small Burst Templates. This is a Shooting roll with a range of 3/6/12. Anything in the web must cut or break their way free (Toughness 7). Webbed characters can still fight, but all physical actions are at &ndash;4.',
+		 'en-US': 'Bite: Str+d4.\nPoison (-2): The bite of an arachnaur causes instant paralysis for those who fail their Vigor roll. It lasts for 1d6 rounds.\nSize +1: Arachnaurs measure 7\' in length.\nWebbing: Arachnaurs can cast webs from their thorax that are the size of Small Burst Templates. This is a Shooting roll with a range of 3/6/12. Anything in the web must cut or break their way free (Toughness 7). Webbed characters can still fight, but all physical actions are at –4.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -24506,7 +24506,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager',
 	},
 	 abilities: {
-		 'en-US': 'Poison: The quickest way to kill someone is with poison. A typical poison requires a Vigor roll at &ndash;2 or take an automatic wound.',
+		 'en-US': 'Poison: The quickest way to kill someone is with poison. A typical poison requires a Vigor roll at –2 or take an automatic wound.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -24547,7 +24547,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager',
 	},
 	 abilities: {
-		 'en-US': 'Poison: Master assassins use more deadly venoms in their trade. Victims must make a Vigor roll at &ndash;2 or die in 2d6 rounds.',
+		 'en-US': 'Poison: Master assassins use more deadly venoms in their trade. Victims must make a Vigor roll at –2 or die in 2d6 rounds.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -24670,7 +24670,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str+d6.\nCurse: The first time the characters see an individual bargest, they must make a Spirit roll at &ndash;2 or suffer a curse. Those who fail lose all their bennies and cannot earn any more for the remainder of the session. If a character has no bennies left when he sees the bargest, he suffers a &ndash;2 penalty to all trait rolls for the rest of the session instead.\nGo fot the Throat: Bargests instinctively go for an opponent&rsquo;s soft spots. With a raise on its attack roll, it hits the target&rsquo;s most weakly-armored location.\nFleet-Footed: Bargests roll a d10 instead of d6 when running.\nSize +1: Bargests average 7&rsquo; in length and stand as much as 4&rsquo; high.',
+		 'en-US': 'Bite: Str+d6.\nCurse: The first time the characters see an individual bargest, they must make a Spirit roll at –2 or suffer a curse. Those who fail lose all their bennies and cannot earn any more for the remainder of the session. If a character has no bennies left when he sees the bargest, he suffers a –2 penalty to all trait rolls for the rest of the session instead.\nGo fot the Throat: Bargests instinctively go for an opponent\'s soft spots. With a raise on its attack roll, it hits the target\'s most weakly-armored location.\nFleet-Footed: Bargests roll a d10 instead of d6 when running.\nSize +1: Bargests average 7\' in length and stand as much as 4\' high.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -24711,7 +24711,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Worthwhile around lair',
 	},
 	 abilities: {
-		 'en-US': 'Death Gaze: Victims of the basilisk do not have to meet its gaze to be affected by its deadly power. As an action, the basilisk can stare at any creature it can see. Opponents must make a Vigor roll opposed by the basilisk&rsquo;s Spirit or suffer an automatic wound.\nPoison Blood: A basilisk&rsquo;s blood is highly toxic. When it receives a wound, every adjacent creature must make an Agility roll to avoid the deadly spray. Those who fail take a wound.\nSize -2: Basilisks measure only 12&rdquo; in length.\nSmall: Opponents must subtract &ndash;2 from attack rolls against the basilisk due to its small size.',
+		 'en-US': 'Death Gaze: Victims of the basilisk do not have to meet its gaze to be affected by its deadly power. As an action, the basilisk can stare at any creature it can see. Opponents must make a Vigor roll opposed by the basilisk\'s Spirit or suffer an automatic wound.\nPoison Blood: A basilisk\'s blood is highly toxic. When it receives a wound, every adjacent creature must make an Agility roll to avoid the deadly spray. Those who fail take a wound.\nSize -2: Basilisks measure only 12” in length.\nSmall: Opponents must subtract –2 from attack rolls against the basilisk due to its small size.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -24752,7 +24752,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager, in lair',
 	},
 	 abilities: {
-		 'en-US': 'Flight: Giant bees have a Flying Pace of 6" and Climb of 3".\nPoison: Any creature Shaken or wounded by a sting attack must make a Vigor roll or take a wound.\nSize -1: Giant bees are 3&rsquo; long.\nSting: Str+d4',
+		 'en-US': 'Flight: Giant bees have a Flying Pace of 6" and Climb of 3".\nPoison: Any creature Shaken or wounded by a sting attack must make a Vigor roll or take a wound.\nSize -1: Giant bees are 3\' long.\nSting: Str+d4',
 	},
 	 tags: {
 		 'en-US': '',
@@ -24793,7 +24793,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Blind: When attacking large prey (such as characters), birds of prey go for the eyes. If the bird scores a raise on its Fighting roll, it has hit the character&rsquo;s face. The character must make an Agility roll. On a failure, he suffers the One Eye Hindrance until his wounds heal. A roll of 1, regardless of the Wild Die, he suffers the Blind Hindrance instead.\nClaws: Str+d6\nFlying: Flying Pace 8".\nSize: Birds of prey measure up to 2&rsquo; in height.\nSmall: Attackers suffer a &ndash;2 penalty to attack rolls because of the beast&rsquo;s size.',
+		 'en-US': 'Blind: When attacking large prey (such as characters), birds of prey go for the eyes. If the bird scores a raise on its Fighting roll, it has hit the character\'s face. The character must make an Agility roll. On a failure, he suffers the One Eye Hindrance until his wounds heal. A roll of 1, regardless of the Wild Die, he suffers the Blind Hindrance instead.\nClaws: Str+d6\nFlying: Flying Pace 8".\nSize: Birds of prey measure up to 2\' in height.\nSmall: Attackers suffer a –2 penalty to attack rolls because of the beast\'s size.',
 	},
 	 tags: {
 		 'en-US': 'animal,',
@@ -24834,7 +24834,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Arcane Resistance: +2 Armor against damage-causing powers and +2 on trait rolls to resist opposed powers.\nArmor +3: Black plate armor and a closed helm.\nBalefire Weapon: Great sword (Str+d10) and lance (Str+d10), if mounted. Anyone struck by a weapon, whether injured or not, has a chance of catching fire.\nDemon: +2 to recover from being Shaken; Immune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nElite Soldiers: Black knights have the following Combat Edges: Combat Reflexes, Improved Block, Improved Frenzy, Improved Sweep, and Level Headed.\nSize +1: Black knights stand over 7&rsquo; tall.\nSummon Reinforcements: Once per day a black knight can summon forth 1d6 demonic soldiers per success and raise on a Spirit roll. The minions appear within 6&rdquo; of the knight.\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
+		 'en-US': 'Arcane Resistance: +2 Armor against damage-causing powers and +2 on trait rolls to resist opposed powers.\nArmor +3: Black plate armor and a closed helm.\nBalefire Weapon: Great sword (Str+d10) and lance (Str+d10), if mounted. Anyone struck by a weapon, whether injured or not, has a chance of catching fire.\nDemon: +2 to recover from being Shaken; Immune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nElite Soldiers: Black knights have the following Combat Edges: Combat Reflexes, Improved Block, Improved Frenzy, Improved Sweep, and Level Headed.\nSize +1: Black knights stand over 7\' tall.\nSummon Reinforcements: Once per day a black knight can summon forth 1d6 demonic soldiers per success and raise on a Spirit roll. The minions appear within 6” of the knight.\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
 	},
 	 tags: {
 		 'en-US': 'demon,devil,',
@@ -24875,7 +24875,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Berserk: When a boar is Shaken, it goes berserk. It gains +2 to all Fighting and Strength rolls and its Toughness, but Parry is reduced by 2.\nGore: If a boar can charge at least 6&rdquo; before attacking, it adds +4 to damage.\nTusks: Str+d4',
+		 'en-US': 'Berserk: When a boar is Shaken, it goes berserk. It gains +2 to all Fighting and Strength rolls and its Toughness, but Parry is reduced by 2.\nGore: If a boar can charge at least 6” before attacking, it adds +4 to damage.\nTusks: Str+d4',
 	},
 	 tags: {
 		 'en-US': 'animal,',
@@ -24928,7 +24928,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'All Thumbs, Mean',
 	},
 	 blurb: {
-		 'en-US': '"Cave man" is a generic term used to describe a member of a primitive, non- technological society. Some cave men actually live in caves, whereas others inhabit deserts, jungles, or swamps, living in mud or reed huts. They lack an organized society, typically being led by a chief who is advised by one or more shamans.\nCave man culture focuses on hunting and warring with rival tribes&mdash;the latter being typically for females. Some tribes fear outsiders, using force to drive them away. Others welcome limited contact, swapping furs and meat for metal tools. Some are cannibals, openly welcoming strangers, only to turn on them and eat them.\nCave men communities are often lead by a chieftain. Typically, he is the largest and strongest individual in the tribe.',
+		 'en-US': '"Cave man" is a generic term used to describe a member of a primitive, non- technological society. Some cave men actually live in caves, whereas others inhabit deserts, jungles, or swamps, living in mud or reed huts. They lack an organized society, typically being led by a chief who is advised by one or more shamans.\nCave man culture focuses on hunting and warring with rival tribes—the latter being typically for females. Some tribes fear outsiders, using force to drive them away. Others welcome limited contact, swapping furs and meat for metal tools. Some are cannibals, openly welcoming strangers, only to turn on them and eat them.\nCave men communities are often lead by a chieftain. Typically, he is the largest and strongest individual in the tribe.',
 	},
 		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d10","vigor":"d10"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d4"},"SKILL_STEALTH":{"value":"d6"},"SKILL_THROWING":{"value":"d8"}}',
@@ -24969,7 +24969,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'All Thumbs, Mean',
 	},
 	 blurb: {
-		 'en-US': '"Cave man" is a generic term used to describe a member of a primitive, non- technological society. Some cave men actually live in caves, whereas others inhabit deserts, jungles, or swamps, living in mud or reed huts. They lack an organized society, typically being led by a chief who is advised by one or more shamans.\nCave man culture focuses on hunting and warring with rival tribes&mdash;the latter being typically for females. Some tribes fear outsiders, using force to drive them away. Others welcome limited contact, swapping furs and meat for metal tools. Some are cannibals, openly welcoming strangers, only to turn on them and eat them.\nMost cave man tribes have at least one shaman in their number. He communes with the spirits and foretells the omens.',
+		 'en-US': '"Cave man" is a generic term used to describe a member of a primitive, non- technological society. Some cave men actually live in caves, whereas others inhabit deserts, jungles, or swamps, living in mud or reed huts. They lack an organized society, typically being led by a chief who is advised by one or more shamans.\nCave man culture focuses on hunting and warring with rival tribes—the latter being typically for females. Some tribes fear outsiders, using force to drive them away. Others welcome limited contact, swapping furs and meat for metal tools. Some are cannibals, openly welcoming strangers, only to turn on them and eat them.\nMost cave man tribes have at least one shaman in their number. He communes with the spirits and foretells the omens.',
 	},
 		attributes: '{"agility":"d6","smarts":"d4","spirit":"d8","strength":"d8","vigor":"d8"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d4"},"SKILL_SPELLCASTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"}}',
@@ -25010,7 +25010,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'All Thumbs, Mean',
 	},
 	 blurb: {
-		 'en-US': '"Cave man" is a generic term used to describe a member of a primitive, non- technological society. Some cave men actually live in caves, whereas others inhabit deserts, jungles, or swamps, living in mud or reed huts. They lack an organized society, typically being led by a chief who is advised by one or more shamans.\nCave man culture focuses on hunting and warring with rival tribes&mdash;the latter being typically for females. Some tribes fear outsiders, using force to drive them away. Others welcome limited contact, swapping furs and meat for metal tools. Some are cannibals, openly welcoming strangers, only to turn on them and eat them.',
+		 'en-US': '"Cave man" is a generic term used to describe a member of a primitive, non- technological society. Some cave men actually live in caves, whereas others inhabit deserts, jungles, or swamps, living in mud or reed huts. They lack an organized society, typically being led by a chief who is advised by one or more shamans.\nCave man culture focuses on hunting and warring with rival tribes—the latter being typically for females. Some tribes fear outsiders, using force to drive them away. Others welcome limited contact, swapping furs and meat for metal tools. Some are cannibals, openly welcoming strangers, only to turn on them and eat them.',
 	},
 		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d10","vigor":"d10"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d4"},"SKILL_STEALTH":{"value":"d6"},"SKILL_THROWING":{"value":"d8"}}',
@@ -25080,7 +25080,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager, in lair',
 	},
 	 abilities: {
-		 'en-US': 'Armor +3: Thick chitinous armor.\nBite: Str+d8, AP 4.\nLarge: Attackers add +2 when attacking a giant centipede due to their size.\nPoison: Victims must make a Vigor roll at &ndash;2 or suffer an automatic wound.\nSize +4: Giant centipedes grow up to 24\' long.',
+		 'en-US': 'Armor +3: Thick chitinous armor.\nBite: Str+d8, AP 4.\nLarge: Attackers add +2 when attacking a giant centipede due to their size.\nPoison: Victims must make a Vigor roll at –2 or suffer an automatic wound.\nSize +4: Giant centipedes grow up to 24\' long.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -25121,7 +25121,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Change Form: A changeling can assume the form of the last person it has killed. This requires an action and a Smarts roll at &ndash;2. Changing back to their natural form requires a Smarts roll. Changelings only assume the physical form&mdash;clothing and equipment must be taken from the corpse.\nDemon: +2 to recover from being Shaken; Immune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nFear -2: Anyone who sees a changeling in its natural form must make a Fear check at &ndash;2.\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
+		 'en-US': 'Change Form: A changeling can assume the form of the last person it has killed. This requires an action and a Smarts roll at –2. Changing back to their natural form requires a Smarts roll. Changelings only assume the physical form—clothing and equipment must be taken from the corpse.\nDemon: +2 to recover from being Shaken; Immune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nFear -2: Anyone who sees a changeling in its natural form must make a Fear check at –2.\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
 	},
 	 tags: {
 		 'en-US': 'demon,devil,',
@@ -25133,7 +25133,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'In their natural form, changelings resemble skinless humans devoid of any distinguishing features, save for their gruesome appearance. Changelings have the ability to assume the exact form of their victims, taking on their mannerisms and retaining their memories.\nRegardless of the form they assume, they keep their own attributes. Thus, a changeling who assumes the form of a human with a d10 Strength may look physically impressive but lacks the muscle power of the original. However, a changeling absorbs its victim&rsquo;s memories. It gains all its victim&rsquo;s skills at one die type lower (minimum d4) unless its own skills are higher&mdash;in which case it retains its own levels.\nChangelings are used as infiltrators and assassins.',
+		 'en-US': 'In their natural form, changelings resemble skinless humans devoid of any distinguishing features, save for their gruesome appearance. Changelings have the ability to assume the exact form of their victims, taking on their mannerisms and retaining their memories.\nRegardless of the form they assume, they keep their own attributes. Thus, a changeling who assumes the form of a human with a d10 Strength may look physically impressive but lacks the muscle power of the original. However, a changeling absorbs its victim\'s memories. It gains all its victim\'s skills at one die type lower (minimum d4) unless its own skills are higher—in which case it retains its own levels.\nChangelings are used as infiltrators and assassins.',
 	},
 		attributes: '{"agility":"d6","smarts":"d6","spirit":"d6","strength":"d6","vigor":"d6"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
@@ -25162,7 +25162,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager, in lair',
 	},
 	 abilities: {
-		 'en-US': 'Bite/Claw: Str+d6.\nFiery Breath: Chimeras breathe fire using the Cone Template. Every target within this cone may make an Agility roll at &ndash;2 to avoid the attack. Those who fail suffer 2d10 damage and must check to see if they catch fire. A chimera may not attack with its claws or bite in the same round it breathes fire.\nImproved Frenzy: If a chimera does not use its Fiery Breath Ability, it may make an additional Fighting attack with no penalty.\nSize +2: Chimera weigh over 500 pounds.\nTwo Fisted: A chimera may attack with its claws and bite in the same round with no multi-action penalty.',
+		 'en-US': 'Bite/Claw: Str+d6.\nFiery Breath: Chimeras breathe fire using the Cone Template. Every target within this cone may make an Agility roll at –2 to avoid the attack. Those who fail suffer 2d10 damage and must check to see if they catch fire. A chimera may not attack with its claws or bite in the same round it breathes fire.\nImproved Frenzy: If a chimera does not use its Fiery Breath Ability, it may make an additional Fighting attack with no penalty.\nSize +2: Chimera weigh over 500 pounds.\nTwo Fisted: A chimera may attack with its claws and bite in the same round with no multi-action penalty.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -25174,7 +25174,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'A chimera has the head of a lion, the body of a goat, and the tail of a dragon, complete with a dragon&rsquo;s head at the tip. The creature&rsquo;s leonine head can breathe fire. A few chimera can also breathe fire from their dragon-headed tail.',
+		 'en-US': 'A chimera has the head of a lion, the body of a goat, and the tail of a dragon, complete with a dragon\'s head at the tip. The creature\'s leonine head can breathe fire. A few chimera can also breathe fire from their dragon-headed tail.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d10","strength":"d12","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"}}',
@@ -25244,7 +25244,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Claws: Str+d6. The claws of a collector ignore all mundane and magical Armor.\nDemon: +2 to recover from being Shaken; Immune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nFear -2: Collectors exude an aura of terror. Anyone seeing one must make a Fear roll at &ndash;2.\nImproved Arcane Resistance: +4 Armor against damage-causing powers and +4 on trait rolls to resist opposed powers.\nSingle Minded: Collectors are not easily swayed from their goal. They receive a +2 bonus to resist Tests of Will.\nSize +1: These cowled demons stand over 7&rsquo; tall.\nSoul Drain: The uncowled stare of a collector can literally rip the soul from a living being. Fortunately, they usually reserve this fate for their quarry. To use this Ability, the collector must grapple its foe, at which point it removes its cowl and forces its prey to stare into its demonic eyes. The victim must make an opposed Spirit roll or die instantly.\nUnnatural Senses: A collector can detect arcana as if it were part of its normal vision. It also ignores all pentalties for bad lighting, including complete darkness\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
+		 'en-US': 'Claws: Str+d6. The claws of a collector ignore all mundane and magical Armor.\nDemon: +2 to recover from being Shaken; Immune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nFear -2: Collectors exude an aura of terror. Anyone seeing one must make a Fear roll at –2.\nImproved Arcane Resistance: +4 Armor against damage-causing powers and +4 on trait rolls to resist opposed powers.\nSingle Minded: Collectors are not easily swayed from their goal. They receive a +2 bonus to resist Tests of Will.\nSize +1: These cowled demons stand over 7\' tall.\nSoul Drain: The uncowled stare of a collector can literally rip the soul from a living being. Fortunately, they usually reserve this fate for their quarry. To use this Ability, the collector must grapple its foe, at which point it removes its cowl and forces its prey to stare into its demonic eyes. The victim must make an opposed Spirit roll or die instantly.\nUnnatural Senses: A collector can detect arcana as if it were part of its normal vision. It also ignores all pentalties for bad lighting, including complete darkness\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
 	},
 	 tags: {
 		 'en-US': 'demon,devil,',
@@ -25256,7 +25256,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Mortals sometimes make deals with powerful demon lords in the hope of accruing power&mdash;sometimes they try to renege on the deal. When this happens, the demon lords despatch a demon whose task it is to drain souls and return them to Hell. Collectors are sometimes used as common assassins, but they are at best halfhearted in this role, finding it beneath them.\nAlthough powerful, they are not interested in wanton destruction&mdash;all that matters to them is their quarry. Of course, any creature foolish enough to stand in its way is slaughtered without mercy.\nCollectors always wear black, heavy cowls. They reveal their face only to those they are hunting, for it is said that to gaze on one is to lose one&rsquo;s soul.\nBeneath their cowls, collectors resemble bipedal vultures with rotting flesh. Their eyes are empty hollows, in which a vortex of balefire swirls.',
+		 'en-US': 'Mortals sometimes make deals with powerful demon lords in the hope of accruing power—sometimes they try to renege on the deal. When this happens, the demon lords despatch a demon whose task it is to drain souls and return them to Hell. Collectors are sometimes used as common assassins, but they are at best halfhearted in this role, finding it beneath them.\nAlthough powerful, they are not interested in wanton destruction—all that matters to them is their quarry. Of course, any creature foolish enough to stand in its way is slaughtered without mercy.\nCollectors always wear black, heavy cowls. They reveal their face only to those they are hunting, for it is said that to gaze on one is to lose one\'s soul.\nBeneath their cowls, collectors resemble bipedal vultures with rotting flesh. Their eyes are empty hollows, in which a vortex of balefire swirls.',
 	},
 		attributes: '{"agility":"d10","smarts":"d8","spirit":"d12","strength":"d12","vigor":"d12"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d12"},"SKILL_TRACKING":{"value":"d12+2"}}',
@@ -25285,7 +25285,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Worthwhile, in lair',
 	},
 	 abilities: {
-		 'en-US': 'Clueless: Giants receive a &ndash;2 penalty to Common Knowledge rolls.\nImproved Sweep: Giants can attack all adjacent foes at no penalty.\nLarge: Attackers gain +4 to attack rolls against giants due to their size.\nSize +5: Giants are over 20\' tall.',
+		 'en-US': 'Clueless: Giants receive a –2 penalty to Common Knowledge rolls.\nImproved Sweep: Giants can attack all adjacent foes at no penalty.\nLarge: Attackers gain +4 to attack rolls against giants due to their size.\nSize +5: Giants are over 20\' tall.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -25297,7 +25297,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Giants come in several forms, but all share two common features&mdash;they are tall and they enjoy human flesh. Fortunately, they are also rather stupid.\nDepending on where they are found, these hulking brutes are known as forest giants, hill giants, mountain giants, or simply as giants. There are slight differences between the breeds, but not enough to separate them.',
+		 'en-US': 'Giants come in several forms, but all share two common features—they are tall and they enjoy human flesh. Fortunately, they are also rather stupid.\nDepending on where they are found, these hulking brutes are known as forest giants, hill giants, mountain giants, or simply as giants. There are slight differences between the breeds, but not enough to separate them.',
 	},
 		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d12+5","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_THROWING":{"value":"d8"}}',
@@ -25420,7 +25420,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Golems are magical constructs, given life through the imprisonment of a spirit within the golem&rsquo;s body. Creating one is costly and laborious, and few mages have the requisite knowledge. Despite being inhabited by a spirit, golems cannot talk.\nThe vilest golems are those crafted from the body parts of corpses. Depending on the creator, the golem may be stitched together from the parts of one species or multiple species. Some corpse golems utilize animal parts.',
+		 'en-US': 'Golems are magical constructs, given life through the imprisonment of a spirit within the golem\'s body. Creating one is costly and laborious, and few mages have the requisite knowledge. Despite being inhabited by a spirit, golems cannot talk.\nThe vilest golems are those crafted from the body parts of corpses. Depending on the creator, the golem may be stitched together from the parts of one species or multiple species. Some corpse golems utilize animal parts.',
 	},
 		attributes: '{"agility":"d6","smarts":"d4","spirit":"d10","strength":"d12","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
@@ -25449,7 +25449,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Worthwhile',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str+d4\nConstrict: A naga may choose to constrict a foe in her coils by making a Fighting attack. The round it entangles and each round thereafter it causes Str+d8 damage. The prey may attempt to escape by getting a raise on an opposed Strength roll. Given its large size, a naga may constrict one foe and bite another, suffering the standard multi- action penalty.\nHypnotic Gaze: The naga can use the puppet power using her Smarts instead of an arcane skill. She can use and maintain the power indefinitely, but may only affect one target at a time.\nMagic: Corrupt nagas practice arcane magic. They have 30 Power Points and know the following powers: armor, bolt, boost/lower trait, burrow, deflection, detect/ conceal arcana, dispel, fear, invisibility, obscure, quickness, and speak language. They retain this ability in human form.\nQuick: A naga is frighteningly quick for its size, and redraws cards of 5 or less.\nShape Change: As an action, a naga can change into female human form with a Smarts roll at &ndash;2. Changing back into naga form requires a Smarts roll.\nSize+3: A naga is 15&rsquo; long and about a foot in diameter.\nStrong Willed: A naga cannot be swayed by threats or taunts. She receives a +2 bonus to defend against Tests of Will.',
+		 'en-US': 'Bite: Str+d4\nConstrict: A naga may choose to constrict a foe in her coils by making a Fighting attack. The round it entangles and each round thereafter it causes Str+d8 damage. The prey may attempt to escape by getting a raise on an opposed Strength roll. Given its large size, a naga may constrict one foe and bite another, suffering the standard multi- action penalty.\nHypnotic Gaze: The naga can use the puppet power using her Smarts instead of an arcane skill. She can use and maintain the power indefinitely, but may only affect one target at a time.\nMagic: Corrupt nagas practice arcane magic. They have 30 Power Points and know the following powers: armor, bolt, boost/lower trait, burrow, deflection, detect/ conceal arcana, dispel, fear, invisibility, obscure, quickness, and speak language. They retain this ability in human form.\nQuick: A naga is frighteningly quick for its size, and redraws cards of 5 or less.\nShape Change: As an action, a naga can change into female human form with a Smarts roll at –2. Changing back into naga form requires a Smarts roll.\nSize+3: A naga is 15\' long and about a foot in diameter.\nStrong Willed: A naga cannot be swayed by threats or taunts. She receives a +2 bonus to defend against Tests of Will.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -25461,7 +25461,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Naga are giant snakes with the head of women. In Buddhist mythology, the naga tried to follow Buddha&rsquo;s teaching and become a monk, transforming into human form to nfiltrate the monks. Buddha discovered the ploy and told the naga it was a beast, not a human, and therefore could not be ordained. Still loyal to the Buddhist faith, the naga became a temple guardian. In a fantasy campaign, nagas serve as guardians of temples to the gods of good.\nIn a fantasy setting, there is no reason why a naga cannot follow the gods of evil. Unlike guardian naga, who are forbidden from joining the priesthood and learning magic, corrupt naga are powerful spellcasters. Some even go so far as to form their own cults, with the naga as living gods.',
+		 'en-US': 'Naga are giant snakes with the head of women. In Buddhist mythology, the naga tried to follow Buddha\'s teaching and become a monk, transforming into human form to nfiltrate the monks. Buddha discovered the ploy and told the naga it was a beast, not a human, and therefore could not be ordained. Still loyal to the Buddhist faith, the naga became a temple guardian. In a fantasy campaign, nagas serve as guardians of temples to the gods of good.\nIn a fantasy setting, there is no reason why a naga cannot follow the gods of evil. Unlike guardian naga, who are forbidden from joining the priesthood and learning magic, corrupt naga are powerful spellcasters. Some even go so far as to form their own cults, with the naga as living gods.',
 	},
 		attributes: '{"agility":"d8","smarts":"d10","spirit":"d10","strength":"d12","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d10"},"SKILL_STEALTH":{"value":"d4"},"SKILL_TAUNT":{"value":"d8"}}',
@@ -25502,7 +25502,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Various, but often some sort of physical affliction',
 	},
 	 blurb: {
-		 'en-US': 'This entry covers both true nobles and their courtier lackeys, such as seneschals and chancellors. The generic noble is suitable for every noble Rank from baron to emperor.\nDespite often being dwarves or hunchbacks (or both), jesters are more than just comical entertainment for the nobility. They have their lord&rsquo;s ear, are privy to his most secret affairs, can get away with insulting powerful guests, and conceal great wisdom in their seemingly nonsensical riddles and japes.',
+		 'en-US': 'This entry covers both true nobles and their courtier lackeys, such as seneschals and chancellors. The generic noble is suitable for every noble Rank from baron to emperor.\nDespite often being dwarves or hunchbacks (or both), jesters are more than just comical entertainment for the nobility. They have their lord\'s ear, are privy to his most secret affairs, can get away with insulting powerful guests, and conceal great wisdom in their seemingly nonsensical riddles and japes.',
 	},
 		attributes: '{"agility":"d10","smarts":"d8","spirit":"d8","strength":"d6","vigor":"d6"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d4"},"SKILL_NOTICE":{"value":"d8"},"SKILL_PERSUASION":{"value":"d6"},"SKILL_STREETWISE":{"value":"d8"},"SKILL_TAUNT":{"value":"d12"}}',
@@ -25543,7 +25543,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'This entry covers both true nobles and their courtier lackeys, such as seneschals and chancellors. The generic noble is suitable for every noble Rank from baron to emperor.\nCourtiers are more than just servants&mdash; they are advisors and often hold positions of importance within the court. Unless the characters know a noble personally, most dealings are conducted through a trusted courtier, typically a seneschal.',
+		 'en-US': 'This entry covers both true nobles and their courtier lackeys, such as seneschals and chancellors. The generic noble is suitable for every noble Rank from baron to emperor.\nCourtiers are more than just servants— they are advisors and often hold positions of importance within the court. Unless the characters know a noble personally, most dealings are conducted through a trusted courtier, typically a seneschal.',
 	},
 		attributes: '{"agility":"d6","smarts":"d6","spirit":"d6","strength":"d6","vigor":"d6"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d4"},"SKILL_NOTICE":{"value":"d8"},"SKILL_PERSUASION":{"value":"d8"},"SKILL_RIDING":{"value":"d6"},"SKILL_STREETWISE":{"value":"d8"}}',
@@ -25625,7 +25625,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'The crocotta looks like a wolf except for its jaws, which are as long as a crocodile&rsquo;s. Its jaws are powerful enough to bite through almost any material.',
+		 'en-US': 'The crocotta looks like a wolf except for its jaws, which are as long as a crocodile\'s. Its jaws are powerful enough to bite through almost any material.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d6","strength":"d8","vigor":"d6"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"}}',
@@ -25654,7 +25654,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager',
 	},
 	 abilities: {
-		 'en-US': 'Lightning Bolts: A cyclops may throw a lightning bolt as an action. Range: 5/10/20; Damage: 3d6; Small Burst Template.\nOne Eye: &ndash;2 to all trait rolls involving depth perception, such as Throwing.\nSize +2: Cyclops stand over 8&rsquo; tall.',
+		 'en-US': 'Lightning Bolts: A cyclops may throw a lightning bolt as an action. Range: 5/10/20; Damage: 3d6; Small Burst Template.\nOne Eye: –2 to all trait rolls involving depth perception, such as Throwing.\nSize +2: Cyclops stand over 8\' tall.',
 	},
 	 tags: {
 		 'en-US': 'giant,giants,',
@@ -25695,7 +25695,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Berserk: Demonic soldiers can go berserk at will.\nBite/Claws: Str+d6.\nDemon: +2 to recover from being Shaken; Immune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nSize -1: Demonic soldiers are rarely larger than 4&rsquo; tall.\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
+		 'en-US': 'Berserk: Demonic soldiers can go berserk at will.\nBite/Claws: Str+d6.\nDemon: +2 to recover from being Shaken; Immune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nSize -1: Demonic soldiers are rarely larger than 4\' tall.\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
 	},
 	 tags: {
 		 'en-US': 'demon,devil,',
@@ -25707,7 +25707,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Making up the bulk of the legions of Hell are demonic soldiers, small, feral creatures with sharp teeth and claws and only a limited capacity for reasoning. They attack with berserk fury, ripping their prey to shreds with howls of glee. Demon lords use them in &ldquo;human-wave&rdquo; tactics and rarely bother to provide them with armor or weapons.',
+		 'en-US': 'Making up the bulk of the legions of Hell are demonic soldiers, small, feral creatures with sharp teeth and claws and only a limited capacity for reasoning. They attack with berserk fury, ripping their prey to shreds with howls of glee. Demon lords use them in “human-wave” tactics and rarely bother to provide them with armor or weapons.',
 	},
 		attributes: '{"agility":"d8","smarts":"d4","spirit":"d6","strength":"d8","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"}}',
@@ -25736,7 +25736,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None.',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str+d6\nGo for the Throat: Wolves instinctively go for an opponent&rsquo;s soft spots. With a raise on its attack roll, it hits the target&rsquo;s most weakly-armored location.\nFleet-Footed: Dire wolves roll d10s instead of d6s when running.',
+		 'en-US': 'Bite: Str+d6\nGo for the Throat: Wolves instinctively go for an opponent\'s soft spots. With a raise on its attack roll, it hits the target\'s most weakly-armored location.\nFleet-Footed: Dire wolves roll d10s instead of d6s when running.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -25777,7 +25777,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager.',
 	},
 	 abilities: {
-		 'en-US': 'Acid: Str+d6\nCamouflage: When lying still, dissolvers gain +4 to Stealth rolls.\nEnvelope: If a dissolver succeeds in a Fighting roll it has enveloped part of its target. Each round the victim remains enveloped, he suffers 2d6 damage. All equipment permanently loses 1 point of Toughness (Protection for armor) per round until it reaches zero, at which point it is destroyed. Trying to escape from a grapple requires a Strength roll at &ndash;6. A dissolver may only envelope one foe at a time, regardless of its size.\nPseudopod: A dissolver can extend a single pseudopod out to 1". Damage 2d6.',
+		 'en-US': 'Acid: Str+d6\nCamouflage: When lying still, dissolvers gain +4 to Stealth rolls.\nEnvelope: If a dissolver succeeds in a Fighting roll it has enveloped part of its target. Each round the victim remains enveloped, he suffers 2d6 damage. All equipment permanently loses 1 point of Toughness (Protection for armor) per round until it reaches zero, at which point it is destroyed. Trying to escape from a grapple requires a Strength roll at –6. A dissolver may only envelope one foe at a time, regardless of its size.\nPseudopod: A dissolver can extend a single pseudopod out to 1". Damage 2d6.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -25830,7 +25830,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Dragon men are bipedal dragons, slightly taller than an average human. Scholars have long debated whether they are a natural species, a mutated dragon embryo, or the result of some ancient arcane experiment. The race consists of two castes&mdash;warriors and sorcerers.\nThey are sometimes found working with true dragons, and it seems beyond coincidence that the color of their scales usually matches that of their dragon lord. If you are using the Variant Dragon options (p113), dragon men can also have different breath weapons .',
+		 'en-US': 'Dragon men are bipedal dragons, slightly taller than an average human. Scholars have long debated whether they are a natural species, a mutated dragon embryo, or the result of some ancient arcane experiment. The race consists of two castes—warriors and sorcerers.\nThey are sometimes found working with true dragons, and it seems beyond coincidence that the color of their scales usually matches that of their dragon lord. If you are using the Variant Dragon options (p113), dragon men can also have different breath weapons .',
 	},
 		attributes: '{"agility":"d8","smarts":"d8","spirit":"d6","strength":"d8","vigor":"d8"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
@@ -25871,7 +25871,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Dragon men are bipedal dragons, slightly taller than an average human. Scholars have long debated whether they are a natural species, a mutated dragon embryo, or the result of some ancient arcane experiment. The race consists of two castes&mdash;warriors and sorcerers.\nThey are sometimes found working with true dragons, and it seems beyond coincidence that the color of their scales usually matches that of their dragon lord. If you are using the Variant Dragon options (p113), dragon men can also have different breath weapons.',
+		 'en-US': 'Dragon men are bipedal dragons, slightly taller than an average human. Scholars have long debated whether they are a natural species, a mutated dragon embryo, or the result of some ancient arcane experiment. The race consists of two castes—warriors and sorcerers.\nThey are sometimes found working with true dragons, and it seems beyond coincidence that the color of their scales usually matches that of their dragon lord. If you are using the Variant Dragon options (p113), dragon men can also have different breath weapons.',
 	},
 		attributes: '{"agility":"d8","smarts":"d10","spirit":"d10","strength":"d8","vigor":"d8"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
@@ -25900,7 +25900,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Three Treasure Troves in lair',
 	},
 	 abilities: {
-		 'en-US': 'Armor+4: Scaly hide.\nClaws/Bite: Str+d8.\nFear-2: Anyone who sees a mighty dragon must make a Fear check at &ndash;2.\nFiery Breath: Dragons breathe fire using the Cone Template. Every target within this cone may make an Agility roll at &ndash;2 to avoid the attack. Those who fail suffer 2d10 damage and must check to see if they catch fire. A dragon may not attack with its claws or bite in the round it breathes fire.\nFlight: Dragons have a Flying Pace of 24&rdquo; and Climb 0.\nHardy: The creature does not suffer a wound from being Shaken twice.\nHuge: Attackers add +4 to their Fighting or Shooting rolls when attacking a dragon due to its massive size.\nImproved Frenzy: If a dragon does not use its Fiery Breath ability, it may make two Fighting attacks with no penalty.\nLevel Headed: Act on best of two cards.\nSize +8: Dragons are massive creatures. This version is over 40&rsquo; long from nose to tail, and weighs well over 30,000 pounds.\nTail Lash: The dragon can sweep all opponents in its rear facing in a 3&rdquo; long by 6&rdquo; wide square. This is a standard Fighting attack, and damage is equal to the dragon&rsquo;s Strength &ndash;2.',
+		 'en-US': 'Armor+4: Scaly hide.\nClaws/Bite: Str+d8.\nFear-2: Anyone who sees a mighty dragon must make a Fear check at –2.\nFiery Breath: Dragons breathe fire using the Cone Template. Every target within this cone may make an Agility roll at –2 to avoid the attack. Those who fail suffer 2d10 damage and must check to see if they catch fire. A dragon may not attack with its claws or bite in the round it breathes fire.\nFlight: Dragons have a Flying Pace of 24” and Climb 0.\nHardy: The creature does not suffer a wound from being Shaken twice.\nHuge: Attackers add +4 to their Fighting or Shooting rolls when attacking a dragon due to its massive size.\nImproved Frenzy: If a dragon does not use its Fiery Breath ability, it may make two Fighting attacks with no penalty.\nLevel Headed: Act on best of two cards.\nSize +8: Dragons are massive creatures. This version is over 40\' long from nose to tail, and weighs well over 30,000 pounds.\nTail Lash: The dragon can sweep all opponents in its rear facing in a 3” long by 6” wide square. This is a standard Fighting attack, and damage is equal to the dragon\'s Strength –2.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -25941,7 +25941,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor+4: Scaly hide.\nClaws/Bite: Str+d8.\nFear: Drakes are frightening creatures to behold.\nFiery Breath: Drakes breathe fire using the Cone Template. Every target within this cone may make an Agility roll at &ndash;2 to avoid the attack. Those who fail suffer 2d10 damage and must check to see if they catch fire (see Fire). A drake may not attack with its claws or bite in the round it breathes fire.\nLarge: Attackers add +2 to their attack rolls when attacking a drake due to its large size.\nSize +5: Drakes are over 20&rsquo; long from snout to tail, and weigh in at over 3000 pounds.\nTail Lash: A drake can sweep all opponents in its rear facing in a 3&rdquo; long by 6&rdquo; wide rectangle. This is a standard Fighting attack, and damage is equal to the creature&rsquo;s Strength &ndash;2.',
+		 'en-US': 'Armor+4: Scaly hide.\nClaws/Bite: Str+d8.\nFear: Drakes are frightening creatures to behold.\nFiery Breath: Drakes breathe fire using the Cone Template. Every target within this cone may make an Agility roll at –2 to avoid the attack. Those who fail suffer 2d10 damage and must check to see if they catch fire (see Fire). A drake may not attack with its claws or bite in the round it breathes fire.\nLarge: Attackers add +2 to their attack rolls when attacking a drake due to its large size.\nSize +5: Drakes are over 20\' long from snout to tail, and weigh in at over 3000 pounds.\nTail Lash: A drake can sweep all opponents in its rear facing in a 3” long by 6” wide rectangle. This is a standard Fighting attack, and damage is equal to the creature\'s Strength –2.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -25982,7 +25982,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None.',
 	},
 	 abilities: {
-		 'en-US': 'Animate Tree: A dryad may animate her tree as a war tree (see War Tree). This costs 20 Power Points and has a fixed duration of one hour.\nAttractive: Dryads resemble attractive human females, but often have a green or brown tint to their skin.\nMagic: Dryads have 30 Power Points and know the following powers: armor (bark), barrier (wall of thorns), beast friend, deflection (tree branches get in the way), entangle, healing, shape change, and stun.\nTree Bond: Dryads share their soul with a particular tree. They must remain within 36&rdquo; of the tree or their magic does not work. If the tree dies or becomes unhealthy, so does the dryad (and vice versa).',
+		 'en-US': 'Animate Tree: A dryad may animate her tree as a war tree (see War Tree). This costs 20 Power Points and has a fixed duration of one hour.\nAttractive: Dryads resemble attractive human females, but often have a green or brown tint to their skin.\nMagic: Dryads have 30 Power Points and know the following powers: armor (bark), barrier (wall of thorns), beast friend, deflection (tree branches get in the way), entangle, healing, shape change, and stun.\nTree Bond: Dryads share their soul with a particular tree. They must remain within 36” of the tree or their magic does not work. If the tree dies or becomes unhealthy, so does the dryad (and vice versa).',
 	},
 	 tags: {
 		 'en-US': '',
@@ -26105,7 +26105,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Armor +2: Thick Hide\nHardy: War elephants do not suffer a wound from being Shaken twice.\nHeadbutt: Str+d6. Heavy Weapon. A war elephant cannot headbutt anything of Size +3 or smaller.\nHuge: Attackers have +4 to attack rolls against these beasts due to their size.\nPlatform: The wooden platform provides Light Cover to anyone riding in it and grants +2 Armor.\nSize +8: War elephants weigh over 20,000 pounds.\nTrample: As long as the air elemental does not move that turn it may attempt to pick up a foe. Make an opposed Strength check and if the air elemental wins then its foe is pulled into the swirling maelstrom of its body. While trapped, the target is at &ndash;2 on all rolls including damage, to hit and Strength rolls to free himself. The air elemental cannot move as long as it wants to keep foes trapped inside its form.\nTusks: Str+d10. The tusks of a war elephant are fitted with spiked, metal caps.',
+		 'en-US': 'Armor +2: Thick Hide\nHardy: War elephants do not suffer a wound from being Shaken twice.\nHeadbutt: Str+d6. Heavy Weapon. A war elephant cannot headbutt anything of Size +3 or smaller.\nHuge: Attackers have +4 to attack rolls against these beasts due to their size.\nPlatform: The wooden platform provides Light Cover to anyone riding in it and grants +2 Armor.\nSize +8: War elephants weigh over 20,000 pounds.\nTrample: As long as the air elemental does not move that turn it may attempt to pick up a foe. Make an opposed Strength check and if the air elemental wins then its foe is pulled into the swirling maelstrom of its body. While trapped, the target is at –2 on all rolls including damage, to hit and Strength rolls to free himself. The air elemental cannot move as long as it wants to keep foes trapped inside its form.\nTusks: Str+d10. The tusks of a war elephant are fitted with spiked, metal caps.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -26187,7 +26187,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Elemental: No additional damage from called shots;Fearless; Immune to disease and poison.\nInvulnerability: Fire Elementals are immune to all non-magical attacks, but suffer 1d6 damage when doused in at least a gallon of water, +2 per additional gallon.\nFiery Touch: Str+d6; chance of catching fire.\nFlame Strike: Fire elementals can project a searing blast of flame using the Cone Template. Characters within the cone must beat the spirit&rsquo;s Shooting roll with Agility or suffer 2d10 damage, plus the chance of catching fire.',
+		 'en-US': 'Elemental: No additional damage from called shots;Fearless; Immune to disease and poison.\nInvulnerability: Fire Elementals are immune to all non-magical attacks, but suffer 1d6 damage when doused in at least a gallon of water, +2 per additional gallon.\nFiery Touch: Str+d6; chance of catching fire.\nFlame Strike: Fire elementals can project a searing blast of flame using the Cone Template. Characters within the cone must beat the spirit\'s Shooting roll with Agility or suffer 2d10 damage, plus the chance of catching fire.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -26240,7 +26240,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Giants come in several forms, but all share two common features&mdash;they are tall and they enjoy human flesh. Fortunately, they are also rather stupid.\nFire giants prefer to dwell in hot places, such as near volcanoes or in the middle of scorching-hot deserts. Their ruddy complexion and flame-red hair makes them easy to identify.',
+		 'en-US': 'Giants come in several forms, but all share two common features—they are tall and they enjoy human flesh. Fortunately, they are also rather stupid.\nFire giants prefer to dwell in hot places, such as near volcanoes or in the middle of scorching-hot deserts. Their ruddy complexion and flame-red hair makes them easy to identify.',
 	},
 		attributes: '{"agility":"d6","smarts":"d6","spirit":"d6","strength":"d12+4","vigor":"d10"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_THROWING":{"value":"d6"}}',
@@ -26269,7 +26269,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Worthwhile, in lair',
 	},
 	 abilities: {
-		 'en-US': 'Fiery Body: Fire attacks cause no damage. Nonmagical attacks &ldquo;melt&rdquo; as they impact the salamander&rsquo;s body. The creature has 4 points of armor against such attacks and the attacker must roll a d6. On a 5&ndash;6, wooden weapons catch fire. On a 6, metal weapons melt slightly and cause 1 less die of damage until repaired by a blacksmith. Anyone who attacks a fire salamander with their bare hands and hits suffers an automatic 2d6 damage. Salamanders often grapple their foes to scorch them in this manner.\nWeakness (Water): Magical water-based attacks cause +4 damage. Nonmagical water has no additional effect.',
+		 'en-US': 'Fiery Body: Fire attacks cause no damage. Nonmagical attacks “melt” as they impact the salamander\'s body. The creature has 4 points of armor against such attacks and the attacker must roll a d6. On a 5–6, wooden weapons catch fire. On a 6, metal weapons melt slightly and cause 1 less die of damage until repaired by a blacksmith. Anyone who attacks a fire salamander with their bare hands and hits suffers an automatic 2d6 damage. Salamanders often grapple their foes to scorch them in this manner.\nWeakness (Water): Magical water-based attacks cause +4 damage. Nonmagical water has no additional effect.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -26322,7 +26322,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Giants come in several forms, but all share two common features&mdash;they are tall and they enjoy human flesh. Fortunately, they are also rather stupid.\nFrost giants live in high mountains, above the snow line, or in the frozen reaches of the world. They build vast stone forts, from which they rule over lesser races, such as orcs and goblins, as veritable gods. Their skin is pale blue, and their hair as white as snow.',
+		 'en-US': 'Giants come in several forms, but all share two common features—they are tall and they enjoy human flesh. Fortunately, they are also rather stupid.\nFrost giants live in high mountains, above the snow line, or in the frozen reaches of the world. They build vast stone forts, from which they rule over lesser races, such as orcs and goblins, as veritable gods. Their skin is pale blue, and their hair as white as snow.',
 	},
 		attributes: '{"agility":"d6","smarts":"d4","spirit":"d8","strength":"d12+3","vigor":"d10"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_THROWING":{"value":"d8"}}',
@@ -26351,7 +26351,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Armor +2: Thick hide and fur.\nIcy Breath: Frost mammoths breathe an icy blast using the Cone Template. Every target within this cone may make an Agility roll at &ndash;2 to avoid the attack. Those who fail suffer 2d8. A frost mammoth may not attack with its tusks or trample in the round it breathes fire.\nImmunity (Cold): Mammoths take no damage from cold, including magical attacks.\nLarge: Attackers have +2 to attack rolls against these beasts due to their size\nSize +5: Frost mammoths weigh over 4,000 pounds.\nTrample: Str.\nTusks: Str+d6',
+		 'en-US': 'Armor +2: Thick hide and fur.\nIcy Breath: Frost mammoths breathe an icy blast using the Cone Template. Every target within this cone may make an Agility roll at –2 to avoid the attack. Those who fail suffer 2d8. A frost mammoth may not attack with its tusks or trample in the round it breathes fire.\nImmunity (Cold): Mammoths take no damage from cold, including magical attacks.\nLarge: Attackers have +2 to attack rolls against these beasts due to their size\nSize +5: Frost mammoths weigh over 4,000 pounds.\nTrample: Str.\nTusks: Str+d6',
 	},
 	 tags: {
 		 'en-US': '',
@@ -26392,7 +26392,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None.',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str+d6\nChill Bite: The icy bite of a frost wolf can paralyze prey. Anyone Shaken or wounded must make a Vigor roll or be paralyzed for 1d6 rounds.\nFleet Footed: Frost wolves have a d10 running die.\nGo for the Throat: If a frost wolf gets a raise on its attack roll, it strikes its opponent&rsquo;s least armored location.\nImmunity (Cold): Frost wolves take no damage from cold.\nSize +1: Frost wolves stand 5&rsquo; tall and are over 7&rsquo; long.',
+		 'en-US': 'Bite: Str+d6\nChill Bite: The icy bite of a frost wolf can paralyze prey. Anyone Shaken or wounded must make a Vigor roll or be paralyzed for 1d6 rounds.\nFleet Footed: Frost wolves have a d10 running die.\nGo for the Throat: If a frost wolf gets a raise on its attack roll, it strikes its opponent\'s least armored location.\nImmunity (Cold): Frost wolves take no damage from cold.\nSize +1: Frost wolves stand 5\' tall and are over 7\' long.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -26474,7 +26474,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None.',
 	},
 	 abilities: {
-		 'en-US': 'Fearless: Stone gargoyles are immune to fear and Intimidation.\nGhost Warrior: The ghostly figure cannot be harmed or dispelled by any means. The sword, however, can be damaged as a regular character. The sword breaks when Incapacitated. Because the ghostly warrior is a figment of the sword&rsquo;s memory and not a real being, it cannot be disarmed.\nGreat Sword: Str+d10. Toughness: 12.\nImproved Block: +2 Parry',
+		 'en-US': 'Fearless: Stone gargoyles are immune to fear and Intimidation.\nGhost Warrior: The ghostly figure cannot be harmed or dispelled by any means. The sword, however, can be damaged as a regular character. The sword breaks when Incapacitated. Because the ghostly warrior is a figment of the sword\'s memory and not a real being, it cannot be disarmed.\nGreat Sword: Str+d10. Toughness: 12.\nImproved Block: +2 Parry',
 	},
 	 tags: {
 		 'en-US': '',
@@ -26486,7 +26486,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Ghost blades take the form of spectral warriors clutching a great sword. The ghostly figure is, in fact, a manifestation of the true creature&mdash;the blade.\nGhost blades are created by swords used by great heroes fallen in battle. The memories of the former wielder become burned into the blade, which then creates a ghostly figure to carry it into battle. Ghost blades seek only to kill, not caring if their victims are helpless children or mighty dragons.\nThe attributes are for the ghostly form, which cannot be harmed by any means so long as the sword is intact. Attacks against the sword are conducted as normal.',
+		 'en-US': 'Ghost blades take the form of spectral warriors clutching a great sword. The ghostly figure is, in fact, a manifestation of the true creature—the blade.\nGhost blades are created by swords used by great heroes fallen in battle. The memories of the former wielder become burned into the blade, which then creates a ghostly figure to carry it into battle. Ghost blades seek only to kill, not caring if their victims are helpless children or mighty dragons.\nThe attributes are for the ghostly form, which cannot be harmed by any means so long as the sword is intact. Attacks against the sword are conducted as normal.',
 	},
 		attributes: '{"agility":"d8","smarts":"d8 (A)","spirit":"d6","strength":"d10","vigor":"d4"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d12"}}',
@@ -26515,7 +26515,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager per 3 ghouls',
 	},
 	 abilities: {
-		 'en-US': 'Claws: Str+d4.\nInfravision: Ghouls halve penalties (round down) for bad lighting when attacking living targets.\nKeen Nose: Ghouls get +2 to Notice and Tracking rolls against living targets.\nParalysis: Victims of a ghoul&rsquo;s claw attacks must make a Vigor roll at &ndash;2 or be paralyzed for 1d6 rounds.\nUndead: +2 Toughness; +2 to recover from being Shaken; No additional damage from called shots; Immune to disease and poison.',
+		 'en-US': 'Claws: Str+d4.\nInfravision: Ghouls halve penalties (round down) for bad lighting when attacking living targets.\nKeen Nose: Ghouls get +2 to Notice and Tracking rolls against living targets.\nParalysis: Victims of a ghoul\'s claw attacks must make a Vigor roll at –2 or be paralyzed for 1d6 rounds.\nUndead: +2 Toughness; +2 to recover from being Shaken; No additional damage from called shots; Immune to disease and poison.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -26556,7 +26556,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None.',
 	},
 	 abilities: {
-		 'en-US': 'Arcane Resistance: +2 Armor against damage-causing arcane powers and +2 on trait rolls to resist opposed powers.\nArmor +3: Glass golems are depicted wearing plate armor. Despite being glass, it is magically hardened and acts as metal armor.\nCamouflage: When guarding a temple, glass golems stand motionless in stained glass windows, appearing to be part of the scene. When in this environment, detecting them requires an opposed Notice roll at &ndash;4 against their Stealth.\nConstruct: +2 to recover from being Shaken; No additional damage from called shots; Immune to poison and disease.\nFearless: Golems are immune to Fear and Intimidation.\nGlass Shield: Glass golems normally carry magically-hardened glass shields. +1 Parry; +2 Armor to ranged attacks that hit.\nGlass Sword: Str+d10. The edge is razor sharp and never dulls.\nSize +1: Glass golems average 8&rsquo; tall.\nWeakness: Glass golems take double damage from blunt weapons, such as clubs and hammers.',
+		 'en-US': 'Arcane Resistance: +2 Armor against damage-causing arcane powers and +2 on trait rolls to resist opposed powers.\nArmor +3: Glass golems are depicted wearing plate armor. Despite being glass, it is magically hardened and acts as metal armor.\nCamouflage: When guarding a temple, glass golems stand motionless in stained glass windows, appearing to be part of the scene. When in this environment, detecting them requires an opposed Notice roll at –4 against their Stealth.\nConstruct: +2 to recover from being Shaken; No additional damage from called shots; Immune to poison and disease.\nFearless: Golems are immune to Fear and Intimidation.\nGlass Shield: Glass golems normally carry magically-hardened glass shields. +1 Parry; +2 Armor to ranged attacks that hit.\nGlass Sword: Str+d10. The edge is razor sharp and never dulls.\nSize +1: Glass golems average 8\' tall.\nWeakness: Glass golems take double damage from blunt weapons, such as clubs and hammers.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -26568,7 +26568,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Golems are magical constructs, given life through the imprisonment of a spirit within the golem&rsquo;s body. Creating one is costly and laborious, and few mages have the requisite knowledge. Despite being inhabited by a spirit, golems cannot talk.\nThese unusual constructs are crafted to resemble a stained glass warrior and are most often used as guardians in temples. Unlike other golems, they are almost two- dimensional, being no thicker than a pane of glass.',
+		 'en-US': 'Golems are magical constructs, given life through the imprisonment of a spirit within the golem\'s body. Creating one is costly and laborious, and few mages have the requisite knowledge. Despite being inhabited by a spirit, golems cannot talk.\nThese unusual constructs are crafted to resemble a stained glass warrior and are most often used as guardians in temples. Unlike other golems, they are almost two- dimensional, being no thicker than a pane of glass.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d12","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
@@ -26638,7 +26638,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager',
 	},
 	 abilities: {
-		 'en-US': 'Infravision: Goblins halve penalties for dark lighting against living targets (round down)\nSize -1: Goblins stand 3-4&rsquo; tall.\nSpells: Shamans have 15 Power Points, and typically know bolt, fear, obscure, and smite.',
+		 'en-US': 'Infravision: Goblins halve penalties for dark lighting against living targets (round down)\nSize -1: Goblins stand 3-4\' tall.\nSpells: Shamans have 15 Power Points, and typically know bolt, fear, obscure, and smite.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -26650,7 +26650,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Goblins of myth and legend are far more sinister creatures than some games and fiction portray. In the original tales, they were terrifying creatures that stole into homes in the middle of the night to steal and eat unruly children. The statistics here work for both dark &ldquo;fairy tale&rdquo; goblins as well as those found alongside orcs in contemporary roleplaying games.\nGoblin shamans serve as advisors to goblin lords. Their arcane talents give them a position of respect within the tribe.',
+		 'en-US': 'Goblins of myth and legend are far more sinister creatures than some games and fiction portray. In the original tales, they were terrifying creatures that stole into homes in the middle of the night to steal and eat unruly children. The statistics here work for both dark “fairy tale” goblins as well as those found alongside orcs in contemporary roleplaying games.\nGoblin shamans serve as advisors to goblin lords. Their arcane talents give them a position of respect within the tribe.',
 	},
 		attributes: '{"agility":"d8","smarts":"d8","spirit":"d6","strength":"d4","vigor":"d6"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_TAUNT":{"value":"d6"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_SPELLCASTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"},"SKILL_THROWING":{"value":"d6"}}',
@@ -26679,7 +26679,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager, per 3 goblins',
 	},
 	 abilities: {
-		 'en-US': 'Infravision: Goblins halve penalties for dark lighting against living targets (round down)\nSize -1: Goblins stand 3-4&rsquo; tall.',
+		 'en-US': 'Infravision: Goblins halve penalties for dark lighting against living targets (round down)\nSize -1: Goblins stand 3-4\' tall.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -26691,7 +26691,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Goblins of myth and legend are far more sinister creatures than some games and fiction portray. In the original tales, they were terrifying creatures that stole into homes in the middle of the night to steal and eat unruly children. The statistics here work for both dark &ldquo;fairy tale&rdquo; goblins as well as those found alongside orcs in contemporary roleplaying games.',
+		 'en-US': 'Goblins of myth and legend are far more sinister creatures than some games and fiction portray. In the original tales, they were terrifying creatures that stole into homes in the middle of the night to steal and eat unruly children. The statistics here work for both dark “fairy tale” goblins as well as those found alongside orcs in contemporary roleplaying games.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6","spirit":"d6","strength":"d4","vigor":"d6"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_TAUNT":{"value":"d6"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"},"SKILL_THROWING":{"value":"d6"}}',
@@ -26720,7 +26720,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Fleece is Worthwhile, but never any relics',
 	},
 	 abilities: {
-		 'en-US': 'Gore: Rams use the charge maneuver to gore their opponents with their long horns. If they can move at least 6&rdquo; before attacking, they add +4 to their damage total.\nHorns: Str+d6.\nMountain Beast: Golden rams ignore penalties for Difficult Terrain in mountainous regions.\nSize +2: Golden rams weight over 800 pounds.',
+		 'en-US': 'Gore: Rams use the charge maneuver to gore their opponents with their long horns. If they can move at least 6” before attacking, they add +4 to their damage total.\nHorns: Str+d6.\nMountain Beast: Golden rams ignore penalties for Difficult Terrain in mountainous regions.\nSize +2: Golden rams weight over 800 pounds.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -26761,7 +26761,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None, but they usually guard a Treasure Trove',
 	},
 	 abilities: {
-		 'en-US': 'Arcane Resistance: +2 Armor against damage-causing arcane powers and +2 on trait rolls to resist opposed powers.\nClaws: Str+d6\nFear -2: Anyone seeing a grave guardian must make a Fear roll at &ndash;2.\nPowers: Grave guardians are not true spellcasters, but can use the following powers: armor, burrow, detect/conceal arcana, environmental protection, fear, and obscure. They have 15PP.\nRegeneration: Grave Vigor roll every round to heal all damage, except that caused by cold iron weapons.\nUndead: +2 Toughness, +2 to recover from being Shaken; No additional damage from called shots; Immune to disease and poison.\nWeakness (Cold Iron): Grave guardians cannot Regenerate wounds inflicted by cold iron weapons, but may heal them through natural Healing.',
+		 'en-US': 'Arcane Resistance: +2 Armor against damage-causing arcane powers and +2 on trait rolls to resist opposed powers.\nClaws: Str+d6\nFear -2: Anyone seeing a grave guardian must make a Fear roll at –2.\nPowers: Grave guardians are not true spellcasters, but can use the following powers: armor, burrow, detect/conceal arcana, environmental protection, fear, and obscure. They have 15PP.\nRegeneration: Grave Vigor roll every round to heal all damage, except that caused by cold iron weapons.\nUndead: +2 Toughness, +2 to recover from being Shaken; No additional damage from called shots; Immune to disease and poison.\nWeakness (Cold Iron): Grave guardians cannot Regenerate wounds inflicted by cold iron weapons, but may heal them through natural Healing.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -26773,7 +26773,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Grave guardians are placed in tombs to watch over the valuables entombed with the deceased. They resemble blackened corpses, with long talons and yellow eyes. Their orders are simple&mdash;destroy any creature entering the tomb, and hunt down and retrieve any stolen items.',
+		 'en-US': 'Grave guardians are placed in tombs to watch over the valuables entombed with the deceased. They resemble blackened corpses, with long talons and yellow eyes. Their orders are simple—destroy any creature entering the tomb, and hunt down and retrieve any stolen items.',
 	},
 		attributes: '{"agility":"d6","smarts":"d6","spirit":"d10","strength":"d12","vigor":"d12"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SPELLCASTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"},"SKILL_TRACKING":{"value":"d8"}}',
@@ -26802,7 +26802,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager, in lair',
 	},
 	 abilities: {
-		 'en-US': 'Bite/Claws: Str+d6\nFlight: Griffins have a Flying Pace of 12" and a Climb of 6".\nGrapple: If a griffin gets a raise while performing a grapple, it has knocked its foe to the ground and pinned it with its paws. Bite attacks against a pinned foe are made at +2.\nHorse Terror: Griffins&rsquo; favorite prey is horse flesh. Horses seeing a griffin must make a Fear check or become Panicked.\nImproved Frenzy: Griffins may make two Fighting attacks each action at no penalty.\nSize +2: Griffins weigh over 500 pounds.\nSwoop: Griffins often swoop on their prey to pin it to the ground. It gains +4 to its attack and damage for this action . Its Parry is reduced by &ndash;2 until its next action when performing the maneuver, however.',
+		 'en-US': 'Bite/Claws: Str+d6\nFlight: Griffins have a Flying Pace of 12" and a Climb of 6".\nGrapple: If a griffin gets a raise while performing a grapple, it has knocked its foe to the ground and pinned it with its paws. Bite attacks against a pinned foe are made at +2.\nHorse Terror: Griffins\' favorite prey is horse flesh. Horses seeing a griffin must make a Fear check or become Panicked.\nImproved Frenzy: Griffins may make two Fighting attacks each action at no penalty.\nSize +2: Griffins weigh over 500 pounds.\nSwoop: Griffins often swoop on their prey to pin it to the ground. It gains +4 to its attack and damage for this action . Its Parry is reduced by –2 until its next action when performing the maneuver, however.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -26843,7 +26843,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager',
 	},
 	 abilities: {
-		 'en-US': 'Arcane Resistance: +2 Armor versus magic, and +2 to rolls made to resist magical effects.\nFear: Anyone seeing a guardian mummy must make a Fear check.\nFist: Str+d6\nMummy Rot: Anyone touched by a mummy, whether he is damaged or not, must make a Vigor roll. Failure means the character has &ldquo;mummy rot&rdquo; and suffers an immediate wound.\nShuffling Gait: Guardian mummies roll a d4 running die.\nUndead: +2 Toughness; +2 to recover from being Shaken; Immune to poison and disease; No additional damage from called\nWeakness (Fire): Mummies take +4 damage from fire.',
+		 'en-US': 'Arcane Resistance: +2 Armor versus magic, and +2 to rolls made to resist magical effects.\nFear: Anyone seeing a guardian mummy must make a Fear check.\nFist: Str+d6\nMummy Rot: Anyone touched by a mummy, whether he is damaged or not, must make a Vigor roll. Failure means the character has “mummy rot” and suffers an immediate wound.\nShuffling Gait: Guardian mummies roll a d4 running die.\nUndead: +2 Toughness; +2 to recover from being Shaken; Immune to poison and disease; No additional damage from called\nWeakness (Fire): Mummies take +4 damage from fire.',
 	},
 	 tags: {
 		 'en-US': 'guardian mummy,mummy,undead',
@@ -26884,7 +26884,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Worthwhile',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str+d4\nConstrict: A naga may choose to constrict a foe in her coils by making a Fighting attack. The round it entangles and each round thereafter it causes Str+d8 damage. The prey may attempt to escape by getting a raise on an opposed Strength roll. Given its large size, a naga may constrict one foe and bite another, suffering the standard multi- action penalty.\nHypnotic Gaze: The naga can use the puppet power using her Smarts instead of an arcane skill. She can use and maintain the power indefinitely, but may only affect one target at a time.\nQuick: A naga is frighteningly quick for its size, and redraws cards of 5 or less.\nShape Change: As an action, a naga can change into female human form with a Smarts roll at &ndash;2. Changing back into naga form requires a Smarts roll.\nSize+3: A naga is 15&rsquo; long and about a foot in diameter.\nStrong Willed: A naga cannot be swayed by threats or taunts. She receives a +2 bonus to defend against Tests of Will.',
+		 'en-US': 'Bite: Str+d4\nConstrict: A naga may choose to constrict a foe in her coils by making a Fighting attack. The round it entangles and each round thereafter it causes Str+d8 damage. The prey may attempt to escape by getting a raise on an opposed Strength roll. Given its large size, a naga may constrict one foe and bite another, suffering the standard multi- action penalty.\nHypnotic Gaze: The naga can use the puppet power using her Smarts instead of an arcane skill. She can use and maintain the power indefinitely, but may only affect one target at a time.\nQuick: A naga is frighteningly quick for its size, and redraws cards of 5 or less.\nShape Change: As an action, a naga can change into female human form with a Smarts roll at –2. Changing back into naga form requires a Smarts roll.\nSize+3: A naga is 15\' long and about a foot in diameter.\nStrong Willed: A naga cannot be swayed by threats or taunts. She receives a +2 bonus to defend against Tests of Will.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -26896,7 +26896,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Naga are giant snakes with the head of women. In Buddhist mythology, the naga tried to follow Buddha&rsquo;s teaching and become a monk, transforming into human form to nfiltrate the monks. Buddha discovered the ploy and told the naga it was a beast, not a human, and therefore could not be ordained. Still loyal to the Buddhist faith, the naga became a temple guardian. In a fantasy campaign, nagas serve as guardians of temples to the gods of good.',
+		 'en-US': 'Naga are giant snakes with the head of women. In Buddhist mythology, the naga tried to follow Buddha\'s teaching and become a monk, transforming into human form to nfiltrate the monks. Buddha discovered the ploy and told the naga it was a beast, not a human, and therefore could not be ordained. Still loyal to the Buddhist faith, the naga became a temple guardian. In a fantasy campaign, nagas serve as guardians of temples to the gods of good.',
 	},
 		attributes: '{"agility":"d8","smarts":"d10","spirit":"d10","strength":"d12","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d10"},"SKILL_PERSUASION":{"value":"d10"},"SKILL_STEALTH":{"value":"d4"},"SKILL_TAUNT":{"value":"d8"}}',
@@ -27007,7 +27007,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager, in lair',
 	},
 	 abilities: {
-		 'en-US': 'Claws: Str+d4\nFlight: Harpies have a Flying Pace of 8" and a Climb of 4"\nPoison -2: Harpies live in unsanitary habitats, and their claws are caked in filth. Any victim wounded or Shaken by a claw attack must make a Vigor roll or the wound becomes infected. Each day, the victim must make a Vigor roll or gain a level of Fatigue. A successful Healing roll, also at &ndash;2, cleans out the infection. Fatigue levels are recovered at the rate of one per day once the infection is stopped.',
+		 'en-US': 'Claws: Str+d4\nFlight: Harpies have a Flying Pace of 8" and a Climb of 4"\nPoison -2: Harpies live in unsanitary habitats, and their claws are caked in filth. Any victim wounded or Shaken by a claw attack must make a Vigor roll or the wound becomes infected. Each day, the victim must make a Vigor roll or gain a level of Fatigue. A successful Healing roll, also at –2, cleans out the infection. Fatigue levels are recovered at the rate of one per day once the infection is stopped.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -27048,7 +27048,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None.',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str+d6\nFear: Anyone who sees a hellhound must make a Fear check.\nFleet Footed: Hellhounds have a d10 running die\nGo for the Throat: If a hellhound gets a raise on its attack roll, it strikes its opponent&rsquo;s least armored location.\nImmunity (Fire): Hellhounds take no damage from fire\nTerrible Wounds: The jagged teeth of a hellhound inflict terrible wounds, which do not heal quickly. Healing rolls, including magical and natural healing, are subject to a &ndash;2 penalty on top of any wound penalties.',
+		 'en-US': 'Bite: Str+d6\nFear: Anyone who sees a hellhound must make a Fear check.\nFleet Footed: Hellhounds have a d10 running die\nGo for the Throat: If a hellhound gets a raise on its attack roll, it strikes its opponent\'s least armored location.\nImmunity (Fire): Hellhounds take no damage from fire\nTerrible Wounds: The jagged teeth of a hellhound inflict terrible wounds, which do not heal quickly. Healing rolls, including magical and natural healing, are subject to a –2 penalty on top of any wound penalties.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -27060,7 +27060,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Hellhounds are monstrous dogs, often with black skin which steams from the heat of the beast&rsquo;s demonic blood. Their eyes burn with demonic fire and their teeth are oversized, protruding from their jaw at all angles. Certain demons often keep them as pets, though they may also be found in the company of necromancers and other evil wizards.',
+		 'en-US': 'Hellhounds are monstrous dogs, often with black skin which steams from the heat of the beast\'s demonic blood. Their eyes burn with demonic fire and their teeth are oversized, protruding from their jaw at all angles. Certain demons often keep them as pets, though they may also be found in the company of necromancers and other evil wizards.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d8","strength":"d10","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"},"SKILL_STEALTH":{"value":"d6"}}',
@@ -27183,7 +27183,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Code of Honor, Vow',
 	},
 	 blurb: {
-		 'en-US': 'Knights are the fantasy equivalent of tanks&mdash;heavily armored and highly mobile. They differ from regular cavalry troops in that they are usually minor nobles, often with a fortified manor as their fief. Knights may be chivalric champions out to save princesses and slay dragons or despicable curs interested only in throwing their weight around.\nReligious knights are champions of faith, acting as the military wing of a religion. Some serve good gods, defending the weak and fighting evil. Others follow dark gods, promoting their evil agendas.',
+		 'en-US': 'Knights are the fantasy equivalent of tanks—heavily armored and highly mobile. They differ from regular cavalry troops in that they are usually minor nobles, often with a fortified manor as their fief. Knights may be chivalric champions out to save princesses and slay dragons or despicable curs interested only in throwing their weight around.\nReligious knights are champions of faith, acting as the military wing of a religion. Some serve good gods, defending the weak and fighting evil. Others follow dark gods, promoting their evil agendas.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6","spirit":"d10","strength":"d10","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_HEALING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_PERSUASION":{"value":"d8"},"SKILL_RIDING":{"value":"d8"}}',
@@ -27253,7 +27253,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Worthwhile, in lair.',
 	},
 	 abilities: {
-		 'en-US': 'Armor +2: Scaly Hide.\nBite: Str+d6, Reach 1.\nFierty Breath: Some hydras breathe fire using the Cone Template. Every target within this cone may make an Agility roll at &ndash;2 to avoid the attack. Those who fail suffer 2d10 damage and must check to see if they catch fire. Individual heads may not attack with bite in the round they breathe fire.\nMultiple Heads: Hydras have between four and ten heads. Each head may make a Fighting roll in a round without incurring a multi-action penalty, though no more than four heads may attack a single target, regardless of its size. Every head has 1 wound and is severed if it is Incapacitated. Damage caused to heads does not affect the hydra, though it dies when the last head is severed.\nRegeneration: Each round after a head is severed, the hydra makes a Vigor roll. On a success, any severed heads are replaced by two new ones. Damage caused by fire prevents regeneration, as does cauterizing the wound before a new heads grow. This requires a successful Fighting roll with a torch or other flaming object.\nSize +5: Hydra are large creatures. Most weigh over 10,000 pounds.',
+		 'en-US': 'Armor +2: Scaly Hide.\nBite: Str+d6, Reach 1.\nFierty Breath: Some hydras breathe fire using the Cone Template. Every target within this cone may make an Agility roll at –2 to avoid the attack. Those who fail suffer 2d10 damage and must check to see if they catch fire. Individual heads may not attack with bite in the round they breathe fire.\nMultiple Heads: Hydras have between four and ten heads. Each head may make a Fighting roll in a round without incurring a multi-action penalty, though no more than four heads may attack a single target, regardless of its size. Every head has 1 wound and is severed if it is Incapacitated. Damage caused to heads does not affect the hydra, though it dies when the last head is severed.\nRegeneration: Each round after a head is severed, the hydra makes a Vigor roll. On a success, any severed heads are replaced by two new ones. Damage caused by fire prevents regeneration, as does cauterizing the wound before a new heads grow. This requires a successful Fighting roll with a torch or other flaming object.\nSize +5: Hydra are large creatures. Most weigh over 10,000 pounds.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -27335,7 +27335,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager, per 5 birds',
 	},
 	 abilities: {
-		 'en-US': 'Flight: Pace 6", Climb 4"\nJabber: The jabbering of these birds fills a Medium Burst Template centered on the bird. Characters within the Template must make as Spirit roll, &ndash;1 for each additional Template they are caught in, or become disoriented. Disoriented characters suffer a &ndash;2 penalty to trait rolls and Pace so long as they remain within at least one Template and for 3 rounds after they leave.\nSize -2: Jabber birds are 1&rsquo; tall.',
+		 'en-US': 'Flight: Pace 6", Climb 4"\nJabber: The jabbering of these birds fills a Medium Burst Template centered on the bird. Characters within the Template must make as Spirit roll, –1 for each additional Template they are caught in, or become disoriented. Disoriented characters suffer a –2 penalty to trait rolls and Pace so long as they remain within at least one Template and for 3 rounds after they leave.\nSize -2: Jabber birds are 1\' tall.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -27347,7 +27347,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Jabber birds are cowardly forest-dwelling scavengers. Their high-pitched jabbering, for which they are named, serves two purposes&mdash;it disorients potential prey and alerts predators that there is an easy meal waiting. Once the predators have killed the prey and taken their fill, the jabber birds feed on the remains.\nJabber birds hunt in small flocks, surrounding prey and preventing it from escaping before the nearest predator arrives.',
+		 'en-US': 'Jabber birds are cowardly forest-dwelling scavengers. Their high-pitched jabbering, for which they are named, serves two purposes—it disorients potential prey and alerts predators that there is an easy meal waiting. Once the predators have killed the prey and taken their fill, the jabber birds feed on the remains.\nJabber birds hunt in small flocks, surrounding prey and preventing it from escaping before the nearest predator arrives.',
 	},
 		attributes: '{"agility":"d10","smarts":"d6 (A)","spirit":"d6","strength":"d4","vigor":"d6"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d4"},"SKILL_NOTICE":{"value":"d6"}}',
@@ -27376,7 +27376,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None, but can often bestow wealth upon their patrons',
 	},
 	 abilities: {
-		 'en-US': 'Immunity (Fire): Jinn from fire or heat, being born of such material.\nInvisibility: Jinn can become completely invisible with a successful Smarts roll and can remain that way indefinitely.\nMagic: In addition to their other abilities, jinn have 20 Power Points and know the following powers: blast (fire trapping), bolt (fire trapping), fear, and shape change.\nServitude: A jinni Incapacitated by violent means will seek to make a bargain with its opponent. The jinni offers service for a year and a day in return for sparing its life. During the period of servitude, the jinni is gracious and obedient (though not suicidal), but once the period elapses it strives to destroy the one who forced its enslavement.\nSmoky Form: A jinni can assume a smoky form with a successful Smarts roll. While in this form, the jinni cannot be harmed by any means, but it cannot affect the world in any way. As smoke, they can fit into small containers, such as lamps.\nTeleport: Jinn can teleport anywhere in the world. A Smarts roll is required for teleporting to an unseen location as normal.\nVariable Size: Jinn can vary their size from that of a man (their base form) to over 100&rsquo; high. The base statistics assume they are human-sized. Each point of Size they gain gives them +1 Toughness and Strength. At Size +4 they become Large creatures, at Size +8 they are Huge, and at Size +12 and over they are Gargantuan. Changing Size requires a Smarts roll, with the jinni gaining or losing 1 level of Size per success and raise. The roll may be made once per round.\nWeakness (Earth): Jinn were born of fire, but man, who the gods favor over jinn, was born of clay. Attacks involving earth, whether thrown rocks or magical trappings, inflict double damage.',
+		 'en-US': 'Immunity (Fire): Jinn from fire or heat, being born of such material.\nInvisibility: Jinn can become completely invisible with a successful Smarts roll and can remain that way indefinitely.\nMagic: In addition to their other abilities, jinn have 20 Power Points and know the following powers: blast (fire trapping), bolt (fire trapping), fear, and shape change.\nServitude: A jinni Incapacitated by violent means will seek to make a bargain with its opponent. The jinni offers service for a year and a day in return for sparing its life. During the period of servitude, the jinni is gracious and obedient (though not suicidal), but once the period elapses it strives to destroy the one who forced its enslavement.\nSmoky Form: A jinni can assume a smoky form with a successful Smarts roll. While in this form, the jinni cannot be harmed by any means, but it cannot affect the world in any way. As smoke, they can fit into small containers, such as lamps.\nTeleport: Jinn can teleport anywhere in the world. A Smarts roll is required for teleporting to an unseen location as normal.\nVariable Size: Jinn can vary their size from that of a man (their base form) to over 100\' high. The base statistics assume they are human-sized. Each point of Size they gain gives them +1 Toughness and Strength. At Size +4 they become Large creatures, at Size +8 they are Huge, and at Size +12 and over they are Gargantuan. Changing Size requires a Smarts roll, with the jinni gaining or losing 1 level of Size per success and raise. The roll may be made once per round.\nWeakness (Earth): Jinn were born of fire, but man, who the gods favor over jinn, was born of clay. Attacks involving earth, whether thrown rocks or magical trappings, inflict double damage.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -27388,7 +27388,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Jinn (singular: jinni) are grouped into five categories. Marids are the most powerful, then efrit, shaitan, jinn, and finally the jann. All five are powerful, corporeal beings with the power to disappear at will. Some jinn are good, but the majority are evil&mdash;all are masters of trickery. The Westernized spelling is genie. The stats presented here are for a typical jinni.',
+		 'en-US': 'Jinn (singular: jinni) are grouped into five categories. Marids are the most powerful, then efrit, shaitan, jinn, and finally the jann. All five are powerful, corporeal beings with the power to disappear at will. Some jinn are good, but the majority are evil—all are masters of trickery. The Westernized spelling is genie. The stats presented here are for a typical jinni.',
 	},
 		attributes: '{"agility":"d8","smarts":"d8","spirit":"d8","strength":"d12","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SPELLCASTING":{"value":"d10"},"SKILL_TAUNT":{"value":"d10"}}',
@@ -27417,7 +27417,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager, per every 5 khazoks',
 	},
 	 abilities: {
-		 'en-US': 'Armor +2: Rocky shell.\nBite: Str+d6.\nCamouflage: While not moving, khazoks resemble small boulders. Characters actively searching for danger suffer &ndash;4 to their Notice rolls. Khazoks which aren&rsquo;t detected strike with surprise, getting the Drop on their unsuspecting foes.',
+		 'en-US': 'Armor +2: Rocky shell.\nBite: Str+d6.\nCamouflage: While not moving, khazoks resemble small boulders. Characters actively searching for danger suffer –4 to their Notice rolls. Khazoks which aren\'t detected strike with surprise, getting the Drop on their unsuspecting foes.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -27429,7 +27429,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Khazok is a dwarven word meaning &ldquo;rock monster.&rdquo; Khazoks are carnivorous creatures with sharp mandibles and a rocky shell and are found in mountainous terrain and deep underground. Their favorite tactic is to curl into a ball, which resembles a small boulder, then spring to attack unwary passersby.',
+		 'en-US': 'Khazok is a dwarven word meaning “rock monster.” Khazoks are carnivorous creatures with sharp mandibles and a rocky shell and are found in mountainous terrain and deep underground. Their favorite tactic is to curl into a ball, which resembles a small boulder, then spring to attack unwary passersby.',
 	},
 		attributes: '{"agility":"d6","smarts":"d6 (A)","spirit":"d6","strength":"d8","vigor":"d6"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d10"}}',
@@ -27470,7 +27470,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Code of Honor',
 	},
 	 blurb: {
-		 'en-US': 'Knights are the fantasy equivalent of tanks&mdash;heavily armored and highly mobile. They differ from regular cavalry troops in that they are usually minor nobles, often with a fortified manor as their fief. Knights may be chivalric champions out to save princesses and slay dragons or despicable curs interested only in throwing their weight around.',
+		 'en-US': 'Knights are the fantasy equivalent of tanks—heavily armored and highly mobile. They differ from regular cavalry troops in that they are usually minor nobles, often with a fortified manor as their fief. Knights may be chivalric champions out to save princesses and slay dragons or despicable curs interested only in throwing their weight around.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d8","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_KNOWLEDGE":{"value":"d6","special":{"en-US":"Battle"}},"SKILL_NOTICE":{"value":"d6"},"SKILL_RIDING":{"value":"d8"}}',
@@ -27540,7 +27540,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Arcane Resistance: +2 Armor against damage-causing powers and +2 on trait rolls to resist opposed powers.\nArmor +3: Iron Scales\nBarbed Whip: Str+d8, Reach 2. Anyone struck by the whip, whether they are injured or not, must make a Vigor roll or be Shaken by the immense pain caused by the barbs. They cannot attempt to recover for 1d6 rounds after the attack.\nDemon: +2 to recover from being Shaken; Immune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nFear: Anyone seeing a lasher must make a Fear check at &ndash;2.\nFlight: Lashers have a Flying Pace of 12" and a Climb of 6"\nInfravision: Lashers halve penalties for poor lighting against living targets.\nSize +3: Lashers stand 9&rsquo; tall and weigh over 1000 pounds.\nSweep: By whirling its whip round, a lasher can attack all opponents within 2&rdquo; at no penalty.\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
+		 'en-US': 'Arcane Resistance: +2 Armor against damage-causing powers and +2 on trait rolls to resist opposed powers.\nArmor +3: Iron Scales\nBarbed Whip: Str+d8, Reach 2. Anyone struck by the whip, whether they are injured or not, must make a Vigor roll or be Shaken by the immense pain caused by the barbs. They cannot attempt to recover for 1d6 rounds after the attack.\nDemon: +2 to recover from being Shaken; Immune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nFear: Anyone seeing a lasher must make a Fear check at –2.\nFlight: Lashers have a Flying Pace of 12" and a Climb of 6"\nInfravision: Lashers halve penalties for poor lighting against living targets.\nSize +3: Lashers stand 9\' tall and weigh over 1000 pounds.\nSweep: By whirling its whip round, a lasher can attack all opponents within 2” at no penalty.\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
 	},
 	 tags: {
 		 'en-US': 'demon,devil,',
@@ -27581,7 +27581,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Armor +3: Rocky hide.\nBurrow (6"): Lava elementals can meld into and out of the ground.\nElemental: No additional damage from called shots; Fearless; Immune to disease and poison.\nFlame Strike: Lava elementals can spit a searing blast of flame using the Cone Template. Characters within the cone must beat the elemental&rsquo;s Shooting roll with Agility or suffer 2d10 damage, plus the chance of catching fire.',
+		 'en-US': 'Armor +3: Rocky hide.\nBurrow (6"): Lava elementals can meld into and out of the ground.\nElemental: No additional damage from called shots; Fearless; Immune to disease and poison.\nFlame Strike: Lava elementals can spit a searing blast of flame using the Cone Template. Characters within the cone must beat the elemental\'s Shooting roll with Agility or suffer 2d10 damage, plus the chance of catching fire.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -27622,7 +27622,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None.',
 	},
 	 abilities: {
-		 'en-US': 'Armor +3: Magically hardened stone.\nConstruct: +2 to recover from being Shaken; No additional damage from called shots; Immune to poison and disease.\nFearless: Golems are immune to Fear and Intimidation.\nImproved Arcane Resistance: +4 Armor against damage-causing arcane powers and +4 on trait rolls to resist opposed powers.\nSize +1: Lava golems stand over 8&rsquo; high and weigh 2,000 pounds.\nSpit Lava: Lava golems can spew a glob of molten lava. Range 6/12/24, Damage: 2d10, Medium Burst Template. Targets under the Template may make an Agility roll at &ndash;2 to escape the glob. Victims have a chance of catching fire.\nSuperheated Fists: Str+d10',
+		 'en-US': 'Armor +3: Magically hardened stone.\nConstruct: +2 to recover from being Shaken; No additional damage from called shots; Immune to poison and disease.\nFearless: Golems are immune to Fear and Intimidation.\nImproved Arcane Resistance: +4 Armor against damage-causing arcane powers and +4 on trait rolls to resist opposed powers.\nSize +1: Lava golems stand over 8\' high and weigh 2,000 pounds.\nSpit Lava: Lava golems can spew a glob of molten lava. Range 6/12/24, Damage: 2d10, Medium Burst Template. Targets under the Template may make an Agility roll at –2 to escape the glob. Victims have a chance of catching fire.\nSuperheated Fists: Str+d10',
 	},
 	 tags: {
 		 'en-US': '',
@@ -27634,7 +27634,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Golems are magical constructs, given life through the imprisonment of a spirit within the golem&rsquo;s body. Creating one is costly and laborious, and few mages have the requisite knowledge. Despite being inhabited by a spirit, golems cannot talk.\nAlthough superficially similar to stone golems, lava golems have fiery ichor running through their rock bodies. Their eyes glow red and their fists are superheated.',
+		 'en-US': 'Golems are magical constructs, given life through the imprisonment of a spirit within the golem\'s body. Creating one is costly and laborious, and few mages have the requisite knowledge. Despite being inhabited by a spirit, golems cannot talk.\nAlthough superficially similar to stone golems, lava golems have fiery ichor running through their rock bodies. Their eyes glow red and their fists are superheated.',
 	},
 		attributes: '{"agility":"d6","smarts":"d6","spirit":"d6","strength":"d12","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"}}',
@@ -27675,7 +27675,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Perhaps the most diabolical creature in any fantasy land is the liche&mdash;a necromancer so consumed with the black arts that he eventually becomes undead himself.',
+		 'en-US': 'Perhaps the most diabolical creature in any fantasy land is the liche—a necromancer so consumed with the black arts that he eventually becomes undead himself.',
 	},
 		attributes: '{"agility":"d6","smarts":"d12+2","spirit":"d10","strength":"d10","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_KNOWLEDGE":{"value":"d12+2","special":{"en-US":"Occult"}},"SKILL_NOTICE":{"value":"d10"},"SKILL_SPELLCASTING":{"value":"d12"}}',
@@ -27704,7 +27704,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager per 5 Lizard men',
 	},
 	 abilities: {
-		 'en-US': 'Keen Senses: Lizard men &ldquo;taste&rdquo; the air, giving them +2 to all Notice rolls. This ever- present advantage means they are always considered &ldquo;Active&rdquo; when consulting the Stealth results table.\nNatural Swimmers: Lizard men&rsquo;s tails make them powerful swimmers, giving them +2 on all Swimming rolls and increasing their swimming Pace to equal their Swimming skill.',
+		 'en-US': 'Keen Senses: Lizard men “taste” the air, giving them +2 to all Notice rolls. This ever- present advantage means they are always considered “Active” when consulting the Stealth results table.\nNatural Swimmers: Lizard men\'s tails make them powerful swimmers, giving them +2 on all Swimming rolls and increasing their swimming Pace to equal their Swimming skill.',
 	},
 	 tags: {
 		 'en-US': 'lizard man,',
@@ -27745,7 +27745,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'One relic',
 	},
 	 abilities: {
-		 'en-US': 'Elemental: No additional damage from called shots; Fearless; Immune to disease and poison.\nImproved Arcane Resistance: +4 Armor against damage-causing powers and +4 on trait rolls to resist opposed powers.\nInvulnerability: Mage banes take no damage from non-magical attacks.\nMagic Drain: On a successful Touch Attack the mage bane drains 1d6 Power Points from a victim unless the victim succeeds in an opposed Spirit roll. Drained points are added to the mage bane&rsquo;s own pool. It cannot exceed its starting level, however.\nMagic Sense: Mage banes can detect arcana as a natural sense.\nPowers: Mage banes have 40 Power Points and know the following powers: bolt, deflection, dispel, entangle, fear, obscure, telekinesis, and teleport.',
+		 'en-US': 'Elemental: No additional damage from called shots; Fearless; Immune to disease and poison.\nImproved Arcane Resistance: +4 Armor against damage-causing powers and +4 on trait rolls to resist opposed powers.\nInvulnerability: Mage banes take no damage from non-magical attacks.\nMagic Drain: On a successful Touch Attack the mage bane drains 1d6 Power Points from a victim unless the victim succeeds in an opposed Spirit roll. Drained points are added to the mage bane\'s own pool. It cannot exceed its starting level, however.\nMagic Sense: Mage banes can detect arcana as a natural sense.\nPowers: Mage banes have 40 Power Points and know the following powers: bolt, deflection, dispel, entangle, fear, obscure, telekinesis, and teleport.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -27909,7 +27909,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Worthwhile, in lair',
 	},
 	 abilities: {
-		 'en-US': 'Armor +1: Rubbery hide\nClaws: Str+d4\nImmunity: Immune to poison and disease.\nInfection: The claws of a marsh troll are caked in filth. Any creature Shaken or wounded by a claw must make a Vigor roll. On a failure, the wound becomes infected. The victim has a cumulative &ndash;1 penalty to trait rolls until the wound is cleaned. This requires a successful Healing roll for each wound.\nInfravision: Trolls halve penalties for bad lighting when attacking living targets (round down).\nRegeneration (Fast): Trolls roll to regenerate each round. Fire stops their regeneration, as does cutting off their heads.\nSize +1: Marsh trolls are smaller than regular trolls, being only 7&rsquo; tall.\nStench: Any creature adjacent to a marsh troll must make a Vigor roll or become Shaken with nausea.',
+		 'en-US': 'Armor +1: Rubbery hide\nClaws: Str+d4\nImmunity: Immune to poison and disease.\nInfection: The claws of a marsh troll are caked in filth. Any creature Shaken or wounded by a claw must make a Vigor roll. On a failure, the wound becomes infected. The victim has a cumulative –1 penalty to trait rolls until the wound is cleaned. This requires a successful Healing roll for each wound.\nInfravision: Trolls halve penalties for bad lighting when attacking living targets (round down).\nRegeneration (Fast): Trolls roll to regenerate each round. Fire stops their regeneration, as does cutting off their heads.\nSize +1: Marsh trolls are smaller than regular trolls, being only 7\' tall.\nStench: Any creature adjacent to a marsh troll must make a Vigor roll or become Shaken with nausea.',
 	},
 	 tags: {
 		 'en-US': 'swamp troll,swamp,',
@@ -27962,7 +27962,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Various',
 	},
 	 blurb: {
-		 'en-US': 'Thieves earn a living from stealing from others. Some may be allies of the characters, other are antagonists. In a city or town, thieves often assemble into a guild. Despite being tricky customers, thieves&rsquo; guilds are often excellent sources of information&mdash;if you can find them.',
+		 'en-US': 'Thieves earn a living from stealing from others. Some may be allies of the characters, other are antagonists. In a city or town, thieves often assemble into a guild. Despite being tricky customers, thieves\' guilds are often excellent sources of information—if you can find them.',
 	},
 		attributes: '{"agility":"d12","smarts":"d8","spirit":"d8","strength":"d6","vigor":"d6"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_LOCKPICKING":{"value":"d12"},"SKILL_NOTICE":{"value":"d10"},"SKILL_STEALTH":{"value":"d12"},"SKILL_STREETWISE":{"value":"d8"},"SKILL_TAUNT":{"value":"d8"},"SKILL_THROWING":{"value":"d8"}}',
@@ -27991,7 +27991,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Armor +2: Thick Bark\nCamouflage: When a tree man isn&rsquo;t moving or attacking it looks just like a normal tree. It adds +4 to Stealth rolls.\nLashing Branches: Str+d10, Reach 6.\nGargantuan: Heavy Armor. Ranged attacks against tree men by man-size creatures are made at +4. His attacks are Heavy Weapons. Add Size to Damage when stomping.\nHuge: Characters add +4 when attacking a tree man because of its great size.\nImproved Sweep: May attack all adjacent foes.\nPowers: Tree men are lords of the forest. They have 25 Power Points and know beast friend and entangle.\nSize +11: Tree men are over 100&rsquo; tall.\nWeakness (Fire): Fire-based attacks do +2 damage and the chance of catching alight is 5&ndash;6 on a d6.',
+		 'en-US': 'Armor +2: Thick Bark\nCamouflage: When a tree man isn\'t moving or attacking it looks just like a normal tree. It adds +4 to Stealth rolls.\nLashing Branches: Str+d10, Reach 6.\nGargantuan: Heavy Armor. Ranged attacks against tree men by man-size creatures are made at +4. His attacks are Heavy Weapons. Add Size to Damage when stomping.\nHuge: Characters add +4 when attacking a tree man because of its great size.\nImproved Sweep: May attack all adjacent foes.\nPowers: Tree men are lords of the forest. They have 25 Power Points and know beast friend and entangle.\nSize +11: Tree men are over 100\' tall.\nWeakness (Fire): Fire-based attacks do +2 damage and the chance of catching alight is 5–6 on a d6.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -28032,7 +28032,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Worthwhile, in lair',
 	},
 	 abilities: {
-		 'en-US': 'Petrify: The visage of a medusa is deadly to behold. In combat, a character may avert his eyes by taking a penalty to his attack roll. The attacker may take a &ndash;1, &ndash;2, &ndash;4, or &ndash;6 penalty to his attack roll (his choice). Whether the attack is successful or not, he must then make a Spirit roll with a bonus equal to the penalty he took to his attack roll. On a failure, he catches sight of the medusa&rsquo;s face and is turned to stone&mdash; permanently. A character Surprised by a medusa may make an Agility roll at &ndash;4 to avert his gaze.\nSnake Hair: The writhing snake hair of a medusa can attack all adjacent foes with no multi-action penalty. The bite inflicts d4+2 damage, and also delivers poison. Victim must make a Vigor roll at &ndash;2. With success, the bite area swells and becomes numb. The victim becomes Exhausted until healed. With a failure, the victim becomes Incapacitated and must make a second Vigor roll or die.\nPoison Arrow: As an action, a medusa may drip venom from a snake onto an arrow. The poison is good for one shot and functions as described in Snake Hair.',
+		 'en-US': 'Petrify: The visage of a medusa is deadly to behold. In combat, a character may avert his eyes by taking a penalty to his attack roll. The attacker may take a –1, –2, –4, or –6 penalty to his attack roll (his choice). Whether the attack is successful or not, he must then make a Spirit roll with a bonus equal to the penalty he took to his attack roll. On a failure, he catches sight of the medusa\'s face and is turned to stone— permanently. A character Surprised by a medusa may make an Agility roll at –4 to avert his gaze.\nSnake Hair: The writhing snake hair of a medusa can attack all adjacent foes with no multi-action penalty. The bite inflicts d4+2 damage, and also delivers poison. Victim must make a Vigor roll at –2. With success, the bite area swells and becomes numb. The victim becomes Exhausted until healed. With a failure, the victim becomes Incapacitated and must make a second Vigor roll or die.\nPoison Arrow: As an action, a medusa may drip venom from a snake onto an arrow. The poison is good for one shot and functions as described in Snake Hair.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -28044,7 +28044,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'The legendary medusa was a unique creature&mdash;a former maiden of beauty cursed by the gods for her vanity. In fantasy settings, the creature may be unique or part of a race of the same name. Medusas are found in most terrains. They lair is usually decorated with numerous "statues."',
+		 'en-US': 'The legendary medusa was a unique creature—a former maiden of beauty cursed by the gods for her vanity. In fantasy settings, the creature may be unique or part of a race of the same name. Medusas are found in most terrains. They lair is usually decorated with numerous "statues."',
 	},
 		attributes: '{"agility":"d8","smarts":"d8","spirit":"d8","strength":"d8","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
@@ -28114,7 +28114,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Worthwhile per 5 mermaids',
 	},
 	 abilities: {
-		 'en-US': 'Aquatic: Pace 6\nClaws: Str+d6\nSiren Song: The mermaid&rsquo;s song is like a narcotic for men. When first heard, male characters of all species must make Spirit rolls. Those who fail stumble into the sea and become completely complacent, believing they&rsquo;re cavorting with the beautiful sea nymphs. In truth, the victims are drowning. Every time the victim suffers a wound or a Fatigue level from any source, he gets a Spirit roll at &ndash;2 (plus the Fatigue penalty) to realize his peril and break the spell. Those who do are quickly savaged by the watching mermaids. Aquatic races may fall victim to the mermaids as well, but since they can&rsquo;t drown, they&rsquo;ll simply be ripped to shreds.',
+		 'en-US': 'Aquatic: Pace 6\nClaws: Str+d6\nSiren Song: The mermaid\'s song is like a narcotic for men. When first heard, male characters of all species must make Spirit rolls. Those who fail stumble into the sea and become completely complacent, believing they\'re cavorting with the beautiful sea nymphs. In truth, the victims are drowning. Every time the victim suffers a wound or a Fatigue level from any source, he gets a Spirit roll at –2 (plus the Fatigue penalty) to realize his peril and break the spell. Those who do are quickly savaged by the watching mermaids. Aquatic races may fall victim to the mermaids as well, but since they can\'t drown, they\'ll simply be ripped to shreds.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -28149,13 +28149,13 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Metal Golem',
 	},
 	 gear: {
-		 'en-US': 'Great axe (Str+d10, &ndash;1 Parry, requires 2 hands)',
+		 'en-US': 'Great axe (Str+d10, –1 Parry, requires 2 hands)',
 	},
 	 treasure: {
 		 'en-US': 'None.',
 	},
 	 abilities: {
-		 'en-US': 'Armor +5: Magically hardened metal.\nConstruct: +2 to recover from being Shaken; No additional damage from called shots; Immune to poison and disease.\nFearless: Golems are immune to Fear and Intimidation.\nImproved Arcane Resistance: +4 Armor against damage-causing arcane powers and +4 on trait rolls to resist opposed powers.\nImproved Sweep: Metal golems may attack all adjacent creatures at no penalty.\nSize +2: Metal golems stand over 10&rsquo; high and weigh 6,000 pounds.',
+		 'en-US': 'Armor +5: Magically hardened metal.\nConstruct: +2 to recover from being Shaken; No additional damage from called shots; Immune to poison and disease.\nFearless: Golems are immune to Fear and Intimidation.\nImproved Arcane Resistance: +4 Armor against damage-causing arcane powers and +4 on trait rolls to resist opposed powers.\nImproved Sweep: Metal golems may attack all adjacent creatures at no penalty.\nSize +2: Metal golems stand over 10\' high and weigh 6,000 pounds.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -28167,7 +28167,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Golems are magical constructs, given life through the imprisonment of a spirit within the golem&rsquo;s body. Creating one is costly and laborious, and few mages have the requisite knowledge. Despite being inhabited by a spirit, golems cannot talk.\nTypically crafted in humanoid form from iron or bronze, metal golems are among the most powerful golems. Some creators give their iron golems long swords instead of hands, allowing them to attack more often.',
+		 'en-US': 'Golems are magical constructs, given life through the imprisonment of a spirit within the golem\'s body. Creating one is costly and laborious, and few mages have the requisite knowledge. Despite being inhabited by a spirit, golems cannot talk.\nTypically crafted in humanoid form from iron or bronze, metal golems are among the most powerful golems. Some creators give their iron golems long swords instead of hands, allowing them to attack more often.',
 	},
 		attributes: '{"agility":"d6","smarts":"d4","spirit":"d8","strength":"d12+3","vigor":"d12+1"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"}}',
@@ -28196,7 +28196,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager, scattered around base',
 	},
 	 abilities: {
-		 'en-US': 'Armor +2: Bark\nBranches: Str+d6. A Methusaleh tree may make up to four attacks each round. On a raise, the creature impales the victim. The victim must make a Vigor roll or gain a level of Fatigue (recover one level per 24 hours). Every round a connected branch stays impaled, the victim must make another Vigor roll. Removing the branch requires an opposed Strength roll to pull it free. For each Fatigue level drained, the tree heals 1 wound. The branches have Toughness 10 and one wound. Severing them does not affect the tree&rsquo;s overall health. Severed branches regenerate after 1d6 days.\nCanopy: A Methusaleh tree spreads wide for sun and prey. Branches have Reach 3.\nHuge: Attackers are +4 to attack rolls due to the tree&rsquo;s size.\nPlant: Plants are not subject to Fear and Tests of Will.\nSize +8: Methusaleh trees stands over 60&rsquo; tall.',
+		 'en-US': 'Armor +2: Bark\nBranches: Str+d6. A Methusaleh tree may make up to four attacks each round. On a raise, the creature impales the victim. The victim must make a Vigor roll or gain a level of Fatigue (recover one level per 24 hours). Every round a connected branch stays impaled, the victim must make another Vigor roll. Removing the branch requires an opposed Strength roll to pull it free. For each Fatigue level drained, the tree heals 1 wound. The branches have Toughness 10 and one wound. Severing them does not affect the tree\'s overall health. Severed branches regenerate after 1d6 days.\nCanopy: A Methusaleh tree spreads wide for sun and prey. Branches have Reach 3.\nHuge: Attackers are +4 to attack rolls due to the tree\'s size.\nPlant: Plants are not subject to Fear and Tests of Will.\nSize +8: Methusaleh trees stands over 60\' tall.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -28208,7 +28208,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Methusaleh trees look like oaks, spruces, and other mundane trees, but are always healthy specimens unbothered by nesting birds or tree-dwelling mammals. There is good reason why animals do not bother the tree&mdash;it feeds on their life-force.\nAs well as regular foliage, a Methusaleh tree has four sharpened branches which it uses to impale prey, draining and sucking out their vitality, thus rejuvenating itself.',
+		 'en-US': 'Methusaleh trees look like oaks, spruces, and other mundane trees, but are always healthy specimens unbothered by nesting birds or tree-dwelling mammals. There is good reason why animals do not bother the tree—it feeds on their life-force.\nAs well as regular foliage, a Methusaleh tree has four sharpened branches which it uses to impale prey, draining and sucking out their vitality, thus rejuvenating itself.',
 	},
 		attributes: '{"agility":"d6","smarts":"d4 (A)","spirit":"d10","strength":"d12+4","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"}}',
@@ -28278,7 +28278,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Elemental: No additional damage from called shots; Fearless; Immune to disease and poison.\nImmunity: The semisolid body of a mud elemental gives it limited resistance to attacks. Nonmagical attacks of any sort cause half-damage.\nSeep: Mud elementals can squeeze through small gaps as if it were Difficult Ground. Unlike water elementals, they cannot travel through porous substances&mdash;there must be an actual hole through the obstacle (such as a keyhole).\nSlam: Str+d6, nonlethal damage.\nSmother: If a mud elemental scores a raise on a grapple attack it has enveloped its target. Escaping requires an opposed Strength roll. Each round the victim remains smothered, he suffers a Fatigue level.',
+		 'en-US': 'Elemental: No additional damage from called shots; Fearless; Immune to disease and poison.\nImmunity: The semisolid body of a mud elemental gives it limited resistance to attacks. Nonmagical attacks of any sort cause half-damage.\nSeep: Mud elementals can squeeze through small gaps as if it were Difficult Ground. Unlike water elementals, they cannot travel through porous substances—there must be an actual hole through the obstacle (such as a keyhole).\nSlam: Str+d6, nonlethal damage.\nSmother: If a mud elemental scores a raise on a grapple attack it has enveloped its target. Escaping requires an opposed Strength roll. Each round the victim remains smothered, he suffers a Fatigue level.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -28319,7 +28319,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Rich',
 	},
 	 abilities: {
-		 'en-US': 'Arcane Background (Magic): A mummy typically has 30 Power Points and knows barrier (wall of darkness), bolt (swarm of tiny skulls), deflection (shield of swirling skulls), fear (unearthly cry), obscurement (area of darkness), and zombie (ritual preparation).\nFearless: Mummy lords are immune to Fear and Intimidation.\nFist: Str+d6\nImproved Arcane Resistance: +4 Armor versus magic, and +4 to rolls made to resist magic effects.\nMummy Rot: Anyone touched by a mummy, whether he is damaged or not, must make a Vigor roll. Failure means the character has &ldquo;mummy rot&rdquo; and suffers an immediate wound.\nShuffling Gait: Guardian mummies roll a d4 running die.\nUndead: +2 Toughness; +2 to recover from being Shaken; Immune to poison and disease; No additional damage from called\nWeakness (Fire): Mummies take +4 damage from fire.',
+		 'en-US': 'Arcane Background (Magic): A mummy typically has 30 Power Points and knows barrier (wall of darkness), bolt (swarm of tiny skulls), deflection (shield of swirling skulls), fear (unearthly cry), obscurement (area of darkness), and zombie (ritual preparation).\nFearless: Mummy lords are immune to Fear and Intimidation.\nFist: Str+d6\nImproved Arcane Resistance: +4 Armor versus magic, and +4 to rolls made to resist magic effects.\nMummy Rot: Anyone touched by a mummy, whether he is damaged or not, must make a Vigor roll. Failure means the character has “mummy rot” and suffers an immediate wound.\nShuffling Gait: Guardian mummies roll a d4 running die.\nUndead: +2 Toughness; +2 to recover from being Shaken; Immune to poison and disease; No additional damage from called\nWeakness (Fire): Mummies take +4 damage from fire.',
 	},
 	 tags: {
 		 'en-US': 'mummies,mummy,undead',
@@ -28372,7 +28372,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Naga are giant snakes with the head of women. In Buddhist mythology, the naga tried to follow Buddha&rsquo;s teaching and become a monk, transforming into human form to nfiltrate the monks. Buddha discovered the ploy and told the naga it was a beast, not a human, and therefore could not be ordained. Still loyal to the Buddhist faith, the naga became a temple guardian. In a fantasy campaign, nagas serve as guardians of temples to the gods of good.',
+		 'en-US': 'Naga are giant snakes with the head of women. In Buddhist mythology, the naga tried to follow Buddha\'s teaching and become a monk, transforming into human form to nfiltrate the monks. Buddha discovered the ploy and told the naga it was a beast, not a human, and therefore could not be ordained. Still loyal to the Buddhist faith, the naga became a temple guardian. In a fantasy campaign, nagas serve as guardians of temples to the gods of good.',
 	},
 		attributes: '{"agility":"d8","smarts":"d10","spirit":"d10","strength":"d8","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_PERSUASION":{"value":"d10"},"SKILL_STEALTH":{"value":"d6"},"SKILL_TAUNT":{"value":"d8"}}',
@@ -28401,7 +28401,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Aquatic: Naiads have a Pace of 10 underwater.\nAttractive: Naiads resemble beautiful human females.\nMagic: Naiads have 30 Power Points and know the following powers: barrier (wall of water), beast friend (aquatic only), entangle (bound by water ), healing, invisibility (assumes a watery, translucent form), shape change (aquatic only), and stun.\nPool Bond: Naiads share their soul with a particular pool or similar small body of water. They must remain within 36&rdquo; of the water or their magic does not work. If the pool is polluted, the naiad must make a Vigor roll each day or suffer a Fatigue level until the taint is cleared.',
+		 'en-US': 'Aquatic: Naiads have a Pace of 10 underwater.\nAttractive: Naiads resemble beautiful human females.\nMagic: Naiads have 30 Power Points and know the following powers: barrier (wall of water), beast friend (aquatic only), entangle (bound by water ), healing, invisibility (assumes a watery, translucent form), shape change (aquatic only), and stun.\nPool Bond: Naiads share their soul with a particular pool or similar small body of water. They must remain within 36” of the water or their magic does not work. If the pool is polluted, the naiad must make a Vigor roll each day or suffer a Fatigue level until the taint is cleared.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -28565,7 +28565,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Aquatic: Pace 6\nHuge: Characters add +4 when attacking a giant octopus due to their great size.\nInk Cloud: A giant octopus can spurt a cloud of black ink once per day. The cloud fills a sphere equal to a Large Burst Template. No sight or smell functions within this putrid stuff, even for the octopus.\nSize+6: The body of a giant octopus is as big as a sloop, while each tentacle is over 20&rsquo; long.\nTentacles: A giant octopus may make up to four attacks each round. On a raise, the creature has grappled the victim. An entangled victim may only attempt an opposed Strength roll each round to escape. Once grappled, the octopus does its Strength damage automatically by crushing with its arms and rending with its beak. A victim killed by an octopus&rsquo; tentacles is usually ripped in half.',
+		 'en-US': 'Aquatic: Pace 6\nHuge: Characters add +4 when attacking a giant octopus due to their great size.\nInk Cloud: A giant octopus can spurt a cloud of black ink once per day. The cloud fills a sphere equal to a Large Burst Template. No sight or smell functions within this putrid stuff, even for the octopus.\nSize+6: The body of a giant octopus is as big as a sloop, while each tentacle is over 20\' long.\nTentacles: A giant octopus may make up to four attacks each round. On a raise, the creature has grappled the victim. An entangled victim may only attempt an opposed Strength roll each round to escape. Once grappled, the octopus does its Strength damage automatically by crushing with its arms and rending with its beak. A victim killed by an octopus\' tentacles is usually ripped in half.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -28577,7 +28577,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'These terrors of the deep are aggressive and always hungry. Alone, they are quite cowardly and attack only what they consider easy prey. Wounded beasts typically emit an ink cloud and attempt to escape.\nCharacters often try to sever tentacles. A tentacle is severed if it takes the creature&rsquo;s Toughness in damage in one shot from an edged weapon. Attacking a tentacle that has entangled a friend is somewhat risky&mdash;a roll of 1 on the attack die means the ally is hit instead.',
+		 'en-US': 'These terrors of the deep are aggressive and always hungry. Alone, they are quite cowardly and attack only what they consider easy prey. Wounded beasts typically emit an ink cloud and attempt to escape.\nCharacters often try to sever tentacles. A tentacle is severed if it takes the creature\'s Toughness in damage in one shot from an edged weapon. Attacking a tentacle that has entangled a friend is somewhat risky—a roll of 1 on the attack die means the ally is hit instead.',
 	},
 		attributes: '{"agility":"d8","smarts":"d4(A)","spirit":"d6","strength":"d12+4","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"},"SKILL_SWIMMING":{"value":"d6"}}',
@@ -28606,7 +28606,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager',
 	},
 	 abilities: {
-		 'en-US': 'Size+3: Most ogres are over 8&rsquo; tall with pot-bellies and massive arms and legs.\nSweep: May attack all adjacent foes at &ndash;2.',
+		 'en-US': 'Size+3: Most ogres are over 8\' tall with pot-bellies and massive arms and legs.\nSweep: May attack all adjacent foes at –2.',
 	},
 	 tags: {
 		 'en-US': 'ogres',
@@ -28618,7 +28618,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Ogres are kin to orcs and lesser giants. They are often taken in by orc clans, who respect the dumb brutes for their savagery and strength. Orcs often pit their &ldquo;pet&rdquo; ogres in savage combats against their rivals&rsquo; ogres.',
+		 'en-US': 'Ogres are kin to orcs and lesser giants. They are often taken in by orc clans, who respect the dumb brutes for their savagery and strength. Orcs often pit their “pet” ogres in savage combats against their rivals\' ogres.',
 	},
 		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d12+3","vigor":"d12"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d4"},"SKILL_THROWING":{"value":"d6"}}',
@@ -28647,7 +28647,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager',
 	},
 	 abilities: {
-		 'en-US': 'Infravision: Halves penalties for poor light vs. warm targets.\nSize +1: Orcs are slightly larger than humans.\nSweep: May attack all adjacent characters at &ndash;2 penalty.',
+		 'en-US': 'Infravision: Halves penalties for poor light vs. warm targets.\nSize +1: Orcs are slightly larger than humans.\nSweep: May attack all adjacent characters at –2 penalty.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -28659,7 +28659,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Orcs are savage, green-skinned humanoids with pig-like features, including snouts and sometimes even tusks. They have foul temperaments, and rarely take prisoners.\nThe leader of small orc clans is always the most deadly brute in the bunch. Orc chieftains generally have a magical item or two in settings where such things are relatively common (most &ldquo;swords and sorcery&rdquo; worlds).',
+		 'en-US': 'Orcs are savage, green-skinned humanoids with pig-like features, including snouts and sometimes even tusks. They have foul temperaments, and rarely take prisoners.\nThe leader of small orc clans is always the most deadly brute in the bunch. Orc chieftains generally have a magical item or two in settings where such things are relatively common (most “swords and sorcery” worlds).',
 	},
 		attributes: '{"agility":"d8","smarts":"d6","spirit":"d6","strength":"d10","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d12"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"},"SKILL_THROWING":{"value":"d8"}}',
@@ -28770,7 +28770,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Flying: Pegasi have a Flying Pace of 12&rdquo; and a Climb of 6&rdquo;.\nKick: Str\nSize+2: Pegasi weigh around 800 pounds.',
+		 'en-US': 'Flying: Pegasi have a Flying Pace of 12” and a Climb of 6”.\nKick: Str\nSize+2: Pegasi weigh around 800 pounds.',
 	},
 	 tags: {
 		 'en-US': 'pegasi',
@@ -28811,7 +28811,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Flight: Phoenix have a Flying Pace of 12&rdquo; and a Climb of 6&rdquo;.\nPowers: A phoenix has 35 Power Points and knows the following powers: barrier, blast, bolt, burst, and light. All powers have a fire trapping.\nRebirth: If a phoenix is killed, it explodes into flame filling a Medium Burst Template. Creatures within the Template suffer 2d10 damage and have a chance of catching fire. During the explosion, the body of the phoenix transforms into an egg. A new phoenix hatches 2d6 days later.\nSize-1: A phoenix is the same size as a large eagle.\nTail Feathers: Every phoenix has 35 magical tail feathers, each acting as a one-shot spell. Each of the thirteen yellow feathers contain bolt (one bolt, 3d6 damage), the twelve orange feathers have burst, and the ten red feathers hold blast (3d6 damage in Medium Burst Template). The powers are cast using the phoenix&rsquo;s Spellcasting&mdash;all the user need do to activate the power is throw the feather at the target (as an action). Removed tail feathers do not grow back. Furthermore, each lost feather permanently reduces the bird&rsquo;s Power Points by one. When the last feather is removed, the bird explodes (as above) but is not reborn.',
+		 'en-US': 'Flight: Phoenix have a Flying Pace of 12” and a Climb of 6”.\nPowers: A phoenix has 35 Power Points and knows the following powers: barrier, blast, bolt, burst, and light. All powers have a fire trapping.\nRebirth: If a phoenix is killed, it explodes into flame filling a Medium Burst Template. Creatures within the Template suffer 2d10 damage and have a chance of catching fire. During the explosion, the body of the phoenix transforms into an egg. A new phoenix hatches 2d6 days later.\nSize-1: A phoenix is the same size as a large eagle.\nTail Feathers: Every phoenix has 35 magical tail feathers, each acting as a one-shot spell. Each of the thirteen yellow feathers contain bolt (one bolt, 3d6 damage), the twelve orange feathers have burst, and the ten red feathers hold blast (3d6 damage in Medium Burst Template). The powers are cast using the phoenix\'s Spellcasting—all the user need do to activate the power is throw the feather at the target (as an action). Removed tail feathers do not grow back. Furthermore, each lost feather permanently reduces the bird\'s Power Points by one. When the last feather is removed, the bird explodes (as above) but is not reborn.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -29010,13 +29010,13 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Redcap',
 	},
 	 gear: {
-		 'en-US': 'Leather armor (+1), great axe (Str+d10, &ndash;1 Parry, requires 2 hands)',
+		 'en-US': 'Leather armor (+1), great axe (Str+d10, –1 Parry, requires 2 hands)',
 	},
 	 treasure: {
 		 'en-US': 'Meager',
 	},
 	 abilities: {
-		 'en-US': 'Fear: Characters seeing a redcap must make a Fear check.\nInfravision: Redcaps halve penalties for dark lighting against living targets (round down).\nSize+2: Redcaps stand over 8&rsquo; tall.',
+		 'en-US': 'Fear: Characters seeing a redcap must make a Fear check.\nInfravision: Redcaps halve penalties for dark lighting against living targets (round down).\nSize+2: Redcaps stand over 8\' tall.',
 	},
 	 tags: {
 		 'en-US': 'goblins,goblin',
@@ -29057,7 +29057,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Rich, In Nest',
 	},
 	 abilities: {
-		 'en-US': 'Bash: Rocs have incredible lift, and can pick up small ships (those with a base Toughness of 15 or less) to drop them on the rocks. It takes the roc a full round to properly grasp a ship, which is a Fighting attack against a &ldquo;Parry&rdquo; of 2. With a raise, the roc lifts the boat in the air and ascends 6&rdquo; per round afterward. After five full rounds, it drops its prey, automatically destroying any boat it can lift. Characters suffer damage according to the height.\nFlight: Rocs have a Flying Pace of 16&rdquo;, with an Acceleration of 4&rdquo; and a Climb of 6&rdquo;.\nHuge: Characters add +4 when attacking a roc due to their great size.\nSize+8: Rocs are huge creatures with wingspans over 120&rsquo;.\nTalons: Str+d6; AP 4. These claws are large enough to damage ships with Heavy Armor and fortifications.',
+		 'en-US': 'Bash: Rocs have incredible lift, and can pick up small ships (those with a base Toughness of 15 or less) to drop them on the rocks. It takes the roc a full round to properly grasp a ship, which is a Fighting attack against a “Parry” of 2. With a raise, the roc lifts the boat in the air and ascends 6” per round afterward. After five full rounds, it drops its prey, automatically destroying any boat it can lift. Characters suffer damage according to the height.\nFlight: Rocs have a Flying Pace of 16”, with an Acceleration of 4” and a Climb of 6”.\nHuge: Characters add +4 when attacking a roc due to their great size.\nSize+8: Rocs are huge creatures with wingspans over 120\'.\nTalons: Str+d6; AP 4. These claws are large enough to damage ships with Heavy Armor and fortifications.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -29069,7 +29069,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'These massive birds are large enough to pick up small ships and whales. The great Sinbad the Sailor had a near-fatal encounter with one. Most roost in isolated aeries, searching for large prey for their feasts. Sailors and city guard have sometimes managed to fend off these beasts with ballistae, but even these weapons rarely penetrate the roc&rsquo;s lizard-like skin.',
+		 'en-US': 'These massive birds are large enough to pick up small ships and whales. The great Sinbad the Sailor had a near-fatal encounter with one. Most roost in isolated aeries, searching for large prey for their feasts. Sailors and city guard have sometimes managed to fend off these beasts with ballistae, but even these weapons rarely penetrate the roc\'s lizard-like skin.',
 	},
 		attributes: '{"agility":"d6","smarts":"d6(A)","spirit":"d6","strength":"d12+8","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"}}',
@@ -29098,7 +29098,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager, In Lair',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str+d10, AP 1.\nClaws: Str+d6.\nImproved Frenzy: A sabre-toothed tiger may make two attacks each round with no penalty.\nPounce: Sabre-tooths often pounce on their prey to best bring their mass and teeth to bear. It can leap 1d6&rdquo; to gain +4 to its attack and damage. Its Parry is reduced by &ndash;2 until its next action when performing the maneuver, however.\nSize+3: Sabre-tooths weigh over 800 pounds.',
+		 'en-US': 'Bite: Str+d10, AP 1.\nClaws: Str+d6.\nImproved Frenzy: A sabre-toothed tiger may make two attacks each round with no penalty.\nPounce: Sabre-tooths often pounce on their prey to best bring their mass and teeth to bear. It can leap 1d6” to gain +4 to its attack and damage. Its Parry is reduced by –2 until its next action when performing the maneuver, however.\nSize+3: Sabre-tooths weigh over 800 pounds.',
 	},
 	 tags: {
 		 'en-US': 'saber,sabertooth',
@@ -29139,7 +29139,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Elemental: No additional damage from called shots; Fearless; Immune to disease and poison.\nImmunity: Half-damage from all non- magical attacks.\nSand Blast: Sand elementals can send directed blasts of air at foes using the Cone Template and a Shooting roll. Foes may make an opposed Agility roll to avoid the blast. The damage is 2d8.\nSeep: Sand elementals can squeeze through small gaps as if it were Difficult Ground. Unlike water elementals, they cannot travel through porous substances&mdash;there must be an actual hole through the obstacle (such as a keyhole).\nSlam: Str+d4\nWhirlwind: As long as the elemental does not move that turn it may attempt to pick up a foe. Make an opposed Strength check. If the sand elemental wins, its foe is pulled into the swirling maelstrom of its sandy body. While trapped, the target is at &ndash;2 on all rolls (including damage, to hit, and Strength rolls to free himself), and suffers 2d6 damage per round. The elemental cannot move as long as it wants to keep foes trapped inside its form.',
+		 'en-US': 'Elemental: No additional damage from called shots; Fearless; Immune to disease and poison.\nImmunity: Half-damage from all non- magical attacks.\nSand Blast: Sand elementals can send directed blasts of air at foes using the Cone Template and a Shooting roll. Foes may make an opposed Agility roll to avoid the blast. The damage is 2d8.\nSeep: Sand elementals can squeeze through small gaps as if it were Difficult Ground. Unlike water elementals, they cannot travel through porous substances—there must be an actual hole through the obstacle (such as a keyhole).\nSlam: Str+d4\nWhirlwind: As long as the elemental does not move that turn it may attempt to pick up a foe. Make an opposed Strength check. If the sand elemental wins, its foe is pulled into the swirling maelstrom of its sandy body. While trapped, the target is at –2 on all rolls (including damage, to hit, and Strength rolls to free himself), and suffers 2d6 damage per round. The elemental cannot move as long as it wants to keep foes trapped inside its form.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -29180,7 +29180,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Worthwhile, in lair',
 	},
 	 abilities: {
-		 'en-US': 'Armor +1: Thick hide\nBurrow: Pace 4\nClaws: Str+d4\nInfravision: Trolls halve penalties for bad lighting when attacking living targets (round down).\nRegeneration (Fast): Trolls roll to regenerate each round. Fire stops their regeneration, as does cutting off their heads.\nSize +3: Sand trolls are over 8&rsquo; tall.',
+		 'en-US': 'Armor +1: Thick hide\nBurrow: Pace 4\nClaws: Str+d4\nInfravision: Trolls halve penalties for bad lighting when attacking living targets (round down).\nRegeneration (Fast): Trolls roll to regenerate each round. Fire stops their regeneration, as does cutting off their heads.\nSize +3: Sand trolls are over 8\' tall.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -29221,7 +29221,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager, per 3 scorpion men',
 	},
 	 abilities: {
-		 'en-US': 'Armor +2: Chitinous skin.\nFleet Footed: Scorpion Men roll a d8 for their running die, instead of a d6.\nMarksman: Scorpion men are expert archers. If they do not move in a turn, they may fire as if they took the aim maneuver.\nPoison: Anyone wounded or Shaken by a stinger attack must make a Vigor roll or become Incapacitated. Death follows in 2d6 minutes. A Healing roll at &ndash;2 prevents death\nStinger: Str+d6.',
+		 'en-US': 'Armor +2: Chitinous skin.\nFleet Footed: Scorpion Men roll a d8 for their running die, instead of a d6.\nMarksman: Scorpion men are expert archers. If they do not move in a turn, they may fire as if they took the aim maneuver.\nPoison: Anyone wounded or Shaken by a stinger attack must make a Vigor roll or become Incapacitated. Death follows in 2d6 minutes. A Healing roll at –2 prevents death\nStinger: Str+d6.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -29262,7 +29262,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager, In Lair',
 	},
 	 abilities: {
-		 'en-US': 'Armor +3: Chitinous skin.\nGrapple: A scorpion may grapple a foe with one or both pincers. If it uses both, each must make a successful opposed Strength roll. Escaping from a double grapple gives the prey a &ndash;4 penalty to his Strength roll to escape. A stinger attack against a grappled foe is made at +2, +4 if the victim is held in both pincers.\nImproved Frenzy: A sabre-toothed tiger may make two attacks each round with no penalty.\nPincers: Str+d4.\nPoison: Anyone wounded or Shaken by a stinger attack must make a Vigor roll or immediately become Incapacitated. Death follows in 2d6 rounds.\nStinger: Str+d6.\nSize+1: Giant scorpions measure 7&rsquo; in length.',
+		 'en-US': 'Armor +3: Chitinous skin.\nGrapple: A scorpion may grapple a foe with one or both pincers. If it uses both, each must make a successful opposed Strength roll. Escaping from a double grapple gives the prey a –4 penalty to his Strength roll to escape. A stinger attack against a grappled foe is made at +2, +4 if the victim is held in both pincers.\nImproved Frenzy: A sabre-toothed tiger may make two attacks each round with no penalty.\nPincers: Str+d4.\nPoison: Anyone wounded or Shaken by a stinger attack must make a Vigor roll or immediately become Incapacitated. Death follows in 2d6 rounds.\nStinger: Str+d6.\nSize+1: Giant scorpions measure 7\' in length.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -29303,7 +29303,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Worthwhile, in lair',
 	},
 	 abilities: {
-		 'en-US': 'Aquatic: Sea giants have a Pace of 8 underwater.\nImproved Sweep: Sea giants can attack all adjacent foes at no penalty.\nHuge: Attackers gain +4 to attack rolls against sea giants due to their size.\nSize +8: Sea giants are over 35&rsquo; tall.',
+		 'en-US': 'Aquatic: Sea giants have a Pace of 8 underwater.\nImproved Sweep: Sea giants can attack all adjacent foes at no penalty.\nHuge: Attackers gain +4 to attack rolls against sea giants due to their size.\nSize +8: Sea giants are over 35\' tall.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -29315,7 +29315,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Giants come in several forms, but all share two common features&mdash;they are tall and they enjoy human flesh. Fortunately, they are also rather stupid.\nSea giants dwell in caves beneath the ocean. For the most part they eat marine animals, but sometimes they rise to the surface to swipe unsuspecting sailors from passing ships.',
+		 'en-US': 'Giants come in several forms, but all share two common features—they are tall and they enjoy human flesh. Fortunately, they are also rather stupid.\nSea giants dwell in caves beneath the ocean. For the most part they eat marine animals, but sometimes they rise to the surface to swipe unsuspecting sailors from passing ships.',
 	},
 		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d12+7","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SWIMMING":{"value":"d8"}}',
@@ -29344,7 +29344,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Aquatic: Pace 12\nBite: Str+d6, Reach 2, Heavy Weapon.\nCrush: A sea serpent may wrap itsserpentine body around a ship (or large sea creature) as a grapple. Victims suffer damage each round the grapple is maintained. A sea serpent may crush and bite in the same round without incurring a multi-action penalty.\nGargantuan: Heavy Armor. Creatures add +4 when attacking the body of a sea serpent due to its great size. Add Size to damage when crushing but subtract Size of victim. This attack ignores any Armor value of a ship.\nLong Neck: A sea serpent&rsquo;s long neck gives it a Reach of 2.\nQuick: Sea serpents possess fast reflexes, able to turn in an instant and whip their long necks to attack passing prey. They redraw action cards of 5 or lower.\nSize +12: Sea serpents measure over 150&rsquo; long.',
+		 'en-US': 'Aquatic: Pace 12\nBite: Str+d6, Reach 2, Heavy Weapon.\nCrush: A sea serpent may wrap itsserpentine body around a ship (or large sea creature) as a grapple. Victims suffer damage each round the grapple is maintained. A sea serpent may crush and bite in the same round without incurring a multi-action penalty.\nGargantuan: Heavy Armor. Creatures add +4 when attacking the body of a sea serpent due to its great size. Add Size to damage when crushing but subtract Size of victim. This attack ignores any Armor value of a ship.\nLong Neck: A sea serpent\'s long neck gives it a Reach of 2.\nQuick: Sea serpents possess fast reflexes, able to turn in an instant and whip their long necks to attack passing prey. They redraw action cards of 5 or lower.\nSize +12: Sea serpents measure over 150\' long.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -29426,7 +29426,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager, around base',
 	},
 	 abilities: {
-		 'en-US': 'Plant: Plants are not subject to Fear and Tests of Will.\nRoots: Str. Extending from the siren bush to a range of 3&rdquo; is a tangle of surface roots, each covered in sharp thorns. The roots are mobile and can attack everything within range with no multi-action penalty.\nSiren Song: Siren bushes emit a low, hypnotic hum when a living creatures approaches within 12&rdquo;. All creatures in range must make an opposed Spirit roll. Those who fail are subject to the puppet power. Normally the tree uses the power to draw its prey close enough for its roots to attach themselves, though if the need arises it can order them to defend it from attackers.',
+		 'en-US': 'Plant: Plants are not subject to Fear and Tests of Will.\nRoots: Str. Extending from the siren bush to a range of 3” is a tangle of surface roots, each covered in sharp thorns. The roots are mobile and can attack everything within range with no multi-action penalty.\nSiren Song: Siren bushes emit a low, hypnotic hum when a living creatures approaches within 12”. All creatures in range must make an opposed Spirit roll. Those who fail are subject to the puppet power. Normally the tree uses the power to draw its prey close enough for its roots to attach themselves, though if the need arises it can order them to defend it from attackers.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -29438,7 +29438,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Siren bushes are carnivorous plants. When they detect living prey, they emit a hypnotic hum which lures the victim into the web of roots. Once close enough, the thorny roots rip into the target&rsquo;s flesh, saturating the surrounding ground in blood, which the roots then absorb.',
+		 'en-US': 'Siren bushes are carnivorous plants. When they detect living prey, they emit a hypnotic hum which lures the victim into the web of roots. Once close enough, the thorny roots rip into the target\'s flesh, saturating the surrounding ground in blood, which the roots then absorb.',
 	},
 		attributes: '{"agility":"d6","smarts":"d4(A)","spirit":"d6","strength":"d6","vigor":"d6"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"}}',
@@ -29508,7 +29508,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Rich, in lair',
 	},
 	 abilities: {
-		 'en-US': 'Bite/Claw: Str+d6\nFlight: Sphinxes have a Flying pace of 12&rdquo; and a Climb of 6&rdquo;.\nRiddles: Rather than immediately attack sentient prey, sphinxes prefer to enter into riddle contests. If the prey loses, it gets eaten. Riddle contests are conducted as an opposed Smarts roll.\nSize+2: Sphinxes are the same size as lions.\nStrong Willed: As masters of trickery, sphinxes gets a +2 bonus on Tests of Will.\nWise: Sphinxes are renowned for their wisdom. They get +2 to all Common Knowledge rolls and roll a d8 for all Knowledge skills.',
+		 'en-US': 'Bite/Claw: Str+d6\nFlight: Sphinxes have a Flying pace of 12” and a Climb of 6”.\nRiddles: Rather than immediately attack sentient prey, sphinxes prefer to enter into riddle contests. If the prey loses, it gets eaten. Riddle contests are conducted as an opposed Smarts roll.\nSize+2: Sphinxes are the same size as lions.\nStrong Willed: As masters of trickery, sphinxes gets a +2 bonus on Tests of Will.\nWise: Sphinxes are renowned for their wisdom. They get +2 to all Common Knowledge rolls and roll a d8 for all Knowledge skills.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -29549,7 +29549,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Elemental: No additional damage from called shots; Fearless; Immune to disease and poison.\nFlight: Steam elementals fly at a rate of 6" with a Climb rate of 4". They may never "run"\nImmunity: Steam elementals suffer no damage from non-magical attacks.\nSteam Blast: Steam elementals can send directed blasts of superheated air at foes using the Cone Template and a Shooting roll. Foes may make an opposed Agility roll to avoid the blast. The damage is 2d10 and ignores nonmagical Armor.\nSeep: Steam elementals can squeeze through any gaps or porous surfaces as if they were Difficult Ground\nSlam: Str+d4\nWhirlwind: As long as the elemental does not move that turn it may attempt to pick up a foe. Make an opposed Strength check. If the elemental wins then its foe is pulled into the swirling maelstrom of its steamy body. While trapped, the target is at &ndash;2 on all rolls (including damage, to hit, and Strength rolls to free himself), and suffers 2d6 damage per round. The elemental cannot move as long as it wants to keep foes trapped inside its form.',
+		 'en-US': 'Elemental: No additional damage from called shots; Fearless; Immune to disease and poison.\nFlight: Steam elementals fly at a rate of 6" with a Climb rate of 4". They may never "run"\nImmunity: Steam elementals suffer no damage from non-magical attacks.\nSteam Blast: Steam elementals can send directed blasts of superheated air at foes using the Cone Template and a Shooting roll. Foes may make an opposed Agility roll to avoid the blast. The damage is 2d10 and ignores nonmagical Armor.\nSeep: Steam elementals can squeeze through any gaps or porous surfaces as if they were Difficult Ground\nSlam: Str+d4\nWhirlwind: As long as the elemental does not move that turn it may attempt to pick up a foe. Make an opposed Strength check. If the elemental wins then its foe is pulled into the swirling maelstrom of its steamy body. While trapped, the target is at –2 on all rolls (including damage, to hit, and Strength rolls to free himself), and suffers 2d6 damage per round. The elemental cannot move as long as it wants to keep foes trapped inside its form.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -29602,7 +29602,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Most gargoyles are lifeless statues used to impress or decorate, but some have been given magical life to serve as guardians. Whether they serve good or evil depends upon their controller&rsquo;s whim.',
+		 'en-US': 'Most gargoyles are lifeless statues used to impress or decorate, but some have been given magical life to serve as guardians. Whether they serve good or evil depends upon their controller\'s whim.',
 	},
 		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d12","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d8"}}',
@@ -29631,7 +29631,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None.',
 	},
 	 abilities: {
-		 'en-US': 'Armor +4: Magically hardened stone.\nConstruct: +2 to recover from being Shaken; No additional damage from called shots; Immune to poison and disease.\nFearless: Golems are immune to Fear and Intimidation.\nImproved Arcane Resistance: +4 Armor against damage-causing arcane powers and +4 on trait rolls to resist opposed powers.\nSize +1: Stone golems stand over 8&rsquo; high and weigh 4,000 pounds.\nStone Fists: Str+d6',
+		 'en-US': 'Armor +4: Magically hardened stone.\nConstruct: +2 to recover from being Shaken; No additional damage from called shots; Immune to poison and disease.\nFearless: Golems are immune to Fear and Intimidation.\nImproved Arcane Resistance: +4 Armor against damage-causing arcane powers and +4 on trait rolls to resist opposed powers.\nSize +1: Stone golems stand over 8\' high and weigh 4,000 pounds.\nStone Fists: Str+d6',
 	},
 	 tags: {
 		 'en-US': '',
@@ -29643,7 +29643,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Golems are magical constructs, given life through the imprisonment of a spirit within the golem&rsquo;s body. Creating one is costly and laborious, and few mages have the requisite knowledge. Despite being inhabited by a spirit, golems cannot talk.\nStone golems are the traditional animated statue. As with most golems, they are shaped in the form of warriors and serve as guardians.',
+		 'en-US': 'Golems are magical constructs, given life through the imprisonment of a spirit within the golem\'s body. Creating one is costly and laborious, and few mages have the requisite knowledge. Despite being inhabited by a spirit, golems cannot talk.\nStone golems are the traditional animated statue. As with most golems, they are shaped in the form of warriors and serve as guardians.',
 	},
 		attributes: '{"agility":"d6","smarts":"d6","spirit":"d8","strength":"d12+2","vigor":"d12"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"}}',
@@ -29666,7 +29666,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Straw Golem',
 	},
 	 gear: {
-		 'en-US': 'Pitchfork (Str+d6, Reach 1, requires 2 hands) or scythe (Str+d10, &ndash;1 Parry, requires 2 hands)',
+		 'en-US': 'Pitchfork (Str+d6, Reach 1, requires 2 hands) or scythe (Str+d10, –1 Parry, requires 2 hands)',
 	},
 	 treasure: {
 		 'en-US': 'None.',
@@ -29684,7 +29684,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Golems are magical constructs, given life through the imprisonment of a spirit within the golem&rsquo;s body. Creating one is costly and laborious, and few mages have the requisite knowledge. Despite being inhabited by a spirit, golems cannot talk.\nStraw golems are most often designed to resemble scarecrows. As well as scaring off birds and natural predators such as wolves, they can bolster a village&rsquo;s militia in times of invasion.',
+		 'en-US': 'Golems are magical constructs, given life through the imprisonment of a spirit within the golem\'s body. Creating one is costly and laborious, and few mages have the requisite knowledge. Despite being inhabited by a spirit, golems cannot talk.\nStraw golems are most often designed to resemble scarecrows. As well as scaring off birds and natural predators such as wolves, they can bolster a village\'s militia in times of invasion.',
 	},
 		attributes: '{"agility":"d10","smarts":"d6","spirit":"d8","strength":"d8","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
@@ -29713,7 +29713,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Claws: Str+d4.\nDemon: +2 to recover from being Shaken; Immune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nLife Drain: These foul creatures have more than one way to kill. If a succubus or incubus kisses a victim, they must make a Vigor roll opposed by the demon&rsquo;s Spirit or lose one die of Vigor. If Vigor drops to zero, the demon has sucked out the victim&rsquo;s life force, killing him. Assuming the victim survives, lost Vigor returns at the rate of one die per day.\nLure: Sometimes good looks aren&rsquo;t enough to lure prey to their doom. These demons can use the puppet power using their Spirit as their arcane skill. They have 20 Power Points for this purpose.\nVery Attractive: Succubi and Incubi resemble stunningly beautiful creatures in their illusory form. They can assume the shape of any sentient being. Their illusory appearance gives them +6 Charisma. A detect arcana spell can penetrate the illusion.\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
+		 'en-US': 'Claws: Str+d4.\nDemon: +2 to recover from being Shaken; Immune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nLife Drain: These foul creatures have more than one way to kill. If a succubus or incubus kisses a victim, they must make a Vigor roll opposed by the demon\'s Spirit or lose one die of Vigor. If Vigor drops to zero, the demon has sucked out the victim\'s life force, killing him. Assuming the victim survives, lost Vigor returns at the rate of one die per day.\nLure: Sometimes good looks aren\'t enough to lure prey to their doom. These demons can use the puppet power using their Spirit as their arcane skill. They have 20 Power Points for this purpose.\nVery Attractive: Succubi and Incubi resemble stunningly beautiful creatures in their illusory form. They can assume the shape of any sentient being. Their illusory appearance gives them +6 Charisma. A detect arcana spell can penetrate the illusion.\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
 	},
 	 tags: {
 		 'en-US': 'demon,devil,',
@@ -29766,7 +29766,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Various',
 	},
 	 blurb: {
-		 'en-US': 'Thieves earn a living from stealing from others. Some may be allies of the characters, other are antagonists. In a city or town, thieves often assemble into a guild. Despite being tricky customers, thieves&rsquo; guilds are often excellent sources of information&mdash;if you can find them.',
+		 'en-US': 'Thieves earn a living from stealing from others. Some may be allies of the characters, other are antagonists. In a city or town, thieves often assemble into a guild. Despite being tricky customers, thieves\' guilds are often excellent sources of information—if you can find them.',
 	},
 		attributes: '{"agility":"d10","smarts":"d6","spirit":"d6","strength":"d6","vigor":"d6"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_LOCKPICKING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"},"SKILL_STREETWISE":{"value":"d6"},"SKILL_TAUNT":{"value":"d6"},"SKILL_THROWING":{"value":"d8"}}',
@@ -29795,7 +29795,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager, in lair',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str+d6\nEngulf: Giant toads can swallow prey as large as Size +2 whole. While engulfed, the target is grappled as per the core rulebook with a &ndash;4 penalty to Strength rolls to escape and suffers 2d6 damage per round from digestive juices. Armor offers no protection\nLarge: Attackers are +2 to attack rolls against the toad due to its size.\nSize+4: Giant toads weigh over 4000 pounds.\nTongue: Reach 3. The tongue is coated in sticky saliva. If the toad scores a success on its Fighting roll, it has grappled its prey. Unless the foe can escape, it Engulfs him on its next action. On a raise, the victim is grappled and Engulfed in the same action.',
+		 'en-US': 'Bite: Str+d6\nEngulf: Giant toads can swallow prey as large as Size +2 whole. While engulfed, the target is grappled as per the core rulebook with a –4 penalty to Strength rolls to escape and suffers 2d6 damage per round from digestive juices. Armor offers no protection\nLarge: Attackers are +2 to attack rolls against the toad due to its size.\nSize+4: Giant toads weigh over 4000 pounds.\nTongue: Reach 3. The tongue is coated in sticky saliva. If the toad scores a success on its Fighting roll, it has grappled its prey. Unless the foe can escape, it Engulfs him on its next action. On a raise, the victim is grappled and Engulfed in the same action.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -29848,7 +29848,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Militia are employed in smaller towns and in large villages. Though they are tasked with defending the area in case of emergency, it isn&rsquo;t their primary job, and they are not particularly skilled.',
+		 'en-US': 'Militia are employed in smaller towns and in large villages. Though they are tasked with defending the area in case of emergency, it isn\'t their primary job, and they are not particularly skilled.',
 	},
 		attributes: '{"agility":"d6","smarts":"d6","spirit":"d6","strength":"d6","vigor":"d6"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d4"},"SKILL_NOTICE":{"value":"d4"},"SKILL_SHOOTING":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
@@ -29877,7 +29877,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Armor +2: Thick Bark\nCamouflage: When a tree man isn&rsquo;t moving or attacking it looks just like a normal tree. It adds +4 to Stealth rolls.\nLashing Branches: Str+d10, Reach 3.\nHuge: Characters add +4 when attacking a tree man because of its great size.\nImproved Sweep: May attack all adjacent foes.\nPowers: Tree men are lords of the forest. They have 10 Power Points and know beast friend and entangle.\nSize +6: Tree men are over 50&rsquo; tall\nWeakness (Fire): Fire-based attacks do +2 damage and the chance of catching alight is 5&ndash;6 on a d6.',
+		 'en-US': 'Armor +2: Thick Bark\nCamouflage: When a tree man isn\'t moving or attacking it looks just like a normal tree. It adds +4 to Stealth rolls.\nLashing Branches: Str+d10, Reach 3.\nHuge: Characters add +4 when attacking a tree man because of its great size.\nImproved Sweep: May attack all adjacent foes.\nPowers: Tree men are lords of the forest. They have 10 Power Points and know beast friend and entangle.\nSize +6: Tree men are over 50\' tall\nWeakness (Fire): Fire-based attacks do +2 damage and the chance of catching alight is 5–6 on a d6.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -29918,7 +29918,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Worthwhile, in lair',
 	},
 	 abilities: {
-		 'en-US': 'Armor +1: Rubbery hide\nClaws: Str+d4\nInfravision: Trolls halve penalties for bad lighting when attacking living targets (round down).\nRegeneration (Fast): Trolls roll to regenerate each round. Fire stops their regeneration, as does cutting off their heads.\nSize +2: Trolls are tall, lanky creatures over 8&rsquo; tall.',
+		 'en-US': 'Armor +1: Rubbery hide\nClaws: Str+d4\nInfravision: Trolls halve penalties for bad lighting when attacking living targets (round down).\nRegeneration (Fast): Trolls roll to regenerate each round. Fire stops their regeneration, as does cutting off their heads.\nSize +2: Trolls are tall, lanky creatures over 8\' tall.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -30000,7 +30000,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Worthwhile, in lair',
 	},
 	 abilities: {
-		 'en-US': 'Armor +2: Thick hide\nBite: Str+d8; AP 2.\nLarge: Creatures add +2 when attacking a T-rex due to their great size.\nRoar: As an action a T-rex can emit a terrifying roar. All those who hear the roar&mdash;typically anyone within a mile&mdash; must make a Spirit roll or be Shaken.\nSize +7: These fearsome creatures stand 30&rsquo; tall and weigh over 20,000 pounds.',
+		 'en-US': 'Armor +2: Thick hide\nBite: Str+d8; AP 2.\nLarge: Creatures add +2 when attacking a T-rex due to their great size.\nRoar: As an action a T-rex can emit a terrifying roar. All those who hear the roar—typically anyone within a mile— must make a Spirit roll or be Shaken.\nSize +7: These fearsome creatures stand 30\' tall and weigh over 20,000 pounds.',
 	},
 	 tags: {
 		 'en-US': 'dinosaur,',
@@ -30041,7 +30041,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Fleet Footed: Unicorns roll a d10 for their running die, rather than a d6.\nForce of Good: Unicorns add +2 to damage when attacking supernatural evil foes, and have +2 Toughness when suffering damage from such creatures.\nHealing: A unicorn can cast healing and greater healing by touching its horn to a target. It has 40 Power Points. A horn cut from a living unicorn retains these powers. Anyone performing such a foul deed is cursed by the gods of good. The victim&rsquo;s skin becomes covered in boils and blisters which no magic can heal. He suffers &ndash;4 Charisma.\nKick: Str+d6\nSize +2: Unicorns weigh between 600 and 800 pounds.',
+		 'en-US': 'Fleet Footed: Unicorns roll a d10 for their running die, rather than a d6.\nForce of Good: Unicorns add +2 to damage when attacking supernatural evil foes, and have +2 Toughness when suffering damage from such creatures.\nHealing: A unicorn can cast healing and greater healing by touching its horn to a target. It has 40 Power Points. A horn cut from a living unicorn retains these powers. Anyone performing such a foul deed is cursed by the gods of good. The victim\'s skin becomes covered in boils and blisters which no magic can heal. He suffers –4 Charisma.\nKick: Str+d6\nSize +2: Unicorns weigh between 600 and 800 pounds.',
 	},
 	 tags: {
 		 'en-US': 'scotland,scottish,',
@@ -30082,7 +30082,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager, in lair',
 	},
 	 abilities: {
-		 'en-US': 'Armor +2: Velociraptors have thick scaly hides.\nBite or Rake: Str+d8\nSize +1: Velociraptors are about 7&rsquo; tall.',
+		 'en-US': 'Armor +2: Velociraptors have thick scaly hides.\nBite or Rake: Str+d8\nSize +1: Velociraptors are about 7\' tall.',
 	},
 	 tags: {
 		 'en-US': 'dinosaur,',
@@ -30094,7 +30094,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'These smart, bipedal dinosaurs are pack hunters, and use remarkably well-developed tactics. True velociraptors were the size of turkeys&mdash;the larger variety made famous in the movies are actually dinonychus, a related species.',
+		 'en-US': 'These smart, bipedal dinosaurs are pack hunters, and use remarkably well-developed tactics. True velociraptors were the size of turkeys—the larger variety made famous in the movies are actually dinonychus, a related species.',
 	},
 		attributes: '{"agility":"d8","smarts":"d8 (A)","spirit":"d6","strength":"d10","vigor":"d8"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"}}',
@@ -30135,7 +30135,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Code of Honor',
 	},
 	 blurb: {
-		 'en-US': 'Knights are the fantasy equivalent of tanks&mdash;heavily armored and highly mobile. They differ from regular cavalry troops in that they are usually minor nobles, often with a fortified manor as their fief. Knights may be chivalric champions out to save princesses and slay dragons or despicable curs interested only in throwing their weight around.\nThese knights are the elite of a kingdom, having survived several battles. Most own a small castle and control 100 soldiers.',
+		 'en-US': 'Knights are the fantasy equivalent of tanks—heavily armored and highly mobile. They differ from regular cavalry troops in that they are usually minor nobles, often with a fortified manor as their fief. Knights may be chivalric champions out to save princesses and slay dragons or despicable curs interested only in throwing their weight around.\nThese knights are the elite of a kingdom, having survived several battles. Most own a small castle and control 100 soldiers.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6","spirit":"d10","strength":"d10","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_KNOWLEDGE":{"value":"d8","special":{"en-US":"Battle"}},"SKILL_NOTICE":{"value":"d6"},"SKILL_RIDING":{"value":"d10"}}',
@@ -30246,7 +30246,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Armor +4: Thick bark.\nBranch Swipe: Str+d6, Reach 1.\nHuge: Attackers are +4 to attack rolls against a war tree due to its siz\nPlant: Plants are not subject to Fear and Tests of Will.\nSize +8: An average war tree is over 40&rsquo; tall.\nStomp: Str+d10. The creature is naturally adept at using its full weight to smash its foes. Nonrigid armor (leather, chain mail) offers no protection against the stomp.\nSweep: A war tree can attack all adjacent opponents at no penalty.\nWeakness (Fire): Fire attacks cause +4 damage.',
+		 'en-US': 'Armor +4: Thick bark.\nBranch Swipe: Str+d6, Reach 1.\nHuge: Attackers are +4 to attack rolls against a war tree due to its siz\nPlant: Plants are not subject to Fear and Tests of Will.\nSize +8: An average war tree is over 40\' tall.\nStomp: Str+d10. The creature is naturally adept at using its full weight to smash its foes. Nonrigid armor (leather, chain mail) offers no protection against the stomp.\nSweep: A war tree can attack all adjacent opponents at no penalty.\nWeakness (Fire): Fire attacks cause +4 damage.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -30369,7 +30369,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Aquatic: Pace 12\nElemental: No additional damage from called shots;Fearless; Immune to disease and poison.\nInvulnerability: Water elementals are immune to all non-magical attacks except fire. A torch or lantern causes them 1d6 damage but is instantly put out if it hits.\nSeep: Water elementals can squeeze through any porous gap as if it were Difficult Ground.\nSlam: Str+d6; nonleathal damage.\nWaterspout: Water spirits can project a torrent of water using the Cone Template. Those in the area may make an Agility roll opposed by the spirit&rsquo;s Shooting to avoid it or suffer 2d8 nonlethal damage. This puts out any normal fires.',
+		 'en-US': 'Aquatic: Pace 12\nElemental: No additional damage from called shots;Fearless; Immune to disease and poison.\nInvulnerability: Water elementals are immune to all non-magical attacks except fire. A torch or lantern causes them 1d6 damage but is instantly put out if it hits.\nSeep: Water elementals can squeeze through any porous gap as if it were Difficult Ground.\nSlam: Str+d6; nonleathal damage.\nWaterspout: Water spirits can project a torrent of water using the Cone Template. Those in the area may make an Agility roll opposed by the spirit\'s Shooting to avoid it or suffer 2d8 nonlethal damage. This puts out any normal fires.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -30410,7 +30410,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Meager, in lair',
 	},
 	 abilities: {
-		 'en-US': 'Bear Hug: A werebear that hits with a raise has pinned his foe and attacks at +2 until the foe is freed. The opponent may only attempt to escape the hug on his action, which requires a raise on an opposed Strength roll.\nBite/Claws: Str+d8\nInfection: Anyone slain by a has a 50% chance of rising as a werebear themselves. The character involuntarily transforms every full moon. He gains control of his lycanthropy only after 1d6 years as a wearbear.\nImmunity: Werecreatures cannot be wounded by weapons that are not silver, only Shaken\nLow Light Vision: Werebears ignore penalties for Dim and Dark lighting.\nSize +2: These creatures stand up to 8&rsquo; tall and weigh over 1000 pounds each.\nWeakness (Silver): Wearbears suffer normal damage from silver weapons.',
+		 'en-US': 'Bear Hug: A werebear that hits with a raise has pinned his foe and attacks at +2 until the foe is freed. The opponent may only attempt to escape the hug on his action, which requires a raise on an opposed Strength roll.\nBite/Claws: Str+d8\nInfection: Anyone slain by a has a 50% chance of rising as a werebear themselves. The character involuntarily transforms every full moon. He gains control of his lycanthropy only after 1d6 years as a wearbear.\nImmunity: Werecreatures cannot be wounded by weapons that are not silver, only Shaken\nLow Light Vision: Werebears ignore penalties for Dim and Dark lighting.\nSize +2: These creatures stand up to 8\' tall and weigh over 1000 pounds each.\nWeakness (Silver): Wearbears suffer normal damage from silver weapons.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -30451,7 +30451,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Rich, in lair',
 	},
 	 abilities: {
-		 'en-US': 'Armor +1: Leathery Skin\nBony Claws: Str+d4\nFear -1: Anyone who sees a wight must make a Fear check at &ndash;1.\nFearless: Wights are immune to Fear and Intimidation.\nPoison: Wights&rsquo; claws deliver a powerful neurotoxin. A character clawed by a wight must make a Vigor roll at &ndash;2. With success, the character gets the &ldquo;shakes,&rdquo; suffering &ndash;1 to all trait rolls for 24 hours. On a failure, the victim becomes immediately Incapacitated and dies in 2d6 rounds unless treated. A successful Healing roll at &ndash;2 prevents this.\nQuick: Wights redraw action cards less than 5.\nUndead: +2 Toughness; +2 to recover from being Shaken; Immune to poison and disease; No additional damage from called shots.',
+		 'en-US': 'Armor +1: Leathery Skin\nBony Claws: Str+d4\nFear -1: Anyone who sees a wight must make a Fear check at –1.\nFearless: Wights are immune to Fear and Intimidation.\nPoison: Wights\' claws deliver a powerful neurotoxin. A character clawed by a wight must make a Vigor roll at –2. With success, the character gets the “shakes,” suffering –1 to all trait rolls for 24 hours. On a failure, the victim becomes immediately Incapacitated and dies in 2d6 rounds unless treated. A successful Healing roll at –2 prevents this.\nQuick: Wights redraw action cards less than 5.\nUndead: +2 Toughness; +2 to recover from being Shaken; Immune to poison and disease; No additional damage from called shots.',
 	},
 	 tags: {
 		 'en-US': 'undead,',
@@ -30492,7 +30492,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Charm: By swaying from side to side and pulsating, wisps can charm prey into following them. This requires a Spirit roll opposed by the victim&rsquo;s Smarts. If the victim ever loses sight of the wisp, the charm is broken.\nSize -2: Wisps measure 1&rsquo; in diameter.\nSmall: Attackers are &ndash;2 to attack wisps because of their size.',
+		 'en-US': 'Charm: By swaying from side to side and pulsating, wisps can charm prey into following them. This requires a Spirit roll opposed by the victim\'s Smarts. If the victim ever loses sight of the wisp, the charm is broken.\nSize -2: Wisps measure 1\' in diameter.\nSmall: Attackers are –2 to attack wisps because of their size.',
 	},
 	 tags: {
 		 'en-US': 'willowisp,will-o-wisp,marsh,phantom,',
@@ -30574,7 +30574,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Worthwhile, in lair',
 	},
 	 abilities: {
-		 'en-US': 'Armor +2: Thick Scales\nBite/Sting: Str+d6, Reach 1\nImproved Frenzy: Wyverns may make a bite and sting attack in the same round at no penalty.\nPoison: Anyone Shaken or wounded by a sting attack must make a Vigor roll at &ndash;2 or be paralyzed for 1d6 rounds.\nQuick: Wyverns move with exceptional speed. They redraw action cards of 5 or lower.\nSize +3: Wyverns weigh around 1500 points',
+		 'en-US': 'Armor +2: Thick Scales\nBite/Sting: Str+d6, Reach 1\nImproved Frenzy: Wyverns may make a bite and sting attack in the same round at no penalty.\nPoison: Anyone Shaken or wounded by a sting attack must make a Vigor roll at –2 or be paralyzed for 1d6 rounds.\nQuick: Wyverns move with exceptional speed. They redraw action cards of 5 or lower.\nSize +3: Wyverns weigh around 1500 points',
 	},
 	 tags: {
 		 'en-US': '',
@@ -30586,7 +30586,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Wyverns resemble small, two-legged dragons. They have no fiery breath, but possess long necks, sharp teeth, and a poisonous sting in their tail. Some wyverns have wings (Flight: 6&rdquo;; Climb 3&rdquo;).',
+		 'en-US': 'Wyverns resemble small, two-legged dragons. They have no fiery breath, but possess long necks, sharp teeth, and a poisonous sting in their tail. Some wyverns have wings (Flight: 6”; Climb 3”).',
 	},
 		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d8","strength":"d12+2","vigor":"d10"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"}}',
@@ -30615,7 +30615,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Bear Hug: Bears don&rsquo;t actually &ldquo;hug&rdquo; their victims, but they do attempt to use their weight to pin their prey and rend it with their claws and teeth. A bear that hits with a raise has pinned his foe and attacks at +2 until the foe is freed. The opponent may only attempt to escape the &ldquo;hug&rdquo; on his action, which requires a raise on an opposed Strength roll.\nClaws: Str+d6\nSize+2: These creatures stand up to 8&rsquo; tall and weigh over 1000 pounds each.\nUndead: +2 Toughness; +2 to recover from being Shaken; Immune to poison and disease; No additional damage from called shots.\nWeakness (Head): Shots to a zombie&rsquo;s head are +2 damage.',
+		 'en-US': 'Bear Hug: Bears don\'t actually “hug” their victims, but they do attempt to use their weight to pin their prey and rend it with their claws and teeth. A bear that hits with a raise has pinned his foe and attacks at +2 until the foe is freed. The opponent may only attempt to escape the “hug” on his action, which requires a raise on an opposed Strength roll.\nClaws: Str+d6\nSize+2: These creatures stand up to 8\' tall and weigh over 1000 pounds each.\nUndead: +2 Toughness; +2 to recover from being Shaken; Immune to poison and disease; No additional damage from called shots.\nWeakness (Head): Shots to a zombie\'s head are +2 damage.',
 	},
 	 tags: {
 		 'en-US': 'undead,',
@@ -30656,7 +30656,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str+d4\nPoison(-4): The bite of the spider causes instant paralysis for those who fail their Vigor roll. It lasts for 1d6 rounds.\nWebbing: Spiders can cast webs from their thorax that are the size of Small Burst Templates. This is a Shooting roll with a range of 3/6/12. Anything in the web must cut or break their way free (Toughness 7). Webbed characters can still fight, but all physical actions are at &ndash;4.\nUndead: +2 Toughness; +2 to recover from being Shaken; Immune to poison and disease; No additional damage from called shots.\nWeakness (Head): Shots to a zombie&rsquo;s head are +2 damage.',
+		 'en-US': 'Bite: Str+d4\nPoison(-4): The bite of the spider causes instant paralysis for those who fail their Vigor roll. It lasts for 1d6 rounds.\nWebbing: Spiders can cast webs from their thorax that are the size of Small Burst Templates. This is a Shooting roll with a range of 3/6/12. Anything in the web must cut or break their way free (Toughness 7). Webbed characters can still fight, but all physical actions are at –4.\nUndead: +2 Toughness; +2 to recover from being Shaken; Immune to poison and disease; No additional damage from called shots.\nWeakness (Head): Shots to a zombie\'s head are +2 damage.',
 	},
 	 tags: {
 		 'en-US': 'undead,',
@@ -30697,7 +30697,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'None',
 	},
 	 abilities: {
-		 'en-US': 'Claws: Str+d4\nFearless: Zombies are immune to Fear and Intimidation.\nUndead: +2 Toughness; +2 to recover from being Shaken; Immune to poison and disease; No additional damage from called shots.\nWeakness (Head): Shots to a zombie&rsquo;s head are +2 damage.',
+		 'en-US': 'Claws: Str+d4\nFearless: Zombies are immune to Fear and Intimidation.\nUndead: +2 Toughness; +2 to recover from being Shaken; Immune to poison and disease; No additional damage from called shots.\nWeakness (Head): Shots to a zombie\'s head are +2 damage.',
 	},
 	 tags: {
 		 'en-US': 'undead,',
@@ -30780,7 +30780,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Acolytes are non-powered clerics, or cultists; they&rsquo;re the lowest level of a clerical or a religious organization, lacking the ability to manifest miracles. They&rsquo;re often led by a more powerful cleric.',
+		 'en-US': 'Acolytes are non-powered clerics, or cultists; they\'re the lowest level of a clerical or a religious organization, lacking the ability to manifest miracles. They\'re often led by a more powerful cleric.',
 	},
 		attributes: '{"agility":"d6","smarts":"d6","spirit":"d8","strength":"d6","vigor":"d6"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_GUTS":{"value":"d6"},"SKILL_KNOWLEDGE":{"value":"d8","special":{"en-US":"Religion"}},"SKILL_NOTICE":{"value":"d4"},"SKILL_SHOOTING":{"value":"d4"}}',
@@ -30809,7 +30809,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Aquatic: Pace 5.\nArmor +2: Thick skin.\nClaws/Bite: Str+d6.\nFear: Anyone seeing the creature must make a Fear check.\nImproved Frenzy: Makes two Fighting attacks each round at no penalty. &acirc;&euro;&cent;Pounce: It can leap 1d6&acirc;&euro; to gain +4 to its attack and damage. Its Parry is reduced by 2 until its next action when performing the maneuver, however.\nRollover: If the beast hits with a raise on a bite attack, it causes an extra 2d4 damage to its prey in addition to its regular Strength damage.\nSize +2: This beast weighs over 500 pounds.',
+		 'en-US': 'Aquatic: Pace 5.\nArmor +2: Thick skin.\nClaws/Bite: Str+d6.\nFear: Anyone seeing the creature must make a Fear check.\nImproved Frenzy: Makes two Fighting attacks each round at no penalty. â€¢Pounce: It can leap 1d6â€ to gain +4 to its attack and damage. Its Parry is reduced by 2 until its next action when performing the maneuver, however.\nRollover: If the beast hits with a raise on a bite attack, it causes an extra 2d4 damage to its prey in addition to its regular Strength damage.\nSize +2: This beast weighs over 500 pounds.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -30850,7 +30850,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Blur: Ama-no-jaku move with supernatural speed. Physical attacks against them are made at &ndash;4.\nDefender: Some ama-no-jaku keep their most deluded victims nearby as guardians when working with more observant groups. Such a person is typically an ordinary man or woman who has been tricked into believing the demon is the ghost of a child, a friendly spirit, etc, and that any new intruders wish it harm.\nHit-And-Run: Ama-no-jaku are experts at using their preternatural speed to run at a victim&rsquo;s blind-side, slash at his lower extremities, and then retreat before he can react. In most situations, the ama-no-jaku can only be hit by a victim who was on Hold. In situations where this isn&rsquo;t possible, the ama-no-jaku typically retreats.\nTraps: Ama-no-jaku take great delight into luring their victims into numerous traps they&rsquo;ve placed around their lairs. Anytime a character draws a black card in combat, on his action he must make an opposed roll of Smarts versus the ama-no-jaku&rsquo;s Taunt. If the creature wins, the character is maneuvered into a trap. He loses his turn and consults the Traps Table at left (p54)',
+		 'en-US': 'Blur: Ama-no-jaku move with supernatural speed. Physical attacks against them are made at –4.\nDefender: Some ama-no-jaku keep their most deluded victims nearby as guardians when working with more observant groups. Such a person is typically an ordinary man or woman who has been tricked into believing the demon is the ghost of a child, a friendly spirit, etc, and that any new intruders wish it harm.\nHit-And-Run: Ama-no-jaku are experts at using their preternatural speed to run at a victim\'s blind-side, slash at his lower extremities, and then retreat before he can react. In most situations, the ama-no-jaku can only be hit by a victim who was on Hold. In situations where this isn\'t possible, the ama-no-jaku typically retreats.\nTraps: Ama-no-jaku take great delight into luring their victims into numerous traps they\'ve placed around their lairs. Anytime a character draws a black card in combat, on his action he must make an opposed roll of Smarts versus the ama-no-jaku\'s Taunt. If the creature wins, the character is maneuvered into a trap. He loses his turn and consults the Traps Table at left (p54)',
 	},
 	 tags: {
 		 'en-US': '',
@@ -30862,7 +30862,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Translating roughly as "imp of heaven," ama-no-jaku are small demons found in Japan that tempt and provoke mischief into mortals. They often do this by pretending to be something they&rsquo;re not&mdash;such as a human child or a beneficent spirit.\nAma-no-jaku (sometimes amanojaku) do not have a magical power to obscure their looks, so they must wear natural disguises, such as shrouds or the skin of their victims.',
+		 'en-US': 'Translating roughly as "imp of heaven," ama-no-jaku are small demons found in Japan that tempt and provoke mischief into mortals. They often do this by pretending to be something they\'re not—such as a human child or a beneficent spirit.\nAma-no-jaku (sometimes amanojaku) do not have a magical power to obscure their looks, so they must wear natural disguises, such as shrouds or the skin of their victims.',
 	},
 		attributes: '{"agility":"d10","smarts":"d10","spirit":"d6","strength":"d4","vigor":"d6"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_KNOWLEDGE":{"value":"d10","special":{"en-US":"Disguise"}},"SKILL_NOTICE":{"value":"d8"},"SKILL_PERSUASION":{"value":"d12"},"SKILL_STEALTH":{"value":"d10"},"SKILL_TAUNT":{"value":"d12"}}',
@@ -30891,7 +30891,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor +3: Chitinous shell.\nBite: Str+d6.\nFear (-4): Anyone seeing the creature must make a Fear check at -4.\nFearless: Immune to Fear and Intimidation. &acirc;&euro;&cent;Gargantuan: Heavy Armor. Creatures add +4 when attacking the body of Arachnos due to her great size. Add Size to damage when crushing but subtract the Size of the victim.\nHardy: If Shaken, further Shaken results have no effect.\nImproved Arcane Resistance: +4 Armor versus magic, and +4 to rolls made to resist magic effects.\nPoison (-4): The bite of the spider causes instant death for those who fail a Vigor roll. &acirc;&euro;&cent;Regeneration (Slow): Arachnos makes a natural healing roll every day.\nSize +10: Arachnos is over 60&acirc;&euro;&trade; across.\nSwarm: Each round, Arachnos may release a swarm of her young. These  ll a Large Burst Template. Use the Swarm stats. She may release a maximum of 10 swarms. If a swarm is killed, she births more young at the rate of one swarm per week.\nWebbing: Arachnos can cast webs from her thorax that are the size of Large Burst Templates. This is a Shooting roll with a range of 10/20/40. Anything in the web must cut or break their way free (Toughness 7 per 1&acirc;&euro;). Webbed characters can still  ght, but all physical actions are at -4.',
+		 'en-US': 'Armor +3: Chitinous shell.\nBite: Str+d6.\nFear (-4): Anyone seeing the creature must make a Fear check at -4.\nFearless: Immune to Fear and Intimidation. â€¢Gargantuan: Heavy Armor. Creatures add +4 when attacking the body of Arachnos due to her great size. Add Size to damage when crushing but subtract the Size of the victim.\nHardy: If Shaken, further Shaken results have no effect.\nImproved Arcane Resistance: +4 Armor versus magic, and +4 to rolls made to resist magic effects.\nPoison (-4): The bite of the spider causes instant death for those who fail a Vigor roll. â€¢Regeneration (Slow): Arachnos makes a natural healing roll every day.\nSize +10: Arachnos is over 60â€™ across.\nSwarm: Each round, Arachnos may release a swarm of her young. These  ll a Large Burst Template. Use the Swarm stats. She may release a maximum of 10 swarms. If a swarm is killed, she births more young at the rate of one swarm per week.\nWebbing: Arachnos can cast webs from her thorax that are the size of Large Burst Templates. This is a Shooting roll with a range of 10/20/40. Anything in the web must cut or break their way free (Toughness 7 per 1â€). Webbed characters can still  ght, but all physical actions are at -4.',
 	},
 	 tags: {
 		 'en-US': 'dark gods,gods,god,',
@@ -30903,7 +30903,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Many people are afraid of spiders. If they knew their true origin, everyone would be afraid of them. Arachnos. Mother of Spiders, takes the form of a monstrous tarantula.\nCrawling across her back are thousands and thousands of small spiders&acirc;&euro;&rdquo;her young. Because of this, Arachnos is usually referred to as a goddess by her deranged followers.',
+		 'en-US': 'Many people are afraid of spiders. If they knew their true origin, everyone would be afraid of them. Arachnos. Mother of Spiders, takes the form of a monstrous tarantula.\nCrawling across her back are thousands and thousands of small spidersâ€”her young. Because of this, Arachnos is usually referred to as a goddess by her deranged followers.',
 	},
 		attributes: '{"agility":"d10","smarts":"d6","spirit":"d8","strength":"d12+4","vigor":"d12+2"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d10"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d10"},"SKILL_STEALTH":{"value":"d8"}}',
@@ -30973,7 +30973,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Claws: Str+d4\nScream: Once per night, and again anytime a banshee draws a Joker in combat, it may elicit the banshee&rsquo;s trademark scream. Anyone within 12&rdquo; (24 yards) must make a Spirit roll or die. Those who are successful automatically lose one point of Sanity and are Shaken.\nUndead: +2 Toughness; +2 to recover from being Shaken; no additional damage from Called Shots; immune to disease and poison; does not suffer wound penalties.',
+		 'en-US': 'Claws: Str+d4\nScream: Once per night, and again anytime a banshee draws a Joker in combat, it may elicit the banshee\'s trademark scream. Anyone within 12” (24 yards) must make a Spirit roll or die. Those who are successful automatically lose one point of Sanity and are Shaken.\nUndead: +2 Toughness; +2 to recover from being Shaken; no additional damage from Called Shots; immune to disease and poison; does not suffer wound penalties.',
 	},
 	 tags: {
 		 'en-US': 'undead,',
@@ -30985,7 +30985,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Banshees are feminine horrors who take one of three forms&mdash;a young maiden, a matron-like figure, or an old crone. All dress in either a dark, hooded cloak or a funeral shroud. Their long nails may be able to tear through flesh, but their most feared power is their terrible scream, which can drive a man mad or even kill him.\nA variant of the banshee, known as the &ldquo;washer woman&rdquo; comes in the form of a cloaked figure washing blood-stained clothes. According to legend, these are the garments of those about to die from her wailing.',
+		 'en-US': 'Banshees are feminine horrors who take one of three forms—a young maiden, a matron-like figure, or an old crone. All dress in either a dark, hooded cloak or a funeral shroud. Their long nails may be able to tear through flesh, but their most feared power is their terrible scream, which can drive a man mad or even kill him.\nA variant of the banshee, known as the “washer woman” comes in the form of a cloaked figure washing blood-stained clothes. According to legend, these are the garments of those about to die from her wailing.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d6","vigor":"d6"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"}}',
@@ -31014,7 +31014,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bony Claws: Str+d4\nBound: A barrow dweller may not move further than 50&rdquo; (100 yards) from its burial place.\nFear(-2): Anyone seeing the creature must make a Fear test at &ndash;2.\nNumbing Touch: Any creature touched by a barrow dweller must make a Vigor roll. On a failure, the victim suffers a cumulative -1 penalty to Agility roll and skills.\nUndead: +2 Toughness; +2 to recover from being Shaken; no additional damage from Called Shots; immune to disease and poison; does not suffer wound penalties.\nWeakness (Sunlight): Barrow dwellers are weakened by the sun. Each round in sunlight, they must make a Vigor roll or become Exhausted.',
+		 'en-US': 'Bony Claws: Str+d4\nBound: A barrow dweller may not move further than 50” (100 yards) from its burial place.\nFear(-2): Anyone seeing the creature must make a Fear test at –2.\nNumbing Touch: Any creature touched by a barrow dweller must make a Vigor roll. On a failure, the victim suffers a cumulative -1 penalty to Agility roll and skills.\nUndead: +2 Toughness; +2 to recover from being Shaken; no additional damage from Called Shots; immune to disease and poison; does not suffer wound penalties.\nWeakness (Sunlight): Barrow dwellers are weakened by the sun. Each round in sunlight, they must make a Vigor roll or become Exhausted.',
 	},
 	 tags: {
 		 'en-US': 'wights,wight,undead,hagbui,',
@@ -31026,7 +31026,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Also known as wights and hagbui (literally &ldquo;barrow dweller&rdquo;), these undead are the corporeal remains of kings and heroes buried in ages past. They are common in northern Europe, especially areas the Vikings settled. Their form is that of a mummified corpse with tight, leathery skin drawn over wasted muscles. Their eyes burn with a pale, cold light. Although barrow dwellers can speak, they only speak languages known to them in the era they died. Their tombs are brimming with treasure, and they intend to ensure it remains that way for eternity.',
+		 'en-US': 'Also known as wights and hagbui (literally “barrow dweller”), these undead are the corporeal remains of kings and heroes buried in ages past. They are common in northern Europe, especially areas the Vikings settled. Their form is that of a mummified corpse with tight, leathery skin drawn over wasted muscles. Their eyes burn with a pale, cold light. Although barrow dwellers can speak, they only speak languages known to them in the era they died. Their tombs are brimming with treasure, and they intend to ensure it remains that way for eternity.',
 	},
 		attributes: '{"agility":"d8","smarts":"d8","spirit":"d10","strength":"d10","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"}}',
@@ -31055,7 +31055,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str\nEcho Location: Giant bats suffer no penalties for bad lighting, even in Pitch Darkness.\nFlying: Pace 8, Climb -2.\nSize -1: Giant bats are about the size of medium dogs in the body, and have 9&rsquo; long wingspans.',
+		 'en-US': 'Bite: Str\nEcho Location: Giant bats suffer no penalties for bad lighting, even in Pitch Darkness.\nFlying: Pace 8, Climb -2.\nSize -1: Giant bats are about the size of medium dogs in the body, and have 9\' long wingspans.',
 	},
 	 tags: {
 		 'en-US': 'animal,',
@@ -31096,7 +31096,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor +1: Hard muscle.\nBite/Claws: Str+d6.\nBerserk: Beast golems have the Berserk Edge.\nConstruct: +2 to recover from being Shaken; No additional damage from called shots; Immune to poison and disease.\nFear: Characters seeing a beast golem must make a Fear check.\nFearless: Golems are immune to Fear (with the exception of  fire) and Intimidation.\nImproved Frenzy: May make two Fighting attacks each round.\nSize +2: Being based on a bear, this particular beast golem stands over 8&acirc;&euro;&trade; tall. \nWeakness (Fire): Beast golems are afraid of fire. They subtract 2 from attack rolls against a person carrying a burning torch or similar object.',
+		 'en-US': 'Armor +1: Hard muscle.\nBite/Claws: Str+d6.\nBerserk: Beast golems have the Berserk Edge.\nConstruct: +2 to recover from being Shaken; No additional damage from called shots; Immune to poison and disease.\nFear: Characters seeing a beast golem must make a Fear check.\nFearless: Golems are immune to Fear (with the exception of  fire) and Intimidation.\nImproved Frenzy: May make two Fighting attacks each round.\nSize +2: Being based on a bear, this particular beast golem stands over 8â€™ tall. \nWeakness (Fire): Beast golems are afraid of fire. They subtract 2 from attack rolls against a person carrying a burning torch or similar object.',
 	},
 	 tags: {
 		 'en-US': 'golems,',
@@ -31137,7 +31137,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor +3: Thick bark\nBranches: Str+d6. Reach 1. A black tree has four branches and may use them all each round with no multi-action penalty. Only two branches may be used to attack a single foe, however.\nEntangle: The tree&rsquo;s lesser branches and roots attempt to trip and entangle its attackers. Everyone within a Large Burst Template centered on the tree is affected by a constant entangle as if cast with a raise.\nFear: Anyone seeing the creature must make a Fear check.\nHuge: Attackers add +4 to attack rolls against a black tree because of its size.\nImpale: A raise on the thing&rsquo;s Fighting roll impales its foe on a sharp branch. Each round thereafter, the victim must make a Vigor roll or suffer a level of Fatigue as the black tree drains his blood. Victims may escape as if breaking a grapple. Lost Fatigue recovers at the rate of one level per 24 hours.\nResistance (Piercing Weapons): A black tree suffers half damage from piercing attacks, such as gunshots.\nSize+8: Black trees stand up to 50&rsquo; high.\nSticky Sap: An attacker who strikes a black tree with a melee weapon finds his weapon stuck to the sap. On his next action, he must make a Strength roll at &ndash;2 to free his weapon. With success, he frees the weapon but it takes the entire round. With a raise, he frees the weapon and may still perform other actions this round. The same is true if a character touches the tree.\nWakness (Fire): A black wood suffers +4 damage from fire attacks.',
+		 'en-US': 'Armor +3: Thick bark\nBranches: Str+d6. Reach 1. A black tree has four branches and may use them all each round with no multi-action penalty. Only two branches may be used to attack a single foe, however.\nEntangle: The tree\'s lesser branches and roots attempt to trip and entangle its attackers. Everyone within a Large Burst Template centered on the tree is affected by a constant entangle as if cast with a raise.\nFear: Anyone seeing the creature must make a Fear check.\nHuge: Attackers add +4 to attack rolls against a black tree because of its size.\nImpale: A raise on the thing\'s Fighting roll impales its foe on a sharp branch. Each round thereafter, the victim must make a Vigor roll or suffer a level of Fatigue as the black tree drains his blood. Victims may escape as if breaking a grapple. Lost Fatigue recovers at the rate of one level per 24 hours.\nResistance (Piercing Weapons): A black tree suffers half damage from piercing attacks, such as gunshots.\nSize+8: Black trees stand up to 50\' high.\nSticky Sap: An attacker who strikes a black tree with a melee weapon finds his weapon stuck to the sap. On his next action, he must make a Strength roll at –2 to free his weapon. With success, he frees the weapon but it takes the entire round. With a raise, he frees the weapon and may still perform other actions this round. The same is true if a character touches the tree.\nWakness (Fire): A black wood suffers +4 damage from fire attacks.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -31149,7 +31149,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Black trees are malevolent creatures found in clusters within ancient and dark forests. Some are formed by desecration of old burial grounds, some are possessed by spirits or demons, and others exist where chemical dumping has corrupted the land.\nThey resemble standard trees, but their bark is black, and sticky red sap oozes from gaps in the bark. Most have &ldquo;facial&rdquo; features, formed from knots and twists in the wood.',
+		 'en-US': 'Black trees are malevolent creatures found in clusters within ancient and dark forests. Some are formed by desecration of old burial grounds, some are possessed by spirits or demons, and others exist where chemical dumping has corrupted the land.\nThey resemble standard trees, but their bark is black, and sticky red sap oozes from gaps in the bark. Most have “facial” features, formed from knots and twists in the wood.',
 	},
 		attributes: '{"agility":"d6","smarts":"d4(A)","spirit":"d10","strength":"d12+4","vigor":"d12"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"}}',
@@ -31178,7 +31178,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Blob: +2 to recover from being Shaken; No wound penalties; Immune to poison and disease.\nEngulf: A blob may make a grapple attack against every creature under its template (see below). On a success, it has engulfed its foe. Each round the grapple is maintained thereafter, the victim suffers 2d4 damage. Victims reaching Death are absorbed and add to the blob&rsquo;s bulk.\nFear: Anyone seeing the creature must make a Fear check.\nMindless: Immune to Fear and Tests of Will.\nVariable Size: The blob begins as a Small Burst Template (Size +2). For each victim it absorbs, it grows 1&rdquo; and adds +1 Size (and Toughness), with no limit.',
+		 'en-US': 'Blob: +2 to recover from being Shaken; No wound penalties; Immune to poison and disease.\nEngulf: A blob may make a grapple attack against every creature under its template (see below). On a success, it has engulfed its foe. Each round the grapple is maintained thereafter, the victim suffers 2d4 damage. Victims reaching Death are absorbed and add to the blob\'s bulk.\nFear: Anyone seeing the creature must make a Fear check.\nMindless: Immune to Fear and Tests of Will.\nVariable Size: The blob begins as a Small Burst Template (Size +2). For each victim it absorbs, it grows 1” and adds +1 Size (and Toughness), with no limit.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -31272,7 +31272,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'The destruction of an ancient vampire&rsquo;s physical body isn&rsquo;t necessarily the end of its existence. Through dark magic, they can be brought back into existence as near&ndash;mindless, ethereal clouds of vapor with an insatiable bloodlust by those who know the proper rituals.\nBlood mists appear as grey clouds until they feed, then change to pink to dark red as they consume more blood. Their preferred tactic is to mingle with natural mist, allowing them to approach unsuspecting victims with ease.\nBlood mists are Swarms (see Savage Worlds). Their attack is a blood drain, so targets in completely sealed suits remain immune as usual.\nBlood mists have typical statistics for Swarms, and the following Special Ability:',
+		 'en-US': 'The destruction of an ancient vampire\'s physical body isn\'t necessarily the end of its existence. Through dark magic, they can be brought back into existence as near–mindless, ethereal clouds of vapor with an insatiable bloodlust by those who know the proper rituals.\nBlood mists appear as grey clouds until they feed, then change to pink to dark red as they consume more blood. Their preferred tactic is to mingle with natural mist, allowing them to approach unsuspecting victims with ease.\nBlood mists are Swarms (see Savage Worlds). Their attack is a blood drain, so targets in completely sealed suits remain immune as usual.\nBlood mists have typical statistics for Swarms, and the following Special Ability:',
 	},
 		attributes: '',
 		skills: '[]',
@@ -31301,7 +31301,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor +2: Bone.\nBony Claws: Str+d4.\nConstruct: +2 to recover from being Shaken; No additional damage from called shots; Immune to poison and disease.\nFear: Characters seeing a bone golem must make a Fear check.\nFearless: Blood golems are immune to Fear and Intimidation.\nFrenzy: May make two Fighting attacks each round at -2.\nSize +2: Bone golems are usually over 9&acirc;&euro;&trade; tall.',
+		 'en-US': 'Armor +2: Bone.\nBony Claws: Str+d4.\nConstruct: +2 to recover from being Shaken; No additional damage from called shots; Immune to poison and disease.\nFear: Characters seeing a bone golem must make a Fear check.\nFearless: Blood golems are immune to Fear and Intimidation.\nFrenzy: May make two Fighting attacks each round at -2.\nSize +2: Bone golems are usually over 9â€™ tall.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -31354,7 +31354,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'This is an ordinary house cat, the sort that might be a familiar for a spellcaster, a Beast Master&rsquo;s animal friend, or an alternate form for the shape change power.',
+		 'en-US': 'This is an ordinary house cat, the sort that might be a familiar for a spellcaster, a Beast Master\'s animal friend, or an alternate form for the shape change power.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6(A)","spirit":"d10","strength":"d4","vigor":"d6"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d8"}}',
@@ -31383,7 +31383,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Claws: Str+d6. The claws of a collector ignore all mundane and magical Armor.\nDemon: +2 to recover from being Shaken; Immune to poison and disease; Half- damage from nonmagical attacks except for cold iron.\nFear (-2): Collectors exude an aura of terror. Anyone seeing one must make a Fear check at -2.\nImproved Arcane Resistance: +4 Armor against damage-causing powers and +4 on trait rolls to resist opposed powers.\nSingle Minded: Collectors are not easily swayed from their goal. They receive a +2 bonus to resist Tests of Will and Smarts Tricks.\nSize +1: These cowled demons stand over 7&acirc;&euro;&trade; tall.\nSoul Drain: The uncowled stare of a collector rips the life and soul from its quarry. To use this Ability, the collector must grapple its foe, at which point it removes its cowl and forces its prey to stare into its demonic eyes. The victim must make an opposed Spirit roll or die instantly. The victim&acirc;&euro;&trade;s soul is sent to Hell, making resurrection impossible without somehow freeing it.\nUnnatural Senses: A collector can detect its target anywhere on earth, homing it on it with unerring accuracy (though it may take a while to travel to it). It also ignores all penalties for bad lighting, including complete darkness.\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
+		 'en-US': 'Claws: Str+d6. The claws of a collector ignore all mundane and magical Armor.\nDemon: +2 to recover from being Shaken; Immune to poison and disease; Half- damage from nonmagical attacks except for cold iron.\nFear (-2): Collectors exude an aura of terror. Anyone seeing one must make a Fear check at -2.\nImproved Arcane Resistance: +4 Armor against damage-causing powers and +4 on trait rolls to resist opposed powers.\nSingle Minded: Collectors are not easily swayed from their goal. They receive a +2 bonus to resist Tests of Will and Smarts Tricks.\nSize +1: These cowled demons stand over 7â€™ tall.\nSoul Drain: The uncowled stare of a collector rips the life and soul from its quarry. To use this Ability, the collector must grapple its foe, at which point it removes its cowl and forces its prey to stare into its demonic eyes. The victim must make an opposed Spirit roll or die instantly. The victimâ€™s soul is sent to Hell, making resurrection impossible without somehow freeing it.\nUnnatural Senses: A collector can detect its target anywhere on earth, homing it on it with unerring accuracy (though it may take a while to travel to it). It also ignores all penalties for bad lighting, including complete darkness.\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
 	},
 	 tags: {
 		 'en-US': 'demon,demons,devil,devils,',
@@ -31506,7 +31506,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Engulf: Crazalphasalius  lls an area some 12&acirc;&euro; in diameter. Objects within this template take 2d10 damage per round, +1 per 1&acirc;&euro; they are inside his body. They also have a chance of catching  re (see Savage Worlds).\nFear (-4): Anyone seeing the creature must make a Fear check at -4.\nFireball: Crazalphasalius can spit three  fireballs each round without incurring a multi-action penalty. They are aimed using Shooting. Range: 50/100/200, Damage: 2d10 damage (with a chance of the victim catching  re), Large Burst Template. Heavy Weapon.\nFearless: Immune to Fear and Intimidation. &acirc;&euro;&cent;Gargantuan: Creatures add +4 when attacking the body of Crazalphasalius due to its great size, Heavy Armor.\nHardy: If Shaken, further Shaken results have no effect.\nImproved Arcane Resistance: +4 Armor versus magic, and +4 to rolls made to resist magic effects.\nInvulnerability: Immune to all forms of attack other than those which are water- or ice based.\nSize +10: Crazalphasalius averages 80&acirc;&euro;&trade; in width.\nWeakness (Water): Crazalphasalius can only be harmed by water- or ice-based attacks. A bucket of water inflicts 1d6 damage, whereas a  re hose causes 3d6 damage.',
+		 'en-US': 'Engulf: Crazalphasalius  lls an area some 12â€ in diameter. Objects within this template take 2d10 damage per round, +1 per 1â€ they are inside his body. They also have a chance of catching  re (see Savage Worlds).\nFear (-4): Anyone seeing the creature must make a Fear check at -4.\nFireball: Crazalphasalius can spit three  fireballs each round without incurring a multi-action penalty. They are aimed using Shooting. Range: 50/100/200, Damage: 2d10 damage (with a chance of the victim catching  re), Large Burst Template. Heavy Weapon.\nFearless: Immune to Fear and Intimidation. â€¢Gargantuan: Creatures add +4 when attacking the body of Crazalphasalius due to its great size, Heavy Armor.\nHardy: If Shaken, further Shaken results have no effect.\nImproved Arcane Resistance: +4 Armor versus magic, and +4 to rolls made to resist magic effects.\nInvulnerability: Immune to all forms of attack other than those which are water- or ice based.\nSize +10: Crazalphasalius averages 80â€™ in width.\nWeakness (Water): Crazalphasalius can only be harmed by water- or ice-based attacks. A bucket of water inflicts 1d6 damage, whereas a  re hose causes 3d6 damage.',
 	},
 	 tags: {
 		 'en-US': 'dark gods,gods,god,',
@@ -31547,7 +31547,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Scuttle: Creeping hands roll a d4 running die, instead of a d6.\nSize -2: Creeping hands are small creatures.\nSmall: Attackers suffer a -2 penalty to attack a creeping hand due to its size.\nThrottle: A creeping hand scoring a raise on a Fighting attack has grabbed its opponent&acirc;&euro;&trade;s throat. Starting immediately after the throttle begins, roll the hand&acirc;&euro;&trade;s Strength versus the victim&acirc;&euro;&trade;s Vigor. If the hand is successful, it causes Fatigue. This continues each round until the victim is dead or succeeds in an opposed Strength roll to remove it. Fatigue caused by a hand fades every 24 hours.',
+		 'en-US': 'Scuttle: Creeping hands roll a d4 running die, instead of a d6.\nSize -2: Creeping hands are small creatures.\nSmall: Attackers suffer a -2 penalty to attack a creeping hand due to its size.\nThrottle: A creeping hand scoring a raise on a Fighting attack has grabbed its opponentâ€™s throat. Starting immediately after the throttle begins, roll the handâ€™s Strength versus the victimâ€™s Vigor. If the hand is successful, it causes Fatigue. This continues each round until the victim is dead or succeeds in an opposed Strength roll to remove it. Fatigue caused by a hand fades every 24 hours.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -31600,7 +31600,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Arrogant',
 	},
 	 blurb: {
-		 'en-US': 'At the top of every cult is the &acirc;&euro;&oelig;high priest,&acirc;&euro; &acirc;&euro;&oelig;grand wizard,&acirc;&euro; or some such high-titled lunatic. Most have supernatural powers granted to them by their deity. Despite believing in the power of their &acirc;&euro;&oelig;god,&acirc;&euro; they actually use arcane magic rather than invoke miracles.\nThe spell trappings are suggestions. Ideally, you should alter them to  t the nature of the cult the characters are facing.',
+		 'en-US': 'At the top of every cult is the â€œhigh priest,â€ â€œgrand wizard,â€ or some such high-titled lunatic. Most have supernatural powers granted to them by their deity. Despite believing in the power of their â€œgod,â€ they actually use arcane magic rather than invoke miracles.\nThe spell trappings are suggestions. Ideally, you should alter them to  t the nature of the cult the characters are facing.',
 	},
 		attributes: '{"agility":"d6","smarts":"d8","spirit":"d10","strength":"d6","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SPELLCASTING":{"value":"d10"}}',
@@ -31670,7 +31670,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Fear: When using their Mind Control power, the eyes of the Damned glow eerily; anyone seeing this happen must make a Guts check.\nKnow it All: Constant use of their Mind Reading power gives the Damned an almost encyclopedic knowledge of Earth lore. Treat all but the most rarified information as Common Knowledge for them.\nMind Control: The Damned can use the Puppet power at will, and get a +2 to their Spirit rolls when doing so.\nMind Link: The Damned are typically inserted on to Earth in packs of up to a dozen. These packs are in constant mental contact with each other, allowing them to share information instantaneously with each other: when one of them learns something, they all learn it. There is a drawback: if one of them becomes Shaken, the rest of them do, too. (This doesn&rsquo;t extend to Wounds, though!)\nMind Reading: By making an opposed Spirit roll against a target, the Damned can read their mind. With a normal success, they can scan surface thoughts; subsequent raises allow them to scan deeper.',
+		 'en-US': 'Fear: When using their Mind Control power, the eyes of the Damned glow eerily; anyone seeing this happen must make a Guts check.\nKnow it All: Constant use of their Mind Reading power gives the Damned an almost encyclopedic knowledge of Earth lore. Treat all but the most rarified information as Common Knowledge for them.\nMind Control: The Damned can use the Puppet power at will, and get a +2 to their Spirit rolls when doing so.\nMind Link: The Damned are typically inserted on to Earth in packs of up to a dozen. These packs are in constant mental contact with each other, allowing them to share information instantaneously with each other: when one of them learns something, they all learn it. There is a drawback: if one of them becomes Shaken, the rest of them do, too. (This doesn\'t extend to Wounds, though!)\nMind Reading: By making an opposed Spirit roll against a target, the Damned can read their mind. With a normal success, they can scan surface thoughts; subsequent raises allow them to scan deeper.',
 	},
 	 tags: {
 		 'en-US': 'alien,aliens,',
@@ -31682,7 +31682,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'These are human children who have been genetically manipulated by the Grays either pre-conception or in utero. From birth there&rsquo;s no question that they&rsquo;re somehow... different. The Damned often serve as advance scouts for the alien invaders. They&rsquo;re all born with blonde hair and blue eyes.',
+		 'en-US': 'These are human children who have been genetically manipulated by the Grays either pre-conception or in utero. From birth there\'s no question that they\'re somehow... different. The Damned often serve as advance scouts for the alien invaders. They\'re all born with blonde hair and blue eyes.',
 	},
 		attributes: '{"agility":"d6","smarts":"d10","spirit":"d10","strength":"d4","vigor":"d6"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d4"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_KNOWLEDGE":{"value":"d12","special":{"en-US":"Alien Science"}},"SKILL_NOTICE":{"value":"d8"},"SKILL_PERSUASION":{"value":"d8"},"SKILL_REPAIR":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"}}',
@@ -31752,7 +31752,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Boost Undead: Any undead within 5&acirc;&euro; adds +1 to recover from being Shaken,\nFighting damage rolls, and Toughness. &acirc;&euro;&cent;Ethereal: Invisible and immune to normal damage. Magic items, weapons, and supernatural powers affect them normally. &acirc;&euro;&cent;Fear: Anyone seeing the creature must\nmake a Fear check.\nFearless: Immune to Fear and Intimidation. &acirc;&euro;&cent;Immunity: A dark man is immune to all non-magical attacks.\nImproved Arcane Resistance: +4 Armor versus magic, and +4 to rolls made to resist magic effects.\nNecromantic Surge: As a free action, a dark man may make a Spirit roll to send forth a wave of necromantic energy. This  fills a Large Burst Template centered on the creature. Any Shaken undead within the template automatically recover and may act on their Action Card. With a raise on this roll, Wild Card undead automatically recover one wound. Supernatural good creatures caught in the template must make a Vigor roll at -2 or suffer a wound.',
+		 'en-US': 'Boost Undead: Any undead within 5â€ adds +1 to recover from being Shaken,\nFighting damage rolls, and Toughness. â€¢Ethereal: Invisible and immune to normal damage. Magic items, weapons, and supernatural powers affect them normally. â€¢Fear: Anyone seeing the creature must\nmake a Fear check.\nFearless: Immune to Fear and Intimidation. â€¢Immunity: A dark man is immune to all non-magical attacks.\nImproved Arcane Resistance: +4 Armor versus magic, and +4 to rolls made to resist magic effects.\nNecromantic Surge: As a free action, a dark man may make a Spirit roll to send forth a wave of necromantic energy. This  fills a Large Burst Template centered on the creature. Any Shaken undead within the template automatically recover and may act on their Action Card. With a raise on this roll, Wild Card undead automatically recover one wound. Supernatural good creatures caught in the template must make a Vigor roll at -2 or suffer a wound.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -31764,7 +31764,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Although often referred to as &acirc;&euro;&oelig;the&acirc;&euro; Dark Man, evidence suggests that this creature is not a unique entity. A dark man, is a humanoid  gure of inky darkness with no visible facial features.\nA dark man is a source of pure necromantic energy, and its power lies in its ability to boost undead. As such, they are never summoned except to &acirc;&euro;&oelig;lead&acirc;&euro; a host of such  ends. Their abilities work on Wild Card undead as well as Extras.',
+		 'en-US': 'Although often referred to as â€œtheâ€ Dark Man, evidence suggests that this creature is not a unique entity. A dark man, is a humanoid  gure of inky darkness with no visible facial features.\nA dark man is a source of pure necromantic energy, and its power lies in its ability to boost undead. As such, they are never summoned except to â€œleadâ€ a host of such  ends. Their abilities work on Wild Card undead as well as Extras.',
 	},
 		attributes: '{"agility":"d6","smarts":"d8","spirit":"d10","strength":"d6","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d12+2"}}',
@@ -31805,7 +31805,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Dark stalkers are small insectoid aliens that hang on the shadowy sides of ceilings, waiting for unsuspecting victims to pass below. When they spot prey, they race down from their hidings, and strike with lightning speed. Their prey almost never sees them coming before it&rsquo;s too late.\nBefore they strike, dark stalkers are almost totally silent. They emit an evil hissing sound when fighting that sounds almost like a riled serpent.',
+		 'en-US': 'Dark stalkers are small insectoid aliens that hang on the shadowy sides of ceilings, waiting for unsuspecting victims to pass below. When they spot prey, they race down from their hidings, and strike with lightning speed. Their prey almost never sees them coming before it\'s too late.\nBefore they strike, dark stalkers are almost totally silent. They emit an evil hissing sound when fighting that sounds almost like a riled serpent.',
 	},
 		attributes: '{"agility":"d10","smarts":"d4 (A)","spirit":"d6","strength":"d10","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_GUTS":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"}}',
@@ -31834,7 +31834,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Fanatical: Minions go berserk, as per the Edge, if they see their master take a wound. &acirc;&euro;&cent;Lame: Minions roll a d4 running die instead of a d6.\nSize -1: Minions are usually stunted or twisted.',
+		 'en-US': 'Fanatical: Minions go berserk, as per the Edge, if they see their master take a wound. â€¢Lame: Minions roll a d4 running die instead of a d6.\nSize -1: Minions are usually stunted or twisted.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -31846,7 +31846,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Every mad scientist or cult leader has a trusty sidekick, and they&acirc;&euro;&trade;re usually deformed in some way. Deformed minions are fanatically loyal to their master.',
+		 'en-US': 'Every mad scientist or cult leader has a trusty sidekick, and theyâ€™re usually deformed in some way. Deformed minions are fanatically loyal to their master.',
 	},
 		attributes: '{"agility":"d6","smarts":"d6","spirit":"d8","strength":"d10","vigor":"d8"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"},"SKILL_TAUNT":{"value":"d6"}}',
@@ -31875,7 +31875,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor +4: Thick layers of fat.\nBite: Str+d8\nDemon: +2 to recover from being Shaken; Immune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nFear (-2): Anyone seeing the creature must make a Fear check at -2.\nHardy: The creature does not suffer a wound from being Shaken twice.\nHuge: Attackers add +4 to their Fighting or Shooting rolls when attacking a worm due to its size.\nSize +8: Demon worms are usually well over 30&acirc;&euro;&trade; long and 10&acirc;&euro;&trade; or more in diameter. &acirc;&euro;&cent;Slam: Demon worms attempt to rise up and crush their prey beneath their massive bodies. This is an opposed roll of the creature&acirc;&euro;&trade;s Fighting versus the target&acirc;&euro;&trade;s Agility. If the worm wins, the victim suffers 4d6 damage.\nTentacles: A demon worm may make up to four attacks each round. On a raise, the creature has grappled the victim. An entangled victim may only attempt an opposed Strength roll each round to escape. Once grappled,  the demon worm does its Strength damage automatically by rending with its teeth. A victim killed by a demon worm&acirc;&euro;&trade;s tentacles is devoured and dissolved within a few hours.\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
+		 'en-US': 'Armor +4: Thick layers of fat.\nBite: Str+d8\nDemon: +2 to recover from being Shaken; Immune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nFear (-2): Anyone seeing the creature must make a Fear check at -2.\nHardy: The creature does not suffer a wound from being Shaken twice.\nHuge: Attackers add +4 to their Fighting or Shooting rolls when attacking a worm due to its size.\nSize +8: Demon worms are usually well over 30â€™ long and 10â€™ or more in diameter. â€¢Slam: Demon worms attempt to rise up and crush their prey beneath their massive bodies. This is an opposed roll of the creatureâ€™s Fighting versus the targetâ€™s Agility. If the worm wins, the victim suffers 4d6 damage.\nTentacles: A demon worm may make up to four attacks each round. On a raise, the creature has grappled the victim. An entangled victim may only attempt an opposed Strength roll each round to escape. Once grappled,  the demon worm does its Strength damage automatically by rending with its teeth. A victim killed by a demon wormâ€™s tentacles is devoured and dissolved within a few hours.\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
 	},
 	 tags: {
 		 'en-US': 'demon,demons,devil,devils,',
@@ -31969,7 +31969,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Although Satanists often claim to have summoned the Devil, Lucifer is too powerful to answer to the beck\nand call of mortals. The creature summoned by these misguided fools is actually a devilkin, a minor minion of the Devil. Devilkins are humanoid, but have cloven hooves and the head of a goat.\nThe devilkin does not speak, but it listens to the summoner&acirc;&euro;&trade;s please, canting its unearthly head back and forth as it does so. Then it runs off and tries to fulfill the caster&acirc;&euro;&trade;s pleas&acirc;&euro;&rdquo;in the worst way possible.\nIt won&acirc;&euro;&trade;t attack the summoner though&acirc;&euro;&rdquo;it wants to torment her through its deeds instead.',
+		 'en-US': 'Although Satanists often claim to have summoned the Devil, Lucifer is too powerful to answer to the beck\nand call of mortals. The creature summoned by these misguided fools is actually a devilkin, a minor minion of the Devil. Devilkins are humanoid, but have cloven hooves and the head of a goat.\nThe devilkin does not speak, but it listens to the summonerâ€™s please, canting its unearthly head back and forth as it does so. Then it runs off and tries to fulfill the casterâ€™s pleasâ€”in the worst way possible.\nIt wonâ€™t attack the summoner thoughâ€”it wants to torment her through its deeds instead.',
 	},
 		attributes: '{"agility":"d8","smarts":"d10 (A)","spirit":"d8","strength":"d8","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SPELLCASTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"}}',
@@ -32039,7 +32039,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str+d6.\nGo for the Throat: Wolves instinctively go for an opponent&acirc;&euro;&trade;s soft spots. With a raise on its attack roll, it hits the target&acirc;&euro;&trade;s most weakly armored location.\nFleet-Footed: Dire wolves roll d10s instead of d6s when running.',
+		 'en-US': 'Bite: Str+d6.\nGo for the Throat: Wolves instinctively go for an opponentâ€™s soft spots. With a raise on its attack roll, it hits the targetâ€™s most weakly armored location.\nFleet-Footed: Dire wolves roll d10s instead of d6s when running.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -32080,7 +32080,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Fear (-3): Anyone seeing the dismembered corpse after it has separated must make a Fear test at -3.\nFearless: Immune to Fear and Intimidation. \nImmunity: The first wound a dismembered corpse takes causes it to separate, but causes no actual damage.\nSeparate Limbs: Each limb acts as an independent character. Thus, the  end can make seven attacks a round without incurring a multi action penalty. Treat each limb as an Extra. Only by destroying all seven parts can the corpse be vanquished.\nHead: Head butt or bite for Str damage. &acirc;&euro;&cent;Torso: Slam for Str damage.\nIntestines: Grapple.\nArms (2): Claws for Str+d6 damage. &acirc;&euro;&cent;Legs (2): Claws for Str+d4 damage. &acirc;&euro;&cent;Size-2: After the corpse has divided, each part is a smaller target and has Toughness 6.\nUndead: +2 Toughness; +2 to recover from being Shaken; no additional damage from Called Shots; immune to disease and poison; does not suffer wound penalties.',
+		 'en-US': 'Fear (-3): Anyone seeing the dismembered corpse after it has separated must make a Fear test at -3.\nFearless: Immune to Fear and Intimidation. \nImmunity: The first wound a dismembered corpse takes causes it to separate, but causes no actual damage.\nSeparate Limbs: Each limb acts as an independent character. Thus, the  end can make seven attacks a round without incurring a multi action penalty. Treat each limb as an Extra. Only by destroying all seven parts can the corpse be vanquished.\nHead: Head butt or bite for Str damage. â€¢Torso: Slam for Str damage.\nIntestines: Grapple.\nArms (2): Claws for Str+d6 damage. â€¢Legs (2): Claws for Str+d4 damage. â€¢Size-2: After the corpse has divided, each part is a smaller target and has Toughness 6.\nUndead: +2 Toughness; +2 to recover from being Shaken; no additional damage from Called Shots; immune to disease and poison; does not suffer wound penalties.',
 	},
 	 tags: {
 		 'en-US': 'undead,',
@@ -32092,7 +32092,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'When first encountered, dismembered corpses look exactly like zombies. However, after they take their first wound, they  y apart into four limbs, a torso, intestines, and a head&acirc;&euro;&rdquo;each acting as an independent entity.\nThe various parts  oat around the torso, but operate completely independently. These various bits  ail, slap, kick, and claw at their bewildered foes.',
+		 'en-US': 'When first encountered, dismembered corpses look exactly like zombies. However, after they take their first wound, they  y apart into four limbs, a torso, intestines, and a headâ€”each acting as an independent entity.\nThe various parts  oat around the torso, but operate completely independently. These various bits  ail, slap, kick, and claw at their bewildered foes.',
 	},
 		attributes: '{"agility":"d6","smarts":"d4","spirit":"d4","strength":"d8","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d4"},"SKILL_STEALTH":{"value":"d6"}}',
@@ -32121,7 +32121,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str+d4.\nFleet-Footed: Roll a d10 when running instead of a d6.\nGo for the Throat: Dogs instinctively go for an opponent&acirc;&euro;&trade;s soft spots. With a raise on its attack roll, it hits the target&acirc;&euro;&trade;s most weakly armored location.\nSize -1: Dogs are relatively small.',
+		 'en-US': 'Bite: Str+d4.\nFleet-Footed: Roll a d10 when running instead of a d6.\nGo for the Throat: Dogs instinctively go for an opponentâ€™s soft spots. With a raise on its attack roll, it hits the targetâ€™s most weakly armored location.\nSize -1: Dogs are relatively small.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -32162,7 +32162,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Death Touch: Liches drain the lives of those around them with a touch. Instead of a normal attack, a liche may make a touch attack. Every raise on its Fighting roll automatically inflicts one wound to its target. An Incapacitated victim must make a final Vigor roll or join the ranks of the damned as a zombie 1d4 rounds later.\nFear: Anyone seeing the creature must make a Fear test.\nImmunity: Dread liches can only be harmed by magical attacks.\nLeader of the Damned: Non Wild Card undead within 5&acirc;&euro; add +1 to recover from being Shaken and +1 to Fighting damage rolls.\nSpells: Liches have 65 Power Points and know most every spell available.\nTransfer Essence: A dread liche may transfer its essence to any Extra undead within 5&acirc;&euro;. This requires a Spellcasting roll and uses 5 Power Points. On a success, the old body crumbles to dust and the new body becomes a dread liche.\nUndead: +2 Toughness; +2 to recover from being Shaken; no additional damage from Called Shots; immune to disease and poison; does not suffer wound penalties.\nZombie: Dread liches are necromancers  rst and foremost. The undead they raise are permanent, so they are usually surrounded by 4d10 skeletons or zombies as they choose. Some liches have entire armies of the undead at their disposal.',
+		 'en-US': 'Death Touch: Liches drain the lives of those around them with a touch. Instead of a normal attack, a liche may make a touch attack. Every raise on its Fighting roll automatically inflicts one wound to its target. An Incapacitated victim must make a final Vigor roll or join the ranks of the damned as a zombie 1d4 rounds later.\nFear: Anyone seeing the creature must make a Fear test.\nImmunity: Dread liches can only be harmed by magical attacks.\nLeader of the Damned: Non Wild Card undead within 5â€ add +1 to recover from being Shaken and +1 to Fighting damage rolls.\nSpells: Liches have 65 Power Points and know most every spell available.\nTransfer Essence: A dread liche may transfer its essence to any Extra undead within 5â€. This requires a Spellcasting roll and uses 5 Power Points. On a success, the old body crumbles to dust and the new body becomes a dread liche.\nUndead: +2 Toughness; +2 to recover from being Shaken; no additional damage from Called Shots; immune to disease and poison; does not suffer wound penalties.\nZombie: Dread liches are necromancers  rst and foremost. The undead they raise are permanent, so they are usually surrounded by 4d10 skeletons or zombies as they choose. Some liches have entire armies of the undead at their disposal.',
 	},
 	 tags: {
 		 'en-US': 'undead,',
@@ -32174,7 +32174,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Dread liches are those foul beings who have &acirc;&euro;&oelig;lived&acirc;&euro; for centuries, refining and honing their mastery of the dark arts. Aside from having greater magic and enhanced control over lesser undead than liches, dread liches can avoid destruction by transferring their essence to lesser undead.',
+		 'en-US': 'Dread liches are those foul beings who have â€œlivedâ€ for centuries, refining and honing their mastery of the dark arts. Aside from having greater magic and enhanced control over lesser undead than liches, dread liches can avoid destruction by transferring their essence to lesser undead.',
 	},
 		attributes: '{"agility":"d6","smarts":"d12+2","spirit":"d12","strength":"d10","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d10"},"SKILL_SPELLCASTING":{"value":"d12"},"SKILL_KNOWLEDGE0":{"special":{"en-US":"Battle"},"value":"d10"}}',
@@ -32215,7 +32215,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'At certain times of the year, evil holds great sway. All Hallows Eve is one such occasion, but there are others. During this time, creatures born in sleepers&acirc;&euro;&trade; nightmares gain the power to enter the physical world.\nTheir exact form varies from sleeper to sleeper. Some take the form of demonic clowns, others as tentacled beasts or maniacal versions of abusive parents. Regardless of form, all are intent on manifesting in the physical world and causing as much mayhem as possible.\nDream evils materialize after their host has gone to sleep, generally appearing within a few miles and proceed to act something like what they&acirc;&euro;&trade;ve manifested as. A giant spider lurks in trees and ensnares victims, however. An evil clown might appear near a circus and lure attendees into a dark tent where it can devour them.\nDream evils never attack their host&acirc;&euro;&rdquo;that automatically ends their existence. The only way to be rid of them is to survive seven straight nights without sleep, or via the banish entity power.\nDream evils have physical statistics based on their form. Their Smarts and Spirit are equal to the Spirit of the host. They also have the following Special Abilities.',
+		 'en-US': 'At certain times of the year, evil holds great sway. All Hallows Eve is one such occasion, but there are others. During this time, creatures born in sleepersâ€™ nightmares gain the power to enter the physical world.\nTheir exact form varies from sleeper to sleeper. Some take the form of demonic clowns, others as tentacled beasts or maniacal versions of abusive parents. Regardless of form, all are intent on manifesting in the physical world and causing as much mayhem as possible.\nDream evils materialize after their host has gone to sleep, generally appearing within a few miles and proceed to act something like what theyâ€™ve manifested as. A giant spider lurks in trees and ensnares victims, however. An evil clown might appear near a circus and lure attendees into a dark tent where it can devour them.\nDream evils never attack their hostâ€”that automatically ends their existence. The only way to be rid of them is to survive seven straight nights without sleep, or via the banish entity power.\nDream evils have physical statistics based on their form. Their Smarts and Spirit are equal to the Spirit of the host. They also have the following Special Abilities.',
 	},
 		attributes: '{"agility":"","smarts":"","spirit":"","strength":"","vigor":""}',
 		skills: '[]',
@@ -32256,7 +32256,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Dreamreavers are spirits of nightmare that walk the mortal world looking for victims&acirc;&euro;&trade; psyches to feed upon. They do so by plunging the victim into a terrible and all-too-real dream world. Within, the dreamer must battle to complete some quest, overcoming obstacles and defeating foes, or remain lost in the nightmare land forever.\nDreamreavers often pull close companions of their victims into the nightmare realm as well. This means an entire party might find themselves trapped in one of their companions&acirc;&euro;&trade; nightmares.\nOnce in the dream world, the victim soon stumbles upon some quest that he feels compelled to complete. The task may be simple escape, it may be to defeat a dread foe, or it may to reach some distant objective.\nThe foes and obstacles faced along the way are very real (within the dream world, anyway), and should be handled just as in regular play.\nVictims who die within the dream world remain in a coma in the physical world. They are essentially brain dead&acirc;&euro;&rdquo;the dreamreaver has devoured their essence.\nThose who survive and &acirc;&euro;&oelig;win&acirc;&euro; dispel the dreamreaver and are blessed with restful sleep for the rest of their lives. If they suffered from night terrors or other sleep disorders before, they are cured. They may still have occasional nightmares, but are always aware they are nothing but dreams and ignore any ill effects.\nThe statistics below are for the dreamreaver&acirc;&euro;&trade;s invisible spirit form. Those who can see such things spy a squat, toad-like humanoid with black eyes, lolling tongue, and vacant, slack- jawed gaze.',
+		 'en-US': 'Dreamreavers are spirits of nightmare that walk the mortal world looking for victimsâ€™ psyches to feed upon. They do so by plunging the victim into a terrible and all-too-real dream world. Within, the dreamer must battle to complete some quest, overcoming obstacles and defeating foes, or remain lost in the nightmare land forever.\nDreamreavers often pull close companions of their victims into the nightmare realm as well. This means an entire party might find themselves trapped in one of their companionsâ€™ nightmares.\nOnce in the dream world, the victim soon stumbles upon some quest that he feels compelled to complete. The task may be simple escape, it may be to defeat a dread foe, or it may to reach some distant objective.\nThe foes and obstacles faced along the way are very real (within the dream world, anyway), and should be handled just as in regular play.\nVictims who die within the dream world remain in a coma in the physical world. They are essentially brain deadâ€”the dreamreaver has devoured their essence.\nThose who survive and â€œwinâ€ dispel the dreamreaver and are blessed with restful sleep for the rest of their lives. If they suffered from night terrors or other sleep disorders before, they are cured. They may still have occasional nightmares, but are always aware they are nothing but dreams and ignore any ill effects.\nThe statistics below are for the dreamreaverâ€™s invisible spirit form. Those who can see such things spy a squat, toad-like humanoid with black eyes, lolling tongue, and vacant, slack- jawed gaze.',
 	},
 		attributes: '{"agility":"d8","smarts":"d10","spirit":"d8","strength":"d6","vigor":"d6"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d4"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d10"}}',
@@ -32338,7 +32338,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Not all zombies are near-mindless, shambling corpses. The einherjar are one such breed of zombies. In Norse mythology, the einherjar were Odin&acirc;&euro;&trade;s eternal warriors, mortals who had earned a seat in Valhalla. Necromancers could petition Odin for use of the einherjar, though on Earth they appear as zombies rather than &acirc;&euro;&oelig;live&acirc;&euro; warriors. They are renowned for their strength and courage.\nIn a fantasy horror game, a god of battle might have similar undead followers he loans to favored mortals. For a modern game, perhaps the ancient Norse gods are not completely dead and can still make their presence felt on Earth.\nEinherjar can speak, though traditional ones only speak Old Norse. A character with knowledge of any Scandinavian language can make a Common Knowledge (if it&acirc;&euro;&trade;s his native tongue) or Knowledge (Language) to communicate with them.',
+		 'en-US': 'Not all zombies are near-mindless, shambling corpses. The einherjar are one such breed of zombies. In Norse mythology, the einherjar were Odinâ€™s eternal warriors, mortals who had earned a seat in Valhalla. Necromancers could petition Odin for use of the einherjar, though on Earth they appear as zombies rather than â€œliveâ€ warriors. They are renowned for their strength and courage.\nIn a fantasy horror game, a god of battle might have similar undead followers he loans to favored mortals. For a modern game, perhaps the ancient Norse gods are not completely dead and can still make their presence felt on Earth.\nEinherjar can speak, though traditional ones only speak Old Norse. A character with knowledge of any Scandinavian language can make a Common Knowledge (if itâ€™s his native tongue) or Knowledge (Language) to communicate with them.',
 	},
 		attributes: '{"agility":"d6","smarts":"d6","spirit":"d8","strength":"d12","vigor":"d10"}',
 		skills: '{"SKILL_BOATING":{"value":"d6"},"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_TAUNT":{"value":"d6"},"SKILL_THROWING":{"value":"d8"}}',
@@ -32367,7 +32367,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Dark Emotion: The spirit attaches itself to a single victim and stays within a few feet for the duration of its &acirc;&euro;&oelig;life.&acirc;&euro; While present, it enhances the host&acirc;&euro;&trade;s negative emotions. A peaceful man might become angry or short-tempered, while a naturally angry man likely becomes violent.\nEthereal: Invisible and immune to normal damage. Magic items, weapons, and supernatural powers affect them normally.\nExorcism: An emotion spirit can be made  esh by a banish entity spell. If destroyed in that state, it vanishes forever.',
+		 'en-US': 'Dark Emotion: The spirit attaches itself to a single victim and stays within a few feet for the duration of its â€œlife.â€ While present, it enhances the hostâ€™s negative emotions. A peaceful man might become angry or short-tempered, while a naturally angry man likely becomes violent.\nEthereal: Invisible and immune to normal damage. Magic items, weapons, and supernatural powers affect them normally.\nExorcism: An emotion spirit can be made  esh by a banish entity spell. If destroyed in that state, it vanishes forever.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -32379,7 +32379,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Emotion spirits are non-corporeal embodiments of a dark or negative emotion, such as hatred or greed.\nThey attach themselves to a victim who was&acirc;&euro;&rdquo;at least momentarily&acirc;&euro;&rdquo;affected by its particular vice. So a Greedy character, or one who was even temporarily greedy, might attract the spirit&acirc;&euro;&trade;s attention.\nAfter that, the creature follows its host around, invisible and ethereal, emphasizing this negative trait to the extreme in hopes of causing more misery and pain.\nTo those who can see them, or once made  esh (see below), their form varies by type. A spirit of greed might appear as a corpulent human weighed down by golden chains. A spirit of cruelty might be covered in weeping whip marks.',
+		 'en-US': 'Emotion spirits are non-corporeal embodiments of a dark or negative emotion, such as hatred or greed.\nThey attach themselves to a victim who wasâ€”at least momentarilyâ€”affected by its particular vice. So a Greedy character, or one who was even temporarily greedy, might attract the spiritâ€™s attention.\nAfter that, the creature follows its host around, invisible and ethereal, emphasizing this negative trait to the extreme in hopes of causing more misery and pain.\nTo those who can see them, or once made  esh (see below), their form varies by type. A spirit of greed might appear as a corpulent human weighed down by golden chains. A spirit of cruelty might be covered in weeping whip marks.',
 	},
 		attributes: '{"agility":"d6","smarts":"d4","spirit":"d10","strength":"d6","vigor":"d6"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d8"}}',
@@ -32408,7 +32408,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Acrobat: Clowns are experts at tumbling. They have +2 to perform Agility Tricks and have +1 Parry.\nBite: Str+d12. Whenever a victim is Shaken, an evil clown exposes its massive mouth full of jagged, rotting teeth.\nClaws: Str+d6.\nFear (-2): Once a clown has its victim isolated and alone, it drops its disguise and reveals its true self, causing a Fear test at -2. &acirc;&euro;&cent;Improved Frenzy: Evil clowns may make two claw attacks per round at no penalty.',
+		 'en-US': 'Acrobat: Clowns are experts at tumbling. They have +2 to perform Agility Tricks and have +1 Parry.\nBite: Str+d12. Whenever a victim is Shaken, an evil clown exposes its massive mouth full of jagged, rotting teeth.\nClaws: Str+d6.\nFear (-2): Once a clown has its victim isolated and alone, it drops its disguise and reveals its true self, causing a Fear test at -2. â€¢Improved Frenzy: Evil clowns may make two claw attacks per round at no penalty.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -32420,7 +32420,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'That irrational fear you have of clowns isn&acirc;&euro;&trade;t always irrational. Below is a common version of the evil clown&acirc;&euro;&rdquo;the kind that lures victims into the dark and devours them.\nA gaggle of clowns have the statistics listed below. A single clown&acirc;&euro;&rdquo;or sometimes a &acirc;&euro;&oelig;boss clown&acirc;&euro;&acirc;&euro;&rdquo;is a Wild Card.',
+		 'en-US': 'That irrational fear you have of clowns isnâ€™t always irrational. Below is a common version of the evil clownâ€”the kind that lures victims into the dark and devours them.\nA gaggle of clowns have the statistics listed below. A single clownâ€”or sometimes a â€œboss clownâ€â€”is a Wild Card.',
 	},
 		attributes: '{"agility":"d10","smarts":"d6","spirit":"d8","strength":"d10","vigor":"d10"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_DRIVING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_PERSUASION":{"value":"d10"},"SKILL_STEALTH":{"value":"d8"},"SKILL_TAUNT":{"value":"d10"}}',
@@ -32490,7 +32490,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str+d6 vs ethereals only.\nDire Warning: When a fetch detects an invisible or ethereal foe within about 20 yards (10&acirc;&euro; on the table-top), its host gains a vague sense of the enemy&acirc;&euro;&trade;s location as well. He may attack it at -2 (assuming he has no way of seeing the thing himself), but still can only harm it if he has a magical attack of some sort.\nEthereal: Invisible and immune to normal damage. Magic items, weapons, and supernatural powers affect them normally (including attacks from other ethereals).\nSee Invisible: A fetch can see invisible creatures, whether they are  esh or ethereal.\nSize (-1): Dogs are small creatures.',
+		 'en-US': 'Bite: Str+d6 vs ethereals only.\nDire Warning: When a fetch detects an invisible or ethereal foe within about 20 yards (10â€ on the table-top), its host gains a vague sense of the enemyâ€™s location as well. He may attack it at -2 (assuming he has no way of seeing the thing himself), but still can only harm it if he has a magical attack of some sort.\nEthereal: Invisible and immune to normal damage. Magic items, weapons, and supernatural powers affect them normally (including attacks from other ethereals).\nSee Invisible: A fetch can see invisible creatures, whether they are  esh or ethereal.\nSize (-1): Dogs are small creatures.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -32502,7 +32502,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Fetches are spiritual companions to mortals who can detect spirits and other ethereal beings. Traditionally, only people born on a Saturday could have a fetch dog, but this may vary depending on the setting and your particular lore. In a game setting, fetch&acirc;&euro;&trade;s are probably better suited to be gifts from powerful friendly entities.\nThe &acirc;&euro;&oelig;owner&acirc;&euro; of a fetch cannot communicate with it&acirc;&euro;&rdquo;the thing simply stays by its companion at all times, protecting its master from evil to the best of its ability. It cannot affect the physical world in any way.\nFetches are invisible, but occasionally&acirc;&euro;&rdquo;at the Game Master&acirc;&euro;&trade;s discretion&acirc;&euro;&rdquo;mortals might catch a glimpse of the creature.',
+		 'en-US': 'Fetches are spiritual companions to mortals who can detect spirits and other ethereal beings. Traditionally, only people born on a Saturday could have a fetch dog, but this may vary depending on the setting and your particular lore. In a game setting, fetchâ€™s are probably better suited to be gifts from powerful friendly entities.\nThe â€œownerâ€ of a fetch cannot communicate with itâ€”the thing simply stays by its companion at all times, protecting its master from evil to the best of its ability. It cannot affect the physical world in any way.\nFetches are invisible, but occasionallyâ€”at the Game Masterâ€™s discretionâ€”mortals might catch a glimpse of the creature.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d8","strength":"d6","vigor":"d6"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"},"SKILL_STEALTH":{"value":"d6"}}',
@@ -32572,7 +32572,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Cry: As an action, a flying head can emit a terrifying howl. Any creature within 20 yards (10&acirc;&euro;) must make a Fear test at -4. If multiple heads howl in the same round, there is -1 penalty to the Fear roll for each.\nFear: Anyone seeing the creature must make a Fear test.\nFearless: Immune to Fear (except lightning) and Intimidation.\nFlying: Pace 8&acirc;&euro;, Climb 0.\nKick: Str+d6.\nWeakness (Lightning): Flying heads fear lightning. Seeing lightning causes them to make a Fear check. On a failure, they immediately  flee the area, seeking refuge away from the blinding light.',
+		 'en-US': 'Cry: As an action, a flying head can emit a terrifying howl. Any creature within 20 yards (10â€) must make a Fear test at -4. If multiple heads howl in the same round, there is -1 penalty to the Fear roll for each.\nFear: Anyone seeing the creature must make a Fear test.\nFearless: Immune to Fear (except lightning) and Intimidation.\nFlying: Pace 8â€, Climb 0.\nKick: Str+d6.\nWeakness (Lightning): Flying heads fear lightning. Seeing lightning causes them to make a Fear check. On a failure, they immediately  flee the area, seeking refuge away from the blinding light.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -32584,7 +32584,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Among certain tribes of North American Indians, there exist stories of  flying heads. Each head is as tall as a man, and rests upon two short legs. At the end of each leg are a set of powerful claws.\nFlying heads emit a fearsome cry which can turn a warrior&acirc;&euro;&trade;s blood to ice.',
+		 'en-US': 'Among certain tribes of North American Indians, there exist stories of  flying heads. Each head is as tall as a man, and rests upon two short legs. At the end of each leg are a set of powerful claws.\nFlying heads emit a fearsome cry which can turn a warriorâ€™s blood to ice.',
 	},
 		attributes: '{"agility":"d8","smarts":"d8","spirit":"d10","strength":"d8","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"},"SKILL_SWIMMING":{"value":"d10"}}',
@@ -32625,7 +32625,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Pumpkin Jack is probably the most famous foul scarecrow, but he isn&acirc;&euro;&trade;t the only one of his kind. Foul scarecrows are most commonly awakened by evil spirits, but sometimes the spilling of blood can awaken them. Old battle fields now turned over to agriculture are good candidates.',
+		 'en-US': 'Pumpkin Jack is probably the most famous foul scarecrow, but he isnâ€™t the only one of his kind. Foul scarecrows are most commonly awakened by evil spirits, but sometimes the spilling of blood can awaken them. Old battle fields now turned over to agriculture are good candidates.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d10","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d10"}}',
@@ -32695,7 +32695,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Claws: Str+d4.\nInfravision: Ghouls halve penalties (round down) for bad lighting when attacking living targets.\nKeen Nose: Ghouls get +2 to Notice and Tracking rolls against living targets.\nParalysis: Victims of a ghoul&acirc;&euro;&trade;s claw attack must make a Vigor roll at -2 or be paralyzed for 2d6 minutes.',
+		 'en-US': 'Claws: Str+d4.\nInfravision: Ghouls halve penalties (round down) for bad lighting when attacking living targets.\nKeen Nose: Ghouls get +2 to Notice and Tracking rolls against living targets.\nParalysis: Victims of a ghoulâ€™s claw attack must make a Vigor roll at -2 or be paralyzed for 2d6 minutes.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -32707,7 +32707,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Ghouls are vile scavengers, feasting off carrion and unfortunate victims who cross their path while feeding. Whether they are a natural species or the creation of foul magic is open to debate.\nGhouls have pale, rubbery skin with the texture of uncooked pastry. Their eyes are large and glow with a pale feral-yellow color. They have sharp claws and teeth, often with shreds of rendered  flesh hanging from them.\nGhouls typically scavenge in packs of 3-9 creatures (1d6+3), and live in vast lairs of 20+ individuals with a Wild Card &acirc;&euro;&oelig;king.&acirc;&euro;',
+		 'en-US': 'Ghouls are vile scavengers, feasting off carrion and unfortunate victims who cross their path while feeding. Whether they are a natural species or the creation of foul magic is open to debate.\nGhouls have pale, rubbery skin with the texture of uncooked pastry. Their eyes are large and glow with a pale feral-yellow color. They have sharp claws and teeth, often with shreds of rendered  flesh hanging from them.\nGhouls typically scavenge in packs of 3-9 creatures (1d6+3), and live in vast lairs of 20+ individuals with a Wild Card â€œking.â€',
 	},
 		attributes: '{"agility":"d10","smarts":"d6","spirit":"d6","strength":"d8","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"},"SKILL_TRACKING":{"value":"d8"}}',
@@ -32736,7 +32736,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Ambidextrous: May use either hand at no penalty.\nArmor +2: Pieces of metal.\nBerserk: The demon makes a Smarts roll after receiving a wound. If it fails, its Parry is reduced by 2 but it adds +2 to all Fighting, Strength, Toughness, and melee damage rolls. It ignores all wound modi ers. A Fighting die roll of 1 hits a random adjacent foe instead of the original target. Gladiator demons only end their berserk fury when all foes in sight are dead.\nBlades: Str+d10, Reach 1. \nDemon: +2 to recover from being Shaken; Immune to poison and disease; Half-damage from nonmagical attacks except for cold iron.\nFear: Anyone seeing the creature must make a Fear test.\nFearless: Immune to Fear and Intimidation. \nInfravision: Gladiators halve penalties for bad lighting when attacking living targets (round down).\nLarge: Attackers are +2 to attack rolls against the creature because of its size. \nSize +5: Gladiators are over 15&acirc;&euro;&trade; tall.',
+		 'en-US': 'Ambidextrous: May use either hand at no penalty.\nArmor +2: Pieces of metal.\nBerserk: The demon makes a Smarts roll after receiving a wound. If it fails, its Parry is reduced by 2 but it adds +2 to all Fighting, Strength, Toughness, and melee damage rolls. It ignores all wound modi ers. A Fighting die roll of 1 hits a random adjacent foe instead of the original target. Gladiator demons only end their berserk fury when all foes in sight are dead.\nBlades: Str+d10, Reach 1. \nDemon: +2 to recover from being Shaken; Immune to poison and disease; Half-damage from nonmagical attacks except for cold iron.\nFear: Anyone seeing the creature must make a Fear test.\nFearless: Immune to Fear and Intimidation. \nInfravision: Gladiators halve penalties for bad lighting when attacking living targets (round down).\nLarge: Attackers are +2 to attack rolls against the creature because of its size. \nSize +5: Gladiators are over 15â€™ tall.',
 	},
 	 tags: {
 		 'en-US': 'demon,demons,devil,devils,',
@@ -32748,7 +32748,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Gladiators are Hell&acirc;&euro;&trade;s warriors,  ghting in the service&acirc;&euro;&rdquo;or for the amusement&acirc;&euro;&rdquo;of demon princes. They are towering monstrosities of muscle, metal, and hate.\nSomewhere in the bowels of the Abyss, in some horri c workshop of screaming blacksmiths, metal plates have been crudely riveted onto its  esh; and its arms below the elbow end in large, jagged blades, the tips of which scrape along the ground when the beast moves. Even when calm, a gladiator froths at the mouth and has a mad look in its eyes.',
+		 'en-US': 'Gladiators are Hellâ€™s warriors,  ghting in the serviceâ€”or for the amusementâ€”of demon princes. They are towering monstrosities of muscle, metal, and hate.\nSomewhere in the bowels of the Abyss, in some horri c workshop of screaming blacksmiths, metal plates have been crudely riveted onto its  esh; and its arms below the elbow end in large, jagged blades, the tips of which scrape along the ground when the beast moves. Even when calm, a gladiator froths at the mouth and has a mad look in its eyes.',
 	},
 		attributes: '{"agility":"d10","smarts":"d6","spirit":"d8","strength":"d12+3","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d12"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"}}',
@@ -32818,7 +32818,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor +2: Goblins are densely muscled and have a thick, leathery hide, making them surprisingly resistant to physical injury.\nBlind: These creatures are immune to any vision-based effects (darkness, invisibility, obscure, etc.).\nBurrowing: 4&acirc;&euro;.\nClaws: Str+1d4, AP 2. Goblin claws are dense and sharp, capable of scoring solid stone.\nEcho Location: Goblins do not suffer any penalties for bad lighting.\nSize -1: Goblins stand 4&acirc;&euro;&trade; tall on average. &acirc;&euro;&cent;Weakness (Sound): Loud noises, such as gunshots or explosions, force goblins to make a Vigor roll or be deafened, suffering a -6 to all physical tasks that require &acirc;&euro;&oelig;vision&acirc;&euro; for the next round.',
+		 'en-US': 'Armor +2: Goblins are densely muscled and have a thick, leathery hide, making them surprisingly resistant to physical injury.\nBlind: These creatures are immune to any vision-based effects (darkness, invisibility, obscure, etc.).\nBurrowing: 4â€.\nClaws: Str+1d4, AP 2. Goblin claws are dense and sharp, capable of scoring solid stone.\nEcho Location: Goblins do not suffer any penalties for bad lighting.\nSize -1: Goblins stand 4â€™ tall on average. â€¢Weakness (Sound): Loud noises, such as gunshots or explosions, force goblins to make a Vigor roll or be deafened, suffering a -6 to all physical tasks that require â€œvisionâ€ for the next round.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -32871,7 +32871,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'When a powerful necromancer dies, his body putrefies in his grave while his spirit refuses to let go of existence. The result is a gravebane.\nGravebanes are large blobs of putrescent energy. They retain a small degree of intelligence, but are primarily interested in feasting. They do so by animating nearby undead to hunt for them.\nThe gravebane&acirc;&euro;&trade;s favored tactic is to remain hidden and use its zombies to kill nearby beings. Once all the prey are dead, the zombies bring the corpses to the gravebane for absorption.',
+		 'en-US': 'When a powerful necromancer dies, his body putrefies in his grave while his spirit refuses to let go of existence. The result is a gravebane.\nGravebanes are large blobs of putrescent energy. They retain a small degree of intelligence, but are primarily interested in feasting. They do so by animating nearby undead to hunt for them.\nThe gravebaneâ€™s favored tactic is to remain hidden and use its zombies to kill nearby beings. Once all the prey are dead, the zombies bring the corpses to the gravebane for absorption.',
 	},
 		attributes: '{"agility":"d4","smarts":"d8 (A)","spirit":"d8","strength":"d6","vigor":"d10"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"}}',
@@ -32894,13 +32894,13 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Grays',
 	},
 	 gear: {
-		 'en-US': '[{"name":"Hypodermic","description":"Str+d4. These are foot-long and wickedly barbed. If the Gray hits with a raise, the extra damage inflicted is caused by blood and other fluids (and sometimes solids!) being extracted from the target. Damage from a hypo is incredibly painful; those Shaken by one are at a -2 to their Spirit roll to recover."},{"name":"Implants","description":"These are small bits of metal implanted into victim during their time with the Grays. They allow the aliens to track the victim anywhere on Earth; they also transmit fear, pain, and feelings of paranoia and isolation back to the Grays for distillation."},{"name":"Probes","description":"These aren&rsquo;t used for gathering information, but for inflicting pain. They allow the Grays to torture a victim for days (or longer) without doing any permanent damage to them."}]',
+		 'en-US': '[{"name":"Hypodermic","description":"Str+d4. These are foot-long and wickedly barbed. If the Gray hits with a raise, the extra damage inflicted is caused by blood and other fluids (and sometimes solids!) being extracted from the target. Damage from a hypo is incredibly painful; those Shaken by one are at a -2 to their Spirit roll to recover."},{"name":"Implants","description":"These are small bits of metal implanted into victim during their time with the Grays. They allow the aliens to track the victim anywhere on Earth; they also transmit fear, pain, and feelings of paranoia and isolation back to the Grays for distillation."},{"name":"Probes","description":"These aren\'t used for gathering information, but for inflicting pain. They allow the Grays to torture a victim for days (or longer) without doing any permanent damage to them."}]',
 	},
 	 treasure: {
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Alien Intellect: Grays get +2 to any Smarts based opposed rolls against normal humans; their thought patterns are unpredictable, at best.\nFear: \nGarmonbozia: Grays gain power and sustenance from the pain and suffering of others. When injected into themselves, it both removes any Wounds they have and boosts their Agility and Strength to d10 for one hour. When injected into a human, they suffer incredible agony. They must make a Vigor roll at -2 immediately to avoid being Shaken. They must continue to make Vigor rolls every round for 3 +1d6 rounds or take a level of Fatigue and become Shaken again if they&rsquo;ve recovered. If reduced to Incapacitated by Fatigue, any additional Fatigue levels become Wounds instead.\nImmunity: Grays are immune to the mental powers of the Damned Children and Nordics.\nMind Wipe: Grays can wipe an individuals memories, up to 48 hours worth, with an opposed Smarts roll. The memories aren&rsquo;t really gone, though, just deeply suppressed. They still surface in the form of dreams and hallucinations, and can be recovered through extensive hypnotherapy.\nParalysis: Grays can induce paralysis in humans with their minds. Make an opposed Spirit roll; if the Gray wins, the target can&rsquo;t move for 3 rounds. Each Gray that acts in concert to hold the victim doubles the duration (6 rounds with 2 Grays, 12 rounds with 3, etc.); use the Cooperative Roll rules to have them assist. Engaging the paralysis counts as an action for the Grays, but maintaining it does not.',
+		 'en-US': 'Alien Intellect: Grays get +2 to any Smarts based opposed rolls against normal humans; their thought patterns are unpredictable, at best.\nFear: \nGarmonbozia: Grays gain power and sustenance from the pain and suffering of others. When injected into themselves, it both removes any Wounds they have and boosts their Agility and Strength to d10 for one hour. When injected into a human, they suffer incredible agony. They must make a Vigor roll at -2 immediately to avoid being Shaken. They must continue to make Vigor rolls every round for 3 +1d6 rounds or take a level of Fatigue and become Shaken again if they\'ve recovered. If reduced to Incapacitated by Fatigue, any additional Fatigue levels become Wounds instead.\nImmunity: Grays are immune to the mental powers of the Damned Children and Nordics.\nMind Wipe: Grays can wipe an individuals memories, up to 48 hours worth, with an opposed Smarts roll. The memories aren\'t really gone, though, just deeply suppressed. They still surface in the form of dreams and hallucinations, and can be recovered through extensive hypnotherapy.\nParalysis: Grays can induce paralysis in humans with their minds. Make an opposed Spirit roll; if the Gray wins, the target can\'t move for 3 rounds. Each Gray that acts in concert to hold the victim doubles the duration (6 rounds with 2 Grays, 12 rounds with 3, etc.); use the Cooperative Roll rules to have them assist. Engaging the paralysis counts as an action for the Grays, but maintaining it does not.',
 	},
 	 tags: {
 		 'en-US': 'alien,aliens,',
@@ -32912,7 +32912,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'These beings generally appear to be your archetypal aliens: gray skinned, tall and spindly, with huge black eyes and small slits for mouths, though they can take on other forms. These particular aliens do not come in peace.\nThey utilize a bizarre mixture of super-science and mysticism which to a large degree has baffled Earth scientists. More recently, they have completed development of the technology to distill pain and fear from Earth creatures as a source of techno-occult power. (Hence the rise in horrifying abductions and cattle mutilations.) At some point their supply of such power will reach critical mass; what happens then is up to you, but it certainly won&rsquo;t be anything good... The Grays find combat distasteful, and allow their servants to handle it for them.',
+		 'en-US': 'These beings generally appear to be your archetypal aliens: gray skinned, tall and spindly, with huge black eyes and small slits for mouths, though they can take on other forms. These particular aliens do not come in peace.\nThey utilize a bizarre mixture of super-science and mysticism which to a large degree has baffled Earth scientists. More recently, they have completed development of the technology to distill pain and fear from Earth creatures as a source of techno-occult power. (Hence the rise in horrifying abductions and cattle mutilations.) At some point their supply of such power will reach critical mass; what happens then is up to you, but it certainly won\'t be anything good... The Grays find combat distasteful, and allow their servants to handle it for them.',
 	},
 		attributes: '{"agility":"d8","smarts":"d12","spirit":"d10","strength":"d8","vigor":"d6"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_GUTS":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_KNOWLEDGE":{"value":"d12","special":{"en-US":"Torture"}},"SKILL_NOTICE":{"value":"d10"},"SKILL_SHOOTING":{"value":"d6"}}',
@@ -32941,7 +32941,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Arcane Background (Magic): A greater mummy typically knows barrier (wall of darkness), bolt (swarm of tiny skulls), deflection (shield of swirling skulls), fear (unearthly cry), obscure (area of darkness), and zombie (ritual preparation). It typically has 30 Power Points.\n&acirc;&euro;&cent;Fear: Anyone seeing a greater mummy\nmust make a Fear test.\n&acirc;&euro;&cent;Fearless: Greater mummies are immune\nto Fear and Intimidation.\n&acirc;&euro;&cent;Feast: Greater mummies can return to a\nnear-semblance of real life. Every time they kill a specific kind of target (their natural enemies, those who awoke them, etc), they regain some of their appearance in life. When they have taken the life of three such victims, they are no longer &acirc;&euro;&oelig;mummies&acirc;&euro; and do not cause fear, suffer from Fire, cause mummy rot, or have a Shuffling Gait. They retain all their other powers as usual.\n&acirc;&euro;&cent;Fist: Str+d6.\n&acirc;&euro;&cent;Improved Arcane Resistance: +4 Armor\nversus magic, and +4 to rolls made to resist magic effects. This ability comes from protective amulets hidden in their bandages, and does not inhibit spells they cast on themselves.\n&acirc;&euro;&cent;Mummy Rot: Anyone touched by a greater mummy, whether he is damaged or not, must make a Vigor roll. Failure means the character has &acirc;&euro;&oelig;mummy rot&acirc;&euro; and suffers an immediate wound. Victims who die as result of &acirc;&euro;&oelig;mummy rot&acirc;&euro; may be brought back as mummies through the zombie power.\n&acirc;&euro;&cent; Shuffling Gait: Mummies roll a d4 running die due to the constraint of their dressing and desiccated  flesh.\n&acirc;&euro;&cent;Slam: Str.\n&acirc;&euro;&cent;Undead: +2 Toughness; +2 to recover\nfrom being Shaken; no additional damage from Called Shots; immune to disease and poison; does not suffer wound penalties.\n&acirc;&euro;&cent;Weakness (Fire): Mummies wrapped in dried rags (often treated with flammable chemicals) suffer +4 damage from fire.',
+		 'en-US': 'Arcane Background (Magic): A greater mummy typically knows barrier (wall of darkness), bolt (swarm of tiny skulls), deflection (shield of swirling skulls), fear (unearthly cry), obscure (area of darkness), and zombie (ritual preparation). It typically has 30 Power Points.\nâ€¢Fear: Anyone seeing a greater mummy\nmust make a Fear test.\nâ€¢Fearless: Greater mummies are immune\nto Fear and Intimidation.\nâ€¢Feast: Greater mummies can return to a\nnear-semblance of real life. Every time they kill a specific kind of target (their natural enemies, those who awoke them, etc), they regain some of their appearance in life. When they have taken the life of three such victims, they are no longer â€œmummiesâ€ and do not cause fear, suffer from Fire, cause mummy rot, or have a Shuffling Gait. They retain all their other powers as usual.\nâ€¢Fist: Str+d6.\nâ€¢Improved Arcane Resistance: +4 Armor\nversus magic, and +4 to rolls made to resist magic effects. This ability comes from protective amulets hidden in their bandages, and does not inhibit spells they cast on themselves.\nâ€¢Mummy Rot: Anyone touched by a greater mummy, whether he is damaged or not, must make a Vigor roll. Failure means the character has â€œmummy rotâ€ and suffers an immediate wound. Victims who die as result of â€œmummy rotâ€ may be brought back as mummies through the zombie power.\nâ€¢ Shuffling Gait: Mummies roll a d4 running die due to the constraint of their dressing and desiccated  flesh.\nâ€¢Slam: Str.\nâ€¢Undead: +2 Toughness; +2 to recover\nfrom being Shaken; no additional damage from Called Shots; immune to disease and poison; does not suffer wound penalties.\nâ€¢Weakness (Fire): Mummies wrapped in dried rags (often treated with flammable chemicals) suffer +4 damage from fire.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -32982,7 +32982,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Arcane Resistance: +2 Armor versus magic, and +2 to rolls made to resist magical effects.\nFear: Anyone seeing a guardian mummy must make a Fear test.\nMummy Rot: Anyone touched by a mummy, whether he is damaged or not, must make a Vigor roll. Failure means the character has &acirc;&euro;&oelig;mummy rot&acirc;&euro; and suffers an immediate wound. Victims who die as result of &acirc;&euro;&oelig;mummy rot&acirc;&euro; may be brought back as mummies through the zombie power.\nShuffling Gait: Mummies roll a d4 running die.\nSlam: Str.\nUndead: +2 Toughness; +2 to recover from being Shaken; no additional damage from Called Shots; immune to disease and poison; does not suffer wound penalties. \nWeakness (Fire): The chemical used in the preservation process mean mummies\ntake +4 damage from  re.',
+		 'en-US': 'Arcane Resistance: +2 Armor versus magic, and +2 to rolls made to resist magical effects.\nFear: Anyone seeing a guardian mummy must make a Fear test.\nMummy Rot: Anyone touched by a mummy, whether he is damaged or not, must make a Vigor roll. Failure means the character has â€œmummy rotâ€ and suffers an immediate wound. Victims who die as result of â€œmummy rotâ€ may be brought back as mummies through the zombie power.\nShuffling Gait: Mummies roll a d4 running die.\nSlam: Str.\nUndead: +2 Toughness; +2 to recover from being Shaken; no additional damage from Called Shots; immune to disease and poison; does not suffer wound penalties. \nWeakness (Fire): The chemical used in the preservation process mean mummies\ntake +4 damage from  re.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -33023,7 +33023,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Ethereal: Hates are immune to normal attacks. Magic items, weapons, and supernatural powers affect them normally.\nFear: Anyone seeing the creature must make a Fear check.\nFearless: Immune to Fear and Intimidation. &acirc;&euro;&cent;Rage: A hate  fills a Large Burst Template. Any character in the template must make an opposed Spirit roll. On a failure, the victim goes berserk (as the Edge) and launches a violent attack against the nearest character, friend or foe. The character may try to end his rage as normal, but must succeed at an opposed Spirit roll rather than making a Smarts roll as normal.\nSwarm: Parry +2. Because the hate is composed of scores, hundreds, or thousands of souls, cutting and piercing weapons do no real damage. Area-effect weapons work normally.',
+		 'en-US': 'Ethereal: Hates are immune to normal attacks. Magic items, weapons, and supernatural powers affect them normally.\nFear: Anyone seeing the creature must make a Fear check.\nFearless: Immune to Fear and Intimidation. â€¢Rage: A hate  fills a Large Burst Template. Any character in the template must make an opposed Spirit roll. On a failure, the victim goes berserk (as the Edge) and launches a violent attack against the nearest character, friend or foe. The character may try to end his rage as normal, but must succeed at an opposed Spirit roll rather than making a Smarts roll as normal.\nSwarm: Parry +2. Because the hate is composed of scores, hundreds, or thousands of souls, cutting and piercing weapons do no real damage. Area-effect weapons work normally.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -33105,7 +33105,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor: The car&acirc;&euro;&trade;s Toughness relates to every part of the vehicle, even the windows. \nControl: The car can control all its accessories, making it freezing cold with its air conditioner or blasting its radio to deafen everyone inside. It might also communicate with its radio, using different stations to put together a cryptic message from various spoken words or playing certain songs that communicate its message. It can also hold its doors (or other portals) closed with a Strength of d12+2.\nFeed: Haunted cars must feed on  flesh and blood at least once per week or they suffer a wound. They do this by ramming, or allowing an unwitting person inside then crashing at the  first opportunity when no one is looking.\nFearless: Immune to Fear and Tests of Will.\nRegenerate (Slow): Haunted cars make a natural healing roll every day. Dents become undented, tires rein ate, bumpers reattach, and so on. Even crushing it is only a temporary &acirc;&euro;&oelig;death&acirc;&euro; for the vehicle. Only  re or the banish spirit spell can permanently destroy the vehicle.',
+		 'en-US': 'Armor: The carâ€™s Toughness relates to every part of the vehicle, even the windows. \nControl: The car can control all its accessories, making it freezing cold with its air conditioner or blasting its radio to deafen everyone inside. It might also communicate with its radio, using different stations to put together a cryptic message from various spoken words or playing certain songs that communicate its message. It can also hold its doors (or other portals) closed with a Strength of d12+2.\nFeed: Haunted cars must feed on  flesh and blood at least once per week or they suffer a wound. They do this by ramming, or allowing an unwitting person inside then crashing at the  first opportunity when no one is looking.\nFearless: Immune to Fear and Tests of Will.\nRegenerate (Slow): Haunted cars make a natural healing roll every day. Dents become undented, tires rein ate, bumpers reattach, and so on. Even crushing it is only a temporary â€œdeathâ€ for the vehicle. Only  re or the banish spirit spell can permanently destroy the vehicle.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -33117,7 +33117,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Haunted cars (or other vehicles) are possessed by evil machine spirits who &acirc;&euro;&oelig;feed&acirc;&euro; by mangling victims within them.\nHaunted cars are sentient and malevolent. They&acirc;&euro;&trade;re also conscious of being destroyed and so know to maintain a low profile&acirc;&euro;&rdquo;when they aren&acirc;&euro;&trade;t on a murderous rampage.\nUse the statistics for the car in question, but add Smarts at d8 and Spirit at d10 for the spirit inside, as well as the Special Abilities listed below. Track the car&acirc;&euro;&trade;s wounds just as you would any other vehicle. If it&acirc;&euro;&trade;s &acirc;&euro;&oelig;wrecked,&acirc;&euro; it&acirc;&euro;&trade;s treated as Incapacitated.\nHaunted cars control themselves, but like to toy with their victims for a while before feasting on their shattered bodies. This process may go on for several days or even weeks if the car becomes fond of a particular operator. When this happens, which it often does, the machine spirit &acirc;&euro;&oelig;falls in love&acirc;&euro; with the driver, killing at night or when the operator isn&acirc;&euro;&trade;t present to avoid the temptation of devouring him or her instead. Such spirits often become very jealous of others who compete for their operator&acirc;&euro;&trade;s attention.',
+		 'en-US': 'Haunted cars (or other vehicles) are possessed by evil machine spirits who â€œfeedâ€ by mangling victims within them.\nHaunted cars are sentient and malevolent. Theyâ€™re also conscious of being destroyed and so know to maintain a low profileâ€”when they arenâ€™t on a murderous rampage.\nUse the statistics for the car in question, but add Smarts at d8 and Spirit at d10 for the spirit inside, as well as the Special Abilities listed below. Track the carâ€™s wounds just as you would any other vehicle. If itâ€™s â€œwrecked,â€ itâ€™s treated as Incapacitated.\nHaunted cars control themselves, but like to toy with their victims for a while before feasting on their shattered bodies. This process may go on for several days or even weeks if the car becomes fond of a particular operator. When this happens, which it often does, the machine spirit â€œfalls in loveâ€ with the driver, killing at night or when the operator isnâ€™t present to avoid the temptation of devouring him or her instead. Such spirits often become very jealous of others who compete for their operatorâ€™s attention.',
 	},
 		attributes: '{"agility":"","smarts":"","spirit":"","strength":"","vigor":""}',
 		skills: '[]',
@@ -33158,7 +33158,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'A haunted portrait is a painting possessed by a malevolent spirit&acirc;&euro;&rdquo;typically a shade or shadow of the person depicted.',
+		 'en-US': 'A haunted portrait is a painting possessed by a malevolent spiritâ€”typically a shade or shadow of the person depicted.',
 	},
 		attributes: '{"agility":"d4","smarts":"d8","spirit":"d10","strength":"d4","vigor":"d10"}',
 		skills: '{"SKILL_NOTICE":{"value":"d8"},"SKILL_SPELLCASTING":{"value":"d10"},"SKILL_TAUNT":{"value":"d10"}}',
@@ -33187,7 +33187,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor +4: Scaly hide.\nBlasphemous Heads: Each of the seven heads knows one power. If a head is severed, the helldrake loses the use of that power. The helldrake has unlimited Power Points and may cast blast (hell re; victims may catch  re), burst (rots  flesh from bones), fear (unholy curses), lower trait (curse; no boost), puppet (seductive words), stun (roar), and zombie (corpse possessed by unholy spirit).\nClaws/Bite: Str+d8.\nFear -2: Anyone who sees a helldrake must make a Fear check at -2.\nHardy: Helldrakes do not suffer a wound from being Shaken twice.\nHuge: Attackers add +4 to their Fighting or Shooting rolls when attacking a Helldrake due to its massive size. Improved Arcane Resistance: +4 Armor versus magic, and +4 to rolls made to resist magical effects.\nImproved Level Headed: Helldrakes act on the best of three cards.\nMultiple Heads: Helldrakes have seven heads. Each head may make a Fighting roll in a round without incurring a multi- action penalty, though no more than two heads may attack a single target, regardless of its size. Every head has one wound and is severed if it is Incapacitated. Damage caused to heads does not affect the helldrake, though it dies when the last head is severed.\nSize +8: Helldrakes measure over 40&acirc;&euro;&trade; long. &acirc;&euro;&cent;Unholy Power: A helldrake has the Champion (against supernatural good creatures) and Unholy Warrior Edges.',
+		 'en-US': 'Armor +4: Scaly hide.\nBlasphemous Heads: Each of the seven heads knows one power. If a head is severed, the helldrake loses the use of that power. The helldrake has unlimited Power Points and may cast blast (hell re; victims may catch  re), burst (rots  flesh from bones), fear (unholy curses), lower trait (curse; no boost), puppet (seductive words), stun (roar), and zombie (corpse possessed by unholy spirit).\nClaws/Bite: Str+d8.\nFear -2: Anyone who sees a helldrake must make a Fear check at -2.\nHardy: Helldrakes do not suffer a wound from being Shaken twice.\nHuge: Attackers add +4 to their Fighting or Shooting rolls when attacking a Helldrake due to its massive size. Improved Arcane Resistance: +4 Armor versus magic, and +4 to rolls made to resist magical effects.\nImproved Level Headed: Helldrakes act on the best of three cards.\nMultiple Heads: Helldrakes have seven heads. Each head may make a Fighting roll in a round without incurring a multi- action penalty, though no more than two heads may attack a single target, regardless of its size. Every head has one wound and is severed if it is Incapacitated. Damage caused to heads does not affect the helldrake, though it dies when the last head is severed.\nSize +8: Helldrakes measure over 40â€™ long. â€¢Unholy Power: A helldrake has the Champion (against supernatural good creatures) and Unholy Warrior Edges.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -33199,7 +33199,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Helldrakes are akin to dragons but have seven heads, each inscribed with a blasphemous name. Their thick scales are  ery red, like the  res of Hell in which they are spawned, and engraved with unholy runes and sigils. Unlike dragons, however, helldrakes do not have fiery breath or tails, nor can they  y. It is said that each demon prince of Hell has a helldrake as his mount, spawned by the great dragon defeated by Archangel Michael during\nLucifer&acirc;&euro;&trade;s rebellion.',
+		 'en-US': 'Helldrakes are akin to dragons but have seven heads, each inscribed with a blasphemous name. Their thick scales are  ery red, like the  res of Hell in which they are spawned, and engraved with unholy runes and sigils. Unlike dragons, however, helldrakes do not have fiery breath or tails, nor can they  y. It is said that each demon prince of Hell has a helldrake as his mount, spawned by the great dragon defeated by Archangel Michael during\nLuciferâ€™s rebellion.',
 	},
 		attributes: '{"agility":"d8","smarts":"d8","spirit":"d10","strength":"d12+9","vigor":"d12"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d12"},"SKILL_SPELLCASTING":{"value":"d12"}}',
@@ -33228,7 +33228,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str+d6.\nFear: Anyone who sees a hellhound must make a Fear roll.\nFleet Footed: Hellhounds have a d10 running die.\nGo for the Throat: If a hellhound gets a raise on its attack roll, it strikes its opponent&acirc;&euro;&trade;s least armored location. \nImmunity (Fire): Hellhounds take no damage from fire.\nTerrible Wounds: The jagged teeth of a hellhound inflict terrible wounds, which do not heal quickly. Healing rolls, including magical and natural healing, are subject to a -2 penalty on top of any wound penalties.',
+		 'en-US': 'Bite: Str+d6.\nFear: Anyone who sees a hellhound must make a Fear roll.\nFleet Footed: Hellhounds have a d10 running die.\nGo for the Throat: If a hellhound gets a raise on its attack roll, it strikes its opponentâ€™s least armored location. \nImmunity (Fire): Hellhounds take no damage from fire.\nTerrible Wounds: The jagged teeth of a hellhound inflict terrible wounds, which do not heal quickly. Healing rolls, including magical and natural healing, are subject to a -2 penalty on top of any wound penalties.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -33240,7 +33240,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Hellhounds are monstrous dogs, often with black skin which steams from the heat of the beast&acirc;&euro;&trade;s demonic blood. Their eyes burn with demonic  re and their teeth are oversized, protruding from their jaw at all angles. Certain demons often keep them as pets, though they may also be found in the company of necromancers and other evil wizards. They are sometimes known as &acirc;&euro;&oelig;black dogs.&acirc;&euro;',
+		 'en-US': 'Hellhounds are monstrous dogs, often with black skin which steams from the heat of the beastâ€™s demonic blood. Their eyes burn with demonic  re and their teeth are oversized, protruding from their jaw at all angles. Certain demons often keep them as pets, though they may also be found in the company of necromancers and other evil wizards. They are sometimes known as â€œblack dogs.â€',
 	},
 		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d8","strength":"d10","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"},"SKILL_STEALTH":{"value":"d6"}}',
@@ -33269,7 +33269,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Ethereal: Hoarfrost warriors are immaterial and can only be harmed by magical attacks or as noted below. Their weapons can still harm corporeal targets.\nFear: Hoarfrost warriors cause Fear checks when they are visible.\nPartial Invisibility: A hoarfrost warrior is normally invisible. A character may detect the invisible spirit if he has a reason to look and makes a Notice roll at -6. Once detected, a hoarfrost warrior may be attacked at a -6 penalty. In direct moonlight, however, hoarfrost warriors are visible as shimmering ghostly outlines and may be seen and attacked without penalty.\nTwo-Fisted: Hoarfrost warriors are trained to fight with two weapons. They gain the benefits of the Two-Fisted Edge.\nWeakness (Daylight): Hoarfrost warriors can only appear at night once the moon has risen. They disappear when the day comes or the moon has set.\nWeakness (Fire): Hoarfrost warriors suffer normal damage from fire or flaming weapons.\nWeakness (Icy Heart): A Hoarfrost warrior spirit can be harmed physically if someone dares to grab their icy\nheart. To do this, an opponent must spend an action, reach into the creature&acirc;&euro;&trade;s chest, and make an opposed Spirit roll against the ghost. If the opponent wins the Spirit roll, the Hoarfrost warrior loses the Ethereal power until sunrise.',
+		 'en-US': 'Ethereal: Hoarfrost warriors are immaterial and can only be harmed by magical attacks or as noted below. Their weapons can still harm corporeal targets.\nFear: Hoarfrost warriors cause Fear checks when they are visible.\nPartial Invisibility: A hoarfrost warrior is normally invisible. A character may detect the invisible spirit if he has a reason to look and makes a Notice roll at -6. Once detected, a hoarfrost warrior may be attacked at a -6 penalty. In direct moonlight, however, hoarfrost warriors are visible as shimmering ghostly outlines and may be seen and attacked without penalty.\nTwo-Fisted: Hoarfrost warriors are trained to fight with two weapons. They gain the benefits of the Two-Fisted Edge.\nWeakness (Daylight): Hoarfrost warriors can only appear at night once the moon has risen. They disappear when the day comes or the moon has set.\nWeakness (Fire): Hoarfrost warriors suffer normal damage from fire or flaming weapons.\nWeakness (Icy Heart): A Hoarfrost warrior spirit can be harmed physically if someone dares to grab their icy\nheart. To do this, an opponent must spend an action, reach into the creatureâ€™s chest, and make an opposed Spirit roll against the ghost. If the opponent wins the Spirit roll, the Hoarfrost warrior loses the Ethereal power until sunrise.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -33310,7 +33310,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Claws: Str\nMalleable Body: A homunculus can squeeze its body through any space at least 1 inch in diameter.\nNoxious Breath: A homunculus can exhale a small cloud of gas that works as a very mild sedative. There is no effect against a fully conscious target, but a victim who is already sleeping must make a Vigor roll (-2) or fall into a deeper slumber that lasts one hour. Targets that have suffered one or more Fatigue levels are also susceptible, but they roll a straight Vigor roll instead (minus any Fatigue modifiers, of course). The sleep is so deep that a victim is only allowed a Vigor roll to awaken whenever she takes actual physical damage.\nPoison: A character struck by a homunculus in combat must make a Vigor roll, regardless of whether the creature deals enough damage to overcome Toughness. If he fails, he gains a Fatigue level. This poison is not strong enough to cause death and Fatigue levels gained in this fashion are removed after one hour.\nSize -2: Homunculus stand 6 inches tall. &acirc;&euro;&cent;Small: Attackers suffer -2 to attack rolls against a homunculi, due to its size.',
+		 'en-US': 'Claws: Str\nMalleable Body: A homunculus can squeeze its body through any space at least 1 inch in diameter.\nNoxious Breath: A homunculus can exhale a small cloud of gas that works as a very mild sedative. There is no effect against a fully conscious target, but a victim who is already sleeping must make a Vigor roll (-2) or fall into a deeper slumber that lasts one hour. Targets that have suffered one or more Fatigue levels are also susceptible, but they roll a straight Vigor roll instead (minus any Fatigue modifiers, of course). The sleep is so deep that a victim is only allowed a Vigor roll to awaken whenever she takes actual physical damage.\nPoison: A character struck by a homunculus in combat must make a Vigor roll, regardless of whether the creature deals enough damage to overcome Toughness. If he fails, he gains a Fatigue level. This poison is not strong enough to cause death and Fatigue levels gained in this fashion are removed after one hour.\nSize -2: Homunculus stand 6 inches tall. â€¢Small: Attackers suffer -2 to attack rolls against a homunculi, due to its size.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -33322,7 +33322,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'The homunculus is the result of an alchemist successfully crafting a living creature using his art. These creatures are tiny, man-shaped, and sometimes take on the rough appearance of their creators. The recipes for homunculi vary from alchemist to alchemist and often vary greatly. However, all have one thing in common: even though they are somehow granted a spark of life, these strange constructs lack a soul.\nThis fact makes homunculi extremely dangerous for they are perfect vessels for demonic or other types of spiritual possession. Few escape falling prey to the attentions of fell beings, often within hours&acirc;&euro;&rdquo;or even minutes&acirc;&euro;&rdquo;of their creation. Ironically, since most alchemists fancy themselves scientists rather than magicians, the majority of them scoff at the possibility of such an event.\nWhile in service of their creator, these creatures are typically used for innocuous purposes, or at worst, to spy on others. Under the control of a malevolent spirit, they become focused on mischief and mayhem&acirc;&euro;&rdquo;or far worse.\nInitially, the appearance of these small constructs depends largely on the ingredients used in their manufacture. Some appear plant-like, while others may vaguely resemble lizards or other reptilian creatures. Over time, they may take on more human features as they bond to their creator&acirc;&euro;&rdquo;or more demonic ones if they succumb to diabolic influences.',
+		 'en-US': 'The homunculus is the result of an alchemist successfully crafting a living creature using his art. These creatures are tiny, man-shaped, and sometimes take on the rough appearance of their creators. The recipes for homunculi vary from alchemist to alchemist and often vary greatly. However, all have one thing in common: even though they are somehow granted a spark of life, these strange constructs lack a soul.\nThis fact makes homunculi extremely dangerous for they are perfect vessels for demonic or other types of spiritual possession. Few escape falling prey to the attentions of fell beings, often within hoursâ€”or even minutesâ€”of their creation. Ironically, since most alchemists fancy themselves scientists rather than magicians, the majority of them scoff at the possibility of such an event.\nWhile in service of their creator, these creatures are typically used for innocuous purposes, or at worst, to spy on others. Under the control of a malevolent spirit, they become focused on mischief and mayhemâ€”or far worse.\nInitially, the appearance of these small constructs depends largely on the ingredients used in their manufacture. Some appear plant-like, while others may vaguely resemble lizards or other reptilian creatures. Over time, they may take on more human features as they bond to their creatorâ€”or more demonic ones if they succumb to diabolic influences.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6","spirit":"d4","strength":"d4","vigor":"d8"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d10"}}',
@@ -33351,7 +33351,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor +2: Hardened skin.\n&acirc;&euro;&cent;Burrow (4&acirc;&euro;): These mummies can burrow\nthrough snow or sand (depending on where they were found). They can make a surprise attack at +2 to attack and damage (+4 with a raise) by making an opposed Stealth vs Notice roll.\n&acirc;&euro;&cent; Fear: Anyone seeing an ice mummy must make a Fear check.\n&acirc;&euro;&cent; Touch of Pain: Anyone touched by an ice or sand mummy, whether damaged or not, must make a Vigor roll. Failure means the character suffers a level of Fatigue from either frostbite (ice) or terrible abrasion (sand). Fatigue accumulated in this way cannot cause death, and fades at the rate of one level every 24 hours.\n&acirc;&euro;&cent; Shuffling Gait: Mummies roll a d4 running die.\n&acirc;&euro;&cent; Slam: Str.\n&acirc;&euro;&cent; Thaw: Ice mummies need a cold environment. Each hour spent in temperatures above freezing, they must make a Vigor roll or suffer a level of Fatigue. If this results in &acirc;&euro;&oelig;death,&acirc;&euro; the mummy returns to its inert state. \nUndead: +2 Toughness; +2 to recover from being Shaken; no additional damage from Called Shots; immune to disease and poison; does not suffer wound penalties.',
+		 'en-US': 'Armor +2: Hardened skin.\nâ€¢Burrow (4â€): These mummies can burrow\nthrough snow or sand (depending on where they were found). They can make a surprise attack at +2 to attack and damage (+4 with a raise) by making an opposed Stealth vs Notice roll.\nâ€¢ Fear: Anyone seeing an ice mummy must make a Fear check.\nâ€¢ Touch of Pain: Anyone touched by an ice or sand mummy, whether damaged or not, must make a Vigor roll. Failure means the character suffers a level of Fatigue from either frostbite (ice) or terrible abrasion (sand). Fatigue accumulated in this way cannot cause death, and fades at the rate of one level every 24 hours.\nâ€¢ Shuffling Gait: Mummies roll a d4 running die.\nâ€¢ Slam: Str.\nâ€¢ Thaw: Ice mummies need a cold environment. Each hour spent in temperatures above freezing, they must make a Vigor roll or suffer a level of Fatigue. If this results in â€œdeath,â€ the mummy returns to its inert state. \nUndead: +2 Toughness; +2 to recover from being Shaken; no additional damage from Called Shots; immune to disease and poison; does not suffer wound penalties.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -33392,7 +33392,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Aquatic: Pace 6\nBite or Claws: Str+d4\nBlood Frenzy: When another character or animal suffers a wound, all icthynites and hybrids within 6&acirc;&euro; are driven into a frenzy by the scent of blood. This causes them to go Berserk (as per the Edge). Unlike their full-blooded cousins, a hybrid can attempt to end his rage by doing nothing (even moving) for a full action and making a Smarts roll (-2).\nCrooning: A hybrid&acirc;&euro;&trade;s vocal cords aren&acirc;&euro;&trade;t developed enough to initiate the icthynites&acirc;&euro;&trade; hypnotic song. However, as an action, it can lend its voice to the chorus and counts as an additional icthynite for purposes of penalties to the Spirit roll to resist the crooning.\nLow Light Vision: Icthynite hybrids ignore any penalties for Dim and Dark lighting.',
+		 'en-US': 'Aquatic: Pace 6\nBite or Claws: Str+d4\nBlood Frenzy: When another character or animal suffers a wound, all icthynites and hybrids within 6â€ are driven into a frenzy by the scent of blood. This causes them to go Berserk (as per the Edge). Unlike their full-blooded cousins, a hybrid can attempt to end his rage by doing nothing (even moving) for a full action and making a Smarts roll (-2).\nCrooning: A hybridâ€™s vocal cords arenâ€™t developed enough to initiate the icthynitesâ€™ hypnotic song. However, as an action, it can lend its voice to the chorus and counts as an additional icthynite for purposes of penalties to the Spirit roll to resist the crooning.\nLow Light Vision: Icthynite hybrids ignore any penalties for Dim and Dark lighting.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -33404,7 +33404,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'These hideous mutations are created when an unfortunate human with icthynite ancestry responds to the  sh-men&acirc;&euro;&trade;s call. Very soon after making contact with the icthynites, his skin develops a thin covering of sickly gray scales and his teeth become more pointed and cartilaginous. In time, he develops a gill-like structure on the side of his neck and webs between his toes to allow him to live in the depths with his scaled cousins.',
+		 'en-US': 'These hideous mutations are created when an unfortunate human with icthynite ancestry responds to the  sh-menâ€™s call. Very soon after making contact with the icthynites, his skin develops a thin covering of sickly gray scales and his teeth become more pointed and cartilaginous. In time, he develops a gill-like structure on the side of his neck and webs between his toes to allow him to live in the depths with his scaled cousins.',
 	},
 		attributes: '{"agility":"d6","smarts":"d6","spirit":"d6","strength":"d6","vigor":"d6"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"},"SKILL_SWIMMING":{"value":"d8"},"SKILL_KNOWLEDGE0":{"special":{"en-US":"One Trade"},"value":"d6"}}',
@@ -33433,7 +33433,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Aquatic: Pace 8\nArmor +2: Icthynites have tough scales. \nBite or Claws: Str+d6\nBlood Frenzy: When another character or animal suffers a wound, all icthynites within 6&acirc;&euro; are driven into a frenzy by the scent of blood. This causes them to go Berserk (as the Edge). Icthynites cannot end their rage until the battle is over.\nCrooning: As an action, an icthynite can sing an alien song which draws those with icthynite blood inexorably to it. In other humans, it causes a mild hypnotic state in those exposed to it for more than a single round. Anyone who fails a Spirit roll upon hearing the crooning suffers a -2 to all rolls for the duration of the scene. For each additional icthynite crooning in the chorus, apply a -1 penalty to the initial Spirit roll.\nLow Light Vision: Icthynites ignore any penalties for Dim and Dark lighting.',
+		 'en-US': 'Aquatic: Pace 8\nArmor +2: Icthynites have tough scales. \nBite or Claws: Str+d6\nBlood Frenzy: When another character or animal suffers a wound, all icthynites within 6â€ are driven into a frenzy by the scent of blood. This causes them to go Berserk (as the Edge). Icthynites cannot end their rage until the battle is over.\nCrooning: As an action, an icthynite can sing an alien song which draws those with icthynite blood inexorably to it. In other humans, it causes a mild hypnotic state in those exposed to it for more than a single round. Anyone who fails a Spirit roll upon hearing the crooning suffers a -2 to all rolls for the duration of the scene. For each additional icthynite crooning in the chorus, apply a -1 penalty to the initial Spirit roll.\nLow Light Vision: Icthynites ignore any penalties for Dim and Dark lighting.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -33445,7 +33445,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'The icthynites are a race of  fish-men who hail from a time long forgotten by humanity. From a distance, they appear to be humanoid. Nearer, one can see the silver sheen of their scaled skin. The mouths of these creatures are gaping and piscine,  filled with sharp, translucent teeth. Most remarkable of all are their glistening, metallic eyes which never blink.\nTravelers have claimed sighting ancient cites occupied by these  sh-men in lonely stretches of the sea. Perhaps these lost megalopolises were even built by the icthynites themselves.\nIf so, the secrets to their ancient civilization are long lost, for the feral  sh-men seem to  have no recollection of it. Instead, they clamber over the neglected ruins,  fighting each other and feeding on any mortals that dare wander close to their abodes.\nIcthynites are capable of breeding with human women. Usually, any offspring born to a human parent is horribly deformed. Few of these survive even the first moments of life. Over the years, a small number have been born with none of their inhuman father&acirc;&euro;&trade;s traits and have integrated into human society. Most have\nno idea of their unnatural parentage. Those offspring that survive&acirc;&euro;&rdquo;as well as their own descendants&acirc;&euro;&rdquo;have hidden ancestral memories deep within their souls. For this reason, the  sh-men croon from the sea at night, recalling all mortals who can remember their alien song. Should any wander towards the waves, they are taken from the shore and into the deep below to never be seen again.\nWe don&acirc;&euro;&trade;t recommend you apply this fate to heroes. Being the ancestral offspring of a degenerate race of  sh-men is probably something a player shouldn&acirc;&euro;&trade;t learn about as a result of a random Trait check!',
+		 'en-US': 'The icthynites are a race of  fish-men who hail from a time long forgotten by humanity. From a distance, they appear to be humanoid. Nearer, one can see the silver sheen of their scaled skin. The mouths of these creatures are gaping and piscine,  filled with sharp, translucent teeth. Most remarkable of all are their glistening, metallic eyes which never blink.\nTravelers have claimed sighting ancient cites occupied by these  sh-men in lonely stretches of the sea. Perhaps these lost megalopolises were even built by the icthynites themselves.\nIf so, the secrets to their ancient civilization are long lost, for the feral  sh-men seem to  have no recollection of it. Instead, they clamber over the neglected ruins,  fighting each other and feeding on any mortals that dare wander close to their abodes.\nIcthynites are capable of breeding with human women. Usually, any offspring born to a human parent is horribly deformed. Few of these survive even the first moments of life. Over the years, a small number have been born with none of their inhuman fatherâ€™s traits and have integrated into human society. Most have\nno idea of their unnatural parentage. Those offspring that surviveâ€”as well as their own descendantsâ€”have hidden ancestral memories deep within their souls. For this reason, the  sh-men croon from the sea at night, recalling all mortals who can remember their alien song. Should any wander towards the waves, they are taken from the shore and into the deep below to never be seen again.\nWe donâ€™t recommend you apply this fate to heroes. Being the ancestral offspring of a degenerate race of  sh-men is probably something a player shouldnâ€™t learn about as a result of a random Trait check!',
 	},
 		attributes: '{"agility":"d8","smarts":"d4","spirit":"d6","strength":"d8","vigor":"d12"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"},"SKILL_SWIMMING":{"value":"d12"}}',
@@ -33474,7 +33474,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Claws: Str+d4.\nImp Code: Imps must abide by special rules of behavior. They cannot lie (but don&acirc;&euro;&trade;t have to tell the truth, either!); they must always parley, if asked; if they agree to a bargain, they must keep to the letter (but not the spirit!); they must always accept something offered.\nImmunity: These creatures suffer half damage from non-magical attacks.\nLow Light Vision: A imp can see perfectly in all but pitch black conditions.\nShadow Magic: Imps are magical creatures tied closely with darkness. In areas of darkness (at least -1 to attack rolls), they can cast invisibility and slumber. They have 20 Power Points.\nSize -1: Imps stand 3&acirc;&euro;&trade;-4&acirc;&euro;&trade; tall\nSnatch Essence: This sinister ability\nallows a imp to temporarily snatch part of a victim&acirc;&euro;&trade;s essence or life force. If an imp inflicts a wound, instead of doing damage, the creature can inflict a Fatigue level on the victim. Wild Cards can prevent this effect by winning an opposed Spirit check with the imp. Defeating the monster causes it to drop the essence, removing the Fatigue levels from the victim. Imps often use this method of attack to Incapacitate a victim before inflicting their &acirc;&euro;&oelig;justice&acirc;&euro; upon them.\nWeakness (Iron): These creatures suffer normal damage from weapons of pure iron (not iron alloys, such as steel).\nWeakness (Sunlight): Imps receive a -2 penalty to all attack and Magic rolls in direct sunlight.',
+		 'en-US': 'Claws: Str+d4.\nImp Code: Imps must abide by special rules of behavior. They cannot lie (but donâ€™t have to tell the truth, either!); they must always parley, if asked; if they agree to a bargain, they must keep to the letter (but not the spirit!); they must always accept something offered.\nImmunity: These creatures suffer half damage from non-magical attacks.\nLow Light Vision: A imp can see perfectly in all but pitch black conditions.\nShadow Magic: Imps are magical creatures tied closely with darkness. In areas of darkness (at least -1 to attack rolls), they can cast invisibility and slumber. They have 20 Power Points.\nSize -1: Imps stand 3â€™-4â€™ tall\nSnatch Essence: This sinister ability\nallows a imp to temporarily snatch part of a victimâ€™s essence or life force. If an imp inflicts a wound, instead of doing damage, the creature can inflict a Fatigue level on the victim. Wild Cards can prevent this effect by winning an opposed Spirit check with the imp. Defeating the monster causes it to drop the essence, removing the Fatigue levels from the victim. Imps often use this method of attack to Incapacitate a victim before inflicting their â€œjusticeâ€ upon them.\nWeakness (Iron): These creatures suffer normal damage from weapons of pure iron (not iron alloys, such as steel).\nWeakness (Sunlight): Imps receive a -2 penalty to all attack and Magic rolls in direct sunlight.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -33486,7 +33486,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Imps are pernicious creatures who may be the source of myths of faeries and similar creatures. However, unlike the faeries of legend, imp mischief is usually marked by violence. Most often summoned by a witch or necromancer, their injurious acts are almost always focused on those who have committed some wrong, leading some stories to claim they are merely elemental manifestations of justice. But there is very little that is &acirc;&euro;&oelig;just&acirc;&euro; about imp work.\nWithout fail, these monsters inflict much harsher punishment upon their victims than they deserve. These creatures have been known to snatch the tongues of liars, or blind a man for coveting his neighbor&acirc;&euro;&trade;s house. Conversely, they rarely punish truly heinous crimes such as murder or the like, instead reserving their torments for those guilty of only small immoralities. In rare instances, imps will offer to undo their harm. In such cases, the imps invariably require their victims to perform even worse acts&acirc;&euro;&rdquo;usually upon another transgressor&acirc;&euro;&rdquo;than that of which the imps first found them &acirc;&euro;&oelig;guilty.&acirc;&euro;\nImps abide by odd rules of behavior for reasons beyond human understanding. These restrictions are magical in nature and their effects so strong that a imp cannot choose to disobey them. This, no doubt, is why some arcane practitioners call on them. A hero who makes a Knowledge (Occult) roll can recall these strictures, but it is up to her to use them to her advantage.\nImps are short, humanoid beings with large heads and pointed ears. They favor darkened areas, recoiling violently from bright light with hisses or curses. Should their fanged mouths and clawed fingers leave any doubt, the malevolent gleam in their eyes make their wicked natures clear.',
+		 'en-US': 'Imps are pernicious creatures who may be the source of myths of faeries and similar creatures. However, unlike the faeries of legend, imp mischief is usually marked by violence. Most often summoned by a witch or necromancer, their injurious acts are almost always focused on those who have committed some wrong, leading some stories to claim they are merely elemental manifestations of justice. But there is very little that is â€œjustâ€ about imp work.\nWithout fail, these monsters inflict much harsher punishment upon their victims than they deserve. These creatures have been known to snatch the tongues of liars, or blind a man for coveting his neighborâ€™s house. Conversely, they rarely punish truly heinous crimes such as murder or the like, instead reserving their torments for those guilty of only small immoralities. In rare instances, imps will offer to undo their harm. In such cases, the imps invariably require their victims to perform even worse actsâ€”usually upon another transgressorâ€”than that of which the imps first found them â€œguilty.â€\nImps abide by odd rules of behavior for reasons beyond human understanding. These restrictions are magical in nature and their effects so strong that a imp cannot choose to disobey them. This, no doubt, is why some arcane practitioners call on them. A hero who makes a Knowledge (Occult) roll can recall these strictures, but it is up to her to use them to her advantage.\nImps are short, humanoid beings with large heads and pointed ears. They favor darkened areas, recoiling violently from bright light with hisses or curses. Should their fanged mouths and clawed fingers leave any doubt, the malevolent gleam in their eyes make their wicked natures clear.',
 	},
 		attributes: '{"agility":"d10","smarts":"d8","spirit":"d8","strength":"d4","vigor":"d6"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d10"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_SPELLCASTING":{"value":"d10"},"SKILL_STEALTH":{"value":"d10"},"SKILL_TAUNT":{"value":"d8"},"SKILL_KNOWLEDGE0":{"special":{"en-US":"Magic"},"value":"d8"}}',
@@ -33556,7 +33556,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Fear (-6): Anyone seeing the creature must make a Fear check at -6.\nFearless: Immune to Fear and Intimidation. &acirc;&euro;&cent;Hardy: If Shaken, further Shaken results have no effect.\nHowl: Once per round, Jjrikillimsg emits an unearthly, howling babble. This counts as an action. Everything within a Large Burst Template centered on the god must make a Spirit roll. A failure causes the victim to lose his mind, permanently lowering his Smarts and Spirit by 1 die. If either reaches zero, the victim is insane and becomes an Extra under the control of the Game Master.\nHuge: Creatures add +4 when attacking\nthe body of Jjrikillimsg due to its great size. &acirc;&euro;&cent;Improved Arcane Resistance: +4 Armor versus magic, and +4 to rolls made to resist magic effects.\nInsane: A character trying to affect Jjrikillimsg&acirc;&euro;&trade;s mind through arcane powers, such as puppet, automatically fails his opposed roll. Contact with the insane creature also causes the arcane character to make a Spirit roll at -6 or become a gibbering idiot for 2d6 rounds. During this time he acts as if Shaken and runs around randomly. Roll a d12 to determine his direction each round. He moves his full Pace.\nNatural Weapons: Str+d8. The dark god always has some form of weapon, be it claws, teeth, a multiple barbed tail, or whatever.\nSize +8: Jjrikillimsg&acirc;&euro;&trade;s form varies, but averages around 30&acirc;&euro;&trade; tall.',
+		 'en-US': 'Fear (-6): Anyone seeing the creature must make a Fear check at -6.\nFearless: Immune to Fear and Intimidation. â€¢Hardy: If Shaken, further Shaken results have no effect.\nHowl: Once per round, Jjrikillimsg emits an unearthly, howling babble. This counts as an action. Everything within a Large Burst Template centered on the god must make a Spirit roll. A failure causes the victim to lose his mind, permanently lowering his Smarts and Spirit by 1 die. If either reaches zero, the victim is insane and becomes an Extra under the control of the Game Master.\nHuge: Creatures add +4 when attacking\nthe body of Jjrikillimsg due to its great size. â€¢Improved Arcane Resistance: +4 Armor versus magic, and +4 to rolls made to resist magic effects.\nInsane: A character trying to affect Jjrikillimsgâ€™s mind through arcane powers, such as puppet, automatically fails his opposed roll. Contact with the insane creature also causes the arcane character to make a Spirit roll at -6 or become a gibbering idiot for 2d6 rounds. During this time he acts as if Shaken and runs around randomly. Roll a d12 to determine his direction each round. He moves his full Pace.\nNatural Weapons: Str+d8. The dark god always has some form of weapon, be it claws, teeth, a multiple barbed tail, or whatever.\nSize +8: Jjrikillimsgâ€™s form varies, but averages around 30â€™ tall.',
 	},
 	 tags: {
 		 'en-US': 'dark gods,gods,god,',
@@ -33568,7 +33568,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Jjrikillimsg is mad&acirc;&euro;&rdquo;totally and utterly mad in a way no mortal can ever hope to understand or emulate. His titles include such epithets as the Insane, One Without True Form, Revealer of Secrets, and Enlightener of Closed Minds.\nIf it has a true shape, no one has ever recorded it. Jjrikillimsg  its between many forms, changing so rapidly that the human eye cannot keep up. Every now and then, however, he pauses in one form just long enough for the brain to analyze what it has seen. Madness usually follows shortly thereafter.',
+		 'en-US': 'Jjrikillimsg is madâ€”totally and utterly mad in a way no mortal can ever hope to understand or emulate. His titles include such epithets as the Insane, One Without True Form, Revealer of Secrets, and Enlightener of Closed Minds.\nIf it has a true shape, no one has ever recorded it. Jjrikillimsg  its between many forms, changing so rapidly that the human eye cannot keep up. Every now and then, however, he pauses in one form just long enough for the brain to analyze what it has seen. Madness usually follows shortly thereafter.',
 	},
 		attributes: '{"agility":"d8","smarts":"d4 (A)","spirit":"d12","strength":"d12+2","vigor":"d12+4"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d6"}}',
@@ -33597,7 +33597,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Break the Hold: The only way a mortal can be freed of the leanhaum-shee&acirc;&euro;&trade;s seductive grasp is to  nd a replacement &acirc;&euro;&rdquo; or the creature&acirc;&euro;&trade;s death.\nEnslave: A leanhaum-shee uses her seductive charms to enslave mortals. This works as puppet using the leanhaum-shee&acirc;&euro;&trade;s Spirit as her arcane ability, but it lasts inde nitely. She adds her Charisma to this roll. A leanhaum-shee may only ever have one mortal bound to her at a time.\nLife Drain: Each week a slave remains enthralled, regardless of the distance between mistress and slave, he must make a Spirit roll or lose one die from his Vigor. When his Vigor drops below a d4, he dies. One die of Vigor is recovered with a natural healing roll made each week if the leanhaum-shee&acirc;&euro;&trade;s hold over the slave is broken.\nUnearthly Beauty: A leanhaum-shee is incredibly beautiful and has +8 Charisma.',
+		 'en-US': 'Break the Hold: The only way a mortal can be freed of the leanhaum-sheeâ€™s seductive grasp is to  nd a replacement â€” or the creatureâ€™s death.\nEnslave: A leanhaum-shee uses her seductive charms to enslave mortals. This works as puppet using the leanhaum-sheeâ€™s Spirit as her arcane ability, but it lasts inde nitely. She adds her Charisma to this roll. A leanhaum-shee may only ever have one mortal bound to her at a time.\nLife Drain: Each week a slave remains enthralled, regardless of the distance between mistress and slave, he must make a Spirit roll or lose one die from his Vigor. When his Vigor drops below a d4, he dies. One die of Vigor is recovered with a natural healing roll made each week if the leanhaum-sheeâ€™s hold over the slave is broken.\nUnearthly Beauty: A leanhaum-shee is incredibly beautiful and has +8 Charisma.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -33650,7 +33650,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Abhorrent as it may be, people sometimes resort to cannibalism when lost in the wilderness or stranded on deserted islands.\nFor most, it is a matter of survival, never to be tried again once they are rescued. For a few, however, it becomes a craving. These individuals are said to be possessed by the spirit of the wendigo, an American Indian cannibal spirit.\nThis version is an enhanced human&acirc;&euro;&rdquo; perhaps an early stage of the creature which follows. It remains human in appearance, but typically naked or covered in dirty rags and with a feral snarl on its blood-stained face.',
+		 'en-US': 'Abhorrent as it may be, people sometimes resort to cannibalism when lost in the wilderness or stranded on deserted islands.\nFor most, it is a matter of survival, never to be tried again once they are rescued. For a few, however, it becomes a craving. These individuals are said to be possessed by the spirit of the wendigo, an American Indian cannibal spirit.\nThis version is an enhanced humanâ€” perhaps an early stage of the creature which follows. It remains human in appearance, but typically naked or covered in dirty rags and with a feral snarl on its blood-stained face.',
 	},
 		attributes: '{"agility":"d6","smarts":"d6","spirit":"d8","strength":"d6","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d8"}}',
@@ -33679,7 +33679,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Demon: +2 to recover from being Shaken; Immune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nScholar: Librarians apply a +4 bonus to all their Knowledge skills.\nSize +1: Librarians are taller than humans. &acirc;&euro;&cent;Weakness (Cold Iron): Demons take normal damage from cold iron weapons.',
+		 'en-US': 'Demon: +2 to recover from being Shaken; Immune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nScholar: Librarians apply a +4 bonus to all their Knowledge skills.\nSize +1: Librarians are taller than humans. â€¢Weakness (Cold Iron): Demons take normal damage from cold iron weapons.',
 	},
 	 tags: {
 		 'en-US': 'demon,demons,devil,devils,',
@@ -33691,7 +33691,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'While it&acirc;&euro;&trade;s doubtful many demon lords have libraries, these unusual demons are the scholars of the underworld. The epithet, perhaps given in jest, has become common parlance.\nLibrarians are tall, blue-skinned humanoids with red eyes. Their heads are completely bald, and runes of power and knowledge are burned into their skull. When traveling in mortal realms, they wear heavy cowled cloaks to conceal their appearance.\nUnusually for a denizen of Hell, librarians seem quite willing to help mortals in return for a small reward, such as a relic or a tome of knowledge. What use they have for these items in Hell is anyone&acirc;&euro;&trade;s guess.',
+		 'en-US': 'While itâ€™s doubtful many demon lords have libraries, these unusual demons are the scholars of the underworld. The epithet, perhaps given in jest, has become common parlance.\nLibrarians are tall, blue-skinned humanoids with red eyes. Their heads are completely bald, and runes of power and knowledge are burned into their skull. When traveling in mortal realms, they wear heavy cowled cloaks to conceal their appearance.\nUnusually for a denizen of Hell, librarians seem quite willing to help mortals in return for a small reward, such as a relic or a tome of knowledge. What use they have for these items in Hell is anyoneâ€™s guess.',
 	},
 		attributes: '{"agility":"d6","smarts":"d12","spirit":"d10","strength":"d8","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d4"},"SKILL_INVESTIGATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"},"SKILL_TAUNT":{"value":"d8"},"SKILL_KNOWLEDGE0":{"special":{"en-US":"Any One"},"value":"d12"},"SKILL_KNOWLEDGE1":{"special":{"en-US":"Any One"},"value":"d12"},"SKILL_KNOWLEDGE2":{"special":{"en-US":"All Others"},"value":"d10"}}',
@@ -33720,7 +33720,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Block: Parry +1.\nClaws/Bite: Str+d6.\nCombat Re exes: Add +2 to recover from being Shaken.\nFear: Anyone seeing the creature must make a Fear test\nImproved Frenzy: May make two Fighting attacks each round at no penalty.\nQuick: Discard and ignore Action Card draw of 5 or less.\nMagic: Living gods have unlimited Power Points and know the following Powers: beast friend (command over animals of same type), bolt (divine energy), detect/conceal arcana (divine sight), fear (howl), quickness (supernatural re exes), speak language (divine understanding), stun (word of power), and teleport (blinding  flash).\nSize +2: Living gods stand over 10&acirc;&euro;&trade; tall.',
+		 'en-US': 'Block: Parry +1.\nClaws/Bite: Str+d6.\nCombat Re exes: Add +2 to recover from being Shaken.\nFear: Anyone seeing the creature must make a Fear test\nImproved Frenzy: May make two Fighting attacks each round at no penalty.\nQuick: Discard and ignore Action Card draw of 5 or less.\nMagic: Living gods have unlimited Power Points and know the following Powers: beast friend (command over animals of same type), bolt (divine energy), detect/conceal arcana (divine sight), fear (howl), quickness (supernatural re exes), speak language (divine understanding), stun (word of power), and teleport (blinding  flash).\nSize +2: Living gods stand over 10â€™ tall.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -33732,7 +33732,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'These abominations aren&acirc;&euro;&trade;t true gods, but are supernatural servitors of those beings. Commonly found among the ancient Egyptians, they have the bodies of humans but the heads of animals. Thus, one  nds crocodile-headed living gods following Sobek, jackal-headed gods following Anubis, and\ncow-headed gods following Hathor.\nWhen found on Earth, they are usually leading a cult of worshippers. In a fantasy setting, they might just as easily be servitors of other gods, taking the heads of sacred animals. In a sci-  game, they could be an alien race posing as divine messengers among a primitive culture.',
+		 'en-US': 'These abominations arenâ€™t true gods, but are supernatural servitors of those beings. Commonly found among the ancient Egyptians, they have the bodies of humans but the heads of animals. Thus, one  nds crocodile-headed living gods following Sobek, jackal-headed gods following Anubis, and\ncow-headed gods following Hathor.\nWhen found on Earth, they are usually leading a cult of worshippers. In a fantasy setting, they might just as easily be servitors of other gods, taking the heads of sacred animals. In a sci-  game, they could be an alien race posing as divine messengers among a primitive culture.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6","spirit":"d10","strength":"d12+2","vigor":"d12"}',
 		skills: '{"SKILL_FAITH":{"value":"d10"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"},"SKILL_THROWING":{"value":"d8"}}',
@@ -33761,7 +33761,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Claws/Bite: Str+d8.\nConstruct: +2 to recover from being Shaken; No additional damage from called shots; Do not suffer wound modifiers; Immune to poison and disease.\nImmobile: A grimoire can only attack characters who try to pick it up. It&acirc;&euro;&trade;s Fighting roll is a reflection of its ability to attack, not defend itself.\nPowers: A living grimoire whose contents include spells may use that magic to defend itself. A typical grimoire with access to magic has 15 Power Points, Spellcasting d8, and usually knows the following powers: bolt (dark energy), deflection (skeletal hands), conceal arcana (changes appearance to look like a regular tome; no detect), fear (demonic laugh),  flight (it flaps its cover like wings), obscure (sphere of darkness), teleport (accompanied by insane laugh), and zombie (incantation).\nSize -2: Grimoires measure less than 2&acirc;&euro;&trade; across.\nSmall: Attackers suffer a -2 penalty to attack a living grimoire due to its size.',
+		 'en-US': 'Claws/Bite: Str+d8.\nConstruct: +2 to recover from being Shaken; No additional damage from called shots; Do not suffer wound modifiers; Immune to poison and disease.\nImmobile: A grimoire can only attack characters who try to pick it up. Itâ€™s Fighting roll is a reflection of its ability to attack, not defend itself.\nPowers: A living grimoire whose contents include spells may use that magic to defend itself. A typical grimoire with access to magic has 15 Power Points, Spellcasting d8, and usually knows the following powers: bolt (dark energy), deflection (skeletal hands), conceal arcana (changes appearance to look like a regular tome; no detect), fear (demonic laugh),  flight (it flaps its cover like wings), obscure (sphere of darkness), teleport (accompanied by insane laugh), and zombie (incantation).\nSize -2: Grimoires measure less than 2â€™ across.\nSmall: Attackers suffer a -2 penalty to attack a living grimoire due to its size.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -33773,7 +33773,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Grimoires are books containing dark knowledge or spells. Most are simply books, though they may be written in blood or contain images that turn even the strongest stomach. Living grimoires, however, are magical creations, designed to protect the book from nosy individuals.\nLiving grimoires are actually just the covers of the book they hold. Usually they take the form of demonic faces, gaping maws, or perhaps just sharp claws used to clasp the book closed. They only make their presence felt when someone other than the book&acirc;&euro;&trade;s rightful owner tries to pick up or open the book. Killing the grimoire does not damage the book (a by-product of the magic used in their creation).\nLiving grimoires speak many languages, but usually only converse to threaten or taunt people.',
+		 'en-US': 'Grimoires are books containing dark knowledge or spells. Most are simply books, though they may be written in blood or contain images that turn even the strongest stomach. Living grimoires, however, are magical creations, designed to protect the book from nosy individuals.\nLiving grimoires are actually just the covers of the book they hold. Usually they take the form of demonic faces, gaping maws, or perhaps just sharp claws used to clasp the book closed. They only make their presence felt when someone other than the bookâ€™s rightful owner tries to pick up or open the book. Killing the grimoire does not damage the book (a by-product of the magic used in their creation).\nLiving grimoires speak many languages, but usually only converse to threaten or taunt people.',
 	},
 		attributes: '{"agility":"d4","smarts":"d4 (A)","spirit":"d12","strength":"d8","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_TAUNT":{"value":"d10"}}',
@@ -33884,7 +33884,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str+d4.\nFear: Anyone seeing the creature must make a Fear test.\nFleet-Footed: A man-dog hybrid running on all fours has a d10 running die.\nGo for the Throat: A hybrid scoring a raise on its attack roll automatically hits the target&acirc;&euro;&trade;s most weakly-armored location.',
+		 'en-US': 'Bite: Str+d4.\nFear: Anyone seeing the creature must make a Fear test.\nFleet-Footed: A man-dog hybrid running on all fours has a d10 running die.\nGo for the Throat: A hybrid scoring a raise on its attack roll automatically hits the targetâ€™s most weakly-armored location.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -33925,7 +33925,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor +2: Wooden body.\nConstruct: +2 to recover from being Shaken; No additional damage from called shots; Do not suffer wound modifiers; Immune to poison and disease.\nFearless: Golems are immune to Fear and Intimidation.\nSize -1: Marionettes stand no taller than 2&acirc;&euro;&trade;. &acirc;&euro;&cent;Small: Attackers suffer a -2 penalty when attacking a marionette.',
+		 'en-US': 'Armor +2: Wooden body.\nConstruct: +2 to recover from being Shaken; No additional damage from called shots; Do not suffer wound modifiers; Immune to poison and disease.\nFearless: Golems are immune to Fear and Intimidation.\nSize -1: Marionettes stand no taller than 2â€™. â€¢Small: Attackers suffer a -2 penalty when attacking a marionette.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -33960,13 +33960,13 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Men in Black',
 	},
 	 gear: {
-		 'en-US': '[{"name":"Vehicle - Edsel","description":"What&rsquo;s weirder than the MiB&rsquo;s driving Edsels? The fact that they look like they just drove off of the assembly line. A careful examination under the hood reveals that although the engine appears normal at first glance, it&rsquo;s put together completely wrong, and could never actually run... They&rsquo;re identical to Sports Cars (see SW:DE page 49)."},{"name":"Guns","description":"These are functionally identical to a Colt.45, and look approximately like one as well. Like their Edsels, if the inner workings are examined, there&rsquo;s no way these weapons should be able to actually fire."}]',
+		 'en-US': '[{"name":"Vehicle - Edsel","description":"What\'s weirder than the MiB\'s driving Edsels? The fact that they look like they just drove off of the assembly line. A careful examination under the hood reveals that although the engine appears normal at first glance, it\'s put together completely wrong, and could never actually run... They\'re identical to Sports Cars (see SW:DE page 49)."},{"name":"Guns","description":"These are functionally identical to a Colt.45, and look approximately like one as well. Like their Edsels, if the inner workings are examined, there\'s no way these weapons should be able to actually fire."}]',
 	},
 	 treasure: {
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Unshakable: MiB&rsquo;s ignore all Wound penalties and are never Shaken by attacks.',
+		 'en-US': 'Unshakable: MiB\'s ignore all Wound penalties and are never Shaken by attacks.',
 	},
 	 tags: {
 		 'en-US': 'alien,aliens,',
@@ -33978,7 +33978,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'There is considerable speculation on who these agents really work for; is it the Grays? Are they part of a government black op? Someone else, someone we haven&rsquo;t seen yet? Or do they work for no one but themselves, serving an agenda we can&rsquo;t hope to understand? Men in Black are known to appear wherever a great deal of psychic/supernatural activity has occurred, or is about to occur. They look more or less normal, but their features are uneven, and their voices project down into deep subharmonics. Their behavior is erratic, at best.',
+		 'en-US': 'There is considerable speculation on who these agents really work for; is it the Grays? Are they part of a government black op? Someone else, someone we haven\'t seen yet? Or do they work for no one but themselves, serving an agenda we can\'t hope to understand? Men in Black are known to appear wherever a great deal of psychic/supernatural activity has occurred, or is about to occur. They look more or less normal, but their features are uneven, and their voices project down into deep subharmonics. Their behavior is erratic, at best.',
 	},
 		attributes: '{"agility":"d8","smarts":"d10","spirit":"d10","strength":"d10","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_GUTS":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_KNOWLEDGE":{"value":"d8","special":{"en-US":"Alien Technology"}},"SKILL_NOTICE":{"value":"d8"},"SKILL_PERSUASION":{"value":"d8"},"SKILL_SHOOTING":{"value":"d10"}}',
@@ -34007,7 +34007,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor +4: Metal body.\nConstruct: +2 to recover from being\nShaken; No additional damage from called shots; Do not suffer wound modifiers; Immune to poison and disease.\nFear: Anyone seeing the creature must make a Fear test.\nFearless: Immune to Fear and Intimidation. &acirc;&euro;&cent;Large: Attacks are +2 to attack rolls against a juggernaut due to its size.\nRegeneration: A metal juggernaut adjacent to a large source of metal (size of a sports car or upward) can make a natural healing roll as a free action by drawing pieces of metal onto its body. The Game Master should determine whether the source can be used multiple times or for a single use only.\nSize +4: The juggernauts are typically 10-12 feet tall.\nWeaponry: The weapons available to a juggernaut depend on the metal it is built from, and the era in which it lives. In a modern age, most juggernauts would sport twin .50 caliber machineguns. In a steampunk world, they might be equipped with heavy bolt-throwers of some sort and spinning blades.',
+		 'en-US': 'Armor +4: Metal body.\nConstruct: +2 to recover from being\nShaken; No additional damage from called shots; Do not suffer wound modifiers; Immune to poison and disease.\nFear: Anyone seeing the creature must make a Fear test.\nFearless: Immune to Fear and Intimidation. â€¢Large: Attacks are +2 to attack rolls against a juggernaut due to its size.\nRegeneration: A metal juggernaut adjacent to a large source of metal (size of a sports car or upward) can make a natural healing roll as a free action by drawing pieces of metal onto its body. The Game Master should determine whether the source can be used multiple times or for a single use only.\nSize +4: The juggernauts are typically 10-12 feet tall.\nWeaponry: The weapons available to a juggernaut depend on the metal it is built from, and the era in which it lives. In a modern age, most juggernauts would sport twin .50 caliber machineguns. In a steampunk world, they might be equipped with heavy bolt-throwers of some sort and spinning blades.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -34060,7 +34060,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Those unfortunate souls sprayed with Todoto&acirc;&euro;&trade;s blood become twisted and warped. No two forms are the same. Some may grow extra limbs or tentacles while others turn inside out, transforming into an unholy blend of man, plant, and animal. Still others might become putrescent blobs of gelatinous ooze.\nMinions are loyal to Todoto, though he has no special powers to control their actions.',
+		 'en-US': 'Those unfortunate souls sprayed with Todotoâ€™s blood become twisted and warped. No two forms are the same. Some may grow extra limbs or tentacles while others turn inside out, transforming into an unholy blend of man, plant, and animal. Still others might become putrescent blobs of gelatinous ooze.\nMinions are loyal to Todoto, though he has no special powers to control their actions.',
 	},
 		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d8","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
@@ -34101,7 +34101,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Contrary to conspiracy theory, the Nordics are not a separate alien race (they&rsquo;re alternately described as being in league with, or opposed to, the Grays). Rather, they are Damned Children who have grown to full size... and full power. Despite this power, they remain the thralls of the Grays. Nordics are all statuesque (averaging 6&rsquo;6&rdquo;), with perfectly chiseled features, platinum blonde hair and pale blue eyes. With all their power, they&rsquo;re still more comfortable with others of their kind around, and are almost never encountered alone.',
+		 'en-US': 'Contrary to conspiracy theory, the Nordics are not a separate alien race (they\'re alternately described as being in league with, or opposed to, the Grays). Rather, they are Damned Children who have grown to full size... and full power. Despite this power, they remain the thralls of the Grays. Nordics are all statuesque (averaging 6\'6”), with perfectly chiseled features, platinum blonde hair and pale blue eyes. With all their power, they\'re still more comfortable with others of their kind around, and are almost never encountered alone.',
 	},
 		attributes: '{"agility":"d8","smarts":"d10","spirit":"d12","strength":"d8","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_GUTS":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_KNOWLEDGE":{"value":"d12","special":{"en-US":"Alien Science"}},"SKILL_NOTICE":{"value":"d12"},"SKILL_PILOTING":{"value":"d8"},"SKILL_REPAIR":{"value":"d10"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
@@ -34130,7 +34130,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Claws: Str+d6.\nDemon: +2 to recover from being Shaken;Immune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nFear: Anyone seeing the creature must make a Fear test\nFlight: Flying Pace 12&acirc;&euro;, Climb 3&acirc;&euro;. &acirc;&euro;&cent;Illusionary Appearance: Pazuzu can assume the form of a human (or nonhuman if your setting allows such races). &acirc;&euro;&cent;Improved Frenzy: A pazuzu in the air may make two Fighting attacks each round at no penalty.\nSize +2: Pazuzu stand over 9&acirc;&euro;&trade; high in their natural form.\nUntrickable: Pazuzu are masters of deception and are not subject to Tests of Will.\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
+		 'en-US': 'Claws: Str+d6.\nDemon: +2 to recover from being Shaken;Immune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nFear: Anyone seeing the creature must make a Fear test\nFlight: Flying Pace 12â€, Climb 3â€. â€¢Illusionary Appearance: Pazuzu can assume the form of a human (or nonhuman if your setting allows such races). â€¢Improved Frenzy: A pazuzu in the air may make two Fighting attacks each round at no penalty.\nSize +2: Pazuzu stand over 9â€™ high in their natural form.\nUntrickable: Pazuzu are masters of deception and are not subject to Tests of Will.\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
 	},
 	 tags: {
 		 'en-US': 'demon,demons,devil,devils,',
@@ -34142,7 +34142,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Pazuzu have the head of a man with a lion&acirc;&euro;&trade;s mane, leonine claws on its hands and feet, the wings of an eagle, and a scorpion&acirc;&euro;&trade;s tail.\nWhen on Earth they prefer hot, dry climates.\nThey are said to be masters of illusion, and desert nomads believe mirages are their work. They enjoy cruel and often lethal pranks.\nOne common trick is to approach desert nomads. It then questions them about how much water they have. If they are low, it offers to lead them to an oasis in return for money. In reality, it leads them deeper into the desert and then abandons them to await a lingering death. Once its victims have died, it returns to feast on their  flesh.',
+		 'en-US': 'Pazuzu have the head of a man with a lionâ€™s mane, leonine claws on its hands and feet, the wings of an eagle, and a scorpionâ€™s tail.\nWhen on Earth they prefer hot, dry climates.\nThey are said to be masters of illusion, and desert nomads believe mirages are their work. They enjoy cruel and often lethal pranks.\nOne common trick is to approach desert nomads. It then questions them about how much water they have. If they are low, it offers to lead them to an oasis in return for money. In reality, it leads them deeper into the desert and then abandons them to await a lingering death. Once its victims have died, it returns to feast on their  flesh.',
 	},
 		attributes: '{"agility":"d6","smarts":"d10","spirit":"d8","strength":"d12+2","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_PERSUASION":{"value":"d10"},"SKILL_STEALTH":{"value":"d8"},"SKILL_TAUNT":{"value":"d12"}}',
@@ -34183,7 +34183,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Plague demons are followers of Beelzebub, the Lord of the Flies. They have haunted mankind for millennia, spreading sickness and disease wherever they go.\nThey resemble humans (or any other race if you&acirc;&euro;&trade;re playing a fantasy or sci-fi  horror game),\nbut are covered in weeping sores, pus-filled boils, and are always surrounded by a dark halo of flies.',
+		 'en-US': 'Plague demons are followers of Beelzebub, the Lord of the Flies. They have haunted mankind for millennia, spreading sickness and disease wherever they go.\nThey resemble humans (or any other race if youâ€™re playing a fantasy or sci-fi  horror game),\nbut are covered in weeping sores, pus-filled boils, and are always surrounded by a dark halo of flies.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6","spirit":"d6","strength":"d8","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"}}',
@@ -34294,7 +34294,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Demon: +2 to recover from being Shaken;\nImmune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nEthereal: Cannot be harmed by normal attacks. Take normal damage from magic items and weapons, cold iron weapons, and supernatural powers.\nExorcism: A possessor demon can be exorcised by the banish entity power.\nPossession: A possessor can try to possess any sentient being in sight with an opposed Spirit roll. If the demon fails, it may not try that victim again in the next 24 hours. If it rolls a 1, it returns to whatever dimension it came from! (This is why they are very careful about jumping from body to body.) With a success, the demon is now inside the body and in complete control of it. It has access to all the subject&acirc;&euro;&trade;s thoughts and memories. The demon can take control whenever it wants, but after committing any particularly heinous act the victim may make an opposed Spirit test to wrest control for 1d6 hours, or 2d6 hours with a raise.\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
+		 'en-US': 'Demon: +2 to recover from being Shaken;\nImmune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nEthereal: Cannot be harmed by normal attacks. Take normal damage from magic items and weapons, cold iron weapons, and supernatural powers.\nExorcism: A possessor demon can be exorcised by the banish entity power.\nPossession: A possessor can try to possess any sentient being in sight with an opposed Spirit roll. If the demon fails, it may not try that victim again in the next 24 hours. If it rolls a 1, it returns to whatever dimension it came from! (This is why they are very careful about jumping from body to body.) With a success, the demon is now inside the body and in complete control of it. It has access to all the subjectâ€™s thoughts and memories. The demon can take control whenever it wants, but after committing any particularly heinous act the victim may make an opposed Spirit test to wrest control for 1d6 hours, or 2d6 hours with a raise.\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
 	},
 	 tags: {
 		 'en-US': 'demon,demons,devil,devils,',
@@ -34335,7 +34335,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bear Hug: Bears don&acirc;&euro;&trade;t actually &acirc;&euro;&oelig;hug&acirc;&euro; their victims, but they do attempt to use their weight to pin their prey and rend it with their claws and teeth. A bear that hits with a raise has pinned his foe. The opponent may only attempt to escape the &acirc;&euro;&oelig;hug&acirc;&euro; on his action, which requires a raise on an opposed Strength roll.\nBerserk: A rabid animal is automatically berserk and cannot calm down. The traits above include all modifiers. If you choose to make the beast a Wild Card, it suffers no wound penalties.\nBite/Claws: Str+d6.\nDisease (-2): A character Shaken or wounded by a bite attack must make a Vigor roll at -2. On a failure, the victim has contracted rabies. He suffers a level of Fatigue each day until Death. A successful Healing roll can treat the disease, but it must be made within 24 hours and the healer must have access to a large amount of vaccine. If your game has magic healing, you&acirc;&euro;&trade;ll need to decide whether it can treat rabies after the first 24 hours. Fearless: Immune to Fear and Intimidation (see Weakness below).\n&acirc;&euro;&cent;Size +2: These creatures stand up to 8&acirc;&euro;&trade; tall. &acirc;&euro;&cent;Weakness (Water): One symptom of rabies is hydrophobia. The creature suffers -2 to all Trait rolls when there is a body of water larger than a drinking trough within 5&acirc;&euro;.',
+		 'en-US': 'Bear Hug: Bears donâ€™t actually â€œhugâ€ their victims, but they do attempt to use their weight to pin their prey and rend it with their claws and teeth. A bear that hits with a raise has pinned his foe. The opponent may only attempt to escape the â€œhugâ€ on his action, which requires a raise on an opposed Strength roll.\nBerserk: A rabid animal is automatically berserk and cannot calm down. The traits above include all modifiers. If you choose to make the beast a Wild Card, it suffers no wound penalties.\nBite/Claws: Str+d6.\nDisease (-2): A character Shaken or wounded by a bite attack must make a Vigor roll at -2. On a failure, the victim has contracted rabies. He suffers a level of Fatigue each day until Death. A successful Healing roll can treat the disease, but it must be made within 24 hours and the healer must have access to a large amount of vaccine. If your game has magic healing, youâ€™ll need to decide whether it can treat rabies after the first 24 hours. Fearless: Immune to Fear and Intimidation (see Weakness below).\nâ€¢Size +2: These creatures stand up to 8â€™ tall. â€¢Weakness (Water): One symptom of rabies is hydrophobia. The creature suffers -2 to all Trait rolls when there is a body of water larger than a drinking trough within 5â€.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -34347,7 +34347,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Rabies is a disease of the central nervous system and can be found in any warm-blooded animal. In the real world, it tends to be found in smaller animals, such as bats or raccoons, but in a horror game there&acirc;&euro;&trade;s no reason why a larger creature can&acirc;&euro;&trade;t have the disease.\nTo make a rabid animal, simply add the Berserk, Disease, Fearless, and Weakness (Water) abilities as shown below in the sample creature.',
+		 'en-US': 'Rabies is a disease of the central nervous system and can be found in any warm-blooded animal. In the real world, it tends to be found in smaller animals, such as bats or raccoons, but in a horror game thereâ€™s no reason why a larger creature canâ€™t have the disease.\nTo make a rabid animal, simply add the Berserk, Disease, Fearless, and Weakness (Water) abilities as shown below in the sample creature.',
 	},
 		attributes: '{"agility":"d6","smarts":"d6 (A)","spirit":"d10","strength":"d12+6","vigor":"d12"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"}}',
@@ -34376,7 +34376,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bite or Sting: Swarms inflict hundreds of tiny bites every round to their victims, hitting automatically and causing 2d4 damage to everyone in the template. Damage is applied to the least armored location (victims in completely sealed suits are immune).\n&acirc;&euro;&cent;Split: Some swarms are clever enough to split into two smaller swarms (Small Burst Templates) should their foes split up. The toughness of these smaller swarms is lowered by -2 (to 5 each).\n&acirc;&euro;&cent;Swarm: Parry +2; Because the swarm\nis composed of scores, hundreds, or thousands of creatures, cutting and piercing weapons do no real damage. Area-effect weapons work normally, and a character can stomp to inflict his damage in Strength each round. Swarms are usually foiled by jumping in water (unless they are aquatic pests, such as piranha).\nInfection: Anyone Shaken or wounded by a rat swarm must make a Vigor roll or contract a long-term, debilitating disease (see Savage Worlds).',
+		 'en-US': 'Bite or Sting: Swarms inflict hundreds of tiny bites every round to their victims, hitting automatically and causing 2d4 damage to everyone in the template. Damage is applied to the least armored location (victims in completely sealed suits are immune).\nâ€¢Split: Some swarms are clever enough to split into two smaller swarms (Small Burst Templates) should their foes split up. The toughness of these smaller swarms is lowered by -2 (to 5 each).\nâ€¢Swarm: Parry +2; Because the swarm\nis composed of scores, hundreds, or thousands of creatures, cutting and piercing weapons do no real damage. Area-effect weapons work normally, and a character can stomp to inflict his damage in Strength each round. Swarms are usually foiled by jumping in water (unless they are aquatic pests, such as piranha).\nInfection: Anyone Shaken or wounded by a rat swarm must make a Vigor roll or contract a long-term, debilitating disease (see Savage Worlds).',
 	},
 	 tags: {
 		 'en-US': '',
@@ -34499,7 +34499,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Construct: +2 to recover from being Shaken; No additional damage from called shots; Does not suffer wound modifiers; Immune to poison and disease.\nFear: Anyone seeing the creature must make a Fear test.\nFearless: Immune to Fear and Intimidation. \nHop: A Savage Jack moves by hopping, bringing his entire box with him. He rolls a d4 as his running die, instead of a d6. \nSmall: Attackers must subtract -2 from rolls to hit a Savage Jack.\nSpringy: A Savage Jack is mounted on a powerful spring and has a Reach of 1&acirc;&euro;. As an action, he can extend this to 2&acirc;&euro;. \nSurprise!: A Savage Jack gets The Drop against an unsuspecting foe who opens his box, allowing it to attack with +4 to its attack and damage rolls that round.',
+		 'en-US': 'Construct: +2 to recover from being Shaken; No additional damage from called shots; Does not suffer wound modifiers; Immune to poison and disease.\nFear: Anyone seeing the creature must make a Fear test.\nFearless: Immune to Fear and Intimidation. \nHop: A Savage Jack moves by hopping, bringing his entire box with him. He rolls a d4 as his running die, instead of a d6. \nSmall: Attackers must subtract -2 from rolls to hit a Savage Jack.\nSpringy: A Savage Jack is mounted on a powerful spring and has a Reach of 1â€. As an action, he can extend this to 2â€. \nSurprise!: A Savage Jack gets The Drop against an unsuspecting foe who opens his box, allowing it to attack with +4 to its attack and damage rolls that round.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -34511,7 +34511,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Said to have been created by a maniacal toymaker with a hatred of children, the &acirc;&euro;&oelig;Savage Jack&acirc;&euro; is a tool of fear and revenge. The same toymaker may have created the  first marionette golems as well (see page 86).\nAlthough it looks like a normal children&acirc;&euro;&trade;s toy by day, by night it becomes a twisted, macabre jester with a hatred of children. Its favorite tactic is to rattle its box until the child grows curious and opens it. Savage Jack then springs out, armed with a vicious, jagged knife stained in the blood of previous victims.\nA Savage Jack can talk, though it usually only converses to intimidate and mock its victims.',
+		 'en-US': 'Said to have been created by a maniacal toymaker with a hatred of children, the â€œSavage Jackâ€ is a tool of fear and revenge. The same toymaker may have created the  first marionette golems as well (see page 86).\nAlthough it looks like a normal childrenâ€™s toy by day, by night it becomes a twisted, macabre jester with a hatred of children. Its favorite tactic is to rattle its box until the child grows curious and opens it. Savage Jack then springs out, armed with a vicious, jagged knife stained in the blood of previous victims.\nA Savage Jack can talk, though it usually only converses to intimidate and mock its victims.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d8","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"},"SKILL_TAUNT":{"value":"d12+2"}}',
@@ -34581,7 +34581,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Aquatic: Seaweed  ends have Pace of 8 underwater.\nClaw: Str+d4 (formed from sharp pieces of  sh bone or splintered wood).\nFear: The  ends&acirc;&euro;&trade; black, slimy forms often contain rotting marine life and their eyes glow a baleful yellow.\nImmunity (Fire): Fire attacks cause no damage to their slimy bodies.\nStench: Seaweed  ends reek of tar and decaying  sh. Everyone adjacent to a seaweed  end must make a Vigor roll or be Shaken. Victims who succeed are immune to the stench for 24 hours.',
+		 'en-US': 'Aquatic: Seaweed  ends have Pace of 8 underwater.\nClaw: Str+d4 (formed from sharp pieces of  sh bone or splintered wood).\nFear: The  endsâ€™ black, slimy forms often contain rotting marine life and their eyes glow a baleful yellow.\nImmunity (Fire): Fire attacks cause no damage to their slimy bodies.\nStench: Seaweed  ends reek of tar and decaying  sh. Everyone adjacent to a seaweed  end must make a Vigor roll or be Shaken. Victims who succeed are immune to the stench for 24 hours.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -34622,7 +34622,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Charismatic: Charisma +4, seducers are very attractive and charismatic in their mortal guise.\nCorruption: Every gift a mortal accepts from a seducer corrupts him. Each time he accepts a gift, no matter how small, the victim must make a Spirit roll with a penalty of -1 per previous gift he has accepted. On a failure, the victim gains the Greedy (Minor) Hindrance, or Major if he has the minor version already. Should he already have the Major Hindrance, he loses 1 point of Charisma instead. If the Spirit roll is 1 or lower, regardless of the Wild Die, the victim becomes totally corrupt. He gains the Greedy (Major), Mean, and Vengeful (Major) Hindrances. He&acirc;&euro;&trade;s also damned his soul for eternity.\nDemon: +2 to recover from being Shaken; Immune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nFear: Anyone seeing the creature in its natural form must make a Fear test.\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
+		 'en-US': 'Charismatic: Charisma +4, seducers are very attractive and charismatic in their mortal guise.\nCorruption: Every gift a mortal accepts from a seducer corrupts him. Each time he accepts a gift, no matter how small, the victim must make a Spirit roll with a penalty of -1 per previous gift he has accepted. On a failure, the victim gains the Greedy (Minor) Hindrance, or Major if he has the minor version already. Should he already have the Major Hindrance, he loses 1 point of Charisma instead. If the Spirit roll is 1 or lower, regardless of the Wild Die, the victim becomes totally corrupt. He gains the Greedy (Major), Mean, and Vengeful (Major) Hindrances. Heâ€™s also damned his soul for eternity.\nDemon: +2 to recover from being Shaken; Immune to poison and disease; Half- damage from non-magical attacks except for cold iron.\nFear: Anyone seeing the creature in its natural form must make a Fear test.\nWeakness (Cold Iron): Demons take normal damage from cold iron weapons.',
 	},
 	 tags: {
 		 'en-US': 'demon,demons,devil,devils,',
@@ -34634,7 +34634,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Whereas incubi and succubi seduce mortals to feed on their life energy, seducer demons corrupt their souls. They favor the innocent - though harder to corrupt, the end result is a much larger gain.\nSeducers work by approaching mortals and offering them strength, power, love, wealth, or other bene ts. These &acirc;&euro;&oelig;dark gifts&acirc;&euro; are usually delivered subtly within a few days or weeks. Raising a Trait might take a few days so as not to raise suspicions. Wealth might come in the form of a lucrative contract, or something as simple as finding a treasure chest or bag of money.\n\nSee Horror Companion for details of these gifts.',
+		 'en-US': 'Whereas incubi and succubi seduce mortals to feed on their life energy, seducer demons corrupt their souls. They favor the innocent - though harder to corrupt, the end result is a much larger gain.\nSeducers work by approaching mortals and offering them strength, power, love, wealth, or other bene ts. These â€œdark giftsâ€ are usually delivered subtly within a few days or weeks. Raising a Trait might take a few days so as not to raise suspicions. Wealth might come in the form of a lucrative contract, or something as simple as finding a treasure chest or bag of money.\n\nSee Horror Companion for details of these gifts.',
 	},
 		attributes: '{"agility":"d6","smarts":"d12","spirit":"d12","strength":"d8","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_PERSUASION":{"value":"d12+2"},"SKILL_STREETWISE":{"value":"d12"},"SKILL_TAUNT":{"value":"d10"}}',
@@ -34663,7 +34663,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Dream Killer: As in the Nightmare on Elm Street movies, the killer has the unique ability to draw sleeping victims into his nightmares&acirc;&euro;&rdquo;even as a group. Treat the dream realm just like the real world, though perhaps with whatever bizarre rules may apply (so in a nightmarish space station there may not be gravity). The killer is likely much more powerful in the dream realm than in the real world, perhaps having the ability to teleport, create creatures and other threats, etc. Whatever the details, the killer still has to &acirc;&euro;&oelig;attack&acirc;&euro; the victim&acirc;&euro;&trade;s will via threats&acirc;&euro;&rdquo;he can never simply kill them.\nInvulnerable: Serial killers who are &acirc;&euro;&oelig;slain&acirc;&euro; simply vanish for a few nights and then begin slaying again. This should always be coupled with a Weakness of some sort.\nTeleport: Serial killers have the uncanny ability to disappear from sight and then reappear when one least expects it. As long as no one is looking at the killer (and he is not Shaken, stunned,\nor otherwise bound), he can disappear, reappearing when dramatically appropriate. This is an free action for the serial killer.\nUndead: Sometimes the serial killer is undead. +2 Toughness; +2 to recover from being Shaken; no additional damage from Called Shots; immune to disease and poison.\nWeakness (Special): The murderer has a weakness to something that either killed him in life (if undead), or is tied to his unique history. In the original Friday the 13th, the killer was stopped by someone dressing in the skin of the one person he feared&acirc;&euro;&rdquo;his dead mother!',
+		 'en-US': 'Dream Killer: As in the Nightmare on Elm Street movies, the killer has the unique ability to draw sleeping victims into his nightmaresâ€”even as a group. Treat the dream realm just like the real world, though perhaps with whatever bizarre rules may apply (so in a nightmarish space station there may not be gravity). The killer is likely much more powerful in the dream realm than in the real world, perhaps having the ability to teleport, create creatures and other threats, etc. Whatever the details, the killer still has to â€œattackâ€ the victimâ€™s will via threatsâ€”he can never simply kill them.\nInvulnerable: Serial killers who are â€œslainâ€ simply vanish for a few nights and then begin slaying again. This should always be coupled with a Weakness of some sort.\nTeleport: Serial killers have the uncanny ability to disappear from sight and then reappear when one least expects it. As long as no one is looking at the killer (and he is not Shaken, stunned,\nor otherwise bound), he can disappear, reappearing when dramatically appropriate. This is an free action for the serial killer.\nUndead: Sometimes the serial killer is undead. +2 Toughness; +2 to recover from being Shaken; no additional damage from Called Shots; immune to disease and poison.\nWeakness (Special): The murderer has a weakness to something that either killed him in life (if undead), or is tied to his unique history. In the original Friday the 13th, the killer was stopped by someone dressing in the skin of the one person he fearedâ€”his dead mother!',
 	},
 	 tags: {
 		 'en-US': '',
@@ -34675,7 +34675,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Bloodthirsty, Mean, Vengeful (Major)',
 	},
 	 blurb: {
-		 'en-US': 'Unlike in real life, serial killers in most horror settings aren&acirc;&euro;&trade;t the quiet-guy- next-door type. Horror setting serial\nkillers stand out in a crowd, mainly because of their strange attire, blood-soaked clothes, and large, dangerous weapons.',
+		 'en-US': 'Unlike in real life, serial killers in most horror settings arenâ€™t the quiet-guy- next-door type. Horror setting serial\nkillers stand out in a crowd, mainly because of their strange attire, blood-soaked clothes, and large, dangerous weapons.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6","spirit":"d10","strength":"d12","vigor":"d10"}',
 		skills: '{"SKILL_DRIVING":{"value":"d8"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"}}',
@@ -34704,7 +34704,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Fearless: Immune to Fear and Intimidation. &acirc;&euro;&cent;Fleet Footed: Skeletal horses roll a d8\nwhen running, rather than a d6.\nKick: Str+d6.\nSize +2: Skeletal horses stand taller than a\nhuman and weigh as much as 500 pounds. &acirc;&euro;&cent;Undead: +2 Toughness; +2 to recover from being Shaken; no additional damage from Called Shots; immune to disease and poison.',
+		 'en-US': 'Fearless: Immune to Fear and Intimidation. â€¢Fleet Footed: Skeletal horses roll a d8\nwhen running, rather than a d6.\nKick: Str+d6.\nSize +2: Skeletal horses stand taller than a\nhuman and weigh as much as 500 pounds. â€¢Undead: +2 Toughness; +2 to recover from being Shaken; no additional damage from Called Shots; immune to disease and poison.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -34745,7 +34745,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor +2: Fossilized bone.\nBite: Str+d8; AP 2.\nFear (-2): Anyone seeing a skeletal T-Rex\nmust make a Fear test at -2.\nFearless: Immune to Fear and Intimidation. &acirc;&euro;&cent;Fleet Footed: It has a running die of d10,\nrather than a d6.\nLarge: Creatures add +2 when attacking a T-Rex due to their great size.\nSize +7: These fearsome creatures stand 30&acirc;&euro;&trade; tall and weigh over 20,000 pounds. \nUndead: +2 Toughness; +2 to recover from being Shaken; no additional damage from Called Shots; immune to disease and poison; does not suffer wound penalties',
+		 'en-US': 'Armor +2: Fossilized bone.\nBite: Str+d8; AP 2.\nFear (-2): Anyone seeing a skeletal T-Rex\nmust make a Fear test at -2.\nFearless: Immune to Fear and Intimidation. â€¢Fleet Footed: It has a running die of d10,\nrather than a d6.\nLarge: Creatures add +2 when attacking a T-Rex due to their great size.\nSize +7: These fearsome creatures stand 30â€™ tall and weigh over 20,000 pounds. \nUndead: +2 Toughness; +2 to recover from being Shaken; no additional damage from Called Shots; immune to disease and poison; does not suffer wound penalties',
 	},
 	 tags: {
 		 'en-US': '',
@@ -34757,7 +34757,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'The &acirc;&euro;&oelig;king of the dinosaurs&acirc;&euro; was no doubt a terrifying creature when it roamed the Earth. As a skeletal creature, it&acirc;&euro;&trade;s even more fearsome.',
+		 'en-US': 'The â€œking of the dinosaursâ€ was no doubt a terrifying creature when it roamed the Earth. As a skeletal creature, itâ€™s even more fearsome.',
 	},
 		attributes: '{"agility":"d8","smarts":"d4 (A)","spirit":"d8","strength":"d12+4","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"}}',
@@ -34868,7 +34868,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Choke: A smog cloud  fills a Large Burst Template. Any creature in the template must make a Vigor roll (+2 bonus if the character&acirc;&euro;&trade;s mouth and nose are covered) each round or suffer a level of Fatigue. Fatigue recovers at the rate of 1 level per 5 minutes in clean air.\nElemental: No additional damage from called shots; Fearless; Immune to disease and poison.\nEthereal: The vaporous nature of a smog cloud makes it immune to normal damage. It takes damage as normal from magic items, weapons, and supernatural powers. \nFlight: Flying Pace 12&acirc;&euro;, Climb -3.',
+		 'en-US': 'Choke: A smog cloud  fills a Large Burst Template. Any creature in the template must make a Vigor roll (+2 bonus if the characterâ€™s mouth and nose are covered) each round or suffer a level of Fatigue. Fatigue recovers at the rate of 1 level per 5 minutes in clean air.\nElemental: No additional damage from called shots; Fearless; Immune to disease and poison.\nEthereal: The vaporous nature of a smog cloud makes it immune to normal damage. It takes damage as normal from magic items, weapons, and supernatural powers. \nFlight: Flying Pace 12â€, Climb -3.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -34950,7 +34950,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bite / Claws: Str+d4.\nFearless: Immune to Fear and Intimidation. \nUndead: +2 Toughness; +2 to recover from being Shaken; no additional damage from Called Shots; immune to disease and poison; does not suffer wound penalties if a Wild Card.\nWeakness (Head): Shots to a zombie&acirc;&euro;&trade;s cause +2 damage.\nMany other possible Special Abilities and Weakness on pages 123-124',
+		 'en-US': 'Bite / Claws: Str+d4.\nFearless: Immune to Fear and Intimidation. \nUndead: +2 Toughness; +2 to recover from being Shaken; no additional damage from Called Shots; immune to disease and poison; does not suffer wound penalties if a Wild Card.\nWeakness (Head): Shots to a zombieâ€™s cause +2 damage.\nMany other possible Special Abilities and Weakness on pages 123-124',
 	},
 	 tags: {
 		 'en-US': 'undead,',
@@ -34962,7 +34962,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Many movies depict zombies as having an insatiable craving for human brains. Some of these zombies can speak, though usually their vocabulary is limited to one word&acirc;&euro;&rdquo; &acirc;&euro;&oelig;Brains!&acirc;&euro;&acirc;&euro;&rdquo;which they moan continually when they spy a potential meal.',
+		 'en-US': 'Many movies depict zombies as having an insatiable craving for human brains. Some of these zombies can speak, though usually their vocabulary is limited to one wordâ€” â€œBrains!â€â€”which they moan continually when they spy a potential meal.',
 	},
 		attributes: '{"agility":"d6","smarts":"d4","spirit":"d4","strength":"d6","vigor":"d6"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d4"},"SKILL_STEALTH":{"value":"d6"}}',
@@ -35032,7 +35032,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Corrupting Lyrics: Every time a person listens to a tainted musician&acirc;&euro;&trade;s songs, he must make a Spirit roll (at -2 for a live performance). Failure means the listener loses 1 point of Sanity and gains a negative Hindrance of the Game Master&acirc;&euro;&trade;s choice, such as Bloodthirsty, Greedy, or Mean. These get progressively worse as time goes on until the listener is driven insane. This typically results in acts of violence and mayhem.\nHeadbang: The musician can headbutt for Str+d6 damage.\nPacify: Tainted musicians often find themselves surrounded by angry listeners. To protect themselves, they play slow songs, odes, or power ballads that pacify those trying to attack them. If the musician takes a full defense maneuver, anyone desiring to harm him must win an opposed Spirit roll. With a raise, the attacker is immune to the musician&acirc;&euro;&trade;s defense for the rest of the encounter.',
+		 'en-US': 'Corrupting Lyrics: Every time a person listens to a tainted musicianâ€™s songs, he must make a Spirit roll (at -2 for a live performance). Failure means the listener loses 1 point of Sanity and gains a negative Hindrance of the Game Masterâ€™s choice, such as Bloodthirsty, Greedy, or Mean. These get progressively worse as time goes on until the listener is driven insane. This typically results in acts of violence and mayhem.\nHeadbang: The musician can headbutt for Str+d6 damage.\nPacify: Tainted musicians often find themselves surrounded by angry listeners. To protect themselves, they play slow songs, odes, or power ballads that pacify those trying to attack them. If the musician takes a full defense maneuver, anyone desiring to harm him must win an opposed Spirit roll. With a raise, the attacker is immune to the musicianâ€™s defense for the rest of the encounter.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -35073,7 +35073,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor: In earlier centuries or in fantasy games, the coach&rsquo;s wooden frame provides 2 points of armor. In a modern setting, increase the Toughness to 18(4). In either case, the coach&rsquo;s chassis is considered Heavy Armor thanks to its hellish origins.\nFear(-2): Anyone who opens the coach door sees a writhing mass of screaming, tormented spirits. They must make a Fear roll at &ndash;2.\nInvulnerable: If the coach is destroyed, the coachman either mounts a horse or fights on foot. It returns the following night along with the coachman until he returns to hell.',
+		 'en-US': 'Armor: In earlier centuries or in fantasy games, the coach\'s wooden frame provides 2 points of armor. In a modern setting, increase the Toughness to 18(4). In either case, the coach\'s chassis is considered Heavy Armor thanks to its hellish origins.\nFear(-2): Anyone who opens the coach door sees a writhing mass of screaming, tormented spirits. They must make a Fear roll at –2.\nInvulnerable: If the coach is destroyed, the coachman either mounts a horse or fights on foot. It returns the following night along with the coachman until he returns to hell.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -35085,7 +35085,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'The black coach is a prison for souls awaiting delivery to whatever fate awaits them. Black curtains cover the windows, but occasionally the ghostly face of a coachman&rsquo;s victim can be seen frantically peering out.',
+		 'en-US': 'The black coach is a prison for souls awaiting delivery to whatever fate awaits them. Black curtains cover the windows, but occasionally the ghostly face of a coachman\'s victim can be seen frantically peering out.',
 	},
 		attributes: '',
 		skills: '[]',
@@ -35114,7 +35114,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Reaping Scythe: The reaping scythe is only useful against sentient beings with souls. It causes no damage (but see below), but those hit by it must win an opposed Spirit roll with the coachman or be claimed. Those claimed fall into a torpor, alive but unresponsive until the coachman either escorts them to hell (or wherever he goes), or is defeated. If the former, the victims die. If the latter, they awake Exhausted but alive minutes later. If the coachman is made flesh (see Invulnerable, below), the scythe does not reap souls but causes Str+d10 damage.\nFear: Anyone seeing the creature suffers a Fear test.\nInvulnerable: The coachman can be driven off if wounded by magical weapons, but is not dead and appears the following night as usual. The only way to permanently slay the creature is to use a banish entity spell. Rather than banishing it, the spell makes it whole for 13 minutes. During this time it must fight its summoner (and his companions). If it is not defeated in that time, it fights on as usual. If it is defeated within 13 minutes, it is dragged screaming to the Abyss and does not return&mdash;until summoned again!\nUndead: +2 Toughness; +2 to recover from being Shaken; no additional damage from Called Shots; immune to disease and poison; does not suffer wound penalties.',
+		 'en-US': 'Reaping Scythe: The reaping scythe is only useful against sentient beings with souls. It causes no damage (but see below), but those hit by it must win an opposed Spirit roll with the coachman or be claimed. Those claimed fall into a torpor, alive but unresponsive until the coachman either escorts them to hell (or wherever he goes), or is defeated. If the former, the victims die. If the latter, they awake Exhausted but alive minutes later. If the coachman is made flesh (see Invulnerable, below), the scythe does not reap souls but causes Str+d10 damage.\nFear: Anyone seeing the creature suffers a Fear test.\nInvulnerable: The coachman can be driven off if wounded by magical weapons, but is not dead and appears the following night as usual. The only way to permanently slay the creature is to use a banish entity spell. Rather than banishing it, the spell makes it whole for 13 minutes. During this time it must fight its summoner (and his companions). If it is not defeated in that time, it fights on as usual. If it is defeated within 13 minutes, it is dragged screaming to the Abyss and does not return—until summoned again!\nUndead: +2 Toughness; +2 to recover from being Shaken; no additional damage from Called Shots; immune to disease and poison; does not suffer wound penalties.',
 	},
 	 tags: {
 		 'en-US': 'undead,',
@@ -35126,7 +35126,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'The black coachman has existed in one form or another for millennia. The Egyptians knew him as the &ldquo;dark charioteer,&rdquo; the Romans called him the &ldquo;black rider,&rdquo; and the Normans knew him as &ldquo;death&rsquo;s wagoner.&rdquo; His current name stems from the Victorian era.\nThe coachman appears only when summoned via a summon demon spell. This is typically done as vengeance against someone the summoner believes has wronged him.\nOnce summoned and tasked, the coachman begins its long ride the very next night at 13 minutes after midnight. It rides the roads within 13 miles of where it was summoned and gathers the souls of all those it meets. The summoner can task it with reaping the souls of up to 13 named victims, whom it seeks unerringly, one per night. Along the way, the coachman may gather any other unfortunates he comes across except the summoner and up to 12 individuals he&rsquo;s named as protected.',
+		 'en-US': 'The black coachman has existed in one form or another for millennia. The Egyptians knew him as the “dark charioteer,” the Romans called him the “black rider,” and the Normans knew him as “death\'s wagoner.” His current name stems from the Victorian era.\nThe coachman appears only when summoned via a summon demon spell. This is typically done as vengeance against someone the summoner believes has wronged him.\nOnce summoned and tasked, the coachman begins its long ride the very next night at 13 minutes after midnight. It rides the roads within 13 miles of where it was summoned and gathers the souls of all those it meets. The summoner can task it with reaping the souls of up to 13 named victims, whom it seeks unerringly, one per night. Along the way, the coachman may gather any other unfortunates he comes across except the summoner and up to 12 individuals he\'s named as protected.',
 	},
 		attributes: '{"agility":"d8","smarts":"d8","spirit":"d8","strength":"d10","vigor":"d10"}',
 		skills: '{"SKILL_DRIVING":{"value":"d10"},"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"},"SKILL_RIDING":{"value":"d10"},"SKILL_STEALTH":{"value":"d6"}}',
@@ -35167,7 +35167,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Four stallions, with coats as black as pitch and eyes like burning coals, pull the coachman&rsquo;s black coach. There are no reins attaching them to the coach, only strands of inky blackness. They fight only if they or the coachman are attacked.',
+		 'en-US': 'Four stallions, with coats as black as pitch and eyes like burning coals, pull the coachman\'s black coach. There are no reins attaching them to the coach, only strands of inky blackness. They fight only if they or the coachman are attacked.',
 	},
 		attributes: '{"agility":"d6","smarts":"d6(A)","spirit":"d8","strength":"d12+4","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d8"}}',
@@ -35196,7 +35196,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Fearless: Immune to Fear and Intimidation.\nInvulnerable: The judge is invulnerable to all but the person who summoned him.\nDark Insight: If the summoner defeats the judge in single-combat, he may ask how to defeat a single supernatural creature. The judge imparts no other information&mdash; his sole cosmic purpose is to reveal such secrets. Some believe this is a sort of &ldquo;safety net&rdquo; for knowledge that might otherwise be lost so that no creature is every truly undefeatable.\nJudgement: If the summoner is defeated by the Black Judge in single combat, he must make an opposed Spirit roll with the judge plus or minus his own Charisma modifier. A Mean summoner, for example, subtracts &ndash;2 from his opposed roll. If the judge wins the character is cursed with doom. He may no longer spend Bennies to make Soak rolls until he summons another judge&mdash;and defeats him!\nWeakness (Summoner): The judge is vulnerable only to the one who summoned him.',
+		 'en-US': 'Fearless: Immune to Fear and Intimidation.\nInvulnerable: The judge is invulnerable to all but the person who summoned him.\nDark Insight: If the summoner defeats the judge in single-combat, he may ask how to defeat a single supernatural creature. The judge imparts no other information— his sole cosmic purpose is to reveal such secrets. Some believe this is a sort of “safety net” for knowledge that might otherwise be lost so that no creature is every truly undefeatable.\nJudgement: If the summoner is defeated by the Black Judge in single combat, he must make an opposed Spirit roll with the judge plus or minus his own Charisma modifier. A Mean summoner, for example, subtracts –2 from his opposed roll. If the judge wins the character is cursed with doom. He may no longer spend Bennies to make Soak rolls until he summons another judge—and defeats him!\nWeakness (Summoner): The judge is vulnerable only to the one who summoned him.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -35208,7 +35208,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'For those who know the ancient rituals necessary to summon him, the black judge can be an ally in the fight against evil. He takes the form of a cowled figure clad in robes of darkest night. Over his face he wears a vaguely skull-like mask. Although predominantly black, the mask has burning yellow eyes and fangs. What lies beneath the mask has never been revealed.\nOnce summoned, the judge usually takes a moment to hear the petitioner&rsquo;s plea, and may even converse with him. Before the judge grants any information, however, he must be defeated in single melee combat.\nThe judge is incredibly tough, but is vulnerable to whoever summoned him. Weighing whether or not the judge should be summoned should be a very difficult decision.\nIf the judge is defeated, the summoner may ask him how to defeat one supernatural creature&mdash;good or evil.\nIf the summoner is defeated, the judge renders judgement&ndash;see below.',
+		 'en-US': 'For those who know the ancient rituals necessary to summon him, the black judge can be an ally in the fight against evil. He takes the form of a cowled figure clad in robes of darkest night. Over his face he wears a vaguely skull-like mask. Although predominantly black, the mask has burning yellow eyes and fangs. What lies beneath the mask has never been revealed.\nOnce summoned, the judge usually takes a moment to hear the petitioner\'s plea, and may even converse with him. Before the judge grants any information, however, he must be defeated in single melee combat.\nThe judge is incredibly tough, but is vulnerable to whoever summoned him. Weighing whether or not the judge should be summoned should be a very difficult decision.\nIf the judge is defeated, the summoner may ask him how to defeat one supernatural creature—good or evil.\nIf the summoner is defeated, the judge renders judgement–see below.',
 	},
 		attributes: '{"agility":"d8","smarts":"d10","spirit":"d12","strength":"d8","vigor":"d8"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d12"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"},"SKILL_PERSUASION":{"value":"d10"},"SKILL_STEALTH":{"value":"d8"},"SKILL_TAUNT":{"value":"d10"}}',
@@ -35331,7 +35331,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': 'Bad Eyes, Outsider (to most other kids)',
 	},
 	 blurb: {
-		 'en-US': 'The nerd may be the brains of the out t, but he&acirc;&euro;&trade;s a social pariah. His bookish knowledge might save his friends&acirc;&euro;&trade; lives, but his nerdy glasses and lack of social skills mean they don&acirc;&euro;&trade;t want to hang with him socially.',
+		 'en-US': 'The nerd may be the brains of the out t, but heâ€™s a social pariah. His bookish knowledge might save his friendsâ€™ lives, but his nerdy glasses and lack of social skills mean they donâ€™t want to hang with him socially.',
 	},
 		attributes: '{"agility":"","smarts":"","spirit":"","strength":"","vigor":""}',
 		skills: '{"SKILL_INVESTIGATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d4"},"SKILL_REPAIR":{"value":"d6"},"SKILL_STEALTH":{"value":"d4"},"SKILL_KNOWLEDGE0":{"special":{"en-US":"Computers"},"value":"d8"},"SKILL_KNOWLEDGE1":{"special":{"en-US":"Science"},"value":"d10"}}',
@@ -35360,7 +35360,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Blood Spray: Any wound caused to Todoto causes a fountain of blood to spray from his warped body. Place the thin end of a Cone Template on Todoto, facing toward the direction the damage came from. Any character under the template must make an Agility roll or be struck by the blood (see below).\nFear (-4): Anyone seeing the creature must make a Fear check at -4.\nFearless: Immune to Fear and Intimidation. \nGargantuan: Heavy Armor. Creatures add +4 when attacking the body of Todoto due to its great size. Add Size to damage when crushing but subtract Size of victim.\nHardy: If Shaken, further Shaken results have no effect.\nImproved Arcane Resistance: +4 Armor versus magic, and +4 to rolls made to resist magic effects.\nMutating Blood: Any creature struck by Todoto&acirc;&euro;&trade;s blood must make a Vigor roll at -2 or be transformed into a Minion of Todoto (see below). The process takes one round, during which time the victim can take no action. The process is irreversible.\nRegeneration (Fast): Todoto makes a natural healing roll every round.\nSize +10: Todoto is over 70&acirc;&euro;&trade; tall.',
+		 'en-US': 'Blood Spray: Any wound caused to Todoto causes a fountain of blood to spray from his warped body. Place the thin end of a Cone Template on Todoto, facing toward the direction the damage came from. Any character under the template must make an Agility roll or be struck by the blood (see below).\nFear (-4): Anyone seeing the creature must make a Fear check at -4.\nFearless: Immune to Fear and Intimidation. \nGargantuan: Heavy Armor. Creatures add +4 when attacking the body of Todoto due to its great size. Add Size to damage when crushing but subtract Size of victim.\nHardy: If Shaken, further Shaken results have no effect.\nImproved Arcane Resistance: +4 Armor versus magic, and +4 to rolls made to resist magic effects.\nMutating Blood: Any creature struck by Todotoâ€™s blood must make a Vigor roll at -2 or be transformed into a Minion of Todoto (see below). The process takes one round, during which time the victim can take no action. The process is irreversible.\nRegeneration (Fast): Todoto makes a natural healing roll every round.\nSize +10: Todoto is over 70â€™ tall.',
 	},
 	 tags: {
 		 'en-US': 'dark gods,gods,god,',
@@ -35401,7 +35401,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bite/Claws: Wendigos have jagged claws and teeth. Str+d6.\nFear (-2): Anyone encountering a wendigo must make a Fear test at -1.\nFearless: Wendigos are immune to Fear and Intimidation.\nImmunity (Cold/Heat): Wendigos in cold climates are immune to cold and cold- based attacks. The same is true of those crated in sweltering environs.\nNight Vision: Wendigos can see in all but complete darkness.\nSize +2: Wendigos stand over 10&acirc;&euro;&trade; tall. &acirc;&euro;&cent;Weakness (Hot Tallow): A wendigo is instantly killed if someone manages to pour hot tallow down its throat to melt its icy heart.',
+		 'en-US': 'Bite/Claws: Wendigos have jagged claws and teeth. Str+d6.\nFear (-2): Anyone encountering a wendigo must make a Fear test at -1.\nFearless: Wendigos are immune to Fear and Intimidation.\nImmunity (Cold/Heat): Wendigos in cold climates are immune to cold and cold- based attacks. The same is true of those crated in sweltering environs.\nNight Vision: Wendigos can see in all but complete darkness.\nSize +2: Wendigos stand over 10â€™ tall. â€¢Weakness (Hot Tallow): A wendigo is instantly killed if someone manages to pour hot tallow down its throat to melt its icy heart.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -35413,7 +35413,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Abhorrent as it may be, people sometimes resort to cannibalism when lost in the wilderness or stranded on deserted islands.\nFor most, it is a matter of survival, never to be tried again once they are rescued. For a few, however, it becomes a craving. These individuals are said to be possessed by the spirit of the wendigo, an American Indian cannibal spirit.\nTrue wendigos are either more advanced forms of their lesser cousins or born from more savage stock or circumstances. They tend to exist in the dead of winter, but there&acirc;&euro;&trade;s no reason such creatures\ncan&acirc;&euro;&trade;t exist in other climates.',
+		 'en-US': 'Abhorrent as it may be, people sometimes resort to cannibalism when lost in the wilderness or stranded on deserted islands.\nFor most, it is a matter of survival, never to be tried again once they are rescued. For a few, however, it becomes a craving. These individuals are said to be possessed by the spirit of the wendigo, an American Indian cannibal spirit.\nTrue wendigos are either more advanced forms of their lesser cousins or born from more savage stock or circumstances. They tend to exist in the dead of winter, but thereâ€™s no reason such creatures\ncanâ€™t exist in other climates.',
 	},
 		attributes: '{"agility":"d10","smarts":"d8","spirit":"d8","strength":"d12+2","vigor":"d12"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d12"},"SKILL_FIGHTING":{"value":"d12"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d10"},"SKILL_STEALTH":{"value":"d8"},"SKILL_SWIMMING":{"value":"d10"},"SKILL_THROWING":{"value":"d10"},"SKILL_TRACKING":{"value":"d10"}}',
@@ -35565,7 +35565,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor +2: Wooden body.\nConstruct: +2 to recover from being Shaken; No additional damage from called shots; Do not suffer wound modi ers; Immune to poison and disease.\nPuppet: Dummies can use the puppet power. They use their Spirit as their arcane skill, and have 20 Power Points.\nSize -2: Dummies stand no taller than 3&acirc;&euro;&trade;. &acirc;&euro;&cent;Small: Attackers suffer a -2 penalty when\nattacking a dummy.',
+		 'en-US': 'Armor +2: Wooden body.\nConstruct: +2 to recover from being Shaken; No additional damage from called shots; Do not suffer wound modi ers; Immune to poison and disease.\nPuppet: Dummies can use the puppet power. They use their Spirit as their arcane skill, and have 20 Power Points.\nSize -2: Dummies stand no taller than 3â€™. â€¢Small: Attackers suffer a -2 penalty when\nattacking a dummy.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -35577,7 +35577,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Ventriloquist dummies with a mind of their own have been the subject of many horror movies. They may look like the ventriloquist is making it talk, but in reality the dummy is the boss. Dummies don&acirc;&euro;&trade;t like to move about on their own unless absolutely necessary, but they can. In most cases, they get their &acirc;&euro;&oelig;master&acirc;&euro; to do their dirty work for them.',
+		 'en-US': 'Ventriloquist dummies with a mind of their own have been the subject of many horror movies. They may look like the ventriloquist is making it talk, but in reality the dummy is the boss. Dummies donâ€™t like to move about on their own unless absolutely necessary, but they can. In most cases, they get their â€œmasterâ€ to do their dirty work for them.',
 	},
 		attributes: '{"agility":"d6","smarts":"d8","spirit":"d10","strength":"d6","vigor":"d6"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_PERSUASION":{"value":"d10"},"SKILL_STEALTH":{"value":"d6"},"SKILL_TAUNT":{"value":"d12"}}',
@@ -35729,7 +35729,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor +4: Gelatinous body.\nFear (-4): Anyone seeing the creature must make a Fear check at -4.\nFearless: Immune to Fear and Intimidation. &acirc;&euro;&cent;Gargantuan: Heavy Armor. Creatures add +4 when attacking the body of Vralkresh due to its great size. Add Size to damage when crushing but subtract Size of victim.\nHardy: If Shaken, further Shaken results have no effect.\nImproved Arcane Resistance: +4 Armor versus magic, and +4 to rolls made to resist magic effects.\nImproved Frenzy: Vralkresh makes two Fighting attacks against every opponent within 2&acirc;&euro; of him each round without incurring a multi action penalty.\nRegeneration (Fast): Vralkresh makes a natural healing roll every round.\nSize +12: Vralkresh is over 100&acirc;&euro;&trade; wide. \nTentacles: Str+d8. Each tentacle has a single wound, but damaging a tentacle causes no harm to Vralkresh. Vralkresh can sprout a new tentacle to replace a damaged one as a free action.',
+		 'en-US': 'Armor +4: Gelatinous body.\nFear (-4): Anyone seeing the creature must make a Fear check at -4.\nFearless: Immune to Fear and Intimidation. â€¢Gargantuan: Heavy Armor. Creatures add +4 when attacking the body of Vralkresh due to its great size. Add Size to damage when crushing but subtract Size of victim.\nHardy: If Shaken, further Shaken results have no effect.\nImproved Arcane Resistance: +4 Armor versus magic, and +4 to rolls made to resist magic effects.\nImproved Frenzy: Vralkresh makes two Fighting attacks against every opponent within 2â€ of him each round without incurring a multi action penalty.\nRegeneration (Fast): Vralkresh makes a natural healing roll every round.\nSize +12: Vralkresh is over 100â€™ wide. \nTentacles: Str+d8. Each tentacle has a single wound, but damaging a tentacle causes no harm to Vralkresh. Vralkresh can sprout a new tentacle to replace a damaged one as a free action.',
 	},
 	 tags: {
 		 'en-US': 'dark gods,gods,god,',
@@ -35782,7 +35782,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'War droids are bipedal constructs, but due to their skeletal appearance (which is designed to instill fear) cannot be mistaken for humans. Their sole function is to destroy whatever life- form they&acirc;&euro;&trade;ve been programmed to see as their enemy. They can use any standard weapons available to the race which built them.',
+		 'en-US': 'War droids are bipedal constructs, but due to their skeletal appearance (which is designed to instill fear) cannot be mistaken for humans. Their sole function is to destroy whatever life- form theyâ€™ve been programmed to see as their enemy. They can use any standard weapons available to the race which built them.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d6","strength":"d12+2","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d10"}}',
@@ -35811,7 +35811,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str+d4.\nClaws: Str+d8.\nImmunity: Werecreatures can only be Shaken by weapons that are not silver&acirc;&euro;&rdquo;not wounded.\nInfection: Anyone bitten by a werejaguar and suffers a wound or greater must make a Vigor roll. Failure means the character becomes a werejaguar at the next full moon (assuming he survives the attack).\nPounce: Werejaguars often pounce on their prey to best bring their mass and claws to bear. It can leap 1d6&acirc;&euro; to gain +4 to its attack and damage. Its Parry is reduced by -2 until its next action when performing the maneuver however.\nSize +1: Werejaguars are taller than humans. \nWeakness (Silver): Werecreatures suffer normal damage from silver weapons.',
+		 'en-US': 'Bite: Str+d4.\nClaws: Str+d8.\nImmunity: Werecreatures can only be Shaken by weapons that are not silverâ€”not wounded.\nInfection: Anyone bitten by a werejaguar and suffers a wound or greater must make a Vigor roll. Failure means the character becomes a werejaguar at the next full moon (assuming he survives the attack).\nPounce: Werejaguars often pounce on their prey to best bring their mass and claws to bear. It can leap 1d6â€ to gain +4 to its attack and damage. Its Parry is reduced by -2 until its next action when performing the maneuver however.\nSize +1: Werejaguars are taller than humans. \nWeakness (Silver): Werecreatures suffer normal damage from silver weapons.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -35852,7 +35852,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Aquatic: Pace 10.\nBite: Str+d8.\nFeeding Frenzy: Once there&acirc;&euro;&trade;s a significant amount of blood in the water (usually one wound), weresharks go into a feeding frenzy and add +2 to their attacks and damage for the rest of the  ght.\nImmunity: Were-creatures can only be Shaken by weapons that are not silver&acirc;&euro;&rdquo;not wounded.\nInfection: Anyone bitten by a wereshark and suffers a wound or greater must make a Vigor roll. Failure means the character becomes a wereshark at the next full moon (assuming he survives the attack).\nSize +1: Weresharks stand over 7&acirc;&euro;&trade; tall. &acirc;&euro;&cent;Weakness (silver): Were-creatures suffer\nnormal damage from silver weapons.',
+		 'en-US': 'Aquatic: Pace 10.\nBite: Str+d8.\nFeeding Frenzy: Once thereâ€™s a significant amount of blood in the water (usually one wound), weresharks go into a feeding frenzy and add +2 to their attacks and damage for the rest of the  ght.\nImmunity: Were-creatures can only be Shaken by weapons that are not silverâ€”not wounded.\nInfection: Anyone bitten by a wereshark and suffers a wound or greater must make a Vigor roll. Failure means the character becomes a wereshark at the next full moon (assuming he survives the attack).\nSize +1: Weresharks stand over 7â€™ tall. â€¢Weakness (silver): Were-creatures suffer\nnormal damage from silver weapons.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -35864,7 +35864,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Weresharks are a human-shark mix. Like all werecreatures, they have a humanoid form with bestial features. In this instance, the creatures has a shark&acirc;&euro;&trade;s head and skin, webbed hands, and a dorsal  n.',
+		 'en-US': 'Weresharks are a human-shark mix. Like all werecreatures, they have a humanoid form with bestial features. In this instance, the creatures has a sharkâ€™s head and skin, webbed hands, and a dorsal  n.',
 	},
 		attributes: '{"agility":"d10","smarts":"d6","spirit":"d6","strength":"d12+1","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d12"},"SKILL_NOTICE":{"value":"d12+2"},"SKILL_STEALTH":{"value":"d6"},"SKILL_SWIMMING":{"value":"d10"}}',
@@ -35893,7 +35893,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Claws: Str+d8.\nFear -2: Werewolves chill the blood of all who see them.\nInfection: Anyone bitten by a werewolf and suffers a wound or greater must make a Vigor roll.\nFailure means the character becomes a werewolf at the next full moon (assuming he survives the attack).\nInvulnerability: Werewolves can only be Shaken by weapons that are not silver&acirc;&euro;&rdquo;not wounded.\nInfravision: Werewolves can see heat and halve penalties for bad lighting when attacking living targets.\nWeakness: Werewolves suffer damage from silver weapons.',
+		 'en-US': 'Claws: Str+d8.\nFear -2: Werewolves chill the blood of all who see them.\nInfection: Anyone bitten by a werewolf and suffers a wound or greater must make a Vigor roll.\nFailure means the character becomes a werewolf at the next full moon (assuming he survives the attack).\nInvulnerability: Werewolves can only be Shaken by weapons that are not silverâ€”not wounded.\nInfravision: Werewolves can see heat and halve penalties for bad lighting when attacking living targets.\nWeakness: Werewolves suffer damage from silver weapons.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -35934,7 +35934,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Ethereal: Will o&acirc;&euro;&trade; wisps are immaterial. They don&acirc;&euro;&trade;t suffer additional damage from called shots; Fearless; Immune to disease and poison.\nFlaming Jack: The will o&acirc;&euro;&trade; wisp can reanimate and possess the body of a victim slain by its Spiritual Exhaustion (see below) attack.\nFlight: The will o&acirc;&euro;&trade; wisp  flies at a rate of 8&acirc;&euro;. They may not &acirc;&euro;&oelig;run.&acirc;&euro;\nFocus: The ghost is tied to a specific talisman&acirc;&euro;&rdquo;usually a piece of jewelry&acirc;&euro;&rdquo; which remains unnaturally hot to the touch (2d6 damage to exposed flesh). If this item is submerged in water, the will o&acirc;&euro;&trade; wisp suffers 2d6 damage per round as long as it remains so. If it is submerged in holy water, the wisp is destroyed immediately.\nInvulnerability: Will o&acirc;&euro;&trade; wisps are immune to all non-magical attacks, but suffer 1d6 damage when doused in at least a gallon of water, +2 per additional gallon.\nSpiritual Exhaustion: A will o&acirc;&euro;&trade; wisp&acirc;&euro;&trade;s only means of attack in its initial form is by subjecting its victim to a supernatural heat that only she can feel. The wisp and its target make an opposed Spirit roll. If the victim loses, the victim suffers a Fatigue level.\nSize -1: Will o&acirc;&euro;&trade; wisps are approximately 2&acirc;&euro;&trade;-3&acirc;&euro;&trade; in diameter.\nWeakness (Holy Water): Sprinkling a will o&acirc;&euro;&trade; wisp with holy water does 2d10 damage to it.',
+		 'en-US': 'Ethereal: Will oâ€™ wisps are immaterial. They donâ€™t suffer additional damage from called shots; Fearless; Immune to disease and poison.\nFlaming Jack: The will oâ€™ wisp can reanimate and possess the body of a victim slain by its Spiritual Exhaustion (see below) attack.\nFlight: The will oâ€™ wisp  flies at a rate of 8â€. They may not â€œrun.â€\nFocus: The ghost is tied to a specific talismanâ€”usually a piece of jewelryâ€” which remains unnaturally hot to the touch (2d6 damage to exposed flesh). If this item is submerged in water, the will oâ€™ wisp suffers 2d6 damage per round as long as it remains so. If it is submerged in holy water, the wisp is destroyed immediately.\nInvulnerability: Will oâ€™ wisps are immune to all non-magical attacks, but suffer 1d6 damage when doused in at least a gallon of water, +2 per additional gallon.\nSpiritual Exhaustion: A will oâ€™ wispâ€™s only means of attack in its initial form is by subjecting its victim to a supernatural heat that only she can feel. The wisp and its target make an opposed Spirit roll. If the victim loses, the victim suffers a Fatigue level.\nSize -1: Will oâ€™ wisps are approximately 2â€™-3â€™ in diameter.\nWeakness (Holy Water): Sprinkling a will oâ€™ wisp with holy water does 2d10 damage to it.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -35946,7 +35946,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Will o&acirc;&euro;&trade; wisps are the ghosts of witches and necromancers who have been burned at the stake. They manifest as small handfuls of  flickering white flame that is oddly cold to the touch rather than hot. Legend claims a brave observer can see a grinning face inside of a will o&acirc;&euro;&trade; wisp.\nA will o&acirc;&euro;&trade; wisp uses the glimmering light produced by its form to lure its intended victim to a secluded spot. There, it weakens the poor soul with a  re that seems to spring from Hell itself. Once its target succumbs to the heat, the ghost possesses his corpse which immediately bursts aflame. These burning zombies are sometimes referred to as &acirc;&euro;&oelig;flaming jacks,&acirc;&euro; particularly among more rural populations. The ghost uses the reanimated body to wreak as much havoc as it can before it is consumed by the creature&acirc;&euro;&trade;s otherworldly  ames&acirc;&euro;&rdquo;preferably on those it believes wronged it in its former life.\nInitially, a will o&acirc;&euro;&trade; wisp haunts the area near its death, seeking vengeance on those responsible for any and all wrongdoings against it during life. However, even once it has revenged itself on everyone guilty of even the slightest infraction, the hatred and anger that drove it to an undead existence continues to burn within the ghost. Eventually, these spirits tend to gravitate toward lonely, desolate areas where their unnatural spite for all things living leads them to prey upon unsuspecting travelers.\nThe process by which a will o&acirc;&euro;&trade; wisp is formed is a closely guarded secret among the few practitioners of the dark arts that know it and often varies greatly in the details. Invariably though, it involves the creation of a talisman of some sort which must be on the black magician at the time of his death and which serves as the ghost&acirc;&euro;&trade;s anchor to this plane. The talisman is not consumed in the  ames, but remains ever after searing hot to the touch.\nThe light of a will o&acirc;&euro;&trade; wisp varies from cold white to  flame orange. The ghost can lessen its brilliance to that of a mere candle or brighten it to that of a torch at will.',
+		 'en-US': 'Will oâ€™ wisps are the ghosts of witches and necromancers who have been burned at the stake. They manifest as small handfuls of  flickering white flame that is oddly cold to the touch rather than hot. Legend claims a brave observer can see a grinning face inside of a will oâ€™ wisp.\nA will oâ€™ wisp uses the glimmering light produced by its form to lure its intended victim to a secluded spot. There, it weakens the poor soul with a  re that seems to spring from Hell itself. Once its target succumbs to the heat, the ghost possesses his corpse which immediately bursts aflame. These burning zombies are sometimes referred to as â€œflaming jacks,â€ particularly among more rural populations. The ghost uses the reanimated body to wreak as much havoc as it can before it is consumed by the creatureâ€™s otherworldly  amesâ€”preferably on those it believes wronged it in its former life.\nInitially, a will oâ€™ wisp haunts the area near its death, seeking vengeance on those responsible for any and all wrongdoings against it during life. However, even once it has revenged itself on everyone guilty of even the slightest infraction, the hatred and anger that drove it to an undead existence continues to burn within the ghost. Eventually, these spirits tend to gravitate toward lonely, desolate areas where their unnatural spite for all things living leads them to prey upon unsuspecting travelers.\nThe process by which a will oâ€™ wisp is formed is a closely guarded secret among the few practitioners of the dark arts that know it and often varies greatly in the details. Invariably though, it involves the creation of a talisman of some sort which must be on the black magician at the time of his death and which serves as the ghostâ€™s anchor to this plane. The talisman is not consumed in the  ames, but remains ever after searing hot to the touch.\nThe light of a will oâ€™ wisp varies from cold white to  flame orange. The ghost can lessen its brilliance to that of a mere candle or brighten it to that of a torch at will.',
 	},
 		attributes: '{"agility":"d8","smarts":"d8","spirit":"d10","strength":"d4","vigor":"d6"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"},"SKILL_STEALTH":{"value":"d8"},"SKILL_TAUNT":{"value":"d6"},"SKILL_TRACKING":{"value":"d8"}}',
@@ -35975,7 +35975,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Curse of Doom: If a Wild Card witch is slain and has a chance, she&acirc;&euro;&trade;ll curse her slayers with a curse of doom. Until the character undergoes a ritual casting of dispel magic (or some other speci c task set by the Game\nMaster), all those cursed subtract 2 from Vigor rolls made to Soak damage.\nSpells: An average witch, such as one who is part of a coven, knows bolt, boost / lower trait,  flight, puppet, and telekinesis. They have 15 Power Points each.',
+		 'en-US': 'Curse of Doom: If a Wild Card witch is slain and has a chance, sheâ€™ll curse her slayers with a curse of doom. Until the character undergoes a ritual casting of dispel magic (or some other speci c task set by the Game\nMaster), all those cursed subtract 2 from Vigor rolls made to Soak damage.\nSpells: An average witch, such as one who is part of a coven, knows bolt, boost / lower trait,  flight, puppet, and telekinesis. They have 15 Power Points each.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -35987,7 +35987,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'There are many types of witches in horror tales&acirc;&euro;&rdquo;from classic crones making deals with the devil to modern divas who practice (cinematic) wicca. Where they draw their power from and what they do with it is typically the feature of your tale.',
+		 'en-US': 'There are many types of witches in horror talesâ€”from classic crones making deals with the devil to modern divas who practice (cinematic) wicca. Where they draw their power from and what they do with it is typically the feature of your tale.',
 	},
 		attributes: '{"agility":"d6","smarts":"d8","spirit":"d8","strength":"d6","vigor":"d6"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d4"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d8"},"SKILL_PERSUASION":{"value":"d8"},"SKILL_SPELLCASTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
@@ -36016,7 +36016,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor +4: Thick plates.\nBite and Claws: Str+d8.\nFearless: Immune to Fear and Intimidation. \nHardy: Multiple Shaken results do not cause a wound.\nLarge: Attackers are +2 to attack rolls against the queen due to her large size. \nParalysis (-2): Anyone Shaken or wounded by a tail attack must make a Vigor roll or be paralyzed for 2d6 rounds. \nSize +6: The queen measures 30&acirc;&euro;&trade; long. \nTail: Str+d8, +1 Reach.',
+		 'en-US': 'Armor +4: Thick plates.\nBite and Claws: Str+d8.\nFearless: Immune to Fear and Intimidation. \nHardy: Multiple Shaken results do not cause a wound.\nLarge: Attackers are +2 to attack rolls against the queen due to her large size. \nParalysis (-2): Anyone Shaken or wounded by a tail attack must make a Vigor roll or be paralyzed for 2d6 rounds. \nSize +6: The queen measures 30â€™ long. \nTail: Str+d8, +1 Reach.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -36057,7 +36057,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor +2: Thick plates.\nBite and Claws: Str+d6.\nFearless: Immune to Fear and Intimidation.\nHardy: Multiple Shaken results do not cause a wound.\nParalysis: Anyone Shaken or wounded by a tail attack must make a Vigor roll or be paralyzed for 2d6 rounds.\nSize +1: When upright, the xenoform stands 7&acirc;&euro;&trade; tall.\nTail: Str+d6; +1  Reach.',
+		 'en-US': 'Armor +2: Thick plates.\nBite and Claws: Str+d6.\nFearless: Immune to Fear and Intimidation.\nHardy: Multiple Shaken results do not cause a wound.\nParalysis: Anyone Shaken or wounded by a tail attack must make a Vigor roll or be paralyzed for 2d6 rounds.\nSize +1: When upright, the xenoform stands 7â€™ tall.\nTail: Str+d6; +1  Reach.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -36098,7 +36098,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Death Touch: The touch of a zombie lord can drain the life of its victims. Instead of a normal attack, a zombie lord may make a Touch Attack. Every raise on its Fighting roll automatically inflicts one wound to its target. These wounds rot the skin and tissue around the affected area.\nFear: Anyone seeing the creature must make a Fear test.\nNecromancy: A zombie lord has the zombie power and 30 Power Points. Any zombies the lord creates are permanent.\nSire: A victim Incapacitated by the zombie lord&acirc;&euro;&trade;s Death Touch has a 50% chance of dying and returning to life as a zombie within 1d4 rounds.\nStench of Death: Zombie lords reek of death. The  rst time a character gets within 3&acirc;&euro; of a zombie lord, he must make a Vigor roll or be Shaken. Whether he succeeds or fails, he in then immune to the stench for 24 hours.\nUndead: +2 Toughness; +2 to recover from being Shaken; No additional damage from Called Shots; Immune to disease and poison.\nWeakness (Head): Shots to a zombie lord&acirc;&euro;&trade;s head are +2 damage.',
+		 'en-US': 'Death Touch: The touch of a zombie lord can drain the life of its victims. Instead of a normal attack, a zombie lord may make a Touch Attack. Every raise on its Fighting roll automatically inflicts one wound to its target. These wounds rot the skin and tissue around the affected area.\nFear: Anyone seeing the creature must make a Fear test.\nNecromancy: A zombie lord has the zombie power and 30 Power Points. Any zombies the lord creates are permanent.\nSire: A victim Incapacitated by the zombie lordâ€™s Death Touch has a 50% chance of dying and returning to life as a zombie within 1d4 rounds.\nStench of Death: Zombie lords reek of death. The  rst time a character gets within 3â€ of a zombie lord, he must make a Vigor roll or be Shaken. Whether he succeeds or fails, he in then immune to the stench for 24 hours.\nUndead: +2 Toughness; +2 to recover from being Shaken; No additional damage from Called Shots; Immune to disease and poison.\nWeakness (Head): Shots to a zombie lordâ€™s head are +2 damage.',
 	},
 	 tags: {
 		 'en-US': 'undead,',
@@ -37283,7 +37283,7 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
-		 'en-US': 'Alchemists&rsquo; trunk',
+		 'en-US': 'Alchemists\' trunk',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -38655,7 +38655,7 @@ var savageWorldsGearMundane = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'provides light in 4&rdquo; radius',
+		 'en-US': 'provides light in 4” radius',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -38765,7 +38765,7 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
-		 'en-US': 'Lineman&rsquo;s Telephone',
+		 'en-US': 'Lineman\'s Telephone',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -39750,7 +39750,7 @@ var savageWorldsGearMundane = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': '1 hour, 4&rdquo; radius',
+		 'en-US': '1 hour, 4” radius',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -40270,7 +40270,7 @@ var savageWorldsGearTypes = Array(
 },
 {
 	 name: {
-		 'en-US': 'Animals &amp; Tack',
+		 'en-US': 'Animals & Tack',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -41282,7 +41282,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'Reach 1, Parry &ndash;1, 2 hands, can be used as a weapon in each hand without Reach, ignores Shield/Weapon Parry or Cover bonus',
+		 'en-US': 'Reach 1, Parry –1, 2 hands, can be used as a weapon in each hand without Reach, ignores Shield/Weapon Parry or Cover bonus',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -41408,7 +41408,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 2 vs. rigid armor, &ndash;1 Parry, 2 hands, ignores Shield/Weapon Parry or Cover bonus',
+		 'en-US': 'AP 2 vs. rigid armor, –1 Parry, 2 hands, ignores Shield/Weapon Parry or Cover bonus',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -41596,7 +41596,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 12, Laser swords aren&rsquo;t terribly realistic, but are staples in many space-opera campaigns',
+		 'en-US': 'AP 12, Laser swords aren\'t terribly realistic, but are staples in many space-opera campaigns',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -41999,7 +41999,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': '&ndash;2 to be Noticed if hidden',
+		 'en-US': '–2 to be Noticed if hidden',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -43377,7 +43377,7 @@ var savageWorldsGearRangedWeapons = Array(
 },
 {
 	 name: {
-		 'en-US': 'H&amp;K G3 (.308)',
+		 'en-US': 'H&K G3 (.308)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -43411,7 +43411,7 @@ var savageWorldsGearRangedWeapons = Array(
 },
 {
 	 name: {
-		 'en-US': 'H&amp;K MP5 (9mm)',
+		 'en-US': 'H&K MP5 (9mm)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -44899,7 +44899,7 @@ var savageWorldsGearRangedWeapons = Array(
 },
 {
 	 name: {
-		 'en-US': 'S&amp;W (.357)',
+		 'en-US': 'S&W (.357)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -44933,7 +44933,7 @@ var savageWorldsGearRangedWeapons = Array(
 },
 {
 	 name: {
-		 'en-US': 'S&amp;W (.44)',
+		 'en-US': 'S&W (.44)',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -45670,14 +45670,14 @@ availableLanguages.push ({
 			INDEX_BUTTON_CORE_EXTRAS: 'Statisten',
 			INDEX_BUTTON_CORE_CHAR: 'Charakter Generator',
 			INDEX_BUTTON_CORE_MASSBATTLES: 'Massenkampf',
-			INDEX_BUTTON_SCIFI_POWER: 'Power R&uuml;stung Generator',
+			INDEX_BUTTON_SCIFI_POWER: 'Power Rüstung Generator',
 			INDEX_BUTTON_SCIFI_ROBOT: 'Roboter Generator',
 			INDEX_BUTTON_SCIFI_STARSHIP: 'Raumschiff Generator',
 			INDEX_BUTTON_SCIFI_VEHICLE: 'Fahrzeug Generator',
-			INDEX_BUTTON_SCIFI_WALKER: 'L&auml;ufer Generator',
+			INDEX_BUTTON_SCIFI_WALKER: 'Läufer Generator',
 			INDEX_BUTTON_SCIFI_WORLD: 'Welten Generator',
-			GENERAL_ENTRIES: 'Eintr&auml;ge',
-			GENERAL_TOTAL_ENTRIES: 'Gesamt Eintr&auml;ge',
+			GENERAL_ENTRIES: 'Einträge',
+			GENERAL_TOTAL_ENTRIES: 'Gesamt Einträge',
 			GENERAL_IN_USE: 'Verwendet',
 			GENERAL_TRY_AGAIN: 'Versuchs nochmal',
 			GENERAL_NEW: 'Neu',
@@ -45693,17 +45693,17 @@ availableLanguages.push ({
 			GENERAL_IMPORT: 'Importieren',
 			GENERAL_EXPORT: 'Exportieren',
 			GENERAL_OPTIONS: 'Optionen',
-			GENERAL_BOOKS: 'B&uuml;cher',
+			GENERAL_BOOKS: 'Bücher',
 			GENERAL_BOOK: 'Buch',
 			GENERAL_PRINT: 'Drucken',
 			GENERAL_PDF: 'PDF',
 			GENERAL_YES: 'Ja',
 			GENERAL_NO: 'Nein',
-			GENERAL_CLOSE: 'Schlie&szlig;en',
+			GENERAL_CLOSE: 'Schließen',
 			GENERAL_CANCEL: 'Abbrechen',
 			GENERAL_REMOVE: 'Entfernen',
-			GENERAL_DELETE: 'L&ouml;schen',
-			GENERAL_ADD: 'Hinzuf&uuml;gen',
+			GENERAL_DELETE: 'Löschen',
+			GENERAL_ADD: 'Hinzufügen',
 			GENERAL_COST: 'Kosten',
 			GENERAL_WEIGHT: 'Gewicht',
 			GENERAL_VARIABLE: 'variabel',
@@ -45724,17 +45724,17 @@ availableLanguages.push ({
 			GENERAL_ADVANCEMENT: 'Aufstieg',
 			GENERAL_ADVANCEMENTS: 'Aufstiege',
 			GENERAL_ADVANCES: 'Fortschritte',
-			GENERAL_POWERS: 'M&auml;chte',
+			GENERAL_POWERS: 'Mächte',
 			GENERAL_CYBERWARE: 'Cyberware',
 			GENERAL_STRAIN: 'Belastung',
 			GENERAL_SETTINGS: 'Settings',
-			GENERAL_SELECT_LANGUAGE: 'Sprache ausw&auml;hlen',
-			GENERAL_SELECT: '-Ausw&auml;hlen-',
+			GENERAL_SELECT_LANGUAGE: 'Sprache auswählen',
+			GENERAL_SELECT: '-Auswählen-',
 			GENERAL_ATTRIBUTES: 'Attribute',
 			ATTRIBUTE_AGILITY: 'Geschicklichkeit',
 			ATTRIBUTE_SMARTS: 'Verstand',
 			ATTRIBUTE_SPIRIT: 'Willenskraft',
-			ATTRIBUTE_STRENGTH: 'St&auml;rke',
+			ATTRIBUTE_STRENGTH: 'Stärke',
 			ATTRIBUTE_VIGOR: 'Konstitution',
 			GENERAL_SKILLS: 'Fertigkeiten',
 			EXTRAS_H4_ABILITIES: 'Merkmale',
@@ -45743,94 +45743,94 @@ availableLanguages.push ({
 			GENERAL_PACE: 'Bewegungsweite',
 			GENERAL_CHARISMA: 'Charisma',
 			GENERAL_PARRY: 'Parieren',
-			GENERAL_EDGES_AND_HINDRANCES: 'Talente &amp; Handicaps',
+			GENERAL_EDGES_AND_HINDRANCES: 'Talente & Handicaps',
 			GENERAL_HINDRANCES: 'Handicaps',
 			GENERAL_EDGES: 'Talente',
 			GENERAL_PERKS: 'Nebeneffekt',
-			GENERAL_GEAR: 'Ausr&uuml;stung',
+			GENERAL_GEAR: 'Ausrüstung',
 			CHARGEN_INTRO_MAKE_PC: 'Erschaffe einen Spieler Charakter',
-			CHARGEN_INTRO_NOT_FOR_NPCS: 'Denk daran, dieses Tool ist dazu gedacht SCs nach den Savage Worlds Grundregel und dessen verschiedener Hintergrundb&auml;nde zu gestalten, nicht f&uuml;r NSC. NSC werden nach den Vorstellung des SL erstellt und sind nicht an die Beschr&auml;nkungen von SC gebunden.',
-			CHARGEN_INTRO_NOT_FOR_NPCS2: 'Das hei&szlig;t nicht das ein SL das Tool nicht als Leitfaden nutzen kann, aber es k&ouml;nnte zeitraubender und unn&ouml;tig komplex sein.',
+			CHARGEN_INTRO_NOT_FOR_NPCS: 'Denk daran, dieses Tool ist dazu gedacht SCs nach den Savage Worlds Grundregel und dessen verschiedener Hintergrundbände zu gestalten, nicht für NSC. NSC werden nach den Vorstellung des SL erstellt und sind nicht an die Beschränkungen von SC gebunden.',
+			CHARGEN_INTRO_NOT_FOR_NPCS2: 'Das heißt nicht das ein SL das Tool nicht als Leitfaden nutzen kann, aber es könnte zeitraubender und unnötig komplex sein.',
 			CHARGEN_CHARACTER_INFORMATION: 'Charakter Information',
-			CHARGEN_ATTRIBUTES_AND_SKILLS: 'Attribute &amp; Fertigkeiten',
-			CHARGEN_BOOKS_DIALOG: 'Verwendete B&uuml;cher',
-			CHARGEN_INTRO_BOOKS: 'B&uuml;cher',
+			CHARGEN_ATTRIBUTES_AND_SKILLS: 'Attribute & Fertigkeiten',
+			CHARGEN_BOOKS_DIALOG: 'Verwendete Bücher',
+			CHARGEN_INTRO_BOOKS: 'Bücher',
 			CHARGEN_INTRO_SETTING_RULES: 'Hintergrund Regeln',
 			CHARGEN_SPECIALIZATION_PLACEHOLDER: 'Fertigkeiten Name',
 			CHARGEN_SPECIALIZATIONS: 'Spezialisierung',
-			CHARGEN_STATUS_SKILL_POINTS: 'Fertigkeiten Punkte (verbraucht/verf&uuml;gbar)',
-			CHARGEN_STATUS_POWERS: 'M&auml;chte (verbraucht/verf&uuml;gbar)',
-			CHARGEN_SELECT_POWER: 'W&auml;hle eine Macht',
-			CHARGEN_STATUS_ATTRIBUTE_POINTS: 'Attributs Punkte (verbraucht/verf&uuml;gbar)',
-			CHARGEN_STATUS_ADVANCEMENTS: 'Aufstiege (verbraucht/verf&uuml;gbar)',
-			CHARGEN_NO_ADVANCEMENT_SLOTS_AVAILABLE: 'Du hast keine Aufstiege verf&uuml;gbar. Setze Deine EP auf f&uuml;nf oder mehr um die Aufstiege zu aktivieren.',
-			CHARGEN_VALIDATION_REPORT: 'G&uuml;ltigkeitsbericht',
+			CHARGEN_STATUS_SKILL_POINTS: 'Fertigkeiten Punkte (verbraucht/verfügbar)',
+			CHARGEN_STATUS_POWERS: 'Mächte (verbraucht/verfügbar)',
+			CHARGEN_SELECT_POWER: 'Wähle eine Macht',
+			CHARGEN_STATUS_ATTRIBUTE_POINTS: 'Attributs Punkte (verbraucht/verfügbar)',
+			CHARGEN_STATUS_ADVANCEMENTS: 'Aufstiege (verbraucht/verfügbar)',
+			CHARGEN_NO_ADVANCEMENT_SLOTS_AVAILABLE: 'Du hast keine Aufstiege verfügbar. Setze Deine EP auf fünf oder mehr um die Aufstiege zu aktivieren.',
+			CHARGEN_VALIDATION_REPORT: 'Gültigkeitsbericht',
 			CHARGEN_RACIAL_PARENTHETICAL: '(Rassen-)',
 			CHARGEN_SETTING_PARENTHETICAL: '(Hintergrund-)',
-			CHARGEN_SPC_AB: 'Arkaner Hintergrund (Superkr&auml;fte, Hintergrund Regel)',
-			CHARGEN_ADD_HINDRANCE: 'Handicap hinzuf&uuml;gen',
-			CHARGEN_ADD_EDGE: 'Talent hinzuf&uuml;gen',
-			CHARGEN_ADD_GEAR: 'Ausr&uuml;stung hinzuf&uuml;gen',
-			CHARGEN_ADD_ARMOR: 'R&uuml;stung hinzuf&uuml;gen',
-			CHARGEN_ADD_WEAPON: 'Waffe hinzuf&uuml;gen',
-			CHARGEN_ADD_RANGED_WEAPON: 'Fernkampfwaffe hinzuf&uuml;gen',
-			CHARGEN_ADD_HAND_WEAPON: 'Nahkampfwaffe hinzuf&uuml;gen',
-			CHARGEN_MANAGE_GEAR: 'Ausr&uuml;stung verwalten',
+			CHARGEN_SPC_AB: 'Arkaner Hintergrund (Superkräfte, Hintergrund Regel)',
+			CHARGEN_ADD_HINDRANCE: 'Handicap hinzufügen',
+			CHARGEN_ADD_EDGE: 'Talent hinzufügen',
+			CHARGEN_ADD_GEAR: 'Ausrüstung hinzufügen',
+			CHARGEN_ADD_ARMOR: 'Rüstung hinzufügen',
+			CHARGEN_ADD_WEAPON: 'Waffe hinzufügen',
+			CHARGEN_ADD_RANGED_WEAPON: 'Fernkampfwaffe hinzufügen',
+			CHARGEN_ADD_HAND_WEAPON: 'Nahkampfwaffe hinzufügen',
+			CHARGEN_MANAGE_GEAR: 'Ausrüstung verwalten',
 			CHARGEN_PERK_POINTS: 'Eigenschaftspunkte',
-			CHARGEN_ADD_PERK: 'Eigenschaft hinzuf&uuml;gen',
-			CHARGEN_ADD_ADVANCEMENT: 'Aufstieg hinzuf&uuml;gen',
+			CHARGEN_ADD_PERK: 'Eigenschaft hinzufügen',
+			CHARGEN_ADD_ADVANCEMENT: 'Aufstieg hinzufügen',
 			GENERAL_ADVANCEMENT_SELECTIONS: 'Aufstiegsauswahl',
-			CHARGEN_NO_PERK_POINTS: 'Handicaps ausw&auml;hlen um Eigenschaftspunkte zu erhalten',
-			CHARGEN_SELECT_A_PERK: 'W&auml;hle eine Eigenschaft',
+			CHARGEN_NO_PERK_POINTS: 'Handicaps auswählen um Eigenschaftspunkte zu erhalten',
+			CHARGEN_SELECT_A_PERK: 'Wähle eine Eigenschaft',
 			CHARGEN_PERKS_ATTRIBUTE: 'Erhalte einen weiteren Attributspunkt',
-			CHARGEN_PERKS_EDGE: 'W&auml;hle ein Talent',
+			CHARGEN_PERKS_EDGE: 'Wähle ein Talent',
 			CHARGEN_PERKS_SKILL: 'Erhalte einen weiteren Fertigkeitenpunkt',
-			CHARGEN_PERKS_FUNDS: 'Erh&ouml;he das Startkapital um 100%',
-			CHARGEN_NO_EDGES_AVAILABLE: 'Du hast keine Talente mehr verf&uuml;gbar',
-			CHARGEN_NO_POWERS_SELECTED: 'Du hast keine M&auml;chte gew&auml;hlt',
-			CHARGEN_SELECT_HINDRANCE: 'W&auml;hle ein Handicap',
-			CHARGEN_SELECT_EDGE: 'W&auml;hle ein Talent',
+			CHARGEN_PERKS_FUNDS: 'Erhöhe das Startkapital um 100%',
+			CHARGEN_NO_EDGES_AVAILABLE: 'Du hast keine Talente mehr verfügbar',
+			CHARGEN_NO_POWERS_SELECTED: 'Du hast keine Mächte gewählt',
+			CHARGEN_SELECT_HINDRANCE: 'Wähle ein Handicap',
+			CHARGEN_SELECT_EDGE: 'Wähle ein Talent',
 			CHARGEN_ARCANE_BACKGROUND: 'Arkaner Hintergrund',
-			CHARGEN_SELECTED_POWERS: 'Ausgew&auml;hlte M&auml;chte',
-			CHARGEN_NO_ARCANE_EDGE: 'Du hast kein Arkaner Hintergrund Talent gew&auml;hlt',
+			CHARGEN_SELECTED_POWERS: 'Ausgewählte Mächte',
+			CHARGEN_NO_ARCANE_EDGE: 'Du hast kein Arkaner Hintergrund Talent gewählt',
 			CHARGEN_HINDRANCES_OPTIMIZED: 'Deine Handicaps sind bereits optimiert. Weitere Handicaps werden keine Punkte mehr erzeugen.',
 			CHARGEN_KNOWN_LANGUAGES: 'Bekannte Sprachen',
 			CHARGEN_CULT_NAT_LANG: 'Muttersprache',
 			CHARGEN_ADDITIONAL_LANGS: 'Weitere Sprachen',
-			CHARGEN_VALIDATION_TOO_MANY_EDGES: 'Du hast zu viele Talente gew&auml;hlt',
-			CHARGEN_VALIDATION_TOO_MANY_ADVANCEMENTS: 'Du hast nicht genug EP f&uuml;r die gew&auml;hlten Aufstiege',
-			CHARGEN_VALIDATION_TOO_MANY_ATTRIBUTES: 'Du hast zu viele Attributspunkte ausgew&auml;hlt',
-			CHARGEN_VALIDATION_TOO_MANY_SKILLS: 'Du hast zu viele Fertigkeitspunkte ausgew&auml;hlt',
-			CHARGEN_VALIDATION_TOO_MANY_PERKS: 'Du hast zu viele Eigenschaften ausgew&auml;hlt',
+			CHARGEN_VALIDATION_TOO_MANY_EDGES: 'Du hast zu viele Talente gewählt',
+			CHARGEN_VALIDATION_TOO_MANY_ADVANCEMENTS: 'Du hast nicht genug EP für die gewählten Aufstiege',
+			CHARGEN_VALIDATION_TOO_MANY_ATTRIBUTES: 'Du hast zu viele Attributspunkte ausgewählt',
+			CHARGEN_VALIDATION_TOO_MANY_SKILLS: 'Du hast zu viele Fertigkeitspunkte ausgewählt',
+			CHARGEN_VALIDATION_TOO_MANY_PERKS: 'Du hast zu viele Eigenschaften ausgewählt',
 			CHARGEN_VALIDATION_REQUIRES_EDGE: 'Erfordert das Talent ',
 			CHARGEN_VALIDATION_TOO_MANY_FUNDS: 'Zuviel Geld ausgegeben',
-			CHARGEN_VALIDATION_EDGE_DOESNT_MEET_REQUIREMENTS: 'Voraussetzungen f&uuml;r dieses Talent sind nicht erf&uuml;llt',
-			CHARGEN_VALIDATION_NO_ARCANE_BG: 'Du musst einen arkanen Hintergrund ausw&auml;hlen',
-			CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_NOVICE: 'Du hast zu viele Attributssteigerung f&uuml;r den Rang Anf&auml;nger ausgew&auml;hlt',
-			CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_SEASONED: 'Du hast zu viele Attributssteigerung f&uuml;r den Rang Fortgeschritten ausgew&auml;hlt',
-			CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_VETERAN: 'Du hast zu viele Attributssteigerung f&uuml;r den Rang Veteran ausgew&auml;hlt',
-			CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_HEROIC: 'Du hast zu viele Attributssteigerung f&uuml;r den Rang Held ausgew&auml;hlt',
-			CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_LEGENDARY: 'Du hast zu viele Attributssteigerung f&uuml;r den Rang Legende ausgew&auml;hlt',
-			CHARGEN_VALIDATION_ADVANCEMENT_INVALID_EDGE: 'Das ausgew&auml;hlte Talent',
-			CHARGEN_SELECT_ARCANE_BG: 'W&auml;hle einen arkanen Hintergrund',
-			CHARGEN_BELOW_STR_WEAPON: 'Du erf&uuml;llst die St&auml;rkevoraussetzungen f&uuml;r die ausger&uuml;stete Waffe nicht. Dies f&uuml;hrt zu Nachteilen beim f&uuml;hren der Waffe.',
+			CHARGEN_VALIDATION_EDGE_DOESNT_MEET_REQUIREMENTS: 'Voraussetzungen für dieses Talent sind nicht erfüllt',
+			CHARGEN_VALIDATION_NO_ARCANE_BG: 'Du musst einen arkanen Hintergrund auswählen',
+			CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_NOVICE: 'Du hast zu viele Attributssteigerung für den Rang Anfänger ausgewählt',
+			CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_SEASONED: 'Du hast zu viele Attributssteigerung für den Rang Fortgeschritten ausgewählt',
+			CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_VETERAN: 'Du hast zu viele Attributssteigerung für den Rang Veteran ausgewählt',
+			CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_HEROIC: 'Du hast zu viele Attributssteigerung für den Rang Held ausgewählt',
+			CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_LEGENDARY: 'Du hast zu viele Attributssteigerung für den Rang Legende ausgewählt',
+			CHARGEN_VALIDATION_ADVANCEMENT_INVALID_EDGE: 'Das ausgewählte Talent',
+			CHARGEN_SELECT_ARCANE_BG: 'Wähle einen arkanen Hintergrund',
+			CHARGEN_BELOW_STR_WEAPON: 'Du erfüllst die Stärkevoraussetzungen für die ausgerüstete Waffe nicht. Dies führt zu Nachteilen beim führen der Waffe.',
 			CHARGEN_POWER_POINTS: 'Machtpunkte',
-			CHARGEN_POWER_POINTS_AVAILABLE: 'Verf&uuml;gbare Machtpunkte',
-			CHARGEN_POWERS_AVAILABLE: 'Verf&uuml;gbare M&auml;chte',
-			CHARGEN_POWERS_USED: 'Benutze M&auml;chte',
-			CHARGEN_ADD_POWER: 'Macht hinzuf&uuml;gen',
+			CHARGEN_POWER_POINTS_AVAILABLE: 'Verfügbare Machtpunkte',
+			CHARGEN_POWERS_AVAILABLE: 'Verfügbare Mächte',
+			CHARGEN_POWERS_USED: 'Benutze Mächte',
+			CHARGEN_ADD_POWER: 'Macht hinzufügen',
 			CHARGEN_MAJOR_HINDRANCE: 'schwer',
 			CHARGEN_MINOR_HINDRANCE: 'leicht',
 			CHARGEN_HINDRANCE_SPECIFY_PLACEHOLDER: 'Please elaborate???',
-			CHARGEN_CHARACTER_SELECT_POWERS: 'M&auml;chte w&auml;hlen',
-			CHARGEN_CHARACTER_SELECT_GEAR: 'Ausr&uuml;sten w&auml;hlen',
-			CHARGEN_CHARACTER_SELECT_ADVANCEMENTS: 'Aufstiege w&auml;hlen',
-			CHARGEN_STEP1_SELECT_POWER_REQUIRED: 'Schritt 1: W&auml;hle eine Macht (erforderlich)',
-			CHARGEN_STEP2_SELECT_TRAPPING_REQUIRED: 'Schritt 2: W&auml;hle eine Auspr&auml;gung (erforderlich)',
+			CHARGEN_CHARACTER_SELECT_POWERS: 'Mächte wählen',
+			CHARGEN_CHARACTER_SELECT_GEAR: 'Ausrüsten wählen',
+			CHARGEN_CHARACTER_SELECT_ADVANCEMENTS: 'Aufstiege wählen',
+			CHARGEN_STEP1_SELECT_POWER_REQUIRED: 'Schritt 1: Wähle eine Macht (erforderlich)',
+			CHARGEN_STEP2_SELECT_TRAPPING_REQUIRED: 'Schritt 2: Wähle eine Ausprägung (erforderlich)',
 			CHARGEN_STEP3_NAME_POWER_RECOMMENDED: 'Schritt 3: Benenne die Macht (erforderlich)',
-			CREATOR_DELETE_POWER_CONFIRMATION: 'Sicher das Du diese Macht entfernen m&ouml;chtest?',
+			CREATOR_DELETE_POWER_CONFIRMATION: 'Sicher das Du diese Macht entfernen möchtest?',
 			CHARGEN_CURRENT_FUNDS: 'Aktuelles Kapital',
-			CHARGEN_ADDED_GEAR: 'Hinzugef&uuml;gte Ausr&uuml;stung',
+			CHARGEN_ADDED_GEAR: 'Hinzugefügte Ausrüstung',
 			GENERAL_CURRENT_LOAD: 'Aktuelle Belastung',
 			GENERAL_COMBAT_LOAD: 'Kampf Belastung',
 			CHARGEN_VALIDATION_WARNINGS: 'Warnungen',
@@ -45842,55 +45842,55 @@ availableLanguages.push ({
 			GENERAL_SECONDS: 'Sekunden',
 			GENERAL_SUCCESS: 'Erfolg',
 			GENERAL_AVERAGE_ANSWER_TIME: 'Durchschnittliche Antwortzeit',
-			GENERAL_TOTAL_COMPLETION_TIME: 'Gesamt Ausf&uuml;hrungszeit',
+			GENERAL_TOTAL_COMPLETION_TIME: 'Gesamt Ausführungszeit',
 			GENERAL_SUCCESS_1_RAISE: 'Erfolg mit Steigerung',
 			GENERAL_SUCCESS_2_RAISES: 'Erfolg mit 2 Steigerungen',
 			GENERAL_SUCCESS_2_RAISES_OR_MORE: 'Erfolg mit 2 oder mehr Steigerungen',
 			GENERAL_CURRENT_QUESTION: 'Aktuelle Frage',
-			CHARGEN_FILTER_GEAR: 'Suche nach Ausr&uuml;stung',
-			CHARGEN_MUNDANE_GEAR: 'Gew&ouml;hnliche Gegenst&auml;nde',
+			CHARGEN_FILTER_GEAR: 'Suche nach Ausrüstung',
+			CHARGEN_MUNDANE_GEAR: 'Gewöhnliche Gegenstände',
 			CHARGEN_WEAPONS: 'Waffen',
 			CHARGEN_HAND_WEAPONS: 'Nahkampfwaffen',
 			CHARGEN_RANGED_WEAPONS: 'Fernkampfwaffen',
-			CHARGEN_ARMOR: 'R&uuml;stung',
+			CHARGEN_ARMOR: 'Rüstung',
 			CHARGEN_SHIELDS: 'Schilde',
-			CHARGEN_ADDING_ARMOR: 'R&uuml;stung hinzuf&uuml;gen',
-			CHARGEN_ADDING_GEAR: 'Ausr&uuml;stung hinzuf&uuml;gen',
-			CHARGEN_ADDING_HAND_WEAPONS: 'Nahkampfwaffe hinzuf&uuml;gen',
-			CHARGEN_ADDING_RANGED_WEAPONS: 'Fernkampfwaffe hinzuf&uuml;gen',
-			CHARGEN_ITEM_ADDED_TO_INVENTORY: 'Gegenstand zum Inventar hinzugef&uuml;gt',
+			CHARGEN_ADDING_ARMOR: 'Rüstung hinzufügen',
+			CHARGEN_ADDING_GEAR: 'Ausrüstung hinzufügen',
+			CHARGEN_ADDING_HAND_WEAPONS: 'Nahkampfwaffe hinzufügen',
+			CHARGEN_ADDING_RANGED_WEAPONS: 'Fernkampfwaffe hinzufügen',
+			CHARGEN_ITEM_ADDED_TO_INVENTORY: 'Gegenstand zum Inventar hinzugefügt',
 			GENERAL_PURCHASED_FREE: '(frei)',
-			GENERAL_REDUCED: '(erm&auml;&szlig;igt)',
+			GENERAL_REDUCED: '(ermäßigt)',
 			GENERAL_BUY_FREE: 'Kostenlos',
 			GENERAL_BUY: 'Kaufen',
-			GENERAL_CREDITS: 'Verm&ouml;gen',
+			GENERAL_CREDITS: 'Vermögen',
 			CREDITS_BLURB: 'Diese, nach Ihrem Familienname aufgelisteten Personen haben aktiv an diesem Projekt mitgearbeitet',
-			INDEX_CREDITS: 'Verm&ouml;gen',
+			INDEX_CREDITS: 'Vermögen',
 			GENERAL_LICENSE: 'Lizenz',
 			GENERAL_THANK_YOU: 'Danke',
 			GENERAL_EACH: 'jeder',
-			GENERAL_EQUIP_PRIMARY: 'Ausr&uuml;sten Prim&auml;r',
-			GENERAL_EQUIP_SECONDARY: 'Ausr&uuml;sten Sekund&auml;r',
-			GENERAL_EQUIP: 'Ausr&uuml;sten',
-			CREATOR_EQUIPPED_BOTH_HANDS: 'In beiden H&auml;nden ausger&uuml;stet',
+			GENERAL_EQUIP_PRIMARY: 'Ausrüsten Primär',
+			GENERAL_EQUIP_SECONDARY: 'Ausrüsten Sekundär',
+			GENERAL_EQUIP: 'Ausrüsten',
+			CREATOR_EQUIPPED_BOTH_HANDS: 'In beiden Händen ausgerüstet',
 			GENERAL_UNEQUIP: 'Ablegen',
-			CREATOR_EQUIPPED_OFF: 'In schwacher Hand ausger&uuml;stet',
-			CREATOR_ARMOR_WORN: 'R&uuml;stung ist angelegt',
-			CREATOR_EQUIPPED_PRIMARY: 'in Prim&auml;rhand ausger&uuml;stet',
+			CREATOR_EQUIPPED_OFF: 'In schwacher Hand ausgerüstet',
+			CREATOR_ARMOR_WORN: 'Rüstung ist angelegt',
+			CREATOR_EQUIPPED_PRIMARY: 'in Primärhand ausgerüstet',
 			CHARGEN_XP: 'EP',
-			CHARGEN_SELECTED_RANK: 'Gew&auml;hlter Rang',
+			CHARGEN_SELECTED_RANK: 'Gewählter Rang',
 			CHARGEN_RANK: 'Rang',
-			CHARGEN_RANK_NOVICE: 'Anf&auml;nger',
+			CHARGEN_RANK_NOVICE: 'Anfänger',
 			CHARGEN_RANK_SEASONED: 'Fortgeschritten',
 			CHARGEN_RANK_VETERAN: 'Veteran',
 			CHARGEN_RANK_HEROIC: 'Held',
 			CHARGEN_RANK_LEGENDARY: 'Legende',
-			CHARGEN_ADVANCEMENT_NOT_SELECTED: 'Kein Aufstieg gew&auml;hlt',
+			CHARGEN_ADVANCEMENT_NOT_SELECTED: 'Kein Aufstieg gewählt',
 			CHARGEN_ADVANCEMENT_NEW_EDGE: 'Erhalte ein neues Talent',
-			CHARGEN_ADVANCEMENT_INCREASE_SKILL: 'Erh&ouml;he eine Fertigkeit mit gleichem oder h&ouml;heren Wert wie das dazugeh&ouml;rige Attribut',
-			CHARGEN_ADVANCEMENT_INCREASE_2_SKILLS: 'Erh&ouml;he zwei Fertigkeiten mit niedrigerem Wert wie das dazugeh&ouml;rige Attribut',
+			CHARGEN_ADVANCEMENT_INCREASE_SKILL: 'Erhöhe eine Fertigkeit mit gleichem oder höheren Wert wie das dazugehörige Attribut',
+			CHARGEN_ADVANCEMENT_INCREASE_2_SKILLS: 'Erhöhe zwei Fertigkeiten mit niedrigerem Wert wie das dazugehörige Attribut',
 			CHARGEN_ADVANCEMENT_NEW_SKILL: 'Erwerbe eine neue Fertigkeit auf W4',
-			CHARGEN_ADVANCEMENT_INCREASE_ATTRIBUTE: 'Erh&ouml;he ein Attribut um einen W&uuml;rfeltyp',
+			CHARGEN_ADVANCEMENT_INCREASE_ATTRIBUTE: 'Erhöhe ein Attribut um einen Würfeltyp',
 			SEARCH_TAGS: 'Such Hinweis',
 			CHARGEN_STARTING_WEALTH: 'Startkapital',
 
@@ -45991,7 +45991,7 @@ availableLanguages.push ({
 			GENERAL_PACE: 'Pace',
 			GENERAL_CHARISMA: 'Charisma',
 			GENERAL_PARRY: 'Parry',
-			GENERAL_EDGES_AND_HINDRANCES: 'Edges &amp; Hindrances',
+			GENERAL_EDGES_AND_HINDRANCES: 'Edges & Hindrances',
 			GENERAL_HINDRANCES: 'Hindrances',
 			GENERAL_EDGES: 'Edges',
 			GENERAL_PERKS: 'Perks',
@@ -46000,7 +46000,7 @@ availableLanguages.push ({
 			CHARGEN_INTRO_NOT_FOR_NPCS: 'Remember, this tool is meant for making PCs as per Savage Worlds Core and the various settings of rulebooks not for making NPCs. NPCs can be made from the GMs whim and aren\'t limited like a PC is during generation.',
 			CHARGEN_INTRO_NOT_FOR_NPCS2: 'This isn\'t to say that a GM can\'t use this tool as a guideline, but it could be more time consuming and unnecessary.',
 			CHARGEN_CHARACTER_INFORMATION: 'Character Information',
-			CHARGEN_ATTRIBUTES_AND_SKILLS: 'Attributes &amp; Skills',
+			CHARGEN_ATTRIBUTES_AND_SKILLS: 'Attributes & Skills',
 			CHARGEN_BOOKS_DIALOG: 'Books in Use',
 			CHARGEN_INTRO_BOOKS: 'Books',
 			CHARGEN_INTRO_SETTING_RULES: 'Setting Rules',
@@ -46374,7 +46374,7 @@ availableLanguages.push ({
 	active: true,
 
 	translations: {
-			BUTTON_LANG_RU: '&ETH;&nbsp;&Ntilde;&fnof;&Ntilde;&Ntilde;&ETH;&ordm;&ETH;&cedil;&ETH;&sup1;',
+			BUTTON_LANG_RU: 'Ð ÑƒÑÑÐºÐ¸Ð¹',
 
 	}
 
@@ -46538,7 +46538,7 @@ var savageWorldsPowers = Array(
 		 'de-DE': '',
 	},
 	 additional_effects: {
-		 'en-US': 'he character may cast up to 3 bolts by spending a like amount of Power Points. The bolts may be spread among targets as the character chooses. This is rolled just like fully-automatic weapons  re but without the full- auto penalty&mdash;the character rolls a spellcasting die for each bolt and compares each to the Target Number separately. If the caster is a Wild Card, he also rolls a Wild Die, which may replace any of the casting dice.\nThe caster may instead cast a single 3d6 bolt for 2 Power Points. He may not cast multiple bolts when using this ability.',
+		 'en-US': 'he character may cast up to 3 bolts by spending a like amount of Power Points. The bolts may be spread among targets as the character chooses. This is rolled just like fully-automatic weapons  re but without the full- auto penalty—the character rolls a spellcasting die for each bolt and compares each to the Target Number separately. If the caster is a Wild Card, he also rolls a Wild Die, which may replace any of the casting dice.\nThe caster may instead cast a single 3d6 bolt for 2 Power Points. He may not cast multiple bolts when using this ability.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -47388,7 +47388,7 @@ var savageWorldsPowers = Array(
 		 'de-DE': '',
 	},
 	 additional_effects: {
-		 'en-US': 'This power allows a character to speak, read, and write a language other than his own. The language must be of an advanced form &mdash; not animalistic. A raise on the arcane skill roll allows the user to project a particular dialect as well.',
+		 'en-US': 'This power allows a character to speak, read, and write a language other than his own. The language must be of an advanced form — not animalistic. A raise on the arcane skill roll allows the user to project a particular dialect as well.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -47488,7 +47488,7 @@ var savageWorldsPowers = Array(
 		 'de-DE': '',
 	},
 	 additional_effects: {
-		 'en-US': 'Carrying Others: The hero can carry other beings with him at the cost of a level of Fatigue per additional &ldquo;rider.&rdquo; More than two may be carried at once, but causes instant Incapacitation. One Fatigue level is regained for each full hour of rest.',
+		 'en-US': 'Carrying Others: The hero can carry other beings with him at the cost of a level of Fatigue per additional “rider.” More than two may be carried at once, but causes instant Incapacitation. One Fatigue level is regained for each full hour of rest.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -51841,7 +51841,7 @@ charEffect: function( charObj, powerObject ) {
 		 'de-DE': 'asa2a',
 	},
 	 classification: {
-		 'en-US': 'Missiles &amp; Torpedoes',
+		 'en-US': 'Missiles & Torpedoes',
 		 'pt-BR': '',
 		 'de-DE': 'asdas3',
 	},
@@ -51883,7 +51883,7 @@ return false;
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 40, HW, 30&rdquo; radius. 1001 to 4000 lb. bombs.',
+		 'en-US': 'AP 40, HW, 30” radius. 1001 to 4000 lb. bombs.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -51920,7 +51920,7 @@ return false;
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 40, HW, 50&rdquo; radius. 4001 to 8000 lb. bombs.',
+		 'en-US': 'AP 40, HW, 50” radius. 4001 to 8000 lb. bombs.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -52039,7 +52039,7 @@ return false;
 		 'en-US': 'Flame Weapons',
 	},
 	 notes: {
-		 'en-US': 'HW, targets may catch fire. Can be fired in a Cone Template or a Medium Burst Template up to 18&acirc;&euro; distant. Affects target&acirc;&euro;&trade;s least Armored area.',
+		 'en-US': 'HW, targets may catch fire. Can be fired in a Cone Template or a Medium Burst Template up to 18â€ distant. Affects targetâ€™s least Armored area.',
 	},
 		 'range': 'Cone',
 		 'damage': '3d12',
@@ -52128,7 +52128,7 @@ return false;
 		 'de-DE': '',
 	},
 	 classification: {
-		 'en-US': 'Missiles &amp; Torpedoes',
+		 'en-US': 'Missiles & Torpedoes',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -52165,7 +52165,7 @@ return false;
 		 'de-DE': '',
 	},
 	 classification: {
-		 'en-US': 'Missiles &amp; Torpedoes',
+		 'en-US': 'Missiles & Torpedoes',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -52207,7 +52207,7 @@ return false;
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 30, HW, 20&rdquo; radius. 501 to 1000 lb. bombs.',
+		 'en-US': 'AP 30, HW, 20” radius. 501 to 1000 lb. bombs.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -52270,7 +52270,7 @@ return false;
 		 'en-US': 'Flame Weapons',
 	},
 	 notes: {
-		 'en-US': 'HW, Cone Template, targets may catch fire. Affects target&acirc;&euro;&trade;s least Armored area.',
+		 'en-US': 'HW, Cone Template, targets may catch fire. Affects targetâ€™s least Armored area.',
 	},
 		 'range': 'Cone',
 		 'damage': '2d12',
@@ -52327,7 +52327,7 @@ return false;
 		 'de-DE': '',
 	},
 	 classification: {
-		 'en-US': 'Missiles &amp; Torpedoes',
+		 'en-US': 'Missiles & Torpedoes',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -52364,7 +52364,7 @@ return false;
 		 'de-DE': '',
 	},
 	 classification: {
-		 'en-US': 'Missiles &amp; Torpedoes',
+		 'en-US': 'Missiles & Torpedoes',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -52889,7 +52889,7 @@ return false;
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 20, HW, 10&rdquo; radius. 251 to 500 lb. bombs.',
+		 'en-US': 'AP 20, HW, 10” radius. 251 to 500 lb. bombs.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},

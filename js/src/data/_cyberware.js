@@ -153,7 +153,7 @@ chosenEdge: ""
 		 'en-US': 'Communicator',
 	},
 	 description: {
-		 'en-US': 'A small radio has been built into the character&rsquo;s skull. It has a range of five miles and can communicate with standard radio equipment.',
+		 'en-US': 'A small radio has been built into the character\'s skull. It has a range of five miles and can communicate with standard radio equipment.',
 	},
 	 tag: 'communicator',
 	 book: 0,
@@ -172,7 +172,7 @@ getModEffect: function(selectedObject) {
 		 'en-US': 'Cyberjack',
 	},
 	 description: {
-		 'en-US': 'Real hackers don&rsquo;t use keyboards&mdash;they tap directly into the system via a datajack in their head and &ldquo;run the matrix.&rdquo; This adds +4 to all Knowledge rolls dealing with electronics. If the character fails such a roll anyway, the intense feedback causes a level of Fatigue that fades in one hour and can cause Incapacitation but not death. If the system was particularly powerful or well-protected, failure (including during a failed Dramatic Task) causes 3d6 damage (or more for very high-end corporate or military computers). Armor offers no protection from this damage.',
+		 'en-US': 'Real hackers don\'t use keyboards—they tap directly into the system via a datajack in their head and “run the matrix.” This adds +4 to all Knowledge rolls dealing with electronics. If the character fails such a roll anyway, the intense feedback causes a level of Fatigue that fades in one hour and can cause Incapacitation but not death. If the system was particularly powerful or well-protected, failure (including during a failed Dramatic Task) causes 3d6 damage (or more for very high-end corporate or military computers). Armor offers no protection from this damage.',
 	},
 	 tag: 'cyberjack',
 	 book: 0,
@@ -249,7 +249,7 @@ getModEffect: function(selectedObject) {
 		 'en-US': 'Mule',
 	},
 	 description: {
-		 'en-US': 'The character&rsquo;s skeleton has been strengthened, increasing his Load Limit to 8&times; his Strength. If he has the Brawny Edge as well, it increases to 10&times; Strength.',
+		 'en-US': 'The character\'s skeleton has been strengthened, increasing his Load Limit to 8× his Strength. If he has the Brawny Edge as well, it increases to 10× Strength.',
 	},
 	 tag: 'mule',
 	 book: 0,
@@ -322,7 +322,7 @@ selectTrait: true
 		 'en-US': 'Vision Enhancement',
 	},
 	 description: {
-		 'en-US': 'Cybernetic eyes grant magnification (50&times;), thermal, and low-light vision. This adds +2 to appropriate sight-based Notice rolls and eliminates illumination penalties if in the appropriate mode. Changing modes is a free action.',
+		 'en-US': 'Cybernetic eyes grant magnification (50×), thermal, and low-light vision. This adds +2 to appropriate sight-based Notice rolls and eliminates illumination penalties if in the appropriate mode. Changing modes is a free action.',
 	},
 	 tag: 'vision-enhancement',
 	 book: 0,

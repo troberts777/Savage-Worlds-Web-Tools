@@ -19,7 +19,7 @@ savageWorldsSettingRules[0] = {
 	page: "p108",
 	name: {
 		 'en-US': 'Born a Hero',
-		 'pt-BR': 'Nasce um Her&oacute;i',
+		 'pt-BR': 'Nasce um Herói',
 		 'de-DE': '',
 		 'ru-RU': '',
 	},
@@ -35,7 +35,7 @@ savageWorldsSettingRules[1] = {
 	page: "p109",
 	name: {
 		 'en-US': 'Multiple Languages',
-		 'pt-BR': 'M&uacute;ltiplos Idiomas',
+		 'pt-BR': 'Múltiplos Idiomas',
 		 'de-DE': '',
 		 'ru-RU': '',
 	},
@@ -67,7 +67,7 @@ savageWorldsSettingRules[3] = {
 	page: "p110",
 	name: {
 		 'en-US': 'Skill Specialization',
-		 'pt-BR': 'Especializa&ccedil;&atilde;o de Per&iacute;cias',
+		 'pt-BR': 'Especialização de Perícias',
 		 'de-DE': '',
 		 'ru-RU': '',
 	},
@@ -99,7 +99,7 @@ savageWorldsSettingRules[5] = {
 	page: "p29",
 	name: {
 		 'en-US': 'Cyberware and Strain',
-		 'pt-BR': 'Cyberware &amp; Tens&atilde;o',
+		 'pt-BR': 'Cyberware & Tensão',
 		 'de-DE': '',
 		 'ru-RU': '',
 	},

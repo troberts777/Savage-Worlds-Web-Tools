@@ -26,7 +26,7 @@
 		 'de-DE': 'asa2a',
 	},
 	 classification: {
-		 'en-US': 'Missiles &amp; Torpedoes',
+		 'en-US': 'Missiles & Torpedoes',
 		 'pt-BR': '',
 		 'de-DE': 'asdas3',
 	},
@@ -68,7 +68,7 @@ return false;
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 40, HW, 30&rdquo; radius. 1001 to 4000 lb. bombs.',
+		 'en-US': 'AP 40, HW, 30” radius. 1001 to 4000 lb. bombs.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -105,7 +105,7 @@ return false;
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 40, HW, 50&rdquo; radius. 4001 to 8000 lb. bombs.',
+		 'en-US': 'AP 40, HW, 50” radius. 4001 to 8000 lb. bombs.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -224,7 +224,7 @@ return false;
 		 'en-US': 'Flame Weapons',
 	},
 	 notes: {
-		 'en-US': 'HW, targets may catch fire. Can be fired in a Cone Template or a Medium Burst Template up to 18&acirc;&euro; distant. Affects target&acirc;&euro;&trade;s least Armored area.',
+		 'en-US': 'HW, targets may catch fire. Can be fired in a Cone Template or a Medium Burst Template up to 18â€ distant. Affects targetâ€™s least Armored area.',
 	},
 		 'range': 'Cone',
 		 'damage': '3d12',
@@ -313,7 +313,7 @@ return false;
 		 'de-DE': '',
 	},
 	 classification: {
-		 'en-US': 'Missiles &amp; Torpedoes',
+		 'en-US': 'Missiles & Torpedoes',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -350,7 +350,7 @@ return false;
 		 'de-DE': '',
 	},
 	 classification: {
-		 'en-US': 'Missiles &amp; Torpedoes',
+		 'en-US': 'Missiles & Torpedoes',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -392,7 +392,7 @@ return false;
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 30, HW, 20&rdquo; radius. 501 to 1000 lb. bombs.',
+		 'en-US': 'AP 30, HW, 20” radius. 501 to 1000 lb. bombs.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -455,7 +455,7 @@ return false;
 		 'en-US': 'Flame Weapons',
 	},
 	 notes: {
-		 'en-US': 'HW, Cone Template, targets may catch fire. Affects target&acirc;&euro;&trade;s least Armored area.',
+		 'en-US': 'HW, Cone Template, targets may catch fire. Affects targetâ€™s least Armored area.',
 	},
 		 'range': 'Cone',
 		 'damage': '2d12',
@@ -512,7 +512,7 @@ return false;
 		 'de-DE': '',
 	},
 	 classification: {
-		 'en-US': 'Missiles &amp; Torpedoes',
+		 'en-US': 'Missiles & Torpedoes',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -549,7 +549,7 @@ return false;
 		 'de-DE': '',
 	},
 	 classification: {
-		 'en-US': 'Missiles &amp; Torpedoes',
+		 'en-US': 'Missiles & Torpedoes',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1074,7 +1074,7 @@ return false;
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 20, HW, 10&rdquo; radius. 251 to 500 lb. bombs.',
+		 'en-US': 'AP 20, HW, 10” radius. 251 to 500 lb. bombs.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},

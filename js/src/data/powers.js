@@ -157,7 +157,7 @@ var savageWorldsPowers = Array(
 		 'de-DE': '',
 	},
 	 additional_effects: {
-		 'en-US': 'he character may cast up to 3 bolts by spending a like amount of Power Points. The bolts may be spread among targets as the character chooses. This is rolled just like fully-automatic weapons  re but without the full- auto penalty&mdash;the character rolls a spellcasting die for each bolt and compares each to the Target Number separately. If the caster is a Wild Card, he also rolls a Wild Die, which may replace any of the casting dice.\nThe caster may instead cast a single 3d6 bolt for 2 Power Points. He may not cast multiple bolts when using this ability.',
+		 'en-US': 'he character may cast up to 3 bolts by spending a like amount of Power Points. The bolts may be spread among targets as the character chooses. This is rolled just like fully-automatic weapons  re but without the full- auto penalty—the character rolls a spellcasting die for each bolt and compares each to the Target Number separately. If the caster is a Wild Card, he also rolls a Wild Die, which may replace any of the casting dice.\nThe caster may instead cast a single 3d6 bolt for 2 Power Points. He may not cast multiple bolts when using this ability.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1007,7 +1007,7 @@ var savageWorldsPowers = Array(
 		 'de-DE': '',
 	},
 	 additional_effects: {
-		 'en-US': 'This power allows a character to speak, read, and write a language other than his own. The language must be of an advanced form &mdash; not animalistic. A raise on the arcane skill roll allows the user to project a particular dialect as well.',
+		 'en-US': 'This power allows a character to speak, read, and write a language other than his own. The language must be of an advanced form — not animalistic. A raise on the arcane skill roll allows the user to project a particular dialect as well.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1107,7 +1107,7 @@ var savageWorldsPowers = Array(
 		 'de-DE': '',
 	},
 	 additional_effects: {
-		 'en-US': 'Carrying Others: The hero can carry other beings with him at the cost of a level of Fatigue per additional &ldquo;rider.&rdquo; More than two may be carried at once, but causes instant Incapacitation. One Fatigue level is regained for each full hour of rest.',
+		 'en-US': 'Carrying Others: The hero can carry other beings with him at the cost of a level of Fatigue per additional “rider.” More than two may be carried at once, but causes instant Incapacitation. One Fatigue level is regained for each full hour of rest.',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},

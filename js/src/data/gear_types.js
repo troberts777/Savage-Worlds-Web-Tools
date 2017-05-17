@@ -22,7 +22,7 @@ var savageWorldsGearTypes = Array(
 },
 {
 	 name: {
-		 'en-US': 'Animals &amp; Tack',
+		 'en-US': 'Animals & Tack',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},

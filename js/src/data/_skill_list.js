@@ -54,7 +54,7 @@
 		 'id': 'SKILL_FAITH',
 	 name: {
 		 'en-US': 'Faith',
-		 'pt-BR': 'F&eacute;',
+		 'pt-BR': 'Fé',
 		 'de-DE': 'Glauben',
 	},
 		 'book': '1',
@@ -102,8 +102,8 @@
 		 'id': 'SKILL_INTIMIDATION',
 	 name: {
 		 'en-US': 'Intimidation',
-		 'pt-BR': 'Intimida&ccedil;&atilde;o',
-		 'de-DE': 'Einsch&uuml;chterung',
+		 'pt-BR': 'Intimidação',
+		 'de-DE': 'Einschüchterung',
 	},
 		 'book': '1',
 		 'attribute': 'spirit',
@@ -114,7 +114,7 @@
 		 'id': 'SKILL_INVESTIGATION',
 	 name: {
 		 'en-US': 'Investigation',
-		 'pt-BR': 'Investiga&ccedil;&atilde;o',
+		 'pt-BR': 'Investigação',
 		 'de-DE': 'Untersuchung',
 	},
 		 'book': '1',
@@ -139,7 +139,7 @@
 	 name: {
 		 'en-US': 'Lockpicking',
 		 'pt-BR': '',
-		 'de-DE': 'Schl&ouml;sserknacken',
+		 'de-DE': 'Schlösserknacken',
 	},
 		 'book': '1',
 		 'attribute': 'agility',
@@ -150,7 +150,7 @@
 		 'id': 'SKILL_NOTICE',
 	 name: {
 		 'en-US': 'Notice',
-		 'pt-BR': 'Aviso pr&eacute;vio',
+		 'pt-BR': 'Aviso prévio',
 		 'de-DE': 'Beachten',
 	},
 		 'book': '1',
@@ -162,8 +162,8 @@
 		 'id': 'SKILL_PERSUASION',
 	 name: {
 		 'en-US': 'Persuasion',
-		 'pt-BR': 'Persuas&atilde;o',
-		 'de-DE': ' &Uuml;berzeugung',
+		 'pt-BR': 'Persuasão',
+		 'de-DE': ' Überzeugung',
 	},
 		 'book': '1',
 		 'attribute': 'spirit',
@@ -210,7 +210,7 @@
 		 'id': 'SKILL_RIDING',
 	 name: {
 		 'en-US': 'Riding',
-		 'pt-BR': 'Equita&ccedil;&atilde;o',
+		 'pt-BR': 'Equitação',
 		 'de-DE': 'Reiten',
 	},
 		 'book': '1',
@@ -223,7 +223,7 @@
 	 name: {
 		 'en-US': 'Shooting',
 		 'pt-BR': 'Tiroteio',
-		 'de-DE': 'Schie&szlig;en',
+		 'de-DE': 'Schießen',
 	},
 		 'book': '1',
 		 'attribute': 'agility',
@@ -270,8 +270,8 @@
 		 'id': 'SKILL_SURVIVAL',
 	 name: {
 		 'en-US': 'Survival',
-		 'pt-BR': 'Sobreviv&ecirc;ncia',
-		 'de-DE': '&Uuml;berleben',
+		 'pt-BR': 'Sobrevivência',
+		 'de-DE': 'Überleben',
 	},
 		 'book': '1',
 		 'attribute': 'smarts',
@@ -282,7 +282,7 @@
 		 'id': 'SKILL_SWIMMING',
 	 name: {
 		 'en-US': 'Swimming',
-		 'pt-BR': 'Nata&ccedil;&atilde;o',
+		 'pt-BR': 'Natação',
 		 'de-DE': 'Schwimmen',
 	},
 		 'book': '1',

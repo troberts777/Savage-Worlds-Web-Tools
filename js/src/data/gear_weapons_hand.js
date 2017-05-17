@@ -298,7 +298,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'Reach 1, Parry &ndash;1, 2 hands, can be used as a weapon in each hand without Reach, ignores Shield/Weapon Parry or Cover bonus',
+		 'en-US': 'Reach 1, Parry –1, 2 hands, can be used as a weapon in each hand without Reach, ignores Shield/Weapon Parry or Cover bonus',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -424,7 +424,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 2 vs. rigid armor, &ndash;1 Parry, 2 hands, ignores Shield/Weapon Parry or Cover bonus',
+		 'en-US': 'AP 2 vs. rigid armor, –1 Parry, 2 hands, ignores Shield/Weapon Parry or Cover bonus',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -612,7 +612,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'AP 12, Laser swords aren&rsquo;t terribly realistic, but are staples in many space-opera campaigns',
+		 'en-US': 'AP 12, Laser swords aren\'t terribly realistic, but are staples in many space-opera campaigns',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1015,7 +1015,7 @@ var savageWorldsGearHandWeapons = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': '&ndash;2 to be Noticed if hidden',
+		 'en-US': '–2 to be Noticed if hidden',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},

@@ -120,7 +120,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bear Hug: Bears don&rsquo;t actually &ldquo;hug&rdquo; their victims, but they do attempt to use their weight to pin their prey and rend it with their claws and teeth. A bear that hits with a raise has pinned his foe. The opponent may only attempt to escape the &ldquo;hug&rdquo; on his action, which requires a raise on an opposed Strength roll.\nClaws: Str+d6\nSize +2: These creatures can standup to 8&rsquo;tall and weigh over 1000 pounds.',
+		 'en-US': 'Bear Hug: Bears don\'t actually “hug” their victims, but they do attempt to use their weight to pin their prey and rend it with their claws and teeth. A bear that hits with a raise has pinned his foe. The opponent may only attempt to escape the “hug” on his action, which requires a raise on an opposed Strength roll.\nClaws: Str+d6\nSize +2: These creatures can standup to 8\'tall and weigh over 1000 pounds.',
 	},
 	 tags: {
 		 'en-US': 'animal,',
@@ -161,7 +161,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Horns: Str+d6\nGore: Bulls charge maneuver to gore their opponents with their long horns. If they can move at least 6&rdquo; before attacking, they add +4 to their damage total.\nSize +2: Bulls are large creatures.',
+		 'en-US': 'Horns: Str+d6\nGore: Bulls charge maneuver to gore their opponents with their long horns. If they can move at least 6” before attacking, they add +4 to their damage total.\nSize +2: Bulls are large creatures.',
 	},
 	 tags: {
 		 'en-US': 'animal,',
@@ -173,7 +173,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Bulls are usually only aggressive toward humans when enraged. Of course, if you&rsquo;re looking up the statistics here, it&rsquo;s probably already seeing red.',
+		 'en-US': 'Bulls are usually only aggressive toward humans when enraged. Of course, if you\'re looking up the statistics here, it\'s probably already seeing red.',
 	},
 		attributes: '{"agility":"d6","smarts":"d4 (A)","spirit":"d8","strength":"d12+2","vigor":"d12"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d4"},"SKILL_NOTICE":{"value":"d6"}}',
@@ -214,7 +214,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'This is an ordinary house cat, the sort that might be a familiar for a spellcaster, a Beast Master&rsquo;s animal friend, or an alternate form for the shape change power.',
+		 'en-US': 'This is an ordinary house cat, the sort that might be a familiar for a spellcaster, a Beast Master\'s animal friend, or an alternate form for the shape change power.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d10","strength":"d4","vigor":"d6"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d8"}}',
@@ -243,7 +243,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str+d4.\nFleet-Footed: Roll a d10 when running instead of a d6.\nGo for the Throat: Dogs instinctively go for an opponent&rsquo;s soft spots. With a raise on its attack roll, it hits the target&rsquo;s most weakly armored location.\nSize -1: Dogs are relatively small.',
+		 'en-US': 'Bite: Str+d4.\nFleet-Footed: Roll a d10 when running instead of a d6.\nGo for the Throat: Dogs instinctively go for an opponent\'s soft spots. With a raise on its attack roll, it hits the target\'s most weakly armored location.\nSize -1: Dogs are relatively small.',
 	},
 	 tags: {
 		 'en-US': 'animal,',
@@ -284,7 +284,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor+4: Scaly hide.\nClaws/Bite: Str+d8.\nFear-2: Anyone who sees a mighty dragon must make a Fear check at &ndash;2.\nFiery Breath: Dragons breathe fire using the Cone Template. Every target within this cone may make an Agility roll at &ndash;2 to avoid the attack. Those who fail suffer 2d10 damage and must check to see if they catch fire. A dragon may not attack with its claws or bite in the round it breathes fire.\nFlight: Dragons have a Flying Pace of 24&rdquo; and Climb 0.\nHardy: The creature does not suffer a wound from being Shaken twice.\nHuge: Attackers add +4 to their Fighting or Shooting rolls when attacking a dragon due to its massive size.\nImproved Frenzy: If a dragon does not use its Fiery Breath ability, it may make two Fighting attacks with no penalty.\nLevel Headed: Act on best of two cards.\nSize +8: Dragons are massive creatures. This version is over 40&rsquo; long from nose to tail, and weighs well over 30,000 pounds.\nTail Lash: The dragon can sweep all opponents in its rear facing in a 3&rdquo; long by 6&rdquo; wide square. This is a standard Fighting attack, and damage is equal to the dragon&rsquo;s Strength &ndash;2.',
+		 'en-US': 'Armor+4: Scaly hide.\nClaws/Bite: Str+d8.\nFear-2: Anyone who sees a mighty dragon must make a Fear check at –2.\nFiery Breath: Dragons breathe fire using the Cone Template. Every target within this cone may make an Agility roll at –2 to avoid the attack. Those who fail suffer 2d10 damage and must check to see if they catch fire. A dragon may not attack with its claws or bite in the round it breathes fire.\nFlight: Dragons have a Flying Pace of 24” and Climb 0.\nHardy: The creature does not suffer a wound from being Shaken twice.\nHuge: Attackers add +4 to their Fighting or Shooting rolls when attacking a dragon due to its massive size.\nImproved Frenzy: If a dragon does not use its Fiery Breath ability, it may make two Fighting attacks with no penalty.\nLevel Headed: Act on best of two cards.\nSize +8: Dragons are massive creatures. This version is over 40\' long from nose to tail, and weighs well over 30,000 pounds.\nTail Lash: The dragon can sweep all opponents in its rear facing in a 3” long by 6” wide square. This is a standard Fighting attack, and damage is equal to the dragon\'s Strength –2.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -325,7 +325,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor+4: Scaly hide.\nClaws/Bite: Str+d8.\nFear: Drakes are frightening creatures to behold.\nFiery Breath: Drakes breathe fire using the Cone Template. Every target within this cone may make an Agility roll at &ndash;2 to avoid the attack. Those who fail suffer 2d10 damage and must check to see if they catch fire (see Fire). A drake may not attack with its claws or bite in the round it breathes fire.\nLarge: Attackers add +2 to their attack rolls when attacking a drake due to its large size.\nSize +5: Drakes are over 20&rsquo; long from snout to tail, and weigh in at over 3000 pounds.\nTail Lash: A drake can sweep all opponents in its rear facing in a 3&rdquo; long by 6&rdquo; wide rectangle. This is a standard Fighting attack, and damage is equal to the creature&rsquo;s Strength &ndash;2.',
+		 'en-US': 'Armor+4: Scaly hide.\nClaws/Bite: Str+d8.\nFear: Drakes are frightening creatures to behold.\nFiery Breath: Drakes breathe fire using the Cone Template. Every target within this cone may make an Agility roll at –2 to avoid the attack. Those who fail suffer 2d10 damage and must check to see if they catch fire (see Fire). A drake may not attack with its claws or bite in the round it breathes fire.\nLarge: Attackers add +2 to their attack rolls when attacking a drake due to its large size.\nSize +5: Drakes are over 20\' long from snout to tail, and weigh in at over 3000 pounds.\nTail Lash: A drake can sweep all opponents in its rear facing in a 3” long by 6” wide rectangle. This is a standard Fighting attack, and damage is equal to the creature\'s Strength –2.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -407,7 +407,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Elemental: No additional damage from called shots;Fearless; Immune to disease and poison.\nInvulnerability: Fire Elementals are immune to all non-magical attacks, but suffer 1d6 damage when doused in at least a gallon of water, +2 per additional gallon.\nFiery Touch: Str+d6; chance of catching fire.\nFlame Strike: Fire elementals can project a searing blast of flame using the Cone Template. Characters within the cone must beat the spirit&rsquo;s Shooting roll with Agility or suffer 2d10 damage, plus the chance of catching fire.',
+		 'en-US': 'Elemental: No additional damage from called shots;Fearless; Immune to disease and poison.\nInvulnerability: Fire Elementals are immune to all non-magical attacks, but suffer 1d6 damage when doused in at least a gallon of water, +2 per additional gallon.\nFiery Touch: Str+d6; chance of catching fire.\nFlame Strike: Fire elementals can project a searing blast of flame using the Cone Template. Characters within the cone must beat the spirit\'s Shooting roll with Agility or suffer 2d10 damage, plus the chance of catching fire.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -448,7 +448,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Ethereal: Ghosts are immaterial and can only be harmed by magical attacks.\nFear -2: Ghosts cause Fear checks at &ndash;2 when they let themselves be seen.',
+		 'en-US': 'Ethereal: Ghosts are immaterial and can only be harmed by magical attacks.\nFear -2: Ghosts cause Fear checks at –2 when they let themselves be seen.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -489,7 +489,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor +4: Scaly Hide.\nBite: Str+d8.\nBurrow (20"): Giant worms can disappear and reappear on the following action anywhere within 20".\nGargantuan: The worms are Huge and thus suffer +4 to ranged attacks against them. Their attacks count as Heavy Weapons, and they add their Size to Strength rolls.\nHardy: The creature does not suffer a wound from being Shaken twice.\nSize +10: Giant worms are usually well over 50&rsquo;long and 10&rsquo; or more in diameter.\nSlam: Giant worms attempt to rise up and crush their prey beneath their massive bodies. This is an opposed roll of the creature&rsquo;s Fighting versus the target&rsquo;s Agility. If the worm wins, the victim suffers 4d6 damage.',
+		 'en-US': 'Armor +4: Scaly Hide.\nBite: Str+d8.\nBurrow (20"): Giant worms can disappear and reappear on the following action anywhere within 20".\nGargantuan: The worms are Huge and thus suffer +4 to ranged attacks against them. Their attacks count as Heavy Weapons, and they add their Size to Strength rolls.\nHardy: The creature does not suffer a wound from being Shaken twice.\nSize +10: Giant worms are usually well over 50\'long and 10\' or more in diameter.\nSlam: Giant worms attempt to rise up and crush their prey beneath their massive bodies. This is an opposed roll of the creature\'s Fighting versus the target\'s Agility. If the worm wins, the victim suffers 4d6 damage.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -501,7 +501,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Massive worms tunneling beneath the earth to gobble up unsuspecting adventurers are sometimes found in lonesome flatlands. The things sense vibrations through the earth, hearing a walking person at about 200 yards. The stats below are for a monster some 50&rsquo; long.',
+		 'en-US': 'Massive worms tunneling beneath the earth to gobble up unsuspecting adventurers are sometimes found in lonesome flatlands. The things sense vibrations through the earth, hearing a walking person at about 200 yards. The stats below are for a monster some 50\' long.',
 	},
 		attributes: '{"agility":"d6","smarts":"d6 (A)","spirit":"d10","strength":"d12+10","vigor":"d12"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"},"SKILL_STEALTH":{"value":"d10"}}',
@@ -530,7 +530,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Infravision: Goblins halve penalties for dark lighting against living targets (round down).\nSize -1: Goblins stand 3-4&rsquo; tall.',
+		 'en-US': 'Infravision: Goblins halve penalties for dark lighting against living targets (round down).\nSize -1: Goblins stand 3-4\' tall.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -542,7 +542,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Goblins of myth and legend are far more sinister creatures than some games and fiction portray. In the original tales, they were terrifying creatures that stole into homes in the middle of the night to steal and eat unruly children. The statistics here work for both dark &ldquo;fairy tale&rdquo; goblins as well as those found alongside orcs in contemporary roleplaying games.',
+		 'en-US': 'Goblins of myth and legend are far more sinister creatures than some games and fiction portray. In the original tales, they were terrifying creatures that stole into homes in the middle of the night to steal and eat unruly children. The statistics here work for both dark “fairy tale” goblins as well as those found alongside orcs in contemporary roleplaying games.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6","spirit":"d6","strength":"d4","vigor":"d6"}',
 		skills: '{"SKILL_CLIMBING":{"value":"d6"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_TAUNT":{"value":"d6"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"},"SKILL_THROWING":{"value":"d6"},"SKILL_SWIMMING":{"value":"d6"}}',
@@ -624,7 +624,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'War horses are large beasts trained for aggression. They are trained to fight with both hooves, either to their front or their rear. In combat, the animal attacks any round its rider doesn&rsquo;t make a trick maneuver of some kind.',
+		 'en-US': 'War horses are large beasts trained for aggression. They are trained to fight with both hooves, either to their front or their rear. In combat, the animal attacks any round its rider doesn\'t make a trick maneuver of some kind.',
 	},
 		attributes: '{"agility":"d6","smarts":"d4 (A)","spirit":"d6","strength":"d12+2","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"}}',
@@ -665,7 +665,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Perhaps the most diabolical creature in any fantasy land is the lich&mdash;a necromancer so consumed with the black arts that he eventually becomes undead himself.',
+		 'en-US': 'Perhaps the most diabolical creature in any fantasy land is the lich—a necromancer so consumed with the black arts that he eventually becomes undead himself.',
 	},
 		attributes: '{"agility":"d6","smarts":"d12+2","spirit":"d10","strength":"d10","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_KNOWLEDGE":{"value":"d12+2","special":{"en-US":"Occult"}},"SKILL_NOTICE":{"value":"d10"},"SKILL_SPELLCASTING":{"value":"d12"}}',
@@ -694,7 +694,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bite or Claw: Str+d6.\nImproved Frenzy: Lions may make two Fighting attacks each action at no penalty.\nLow Light Vision: Lions ignore penalties for Dim and Dark lighting.\nPounce: Lions often pounce on their prey to best bring their mass and claws to bear. It can leap 1d6&rdquo; to gain +4 to its attack and damage. Its Parry is reduced by &ndash;2 until its next action when performing the maneuver however.\nSize +2: Male lions can weigh over 500 pounds.',
+		 'en-US': 'Bite or Claw: Str+d6.\nImproved Frenzy: Lions may make two Fighting attacks each action at no penalty.\nLow Light Vision: Lions ignore penalties for Dim and Dark lighting.\nPounce: Lions often pounce on their prey to best bring their mass and claws to bear. It can leap 1d6” to gain +4 to its attack and damage. Its Parry is reduced by –2 until its next action when performing the maneuver however.\nSize +2: Male lions can weigh over 500 pounds.',
 	},
 	 tags: {
 		 'en-US': 'animal,',
@@ -776,7 +776,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Horns: Str+d4\nFleet-Footed: Minotaurs roll d10s instead of d6s when running.\nGore: Minotaurs use this maneuver to gore their opponents with their horns. If they can charge at least 6&rdquo; before attacking, they add +4 to their damage total.\nSize +2: Minotaurs stand over 7&rsquo; tall.',
+		 'en-US': 'Horns: Str+d4\nFleet-Footed: Minotaurs roll d10s instead of d6s when running.\nGore: Minotaurs use this maneuver to gore their opponents with their horns. If they can charge at least 6” before attacking, they add +4 to their damage total.\nSize +2: Minotaurs stand over 7\' tall.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -788,7 +788,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Minotaurs stand over 7&rsquo; tall and have massive, bull-like heads and horns. In many fantasy worlds, they are used as guardians of labyrinths. In others, they are simply another race of creatures occupying a fantastically savage setting. In all cases, they are fierce beasts eager for battle and the taste of their opponents&rsquo; flesh.',
+		 'en-US': 'Minotaurs stand over 7\' tall and have massive, bull-like heads and horns. In many fantasy worlds, they are used as guardians of labyrinths. In others, they are simply another race of creatures occupying a fantastically savage setting. In all cases, they are fierce beasts eager for battle and the taste of their opponents\' flesh.',
 	},
 		attributes: '{"agility":"d8","smarts":"d6","spirit":"d8","strength":"d12+2","vigor":"d12"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d10"},"SKILL_THROWING":{"value":"d6"}}',
@@ -858,7 +858,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Size +3: Most ogres are over 8&rsquo; tall with pot-bellies and massive arms and legs.\nSweep: May attack all adjacent characters at &ndash;2.',
+		 'en-US': 'Size +3: Most ogres are over 8\' tall with pot-bellies and massive arms and legs.\nSweep: May attack all adjacent characters at –2.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -870,7 +870,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Ogres are kin to orcs and lesser giants. They are often taken in by orc clans, who respect the dumb brutes for their savagery and strength. Orcs often pit their &ldquo;pet&rdquo; ogres in savage combats against their rivals&rsquo; ogres.',
+		 'en-US': 'Ogres are kin to orcs and lesser giants. They are often taken in by orc clans, who respect the dumb brutes for their savagery and strength. Orcs often pit their “pet” ogres in savage combats against their rivals\' ogres.',
 	},
 		attributes: '{"agility":"d6","smarts":"d4","spirit":"d6","strength":"d12+3","vigor":"d12"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d4"},"SKILL_THROWING":{"value":"d6"}}',
@@ -899,7 +899,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Infravision: Halves penalties for poor light vs. warm targets.\nSize +1: Orcs are slightly larger than humans.\nSweep: May attack all adjacent characters at &ndash;2 penalty.',
+		 'en-US': 'Infravision: Halves penalties for poor light vs. warm targets.\nSize +1: Orcs are slightly larger than humans.\nSweep: May attack all adjacent characters at –2 penalty.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -911,7 +911,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'The leader of small orc clans is always the most deadly brute in the bunch. Orc chieftains generally have a magical item or two in settings where such things are relatively common (most &ldquo;swords and sorcery&rdquo; worlds).',
+		 'en-US': 'The leader of small orc clans is always the most deadly brute in the bunch. Orc chieftains generally have a magical item or two in settings where such things are relatively common (most “swords and sorcery” worlds).',
 	},
 		attributes: '{"agility":"d8","smarts":"d6","spirit":"d6","strength":"d10","vigor":"d10"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d12"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d6"},"SKILL_THROWING":{"value":"d8"}}',
@@ -1104,7 +1104,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str.\nConstrict: Large constrictors have very little chance of entangling active man-sized prey in the real world&mdash; they must attack while their victim is sleeping, stunned, paralyzed, and so on. Constrictors in pulp and other fantastic genres might be far more deadly. These creatures bite when they succeed at a Fighting roll, and entangle when they succeed with a raise. The round they entangle and each round thereafter, they cause damage to their prey equal to Str+d6. The prey may attempt to escape on his action by getting a raise on an opposed Strength roll.',
+		 'en-US': 'Bite: Str.\nConstrict: Large constrictors have very little chance of entangling active man-sized prey in the real world— they must attack while their victim is sleeping, stunned, paralyzed, and so on. Constrictors in pulp and other fantastic genres might be far more deadly. These creatures bite when they succeed at a Fighting roll, and entangle when they succeed with a raise. The round they entangle and each round thereafter, they cause damage to their prey equal to Str+d6. The prey may attempt to escape on his action by getting a raise on an opposed Strength roll.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -1116,7 +1116,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Pythons, boa constrictors, and other snakes over 15&rsquo; long are rarely deadly to man in the real world because they aren&rsquo;t particularly aggressive toward such large prey. In games, however, such snakes might be provoked, drugged, or just plain mean.',
+		 'en-US': 'Pythons, boa constrictors, and other snakes over 15\' long are rarely deadly to man in the real world because they aren\'t particularly aggressive toward such large prey. In games, however, such snakes might be provoked, drugged, or just plain mean.',
 	},
 		attributes: '{"agility":"d4","smarts":"d4 (A)","spirit":"d8","strength":"d6","vigor":"d6"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d10"}}',
@@ -1145,7 +1145,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str.\nPoison: See the Poison rules on [object Object] page 89.\nQuick: Snakes are notoriously fast. They may discard Action Cards of 5 or lower and draw another. They must keep the replacement card, however.\nSize-2: Most venomous snakes are 4-6&rsquo; in length, but only a few inches thick.\nSmall: Anyone attacking a snake must subtract 2 from his attack rolls.',
+		 'en-US': 'Bite: Str.\nPoison: See the Poison rules on [object Object] page 89.\nQuick: Snakes are notoriously fast. They may discard Action Cards of 5 or lower and draw another. They must keep the replacement card, however.\nSize-2: Most venomous snakes are 4-6\' in length, but only a few inches thick.\nSmall: Anyone attacking a snake must subtract 2 from his attack rolls.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -1186,7 +1186,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bite: Str+d4.\nPoison (-4): See the Poison rules on [object Object] page 89.\nWall Walker: Can walk on vertical surfaces at Pace 8.\nWebbing: The spiders can cast webs from their thorax that are the size of Small Burst Templates. This is a Shooting roll with a range of 3/6/12. Anything in the web must cut or break their way free (Toughness 7). Webbed characters can still fight, but all physical actions are at &ndash;4.',
+		 'en-US': 'Bite: Str+d4.\nPoison (-4): See the Poison rules on [object Object] page 89.\nWall Walker: Can walk on vertical surfaces at Pace 8.\nWebbing: The spiders can cast webs from their thorax that are the size of Small Burst Templates. This is a Shooting roll with a range of 3/6/12. Anything in the web must cut or break their way free (Toughness 7). Webbed characters can still fight, but all physical actions are at –4.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -1227,7 +1227,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Bite or Sting: Swarms inflict hundreds of tiny bites every round to their victims, hitting automatically and causing 2d4 damage to everyone in the template. Damage is applied to the least armored location (victims in completely sealed suits are immune).\nSplit: Some swarms are clever enough to split into two smaller swarms (Small Burst Templates) should their foes split up. The Toughness of these smaller swarms is lowered by &ndash;2 (to 5 each).\nSwarm: Parry +2; Because the swarm is composed of scores, hundreds, or thousands of creatures, cutting and piercing weapons do no real damage. Area-effect weapons work normally, and a character can stomp to inflict his damage in Strength each round. Swarms are usually foiled by jumping in water (unless they are aquatic pests, such as piranha).',
+		 'en-US': 'Bite or Sting: Swarms inflict hundreds of tiny bites every round to their victims, hitting automatically and causing 2d4 damage to everyone in the template. Damage is applied to the least armored location (victims in completely sealed suits are immune).\nSplit: Some swarms are clever enough to split into two smaller swarms (Small Burst Templates) should their foes split up. The Toughness of these smaller swarms is lowered by –2 (to 5 each).\nSwarm: Parry +2; Because the swarm is composed of scores, hundreds, or thousands of creatures, cutting and piercing weapons do no real damage. Area-effect weapons work normally, and a character can stomp to inflict his damage in Strength each round. Swarms are usually foiled by jumping in water (unless they are aquatic pests, such as piranha).',
 	},
 	 tags: {
 		 'en-US': '',
@@ -1239,7 +1239,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Sometimes the most deadly foes come in the smallest packages. The swarm described below can be of most anything&mdash; from biting ants to stinging wasps to filthy rats.',
+		 'en-US': 'Sometimes the most deadly foes come in the smallest packages. The swarm described below can be of most anything— from biting ants to stinging wasps to filthy rats.',
 	},
 		attributes: '{"agility":"d10","smarts":"d4 (A)","spirit":"d12","strength":"d8","vigor":"d10"}',
 		skills: '{"SKILL_NOTICE":{"value":"d6"}}',
@@ -1268,7 +1268,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Armor+1: Rubbery hide.\nClaws: Str+d4.\nImproved Sweep: May attack all adjacent foes at no penalty.\nFast Regeneration: Trollsmayattemptanaturalhealing roll every round unless their wounds were caused by fire or flame. This occurs whether the troll is a Wild Card leader or an Extra. If the latter, a downed troll actually returns to action if it heals itself (and is not Shaken&mdash;even if it was before being Incapacitated).\nSize+2: Trolls are tall, lanky creatures over 8&rsquo; tall.',
+		 'en-US': 'Armor+1: Rubbery hide.\nClaws: Str+d4.\nImproved Sweep: May attack all adjacent foes at no penalty.\nFast Regeneration: Trollsmayattemptanaturalhealing roll every round unless their wounds were caused by fire or flame. This occurs whether the troll is a Wild Card leader or an Extra. If the latter, a downed troll actually returns to action if it heals itself (and is not Shaken—even if it was before being Incapacitated).\nSize+2: Trolls are tall, lanky creatures over 8\' tall.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -1309,7 +1309,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Change Form: As an action, a vampire can change into a wolf or bat with a Smarts roll at &ndash;2. Changing back into humanoid form requires a Smarts roll.\nCharm: Vampires can use the puppet power on the opposite sex using their Smarts as their arcane skill. They can cast and maintain the power indefinitely, but may only affect one target at a time.\nChildren of the Night: Ancient vampires have the ability to summon and control wolves or rats. This requires an action and a Smarts roll at &ndash;2. If successful, 1d6 wolves or 1d6 swarms of rats (see Swarm) come from the surrounding wilds in 1d6+2 rounds.\nClaws: Str +d4.\nImproved Frenzy: Vampires may make two attacks per round without penalty.\nInvulnerability: Vampires can only be harmed by their Weaknesses. They may be Shaken by other attacks, but never wounded.\nLevel Headed: Vampires act on the best of two cards.\nMist: Greater vampires have the ability to turn into mist. This requires an action and a Smarts roll at &ndash;2.\nSire: Anyone slain by a vampire has a 50% chance of rising as a vampire themselves in 1d4 days.\nUndead: +2 Toughness; +2 to recover from being Shaken; called shots do no extra damage (except to the heart&mdash;see below). No wound penalties.\nWeakness (Sunlight): Vampires catch fire if any part of their skin is exposed to direct sunlight. After that they suffer 2d10 damage per round until they are dust. Armor does not protect.\nWeakness (Holy Symbol): A character may keep a vampire at bay by displaying a holy symbol. A vampire who wants to directly attack the victim must beat her in an opposed test of Spirit.\nWeakness (Holy Water): A vampire sprinkled with holy water is Fatigued. If immersed, he combusts as if it were direct sunlight (see above).\nWeakness (Invitation Only): Vampires cannot enter a private dwelling without being invited. They may enter public domains as they please.\nWeakness (Stake Through the Heart): A vampire hit with a called shot to the heart (&ndash;4) must make a Vigor roll versus the damage total. If successful, it takes damage normally. If it fails, it disintegrates to dust.',
+		 'en-US': 'Change Form: As an action, a vampire can change into a wolf or bat with a Smarts roll at –2. Changing back into humanoid form requires a Smarts roll.\nCharm: Vampires can use the puppet power on the opposite sex using their Smarts as their arcane skill. They can cast and maintain the power indefinitely, but may only affect one target at a time.\nChildren of the Night: Ancient vampires have the ability to summon and control wolves or rats. This requires an action and a Smarts roll at –2. If successful, 1d6 wolves or 1d6 swarms of rats (see Swarm) come from the surrounding wilds in 1d6+2 rounds.\nClaws: Str +d4.\nImproved Frenzy: Vampires may make two attacks per round without penalty.\nInvulnerability: Vampires can only be harmed by their Weaknesses. They may be Shaken by other attacks, but never wounded.\nLevel Headed: Vampires act on the best of two cards.\nMist: Greater vampires have the ability to turn into mist. This requires an action and a Smarts roll at –2.\nSire: Anyone slain by a vampire has a 50% chance of rising as a vampire themselves in 1d4 days.\nUndead: +2 Toughness; +2 to recover from being Shaken; called shots do no extra damage (except to the heart—see below). No wound penalties.\nWeakness (Sunlight): Vampires catch fire if any part of their skin is exposed to direct sunlight. After that they suffer 2d10 damage per round until they are dust. Armor does not protect.\nWeakness (Holy Symbol): A character may keep a vampire at bay by displaying a holy symbol. A vampire who wants to directly attack the victim must beat her in an opposed test of Spirit.\nWeakness (Holy Water): A vampire sprinkled with holy water is Fatigued. If immersed, he combusts as if it were direct sunlight (see above).\nWeakness (Invitation Only): Vampires cannot enter a private dwelling without being invited. They may enter public domains as they please.\nWeakness (Stake Through the Heart): A vampire hit with a called shot to the heart (–4) must make a Vigor roll versus the damage total. If successful, it takes damage normally. If it fails, it disintegrates to dust.',
 	},
 	 tags: {
 		 'en-US': 'undead,',
@@ -1321,7 +1321,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Blood-drinkers of lore are common in many fantasy games. The statistics below are for a vampire somewhat below the legendary Dracula, but far above those bloodsuckers fresh from the grave (detailed next). The abilities listed below are standard&mdash;the GM may want to add other Edges as befits the vampire&rsquo;s previous lifestyle.',
+		 'en-US': 'Blood-drinkers of lore are common in many fantasy games. The statistics below are for a vampire somewhat below the legendary Dracula, but far above those bloodsuckers fresh from the grave (detailed next). The abilities listed below are standard—the GM may want to add other Edges as befits the vampire\'s previous lifestyle.',
 	},
 		attributes: '{"agility":"d8","smarts":"d10","spirit":"d10","strength":"d12+3","vigor":"d12"}',
 		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d12"},"SKILL_NOTICE":{"value":"d8"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_SWIMMING":{"value":"d8"},"SKILL_THROWING":{"value":"d8"}}',
@@ -1350,7 +1350,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Claws: Str +d4.\nFrenzy: Vampires can make two attacks per round with a &ndash;2 penalty to each attack.\nLevel Headed: Vampires act on the best of two cards.\nInvulnerability: Vampires can only be harmed by their Weaknesses. They may be Shaken by other attacks, but never wounded.\nSire: Anyone slain by a vampire has a 50% chance of rising as a vampire themselves in 1d4 days.\nUndead: +2 Toughness; +2 to recover from being Shaken; called shots do no extra damage (except to the heart&mdash;see below). No wound penalties.\nWeakness (Sunlight): Vampires catch fire if any part of their skin is exposed to direct sunlight. After that they suffer 2d10 damage per round until they are dust. Armor does not protect.\nWeakness (Holy Symbol): A character may keep a vampire at bay by displaying a holy symbol. A vampire who wants to directly attack the victim must beat her in an opposed test of Spirit.\nWeakness (Holy Water): A vampire sprinkled with holy water is Fatigued. If immersed, he combusts as if it were direct sunlight (see above).\nWeakness (Invitation Only): Vampires cannot enter a private dwelling without being invited. They may enter public domains as they please.\nWeakness (Stake Through the Heart): A vampire hit with a called shot to the heart (&ndash;4) must make a Vigor roll versus the damage total. If successful, it takes damage normally. If it fails, it disintegrates to dust.',
+		 'en-US': 'Claws: Str +d4.\nFrenzy: Vampires can make two attacks per round with a –2 penalty to each attack.\nLevel Headed: Vampires act on the best of two cards.\nInvulnerability: Vampires can only be harmed by their Weaknesses. They may be Shaken by other attacks, but never wounded.\nSire: Anyone slain by a vampire has a 50% chance of rising as a vampire themselves in 1d4 days.\nUndead: +2 Toughness; +2 to recover from being Shaken; called shots do no extra damage (except to the heart—see below). No wound penalties.\nWeakness (Sunlight): Vampires catch fire if any part of their skin is exposed to direct sunlight. After that they suffer 2d10 damage per round until they are dust. Armor does not protect.\nWeakness (Holy Symbol): A character may keep a vampire at bay by displaying a holy symbol. A vampire who wants to directly attack the victim must beat her in an opposed test of Spirit.\nWeakness (Holy Water): A vampire sprinkled with holy water is Fatigued. If immersed, he combusts as if it were direct sunlight (see above).\nWeakness (Invitation Only): Vampires cannot enter a private dwelling without being invited. They may enter public domains as they please.\nWeakness (Stake Through the Heart): A vampire hit with a called shot to the heart (–4) must make a Vigor roll versus the damage total. If successful, it takes damage normally. If it fails, it disintegrates to dust.',
 	},
 	 tags: {
 		 'en-US': 'undead,',
@@ -1391,7 +1391,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Aquatic: Pace 12\nElemental: No additional damage from called shots;Fearless; Immune to disease and poison.\nInvulnerability: Water elementals are immune to all non-magical attacks except fire. A torch or lantern causes them 1d6 damage but is instantly put out if it hits.\nSeep: Water elementals can squeeze through any porous gap as if it were Difficult Ground.\nSlam: Str+d6; nonleathal damage.\nWaterspout: Water spirits can project a torrent of water using the Cone Template. Those in the area may make an Agility roll opposed by the spirit&rsquo;s Shooting to avoid it or suffer 2d8 nonlethal damage. This puts out any normal fires.',
+		 'en-US': 'Aquatic: Pace 12\nElemental: No additional damage from called shots;Fearless; Immune to disease and poison.\nInvulnerability: Water elementals are immune to all non-magical attacks except fire. A torch or lantern causes them 1d6 damage but is instantly put out if it hits.\nSeep: Water elementals can squeeze through any porous gap as if it were Difficult Ground.\nSlam: Str+d6; nonleathal damage.\nWaterspout: Water spirits can project a torrent of water using the Cone Template. Those in the area may make an Agility roll opposed by the spirit\'s Shooting to avoid it or suffer 2d8 nonlethal damage. This puts out any normal fires.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -1432,7 +1432,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Claws: Str +d8.\nInfection: Anyone slain by a werewolf has a 50% chance of rising as a werewolf themselves. The character involuntarily transforms every full moon. He gains control of his lycanthropy only after 1d6 years as a werewolf.\nInvulnerability: Werewolves can only be Shaken by weapons that are not silver&mdash;not wounded.\nInfravision: Werewolves can see heat and halve penalties for bad lighting when attacking living targets.\nWeakness: Werewolves suffer normal damage from silver weapons.',
+		 'en-US': 'Claws: Str +d8.\nInfection: Anyone slain by a werewolf has a 50% chance of rising as a werewolf themselves. The character involuntarily transforms every full moon. He gains control of his lycanthropy only after 1d6 years as a werewolf.\nInvulnerability: Werewolves can only be Shaken by weapons that are not silver—not wounded.\nInfravision: Werewolves can see heat and halve penalties for bad lighting when attacking living targets.\nWeakness: Werewolves suffer normal damage from silver weapons.',
 	},
 	 tags: {
 		 'en-US': '',
@@ -1473,7 +1473,7 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 abilities: {
-		 'en-US': 'Claws: Str.\nFearless: Zombies are immune to Fear and Intimidation.\nUndead: +2 Toughness; +2 to recover from being Shaken; called shots do no extra damage (except to the head).\nWeakness (Head):: Shots to a zombie&rsquo;s head are +2 damage.',
+		 'en-US': 'Claws: Str.\nFearless: Zombies are immune to Fear and Intimidation.\nUndead: +2 Toughness; +2 to recover from being Shaken; called shots do no extra damage (except to the head).\nWeakness (Head):: Shots to a zombie\'s head are +2 damage.',
 	},
 	 tags: {
 		 'en-US': 'undead,',

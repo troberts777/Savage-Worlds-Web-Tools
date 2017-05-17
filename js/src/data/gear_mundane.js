@@ -75,7 +75,7 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
-		 'en-US': 'Alchemists&rsquo; trunk',
+		 'en-US': 'Alchemists\' trunk',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1447,7 +1447,7 @@ var savageWorldsGearMundane = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': 'provides light in 4&rdquo; radius',
+		 'en-US': 'provides light in 4” radius',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -1557,7 +1557,7 @@ var savageWorldsGearMundane = Array(
 },
 {
 	 name: {
-		 'en-US': 'Lineman&rsquo;s Telephone',
+		 'en-US': 'Lineman\'s Telephone',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
@@ -2542,7 +2542,7 @@ var savageWorldsGearMundane = Array(
 		 'de-DE': '',
 	},
 	 notes: {
-		 'en-US': '1 hour, 4&rdquo; radius',
+		 'en-US': '1 hour, 4” radius',
 		 'pt-BR': '',
 		 'de-DE': '',
 	},
