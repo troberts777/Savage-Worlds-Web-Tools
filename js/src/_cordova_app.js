@@ -44,6 +44,8 @@ cordovaApp = angular.module(
 				}
 			}
 
+			users_preferred_language = "en-US";
+
 			$translateProvider.useSanitizeValueStrategy('sanitize');
 
 			$translateProvider.preferredLanguage(users_preferred_language);
