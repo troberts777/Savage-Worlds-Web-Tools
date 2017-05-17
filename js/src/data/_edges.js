@@ -2173,15 +2173,15 @@ charEffects: function ( charObj ) {
 	 book: 1,
 	 child: 0,
 charEffects: function ( charObj ) {
-			charObj.totalPowersKnown++;
-		},
+    charObj.incrementAdditionalPowersKnown();
+},
 requires: function( charObj) {
-if( charObj.usesSPCCreation == false) {
-if( charObj.hasArcaneBackground)
-return true;
-else
-return false;
-} 
+    if( charObj.usesSPCCreation() == false) {
+        if( charObj.hasArcaneBackground() )
+            return true;
+        else
+            return false;
+    } 
 }
 },
 {
@@ -2225,8 +2225,6 @@ charEffects: function ( charObj ) {
 {
 	 name: {
 		 'en-US': 'Power Points',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 	 required_edge: '',
 	 required_rank: 0,
@@ -2239,17 +2237,17 @@ charEffects: function ( charObj ) {
 	 book: 1,
 	 child: 0,
 charEffects: function ( charObj ) {
-	charObj.powerPointsAvailable += 5;
-	charObj.spcExtraPowerPoints += 5;
+	charObj.addAdditionalPowerPoints( 5 );
+	charObj.addAdditionalSPCPowerPoints( 5 );
 },
 requires: function( charObj) {
-if( charObj.usesSPCCreation == false) {
-if( charObj.hasArcaneBackground)
+if( charObj.usesSPCCreation() == false) {
+if( charObj.hasArcaneBackground() )
 return true;
 else
 return false;
 } else {
-if( charObj.SPCRisingStars == true  )
+if( charObj.getSPCRisingStars() == true  )
      return true;
 else
     return false;

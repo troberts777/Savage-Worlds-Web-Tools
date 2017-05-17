@@ -1,3 +1,5 @@
+<div ng-include="'pages/chargen-dialog-buy-gear.html'"></div>
+
 </div>
 <div class="container gear-search-bar">
 	<div class="row">
@@ -7,7 +9,8 @@
 					<h3 class="text-center" translate="CHARGEN_ADDING_ARMOR">Armor</h3>
 
 					<a class="no-bottom-margin float-right button small primary" href="#/core/character-maker-armor" translate="GENERAL_CLOSE"></a>
-					<label><span translate="CHARGEN_FILTER_GEAR">Search for Gear</span>: <input type="text" class="inline-block input-tighter-padding" ng-model="gearSearch.local_name" />
+
+					<label class="inline-block"><span translate="CHARGEN_FILTER_GEAR">Search for Gear</span>: <input type="text" class="inline-block input-tighter-padding" ng-model="gearSearch.local_name" />
 						<div class="inline-block item-added-message" ng-show="showAddedMessage" translate="CHARGEN_ITEM_ADDED_TO_INVENTORY"></div>
 					</label>
 			</div>
@@ -29,7 +32,12 @@
 					</thead>
 					<thead>
 						<tr>
-							<th colspan="4"><h4 translate="CHARGEN_ARMOR">Armor</h4></th>
+							<th colspan="5">
+								<button class="no-bottom-margin float-right button small primary inline-block" translate="CHARGEN_ADD_CUSTOM">Add Custom</button>
+
+								<h4 translate="CHARGEN_ARMOR">Armor</h4>
+
+							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -39,7 +47,9 @@
 							<td>{{gearItem.weight}}</td>
 							<td>{{gearItem.bookObj.local_name}}</td>
 							<td class="text-right">
+<!--
 								<button class="button secondary tiny radius no-bottom-margin" ng-click="buyArmor(gearItem.book, gearItem.tag, true);" translate="GENERAL_BUY_FREE">Buy Free</button>
+-->
 								<button class="button primary tiny radius no-bottom-margin" ng-click="buyArmor(gearItem.book, gearItem.tag, false);" translate="GENERAL_BUY">Buy</button>
 							</td>
 						</tr>
@@ -47,7 +57,11 @@
 
 					<thead>
 						<tr>
-							<th colspan="4"><h4 translate="CHARGEN_SHIELDS">Shields</h4></th>
+							<th colspan="5">
+								<button class="no-bottom-margin float-right button small primary inline-block" translate="CHARGEN_ADD_CUSTOM">Add Custom</button>
+
+								<h4 translate="CHARGEN_SHIELDS">Shields</h4>
+							</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -55,8 +69,11 @@
 							<td>{{gearItem.local_name}}</td>
 							<td>${{addCommas(gearItem.cost)}}</td>
 							<td>{{gearItem.weight}}</td>
+							<td>{{gearItem.bookObj.local_name}}</td>
 							<td class="text-right">
+<!--
 								<button class="button secondary tiny radius no-bottom-margin" ng-click="buyShield(gearItem.book, gearItem.tag, true);" translate="GENERAL_BUY_FREE">Buy Free</button>
+-->
 								<button class="button primary tiny radius no-bottom-margin" ng-click="buyShield(gearItem.book, gearItem.tag, false);" translate="GENERAL_BUY">Buy</button>
 							</td>
 						</tr>

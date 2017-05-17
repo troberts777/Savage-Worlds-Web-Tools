@@ -31,8 +31,6 @@ var coreChargenGearFunctions = function ($timeout, $rootScope, $translate, $scop
 			if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
 				$rootScope.savageCharacter.importJSON( localStorage[ currentItemLocalStorageVariable ] );
 			}
-
-
 		}
 
 		$rootScope.clearGearLog = function() {
@@ -44,11 +42,29 @@ var coreChargenGearFunctions = function ($timeout, $rootScope, $translate, $scop
 		}
 
 		$scope.buyArmor = function( bookID, gearTag, forFree) {
-			if( forFree == true)
-				itemCost = 0;
-			else
-				itemCost = -1;
-			$rootScope.savageCharacter.addGearArmor( bookID, gearTag, itemCost );
+			//~ if( forFree == true)
+				//~ itemCost = 0;
+			//~ else
+				//~ itemCost = -1;
+			//~ $rootScope.savageCharacter.addGearArmor( bookID, gearTag, itemCost );
+			//~ $scope.showItemAdded();
+			//~ $rootScope.validateAndSave();
+			$rootScope.buyItem = $rootScope.savageCharacter.getArmorByTag( bookID, gearTag );
+			$rootScope.buyItemCost = angular.copy($rootScope.buyItem.cost);
+			$scope.buyDialogOpen = true;
+			$scope.currentBuyFunction = $scope.buyArmorSave;
+		}
+
+		$scope.buyArmorSave = function() {
+			//~ if( forFree == true)
+				//~ itemCost = 0;
+			//~ else
+				//~ itemCost = -1;
+			//~ $rootScope.savageCharacter.addGearArmor( bookID, gearTag, itemCost );
+			//~ $scope.showItemAdded();
+			//~ $rootScope.validateAndSave();
+			$rootScope.savageCharacter.addGearArmor( $rootScope.buyItem.book, $rootScope.buyItem.tag, $rootScope.buyItemCost );
+			$scope.closeBuyDialog()
 			$scope.showItemAdded();
 			$rootScope.validateAndSave();
 		}
@@ -58,22 +74,60 @@ var coreChargenGearFunctions = function ($timeout, $rootScope, $translate, $scop
 			$rootScope.validateAndSave();
 		}
 
+		$scope.buyDialogOpen = false;
+
 		$scope.buyHandWeapon = function( bookID, gearTag, forFree) {
-			if( forFree == true)
-				itemCost = 0;
-			else
-				itemCost = -1;
-			$rootScope.savageCharacter.addGearHandWeapon( bookID, gearTag, itemCost );
+			//~ if( forFree == true)
+				//~ itemCost = 0;
+			//~ else
+				//~ itemCost = -1;
+			//~ $rootScope.savageCharacter.addGearHandWeapon( bookID, gearTag, itemCost );
+			//~ $scope.showItemAdded();
+			//~ $rootScope.validateAndSave();
+
+			$rootScope.buyItem = $rootScope.savageCharacter.getHandWeaponByTag( bookID, gearTag );
+			$rootScope.buyItemCost = angular.copy($rootScope.buyItem.cost);
+			$scope.buyDialogOpen = true;
+			$scope.currentBuyFunction = $scope.buyHandWeaponSave;
+		}
+
+		$scope.setBuyItemBuyCost = function( newValue ) {
+			$rootScope.buyItemCost = newValue;
+		}
+
+		$scope.buyHandWeaponSave = function() {
+			//~ console.log( "buyHandWeaponSave called" );
+			$rootScope.savageCharacter.addGearHandWeapon( $rootScope.buyItem.book, $rootScope.buyItem.tag, $rootScope.buyItemCost );
+			$scope.closeBuyDialog()
 			$scope.showItemAdded();
 			$rootScope.validateAndSave();
 		}
 
+		$scope.closeBuyDialog = function( ) {
+			$scope.buyDialogOpen = false;
+			$scope.currentBuyFunction = null;
+			$rootScope.buyItem = null;
+			$rootScope.buyItemCost = null;
+		}
+
 		$scope.buyRangedWeapon = function( bookID, gearTag, forFree) {
-			if( forFree == true)
-				itemCost = 0;
-			else
-				itemCost = -1;
-			$rootScope.savageCharacter.addGearRangedWeapon( bookID, gearTag, itemCost );
+			//~ if( forFree == true)
+				//~ itemCost = 0;
+			//~ else
+				//~ itemCost = -1;
+			//~ $rootScope.savageCharacter.addGearRangedWeapon( bookID, gearTag, itemCost );
+			//~ $scope.showItemAdded();
+			//~ $rootScope.validateAndSave();
+			$rootScope.buyItem = $rootScope.savageCharacter.getRangedWeaponByTag( bookID, gearTag );
+			$rootScope.buyItemCost = angular.copy($rootScope.buyItem.cost);
+			$scope.buyDialogOpen = true;
+			$scope.currentBuyFunction = $scope.buyRangedWeaponSave;
+		}
+
+		$scope.buyRangedWeaponSave = function() {
+			//~ console.log( "buyHandWeaponSave called" );
+			$rootScope.savageCharacter.addGearRangedWeapon( $rootScope.buyItem.book, $rootScope.buyItem.tag, $rootScope.buyItemCost );
+			$scope.closeBuyDialog()
 			$scope.showItemAdded();
 			$rootScope.validateAndSave();
 		}
@@ -130,14 +184,30 @@ var coreChargenGearFunctions = function ($timeout, $rootScope, $translate, $scop
 		}
 
 		$scope.buyShield = function( bookID, gearTag, forFree) {
-			if( forFree == true)
-				itemCost = 0;
-			else
-				itemCost = -1;
-			$rootScope.savageCharacter.addGearShield( bookID, gearTag, itemCost );
-			$rootScope.validateAndSave();
+			//~ if( forFree == true)
+				//~ itemCost = 0;
+			//~ else
+				//~ itemCost = -1;
+			//~ $rootScope.savageCharacter.addGearShield( bookID, gearTag, itemCost );
+			//~ $rootScope.validateAndSave();
+			$rootScope.buyItem = $rootScope.savageCharacter.getShieldByTag( bookID, gearTag );
+			$rootScope.buyItemCost = angular.copy($rootScope.buyItem.cost);
+			$scope.buyDialogOpen = true;
+			$scope.currentBuyFunction = $scope.buyShieldSave;
 		}
 
+		$scope.buyShieldSave = function() {
+			//~ if( forFree == true)
+				//~ itemCost = 0;
+			//~ else
+				//~ itemCost = -1;
+			//~ $rootScope.savageCharacter.addGearShield( bookID, gearTag, itemCost );
+			//~ $rootScope.validateAndSave();
+			$rootScope.savageCharacter.addGearShield( $rootScope.buyItem.book, $rootScope.buyItem.tag, $rootScope.buyItemCost );
+			$scope.closeBuyDialog()
+			$scope.showItemAdded();
+			$rootScope.validateAndSave();
+		}
 		$scope.removeShield = function( indexItem ) {
 			$rootScope.savageCharacter.removeShield( indexItem );
 			$rootScope.validateAndSave();
@@ -179,13 +249,31 @@ var coreChargenGearFunctions = function ($timeout, $rootScope, $translate, $scop
 			$rootScope.validateAndSave();
 		}
 
-
 		$scope.buyMundane = function( bookID, gearTag, forFree) {
-			if( forFree == true)
-				itemCost = 0;
-			else
-				itemCost = -1;
-			$rootScope.savageCharacter.addGearMundane( bookID, gearTag, itemCost );
+			//~ if( forFree == true)
+				//~ itemCost = 0;
+			//~ else
+				//~ itemCost = -1;
+			//~ $rootScope.savageCharacter.addGearMundane( bookID, gearTag, itemCost );
+			//~ $scope.showItemAdded();
+			//~ $rootScope.validateAndSave();
+			$rootScope.buyItem = $rootScope.savageCharacter.getMundaneByTag( bookID, gearTag );
+			$rootScope.buyItemCost = angular.copy($rootScope.buyItem.cost);
+			$scope.buyDialogOpen = true;
+			$scope.currentBuyFunction = $scope.buyMundaneSave;
+		}
+
+		$scope.buyMundaneSave = function() {
+			//~ if( forFree == true)
+				//~ itemCost = 0;
+			//~ else
+				//~ itemCost = -1;
+			//~ $rootScope.savageCharacter.addGearMundane( bookID, gearTag, itemCost );
+			//~ $scope.showItemAdded();
+			//~ $rootScope.validateAndSave();
+
+			$rootScope.savageCharacter.addGearMundane( $rootScope.buyItem.book, $rootScope.buyItem.tag, $rootScope.buyItemCost );
+			$scope.closeBuyDialog()
 			$scope.showItemAdded();
 			$rootScope.validateAndSave();
 		}

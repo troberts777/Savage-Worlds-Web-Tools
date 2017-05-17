@@ -895,10 +895,11 @@ chargenPDF.prototype.createPowersTable = function(label, left, top, width, heigh
 		this.currentDoc.setFontStyle("bold");
 		this.currentDoc.setFontSize(14);
 
-		if( this.currentCharacter.isSettingRuleEnabled("no-power-points") )
-			this.currentDoc.text(left + 1, top + 5, this.currentCharacter.getSelectedArcaneBackground().local_name + "");
-		else
+		if( this.currentCharacter.usesPowerPoints() )
 			this.currentDoc.text(left + 1, top + 5, this.currentCharacter.getSelectedArcaneBackground().local_name + " - " + this.currentCharacter.getPowerPointsAvailable() + " power points");
+		else
+			this.currentDoc.text(left + 1, top + 5, this.currentCharacter.getSelectedArcaneBackground().local_name + "");
+
 		this.currentDoc.setFontStyle("normal");
 		this.currentDoc.setFontSize(10);
 		current_location = top + 5;

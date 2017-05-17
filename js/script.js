@@ -1631,10 +1631,11 @@ chargenPDF.prototype.createPowersTable = function(label, left, top, width, heigh
 		this.currentDoc.setFontStyle("bold");
 		this.currentDoc.setFontSize(14);
 
-		if( this.currentCharacter.isSettingRuleEnabled("no-power-points") )
-			this.currentDoc.text(left + 1, top + 5, this.currentCharacter.getSelectedArcaneBackground().local_name + "");
-		else
+		if( this.currentCharacter.usesPowerPoints() )
 			this.currentDoc.text(left + 1, top + 5, this.currentCharacter.getSelectedArcaneBackground().local_name + " - " + this.currentCharacter.getPowerPointsAvailable() + " power points");
+		else
+			this.currentDoc.text(left + 1, top + 5, this.currentCharacter.getSelectedArcaneBackground().local_name + "");
+
 		this.currentDoc.setFontStyle("normal");
 		this.currentDoc.setFontSize(10);
 		current_location = top + 5;
@@ -2464,6 +2465,7 @@ function savageCharacter (useLang) {
 	var _selectedPowers = Array();
 	var _powerPointsAvailable = 0;
 	var _totalPowersKnown = 0;
+	var _additionalPowersKnown = 0;
 
 	var _usesSanity = false;
 	var _usesGutsSkill = false;
@@ -2520,6 +2522,12 @@ function savageCharacter (useLang) {
 	var _gender = {};
 
 	var _skillValues = {};
+
+	var _customRangedWeapons = [];
+	var _customHandWeapons = [];
+	var _customGear = [];
+	var _customArmor = [];
+	var _customShields = [];
 
 	var _selectedHindrances = Array();
 	var _selectedEdges = Array();
@@ -2668,6 +2676,7 @@ function savageCharacter (useLang) {
 		_selectedPowers = Array();
 		_powerPointsAvailable = 0;
 		_totalPowersKnown = 0;
+		_additionalPowersKnown = 0
 
 		_usesSanity = false;
 		_usesGutsSkill = false;
@@ -3679,6 +3688,57 @@ function savageCharacter (useLang) {
 		return false;
 	}
 
+	this.getHandWeaponByTag = function(bookID, theTag) {
+		for( var eqCount = 0; eqCount < savageWorldsGearHandWeapons.length; eqCount++) {
+			if( savageWorldsGearHandWeapons[eqCount].tag == theTag && savageWorldsGearHandWeapons[eqCount].book == bookID ) {
+
+				return savageWorldsGearHandWeapons[ eqCount ];
+			}
+		}
+		return false;
+	}
+
+	this.getMundaneByTag = function(bookID, theTag) {
+		for( var eqCount = 0; eqCount < savageWorldsGearMundane.length; eqCount++) {
+			if( savageWorldsGearMundane[eqCount].tag == theTag && savageWorldsGearMundane[eqCount].book == bookID ) {
+
+				return savageWorldsGearMundane[ eqCount ];
+			}
+		}
+		return false;
+	}
+
+	this.getShieldByTag = function(bookID, theTag) {
+		for( var eqCount = 0; eqCount < savageWorldsGearShields.length; eqCount++) {
+			if( savageWorldsGearShields[eqCount].tag == theTag && savageWorldsGearShields[eqCount].book == bookID ) {
+
+				return savageWorldsGearShields[ eqCount ];
+			}
+		}
+		return false;
+	}
+
+	this.getArmorByTag = function(bookID, theTag) {
+		for( var eqCount = 0; eqCount < savageWorldsGearArmor.length; eqCount++) {
+			if( savageWorldsGearArmor[eqCount].tag == theTag && savageWorldsGearArmor[eqCount].book == bookID ) {
+
+				return savageWorldsGearArmor[ eqCount ];
+			}
+		}
+		return false;
+	}
+
+
+	this.getRangedWeaponByTag = function(bookID, theTag) {
+		for( var eqCount = 0; eqCount < savageWorldsGearRangedWeapons.length; eqCount++) {
+			if( savageWorldsGearRangedWeapons[eqCount].tag == theTag && savageWorldsGearRangedWeapons[eqCount].book == bookID ) {
+
+				return savageWorldsGearRangedWeapons[ eqCount ];
+			}
+		}
+		return false;
+	}
+
 	this.addHindrance = function(bookId, hindranceTag, specifyField) {
 		for( var hindranceCounter = 0; hindranceCounter < savageWorldsHindrances.length; hindranceCounter++) {
 			if(
@@ -3848,6 +3908,8 @@ function savageCharacter (useLang) {
 		if(  _selectedArcaneBackground && _selectedArcaneBackground.powers ) {
 			_totalPowersKnown = _selectedArcaneBackground.powers;
 		}
+
+
 
 		// for( lBookCounter = 0; lBookCounter.u)
 
@@ -4202,6 +4264,8 @@ function savageCharacter (useLang) {
 			}
 		}
 
+
+
 		//~ console.log( "------------------------" );
 		//~ console.log( "_availablePerkPoints", _availablePerkPoints );
 		//~ console.log( "_extraPerkPointCost", _extraPerkPointCost );
@@ -4255,6 +4319,9 @@ function savageCharacter (useLang) {
 		_availableArcaneBackgrounds = Array();
 		_availablePowers = Array();
 		_availableTrappings = Array();
+
+
+
 
 		_availableArcaneBackgrounds.push(
 			{
@@ -4630,12 +4697,13 @@ function savageCharacter (useLang) {
 	 	for( advCounter = 0; advCounter < _selectedAdvancements.length; advCounter++) {
 	 		// Edge Advancement
 	 		if( _selectedAdvancements[advCounter].tag == "edge" ) {
+
 	 			if(
 	 				_selectedAdvancements[advCounter].option1
 	 					&&
-	 				typeof( _selectedAdvancements[advCounter].option1.charEffect) == "function"
+	 				typeof( _selectedAdvancements[advCounter].option1.charEffects) == "function"
 	 			) {
-	 				_selectedAdvancements[advCounter].option1.charEffect(this);
+	 				_selectedAdvancements[advCounter].option1.charEffects(this);
 	 			}
 
 				if(
@@ -4777,6 +4845,10 @@ function savageCharacter (useLang) {
 				vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
 			};
 		}
+
+
+		_totalPowersKnown += _additionalPowersKnown;
+
 
 		fightingSkill = this.getSkill("SKILL_FIGHTING");
 
@@ -5788,6 +5860,24 @@ function savageCharacter (useLang) {
 					}
 				}
 
+				this._customRangedWeapons = [];
+				this._customHandWeapons = [];
+				this._customGear = [];
+				this._customArmor = [];
+				this._customShields = [];
+
+				if( _importObject.customRangedWeapons )
+					this._customRangedWeapons = _importObject.customRangedWeapons;
+				if( _importObject.customHandWeapons )
+					this._customHandWeapons = _importObject.customHandWeapons;
+				if( _importObject.customGear )
+					this._customGear = _importObject.customGear;
+				if( _importObject.customArmor )
+					this._customArmor = _importObject.customArmor;
+				if( _importObject.customShields )
+					this._customShields = _importObject.customShields;
+
+
 				if(_importObject.spcpowerlevel)
 					_SPCSelectedPowerLevel = _importObject.spcpowerlevel;
 
@@ -6160,6 +6250,13 @@ function savageCharacter (useLang) {
 				}
 
 			}
+
+			_exportObject.customRangedWeapons = this._customRangedWeapons;
+			_exportObject.customHandWeapons = this._customHandWeapons;
+			_exportObject.customGear = this._customGear;
+			_exportObject.customArmor = this._customArmor;
+			_exportObject.customShields = this._customShields;
+
 
 			_exportObject.spcpowerlevel = _SPCSelectedPowerLevel;
 			if(_SPCRisingStars )
@@ -6649,6 +6746,13 @@ function savageCharacter (useLang) {
 		return _powerPointsAvailable;
 	}
 
+	this.usesPowerPoints = function() {
+		if ( this.isSettingRuleEnabled("no-power-points") )
+			return false;
+		else
+			return true;
+	}
+
 	this.getSelectedPowers = function() {
 		return _selectedPowers;
 	}
@@ -6663,6 +6767,24 @@ function savageCharacter (useLang) {
 
 	this.getAvailableNumberOfPowers = function() {
 		return _totalPowersKnown;
+	}
+
+	this.incrementAdditionalPowersKnown = function() {
+		_additionalPowersKnown++;
+		//~ console.log( "incrementAdditionalPowersKnown", _additionalPowersKnown );
+		return _additionalPowersKnown;
+	}
+
+	this.addAdditionalPowerPoints = function( numberPowerPoints ) {
+		_totalPowerPoints += numberPowerPoints / 1;
+		//~ console.log( "addAdditionalPowerPoints", _totalPowerPoints );
+		return _additionalPowersKnown;
+	}
+
+	this.addAdditionalSPCPowerPoints = function( numberPowerPoints ) {
+		_spcExtraPowerPoints += numberPowerPoints / 1;
+		//~ console.log( "addAdditionalSPCPowerPoints", _spcExtraPowerPoints );
+		return _spcExtraPowerPoints;
 	}
 
 	this.getCurrentFunds = function() {
@@ -7133,22 +7255,33 @@ function savageCharacter (useLang) {
 				gearTag == _availableMundaneGear[ gearCounter ].tag
 					&&
 				fromBook == _availableMundaneGear[ gearCounter ].book
+
 			) {
 				mundaneGearIndex = this.getMundaneGear( gearTag );
+
+				var pushedItem = {};
+				angular.extend( pushedItem, _availableMundaneGear[ gearCounter ]);
+				pushedItem.droppedDuringCombat = droppedDuringCombat;
+				if( itemCost > -1 ) {
+					pushedItem.purchaseCost = itemCost;
+				} else {
+					pushedItem.purchaseCost = pushedItem.cost;
+				}
+
 				if( mundaneGearIndex > -1 ) {
-					_selectedMundaneGear[mundaneGearIndex].count++;
+
+					if( _selectedMundaneGear[mundaneGearIndex].purchaseCost == pushedItem.purchaseCost  ) {
+						_selectedMundaneGear[mundaneGearIndex].count++;
+					} else {
+						// push new item since prices don't match.
+						pushedItem.count = itemCount;
+						_selectedMundaneGear.push( pushedItem );
+					}
 					return true;
 				} else {
-
-					var pushedItem = {};
-					angular.extend( pushedItem, _availableMundaneGear[ gearCounter ]);
-					pushedItem.droppedDuringCombat = droppedDuringCombat;
-					if( itemCost > -1 ) {
-						pushedItem.purchaseCost = itemCost;
-					} else {
-						pushedItem.purchaseCost = pushedItem.cost;
-					}
+					// push new item
 					pushedItem.count = itemCount;
+
 
 					_selectedMundaneGear.push( pushedItem );
 					return true;
@@ -7488,8 +7621,8 @@ function savageCharacter (useLang) {
 		_selectedHandWeapons[gearIndex].readiedLocation = "";
 	}
 
-	this.unequipHandWeapon = function( gearIndex ) {
-		_selectedHandWeapons[gearIndex].readiedLocation = "";
+	this.unequipRangedWeapon = function( gearIndex ) {
+		_selectedRangedWeapons[gearIndex].readiedLocation = "";
 	}
 
 	this.setSciFiMod = function( gearIndex, sciFiModSelected ) {
@@ -9156,8 +9289,6 @@ var coreChargenGearFunctions = function ($timeout, $rootScope, $translate, $scop
 			if( typeof(localStorage[ currentItemLocalStorageVariable ]) != "undefined" ) {
 				$rootScope.savageCharacter.importJSON( localStorage[ currentItemLocalStorageVariable ] );
 			}
-
-
 		}
 
 		$rootScope.clearGearLog = function() {
@@ -9169,11 +9300,29 @@ var coreChargenGearFunctions = function ($timeout, $rootScope, $translate, $scop
 		}
 
 		$scope.buyArmor = function( bookID, gearTag, forFree) {
-			if( forFree == true)
-				itemCost = 0;
-			else
-				itemCost = -1;
-			$rootScope.savageCharacter.addGearArmor( bookID, gearTag, itemCost );
+			//~ if( forFree == true)
+				//~ itemCost = 0;
+			//~ else
+				//~ itemCost = -1;
+			//~ $rootScope.savageCharacter.addGearArmor( bookID, gearTag, itemCost );
+			//~ $scope.showItemAdded();
+			//~ $rootScope.validateAndSave();
+			$rootScope.buyItem = $rootScope.savageCharacter.getArmorByTag( bookID, gearTag );
+			$rootScope.buyItemCost = angular.copy($rootScope.buyItem.cost);
+			$scope.buyDialogOpen = true;
+			$scope.currentBuyFunction = $scope.buyArmorSave;
+		}
+
+		$scope.buyArmorSave = function() {
+			//~ if( forFree == true)
+				//~ itemCost = 0;
+			//~ else
+				//~ itemCost = -1;
+			//~ $rootScope.savageCharacter.addGearArmor( bookID, gearTag, itemCost );
+			//~ $scope.showItemAdded();
+			//~ $rootScope.validateAndSave();
+			$rootScope.savageCharacter.addGearArmor( $rootScope.buyItem.book, $rootScope.buyItem.tag, $rootScope.buyItemCost );
+			$scope.closeBuyDialog()
 			$scope.showItemAdded();
 			$rootScope.validateAndSave();
 		}
@@ -9183,22 +9332,60 @@ var coreChargenGearFunctions = function ($timeout, $rootScope, $translate, $scop
 			$rootScope.validateAndSave();
 		}
 
+		$scope.buyDialogOpen = false;
+
 		$scope.buyHandWeapon = function( bookID, gearTag, forFree) {
-			if( forFree == true)
-				itemCost = 0;
-			else
-				itemCost = -1;
-			$rootScope.savageCharacter.addGearHandWeapon( bookID, gearTag, itemCost );
+			//~ if( forFree == true)
+				//~ itemCost = 0;
+			//~ else
+				//~ itemCost = -1;
+			//~ $rootScope.savageCharacter.addGearHandWeapon( bookID, gearTag, itemCost );
+			//~ $scope.showItemAdded();
+			//~ $rootScope.validateAndSave();
+
+			$rootScope.buyItem = $rootScope.savageCharacter.getHandWeaponByTag( bookID, gearTag );
+			$rootScope.buyItemCost = angular.copy($rootScope.buyItem.cost);
+			$scope.buyDialogOpen = true;
+			$scope.currentBuyFunction = $scope.buyHandWeaponSave;
+		}
+
+		$scope.setBuyItemBuyCost = function( newValue ) {
+			$rootScope.buyItemCost = newValue;
+		}
+
+		$scope.buyHandWeaponSave = function() {
+			//~ console.log( "buyHandWeaponSave called" );
+			$rootScope.savageCharacter.addGearHandWeapon( $rootScope.buyItem.book, $rootScope.buyItem.tag, $rootScope.buyItemCost );
+			$scope.closeBuyDialog()
 			$scope.showItemAdded();
 			$rootScope.validateAndSave();
 		}
 
+		$scope.closeBuyDialog = function( ) {
+			$scope.buyDialogOpen = false;
+			$scope.currentBuyFunction = null;
+			$rootScope.buyItem = null;
+			$rootScope.buyItemCost = null;
+		}
+
 		$scope.buyRangedWeapon = function( bookID, gearTag, forFree) {
-			if( forFree == true)
-				itemCost = 0;
-			else
-				itemCost = -1;
-			$rootScope.savageCharacter.addGearRangedWeapon( bookID, gearTag, itemCost );
+			//~ if( forFree == true)
+				//~ itemCost = 0;
+			//~ else
+				//~ itemCost = -1;
+			//~ $rootScope.savageCharacter.addGearRangedWeapon( bookID, gearTag, itemCost );
+			//~ $scope.showItemAdded();
+			//~ $rootScope.validateAndSave();
+			$rootScope.buyItem = $rootScope.savageCharacter.getRangedWeaponByTag( bookID, gearTag );
+			$rootScope.buyItemCost = angular.copy($rootScope.buyItem.cost);
+			$scope.buyDialogOpen = true;
+			$scope.currentBuyFunction = $scope.buyRangedWeaponSave;
+		}
+
+		$scope.buyRangedWeaponSave = function() {
+			//~ console.log( "buyHandWeaponSave called" );
+			$rootScope.savageCharacter.addGearRangedWeapon( $rootScope.buyItem.book, $rootScope.buyItem.tag, $rootScope.buyItemCost );
+			$scope.closeBuyDialog()
 			$scope.showItemAdded();
 			$rootScope.validateAndSave();
 		}
@@ -9255,14 +9442,30 @@ var coreChargenGearFunctions = function ($timeout, $rootScope, $translate, $scop
 		}
 
 		$scope.buyShield = function( bookID, gearTag, forFree) {
-			if( forFree == true)
-				itemCost = 0;
-			else
-				itemCost = -1;
-			$rootScope.savageCharacter.addGearShield( bookID, gearTag, itemCost );
-			$rootScope.validateAndSave();
+			//~ if( forFree == true)
+				//~ itemCost = 0;
+			//~ else
+				//~ itemCost = -1;
+			//~ $rootScope.savageCharacter.addGearShield( bookID, gearTag, itemCost );
+			//~ $rootScope.validateAndSave();
+			$rootScope.buyItem = $rootScope.savageCharacter.getShieldByTag( bookID, gearTag );
+			$rootScope.buyItemCost = angular.copy($rootScope.buyItem.cost);
+			$scope.buyDialogOpen = true;
+			$scope.currentBuyFunction = $scope.buyShieldSave;
 		}
 
+		$scope.buyShieldSave = function() {
+			//~ if( forFree == true)
+				//~ itemCost = 0;
+			//~ else
+				//~ itemCost = -1;
+			//~ $rootScope.savageCharacter.addGearShield( bookID, gearTag, itemCost );
+			//~ $rootScope.validateAndSave();
+			$rootScope.savageCharacter.addGearShield( $rootScope.buyItem.book, $rootScope.buyItem.tag, $rootScope.buyItemCost );
+			$scope.closeBuyDialog()
+			$scope.showItemAdded();
+			$rootScope.validateAndSave();
+		}
 		$scope.removeShield = function( indexItem ) {
 			$rootScope.savageCharacter.removeShield( indexItem );
 			$rootScope.validateAndSave();
@@ -9304,13 +9507,31 @@ var coreChargenGearFunctions = function ($timeout, $rootScope, $translate, $scop
 			$rootScope.validateAndSave();
 		}
 
-
 		$scope.buyMundane = function( bookID, gearTag, forFree) {
-			if( forFree == true)
-				itemCost = 0;
-			else
-				itemCost = -1;
-			$rootScope.savageCharacter.addGearMundane( bookID, gearTag, itemCost );
+			//~ if( forFree == true)
+				//~ itemCost = 0;
+			//~ else
+				//~ itemCost = -1;
+			//~ $rootScope.savageCharacter.addGearMundane( bookID, gearTag, itemCost );
+			//~ $scope.showItemAdded();
+			//~ $rootScope.validateAndSave();
+			$rootScope.buyItem = $rootScope.savageCharacter.getMundaneByTag( bookID, gearTag );
+			$rootScope.buyItemCost = angular.copy($rootScope.buyItem.cost);
+			$scope.buyDialogOpen = true;
+			$scope.currentBuyFunction = $scope.buyMundaneSave;
+		}
+
+		$scope.buyMundaneSave = function() {
+			//~ if( forFree == true)
+				//~ itemCost = 0;
+			//~ else
+				//~ itemCost = -1;
+			//~ $rootScope.savageCharacter.addGearMundane( bookID, gearTag, itemCost );
+			//~ $scope.showItemAdded();
+			//~ $rootScope.validateAndSave();
+
+			$rootScope.savageCharacter.addGearMundane( $rootScope.buyItem.book, $rootScope.buyItem.tag, $rootScope.buyItemCost );
+			$scope.closeBuyDialog()
 			$scope.showItemAdded();
 			$rootScope.validateAndSave();
 		}
@@ -16597,15 +16818,15 @@ charEffects: function ( charObj ) {
 	 book: 1,
 	 child: 0,
 charEffects: function ( charObj ) {
-			charObj.totalPowersKnown++;
-		},
+    charObj.incrementAdditionalPowersKnown();
+},
 requires: function( charObj) {
-if( charObj.usesSPCCreation == false) {
-if( charObj.hasArcaneBackground)
-return true;
-else
-return false;
-} 
+    if( charObj.usesSPCCreation() == false) {
+        if( charObj.hasArcaneBackground() )
+            return true;
+        else
+            return false;
+    } 
 }
 },
 {
@@ -16649,8 +16870,6 @@ charEffects: function ( charObj ) {
 {
 	 name: {
 		 'en-US': 'Power Points',
-		 'pt-BR': '',
-		 'de-DE': '',
 	},
 	 required_edge: '',
 	 required_rank: 0,
@@ -16663,17 +16882,17 @@ charEffects: function ( charObj ) {
 	 book: 1,
 	 child: 0,
 charEffects: function ( charObj ) {
-	charObj.powerPointsAvailable += 5;
-	charObj.spcExtraPowerPoints += 5;
+	charObj.addAdditionalPowerPoints( 5 );
+	charObj.addAdditionalSPCPowerPoints( 5 );
 },
 requires: function( charObj) {
-if( charObj.usesSPCCreation == false) {
-if( charObj.hasArcaneBackground)
+if( charObj.usesSPCCreation() == false) {
+if( charObj.hasArcaneBackground() )
 return true;
 else
 return false;
 } else {
-if( charObj.SPCRisingStars == true  )
+if( charObj.getSPCRisingStars() == true  )
      return true;
 else
     return false;
@@ -46102,6 +46321,10 @@ availableLanguages.push ({
 			GENERAL_CURRENT: 'Current',
 			GENERAL_LIMIT: 'Limit',
 			CHARGEN_CYBER_SELECT_TRAIT_PLACEHOLDER: 'Enter your boosted trait',
+			CHARGEN_BUY_AT_COST: 'Buy at standard cost',
+			CHARGEN_BUY_DIFFERENT_COST: 'Buy at custom cost',
+			CHARGEN_GET_FOR_FREE: 'Get for free',
+			CHARGEN_ADD_CUSTOM: 'Add Custom',
 
 	}
 

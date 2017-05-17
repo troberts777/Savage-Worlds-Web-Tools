@@ -48,6 +48,7 @@ function savageCharacter (useLang) {
 	var _selectedPowers = Array();
 	var _powerPointsAvailable = 0;
 	var _totalPowersKnown = 0;
+	var _additionalPowersKnown = 0;
 
 	var _usesSanity = false;
 	var _usesGutsSkill = false;
@@ -104,6 +105,12 @@ function savageCharacter (useLang) {
 	var _gender = {};
 
 	var _skillValues = {};
+
+	var _customRangedWeapons = [];
+	var _customHandWeapons = [];
+	var _customGear = [];
+	var _customArmor = [];
+	var _customShields = [];
 
 	var _selectedHindrances = Array();
 	var _selectedEdges = Array();
@@ -252,6 +259,7 @@ function savageCharacter (useLang) {
 		_selectedPowers = Array();
 		_powerPointsAvailable = 0;
 		_totalPowersKnown = 0;
+		_additionalPowersKnown = 0
 
 		_usesSanity = false;
 		_usesGutsSkill = false;
@@ -1263,6 +1271,57 @@ function savageCharacter (useLang) {
 		return false;
 	}
 
+	this.getHandWeaponByTag = function(bookID, theTag) {
+		for( var eqCount = 0; eqCount < savageWorldsGearHandWeapons.length; eqCount++) {
+			if( savageWorldsGearHandWeapons[eqCount].tag == theTag && savageWorldsGearHandWeapons[eqCount].book == bookID ) {
+
+				return savageWorldsGearHandWeapons[ eqCount ];
+			}
+		}
+		return false;
+	}
+
+	this.getMundaneByTag = function(bookID, theTag) {
+		for( var eqCount = 0; eqCount < savageWorldsGearMundane.length; eqCount++) {
+			if( savageWorldsGearMundane[eqCount].tag == theTag && savageWorldsGearMundane[eqCount].book == bookID ) {
+
+				return savageWorldsGearMundane[ eqCount ];
+			}
+		}
+		return false;
+	}
+
+	this.getShieldByTag = function(bookID, theTag) {
+		for( var eqCount = 0; eqCount < savageWorldsGearShields.length; eqCount++) {
+			if( savageWorldsGearShields[eqCount].tag == theTag && savageWorldsGearShields[eqCount].book == bookID ) {
+
+				return savageWorldsGearShields[ eqCount ];
+			}
+		}
+		return false;
+	}
+
+	this.getArmorByTag = function(bookID, theTag) {
+		for( var eqCount = 0; eqCount < savageWorldsGearArmor.length; eqCount++) {
+			if( savageWorldsGearArmor[eqCount].tag == theTag && savageWorldsGearArmor[eqCount].book == bookID ) {
+
+				return savageWorldsGearArmor[ eqCount ];
+			}
+		}
+		return false;
+	}
+
+
+	this.getRangedWeaponByTag = function(bookID, theTag) {
+		for( var eqCount = 0; eqCount < savageWorldsGearRangedWeapons.length; eqCount++) {
+			if( savageWorldsGearRangedWeapons[eqCount].tag == theTag && savageWorldsGearRangedWeapons[eqCount].book == bookID ) {
+
+				return savageWorldsGearRangedWeapons[ eqCount ];
+			}
+		}
+		return false;
+	}
+
 	this.addHindrance = function(bookId, hindranceTag, specifyField) {
 		for( var hindranceCounter = 0; hindranceCounter < savageWorldsHindrances.length; hindranceCounter++) {
 			if(
@@ -1432,6 +1491,8 @@ function savageCharacter (useLang) {
 		if(  _selectedArcaneBackground && _selectedArcaneBackground.powers ) {
 			_totalPowersKnown = _selectedArcaneBackground.powers;
 		}
+
+
 
 		// for( lBookCounter = 0; lBookCounter.u)
 
@@ -1786,6 +1847,8 @@ function savageCharacter (useLang) {
 			}
 		}
 
+
+
 		//~ console.log( "------------------------" );
 		//~ console.log( "_availablePerkPoints", _availablePerkPoints );
 		//~ console.log( "_extraPerkPointCost", _extraPerkPointCost );
@@ -1839,6 +1902,9 @@ function savageCharacter (useLang) {
 		_availableArcaneBackgrounds = Array();
 		_availablePowers = Array();
 		_availableTrappings = Array();
+
+
+
 
 		_availableArcaneBackgrounds.push(
 			{
@@ -2214,12 +2280,13 @@ function savageCharacter (useLang) {
 	 	for( advCounter = 0; advCounter < _selectedAdvancements.length; advCounter++) {
 	 		// Edge Advancement
 	 		if( _selectedAdvancements[advCounter].tag == "edge" ) {
+
 	 			if(
 	 				_selectedAdvancements[advCounter].option1
 	 					&&
-	 				typeof( _selectedAdvancements[advCounter].option1.charEffect) == "function"
+	 				typeof( _selectedAdvancements[advCounter].option1.charEffects) == "function"
 	 			) {
-	 				_selectedAdvancements[advCounter].option1.charEffect(this);
+	 				_selectedAdvancements[advCounter].option1.charEffects(this);
 	 			}
 
 				if(
@@ -2361,6 +2428,10 @@ function savageCharacter (useLang) {
 				vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
 			};
 		}
+
+
+		_totalPowersKnown += _additionalPowersKnown;
+
 
 		fightingSkill = this.getSkill("SKILL_FIGHTING");
 
@@ -3372,6 +3443,24 @@ function savageCharacter (useLang) {
 					}
 				}
 
+				this._customRangedWeapons = [];
+				this._customHandWeapons = [];
+				this._customGear = [];
+				this._customArmor = [];
+				this._customShields = [];
+
+				if( _importObject.customRangedWeapons )
+					this._customRangedWeapons = _importObject.customRangedWeapons;
+				if( _importObject.customHandWeapons )
+					this._customHandWeapons = _importObject.customHandWeapons;
+				if( _importObject.customGear )
+					this._customGear = _importObject.customGear;
+				if( _importObject.customArmor )
+					this._customArmor = _importObject.customArmor;
+				if( _importObject.customShields )
+					this._customShields = _importObject.customShields;
+
+
 				if(_importObject.spcpowerlevel)
 					_SPCSelectedPowerLevel = _importObject.spcpowerlevel;
 
@@ -3744,6 +3833,13 @@ function savageCharacter (useLang) {
 				}
 
 			}
+
+			_exportObject.customRangedWeapons = this._customRangedWeapons;
+			_exportObject.customHandWeapons = this._customHandWeapons;
+			_exportObject.customGear = this._customGear;
+			_exportObject.customArmor = this._customArmor;
+			_exportObject.customShields = this._customShields;
+
 
 			_exportObject.spcpowerlevel = _SPCSelectedPowerLevel;
 			if(_SPCRisingStars )
@@ -4233,6 +4329,13 @@ function savageCharacter (useLang) {
 		return _powerPointsAvailable;
 	}
 
+	this.usesPowerPoints = function() {
+		if ( this.isSettingRuleEnabled("no-power-points") )
+			return false;
+		else
+			return true;
+	}
+
 	this.getSelectedPowers = function() {
 		return _selectedPowers;
 	}
@@ -4247,6 +4350,24 @@ function savageCharacter (useLang) {
 
 	this.getAvailableNumberOfPowers = function() {
 		return _totalPowersKnown;
+	}
+
+	this.incrementAdditionalPowersKnown = function() {
+		_additionalPowersKnown++;
+		//~ console.log( "incrementAdditionalPowersKnown", _additionalPowersKnown );
+		return _additionalPowersKnown;
+	}
+
+	this.addAdditionalPowerPoints = function( numberPowerPoints ) {
+		_totalPowerPoints += numberPowerPoints / 1;
+		//~ console.log( "addAdditionalPowerPoints", _totalPowerPoints );
+		return _additionalPowersKnown;
+	}
+
+	this.addAdditionalSPCPowerPoints = function( numberPowerPoints ) {
+		_spcExtraPowerPoints += numberPowerPoints / 1;
+		//~ console.log( "addAdditionalSPCPowerPoints", _spcExtraPowerPoints );
+		return _spcExtraPowerPoints;
 	}
 
 	this.getCurrentFunds = function() {
@@ -4717,22 +4838,33 @@ function savageCharacter (useLang) {
 				gearTag == _availableMundaneGear[ gearCounter ].tag
 					&&
 				fromBook == _availableMundaneGear[ gearCounter ].book
+
 			) {
 				mundaneGearIndex = this.getMundaneGear( gearTag );
+
+				var pushedItem = {};
+				angular.extend( pushedItem, _availableMundaneGear[ gearCounter ]);
+				pushedItem.droppedDuringCombat = droppedDuringCombat;
+				if( itemCost > -1 ) {
+					pushedItem.purchaseCost = itemCost;
+				} else {
+					pushedItem.purchaseCost = pushedItem.cost;
+				}
+
 				if( mundaneGearIndex > -1 ) {
-					_selectedMundaneGear[mundaneGearIndex].count++;
+
+					if( _selectedMundaneGear[mundaneGearIndex].purchaseCost == pushedItem.purchaseCost  ) {
+						_selectedMundaneGear[mundaneGearIndex].count++;
+					} else {
+						// push new item since prices don't match.
+						pushedItem.count = itemCount;
+						_selectedMundaneGear.push( pushedItem );
+					}
 					return true;
 				} else {
-
-					var pushedItem = {};
-					angular.extend( pushedItem, _availableMundaneGear[ gearCounter ]);
-					pushedItem.droppedDuringCombat = droppedDuringCombat;
-					if( itemCost > -1 ) {
-						pushedItem.purchaseCost = itemCost;
-					} else {
-						pushedItem.purchaseCost = pushedItem.cost;
-					}
+					// push new item
 					pushedItem.count = itemCount;
+
 
 					_selectedMundaneGear.push( pushedItem );
 					return true;
@@ -5072,8 +5204,8 @@ function savageCharacter (useLang) {
 		_selectedHandWeapons[gearIndex].readiedLocation = "";
 	}
 
-	this.unequipHandWeapon = function( gearIndex ) {
-		_selectedHandWeapons[gearIndex].readiedLocation = "";
+	this.unequipRangedWeapon = function( gearIndex ) {
+		_selectedRangedWeapons[gearIndex].readiedLocation = "";
 	}
 
 	this.setSciFiMod = function( gearIndex, sciFiModSelected ) {

@@ -446,6 +446,10 @@ availableLanguages.push ({
 			GENERAL_CURRENT: 'Current',
 			GENERAL_LIMIT: 'Limit',
 			CHARGEN_CYBER_SELECT_TRAIT_PLACEHOLDER: 'Enter your boosted trait',
+			CHARGEN_BUY_AT_COST: 'Buy at standard cost',
+			CHARGEN_BUY_DIFFERENT_COST: 'Buy at custom cost',
+			CHARGEN_GET_FOR_FREE: 'Get for free',
+			CHARGEN_ADD_CUSTOM: 'Add Custom',
 
 	}
 

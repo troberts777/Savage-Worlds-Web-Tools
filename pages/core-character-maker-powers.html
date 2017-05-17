@@ -33,7 +33,7 @@
 									<span translage="CHARGEN_POWERS_USED">Selected Powers</span>: {{savageCharacter.getSelectedPowers().length}}
 								</div>
 
-								<div ng-show="savageCharacter.getPowerPointsAvailable() > 0">
+								<div ng-show="savageCharacter.getPowerPointsAvailable() > 0 && savageCharacter.usesPowerPoints()">
 									<span translage="CHARGEN_POWER_POINTS">Power Points</span>: {{savageCharacter.getPowerPointsAvailable()}}
 								</div>
 

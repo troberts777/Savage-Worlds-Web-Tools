@@ -41,24 +41,24 @@
 								<tr class="no-bottom-border" ng-repeat-start="gearItem in savageCharacter.getSelectedHandWeapons()">
 									<td>{{gearItem.local_name}}</td>
 									<td>
-										<div ng-show="gearItem.purchaseCost < gearItem.localCost && !gearItem.sciFiMod">
+										<div ng-show="gearItem.purchaseCost < gearItem.cost">
 											<div ng-show="gearItem.purchaseCost == 0">
-												<span class="alert label" translate="GENERAL_PURCHASED_FREE"></span>
+												<span class="info label" translate="GENERAL_PURCHASED_FREE"></span>
 											</div>
 											<div ng-show="gearItem.purchaseCost > 0">
-												${{gearItem.purchaseCost}} <span class="alert label" translate="GENERAL_REDUCED"></span>
+												${{gearItem.purchaseCost}} <span class="info label" translate="GENERAL_REDUCED"></span>
 											</div>
 										</div>
-										<div ng-show="gearItem.purchaseCost >= gearItem.localCost">
-											${{gearItem.localCost}}
+										<div ng-show="gearItem.purchaseCost >= gearItem.cost">
+											${{gearItem.cost}}
 										</div>
 										<div ng-show="gearItem.sciFiMod">
-											${{gearItem.localCost}}
+											${{gearItem.cost}}
 										</div>
 									</td>
 									<td>{{gearItem.localWeight}}</td>
 									<td class="text-right">
-										<select class="inline-block no-bottom-margin" ng-click="setSciFiMod($index, gearItem.sciFiMod )" ng-model="gearItem.sciFiMod">
+										<select ng-show="savageCharacter.bookInUse(4)" class="inline-block no-bottom-margin" ng-click="setSciFiMod($index, gearItem.sciFiMod )" ng-model="gearItem.sciFiMod">
 											<option value="">No Modifictions</option>
 											<option value="vibro" translate="SCIFI_VIBRO">Vibro</option>
 											<option value="chain" translate="SCIFI_CHAIN">Chain</option>
@@ -121,10 +121,10 @@
 									<td>
 										<div ng-show="gearItem.purchaseCost != gearItem.cost">
 											<div ng-show="gearItem.purchaseCost == 0">
-												<span class="alert label" translate="GENERAL_PURCHASED_FREE"></span>
+												<span class="info label" translate="GENERAL_PURCHASED_FREE"></span>
 											</div>
 											<div ng-show="gearItem.purchaseCost != 0">
-												${{gearItem.purchaseCost}} <span class="alert label" translate="GENERAL_REDUCED"></span>
+												${{gearItem.purchaseCost}} <span class="info label" translate="GENERAL_REDUCED"></span>
 											</div>
 										</div>
 										<div ng-show="gearItem.purchaseCost == gearItem.cost">
