@@ -4359,9 +4359,9 @@ function savageCharacter (useLang) {
 	}
 
 	this.addAdditionalPowerPoints = function( numberPowerPoints ) {
-		_totalPowerPoints += numberPowerPoints / 1;
+		_powerPointsAvailable += numberPowerPoints / 1;
 		//~ console.log( "addAdditionalPowerPoints", _totalPowerPoints );
-		return _additionalPowersKnown;
+		return _powerPointsAvailable;
 	}
 
 	this.addAdditionalSPCPowerPoints = function( numberPowerPoints ) {

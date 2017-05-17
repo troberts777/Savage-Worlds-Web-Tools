@@ -2241,16 +2241,20 @@ charEffects: function ( charObj ) {
 	charObj.addAdditionalSPCPowerPoints( 5 );
 },
 requires: function( charObj) {
-if( charObj.usesSPCCreation() == false) {
-if( charObj.hasArcaneBackground() )
-return true;
-else
-return false;
-} else {
-if( charObj.getSPCRisingStars() == true  )
-     return true;
-else
-    return false;
+    if( charObj.usesSPCCreation() == false) {
+        if( charObj.hasArcaneBackground() == true ) {
+            if( charObj.usesPowerPoints() == true )    
+                return true;
+            else
+                return false;
+        } else {
+            return false;
+        }
+    } else {
+        if( charObj.getSPCRisingStars() == true  )
+            return true;
+        else
+            return false;
 }
 }
 },

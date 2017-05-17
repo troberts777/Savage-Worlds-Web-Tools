@@ -6776,9 +6776,9 @@ function savageCharacter (useLang) {
 	}
 
 	this.addAdditionalPowerPoints = function( numberPowerPoints ) {
-		_totalPowerPoints += numberPowerPoints / 1;
+		_powerPointsAvailable += numberPowerPoints / 1;
 		//~ console.log( "addAdditionalPowerPoints", _totalPowerPoints );
-		return _additionalPowersKnown;
+		return _powerPointsAvailable;
 	}
 
 	this.addAdditionalSPCPowerPoints = function( numberPowerPoints ) {
@@ -16886,16 +16886,20 @@ charEffects: function ( charObj ) {
 	charObj.addAdditionalSPCPowerPoints( 5 );
 },
 requires: function( charObj) {
-if( charObj.usesSPCCreation() == false) {
-if( charObj.hasArcaneBackground() )
-return true;
-else
-return false;
-} else {
-if( charObj.getSPCRisingStars() == true  )
-     return true;
-else
-    return false;
+    if( charObj.usesSPCCreation() == false) {
+        if( charObj.hasArcaneBackground() == true ) {
+            if( charObj.usesPowerPoints() == true )    
+                return true;
+            else
+                return false;
+        } else {
+            return false;
+        }
+    } else {
+        if( charObj.getSPCRisingStars() == true  )
+            return true;
+        else
+            return false;
 }
 }
 },
