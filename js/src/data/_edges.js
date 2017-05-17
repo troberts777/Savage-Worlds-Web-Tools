@@ -631,52 +631,6 @@ charEffects: function ( charObj ) {
 },
 {
 	 name: {
-		 'en-US': 'Attractive',
-	},
-	 required_edge: '',
-	 required_rank: 0,
-	 conflicts_edge: '',
-	 conflicts_hindrance: 'ugly-minor',
-	 tag: 'attractive',
-	 page: 'p35',
-	 racial: 0,
-	 reselectable: 0,
-	 book: 1,
-	 child: 0,
-charEffects: function ( charObj ) {
-			charObj.getDerived().charisma = charObj.getDerived().charisma + 2;
-		},
-requires: function( charObj) {
-	if(
-		charObj.getAttributeDisplayValues().vigor.value >= 6
-	) {
-		return true;
-	}
-		return false;
-	}
-},
-{
-	 name: {
-		 'en-US': 'Attractive, Very',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 required_edge: 'attractive',
-	 required_rank: 0,
-	 conflicts_edge: '',
-	 conflicts_hindrance: '',
-	 tag: 'attractive-very',
-	 page: 'p35',
-	 racial: 0,
-	 reselectable: 0,
-	 book: 1,
-	 child: 1,
-charEffects: function ( charObj ) {
-			charObj.getDerived().charisma = charObj.getDerived().charisma + 2;
-		}
-},
-{
-	 name: {
 		 'en-US': 'Beast Bond',
 	},
 	 required_edge: '',
@@ -4538,7 +4492,7 @@ charObj.doubleStrain();
 	 tag: 'geared-up',
 	 page: 'p12',
 	 racial: 0,
-	 reselectable: 0,
+	 reselectable: 1,
 	 book: 4,
 	 child: 0,
 charEffect: function( charObj ) {

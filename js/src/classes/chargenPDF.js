@@ -251,7 +251,8 @@ chargenPDF.prototype.createBasicPortraitPDF = function () {
 	this.createHindrancesTable("Hindrances", 5, 130,65,40);
 	this.createEdgesTable("Edges", 70,130,80,40);
 	this.createWeaponTable( "Weapons", Array(10, 45, 60, 80, 90, 120, 130 ),  5, 170, 8  );
-	this.createArmorTable("Armor",  5, 220, 65, 53);
+	this.createArmorTable("Armor",  5, 220, 65, 20);
+	this.createPowersTable("Powers",  5, 240, 65, 33);
 	this.createEquipmentTable("Equipment",  70, 220, 80, 53);
 
 	this.createAdvancementTrack( 150,130,55 );
@@ -894,7 +895,10 @@ chargenPDF.prototype.createPowersTable = function(label, left, top, width, heigh
 		this.currentDoc.setFontStyle("bold");
 		this.currentDoc.setFontSize(14);
 
-		this.currentDoc.text(left + 1, top + 5, this.currentCharacter.getSelectedArcaneBackground().local_name + " - " + this.currentCharacter.getPowerPointsAvailable() + " power points");
+		if( this.currentCharacter.isSettingRuleEnabled("no-power-points") )
+			this.currentDoc.text(left + 1, top + 5, this.currentCharacter.getSelectedArcaneBackground().local_name + "");
+		else
+			this.currentDoc.text(left + 1, top + 5, this.currentCharacter.getSelectedArcaneBackground().local_name + " - " + this.currentCharacter.getPowerPointsAvailable() + " power points");
 		this.currentDoc.setFontStyle("normal");
 		this.currentDoc.setFontSize(10);
 		current_location = top + 5;
@@ -934,9 +938,9 @@ chargenPDF.prototype.createPowersTable = function(label, left, top, width, heigh
 			}
 
 			if(details_line != "") {
-				current_location += 2;
+				current_location += 3;
 				this.currentDoc.setFontSize(smallFontSize);
-				this.currentDoc.text(left + 5, current_location , details_line );
+				this.currentDoc.text(left + 1, current_location , details_line );
 				this.currentDoc.setFontSize(10);
 			}
 		}

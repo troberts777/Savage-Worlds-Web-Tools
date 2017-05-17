@@ -1,7 +1,7 @@
 
 
 function savageCharacter (useLang) {
-	this.appVersion = "2.0.0.2016101101";
+	this.appVersion = "2.0.0.2017051701";
 
 	var _useLang = "en-US";
 
