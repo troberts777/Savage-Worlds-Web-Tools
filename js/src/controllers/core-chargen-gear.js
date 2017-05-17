@@ -41,6 +41,26 @@ var coreChargenGearFunctions = function ($timeout, $rootScope, $translate, $scop
 			return addCommas( numericalValue );
 		}
 
+		$scope.addCustomGear = function() {
+			alert("Coming Next Update: Add Custom Gear");
+		}
+
+		$scope.addCustomHandWeapon = function() {
+			alert("Coming Next Update: Add Custom Hand Weapon");
+		}
+
+		$scope.addCustomRangedWeapon = function() {
+			alert("Coming Next Update: Add Custom Ranged Weapon");
+		}
+
+		$scope.addCustomArmor = function() {
+			alert("Coming Next Update: Add Custom Armor");
+		}
+
+		$scope.addCustomShield = function() {
+			alert("Coming Next Update: Add Custom Shield");
+		}
+
 		$scope.buyArmor = function( bookID, gearTag, forFree) {
 			//~ if( forFree == true)
 				//~ itemCost = 0;
