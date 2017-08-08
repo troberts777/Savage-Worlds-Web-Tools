@@ -3,7 +3,6 @@
 	Creative Commons Attribution 4.0 International License.
 */
 
-app_version = "REPLACE";
 
 function chargenPDF( characterObject) {
 

@@ -58,7 +58,6 @@ webApp = angular.module(
 				var storageIndex = storageArrays[ storC ];
 				if( localStorage[storageIndex] ) {
 					var rawData = JSON.parse( localStorage[storageIndex] );
-					console.log( rawData );
 					uuids = [];
 
 					var isDirty = false;
