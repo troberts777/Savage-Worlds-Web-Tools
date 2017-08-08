@@ -518,7 +518,290 @@ webApp = angular.module(
 
 
 
+webApp.run(function($rootScope) {
+	$rootScope.appTitle = globalAppName;
+	$rootScope.appVersion = globalAppVersion;
 
+
+
+	/* Google Drive Functions */
+
+
+
+
+
+	$rootScope.isSignedIntoGoogle = false;
+	$rootScope.gapiAvailable = false;
+
+
+	$rootScope.signInToGoogle = function (event) {
+		gapi.auth2.getAuthInstance().signIn();
+		//~ $rootScope.loadArmyLists();
+	}
+
+	$rootScope.signOutOfGoogle = function(event) {
+
+		$rootScope.isSignedIntoGoogle = false;
+		$rootScope.armyFileGoogleDriveID = false;
+		gapi.auth2.getAuthInstance().signOut();
+		$rootScope.loadArmyLists();
+	}
+
+
+	$rootScope.isCreatingFile = false;
+	$rootScope.isSavingFile = false;
+
+	$rootScope.googleDriveActivity = "";
+
+	$rootScope.armyFileGoogleDriveID = "";
+	$rootScope.armyFileGoogleFilename = "config.json";
+
+	$rootScope.createGDriveFile = function( fileName, bodyData ) {
+
+		if( !$rootScope.isCreatingFile ) {
+			isCreatingFile = true;
+			$rootScope.googleDriveActivity = "Creating Config file";
+			var fileBody = JSON.stringify( bodyData );
+
+			var contentType = 'application/json';
+			var boundary = '-------uf98ju9sdf908sudf8ua98gf89u9a8uas';
+			var delimiter = "\r\n--" + boundary + "\r\n";
+			var close_delim = "\r\n--" + boundary + "--";
+
+			var fileMetadata = {
+				'name': fileName,
+				'parents': [ 'appDataFolder'],
+				'mimeType': contentType
+			};
+
+			var multipartRequestBody =
+				delimiter +
+				'Content-Type: application/json\r\n\r\n' +
+				JSON.stringify(fileMetadata) +
+				delimiter +
+				'Content-Type: ' + contentType + '\r\n\r\n' +
+				fileBody +
+				close_delim;
+
+			var createRequest = gapi.client.request(
+				{
+					'path': '/upload/drive/v3/files',
+					'method': 'POST',
+					'params': {'uploadType': 'multipart'},
+					'headers': {
+						'Content-Type': 'multipart/related; boundary="' + boundary + '"'
+					},
+					'body': multipartRequestBody
+				}
+			);
+			if (!createCallback) {
+					var createCallback = function(file) {
+					//~ console.log(file)
+					isCreatingFile = false;
+					$rootScope.googleDriveActivity = "";
+					$rootScope.$applyAsync();
+					$rootScope.loadArmyLists();
+
+				};
+
+				createRequest.execute(createCallback);
+			}
+
+		}
+	}
+
+	$rootScope.deleteGDriveFile = function( fileId ) {
+		//~ console.log( "deleteFile called", fileId );
+
+		$rootScope.googleDriveActivity = "Deleting File";
+		gapi.client.drive.files.delete({
+			'fileId': fileId
+		  }).then(
+			function(response) {
+				//~ console.log('Title: ' + response.title);
+				//~ console.log('Description: ' + response.description);
+				//~ console.log('MIME type: ' + response.mimeType);
+			//	console.log( "deleteFile response", response.body );
+			$rootScope.googleDriveActivity = "";
+			}
+		);
+	}
+
+
+	$rootScope.getGoogleDriveFileList = function() {
+		//~ console.log( "$rootScope.getGoogleDriveFileList called ");
+		if( gapi ) {
+			if( $rootScope.isSignedIntoGoogle ) {
+				$rootScope.googleDriveActivity = "Getting file list";
+				//~ console.log( "$rootScope.getGoogleDriveFileList called - signed in  ");
+				gapi.client.drive.files.list({
+					'pageSize': 100,
+					'spaces': "appDataFolder",
+					'fields': "nextPageToken, files(id, name)"
+				}).then(function(response) {
+				  var files = response.result.files;
+				  if (files && files.length > 0) {
+
+					$rootScope.googleDriveFiles = files;
+					var foundConfig = false;
+
+					for( var fileIndex in $rootScope.googleDriveFiles ) {
+						//~ $rootScope.deleteGDriveFile( $rootScope.googleDriveFiles[ fileIndex ].id );
+						if( $rootScope.googleDriveFiles[ fileIndex ].name == $rootScope.armyFileGoogleFilename ) {
+							$rootScope.armyFileGoogleDriveID = $rootScope.googleDriveFiles[ fileIndex ].id;
+						}
+					}
+
+					if( $rootScope.armyFileGoogleDriveID == "" ) {
+						//~ console.log( "Creating armies blank file on GDrive" )
+						$rootScope.createGDriveFile( $rootScope.armyFileGoogleFilename, { armies: [], favorites: [] } );
+					}
+				  } else {
+					$rootScope.googleDriveFiles = [];
+					if( $rootScope.armyFileGoogleDriveID == "" ) {
+						//~ console.log( "No files - creating armies blank file on GDrive" )
+						$rootScope.createGDriveFile( $rootScope.armyFileGoogleFilename, { armies: [], favorites: [] } );
+					}
+				  }
+				  $rootScope.googleDriveActivity = "";
+				  $rootScope.$applyAsync();
+				  $rootScope.loadArmyLists();
+				});
+			} else {
+				//~ console.log( "Not signed into Google" );
+			}
+		}  else {
+			//~ console.log("gapi not available ");
+		}
+	}
+
+	$rootScope.getGDriveFileContents = function(fileId) {
+		//~ console.log( "getGDriveFileContents called", fileId );
+
+		var accessToken = gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().access_token;// or this: gapi.auth.getToken().access_token;
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", "https://www.googleapis.com/drive/v3/files/" + fileId + '?alt=media', true);
+		xhr.setRequestHeader('Authorization','Bearer ' + accessToken);
+
+		xhr.onload = function(){
+			//~ console.log( "getFileContents response", JSON.parse( xhr.response)  );
+		}
+
+		xhr.send();
+	}
+
+	$rootScope.saveGDriveFile = function( fileID, fileName, bodyData ) {
+
+		if( !$rootScope.isSavingFile ) {
+			$rootScope.googleDriveActivity = "Saving File";
+			$rootScope.isSavingFile = true;
+			var fileBody = JSON.stringify( bodyData );
+
+			var contentType = 'application/json';
+			var boundary = '-------uf98ju9sdf908sudf8ua98gf89u9a8uas';
+			var delimiter = "\r\n--" + boundary + "\r\n";
+			var close_delim = "\r\n--" + boundary + "--";
+
+			var fileMetadata = {
+				'name': fileName,
+				'parents': [ 'appDataFolder'],
+				'mimeType': contentType
+			};
+
+			var multipartRequestBody =
+				delimiter +
+				'Content-Type: application/json\r\n\r\n' +
+				JSON.stringify(fileMetadata) +
+				delimiter +
+				'Content-Type: ' + contentType + '\r\n\r\n' +
+				fileBody +
+				close_delim;
+
+			var saveRequest = gapi.client.request(
+				{
+					//'path': '/upload/drive/v3/files/' + fileID,
+					'path': '/upload/drive/v2/files/' + fileID,
+
+					'method': 'PUT',
+					'params': {'uploadType': 'multipart'},
+					'headers': {
+						'Content-Type': 'multipart/related; boundary="' + boundary + '"'
+					},
+					'body': multipartRequestBody
+				}
+			);
+			if (!saveCallback) {
+				var saveCallback = function(file) {
+					//~ console.log(file)
+					$rootScope.isSavingFile = false;
+					$rootScope.googleDriveActivity = "";
+					$rootScope.$applyAsync();
+
+				};
+
+				saveRequest.execute(saveCallback);
+			}
+
+		}
+
+	}
+
+	$rootScope.updateSigninStatus = function( signinStatus ) {
+		//~ console.log( "signinStatus", signinStatus );
+		$rootScope.isSignedIntoGoogle = signinStatus;
+		$rootScope.armyFileGoogleDriveID = "";
+		$rootScope.armyFileGoogleFilename = "config.json";
+		$rootScope.getGoogleDriveFileList();
+		//~ $rootScope.loadArmyLists();
+		$rootScope.$applyAsync();
+
+	}
+
+	$rootScope.initClient = function() {
+		// Client ID and API key from the Developer Console
+		var CLIENT_ID = googleDriveClientID;
+		//~ console.log( googleDriveClientID );
+
+		// Array of API discovery doc URLs for APIs used by the quickstart
+		var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
+
+		// Authorization scopes required by the API; multiple scopes can be
+		// included, separated by spaces.
+		var SCOPES = 'https://www.googleapis.com/auth/drive.appfolder';
+
+
+		gapi.client.init({
+			discoveryDocs: DISCOVERY_DOCS,
+			clientId: CLIENT_ID,
+			scope: SCOPES
+		}).then(function () {
+			// Listen for sign-in state changes.
+			gapi.auth2.getAuthInstance().isSignedIn.listen($rootScope.updateSigninStatus);
+
+			// Handle the initial sign-in state.
+			$rootScope.updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+			//~ authorizeButton.onclick = handleAuthClick;
+			//~ signoutButton.onclick = handleSignoutClick;
+		} );
+	}
+	if( typeof(gapi) != "undefined" ) {
+		$rootScope.gapiAvailable = true;
+		gapi.load('client:auth2', $rootScope.initClient);
+
+		//~ handleClientLoad();
+		//~ $rootScope.getGoogleDriveFileList();
+	}
+
+});
+
+
+
+
+
+var googleDriveClientID = "1099251764728-04gkdv3amrs645nk0uuu7vi1l2s8ijp3.apps.googleusercontent.com";
+
+var globalAppName = "0.01Alpha";
+var globalAppVersion = "Savage Worlds Tools";
 
 function get_book_by_id( book_id, language ) {
 	if( !language )
@@ -1577,6 +1860,25 @@ chargenPDF.prototype.createEquipmentTable = function(label, left, top, width, he
 	currentLine++;
 	currentLine++;
 	this.currentDoc.text(left + 5, top + 10 + currentLine * 4, droppedInCombatFootnote);
+
+	var installedCyberware = this.currentCharacter.getInstalledCyberware();
+	if( installedCyberware.length > 0 ) {
+
+		cyberwareHeight = installedCyberware.length * 4 + 2;
+
+		this.currentDoc.setFontStyle("bold");
+		this.currentDoc.setFontSize(14);
+		this.currentDoc.text(left + 1, top + height - cyberwareHeight, "Cyberware");
+		this.currentDoc.setFontStyle("normal");
+		this.currentDoc.setFontSize(10);
+		for( var cCounter = 0; cCounter < installedCyberware.length; cCounter++) {
+			if( installedCyberware[ cCounter ].customName )
+				var equipment_line = installedCyberware[cCounter].customName + " (" + installedCyberware[cCounter].local_name + ")"
+			else
+				var equipment_line = installedCyberware[ cCounter ].local_name
+			this.currentDoc.text(left + 1, top + height - cyberwareHeight + 4 + cCounter * 4, equipment_line);
+		}
+	}
 
 	this.currentDoc.setFontSize(10);
 }
@@ -5487,6 +5789,30 @@ function savageCharacter (useLang) {
 			}
 
 			html += "<br />\n";
+
+		// Gear
+		if( _installedCyberware.length > 0 ) {
+			html += "<strong>" + this.getTranslation("GENERAL_CYBERWARE") + ":</strong> ";
+			var gearCount = 0;
+
+				for (var gCount = 0; gCount < _installedCyberware.length; gCount++) {
+					//~ console.log( _installedCyberware[gCount] );
+					if( _installedCyberware[gCount].customName )
+						html += _installedCyberware[gCount].customName + " (" + _installedCyberware[gCount].local_name + "); ";
+					else
+						html += _installedCyberware[gCount].local_name + "; ";
+					gearCount++;
+				}
+
+			if(gearCount == 0) {
+				html += "(none)";
+			} else {
+				// remove last comma
+				html = html.substr(0, html.length - 2);
+			}
+
+			html += "<br />\n";
+		}
 		// Powers
 			if( _selectedPowers.length > 0 ) {
 				html += "<strong>" + this.getTranslation("GENERAL_POWERS") + ":</strong> ";

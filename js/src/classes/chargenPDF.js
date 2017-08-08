@@ -842,6 +842,25 @@ chargenPDF.prototype.createEquipmentTable = function(label, left, top, width, he
 	currentLine++;
 	this.currentDoc.text(left + 5, top + 10 + currentLine * 4, droppedInCombatFootnote);
 
+	var installedCyberware = this.currentCharacter.getInstalledCyberware();
+	if( installedCyberware.length > 0 ) {
+
+		cyberwareHeight = installedCyberware.length * 4 + 2;
+
+		this.currentDoc.setFontStyle("bold");
+		this.currentDoc.setFontSize(14);
+		this.currentDoc.text(left + 1, top + height - cyberwareHeight, "Cyberware");
+		this.currentDoc.setFontStyle("normal");
+		this.currentDoc.setFontSize(10);
+		for( var cCounter = 0; cCounter < installedCyberware.length; cCounter++) {
+			if( installedCyberware[ cCounter ].customName )
+				var equipment_line = installedCyberware[cCounter].customName + " (" + installedCyberware[cCounter].local_name + ")"
+			else
+				var equipment_line = installedCyberware[ cCounter ].local_name
+			this.currentDoc.text(left + 1, top + height - cyberwareHeight + 4 + cCounter * 4, equipment_line);
+		}
+	}
+
 	this.currentDoc.setFontSize(10);
 }
 

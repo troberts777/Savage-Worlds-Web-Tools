@@ -3039,6 +3039,30 @@ function savageCharacter (useLang) {
 			}
 
 			html += "<br />\n";
+
+		// Gear
+		if( _installedCyberware.length > 0 ) {
+			html += "<strong>" + this.getTranslation("GENERAL_CYBERWARE") + ":</strong> ";
+			var gearCount = 0;
+
+				for (var gCount = 0; gCount < _installedCyberware.length; gCount++) {
+					//~ console.log( _installedCyberware[gCount] );
+					if( _installedCyberware[gCount].customName )
+						html += _installedCyberware[gCount].customName + " (" + _installedCyberware[gCount].local_name + "); ";
+					else
+						html += _installedCyberware[gCount].local_name + "; ";
+					gearCount++;
+				}
+
+			if(gearCount == 0) {
+				html += "(none)";
+			} else {
+				// remove last comma
+				html = html.substr(0, html.length - 2);
+			}
+
+			html += "<br />\n";
+		}
 		// Powers
 			if( _selectedPowers.length > 0 ) {
 				html += "<strong>" + this.getTranslation("GENERAL_POWERS") + ":</strong> ";

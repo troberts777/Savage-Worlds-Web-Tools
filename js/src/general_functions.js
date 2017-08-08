@@ -1,3 +1,8 @@
+var googleDriveClientID = "1099251764728-04gkdv3amrs645nk0uuu7vi1l2s8ijp3.apps.googleusercontent.com";
+
+var globalAppName = "0.01Alpha";
+var globalAppVersion = "Savage Worlds Tools";
+
 function get_book_by_id( book_id, language ) {
 	if( !language )
 		language = localStorage["users_preferred_language"];

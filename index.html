@@ -42,6 +42,17 @@
 			</div>
 		</div>
 
+		<script>
+		function onUpdateReady() {
+		    window.location.reload();
+		}
+		window.applicationCache.addEventListener('updateready', onUpdateReady);
+		if(window.applicationCache.status === window.applicationCache.UPDATEREADY) {
+		  onUpdateReady();
+		}
+		</script>
+
+		<script src="https://apis.google.com/js/api.js"></script>
 
 		<script src="./js/angular-1.5.3/angular.js"></script>
 		<script src="./js/sticky.min.js"></script>
