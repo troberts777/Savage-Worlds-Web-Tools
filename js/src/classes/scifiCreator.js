@@ -84,17 +84,21 @@ scifiCreator.prototype.init = function(objectType, objectLabel, availableSizes, 
 		}
 };
 
+scifiCreator.prototype.newUUID = function() {
+		this.uuid = this.makeUUID();
+	};
+
 scifiCreator.prototype.makeUUID = function(){
-    var d = new Date().getTime();
-    if(window.performance && typeof window.performance.now === "function"){
-        d += performance.now(); //use high-precision timer if available
-    }
-    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = (d + Math.random()*16)%16 | 0;
-        d = Math.floor(d/16);
-        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
-    });
-    return uuid;
+	var d = new Date().getTime();
+	if(window.performance && typeof window.performance.now === "function"){
+		d += performance.now(); //use high-precision timer if available
+	}
+	var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+		var r = (d + Math.random()*16)%16 | 0;
+		d = Math.floor(d/16);
+		return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+	});
+	return uuid;
 };
 
 scifiCreator.prototype.reset = function() {
@@ -159,14 +163,14 @@ scifiCreator.prototype.getLocalName = function( incoming_string_array ) {
 };
 
 scifiCreator.prototype.formatMoney = function(n, decPlaces, thouSeparator, decSeparator) {
-    var
-        decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
-        decSeparator = decSeparator == undefined ? "." : decSeparator,
-        thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
-        sign = n < 0 ? "-" : "",
-        i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
-        j = (j = i.length) > 3 ? j % 3 : 0;
-    return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
+	var
+		decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
+		decSeparator = decSeparator == undefined ? "." : decSeparator,
+		thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
+		sign = n < 0 ? "-" : "",
+		i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
+		j = (j = i.length) > 3 ? j % 3 : 0;
+	return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
 };
 
 scifiCreator.prototype.createStatesBlock = function() {
@@ -402,15 +406,15 @@ scifiCreator.prototype.exportBBCode = function() {
 	return html_return;
 };
 
-scifiCreator.prototype.exportJSON = function(noUUID) {
+scifiCreator.prototype.exportJSON = function() {
 	exportObject = {};
 	exportObject.size = this.size;
 	exportObject.objectType = this.objectType;
 	exportObject.itemName = this.itemName;
-	if( !noUUID )
-		exportObject.uuid = this.uuid;
+	exportObject.uuid = this.uuid;
 	exportObject.objectDescription = this.objectDescription;
 	exportObject.mods = Array();
+	exportObject.exported = new Date();
 	exportObject.options = this.creatorOptions;
 	for(modCounter = 0; modCounter < this.selectedModifications.length; modCounter++)
 		exportObject.mods = exportObject.mods.concat( this.selectedModifications[modCounter].tag );
@@ -462,8 +466,6 @@ scifiCreator.prototype.importJSON = function(importedObjectString) {
 		this.setName(importedObj.itemName);
 		if( typeof(importedObj.objectDescription) != "undefined")
 			this.setDescription(importedObj.objectDescription);
-
-
 
 		if( typeof(importedObj.uuid) != "undefined")
 			this.uuid = importedObj.uuid;

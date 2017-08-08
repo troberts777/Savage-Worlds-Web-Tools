@@ -875,6 +875,10 @@ function savageCharacter (useLang) {
 		}
 	}
 
+	this.newUUID = function() {
+		_uuid = this.makeUUID();
+	}
+
 	this.makeUUID = function(){
 		var d = new Date().getTime();
 		if(window.performance && typeof window.performance.now === "function"){
@@ -3695,14 +3699,13 @@ function savageCharacter (useLang) {
 		}
 	}
 
-	this.exportJSON = function(noUUID) {
+	this.exportJSON = function() {
 		var _exportObject = {};
 		_exportObject.name = _name;
 		_exportObject.background = _background;
 		_exportObject.description = _description;
 
-		if(!noUUID)
-			_exportObject.uuid = _uuid;
+		_exportObject.uuid = _uuid;
 
 		_exportObject.xp = _XP.value;
 		_exportObject.gender = _gender.id;

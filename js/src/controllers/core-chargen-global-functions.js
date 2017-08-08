@@ -231,6 +231,7 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 		if( save_over > -1 ) {
 			$rootScope.saved_items[ save_over ] = $rootScope.makeSaveObject( saveName );
 		} else {
+			$rootScope.savageCharacter.newUUID();
 			$rootScope.saved_items.push( $rootScope.makeSaveObject( saveName ));
 		}
 		localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $rootScope.saved_items );

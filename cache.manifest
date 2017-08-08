@@ -1,11 +1,10 @@
 CACHE MANIFEST
-# 2017-08-08:v01
-# Broken Cache on aug 8, 2017 Number one!
+# 2017-08-08:v02
+# Broken Cache on aug 8, 2017 Number Two!
 
 CACHE:
 # Base HTML
 ./index.html
-./gruntfile.js
 ./manifest.json
 
 # Images

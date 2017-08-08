@@ -45,6 +45,45 @@ webApp = angular.module(
 				}
 			}
 
+			// create new UUIDs for any saved items with duplicate UUIDs
+			var storageArrays = Array(
+				"com.jdg.swwt2.saves.chargen",
+				"com.jdg.swwt2.saves.power_armor",
+				"com.jdg.swwt2.saves.starship",
+				"com.jdg.swwt2.saves.vehicle",
+				"com.jdg.swwt2.saves.walker"
+			);
+
+			for( var storC = 0; storC < storageArrays.length; storC++ ) {
+				var storageIndex = storageArrays[ storC ];
+				if( localStorage[storageIndex] ) {
+					var rawData = JSON.parse( localStorage[storageIndex] );
+					console.log( rawData );
+					uuids = [];
+
+					var isDirty = false;
+					for( var dataC = 0; dataC < rawData.length; dataC++ ) {
+						if( rawData[ dataC ].data ) {
+							var savedData = JSON.parse( rawData[ dataC ].data );
+							if( uuids.indexOf( savedData.uuid ) > -1 ) {
+								savedData.uuid = makeUUID();
+								isDirty = true;
+							}
+
+							uuids.push( savedData.uuid );
+
+							rawData[ dataC ].data = JSON.stringify( savedData );
+						}
+					}
+
+					if( isDirty ) {
+						console.log("Saving fixed UUID saved items on " + storageIndex );
+						localStorage[storageIndex] = JSON.stringify( rawData );
+					}
+
+				}
+			}
+
 			users_preferred_language = "en-US";
 
 			$translateProvider.useSanitizeValueStrategy('sanitize');

@@ -283,6 +283,7 @@ scifipowerarmorArray = [
 			if( save_over > -1 ) {
 				$scope.saved_items[ save_over ] = $scope.makeSaveObject( saveName );
 			} else {
+				$scope.creatorObj.newUUID();
 				$scope.saved_items.push( $scope.makeSaveObject( saveName ));
 			}
 			localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
