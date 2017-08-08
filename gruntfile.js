@@ -41,6 +41,7 @@ module.exports = function(grunt) {
 		uglify: {
 			my_target: {
 				options: {
+					mangle: false,
 					sourceMap: true,
 					sourceMapName: 'js/sourcemap.map'
 				},
