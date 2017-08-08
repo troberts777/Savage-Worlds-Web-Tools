@@ -3,19 +3,28 @@
 
 		<h2>{{buyItem.local_name}}</h2>
 
-		<label>
-			<input ng-click="setBuyItemBuyCost(buyItem.cost)" ng-checked="buyItem.cost == $root.buyItemCost" type="radio" name="buycost">
-			<span translate="CHARGEN_BUY_AT_COST">Buy at Cost</span> ({{buyItem.cost}})
-		</label>
-		<label>
-			<input ng-checked="$root.buyItemCost > 0 && buyItem.cost != buyItemCost" type="radio" name="buycost">
-			<span translate="CHARGEN_BUY_DIFFERENT_COST">Buy at a different Cost</span>
-			<input class="inline-block" ng-click="setBuyItemBuyCost(buyItemCost)" type="number" ng-model="$root.buyItemCost" />
-		</label>
-		<label>
-			<input ng-click="setBuyItemBuyCost(0)" ng-checked="$root.buyItemCost == 0" type="radio" name="buycost">
-			<span translate="CHARGEN_GET_FOR_FREE">Get for Free</span>
-		</label>
+		<div class="row">
+			<div class="columns small-6">
+				<label>
+					<input ng-click="setBuyItemBuyCost(buyItem.cost)" ng-checked="buyItem.cost == $root.buyItemCost" type="radio" name="buycost">
+					<span translate="CHARGEN_BUY_AT_COST">Buy at Cost</span> ({{buyItem.cost}})
+				</label>
+				<label>
+					<input ng-checked="$root.buyItemCost > 0 && buyItem.cost != buyItemCost" type="radio" name="buycost">
+					<span translate="CHARGEN_BUY_DIFFERENT_COST">Buy at a different Cost</span>
+					<input class="inline-block" ng-click="setBuyItemBuyCost(buyItemCost)" type="number" ng-model="$root.buyItemCost" />
+				</label>
+				<label>
+					<input ng-click="setBuyItemBuyCost(0)" ng-checked="$root.buyItemCost == 0" type="radio" name="buycost">
+					<span translate="CHARGEN_GET_FOR_FREE">Get for Free</span>
+				</label>
+
+			</div>
+			<div class="columns small-6">
+				<span translate="CHARGEN_BUY_QUANTITY">Quantity</span>
+				<input class="inline-block" ng-click="setBuyItemBuyQuantity(buyItemQuantity)" type="number" ng-model="$root.buyItemQuantity" />
+			</div>
+		</div>
 
 	  <div class="text-right">
 	  	<button class="button small secondary" ng-click="closeBuyDialog()"  type="button" translate="GENERAL_CANCEL"></button>

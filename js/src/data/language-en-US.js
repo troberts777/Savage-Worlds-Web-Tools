@@ -450,6 +450,7 @@ availableLanguages.push ({
 			CHARGEN_BUY_DIFFERENT_COST: 'Buy at custom cost',
 			CHARGEN_GET_FOR_FREE: 'Get for free',
 			CHARGEN_ADD_CUSTOM: 'Add Custom',
+			CHARGEN_BUY_QUANTITY: 'Buy Quantity',
 
 	}
 
