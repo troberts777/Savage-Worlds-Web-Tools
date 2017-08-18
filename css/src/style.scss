@@ -97,8 +97,15 @@ body {
 
 	input[type="checkbox"],
 	input[type="radio"] {
-		width: 1rem;
-		height: 1rem;
+		width: 1rem !important;
+		height: 1rem !important;
+		background: #fff;
+		border: 1px solid #000 !important;
+		-moz-appearance: none !important;
+		-webkit-appeanance: none !important;
+		&:checked {
+			background: $primaryBG !important;
+		}
 	}
 
 	table {
