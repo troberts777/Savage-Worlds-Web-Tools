@@ -1730,18 +1730,6 @@ function savageCharacter (useLang) {
 			}
 		}
 
-		for(gdvc = 0; gdvc < globalDiceValues.length; gdvc++) {
-			if( 1 + _attributeBoost.agility <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.agility )
-				_diceValues.agility.push( globalDiceValues[gdvc] );
-			if( 1 + _attributeBoost.smarts <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.smarts )
-				_diceValues.smarts.push( globalDiceValues[gdvc] );
-			if( 1 + _attributeBoost.spirit <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.spirit )
-				_diceValues.spirit.push( globalDiceValues[gdvc] );
-			if( 1 + _attributeBoost.strength <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.strength )
-				_diceValues.strength.push( globalDiceValues[gdvc] );
-			if( 1 + _attributeBoost.vigor <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.vigor )
-				_diceValues.vigor.push( globalDiceValues[gdvc] );
-		}
 
 		// Process Selected Hindrances
 		var majorPerk = 0;
@@ -2772,6 +2760,19 @@ function savageCharacter (useLang) {
 			//console.log( _strengthSkills[skCount].local_name, _strengthSkills[skCount].displayValue );
 			if( _strengthSkills[skCount].displayValue && _strengthSkills[skCount].displayValue != "")
 				_activeSkills[ _strengthSkills[skCount].local_name ] = _strengthSkills[skCount].displayValue;
+		}
+
+		for(gdvc = 0; gdvc < globalDiceValues.length; gdvc++) {
+			if( 1 + _attributeBoost.agility <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.agility )
+				_diceValues.agility.push( globalDiceValues[gdvc] );
+			if( 1 + _attributeBoost.smarts <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.smarts )
+				_diceValues.smarts.push( globalDiceValues[gdvc] );
+			if( 1 + _attributeBoost.spirit <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.spirit )
+				_diceValues.spirit.push( globalDiceValues[gdvc] );
+			if( 1 + _attributeBoost.strength <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.strength )
+				_diceValues.strength.push( globalDiceValues[gdvc] );
+			if( 1 + _attributeBoost.vigor <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.vigor )
+				_diceValues.vigor.push( globalDiceValues[gdvc] );
 		}
 
 		//console.log( _activeSkills );

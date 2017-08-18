@@ -95,6 +95,13 @@ body {
 		display: inline-block;
 	}
 
+	input[type="checkbox"],
+	input[type="radio"] {
+		-moz-appearance: none;
+		background: #fff !important;
+		border: solid 1px #000 !important;
+	}
+
 	table {
 		background: $headerFooterBackground;
 		color: $primaryTextColor;
@@ -432,6 +439,8 @@ body {
 	label {
 		color: $fontColor;
 	}
+
+
 	.fieldset {
 		color: $fontColor;
 		padding: 0 1.25rem 1.25rem 1.25rem;

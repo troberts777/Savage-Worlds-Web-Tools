@@ -307,6 +307,44 @@ webApp = angular.module(
 				}
 			}
 
+			// create new UUIDs for any saved items with duplicate UUIDs
+			var storageArrays = Array(
+				"com.jdg.swwt2.saves.chargen",
+				"com.jdg.swwt2.saves.power_armor",
+				"com.jdg.swwt2.saves.starship",
+				"com.jdg.swwt2.saves.vehicle",
+				"com.jdg.swwt2.saves.walker"
+			);
+
+			for( var storC = 0; storC < storageArrays.length; storC++ ) {
+				var storageIndex = storageArrays[ storC ];
+				if( localStorage[storageIndex] ) {
+					var rawData = JSON.parse( localStorage[storageIndex] );
+					uuids = [];
+
+					var isDirty = false;
+					for( var dataC = 0; dataC < rawData.length; dataC++ ) {
+						if( rawData[ dataC ].data ) {
+							var savedData = JSON.parse( rawData[ dataC ].data );
+							if( uuids.indexOf( savedData.uuid ) > -1 ) {
+								savedData.uuid = makeUUID();
+								isDirty = true;
+							}
+
+							uuids.push( savedData.uuid );
+
+							rawData[ dataC ].data = JSON.stringify( savedData );
+						}
+					}
+
+					if( isDirty ) {
+						console.log("Saving fixed UUID saved items on " + storageIndex );
+						localStorage[storageIndex] = JSON.stringify( rawData );
+					}
+
+				}
+			}
+
 			users_preferred_language = "en-US";
 
 			$translateProvider.useSanitizeValueStrategy('sanitize');
@@ -802,8 +840,8 @@ webApp.run(
 
 var googleDriveClientID = "1099251764728-04gkdv3amrs645nk0uuu7vi1l2s8ijp3.apps.googleusercontent.com";
 
-var globalAppName = "0.01Alpha";
-var globalAppVersion = "Savage Worlds Tools";
+var globalAppName = "Savage Worlds Tools";
+var globalAppVersion = "2.0.0.2017051701";
 
 function get_book_by_id( book_id, language ) {
 	if( !language )
@@ -1019,12 +1057,24 @@ function selectAll(theField) {
 	theField.select()
 }
 
+function makeUUID() {
+	var d = new Date().getTime();
+	if(window.performance && typeof window.performance.now === "function"){
+		d += performance.now(); //use high-precision timer if available
+	}
+	var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+		var r = (d + Math.random()*16)%16 | 0;
+		d = Math.floor(d/16);
+		return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+	});
+	return uuid;
+};
+
 /*
 	Savage Worlds Web Tools by Jeffrey Gordon is licensed under a
 	Creative Commons Attribution 4.0 International License.
 */
 
-app_version = "REPLACE";
 
 function chargenPDF( characterObject) {
 
@@ -2753,7 +2803,7 @@ function getDiceValue( diceID, language ) {
 
 
 function savageCharacter (useLang) {
-	this.appVersion = "2.0.0.2017051701";
+	this.appVersion = globalAppVersion;
 
 	var _useLang = "en-US";
 
@@ -3627,6 +3677,10 @@ function savageCharacter (useLang) {
 		}
 	}
 
+	this.newUUID = function() {
+		_uuid = this.makeUUID();
+	}
+
 	this.makeUUID = function(){
 		var d = new Date().getTime();
 		if(window.performance && typeof window.performance.now === "function"){
@@ -4478,18 +4532,6 @@ function savageCharacter (useLang) {
 			}
 		}
 
-		for(gdvc = 0; gdvc < globalDiceValues.length; gdvc++) {
-			if( 1 + _attributeBoost.agility <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.agility )
-				_diceValues.agility.push( globalDiceValues[gdvc] );
-			if( 1 + _attributeBoost.smarts <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.smarts )
-				_diceValues.smarts.push( globalDiceValues[gdvc] );
-			if( 1 + _attributeBoost.spirit <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.spirit )
-				_diceValues.spirit.push( globalDiceValues[gdvc] );
-			if( 1 + _attributeBoost.strength <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.strength )
-				_diceValues.strength.push( globalDiceValues[gdvc] );
-			if( 1 + _attributeBoost.vigor <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.vigor )
-				_diceValues.vigor.push( globalDiceValues[gdvc] );
-		}
 
 		// Process Selected Hindrances
 		var majorPerk = 0;
@@ -5522,6 +5564,19 @@ function savageCharacter (useLang) {
 				_activeSkills[ _strengthSkills[skCount].local_name ] = _strengthSkills[skCount].displayValue;
 		}
 
+		for(gdvc = 0; gdvc < globalDiceValues.length; gdvc++) {
+			if( 1 + _attributeBoost.agility <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.agility )
+				_diceValues.agility.push( globalDiceValues[gdvc] );
+			if( 1 + _attributeBoost.smarts <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.smarts )
+				_diceValues.smarts.push( globalDiceValues[gdvc] );
+			if( 1 + _attributeBoost.spirit <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.spirit )
+				_diceValues.spirit.push( globalDiceValues[gdvc] );
+			if( 1 + _attributeBoost.strength <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.strength )
+				_diceValues.strength.push( globalDiceValues[gdvc] );
+			if( 1 + _attributeBoost.vigor <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.vigor )
+				_diceValues.vigor.push( globalDiceValues[gdvc] );
+		}
+
 		//console.log( _activeSkills );
 
 	}
@@ -6447,14 +6502,13 @@ function savageCharacter (useLang) {
 		}
 	}
 
-	this.exportJSON = function(noUUID) {
+	this.exportJSON = function() {
 		var _exportObject = {};
 		_exportObject.name = _name;
 		_exportObject.background = _background;
 		_exportObject.description = _description;
 
-		if(!noUUID)
-			_exportObject.uuid = _uuid;
+		_exportObject.uuid = _uuid;
 
 		_exportObject.xp = _XP.value;
 		_exportObject.gender = _gender.id;
@@ -8189,17 +8243,21 @@ scifiCreator.prototype.init = function(objectType, objectLabel, availableSizes, 
 		}
 };
 
+scifiCreator.prototype.newUUID = function() {
+		this.uuid = this.makeUUID();
+	};
+
 scifiCreator.prototype.makeUUID = function(){
-    var d = new Date().getTime();
-    if(window.performance && typeof window.performance.now === "function"){
-        d += performance.now(); //use high-precision timer if available
-    }
-    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = (d + Math.random()*16)%16 | 0;
-        d = Math.floor(d/16);
-        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
-    });
-    return uuid;
+	var d = new Date().getTime();
+	if(window.performance && typeof window.performance.now === "function"){
+		d += performance.now(); //use high-precision timer if available
+	}
+	var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+		var r = (d + Math.random()*16)%16 | 0;
+		d = Math.floor(d/16);
+		return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+	});
+	return uuid;
 };
 
 scifiCreator.prototype.reset = function() {
@@ -8264,14 +8322,14 @@ scifiCreator.prototype.getLocalName = function( incoming_string_array ) {
 };
 
 scifiCreator.prototype.formatMoney = function(n, decPlaces, thouSeparator, decSeparator) {
-    var
-        decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
-        decSeparator = decSeparator == undefined ? "." : decSeparator,
-        thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
-        sign = n < 0 ? "-" : "",
-        i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
-        j = (j = i.length) > 3 ? j % 3 : 0;
-    return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
+	var
+		decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
+		decSeparator = decSeparator == undefined ? "." : decSeparator,
+		thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
+		sign = n < 0 ? "-" : "",
+		i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
+		j = (j = i.length) > 3 ? j % 3 : 0;
+	return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
 };
 
 scifiCreator.prototype.createStatesBlock = function() {
@@ -8507,15 +8565,15 @@ scifiCreator.prototype.exportBBCode = function() {
 	return html_return;
 };
 
-scifiCreator.prototype.exportJSON = function(noUUID) {
+scifiCreator.prototype.exportJSON = function() {
 	exportObject = {};
 	exportObject.size = this.size;
 	exportObject.objectType = this.objectType;
 	exportObject.itemName = this.itemName;
-	if( !noUUID )
-		exportObject.uuid = this.uuid;
+	exportObject.uuid = this.uuid;
 	exportObject.objectDescription = this.objectDescription;
 	exportObject.mods = Array();
+	exportObject.exported = new Date();
 	exportObject.options = this.creatorOptions;
 	for(modCounter = 0; modCounter < this.selectedModifications.length; modCounter++)
 		exportObject.mods = exportObject.mods.concat( this.selectedModifications[modCounter].tag );
@@ -8567,8 +8625,6 @@ scifiCreator.prototype.importJSON = function(importedObjectString) {
 		this.setName(importedObj.itemName);
 		if( typeof(importedObj.objectDescription) != "undefined")
 			this.setDescription(importedObj.objectDescription);
-
-
 
 		if( typeof(importedObj.uuid) != "undefined")
 			this.uuid = importedObj.uuid;
@@ -10205,6 +10261,7 @@ var coreChargenGlobalFunctions = function ($timeout, $rootScope, $translate, $lo
 		if( save_over > -1 ) {
 			$rootScope.saved_items[ save_over ] = $rootScope.makeSaveObject( saveName );
 		} else {
+			$rootScope.savageCharacter.newUUID();
 			$rootScope.saved_items.push( $rootScope.makeSaveObject( saveName ));
 		}
 		localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $rootScope.saved_items );
@@ -12427,6 +12484,7 @@ scifipowerarmorArray = [
 			if( save_over > -1 ) {
 				$scope.saved_items[ save_over ] = $scope.makeSaveObject( saveName );
 			} else {
+				$scope.creatorObj.newUUID();
 				$scope.saved_items.push( $scope.makeSaveObject( saveName ));
 			}
 			localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
@@ -13036,6 +13094,7 @@ scifistarshipArray = [
 			if( save_over > -1 ) {
 				$scope.saved_items[ save_over ] = $scope.makeSaveObject( saveName );
 			} else {
+				$scope.creatorObj.newUUID();
 				$scope.saved_items.push( $scope.makeSaveObject( saveName ));
 			}
 			localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
@@ -13630,6 +13689,7 @@ scifivehicleArray = [
 			if( save_over > -1 ) {
 				$scope.saved_items[ save_over ] = $scope.makeSaveObject( saveName );
 			} else {
+				$scope.creatorObj.newUUID();
 				$scope.saved_items.push( $scope.makeSaveObject( saveName ));
 			}
 			localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
@@ -14224,6 +14284,7 @@ var scifiwalkerArray = [
 			if( save_over > -1 ) {
 				$scope.saved_items[ save_over ] = $scope.makeSaveObject( saveName );
 			} else {
+				$scope.creatorObj.newUUID();
 				$scope.saved_items.push( $scope.makeSaveObject( saveName ));
 			}
 			localStorage[ savedItemsLocalStorageVariable ] = JSON.stringify( $scope.saved_items );
