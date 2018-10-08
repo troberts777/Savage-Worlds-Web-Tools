@@ -841,7 +841,7 @@ webApp.run(
 var googleDriveClientID = "1099251764728-04gkdv3amrs645nk0uuu7vi1l2s8ijp3.apps.googleusercontent.com";
 
 var globalAppName = "Savage Worlds Tools";
-var globalAppVersion = "2.0.0.2017051701";
+var globalAppVersion = "2.0.0.2017081801";
 
 function get_book_by_id( book_id, language ) {
 	if( !language )
@@ -2140,7062 +2140,7089 @@ chargenPDF.prototype.createArmorTable = function(label, left, top, width, height
 
 
 
+"use strict";
 var classDice = function() {};
 
 classDice.prototype = {
 
-	init: function() {
-		this.always_exploding_dice = false;
-
-		this.rollSetCountRolls = [];
-		this.rollSetCount = 0;
-
-		this.labelNoEffect = "No Effect";
-		this.labelShaken = "Shaken";
-		this.labelShakenAndAWound = "Shaken and a wound";
-		this.labelShakenAndXWoundS = "Shaken and {raises} wounds";
-
-		this.labelCriticalFailure = "Critical Failure";
-		this.labelFailure = "Failure";
-		this.labelSuccess = "Success";
-		this.labelSuccessWithARaise = "Success with a raise";
-		this.labelSuccessWithXRaises = "Success with {raises} raises";
-
-		this.labelDieRollNumber = "die roll #";
-		this.labelWildDieRollNumber = "wild die roll #";
-
-		this.labelRollSetNumber = "Roll Set #";
-
-		this.labelTotalRoll = "Total Roll";
-
-		this.successTargetNumber = 4;
-		this.successBaseToughness = 5;
-		this.successArmor = 1;
-		this.successWeaponsAP = 0;
-	},
-	rollDie: function(number_of_sides, exploding_die, wild_die) {
-
-		if(!number_of_sides)
-			number_of_sides = 6;
-
-
-		total_roll = 0;
-		keep_rolling = 1;
-		display_roll = "";
-		while(keep_rolling > 0) {
-			roll = Math.floor(Math.random() * number_of_sides) + 1;
-			if(exploding_die > 0) {
-				if(roll == number_of_sides)
-					keep_rolling = 1;
-				else
-					keep_rolling = 0;
-			} else {
-				keep_rolling = 0;
-			}
-
-
-			display_roll += roll + ", ";
-			total_roll += roll;
-
-		}
-		if( !this.rollSetCountRolls[ this.rollSetCount ] ) {
-			this.rollSetCountRolls[ this.rollSetCount ] = {
-				base_rolls: Array(),
-				base_roll_sides: Array(),
-				wild_die_rolls: Array(),
-			};
-		}
-
-
-		this.rollSetCountRolls[ this.rollSetCount ].base_rolls.push( display_roll );
-		this.rollSetCountRolls[ this.rollSetCount ].base_roll_sides.push(number_of_sides);
-		wild_display_roll = "";
-		totalwild_dieRoll = 0;
-		keep_rolling = 1;
-		if(wild_die > 0) {
-			number_of_sides = 6;
-			while(keep_rolling > 0) {
-				roll = Math.floor(Math.random() * number_of_sides) + 1;
-				if(exploding_die > 0) {
-					if(roll == number_of_sides)
-						keep_rolling = 1;
-					else
-						keep_rolling = 0;
-				} else {
-					keep_rolling = 0;
-				}
-
-
-
-				totalwild_dieRoll += roll;
-
-				wild_display_roll += roll + ", ";
-			}
-		}
-		this.rollSetCountRolls[ this.rollSetCount ].wild_die_rolls.push(wild_display_roll);
-
-		if(totalwild_dieRoll == 1 && total_roll == 1)
-			this.rollSetCountRolls[ this.rollSetCount ].critical_failure= 1;
-		else
-			this.rollSetCountRolls[ this.rollSetCount ].critical_failure= 0;
-
-		if(totalwild_dieRoll > total_roll)
-			return totalwild_dieRoll;
-		else
-			return total_roll;
-
-	},
-
-	rollDice: function (number_of_dice, total_modifier) { // 2d6+3 would be this.rollDice(2,3)
-
-		var returnTotal = 0;
-		number_of_sides = 6;
-
-		if(number_of_dice.indexOf("*") > 0)
-			wild_die = 1;
-		else
-			wild_die = 0;
-
-		if(number_of_sides < 2)
-			number_of_sides = 2;
-
-		number_of_dice = number_of_dice.replace("*", "");
-
-		explodingDice = 0;
-		if(number_of_dice.indexOf("d") > -1) {
-			rollNumber = number_of_dice.substring(0, number_of_dice.indexOf("d")) / 1;
-			number_of_sides = number_of_dice.substring(number_of_dice.indexOf("d") + 1) / 1;
-			if(this.always_exploding_dice)
-				explodingDice = 1;
-		} else {
-			if(number_of_dice.indexOf("e") > -1) {
-				explodingDice = 1;
-				rollNumber = number_of_dice.substring(0, number_of_dice.indexOf("e")) / 1;
-				number_of_sides = number_of_dice.substring(number_of_dice.indexOf("e") + 1) / 1;
-			} else {
-				rollNumber = number_of_dice;
-			}
-		}
-
-		// a dX assumes 1dX
-		if(!rollNumber)
-			rollNumber = 1;
-
-		// a 2d assumes 2d6
-		if(!number_of_sides)
-			number_of_sides = 6;
-
-		var rolls = rollNumber + "d" + number_of_sides + ": ";
-		while(rollNumber-- > 0) {
-
-			dieRoll = this.rollDie(number_of_sides, explodingDice, wild_die);
-			returnTotal += dieRoll;
-			rolls += dieRoll + ",";
-			this.rollSetCountRolls[ this.rollSetCount ].total_rolled_dice++;
-		}
-		rolls = rolls.substring(0, rolls.length -1);
-		rolls += "";
-
-
-
-		return returnTotal;
-	},
-	_parseBit: function (input_string) {
-		value = 0;
-
-		if(input_string.indexOf("d") > -1)
-			value = this.rollDice(input_string, 0);
-		else
-			if(input_string.indexOf("e") > -1)
-				value = this.rollDice(input_string, 0);
-			else
-				value = input_string / 1;
-
-		return value;
-	},
-
-	_parseRollSet: function( input_string ) {
-		set_total = 0;
-
-		// remove all spaces...
-
-		input_string = input_string.replace(/ /g, "");
-		input_string = input_string.toLowerCase();
-
-		// parse mathematical expressions
-		input_string = input_string.replace(/\+/g, " + ");
-		input_string = input_string.replace(/x/g, " x ");
-		input_string = input_string.replace(/\//g, " / ");
-		input_string = input_string.replace(/\-/g, " - ");
-		input_string = input_string.replace(/\)/g, " ) ");
-		input_string = input_string.replace(/\(/g, " ( ");
-		input_string = input_string.replace(/\,/g, " , ");
-
-
-		this.rollSetCountRolls[ this.rollSetCount ] = {};
-
-		this.rollSetCountRolls[ this.rollSetCount ].base_rolls = [];
-		this.rollSetCountRolls[ this.rollSetCount ].wild_die_rolls = [];
-		this.rollSetCountRolls[ this.rollSetCount ].base_roll_sides = [];
-		this.rollSetCountRolls[ this.rollSetCount ].total_rolled_dice = 0;
-		this.rollSetCountRolls[ this.rollSetCount ].critical_failure = 0;
-
-		if(input_string.indexOf(" ") > 0) {
-			items = input_string.split(" ");
-
-			current_function = "+";
-			for(count = 0; count < items.length; count++) {
-
-				if(
-					items[count] != "+"
-						&&
-					items[count] != "x"
-						&&
-					items[count] != "-"
-						&&
-					items[count] != "/"
-				) {
-					// parse the bit
-					if(current_function == "+") {
-						set_total += this._parseBit( items[count]) / 1;
-					} else {
-						if(current_function == "-") {
-							set_total -= this._parseBit( items[count]) / 1;
-						} else {
-							if(current_function == "x") {
-								if(set_total == 0) {
-									set_total = items[count] / 1;
-								} else {
-									set_total = set_total * this._parseBit( items[count]) / 1;
-								}
-							} else {
-								if(current_function == "/") {
-									set_total = set_total / this._parseBit( items[count]) / 1;
-								} else {
-									// ignore parentheticals for now
-								}
-							}
-						}
-					}
-				} else {
-					// change what it does...
-					current_function = items[count];
-				}
-
-			}
-
-		} else {
-			set_total += this._parseBit( input_string);
-
-		}
-		this.rollSetCountRolls[ this.rollSetCount ].total_roll = set_total;
-		this.rollSetCount++;
-	},
-
-	parseRoll: function (parseRoll_input_string) {
-
-		// look for modifier(s)....
-		total = 0;
-		this.rollSetCount = 0;
-		this.rollSetCountRolls = [];
-
-		if(parseRoll_input_string.indexOf(",") > 0) {
-			parseRoll_items = parseRoll_input_string.split(",");
-			for( parseRoll_itemcount = 0; parseRoll_itemcount < parseRoll_items.length; parseRoll_itemcount++) {
-				total = this._parseRollSet( parseRoll_items[parseRoll_itemcount] );
-			}
-		} else {
-			total += this._parseRollSet( parseRoll_input_string );
-		}
-
-		return total;
-	},
-
-	displayResults: function (for_trait, for_damage, half_damage) {
-		html = "";
-		if( half_damage && half_damage > 0)
-			half_damage = true;
-		else
-			half_damage = false;
-
-		for( results_set_count = 0; results_set_count < this.rollSetCount; results_set_count++ ) {
-			if( this.rollSetCount > 1 ) {
-				if( results_set_count > 0) {
-					html += "<hr />";
-				}
-				html += "<h4>" + this.labelRollSetNumber + (results_set_count + 1) + "</h4>";
-			}
-
-			if( half_damage )
-				html += "<h5>" + this.labelTotalRoll + ": " + this.rollSetCountRolls[ results_set_count ].total_roll + " (half at " + Math.floor(this.rollSetCountRolls[ results_set_count ].total_roll / 2) + ")</h5>"
-			else
-				html += "<h5>" + this.labelTotalRoll + ": " + this.rollSetCountRolls[ results_set_count ].total_roll + "</h5>"
-
-			if( for_trait )
-				html += this.traitSuccessMargin( this.rollSetCountRolls[ results_set_count ].total_roll, null, results_set_count ) + "<br />";
-
-			if( for_damage ){
-				total_roll = this.rollSetCountRolls[ results_set_count ].total_roll;
-				if( half_damage )
-					total_roll = Math.floor(total_roll / 2);
-				html += this.damageSuccessMargin( total_roll ) + "<br />";
-			}
-
-			for(current_roll = 0; current_roll < this.rollSetCountRolls[ results_set_count ].total_rolled_dice; current_roll++) {
-				// each die roll section
-				if(typeof(this.rollSetCountRolls[ results_set_count ].base_rolls[ current_roll ]) != "undefined") {
-					html += "<br />" + this.labelDieRollNumber  + "" + (current_roll + 1) + " (d" + this.rollSetCountRolls[ results_set_count ].base_roll_sides[ current_roll ] + "): ";
-					if( this.rollSetCountRolls[ results_set_count ].base_rolls[ current_roll ] ) {
-						if( this.rollSetCountRolls[ results_set_count ].base_rolls[ current_roll ].length > 2 ) {
-							html += this.rollSetCountRolls[ results_set_count ].base_rolls[ current_roll ].substring(
-								0,
-								this.rollSetCountRolls[ results_set_count ].base_rolls[ current_roll ].length - 2
-							);
-						} else {
-							html += this.rollSetCountRolls[ results_set_count ].base_rolls[ current_roll ];
-						}
-					}
-
-				}
-
-				// print out wild die rolls if exists
-				if(typeof(this.rollSetCountRolls[ results_set_count ].wild_die_rolls[ current_roll ]) != "undefined") {
-					if(this.rollSetCountRolls[ results_set_count ].wild_die_rolls[ current_roll ].length > 0)
-						html += "<br />" + this.labelWildDieRollNumber + ( current_roll  + 1) + " (d6): ";
-
-					if( this.rollSetCountRolls[ results_set_count ].wild_die_rolls[ current_roll ] ) {
-						//console.log( "wild_die_rolls len: " +  this.rollSetCountRolls[ results_set_count ].wild_die_rolls[ current_roll ].length );
-						if( this.rollSetCountRolls[ results_set_count ].wild_die_rolls[ current_roll ].length > 2 ) {
-							html += this.rollSetCountRolls[ results_set_count ].wild_die_rolls[ current_roll ].substring(
-								0,
-								this.rollSetCountRolls[ results_set_count ].wild_die_rolls[ current_roll ].length - 2
-							);
-						} else {
-							html += this.rollSetCountRolls[ results_set_count ].wild_die_rolls[ current_roll ];
-						}
-					}
-				}
-
-			}
-		}
-
-		return html;
-	},
-	traitSuccessMargin: function (roll, target_number, trait_set_count) {
-
-		if (! target_number )
-			target_number = this.successTargetNumber;
-
-		value = roll/1 - target_number/1;
-
-		html = "";
-
-
-		if(typeof(trait_set_count) != "undefined" && this.rollSetCountRolls[ trait_set_count ].critical_failure > 0) {
-			html += "<span  class=\"color-red bolded uppercase\">" + this.labelCriticalFailure + "</span>";
-		} else {
-			if(value < 0) {
-				html += "<span  class=\"color-red\">" + this.labelFailure + "</span>";
-			} else {
-				raises = Math.floor(value/4);
-				if(raises == 0) {
-					html += this.labelSuccess;
-				} else {
-					if( raises == 1) {
-						html += "<span  class=\"color-green bolded\">" + this.labelSuccessWithARaise + "</span>";
-					} else {
-						html += "<span  class=\"color-green bolded uppercase\">" + this.labelSuccessWithXRaises.replace("{raises}", raises) + "</span>";
-					}
-				}
-			}
-		}
-
-		return html;
-	},
-
-	setResultMargins: function( input_target_number, input_base_toughness, input_armor, input_weapons_ap ) {
-		this.successTargetNumber = input_target_number;
-		this.successBaseToughness = input_base_toughness;
-		this.successArmor = input_armor;
-		this.successWeaponsAP = input_weapons_ap;
-	},
-
-	setLabel: function( label_name, label_value ) {
-		if( label_name == "no_effect") {
-			this.labelNoEffect = label_value;
-			return label_value;
-		}
-
-		if( label_name == "total_roll") {
-			this.labelTotalRoll = label_value;
-			return label_value;
-		}
-
-		if( label_name == "shaken") {
-			this.labelShaken = label_value;
-			return label_value;
-		}
-
-		if( label_name == "shaken_and_a_wound") {
-			this.labelShakenAndAWound = label_value;
-			return label_value;
-		}
-
-		if( label_name == "shaken_and_x_wounds") {
-			this.labelShakenAndXWoundS = label_value;
-			return label_value;
-		}
-
-		if( label_name == "critical_failure") {
-			this.labelCriticalFailure = label_value;
-			return label_value;
-		}
-
-		if( label_name == "roll_set_number") {
-			this.labelRollSetNumber = label_value;
-			return label_value;
-		}
-
-		if( label_name == "failure") {
-			this.labelFailure = label_value;
-			return label_value;
-		}
-
-		if( label_name == "success") {
-			this.labelSuccess = label_value;
-			return label_value;
-		}
-
-		if( label_name == "success_with_a_raise") {
-			this.labelSuccessWithARaise = label_value;
-			return label_value;
-		}
-
-		if( label_name == "success_with_x_raises") {
-			this.labelSuccessWithXRaises = label_value;
-			return label_value;
-		}
-
-		if( label_name == "die_roll_number") {
-			this.labelDieRollNumber = label_value;
-			return label_value;
-		}
-
-		if( label_name == "wild_die_roll_number") {
-			this.labelWildDieRollNumber = label_value;
-			return label_value;
-		}
-
-		return null;
-	},
-
-	setAlwaysExplodingDice: function( new_value ) {
-		this.always_exploding_dice = new_value;
-		return this.always_exploding_dice;
-	},
-
-	damageSuccessMargin: function (roll, toughness, armor, armor_piercing) {
-
-		if( !toughness )
-			toughness = this.successBaseToughness;
-
-		if( !armor )
-			armor = this.successArmor;
-
-		if( !armor_piercing )
-			armor_piercing = this.successWeaponsAP;
-
-		armor = armor/1 - armor_piercing/1;
-		if(armor < 0)
-			armor = 0;
-
-		target_number = toughness/1 + armor/1;
-		value = roll/1 - target_number/1;
-
-		html = "";
-		if(value < 0) {
-			html += "<span>" + this.labelNoEffect + "</span>";
-		} else {
-			raises = Math.floor(value/4);
-			if(raises == 0) {
-				html += "<span class=\"color-orange\">" + this.labelShaken + "</span>";
-			} else {
-				if( raises == 1) {
-					html += "<span class=\"color-red\">" + this.labelShakenAndAWound + "</span>";
-				} else {
-					html += "<span class=\"color-red bolded uppercase\">" + this.labelShakenAndXWoundS.replace("{raises}", raises) + "</span>";
-				}
-			}
-		}
-		return html;
-	}
+    init: function() {
+        this.always_exploding_dice = false;
+
+        this.rollSetCountRolls = [];
+        this.rollSetCount = 0;
+
+        this.labelNoEffect = "No Effect";
+        this.labelShaken = "Shaken";
+        this.labelShakenAndAWound = "Shaken and a wound";
+        this.labelShakenAndXWoundS = "Shaken and {raises} wounds";
+
+        this.labelCriticalFailure = "Critical Failure";
+        this.labelFailure = "Failure";
+        this.labelSuccess = "Success";
+        this.labelSuccessWithARaise = "Success with a raise";
+        this.labelSuccessWithXRaises = "Success with {raises} raises";
+
+        this.labelDieRollNumber = "die roll #";
+        this.labelWildDieRollNumber = "wild die roll #";
+
+        this.labelRollSetNumber = "Roll Set #";
+
+        this.labelTotalRoll = "Total Roll";
+
+        this.successTargetNumber = 4;
+        this.successBaseToughness = 5;
+        this.successArmor = 1;
+        this.successWeaponsAP = 0;
+    },
+    rollDie: function(number_of_sides, exploding_die, wild_die) {
+
+        if(!number_of_sides)
+            number_of_sides = 6;
+
+
+        total_roll = 0;
+        keep_rolling = 1;
+        display_roll = "";
+        while(keep_rolling > 0) {
+            roll = Math.floor(Math.random() * number_of_sides) + 1;
+            if(exploding_die > 0) {
+                if(roll == number_of_sides)
+                    keep_rolling = 1;
+                else
+                    keep_rolling = 0;
+            } else {
+                keep_rolling = 0;
+            }
+
+
+            display_roll += roll + ", ";
+            total_roll += roll;
+
+        }
+        if( !this.rollSetCountRolls[ this.rollSetCount ] ) {
+            this.rollSetCountRolls[ this.rollSetCount ] = {
+                base_rolls: Array(),
+                base_roll_sides: Array(),
+                wild_die_rolls: Array(),
+            };
+        }
+
+
+        this.rollSetCountRolls[ this.rollSetCount ].base_rolls.push( display_roll );
+        this.rollSetCountRolls[ this.rollSetCount ].base_roll_sides.push(number_of_sides);
+        wild_display_roll = "";
+        totalwild_dieRoll = 0;
+        keep_rolling = 1;
+        if(wild_die > 0) {
+            number_of_sides = 6;
+            while(keep_rolling > 0) {
+                roll = Math.floor(Math.random() * number_of_sides) + 1;
+                if(exploding_die > 0) {
+                    if(roll == number_of_sides)
+                        keep_rolling = 1;
+                    else
+                        keep_rolling = 0;
+                } else {
+                    keep_rolling = 0;
+                }
+
+
+
+                totalwild_dieRoll += roll;
+
+                wild_display_roll += roll + ", ";
+            }
+        }
+        this.rollSetCountRolls[ this.rollSetCount ].wild_die_rolls.push(wild_display_roll);
+
+        if(totalwild_dieRoll == 1 && total_roll == 1)
+            this.rollSetCountRolls[ this.rollSetCount ].critical_failure= 1;
+        else
+            this.rollSetCountRolls[ this.rollSetCount ].critical_failure= 0;
+
+        if(totalwild_dieRoll > total_roll)
+            return totalwild_dieRoll;
+        else
+            return total_roll;
+
+    },
+
+    rollDice: function (number_of_dice, total_modifier) { // 2d6+3 would be this.rollDice(2,3)
+
+        var returnTotal = 0;
+        number_of_sides = 6;
+
+        if(number_of_dice.indexOf("*") > 0)
+            wild_die = 1;
+        else
+            wild_die = 0;
+
+        if(number_of_sides < 2)
+            number_of_sides = 2;
+
+        number_of_dice = number_of_dice.replace("*", "");
+
+        explodingDice = 0;
+        if(number_of_dice.indexOf("d") > -1) {
+            rollNumber = number_of_dice.substring(0, number_of_dice.indexOf("d")) / 1;
+            number_of_sides = number_of_dice.substring(number_of_dice.indexOf("d") + 1) / 1;
+            if(this.always_exploding_dice)
+                explodingDice = 1;
+        } else {
+            if(number_of_dice.indexOf("e") > -1) {
+                explodingDice = 1;
+                rollNumber = number_of_dice.substring(0, number_of_dice.indexOf("e")) / 1;
+                number_of_sides = number_of_dice.substring(number_of_dice.indexOf("e") + 1) / 1;
+            } else {
+                rollNumber = number_of_dice;
+            }
+        }
+
+        // a dX assumes 1dX
+        if(!rollNumber)
+            rollNumber = 1;
+
+        // a 2d assumes 2d6
+        if(!number_of_sides)
+            number_of_sides = 6;
+
+        var rolls = rollNumber + "d" + number_of_sides + ": ";
+        while(rollNumber-- > 0) {
+
+            dieRoll = this.rollDie(number_of_sides, explodingDice, wild_die);
+            returnTotal += dieRoll;
+            rolls += dieRoll + ",";
+            this.rollSetCountRolls[ this.rollSetCount ].total_rolled_dice++;
+        }
+        rolls = rolls.substring(0, rolls.length -1);
+        rolls += "";
+
+
+
+        return returnTotal;
+    },
+    _parseBit: function (input_string) {
+        value = 0;
+
+        if(input_string.indexOf("d") > -1)
+            value = this.rollDice(input_string, 0);
+        else
+            if(input_string.indexOf("e") > -1)
+                value = this.rollDice(input_string, 0);
+            else
+                value = input_string / 1;
+
+        return value;
+    },
+
+    _parseRollSet: function( input_string ) {
+        set_total = 0;
+
+        // remove all spaces...
+
+        input_string = input_string.replace(/ /g, "");
+        input_string = input_string.toLowerCase();
+
+        // parse mathematical expressions
+        input_string = input_string.replace(/\+/g, " + ");
+        input_string = input_string.replace(/x/g, " x ");
+        input_string = input_string.replace(/\//g, " / ");
+        input_string = input_string.replace(/\-/g, " - ");
+        input_string = input_string.replace(/\)/g, " ) ");
+        input_string = input_string.replace(/\(/g, " ( ");
+        input_string = input_string.replace(/\,/g, " , ");
+
+
+        this.rollSetCountRolls[ this.rollSetCount ] = {};
+
+        this.rollSetCountRolls[ this.rollSetCount ].base_rolls = [];
+        this.rollSetCountRolls[ this.rollSetCount ].wild_die_rolls = [];
+        this.rollSetCountRolls[ this.rollSetCount ].base_roll_sides = [];
+        this.rollSetCountRolls[ this.rollSetCount ].total_rolled_dice = 0;
+        this.rollSetCountRolls[ this.rollSetCount ].critical_failure = 0;
+
+        if(input_string.indexOf(" ") > 0) {
+            items = input_string.split(" ");
+
+            current_function = "+";
+            for(count = 0; count < items.length; count++) {
+
+                if(
+                    items[count] != "+"
+                        &&
+                    items[count] != "x"
+                        &&
+                    items[count] != "-"
+                        &&
+                    items[count] != "/"
+                ) {
+                    // parse the bit
+                    if(current_function == "+") {
+                        set_total += this._parseBit( items[count]) / 1;
+                    } else {
+                        if(current_function == "-") {
+                            set_total -= this._parseBit( items[count]) / 1;
+                        } else {
+                            if(current_function == "x") {
+                                if(set_total == 0) {
+                                    set_total = items[count] / 1;
+                                } else {
+                                    set_total = set_total * this._parseBit( items[count]) / 1;
+                                }
+                            } else {
+                                if(current_function == "/") {
+                                    set_total = set_total / this._parseBit( items[count]) / 1;
+                                } else {
+                                    // ignore parentheticals for now
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    // change what it does...
+                    current_function = items[count];
+                }
+
+            }
+
+        } else {
+            set_total += this._parseBit( input_string);
+
+        }
+        this.rollSetCountRolls[ this.rollSetCount ].total_roll = set_total;
+        this.rollSetCount++;
+    },
+
+    parseRoll: function (parseRoll_input_string) {
+
+        // look for modifier(s)....
+        total = 0;
+        this.rollSetCount = 0;
+        this.rollSetCountRolls = [];
+
+        if(parseRoll_input_string.indexOf(",") > 0) {
+            parseRoll_items = parseRoll_input_string.split(",");
+            for( parseRoll_itemcount = 0; parseRoll_itemcount < parseRoll_items.length; parseRoll_itemcount++) {
+                total = this._parseRollSet( parseRoll_items[parseRoll_itemcount] );
+            }
+        } else {
+            total += this._parseRollSet( parseRoll_input_string );
+        }
+
+        return total;
+    },
+
+    displayResults: function (for_trait, for_damage, half_damage) {
+        html = "";
+        if( half_damage && half_damage > 0)
+            half_damage = true;
+        else
+            half_damage = false;
+
+        for( results_set_count = 0; results_set_count < this.rollSetCount; results_set_count++ ) {
+            if( this.rollSetCount > 1 ) {
+                if( results_set_count > 0) {
+                    html += "<hr />";
+                }
+                html += "<h4>" + this.labelRollSetNumber + (results_set_count + 1) + "</h4>";
+            }
+
+            if( half_damage )
+                html += "<h5>" + this.labelTotalRoll + ": " + this.rollSetCountRolls[ results_set_count ].total_roll + " (half at " + Math.floor(this.rollSetCountRolls[ results_set_count ].total_roll / 2) + ")</h5>"
+            else
+                html += "<h5>" + this.labelTotalRoll + ": " + this.rollSetCountRolls[ results_set_count ].total_roll + "</h5>"
+
+            if( for_trait )
+                html += this.traitSuccessMargin( this.rollSetCountRolls[ results_set_count ].total_roll, null, results_set_count ) + "<br />";
+
+            if( for_damage ){
+                total_roll = this.rollSetCountRolls[ results_set_count ].total_roll;
+                if( half_damage )
+                    total_roll = Math.floor(total_roll / 2);
+                html += this.damageSuccessMargin( total_roll ) + "<br />";
+            }
+
+            for(current_roll = 0; current_roll < this.rollSetCountRolls[ results_set_count ].total_rolled_dice; current_roll++) {
+                // each die roll section
+                if(typeof(this.rollSetCountRolls[ results_set_count ].base_rolls[ current_roll ]) != "undefined") {
+                    html += "<br />" + this.labelDieRollNumber  + "" + (current_roll + 1) + " (d" + this.rollSetCountRolls[ results_set_count ].base_roll_sides[ current_roll ] + "): ";
+                    if( this.rollSetCountRolls[ results_set_count ].base_rolls[ current_roll ] ) {
+                        if( this.rollSetCountRolls[ results_set_count ].base_rolls[ current_roll ].length > 2 ) {
+                            html += this.rollSetCountRolls[ results_set_count ].base_rolls[ current_roll ].substring(
+                                0,
+                                this.rollSetCountRolls[ results_set_count ].base_rolls[ current_roll ].length - 2
+                            );
+                        } else {
+                            html += this.rollSetCountRolls[ results_set_count ].base_rolls[ current_roll ];
+                        }
+                    }
+
+                }
+
+                // print out wild die rolls if exists
+                if(typeof(this.rollSetCountRolls[ results_set_count ].wild_die_rolls[ current_roll ]) != "undefined") {
+                    if(this.rollSetCountRolls[ results_set_count ].wild_die_rolls[ current_roll ].length > 0)
+                        html += "<br />" + this.labelWildDieRollNumber + ( current_roll  + 1) + " (d6): ";
+
+                    if( this.rollSetCountRolls[ results_set_count ].wild_die_rolls[ current_roll ] ) {
+                        //console.log( "wild_die_rolls len: " +  this.rollSetCountRolls[ results_set_count ].wild_die_rolls[ current_roll ].length );
+                        if( this.rollSetCountRolls[ results_set_count ].wild_die_rolls[ current_roll ].length > 2 ) {
+                            html += this.rollSetCountRolls[ results_set_count ].wild_die_rolls[ current_roll ].substring(
+                                0,
+                                this.rollSetCountRolls[ results_set_count ].wild_die_rolls[ current_roll ].length - 2
+                            );
+                        } else {
+                            html += this.rollSetCountRolls[ results_set_count ].wild_die_rolls[ current_roll ];
+                        }
+                    }
+                }
+
+            }
+        }
+
+        return html;
+    },
+    traitSuccessMargin: function (roll, target_number, trait_set_count) {
+
+        if (! target_number )
+            target_number = this.successTargetNumber;
+
+        value = roll/1 - target_number/1;
+
+        html = "";
+
+
+        if(typeof(trait_set_count) != "undefined" && this.rollSetCountRolls[ trait_set_count ].critical_failure > 0) {
+            html += "<span  class=\"color-red bolded uppercase\">" + this.labelCriticalFailure + "</span>";
+        } else {
+            if(value < 0) {
+                html += "<span  class=\"color-red\">" + this.labelFailure + "</span>";
+            } else {
+                raises = Math.floor(value/4);
+                if(raises == 0) {
+                    html += this.labelSuccess;
+                } else {
+                    if( raises == 1) {
+                        html += "<span  class=\"color-green bolded\">" + this.labelSuccessWithARaise + "</span>";
+                    } else {
+                        html += "<span  class=\"color-green bolded uppercase\">" + this.labelSuccessWithXRaises.replace("{raises}", raises) + "</span>";
+                    }
+                }
+            }
+        }
+
+        return html;
+    },
+
+    setResultMargins: function( input_target_number, input_base_toughness, input_armor, input_weapons_ap ) {
+        this.successTargetNumber = input_target_number;
+        this.successBaseToughness = input_base_toughness;
+        this.successArmor = input_armor;
+        this.successWeaponsAP = input_weapons_ap;
+    },
+
+    setLabel: function( label_name, label_value ) {
+        if( label_name == "no_effect") {
+            this.labelNoEffect = label_value;
+            return label_value;
+        }
+
+        if( label_name == "total_roll") {
+            this.labelTotalRoll = label_value;
+            return label_value;
+        }
+
+        if( label_name == "shaken") {
+            this.labelShaken = label_value;
+            return label_value;
+        }
+
+        if( label_name == "shaken_and_a_wound") {
+            this.labelShakenAndAWound = label_value;
+            return label_value;
+        }
+
+        if( label_name == "shaken_and_x_wounds") {
+            this.labelShakenAndXWoundS = label_value;
+            return label_value;
+        }
+
+        if( label_name == "critical_failure") {
+            this.labelCriticalFailure = label_value;
+            return label_value;
+        }
+
+        if( label_name == "roll_set_number") {
+            this.labelRollSetNumber = label_value;
+            return label_value;
+        }
+
+        if( label_name == "failure") {
+            this.labelFailure = label_value;
+            return label_value;
+        }
+
+        if( label_name == "success") {
+            this.labelSuccess = label_value;
+            return label_value;
+        }
+
+        if( label_name == "success_with_a_raise") {
+            this.labelSuccessWithARaise = label_value;
+            return label_value;
+        }
+
+        if( label_name == "success_with_x_raises") {
+            this.labelSuccessWithXRaises = label_value;
+            return label_value;
+        }
+
+        if( label_name == "die_roll_number") {
+            this.labelDieRollNumber = label_value;
+            return label_value;
+        }
+
+        if( label_name == "wild_die_roll_number") {
+            this.labelWildDieRollNumber = label_value;
+            return label_value;
+        }
+
+        return null;
+    },
+
+    setAlwaysExplodingDice: function( new_value ) {
+        this.always_exploding_dice = new_value;
+        return this.always_exploding_dice;
+    },
+
+    damageSuccessMargin: function (roll, toughness, armor, armor_piercing) {
+
+        if( typeof toughness  == "undefined" )
+            toughness = this.successBaseToughness;
+        else
+            toughness = toughness / 1;
+
+        if( typeof armor == "undefined")
+            armor = this.successArmor;
+        else
+            armor = armor / 1;
+
+        if( typeof armor_piercing  == "undefined" )
+            armor_piercing = this.successWeaponsAP;
+        else
+            armor_piercing = armor_piercing / 1;
+
+        armor = armor/1 - armor_piercing/1;
+        if(armor < 0)
+            armor = 0;
+
+        target_number = toughness/1 + armor/1;
+        value = roll/1 - target_number/1;
+
+        html = "";
+        if(value < 0) {
+            html += "<span>" + this.labelNoEffect + "</span>";
+        } else {
+            raises = Math.floor(value/4);
+            if(raises == 0) {
+                html += "<span class=\"color-orange\">" + this.labelShaken + "</span>";
+            } else {
+                if( raises == 1) {
+                    html += "<span class=\"color-red\">" + this.labelShakenAndAWound + "</span>";
+                } else {
+                    html += "<span class=\"color-red bolded uppercase\">" + this.labelShakenAndXWoundS.replace("{raises}", raises) + "</span>";
+                }
+            }
+        }
+        return html;
+    }
 }
 
 
+"use strict";
 var globalDiceValues = Array(
-	{
-		id: 0,
-		value: 0,
-		label: {
-			"en-US" : "n/a"
-		}
-	},
-	{
-		id: 1,
-		value: 4,
-		label: {
-			"en-US" : "d4"
-		}
-	},
-	{
-		id: 2,
-		value: 6,
-		label: {
-			"en-US" : "d6"
-		}
-	},
-	{
-		id: 3,
-		value: 8,
-		label: {
-			"en-US" : "d8"
-		}
-	},
-	{
-		id: 4,
-		value: 10,
-		label: {
-			"en-US" : "d10"
-		}
-	},
-	{
-		id: 5,
-		value: 12,
-		label: {
-			"en-US" : "d12"
-		}
-	},
-	{
-		id: 6,
-		value: 13,
-		label: {
-			"en-US" : "d12+1"
-		}
-	},
-	{
-		id: 7,
-		value: 14,
-		label: {
-			"en-US" : "d12+2"
-		}
-	},
-	{
-		id: 8,
-		value: 15,
-		label: {
-			"en-US" : "d12+3"
-		}
-	},
-	{
-		id: 9,
-		value: 16,
-		label: {
-			"en-US" : "d12+4"
-		}
-	},
-	{
-		id: 10,
-		value: 17,
-		label: {
-			"en-US" : "d12+5"
-		}
-	},
-	{
-		id: 11,
-		value: 18,
-		label: {
-			"en-US" : "d12+6"
-		}
-	},
-	{
-		id: 12,
-		value: 19,
-		label: {
-			"en-US" : "d12+7"
-		}
-	},
-	{
-		id: 13,
-		value: 20,
-		label: {
-			"en-US" : "d12+8"
-		}
-	},
-	{
-		id: 14,
-		value: 21,
-		label: {
-			"en-US" : "d12+9"
-		}
-	},
-	{
-		id: 15,
-		value: 22,
-		label: {
-			"en-US" : "d12+10"
-		}
-	},
-	{
-		id: 16,
-		value: 23,
-		label: {
-			"en-US" : "d12+11"
-		}
-	},
-	{
-		id: 17,
-		value: 24,
-		label: {
-			"en-US" : "d12+12"
-		}
-	},
-	{
-		id: 18,
-		value: 25,
-		label: {
-			"en-US" : "d12+13"
-		}
-	},
-	{
-		id: 19,
-		value: 26,
-		label: {
-			"en-US" : "d12+14"
-		}
-	}
+    {
+        id: 0,
+        value: 0,
+        label: {
+            "en-US" : "n/a"
+        }
+    },
+    {
+        id: 1,
+        value: 4,
+        label: {
+            "en-US" : "d4"
+        }
+    },
+    {
+        id: 2,
+        value: 6,
+        label: {
+            "en-US" : "d6"
+        }
+    },
+    {
+        id: 3,
+        value: 8,
+        label: {
+            "en-US" : "d8"
+        }
+    },
+    {
+        id: 4,
+        value: 10,
+        label: {
+            "en-US" : "d10"
+        }
+    },
+    {
+        id: 5,
+        value: 12,
+        label: {
+            "en-US" : "d12"
+        }
+    },
+    {
+        id: 6,
+        value: 13,
+        label: {
+            "en-US" : "d12+1"
+        }
+    },
+    {
+        id: 7,
+        value: 14,
+        label: {
+            "en-US" : "d12+2"
+        }
+    },
+    {
+        id: 8,
+        value: 15,
+        label: {
+            "en-US" : "d12+3"
+        }
+    },
+    {
+        id: 9,
+        value: 16,
+        label: {
+            "en-US" : "d12+4"
+        }
+    },
+    {
+        id: 10,
+        value: 17,
+        label: {
+            "en-US" : "d12+5"
+        }
+    },
+    {
+        id: 11,
+        value: 18,
+        label: {
+            "en-US" : "d12+6"
+        }
+    },
+    {
+        id: 12,
+        value: 19,
+        label: {
+            "en-US" : "d12+7"
+        }
+    },
+    {
+        id: 13,
+        value: 20,
+        label: {
+            "en-US" : "d12+8"
+        }
+    },
+    {
+        id: 14,
+        value: 21,
+        label: {
+            "en-US" : "d12+9"
+        }
+    },
+    {
+        id: 15,
+        value: 22,
+        label: {
+            "en-US" : "d12+10"
+        }
+    },
+    {
+        id: 16,
+        value: 23,
+        label: {
+            "en-US" : "d12+11"
+        }
+    },
+    {
+        id: 17,
+        value: 24,
+        label: {
+            "en-US" : "d12+12"
+        }
+    },
+    {
+        id: 18,
+        value: 25,
+        label: {
+            "en-US" : "d12+13"
+        }
+    },
+    {
+        id: 19,
+        value: 26,
+        label: {
+            "en-US" : "d12+14"
+        }
+    }
 );
 
 function localizeDice( language ) {
-	if( !language )
-		language = localStorage["users_preferred_language"];
-	for( var gdv = 0 ; gdv < globalDiceValues.length; gdv++) {
-		if( globalDiceValues[gdv].label[language] ) {
-			globalDiceValues[gdv].local_label = globalDiceValues[gdv].label[language];
-		} else {
-			globalDiceValues[gdv].local_label = globalDiceValues[gdv].label["en-US"];
-		}
-	}
+    if( !language )
+        language = localStorage["users_preferred_language"];
+    for( var gdv = 0 ; gdv < globalDiceValues.length; gdv++) {
+        if( globalDiceValues[gdv].label[language] ) {
+            globalDiceValues[gdv].local_label = globalDiceValues[gdv].label[language];
+        } else {
+            globalDiceValues[gdv].local_label = globalDiceValues[gdv].label["en-US"];
+        }
+    }
 }
 function getDiceValue( diceID, language ) {
 
-	for( var gdv = 0 ; gdv < globalDiceValues.length; gdv++) {
-		if( diceID == globalDiceValues[gdv].id ) {
-			if( globalDiceValues[gdv].label[language] ) {
-				globalDiceValues[gdv].local_label = globalDiceValues[gdv].label[language];
-			} else {
-				globalDiceValues[gdv].local_label = globalDiceValues[gdv].label["en-US"];
-			}
-			return globalDiceValues[gdv];
-		}
-	}
-	return false;
+    for( var gdv = 0 ; gdv < globalDiceValues.length; gdv++) {
+        if( diceID == globalDiceValues[gdv].id ) {
+            if( globalDiceValues[gdv].label[language] ) {
+                globalDiceValues[gdv].local_label = globalDiceValues[gdv].label[language];
+            } else {
+                globalDiceValues[gdv].local_label = globalDiceValues[gdv].label["en-US"];
+            }
+            return globalDiceValues[gdv];
+        }
+    }
+    return false;
 }
-
+"use strict";
 
 function savageCharacter (useLang) {
-	this.appVersion = globalAppVersion;
+    this.appVersion = globalAppVersion;
 
-	var _useLang = "en-US";
+    var _books = Array();
+    var _useLang = "en-US";
 
-	var _name = "";
-	var _background = "";
+    var _availableEdges = Array();
+    var _combatEdges = Array();
 
-	var _description = "";
+    var _name = "";
+    var _background = "";
 
-	var _startingFunds = 500;
-	var _currentFunds = 500;
+    var _description = "";
 
-	var _naturalWeapons = Array();
+    var _startingFunds = 500;
+    var _currentFunds = 500;
 
-	var _isNew = true;
-	var _multipleLanguages = false;
-	var _usesStrain = false;
+    var _naturalWeapons = Array();
+    var _attributeBoost = 0;
+    var _displayAttributes = 0;
 
-	var _selectedSPCPowers = Array();
+    var _isNew = true;
+    var _multipleLanguages = false;
+    var _usesStrain = false;
 
-	var _powerAlterations = Array();
+    var _selectedSPCPowers = Array();
 
-	var _activeSkills = Array();
+    var _powerAlterations = Array();
+    var _loadLimit = 0;
 
-	var _characterJournal = Array();
+    var _activeSkills = Array();
 
-	var _spcExtraPowerPoints = 0;
+    var _characterJournal = Array();
 
-	var _knownLanguages = Array();
+    var _spcExtraPowerPoints = 0;
 
-	var _knownLanguagesLimit = 0;
+    var _knownLanguages = Array();
 
-	var _innateAttacks = Array();
+    var _knownLanguagesLimit = 0;
 
-	var _uuid = -1;
+    var _XP = 0;
 
-	var _availableCyberware = Array();
+    var _innateAttacks = Array();
 
-	var allSkills = Array();
-	var _options = Array();
+    var _uuid = -1;
 
-	var _selectedAdvancements = Array();
-	var _selectedEquipment = Array();
+    var _availableCyberware = Array();
 
-	var _selectedPowers = Array();
-	var _powerPointsAvailable = 0;
-	var _totalPowersKnown = 0;
-	var _additionalPowersKnown = 0;
+    var allSkills = Array();
+    var _options = Array();
 
-	var _usesSanity = false;
-	var _usesGutsSkill = false;
+    var _selectedAdvancements = Array();
+    var _selectedEquipment = Array();
 
-	var _usesRiftsCreation = false;
+    var _selectedPowers = Array();
+    var _powerPointsAvailable = 0;
+    var _totalPowersKnown = 0;
+    var _additionalPowersKnown = 0;
 
-	var _usesSPCCreation = false;
-	var _SPCRisingStars = false;
-	var _SPCCurrentPowerPoints = 0;
-	var _SPCTakenExtraPowerPoints = false;
-	var _SPCPowerLevels = Array();
-	var _SPCPowerLimit = 0;
-	var _SPCSelectedPowerLevel = 0;
-	var _SPCStartingPowerPoints = 0;
+    var _usesSanity = false;
+    var _usesGutsSkill = false;
 
-	var _selectedArmor = Array();
-	var _selectedMundaneGear = Array();
-	var _selectedRangedWeapons = Array();
-	var _selectedHandWeapons = Array();
-	var _selectedShields = Array();
+    var _usesRiftsCreation = false;
 
-	var _perkOptions = Array();
+    var _usesSPCCreation = false;
+    var _SPCRisingStars = false;
+    var _SPCCurrentPowerPoints = 0;
+    var _SPCTakenExtraPowerPoints = false;
+    var _SPCPowerLevels = Array();
+    var _SPCPowerLimit = 0;
+    var _SPCSelectedPowerLevel = 0;
+    var _SPCStartingPowerPoints = 0;
 
-	var _spcGenericModifiers = Array();
+    var _selectedArmor = Array();
+    var _selectedMundaneGear = Array();
+    var _selectedRangedWeapons = Array();
+    var _selectedHandWeapons = Array();
+    var _selectedShields = Array();
 
-	var _attributes = {};
+    var _perkOptions = Array();
 
-	var _attributeBoost = {};
+    var _spcGenericModifiers = Array();
 
-	var _derived = {};
+    var _attributes = {};
 
-	var _perks = Array();
+    var _attributeBoost = {};
 
-	var _advances = Array();
+    var _derived = {};
 
-	var _skills = Array();
+    var _perks = Array();
 
-	var _edges = Array();
+    var _advances = Array();
 
-	var _gear = Array();
+    var _skills = Array();
 
-	var _race = {};
+    var _edges = Array();
 
-	var _raceOptions = Array();
+    var _gear = Array();
 
-	var _race = {};
+    var _race = {};
 
-	var _genderOptions = Array();
+    var _raceOptions = Array();
 
-	var _selectedPerks = Array();
+    var _race = {};
 
-	var _skillList = Array();
+    var _genderOptions = Array();
 
-	var _gender = {};
+    var _selectedPerks = Array();
 
-	var _skillValues = {};
+    var _skillList = Array();
 
-	var _customRangedWeapons = [];
-	var _customHandWeapons = [];
-	var _customGear = [];
-	var _customArmor = [];
-	var _customShields = [];
+    var _gender = {};
 
-	var _selectedHindrances = Array();
-	var _selectedEdges = Array();
+    var _skillValues = {};
 
-	var _installedHindrances = Array();
-	var _installedEdges = Array();
+    var _customRangedWeapons = [];
+    var _customHandWeapons = [];
+    var _customGear = [];
+    var _customArmor = [];
+    var _customShields = [];
 
-	var _bornAHero = false;
+    var _selectedHindrances = Array();
+    var _selectedEdges = Array();
 
-	var _selectedArcaneBackground = null;
+    var _installedHindrances = Array();
+    var _installedEdges = Array();
 
-	var _load = {
-		currentLoad: 0,
-		loadModifier: 0,
-		combatLoad: 0,
-		combatLoadModifier: 0
-	}
+    var _bornAHero = false;
 
-	var _agilitySkills = Array();
-	var _smartsSkills = Array();
-	var _spiritSkills = Array();
-	var _vigorSkills = Array();
-	var _strengthSkills = Array();
+    var _selectedArcaneBackground = null;
 
-	var _availablePerkPoints = 0;
-	var	_totalPerkPoints = 0;
-	var _optimizedPerkPoints = 0;
-	var _availableEdgePoints = 0;
+    var _load = {
+        currentLoad: 0,
+        loadModifier: 0,
+        combatLoad: 0,
+        combatLoadModifier: 0
+    }
 
-	var _isValid = true;
-	var _validSPCoverLimitShown = false;
-	var _validationReport = Array();
-	var _warningReport = Array();
+    var _allSkills = Array();
 
-	var _skillPointsAvailable = 15;
-	var _skillPointsUsed = 0;
 
-	var _strainBoost = 0;
-	var _doubleStrain = 0;
+    var _agilitySkills = Array();
+    var _smartsSkills = Array();
+    var _spiritSkills = Array();
+    var _vigorSkills = Array();
+    var _strengthSkills = Array();
 
-	var _linguistSelected = false;
+    var _availablePerkPoints = 0;
+    var    _totalPerkPoints = 0;
+    var _optimizedPerkPoints = 0;
+    var _availableEdgePoints = 0;
 
-	var _encumbranceMultiplier = 5;
+    var _isValid = true;
+    var _validSPCoverLimitShown = false;
+    var _validationReport = Array();
+    var _warningReport = Array();
 
-	var _installedCyberware = Array();
+    var _skillPointsAvailable = 15;
+    var _skillPointsUsed = 0;
 
-	var _currentStrain = 0;
-	var _maxStrain = 0;
-	var _availableMundaneGear = Array();
-	var _availableArmor = Array();
-	var _availableHandWeapons = Array();
-	var _availableRangedWeapons = Array();
-	var _availableShields = Array();
+    var _strainBoost = 0;
+    var _doubleStrain = 0;
 
-	var _availableArcaneBackgrounds = Array();
-	var _availablePowers = Array();
-	var _availableTrappings = Array();
+    var _linguistSelected = false;
 
-	var _secondMajorHindranceChosen = false;
-	var _attributePointsUsed = 0;
-	var _hasArcaneBackground = false;
+    var _encumbranceMultiplier = 5;
 
-	var _currentArcaneBackground = {};
-	var _attributePointsAvailable = 5;
-	var _attributePointsUsed = 0;
+    var _installedCyberware = Array();
 
-	this.init = function(useLang){
+    var _currentStrain = 0;
+    var _maxStrain = 0;
+    var _availableMundaneGear = Array();
+    var _availableArmor = Array();
+    var _availableHandWeapons = Array();
+    var _availableRangedWeapons = Array();
+    var _availableShields = Array();
 
-		if( useLang )
-			_useLang = useLang;
-		else if( localStorage["users_preferred_language"] )
-			_useLang = localStorage["users_preferred_language"];
-		else
-			_useLang = "en-US";
+    var _availableArcaneBackgrounds = Array();
+    var _availablePowers = Array();
+    var _availableTrappings = Array();
 
-		_name = "";
-		_background = "";
-
-		_description = "";
-
-		_startingFunds = 500;
-		_currentFunds = 500;
-
-		_naturalWeapons = Array();
-
-		_isNew = true;
-		_multipleLanguages = false;
-		_usesStrain = false;
-
-		_selectedSPCPowers = Array();
-
-		_powerAlterations = Array();
-
-		_activeSkills = Array();
-
-		_characterJournal = Array();
-
-		_spcExtraPowerPoints = 0;
-
-		_knownLanguages = Array();
-
-		_knownLanguagesLimit = 0;
-
-		_innateAttacks = Array();
-
-		_installedCyberware = Array();
-
-		_xpOptions = Array();
-
-		for( var optCounter = 0; optCounter <= 100; optCounter++) {
-			var xpObj = {
-				value: optCounter,
-				rankValue: 0,
-				label: optCounter,
-				rankName: "temp"
-			};
-			if( optCounter < 20) {
-				xpObj.rankName = this.getTranslation("CHARGEN_RANK_NOVICE");
-				xpObj.rankValue = 0;
-			} else if (optCounter < 40 ) {
-				xpObj.rankName = this.getTranslation("CHARGEN_RANK_SEASONED");
-				xpObj.rankValue = 1;
-			} else if (optCounter < 60 ) {
-				xpObj.rankName = this.getTranslation("CHARGEN_RANK_VETERAN");
-				xpObj.rankValue = 2;
-			} else if (optCounter < 80 ) {
-				xpObj.rankName = this.getTranslation("CHARGEN_RANK_HEROIC");
-				xpObj.rankValue = 3;
-			} else {
-				xpObj.rankName = this.getTranslation("CHARGEN_RANK_LEGENDARY");
-				xpObj.rankValue = 4;
-			}
-
-			if( optCounter == 0 )
-				_XP = xpObj;
-			_xpOptions.push( xpObj );
-		}
-
-		_uuid = this.makeUUID();
-
-		_options = Array();
-
-		_selectedAdvancements = Array();
-		_selectedEquipment = Array();
-
-		_selectedPowers = Array();
-		_powerPointsAvailable = 0;
-		_totalPowersKnown = 0;
-		_additionalPowersKnown = 0
-
-		_usesSanity = false;
-		_usesGutsSkill = false;
-
-		_usesRiftsCreation = false;
-
-		_usesSPCCreation = false;
-		_SPCRisingStars = false;
-		_SPCCurrentPowerPoints = 0;
-		_SPCTakenExtraPowerPoints = false;
-		_SPCPowerLevels = Array();
-		_SPCSelectedPowerLevel = 0;
-		_SPCPowerLevels[0] = {
-			power_points: 15,
-			rising_stars_power_points: 5,
-			name: this.getTranslation("SPC_PULP_HEROES")
-		};
-		_SPCPowerLevels[1] = {
-			power_points: 30,
-			rising_stars_power_points: 10,
-			name: this.getTranslation("SPC_STREET_FIGHTERS")
-		};
-		_SPCPowerLevels[2] = {
-			power_points: 45,
-			rising_stars_power_points: 20,
-			name: this.getTranslation("SPC_FOUR_COLOR")
-		};
-		_SPCPowerLevels[3] = {
-			power_points: 60,
-			rising_stars_power_points: 30,
-			name: this.getTranslation("SPC_HEAVY_HITTERS")
-		};
-		_SPCPowerLevels[4] = {
-			power_points: 75,
-			rising_stars_power_points: 50,
-			name: this.getTranslation("SPC_COSMIC")
-		};
-
-		_selectedArmor = Array();
-		_selectedMundaneGear = Array();
-		_selectedRangedWeapons = Array();
-		_selectedHandWeapons = Array();
-		_selectedShields = Array();
-
-		_perkOptions = Array(
-			{
-				label: "- " + this.getTranslation("CHARGEN_SELECT_A_PERK") + " -",
-				tag: "null",
-				cost: 0,
-				spcOnly: false,
-				effect: function() {
-
-				}
-			},
-			{
-				label: this.getTranslation("CHARGEN_PERKS_ATTRIBUTE"),
-				tag: "attribute",
-				cost: 2,
-				spcOnly: false,
-				effect: function(savageCharObj) {
-					//savageCharObj.attributePointsAvailable = savageCharObj.attributePointsAvailable + 1;
-					savageCharObj.incrementAttributePointsAvailable( 1 );
-				}
-			},
-			{
-				label: this.getTranslation("CHARGEN_PERKS_EDGE"),
-				tag: "edge",
-				cost: 2,
-				spcOnly: false,
-				effect: function(savageCharObj) {
-					savageCharObj.incrementAvailbleEdgePoints( 1 );
-				}
-			},
-			{
-				label: this.getTranslation("CHARGEN_PERKS_SKILL"),
-				tag: "skill",
-				cost: 1,
-				spcOnly: false,
-				effect: function(savageCharObj) {
-					//savageCharObj.skillPointsAvailable = savageCharObj.skillPointsAvailable + 1;
-					savageCharObj.incrementSkillPointsAvailable( 1 );
-				}
-			},
-			{
-				label: this.getTranslation("CHARGEN_PERKS_FUNDS"),
-				tag: "funds",
-				cost: 1,
-				spcOnly: false,
-				effect: function(savageCharObj) {
-					//savageCharObj.startingFunds = savageCharObj.startingFunds * 2;
-					savageCharObj.addCurrentFunds( savageCharObj.getStartingFunds() );
-				}
-			},
-			{
-				label: this.getTranslation("SPC_ADDITIONAL_POWER_POINTS_PERK"),
-				tag: "spc-power-points",
-				cost: 2,
-				spcOnly: true,
-				effect: function(savageCharObj) {
-					//savageCharObj.SPCTakenExtraPowerPoints = true;
-					savageCharObj.setTakenSPCExtraPowerPoints( true );
-				}
-			}
-		);
-
-		_spcGenericModifiers = Array();
-
-		_spcGenericModifiers.push( {
-			"local_name": this.getTranslation("SPC_MOD_CONTIGENT"),
-			// "points": Array(-1,-2)
-			"points": [0,-1,-2],
-			"currentCost": 0
-		});
-
-		_spcGenericModifiers.push( {
-			"local_name": this.getTranslation("SPC_MOD_DEVICE"),
-			//~ "points": Array(-1,-2)
-			"points": [0,-1,-2],
-			"currentCost": 0
-		});
-
-		_spcGenericModifiers.push( {
-			"local_name": this.getTranslation("SPC_MOD_LIMITATION"),
-			//~ "points": Array(-1,-2)
-			"points": [0,-1,-2],
-			"currentCost": 0
-		});
-
-		_spcGenericModifiers.push( {
-			"local_name": this.getTranslation("SPC_MOD_PROJECTILE"),
-			"points": 1,
-			"currentCost": 0
-		});
-
-		_spcGenericModifiers.push( {
-			"local_name": this.getTranslation("SPC_MOD_RTA"),
-			"points": 2,
-			"currentCost": 0
-		});
-
-		_spcGenericModifiers.push( {
-			"local_name": this.getTranslation("SPC_MOD_RA"),
-			"points": -1,
-			"currentCost": 0
-		});
-
-		_spcGenericModifiers.push( {
-			"local_name": this.getTranslation("SPC_MOD_STA"),
-			"points": -1,
-			"currentCost": 0
-		});
-
-		_spcGenericModifiers.push( {
-			"local_name": this.getTranslation("SPC_MOD_SWITCHABLE"),
-			"points": 2,
-			"switchable": 1,
-			"currentCost": 0
-		});
-
-		_books = Array();
-
-		for( bookCounter = 0; bookCounter < savageWorldsBooksList.length; bookCounter++ ) {
-			_books[bookCounter] = get_book_by_id( savageWorldsBooksList[bookCounter].id );
-			if( _books[bookCounter].id == 1 ) {
-				_books[bookCounter].inUse = true;
-			} else {
-				_books[bookCounter].inUse = false;
-			}
-			for( var setting_c = 0; setting_c < _books[bookCounter].setting_rules.length; setting_c++) {
-				_books[bookCounter].setting_rules[setting_c].inUse = false;
-			}
-		}
-
-		// Localize Edges
-		for( var edgeCounter = 0; edgeCounter < savageWorldsEdges.length; edgeCounter++ ) {
-			savageWorldsEdges[edgeCounter].local_name = this.getLocalName( savageWorldsEdges[edgeCounter].name );
-			savageWorldsEdges[edgeCounter].select_option_name = savageWorldsEdges[edgeCounter].local_name;
-
-			if( savageWorldsEdges[edgeCounter].child == 1 ) {
-				savageWorldsEdges[edgeCounter].select_option_name = "↳ " + savageWorldsEdges[edgeCounter].select_option_name;
-			}
-
-			if( savageWorldsEdges[edgeCounter].child == 2 ) {
-				savageWorldsEdges[edgeCounter].select_option_name = "↳ " + savageWorldsEdges[edgeCounter].select_option_name;
-			}
-
-			//savageWorldsEdges[edgeCounter].local_description = this.getLocalName( savageWorldsEdges[edgeCounter].description );
-			savageWorldsEdges[edgeCounter].bookObj = get_book_by_id( savageWorldsEdges[edgeCounter].book );
-		}
-
-		// Localize Hindrances
-		for( var hindranceCounter = 0; hindranceCounter < savageWorldsHindrances.length; hindranceCounter++ ) {
-			savageWorldsHindrances[hindranceCounter].local_name = this.getLocalName( savageWorldsHindrances[hindranceCounter].name );
-			savageWorldsHindrances[hindranceCounter].select_option_name = savageWorldsHindrances[hindranceCounter].local_name;
-			if( savageWorldsHindrances[hindranceCounter].severity == "major")
-				savageWorldsHindrances[hindranceCounter].select_option_name = savageWorldsHindrances[hindranceCounter].local_name + " (" + this.getTranslation("CHARGEN_MAJOR_HINDRANCE") + ")";
-			else if( savageWorldsHindrances[hindranceCounter].severity == "minor")
-				savageWorldsHindrances[hindranceCounter].select_option_name = savageWorldsHindrances[hindranceCounter].local_name  + " (" + this.getTranslation("CHARGEN_MINOR_HINDRANCE") + ")";
-
-	//		savageWorldsHindrances[hindranceCounter].local_description = this.getLocalName( savageWorldsHindrances[hindranceCounter].description );
-			savageWorldsHindrances[hindranceCounter].bookObj = get_book_by_id( savageWorldsHindrances[hindranceCounter].book );
-		}
-
-		// Localize SPC Powers...
-
-		for( var spcCounter = 0; spcCounter < savageWorldsSPCPowers.length; spcCounter++ ) {
-			savageWorldsSPCPowers[spcCounter].local_name = this.getLocalName( savageWorldsSPCPowers[spcCounter].name );
-			savageWorldsSPCPowers[spcCounter].select_option_name = savageWorldsSPCPowers[spcCounter].local_name;
-
-			savageWorldsSPCPowers[spcCounter].modifiersObj =  JSON.parse(savageWorldsSPCPowers[spcCounter].modifiers)
-			for( var modCounter = 0; modCounter < savageWorldsSPCPowers[spcCounter].modifiersObj.length; modCounter++ ) {
-				savageWorldsSPCPowers[spcCounter].modifiersObj[ modCounter ].local_name = this.getLocalName( savageWorldsSPCPowers[spcCounter].modifiersObj[ modCounter ].name )
-				if( savageWorldsSPCPowers[spcCounter].modifiersObj[ modCounter ].points[0] == "[" )
-						savageWorldsSPCPowers[spcCounter].modifiersObj[ modCounter ].points = JSON.parse( 	savageWorldsSPCPowers[spcCounter].modifiersObj[ modCounter ].points );
-			}
-
-			savageWorldsSPCPowers[spcCounter].genericModifiersObj = angular.copy( _spcGenericModifiers );
-
-	//		savageWorldsSPCPowers[spcCounter].local_description = this.getLocalName( savageWorldsSPCPowers[spcCounter].description );
-			savageWorldsSPCPowers[spcCounter].bookObj = get_book_by_id( savageWorldsSPCPowers[spcCounter].book );
-		}
-
-		// Localize Arcane Backgrounds
-		for( var abCounter = 0; abCounter < savageWorldsArcaneBackgrounds.length; abCounter++ ) {
-			savageWorldsArcaneBackgrounds[abCounter].local_name = this.getLocalName( savageWorldsArcaneBackgrounds[abCounter].name );
-			savageWorldsArcaneBackgrounds[abCounter].select_option_name = savageWorldsArcaneBackgrounds[abCounter].local_name;
-			savageWorldsArcaneBackgrounds[abCounter].local_backlash = this.getLocalName( savageWorldsArcaneBackgrounds[abCounter].backlash );
-	//		savageWorldsArcaneBackgrounds[abCounter].local_description = this.getLocalName( savageWorldsArcaneBackgrounds[abCounter].description );
-			savageWorldsArcaneBackgrounds[abCounter].bookObj = get_book_by_id( savageWorldsArcaneBackgrounds[abCounter].book );
-		}
-
-		// Localize Arcane Trappings
-		for( var abCounter = 0; abCounter < savageWorldsArcaneTrappings.length; abCounter++ ) {
-			savageWorldsArcaneTrappings[abCounter].local_name = this.getLocalName( savageWorldsArcaneTrappings[abCounter].name );
-			savageWorldsArcaneTrappings[abCounter].select_option_name = savageWorldsArcaneTrappings[abCounter].local_name;
-	//		savageWorldsArcaneTrappings[abCounter].local_description = this.getLocalName( savageWorldsArcaneTrappings[abCounter].description );
-			savageWorldsArcaneTrappings[abCounter].bookObj = get_book_by_id( savageWorldsArcaneTrappings[abCounter].book );
-		}
-
-		// Localize Cyberware
-		for( var abCounter = 0; abCounter < savageWorldsCyberware.length; abCounter++ ) {
-			savageWorldsCyberware[abCounter].local_name = this.getLocalName( savageWorldsCyberware[abCounter].name );
-			savageWorldsCyberware[abCounter].local_description = this.getLocalName( savageWorldsCyberware[abCounter].description );
-			savageWorldsCyberware[abCounter].bookObj = get_book_by_id( savageWorldsCyberware[abCounter].book );
-		}
-
-		// Localize Powers
-		for( var abCounter = 0; abCounter < savageWorldsPowers.length; abCounter++ ) {
-			savageWorldsPowers[abCounter].local_name = this.getLocalName( savageWorldsPowers[abCounter].name );
-			savageWorldsPowers[abCounter].select_option_name = savageWorldsPowers[abCounter].local_name;
-		//	savageWorldsPowers[abCounter].local_description = this.getLocalName( savageWorldsPowers[abCounter].description );
-			savageWorldsPowers[abCounter].local_duration = this.getLocalName( savageWorldsPowers[abCounter].duration );
-			savageWorldsPowers[abCounter].local_additional_effects = this.getLocalName( savageWorldsPowers[abCounter].additional_effects );
-			savageWorldsPowers[abCounter].bookObj = get_book_by_id( savageWorldsPowers[abCounter].book );
-		}
-
-		// Localize Equipment
-			// Localize General -
-			for( var eqCounter = 0; eqCounter < savageWorldsGearGeneral.length; eqCounter++ ) {
-				savageWorldsGearGeneral[eqCounter].local_name = this.getLocalName( savageWorldsGearGeneral[eqCounter].name );
-				savageWorldsGearGeneral[eqCounter].select_option_name = savageWorldsGearGeneral[eqCounter].local_name;
-			}
-
-			// Localize Types
-			for( var eqCounter = 0; eqCounter < savageWorldsGearTypes.length; eqCounter++ ) {
-				savageWorldsGearTypes[eqCounter].local_name = this.getLocalName( savageWorldsGearTypes[eqCounter].name );
-				savageWorldsGearTypes[eqCounter].select_option_name = savageWorldsGearTypes[eqCounter].local_name;
-
-				savageWorldsGearTypes[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearTypes[eqCounter].general );
-			}
-
-			// Localize Classes
-			// for( var eqCounter = 0; eqCounter < savageWorldsGearClasses.length; eqCounter++ ) {
-			// 	savageWorldsGearClasses[eqCounter].local_name = this.getLocalName( savageWorldsGearClasses[eqCounter].name );
-			// 	savageWorldsGearClasses[eqCounter].select_option_name = savageWorldsGearClasses[eqCounter].local_name;
-
-			// 	savageWorldsGearTypes[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearTypes[eqCounter].general );
-			// 	savageWorldsGearTypes[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearTypes[eqCounter].type );
-			// }
-
-			// Localize Mundane
-			for( var eqCounter = 0; eqCounter < savageWorldsGearMundane.length; eqCounter++ ) {
-				savageWorldsGearMundane[eqCounter].local_name = this.getLocalName( savageWorldsGearMundane[eqCounter].name );
-				savageWorldsGearMundane[eqCounter].select_option_name = savageWorldsGearMundane[eqCounter].local_name;
-
-				savageWorldsGearMundane[eqCounter].local_notes = this.getLocalName( savageWorldsGearMundane[eqCounter].notes );
-
-				savageWorldsGearMundane[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearMundane[eqCounter].general );
-				savageWorldsGearMundane[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearMundane[eqCounter].type );
-
-				savageWorldsGearMundane[eqCounter].bookObj = get_book_by_id( savageWorldsGearMundane[eqCounter].book );
-			}
-
-			// Localize Armor
-			for( var eqCounter = 0; eqCounter < savageWorldsGearArmor.length; eqCounter++ ) {
-				savageWorldsGearArmor[eqCounter].local_name = this.getLocalName( savageWorldsGearArmor[eqCounter].name );
-				savageWorldsGearArmor[eqCounter].select_option_name = savageWorldsGearArmor[eqCounter].local_name;
-
-				savageWorldsGearArmor[eqCounter].local_notes = this.getLocalName( savageWorldsGearArmor[eqCounter].notes );
-
-				savageWorldsGearArmor[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearArmor[eqCounter].general );
-				savageWorldsGearArmor[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearArmor[eqCounter].type );
-
-				savageWorldsGearArmor[eqCounter].bookObj = get_book_by_id( savageWorldsGearArmor[eqCounter].book );
-			}
-
-			// Localize Shields
-			for( var eqCounter = 0; eqCounter < savageWorldsGearShields.length; eqCounter++ ) {
-				savageWorldsGearShields[eqCounter].local_name = this.getLocalName( savageWorldsGearShields[eqCounter].name );
-				savageWorldsGearShields[eqCounter].select_option_name = savageWorldsGearShields[eqCounter].local_name;
-
-				//savageWorldsGearShields[eqCounter].local_notes = this.getLocalName( savageWorldsGearShields[eqCounter].notes );
-
-				savageWorldsGearShields[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearShields[eqCounter].general );
-				savageWorldsGearShields[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearShields[eqCounter].type );
-
-				savageWorldsGearShields[eqCounter].bookObj = get_book_by_id( savageWorldsGearShields[eqCounter].book );
-			}
-
-			// Localize Hand Weapons
-			for( var eqCounter = 0; eqCounter < savageWorldsGearHandWeapons.length; eqCounter++ ) {
-				savageWorldsGearHandWeapons[eqCounter].local_name = this.getLocalName( savageWorldsGearHandWeapons[eqCounter].name );
-				savageWorldsGearHandWeapons[eqCounter].select_option_name = savageWorldsGearHandWeapons[eqCounter].local_name;
-
-				savageWorldsGearHandWeapons[eqCounter].local_notes = this.getLocalName( savageWorldsGearHandWeapons[eqCounter].notes );
-
-				savageWorldsGearHandWeapons[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearHandWeapons[eqCounter].general );
-				savageWorldsGearHandWeapons[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearHandWeapons[eqCounter].type );
-
-				savageWorldsGearHandWeapons[eqCounter].bookObj = get_book_by_id( savageWorldsGearHandWeapons[eqCounter].book );
-			}
-
-			// Localize Ranged Weapons
-			for( var eqCounter = 0; eqCounter < savageWorldsGearRangedWeapons.length; eqCounter++ ) {
-				savageWorldsGearRangedWeapons[eqCounter].local_name = this.getLocalName( savageWorldsGearRangedWeapons[eqCounter].name );
-				savageWorldsGearRangedWeapons[eqCounter].select_option_name = savageWorldsGearRangedWeapons[eqCounter].local_name;
-
-				savageWorldsGearRangedWeapons[eqCounter].local_notes = this.getLocalName( savageWorldsGearRangedWeapons[eqCounter].notes );
-
-				savageWorldsGearRangedWeapons[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearRangedWeapons[eqCounter].general );
-				savageWorldsGearRangedWeapons[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearRangedWeapons[eqCounter].type );
-
-				savageWorldsGearRangedWeapons[eqCounter].bookObj = get_book_by_id( savageWorldsGearRangedWeapons[eqCounter].book );
-			}
-
-		_attributes = {
-			agility: 1,
-			smarts: 1,
-			spirit: 1,
-			strength: 1,
-			vigor: 1
-		}
-
-		_attributeBoost = {
-			agility: 0,
-			smarts: 0,
-			spirit: 0,
-			strength: 0,
-			vigor: 0,
-		};
-
-		// derived statistics...
-		_derived = {
-			pace: 6,
-			charisma: 0,
-			parry: 2,
-			toughness: 4,
-			armor: 0,
-			strain: 0,
-			currentLoad: 0,
-			sanity: 0
-		};
-
-		localizeDice( _useLang);
-
-		// character creation perks....
-		_perks = Array();
-
-		// character development advances....
-		_advances = Array();
-
-		// skills list...
-		_skills = Array();
-
-		// edges list...
-		_edges = Array();
-
-		// gear list...
-		_gear = Array();
-
-		_race = {};
-
-		_raceOptions = Array();
-
-		for( var raceCount = 0; raceCount < savageWorldsRaces.length; raceCount++ ) {
-			if( this.bookInUse( savageWorldsRaces[raceCount].book ) ) {
-				var newItem = {}
-				angular.extend(newItem, get_race_by_id( savageWorldsRaces[raceCount].id, _useLang ));
-
-				_raceOptions.push( newItem );
-			}
-
-		}
-
-		_race = this._getRaceById(1);
-
-		_genderOptions = Array(
-			{
-				id: "m",
-				label: this.getTranslation( "GENERAL_MALE" )
-			},
-			{
-				id: "f",
-				label: this.getTranslation( "GENERAL_FEMALE" )
-			},
-			{
-				id: "o",
-				label: this.getTranslation( "GENERAL_OTHER" )
-			}
-		);
-
-		_selectedPerks = Array();
-
-		_skillList = Array();
-		for( skillCounter = 0; skillCounter < savageWorldsSkillList.length; skillCounter++) {
-			_skillList[skillCounter] = {};
-			angular.extend( _skillList[skillCounter], savageWorldsSkillList[skillCounter]);
-		}
-
-		_gender = _genderOptions[0];
-
-		_skillValues = {};
-
-		_selectedHindrances = Array();
-		_selectedEdges = Array();
-
-		_installedHindrances = Array();
-		_installedEdges = Array();
-
-		_bornAHero = false;
-
-		this.refreshAvailable();
-		this.validate();
-
-			// Localize Advancement Types
-			this.advancementTypes = Array();
-			this.advancementTypes.push ( {
-					tag: "none",
-					takenAt: -1,
-					label: this.getTranslation("CHARGEN_ADVANCEMENT_NOT_SELECTED"),
-					option1: "",
-					option2: "",
-				}
-			);
-
-			this.advancementTypes.push ( {
-					tag: "edge",
-					takenAt: -1,
-					label: this.getTranslation("CHARGEN_ADVANCEMENT_NEW_EDGE"),
-					option1: _availableEdges[0],
-					option2: "",
-				}
-			);
-
-			this.advancementTypes.push ( {
-					tag: "incskill",
-					takenAt: -1,
-					label: this.getTranslation("CHARGEN_ADVANCEMENT_INCREASE_SKILL"),
-					option1: "",
-					option2: "",
-				}
-			);
-
-			this.advancementTypes.push ( {
-					tag: "inc2skills",
-					takenAt: -1,
-					label: this.getTranslation("CHARGEN_ADVANCEMENT_INCREASE_2_SKILLS"),
-					option1: "",
-					option2: "",
-				}
-			);
-
-			this.advancementTypes.push ( {
-					tag: "skill",
-					takenAt: -1,
-					label: this.getTranslation("CHARGEN_ADVANCEMENT_NEW_SKILL"),
-					option1: "",
-					option2: "",
-				}
-			);
-
-			this.advancementTypes.push ( {
-					tag: "attribute",
-					takenAt: -1,
-					label: this.getTranslation("CHARGEN_ADVANCEMENT_INCREASE_ATTRIBUTE"),
-					option1: "",
-					option2: "",
-				}
-			);
-
-	}
-
-	this.calcSPC = function() {
-		this.hasSPCSwitchablePowers = false;
-		this.switchableSPCPowers = Array()
-
-		if( _usesSPCCreation ) {
-			_SPCPowerLimit = 0;
-			_SPCCurrentPowerPoints = 0;
-			if( _SPCRisingStars ) {
-				_SPCCurrentPowerPoints = _SPCPowerLevels[ _SPCSelectedPowerLevel ].rising_stars_power_points;
-				_SPCCurrentPowerPoints += _spcExtraPowerPoints;
-				_SPCPowerLimit = _SPCCurrentPowerPoints;
-			} else {
-				_SPCCurrentPowerPoints = _SPCPowerLevels[ _SPCSelectedPowerLevel ].power_points;
-				_SPCCurrentPowerPoints += _spcExtraPowerPoints;
-				_SPCPowerLimit = Math.ceil( _SPCCurrentPowerPoints / 3 );
-			}
-			if( this.hasEdge("the-best-there-is"))  {
-				if( !_SPCRisingStars ) {
-					_SPCPowerLimit = Math.ceil( _SPCCurrentPowerPoints / 2 );
-				} else {
-					_SPCPowerLimit = Math.ceil( _SPCCurrentPowerPoints / 2 );
-					if( _SPCPowerLimit < _SPCCurrentPowerPoints)
-						_SPCPowerLimit = _SPCCurrentPowerPoints;
-				}
-			}
-
-			// for the extra power points perk....
-			if( _SPCTakenExtraPowerPoints ) {
-				if( _SPCSelectedPowerLevel == 0 || _SPCSelectedPowerLevel == 1 ) {
-					_SPCCurrentPowerPoints += 5;
-				} else {
-					_SPCCurrentPowerPoints += 10;
-				}
-			}
-
-			_SPCStartingPowerPoints = _SPCCurrentPowerPoints;
-
-			for( var powerCounter = 0; powerCounter < _selectedSPCPowers.length; powerCounter++) {
-				_selectedSPCPowers[powerCounter].currentCost = _selectedSPCPowers[powerCounter].cost  / 1* _selectedSPCPowers[powerCounter].selectedLevel / 1;
-				for( var modCounter = 0; modCounter < _selectedSPCPowers[powerCounter].modifiersObj.length; modCounter++) {
-					if( typeof(_selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost) != "undefined" && _selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost != 0) {
-						_selectedSPCPowers[powerCounter].currentCost += _selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost / 1;
-					}
-				}
-				_selectedSPCPowers[powerCounter].switchable = false;
-				for( var modCounter = 0; modCounter < _selectedSPCPowers[powerCounter].genericModifiersObj.length; modCounter++) {
-					if( typeof(_selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost) != "undefined" && _selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost != 0) {
-						_selectedSPCPowers[powerCounter].currentCost += _selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost / 1;
-						if( _selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].switchable > 0 && _selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost > 0 ) {
-								this.switchableSPCPowers.push( _selectedSPCPowers[powerCounter] );
-								this.hasSPCSwitchablePowers = true;
-								_selectedSPCPowers[powerCounter].switchable = true;
-
-						}
-						_selectedSPCPowers[powerCounter].internalID = powerCounter;
-					}
-				}
-
-				if( _selectedSPCPowers[powerCounter].currentCost < 1 )
-					_selectedSPCPowers[powerCounter].currentCost = 1;
-
-				if( _selectedSPCPowers[powerCounter].boost_attribute > 0 ) {
-					if( _selectedSPCPowers[powerCounter].boosted_attribute != "" ) {
-						//~ console.log( "_selectedSPCPowers[powerCounter].boosted_attribute", _selectedSPCPowers[powerCounter].boosted_attribute);
-						//~ console.log( "_selectedSPCPowers[powerCounter].selectedLevel", _selectedSPCPowers[powerCounter].selectedLevel );
-						this.boostAttribute( _selectedSPCPowers[powerCounter].boosted_attribute, _selectedSPCPowers[powerCounter].selectedLevel );
-					}
-				}
-
-				if( _selectedSPCPowers[powerCounter].boost_skill > 0 ) {
-					if( _selectedSPCPowers[powerCounter].boosted_skill != "" ) {
-						this.boostSkill( _selectedSPCPowers[powerCounter].boosted_skill, _selectedSPCPowers[powerCounter].boosted_skill_specialty, _selectedSPCPowers[powerCounter].selectedLevel  );
-					}
-				}
-
-				if( _selectedSPCPowers[powerCounter].currentCost > _SPCPowerLimit) {
-					if( _validSPCoverLimitShown  == false ) {
-						_validationReport.push(
-							this.getTranslation("CHARGEN_VALIDATION_SPC_OVER_LIMIT").replace(
-								"{value}", _selectedSPCPowers[powerCounter].local_name
-							)
-						);
-						_isValid = false;
-						_validSPCoverLimitShown = true;
-					}
-
-				}
-
-				if( _selectedSPCPowers[powerCounter].switchableWith ) {
-					if( _selectedSPCPowers[powerCounter].currentCost > _selectedSPCPowers[powerCounter].switchableWith.currentCost - 2) {
-						_validationReport.push(
-							this.getTranslation("CHARGEN_VALIDATION_SPC_SWITCH").replace(
-								"{value}", _selectedSPCPowers[powerCounter].local_name
-							)
-						);
-						_isValid = false;
-					}
-				} else {
-					_SPCCurrentPowerPoints -= _selectedSPCPowers[powerCounter].currentCost;
-				}
-
-				if( _selectedSPCPowers[powerCounter].charEffect ) {
-					_selectedSPCPowers[powerCounter].charEffect( this, _selectedSPCPowers[powerCounter]);
-				}
-			}
-
-			if( _SPCCurrentPowerPoints < 0 ) {
-				_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_SPC_OVER_POWER_POINTS") );
-				_isValid = false;
-			}
-		}
-	}
-
-	this.newUUID = function() {
-		_uuid = this.makeUUID();
-	}
-
-	this.makeUUID = function(){
-		var d = new Date().getTime();
-		if(window.performance && typeof window.performance.now === "function"){
-			d += performance.now(); //use high-precision timer if available
-		}
-		var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-			var r = (d + Math.random()*16)%16 | 0;
-			d = Math.floor(d/16);
-			return (c=='x' ? r : (r&0x3|0x8)).toString(16);
-		});
-		return uuid;
-	};
-
-	this.refreshAvailable = function( ) {
-
-		_agilitySkills = Array();
-		_allSkills = Array();
-		_smartsSkills = Array();
-		_spiritSkills = Array();
-		_strengthSkills = Array();
-		_vigorSkills = Array(); // I'm not aware of any vigor skills, but I' m prepared on the backend ;)
-
-		for( skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
-			var showSkill = true;
-			if( _skillList[skillCounter].name[ _useLang ] ) {
-				_skillList[skillCounter].local_name = _skillList[skillCounter].name[ _useLang ];
-			} else {
-				_skillList[skillCounter].local_name = _skillList[skillCounter].name[ "en-US" ];
-			}
-			if( !_skillList[skillCounter].value )
-				_skillList[skillCounter].value = 0;
-			if( !_skillList[skillCounter].spec )
-				_skillList[skillCounter].spec = "";
-			if( !_skillList[skillCounter].specialties )
-				_skillList[skillCounter].specialties = Array();
-
-			_skillList[skillCounter].displayValue = "";
-			if( _skillList[skillCounter].value + _skillList[skillCounter].boost > 0 ) {
-				diceValue = getDiceValue( _skillList[skillCounter].value + _skillList[skillCounter].boost );
-				_skillList[skillCounter].displayValue = diceValue.local_label;
-			}
-
-			for( specialtyCounter = 0; specialtyCounter < _skillList[skillCounter].specialties.length; specialtyCounter++) {
-				_skillList[skillCounter].specialties[specialtyCounter].displayValue = "";
-				if( typeof( _skillList[skillCounter].specialties[specialtyCounter].boost ) == "undefined" )
-					 _skillList[skillCounter].specialties[specialtyCounter].boost = 0;
-				if( _skillList[skillCounter].specialties[specialtyCounter].value + _skillList[skillCounter].specialties[specialtyCounter].boost  > 0 ) {
-					diceValue = getDiceValue( _skillList[skillCounter].specialties[specialtyCounter].value  + _skillList[skillCounter].specialties[specialtyCounter].boost );
-					_skillList[skillCounter].specialties[specialtyCounter].displayValue = diceValue.local_label;
-				}
-			}
-
-			_skillList[skillCounter].showSkill = true;
-			if( !this.bookInUse( _skillList[skillCounter].book) ) {
-				_skillList[skillCounter].showSkill = false;
-				_skillList[skillCounter].value = 0;
-				_skillValues[ _skillList[skillCounter].short_name ] = 0;
-			}
-
-			if(  _skillList[skillCounter].for_arcane ) {
-				if( !this.hasArcane( _skillList[skillCounter].for_arcane )) {
-					_skillList[skillCounter].showSkill = false;
-					_skillValues[ _skillList[skillCounter].short_name ] = 0;
-					_skillList[skillCounter].value = 0;
-				}
-			}
-
-			if( _skillList[skillCounter].id == "SKILL_GUTS" ) {
-				if( _usesGutsSkill == false ) {
-					_skillList[skillCounter].showSkill = false;
-					_skillValues[ _skillList[skillCounter].short_name ] = 0;
-				}
-			}
-
-			if( _skillValues[ _skillList[skillCounter].id ] ) {
-				_skillList[skillCounter].value = _skillValues[ _skillList[skillCounter].short_name ];
-
-			}
-
-			if( _skillList[skillCounter].showSkill && _skillList[skillCounter].attribute == "agility" ) {
-				_agilitySkills.push( _skillList[skillCounter] );
-			}
-			if( _skillList[skillCounter].showSkill && _skillList[skillCounter].attribute == "smarts" ) {
-				_smartsSkills.push( _skillList[skillCounter] );
-			}
-			if( _skillList[skillCounter].showSkill && _skillList[skillCounter].attribute == "spirit" ) {
-				_spiritSkills.push( _skillList[skillCounter] );
-			}
-			if( _skillList[skillCounter].showSkill && _skillList[skillCounter].attribute == "strength" ) {
-				_strengthSkills.push( _skillList[skillCounter] );
-			}
-			if( _skillList[skillCounter].showSkill && _skillList[skillCounter].attribute == "vigor" ) {
-				_vigorSkills.push( _skillList[skillCounter] );
-			}
-			_allSkills.push( _skillList[skillCounter] );
-
-			for( skc = 0; skc < _skillList[skillCounter].specialties.length; skc++ ) {
-				_skillList[skillCounter].specialties[skc].is_specialty = _skillList[skillCounter].id
-				_skillList[skillCounter].specialties[skc].local_name = _skillList[skillCounter].local_name + ": " + _skillList[skillCounter].specialties[skc].name;
-				_skillList[skillCounter].specialties[skc].id = _skillList[skillCounter].id
-				_skillList[skillCounter].specialties[skc].specify_name = _skillList[skillCounter].specialties[skc].name
-				_skillList[skillCounter].specialties[skc].attribute = _skillList[skillCounter].attribute
-				if( ! _skillList[skillCounter].specialties[skc].boost )
-					_skillList[skillCounter].specialties[skc].boost = 0;
-				_allSkills.push( _skillList[skillCounter].specialties[skc] );
-			}
-		}
-
-		_allSkills.unshift( {id: 'undefined',local_name: this.getTranslation('GENERAL_SELECT')} );
-
-		_raceOptions = Array();
-		for( var raceCount = 0; raceCount < savageWorldsRaces.length; raceCount++ ) {
-
-			if( this.bookInUse( savageWorldsRaces[raceCount].book ) ) {
-				var newItem = {}
-				angular.extend(newItem, get_race_by_id( savageWorldsRaces[raceCount].id, _useLang ));
-
-				_raceOptions.push( newItem );
-			}
-		}
-
-	}
-
-	this.isPerkOptimized = function() {
-		if( _totalPerkPoints == _optimizedPerkPoints )
-			return true;
-		else
-			return false;
-	}
-
-	this.getArcaneSkill = function() {
-		for(var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
-			if(  _skillList[skillCounter].for_arcane ) {
-				if( this.hasArcane( _skillList[skillCounter].for_arcane )) {
-					return _skillList[skillCounter];
-				}
-			}
-		}
-		return null;
-	}
-
-	this.getDerived = function() {
-		return _derived;
-	}
-
-	this.getAvailableEdges = function() {
-		return _availableEdges;
-	}
-
-	this.getAvailableCyberware = function() {
-		return _availableCyberware;
-	}
-
-	this.getAvailablePerks = function() {
-		return _availablePerks;
-	}
-
-	this.getSelectedSPCPowers = function() {
-		return _selectedSPCPowers;
-	}
-
-	this.getAvailableHindrances = function() {
-		return _availableHindrances;
-	}
-
-	this.getAvailableHandWeapons = function() {
-		return _availableHandWeapons;
-	}
-
-	this.getAvailableRangedWeapons = function() {
-		return _availableRangedWeapons;
-	}
-
-	this.getSelectedRangedWeapons = function() {
-		return _selectedRangedWeapons;
-	}
-
-	this.getSelectedAvancements = function() {
-		var _return = 0;
-		for( var aC = 0; aC < _selectedAdvancements.length; aC++) {
-			if( _selectedAdvancements[aC].tag != 'none')
-				_return++;
-		}
-		return _return;
-	}
-
-	this.getSelectedHandWeapons = function() {
-		return _selectedHandWeapons;
-	}
-
-	this.getSelectedArmor = function() {
-		return _selectedArmor;
-	}
-
-	this.getXP = function() {
-		return _XP;
-	}
-
-	this.getXPOptions = function() {
-		return _xpOptions;
-	}
-
-	this.getSelectedAdvancements = function() {
-		return _selectedAdvancements;
-	}
-
-	this.getAvailableAdvancements = function() {
-		return _selectedAdvancements.length;
-	}
-
-	this.getAllSkills = function() {
-		return _allSkills;
-	}
-
-	this.getSkillList = function() {
-		return _allSkills;
-	}
-
-	this.getSelectedShields = function() {
-		return _selectedShields;
-	}
-
-	this.getAvailableArmor = function() {
-		return _availableArmor;
-	}
-
-	this.getAvailableShields = function() {
-		return _availableShields;
-	}
-
-	this.getAvailableMundaneGear = function() {
-		return _availableMundaneGear;
-	}
-
-
-	this.getSelectedMundaneGear = function() {
-		return _selectedMundaneGear;
-	}
-
-	this.getSelectedEdges = function() {
-		return _selecteddges;
-	}
-
-	this.getInstalledEdges = function() {
-		return _installedEdges;
-	}
-
-	this.getInstalledHindrances = function() {
-		return _installedHindrances;
-	}
-
-	this.getSelectedHindrances = function() {
-		return _selectedHindrances;
-	}
-
-	this.getSelectedPerks = function() {
-		return _selectedPerks;
-	}
-
-	this.setGender = function( genderID ) {
-		for(var gc = 0; gc < _genderOptions.length; gc++) {
-			if( genderID == _genderOptions[gc].id ) {
-				_gender = _genderOptions[gc];
-				return true;
-			}
-		}
-		return false;
-	}
-
-	this.setXP = function( xpValue ) {
-		for(var xpc = 0; xpc < _xpOptions.length; xpc++) {
-			if( xpValue == _xpOptions[xpc].value ) {
-				_XP = _xpOptions[xpc];
-				return true;
-			}
-		}
-		return false;
-	}
-
-	this._getRaceById = function( raceID ) {
-
-		for(var gc = 0; gc < _raceOptions.length; gc++) {
-
-			if( raceID == _raceOptions[gc].id ) {
-				return  _raceOptions[gc];
-			}
-		}
-		return null;
-	}
-
-	this.setRace = function( raceID ) {
-		for(var gc = 0; gc < savageWorldsRaces.length; gc++) {
-			if( raceID == savageWorldsRaces[gc].id ) {
-				_race = savageWorldsRaces[gc];
-				return true;
-			}
-		}
-		return false;
-	}
-
-	this.removePower = function(powerIndex) {
-
-		if(
-			_selectedPowers[ powerIndex ]
-		) {
-			_selectedPowers.splice(powerIndex, 1);
-			return true;
-		}
-
-		return false;
-	}
-
-	this.addPower = function(powerBookID, powerTag, trappingBookID, trappingTag, powerName) {
-
-		for( var powerCounter = 0; powerCounter < savageWorldsPowers.length; powerCounter++) {
-			if(
-				savageWorldsPowers[powerCounter].tag == powerTag
-					&&
-				savageWorldsPowers[powerCounter].book == powerBookID
-			) {
-				var newPower = {};
-				angular.extend( newPower, savageWorldsPowers[ powerCounter ] );
-
-				newPower.trapping = savageWorldsArcaneTrappings[0];
-				for( var trappingCounter = 0; trappingCounter < savageWorldsArcaneTrappings.length; trappingCounter++) {
-					if(
-						savageWorldsArcaneTrappings[trappingCounter].tag == trappingTag
-							&&
-						savageWorldsArcaneTrappings[trappingCounter].book == trappingBookID
-					) {
-						newPower.trapping = savageWorldsArcaneTrappings[trappingCounter];
-					}
-				}
-				if( powerName )
-					newPower.customName = powerName;
-				else
-					newPower.customName = newPower.local_name;
-
-				_selectedPowers.push( newPower );
-				return true;
-			}
-		}
-		return false;
-	}
-
-	this.addEdge = function(bookId, edgeTag) {
-		for( var edgeCounter = 0; edgeCounter < savageWorldsEdges.length; edgeCounter++) {
-			if(
-				savageWorldsEdges[edgeCounter].tag == edgeTag
-					&&
-				savageWorldsEdges[edgeCounter].book == bookId
-			) {
-				var newEdge = {};
-				angular.extend( newEdge, savageWorldsEdges[ edgeCounter ] );
-				_selectedEdges.push( newEdge );
-				return true;
-			}
-		}
-		return false;
-	}
-
-	this.addCyberEdge = function(bookId, edgeTag) {
-		for( var edgeCounter = 0; edgeCounter < savageWorldsEdges.length; edgeCounter++) {
-			if(
-				savageWorldsEdges[edgeCounter].tag == edgeTag
-					&&
-				savageWorldsEdges[edgeCounter].book == bookId
-			) {
-				var newEdge = {};
-				angular.extend( newEdge, savageWorldsEdges[ edgeCounter ] );
-				newEdge.cyber = true;
-				_selectedEdges.push( newEdge );
-				return true;
-			}
-		}
-		return false;
-	}
-
-	this.removeEdge = function(indexNumber) {
-		if( _edges[indexNumber] ) {
-			_edges = _edges.splice(indexNumber, 1);
-			return true;
-		}
-		return false;
-	}
-
-	this.removeEdgeByTag = function(edgeTag) {
-		for( var edgeCounter = 0; edgeCounter < _selectedEdges.length; edgeCounter++) {
-			if( _selectedEdges[edgeCounter].tag == edgeTag ) {
-				_selectedEdges.splice(edgeCounter, 1);
-				return true;
-			}
-		}
-		return false;
-	}
-
-	this.getHandWeaponByTag = function(bookID, theTag) {
-		for( var eqCount = 0; eqCount < savageWorldsGearHandWeapons.length; eqCount++) {
-			if( savageWorldsGearHandWeapons[eqCount].tag == theTag && savageWorldsGearHandWeapons[eqCount].book == bookID ) {
-
-				return savageWorldsGearHandWeapons[ eqCount ];
-			}
-		}
-		return false;
-	}
-
-	this.getMundaneByTag = function(bookID, theTag) {
-		for( var eqCount = 0; eqCount < savageWorldsGearMundane.length; eqCount++) {
-			if( savageWorldsGearMundane[eqCount].tag == theTag && savageWorldsGearMundane[eqCount].book == bookID ) {
-
-				return savageWorldsGearMundane[ eqCount ];
-			}
-		}
-		return false;
-	}
-
-	this.getShieldByTag = function(bookID, theTag) {
-		for( var eqCount = 0; eqCount < savageWorldsGearShields.length; eqCount++) {
-			if( savageWorldsGearShields[eqCount].tag == theTag && savageWorldsGearShields[eqCount].book == bookID ) {
-
-				return savageWorldsGearShields[ eqCount ];
-			}
-		}
-		return false;
-	}
-
-	this.getArmorByTag = function(bookID, theTag) {
-		for( var eqCount = 0; eqCount < savageWorldsGearArmor.length; eqCount++) {
-			if( savageWorldsGearArmor[eqCount].tag == theTag && savageWorldsGearArmor[eqCount].book == bookID ) {
-
-				return savageWorldsGearArmor[ eqCount ];
-			}
-		}
-		return false;
-	}
-
-
-	this.getRangedWeaponByTag = function(bookID, theTag) {
-		for( var eqCount = 0; eqCount < savageWorldsGearRangedWeapons.length; eqCount++) {
-			if( savageWorldsGearRangedWeapons[eqCount].tag == theTag && savageWorldsGearRangedWeapons[eqCount].book == bookID ) {
-
-				return savageWorldsGearRangedWeapons[ eqCount ];
-			}
-		}
-		return false;
-	}
-
-	this.addHindrance = function(bookId, hindranceTag, specifyField) {
-		for( var hindranceCounter = 0; hindranceCounter < savageWorldsHindrances.length; hindranceCounter++) {
-			if(
-				savageWorldsHindrances[hindranceCounter].tag == hindranceTag
-					&&
-				savageWorldsHindrances[hindranceCounter].book == bookId
-			) {
-				if(specifyField)
-					savageWorldsHindrances[hindranceCounter ].specifyField = specifyField;
-				else
-					savageWorldsHindrances[hindranceCounter ].specifyField = "";
-				_selectedHindrances.push( savageWorldsHindrances[hindranceCounter ]);
-				return true;
-			}
-		}
-		return false;
-	}
-
-
-	this.getCyberTraitList = function() {
-	}
-
-
-	this.getCyberSkillList = function() {
-	}
-
-	this.getCyberWeaponOptions = function() {
-		var _returnValue = Array();
-
-		var pushItem = {
-			id: "",
-			label: this.getTranslation("CHARGEN_SELECT_LIGHT_WEAPON")
-		};
-
-		_returnValue.push( pushItem );
-
-		for( var wC = 0; wC < _selectedRangedWeapons.length; wC++ ) {
-			if( _selectedRangedWeapons[ wC ].weight < 3 ) {
-				var pushItem = {
-					id: _selectedRangedWeapons[ wC ].tag,
-					label: _selectedRangedWeapons[ wC ].local_name,
-				};
-
-				var foundItem = false;
-				for( var rvC = 0; rvC < _returnValue.length; rvC++) {
-					if( _returnValue[ rvC ].id == _selectedRangedWeapons[ wC ].tag ) {
-						foundItem = true;
-						break;
-					}
-				}
-
-				if( !foundItem )
-					_returnValue.push( pushItem );
-			}
-		}
-
-		return _returnValue;
-	}
-
-	this.removeHindrance = function(indexNumber) {
-		if( this.hindrances[indexNumber] ) {
-			this.hindrances = this.hindrances.splice(indexNumber, 1);
-			return true;
-		}
-		return false;
-	}
-
-	this.removeHindranceByTag = function(hindranceTag) {
-		for( var hindranceCounter = 0; hindranceCounter < _selectedHindrances.length; hindranceCounter++) {
-			if( _selectedHindrances[hindranceCounter].tag == hindranceTag ) {
-				_selectedHindrances.splice(hindranceCounter, 1);
-				return true;
-			}
-		}
-		return false;
-	}
-
-	this.addGear = function(bookId, tag) {
-	// TODO
-	}
-
-	this.removeGear = function(indexNumber) {
-		if( _gear[indexNumber] ) {
-			_gear = _gear.splice(indexNumber, 1);
-			return true;
-		}
-		return false;
-	}
-
-	// Validate does both calculation and validation of the character as per the base rules and settings
-	this.validate = function() {
-		_isValid = true;
-		_validSPCoverLimitShown = false;
-		_validationReport = Array();
-		_warningReport = Array();
-		_powerAlterations = Array();
-		_skillPointsAvailable = 15;
-		_skillPointsUsed = 0;
-
-		_strainBoost = 0;
-		_doubleStrain = 0;
-
-		_knownLanguagesLimit = 1;
-		_linguistSelected = false;
-
-		_naturalWeapons = Array();
-
-		_encumbranceMultiplier = 5;
-
-		_currentFunds = _startingFunds;
-		_spcExtraPowerPoints = 0;
-
-		_attributePointsAvailable = 5;
-		_attributePointsUsed = 0;
-
-		_availableEdgePoints = 0;
-		_installedHindrances = Array();
-		_installedEdges = Array();
-		_hasArcaneBackground = false;
-
-		_currentArcaneBackground = {};
-
-		//_startingFunds = 500;
-
-		_usesSanity = false;
-		_usesGutsSkill = false;
-
-		_usesRiftsCreation = false;
-		_usesSPCCreation = false;
-
-		swDeluxe = get_book_by_id( 1 ) ;
-		swDeluxe.inUse = true;
-
-		_bornAHero = false;
-		if( this.isSettingRuleEnabled( "born-a-hero") )
-			_bornAHero = true;
-
-		_usesSPCCreation = false;
-		if( this.isSettingRuleEnabled( "super-hero") )
-			_usesSPCCreation = true;
-
-		_multipleLanguages = false;
-		if( this.isSettingRuleEnabled( "multiple-languages") )
-			_multipleLanguages = true;
-
-		_usesSanity = false;
-		if( this.isSettingRuleEnabled( "sanity") )
-			_usesSanity = true;
-
-		_usesStrain = false;
-
-		if( this.isSettingRuleEnabled( "cyberware-strain") )
-			_usesStrain = true;
-
-		_diceValues = {
-			agility: Array(),
-			smarts: Array(),
-			spirit: Array(),
-			strength: Array(),
-			vigor: Array(),
-		}
-
-		if(  _selectedArcaneBackground && _selectedArcaneBackground.power_points ) {
-			_powerPointsAvailable = _selectedArcaneBackground.power_points;
-		}
-
-		if(  _selectedArcaneBackground && _selectedArcaneBackground.powers ) {
-			_totalPowersKnown = _selectedArcaneBackground.powers;
-		}
-
-
-
-		// for( lBookCounter = 0; lBookCounter.u)
-
-		_attributeBoost = {
-			agility: 0,
-			smarts: 0,
-			spirit: 0,
-			strength: 0,
-			vigor: 0,
-		};
-
-		_displayAttributes = {
-			agility: getDiceValue( _attributes.agility + _attributeBoost.agility ),
-			smarts: getDiceValue( _attributes.smarts + _attributeBoost.smarts ),
-			spirit: getDiceValue( _attributes.spirit + _attributeBoost.spirit ),
-			strength: getDiceValue( _attributes.strength + _attributeBoost.strength ),
-			vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
-		};
-
-		_derived._strainBonus = 0;
-		_derived._doubleStrain = false;
-
-		// Calc init derived stats
-		_derived.toughness = 0; // Math.floor(_displayAttributes.vigor.value / 2) + 2;
-		_derived.armor = 0;
-		_load.currentLoad = 0;
-		_load.combatLoad = 0;
-		fightingSkill = this.getSkill("SKILL_FIGHTING");
-		_derived.parry = 2;
-		if( fightingSkill.value > 0 ) {
-			fightingValue = getDiceValue( fightingSkill.value );
-			_derived.parry = Math.floor(fightingValue.value / 2) + 2;
-		}
-		_derived.pace = 6;
-		_derived.charisma = 0;
-		_derived.sanity = Math.floor(_displayAttributes.spirit.value / 2) + 2;
-
-		// Calculate used attribute points
-		_attributePointsUsed += _attributes.agility - 1;
-		_attributePointsUsed += _attributes.smarts - 1;
-		_attributePointsUsed += _attributes.spirit - 1;
-		_attributePointsUsed += _attributes.strength - 1;
-		_attributePointsUsed += _attributes.vigor - 1;
-
-		// _attributePointsAvailable = _attributePointsAvailable - _attributePointsUsed;
-		// _skillPointsAvailable = _skillPointsAvailable - _skillPointsUsed;
-
-		for( skillCounter = 0; skillCounter < _skillList.length; skillCounter++) {
-			_skillList[skillCounter].boost = 0;
-			if( _skillList[ skillCounter].specialties ) {
-				for( skillCounter2 = 0; skillCounter2 < _skillList[ skillCounter].specialties.length; skillCounter2++) {
-					_skillList[ skillCounter].specialties[skillCounter2].boost = 0;
-				}
-			}
-		}
-
-		// Process Racial Hindrances
-		if( _race.hindrances ) {
-			racial_hindrances = JSON.parse( _race.hindrances );
-			if( racial_hindrances ) {
-				for( var hindranceCounter = 0; hindranceCounter < racial_hindrances.length; hindranceCounter++ ) {
-					hindrance = this.getHindrance( racial_hindrances[hindranceCounter] );
-					if( hindrance ) {
-						if( typeof(hindrance.charEffect) == "function" ) {
-							hindrance.charEffect( this );
-						}
-						if( typeof(hindrance.charEffects) == "function" ) {
-							hindrance.charEffects( this );
-						}
-						_installedHindrances.push( hindrance );
-					}
-				}
-			}
-		}
-
-		// Process Racial Edges
-		if( _race.edges ) {
-			racial_edges = JSON.parse( _race.edges );
-			if( racial_edges ) {
-				for( var edgeCounter = 0; edgeCounter < racial_edges.length; edgeCounter++ ) {
-					edge = this.getEdge( racial_edges[edgeCounter] );
-
-					if( edge ) {
-						_installedEdges.push( edge );
-
-						if( typeof(edge.charEffect) == "function" ) {
-							edge.charEffect( this );
-						}
-						if( typeof(edge.charEffects) == "function" ) {
-							edge.charEffects( this );
-						}
-					}
-
-				}
-			}
-		}
-
-		// Calcuate Strain and Cyberware
-		if( _usesStrain ) {
-			_derived.currentStrain = 0;
-			_derived.strain = 0;
-
-			for( var cyberC = 0; cyberC < _installedCyberware.length; cyberC++ ) {
-				_derived.currentStrain += _installedCyberware[ cyberC ].getStrainCost();
-				_installedCyberware[ cyberC ].localCost = _installedCyberware[ cyberC ].getCost( this );
-
-				if( _installedCyberware[ cyberC ].tag == "weapon-melee" && _installedCyberware[ cyberC ].option1 != "" ) {
-					_installedCyberware[ cyberC ].localNotes = "";
-
-					switch( _installedCyberware[cyberC].option1 ) {
-						case "chain":
-							_installedCyberware[cyberC].localCost += 500;
-							_installedCyberware[ cyberC ].localNotes += ", AP 2";
-
-							_installedCyberware[cyberC].localNotes += " (" + this.getTranslation("SCIFI_CHAIN") + ")";
-							break;
-						case "vibro":
-							_installedCyberware[cyberC].localCost += 500;
-							_installedCyberware[ cyberC ].localNotes += ", AP 2";
-
-							_installedCyberware[cyberC].localNotes += " (" + this.getTranslation("SCIFI_VIBRO") + ")";
-							break;
-						case "energy":
-							_installedCyberware[ cyberC ].dieDamage = "d8";
-							_installedCyberware[ cyberC ].localNotes += ", AP 4";
-							_installedCyberware[cyberC].localCost += 500;
-
-							_installedCyberware[cyberC].localNotes += " (" + this.getTranslation("SCIFI_ENERGY") + ")";
-							break;
-						case "molec":
-
-							_installedCyberware[cyberC].localCost += 500;
-
-							_installedCyberware[cyberC].localNotes += ", AP 3";
-
-							_installedCyberware[cyberC].localNotes += " (" + this.getTranslation("SCIFI_MOLECULAR") + ")";
-
-							break;
-						case "power":
-
-							_installedCyberware[cyberC].localCost += 500;
-							_installedCyberware[cyberC].localNotes += " + d6";
-
-							_installedCyberware[cyberC].localNotes += " (" + this.getTranslation("SCIFI_POWER") + ")";
-							break;
-						case "stun":
-
-							_installedCyberware[cyberC].localCost += 500;
-
-							_installedCyberware[cyberC].localNotes += " (" + this.getTranslation("SCIFI_STUN") + ")";
-							break;
-						default:
-							// no mods
-							break;
-					}
-
-				}
-
-
-				if( _installedCyberware[ cyberC ].getModEffect ) {
-					//~ console.log( "Cyberware - running getModEffect of "  + _installedCyberware[ cyberC ].local_name );
-					_installedCyberware[ cyberC ].getModEffect( this );
-				}
-
-				_currentFunds -= _installedCyberware[cyberC].localCost ;
-			}
-
-			_displayAttributes = {
-				agility: getDiceValue( _attributes.agility + _attributeBoost.agility ),
-				smarts: getDiceValue( _attributes.smarts + _attributeBoost.smarts ),
-				spirit: getDiceValue( _attributes.spirit + _attributeBoost.spirit ),
-				strength: getDiceValue( _attributes.strength + _attributeBoost.strength ),
-				vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
-			};
-
-			if( _displayAttributes.spirit.value < _displayAttributes.vigor.value )
-				_derived.strain = _displayAttributes.spirit.value + _derived._strainBonus;
-			else
-				_derived.strain = _displayAttributes.vigor.value + _derived._strainBonus;
-
-			if( _derived._doubleStrain )
-				_derived.strain = _derived.strain * 2;
-
-
-
-		} else {
-
-			_displayAttributes = {
-				agility: getDiceValue( _attributes.agility + _attributeBoost.agility ),
-				smarts: getDiceValue( _attributes.smarts + _attributeBoost.smarts ),
-				spirit: getDiceValue( _attributes.spirit + _attributeBoost.spirit ),
-				strength: getDiceValue( _attributes.strength + _attributeBoost.strength ),
-				vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
-			};
-		}
-
-		// Calculate used skill points
-		for( skillCounter = 0; skillCounter < _skillList.length; skillCounter++) {
-			if( _skillList[skillCounter].value ) {
-
-				effectiveCurrentValue =  _skillList[skillCounter].value + _skillList[skillCounter].boost ;
-				if(  effectiveCurrentValue > _displayAttributes[_skillList[skillCounter].attribute].id ) {
-					regularCost = _displayAttributes[_skillList[skillCounter].attribute].id;
-					doubleCost = effectiveCurrentValue - _displayAttributes[_skillList[skillCounter].attribute].id;
-					if( _skillList[skillCounter].boost > 0 ) {
-						regularCost = regularCost - _skillList[skillCounter].boost;
-						if ( regularCost < 0)
-							regularCost = 0;
-					}
-					if( !_skillList[skillCounter].advskill || _skillList[skillCounter].advskill == 0)
-						_skillPointsUsed += regularCost + doubleCost * 2;
-				} else {
-					if( !_skillList[skillCounter].advskill || _skillList[skillCounter].advskill == 0)
-						_skillPointsUsed += _skillList[skillCounter].value;
-				}
-			}
-
-			for( specialtyCounter = 0; specialtyCounter < _skillList[skillCounter].specialties.length; specialtyCounter++ ) {
-				//effectiveCurrentValue =  _skillList[skillCounter].value + _skillList[skillCounter].boost ;
-				if( _skillList[skillCounter].specialties[specialtyCounter].value ) {
-					if( _skillList[skillCounter].specialties[specialtyCounter].value + _skillList[skillCounter].specialties[specialtyCounter].boost > _displayAttributes[_skillList[skillCounter].attribute].id ) {
-						regularCost = _displayAttributes[_skillList[skillCounter].attribute].id;
-						doubleCost = _skillList[skillCounter].specialties[specialtyCounter].value - _displayAttributes[_skillList[skillCounter].attribute].id;
-						if(  !_skillList[skillCounter].advskill || _skillList[skillCounter].advskill == 0)
-							_skillPointsUsed += regularCost + doubleCost * 2;
-					} else {
-						if(  !_skillList[skillCounter].advskill || _skillList[skillCounter].advskill == 0)
-							_skillPointsUsed += _skillList[skillCounter].specialties[specialtyCounter].value;
-					}
-				}
-			}
-		}
-
-
-		// Process Selected Hindrances
-		var majorPerk = 0;
-		var minorPerk1 = 0;
-		var minorPerk2 = 0;
-		var majorPerk2 = 0;
-		var _usedPerkPoints = 0;
-		var _extraPerkPointCost = 0;
-		var _selectedPerkPoints = 0;
-		_secondMajorHindranceChosen = false;
-		for( var hindranceCounter = 0; hindranceCounter < _selectedHindrances.length; hindranceCounter++) {
-
-			if( typeof(_selectedHindrances[hindranceCounter].charEffect) == "function" ) {
-				_selectedHindrances[hindranceCounter].charEffect( this );
-			}
-			if( typeof(_selectedHindrances[hindranceCounter].charEffects) == "function" ) {
-				_selectedHindrances[hindranceCounter].charEffects( this );
-			}
-			_installedHindrances.push( _selectedHindrances[hindranceCounter] );
-
-			if( _selectedHindrances[hindranceCounter].severity == "major" ) {
-				_selectedPerkPoints += 2;
-				if( _usesSPCCreation ) {
-					if( majorPerk == 0 ) {
-						majorPerk = 2;
-						majorPerk2 = 0;
-					} else if( majorPerk2 == 0) {
-						majorPerk = 2;
-						majorPerk2 = 2;
-						_secondMajorHindranceChosen = true;
-					}
-				} else {
-					majorPerk = 2;
-				}
-			}
-
-			if( _selectedHindrances[hindranceCounter].severity == "minor" ) {
-				_selectedPerkPoints += 1;
-				if( minorPerk1 == 0 ) {
-					minorPerk1 = 1;
-					minorPerk2 = 0;
-				} else if( minorPerk2 == 0) {
-					minorPerk1 = 1;
-					minorPerk2 = 1;
-				}
-			}
-		}
-
-		// Calculate Perks Available
-		if( _usesSPCCreation ) {
-			_totalPerkPoints = majorPerk + majorPerk2 + minorPerk2 + minorPerk1;
-			_availablePerkPoints = majorPerk + majorPerk2 + minorPerk2 + minorPerk1;
-			_optimizedPerkPoints = 6;
-
-		}
-		else {
-			_totalPerkPoints = majorPerk + minorPerk2 + minorPerk1;
-			_availablePerkPoints = majorPerk + minorPerk2 + minorPerk1;
-			_optimizedPerkPoints = 4;
-		}
-
-		_SPCTakenExtraPowerPoints = false;
-		// Process Selected Perks
-		for( var perkCounter = 0; perkCounter < _selectedPerks.length; perkCounter++) {
-			_selectedPerks[perkCounter].effect(this);
-			_availablePerkPoints = _availablePerkPoints - _selectedPerks[perkCounter].cost;
-			_usedPerkPoints += _selectedPerks[perkCounter].cost;
-		}
-
-		if( _attributePointsUsed > _attributePointsAvailable ) {
-			_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_ATTRIBUTES") );
-			_isValid = false;
-		}
-
-		if( _selectedArcaneBackground && _selectedArcaneBackground.powers && _selectedPowers.length > _selectedArcaneBackground.powers ) {
-			_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_POWERS") );
-			_isValid = false;
-		}
-
-		if( _skillPointsUsed > _skillPointsAvailable ) {
-			_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_SKILLS") );
-			_isValid = false;
-		}
-
-		if( _SPCTakenExtraPowerPoints && majorPerk2 == 0 ) {
-			_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_SPC_EP_REQUIRES_2MAJOR") );
-			_isValid = false;
-		}
-
-		// Process Selected Edges
-		for( var edgeCounter = 0; edgeCounter < _selectedEdges.length; edgeCounter++) {
-
-			_installedEdges.push( _selectedEdges[edgeCounter] );
-			if( ! _selectedEdges[ edgeCounter ].cyber )
-				_availableEdgePoints = _availableEdgePoints - 1;
-
-			if( typeof(_selectedEdges[edgeCounter].charEffect) == "function" ) {
-				_selectedEdges[edgeCounter].charEffect( this );
-			}
-
-			if( typeof(_selectedEdges[edgeCounter].charEffects) == "function" ) {
-				_selectedEdges[edgeCounter].charEffects( this );
-			}
-
-			if( _selectedEdges[edgeCounter].extraPerkPointCost ) {
-				_extraPerkPointCost += _selectedEdges[edgeCounter].extraPerkPointCost;
-			}
-		}
-
-
-
-		//~ console.log( "------------------------" );
-		//~ console.log( "_availablePerkPoints", _availablePerkPoints );
-		//~ console.log( "_extraPerkPointCost", _extraPerkPointCost );
-		//~ console.log( "_selectedPerkPoints", _selectedPerkPoints );
-		//~ console.log( "_totalPerkPoints",  _totalPerkPoints);
-		//~ console.log( "_optimizedPerkPoints", _optimizedPerkPoints );
-		//~ console.log( "_usedPerkPoints", _usedPerkPoints );
-		//~ console.log( "majorPerk", majorPerk );
-		//~ console.log( "majorPerk2", majorPerk2 );
-		//~ console.log( "minorPerk2", minorPerk2 );
-		//~ console.log( "minorPerk1", minorPerk1 );
-
-		//~ console.log( "test", _extraPerkPointCost + ">" + (_selectedPerkPoints - _usedPerkPoints ) );
-
-
-		if( _extraPerkPointCost > _selectedPerkPoints - _usedPerkPoints ) {
-			_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_EDGE_REQUIRES_HINDRANCES") );
-			_isValid = false;
-
-
-
-		}
-
-		if( _extraPerkPointCost ) {
-			_availablePerkPoints = _selectedPerkPoints - _extraPerkPointCost ;
-			//~ _availablePerkPoints -= 2;
-			if( _availablePerkPoints > _totalPerkPoints )
-				_availablePerkPoints = _totalPerkPoints;
-			if( _availablePerkPoints < 0 )
-				_availablePerkPoints = 0;
-		}
-
-		//~ console.log( "_availablePerkPoints", _availablePerkPoints );
-
-		if( _availablePerkPoints < 0 ) {
-			_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_PERKS") );
-			_isValid = false;
-		}
-
-		if( _availableEdgePoints < 0 ) {
-			_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_EDGES") );
-			_isValid = false;
-		}
-
-		if( _hasArcaneBackground > 0 && _selectedArcaneBackground.tag == "" ) {
-			_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_NO_ARCANE_BG") );
-			_isValid = false;
-		}
-
-		// Apply Arcane Background
-		_availableArcaneBackgrounds = Array();
-		_availablePowers = Array();
-		_availableTrappings = Array();
-
-
-
-
-		_availableArcaneBackgrounds.push(
-			{
-				local_name: "- " + this.getTranslation("CHARGEN_SELECT_ARCANE_BG") + " -",
-				select_option_name:  "- " + this.getTranslation("CHARGEN_SELECT_ARCANE_BG") + " -",
-				tag: "",
-				powers: 0,
-				power_points: 0,
-				bookObj: {
-					local_name: ""
-				},
-				blank: true
-			}
-		);
-
-		_availablePowers.push(
-			{
-				local_name: "- " + this.getTranslation("CHARGEN_SELECT_POWER") + " -",
-				select_option_name:  "- " + this.getTranslation("CHARGEN_SELECT_POWER") + " -",
-				tag: "",
-				bookObj: {
-					local_name: ""
-				},
-				blank: true
-			}
-		);
-
-		if( _hasArcaneBackground ) {
-			_selectedArcaneBackground.freePower = null;
-			for( var abCounter = 0 ; abCounter < savageWorldsArcaneBackgrounds.length ; abCounter++)
-				_availableArcaneBackgrounds.push( savageWorldsArcaneBackgrounds[abCounter] );
-
-			for( var abCounter = 0 ; abCounter < savageWorldsPowers.length ; abCounter++) {
-
-				if(
-					_powerAlterations.length > 0
-					&&
-					typeof(_powerAlterations[ savageWorldsPowers[abCounter].id ]) != "undefined"
-				) {
-
-					if( typeof(_powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank) != "undefined" ) {
-						//console.log("!", _powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank, _XP.rankValue);
-						if( _powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank <= _XP.rankValue  )
-							 savageWorldsPowers[abCounter].selectable = true;
-						else
-							 savageWorldsPowers[abCounter].selectable = false;
-					} else {
-						if( savageWorldsPowers[abCounter].rank <= _XP.rankValue  )
-							 savageWorldsPowers[abCounter].selectable = true;
-						else
-							 savageWorldsPowers[abCounter].selectable = false;
-					}
-				//	console.log("_powerAlterations", _powerAlterations[ savageWorldsPowers[abCounter].id ]);
-				//	console.log("savageWorldsPowers[abCounter]", abCounter, savageWorldsPowers[abCounter]);
-				} else {
-
-					if( savageWorldsPowers[abCounter].rank <= _XP.rankValue  )
-						 savageWorldsPowers[abCounter].selectable = true;
-					else
-						 savageWorldsPowers[abCounter].selectable = false;
-				}
-
-				if( _selectedArcaneBackground && _selectedArcaneBackground.power_list && _selectedArcaneBackground.power_list.length > 0 ) {
-					if( _selectedArcaneBackground.power_list.indexOf( savageWorldsPowers[abCounter].tag ) < 0 ) {
-						savageWorldsPowers[abCounter].selectable = false;
-					}
-				}
-
-				_availablePowers.push( savageWorldsPowers[abCounter] );
-				if( _selectedArcaneBackground.free_power != "" && _selectedArcaneBackground.free_power == savageWorldsPowers[abCounter].tag) {
-					_selectedArcaneBackground.freePower = savageWorldsPowers[abCounter];
-				}
-			}
-			for( var abCounter = 0 ; abCounter < savageWorldsArcaneTrappings.length ; abCounter++)
-				_availableTrappings.push( savageWorldsArcaneTrappings[abCounter] );
-
-		} else {
-			_selectedArcaneBackground = _availableArcaneBackgrounds[0];
-		}
-
-		if( !_selectedArcaneBackground )
-			_selectedArcaneBackground = _availableArcaneBackgrounds[0];
-
-		// Process Available Gear
-		_availableMundaneGear = Array();
-		for( var gearCounter = 0; gearCounter < savageWorldsGearMundane.length; gearCounter++) {
-			if( this.bookInUse( savageWorldsGearMundane[ gearCounter ].book ) ) {
-				_availableMundaneGear.push( savageWorldsGearMundane[ gearCounter ] );
-			}
-		}
-
-		_availableArmor = Array();
-		for( var gearCounter = 0; gearCounter < savageWorldsGearArmor.length; gearCounter++) {
-			if( this.bookInUse( savageWorldsGearArmor[ gearCounter ].book ) ) {
-				_availableArmor.push( savageWorldsGearArmor[ gearCounter ] );
-			}
-		}
-
-		_availableHandWeapons = Array();
-		for( var gearCounter = 0; gearCounter < savageWorldsGearHandWeapons.length; gearCounter++) {
-			if( this.bookInUse( savageWorldsGearHandWeapons[ gearCounter ].book ) ) {
-				_availableHandWeapons.push( savageWorldsGearHandWeapons[ gearCounter ] );
-			}
-		}
-
-		_availableRangedWeapons = Array();
-		for( var gearCounter = 0; gearCounter < savageWorldsGearRangedWeapons.length; gearCounter++) {
-			if( this.bookInUse( savageWorldsGearRangedWeapons[ gearCounter ].book ) ) {
-				_availableRangedWeapons.push( savageWorldsGearRangedWeapons[ gearCounter ] );
-			}
-		}
-
-		_availableShields = Array();
-		for( var gearCounter = 0; gearCounter < savageWorldsGearShields.length; gearCounter++) {
-			if( this.bookInUse( savageWorldsGearShields[ gearCounter ].book ) ) {
-				_availableShields.push( savageWorldsGearShields[ gearCounter ] );
-			}
-		}
-
-		// Process Available Hindrances
-		_availableHindrances = Array();
-		_availableHindrances.push(
-		{
-			local_name: "- " + this.getTranslation("CHARGEN_SELECT_HINDRANCE") + " -",
-			select_option_name:  "- " + this.getTranslation("CHARGEN_SELECT_HINDRANCE") + " -",
-			tag: "",
-			selectable: true,
-			bookObj: {
-				local_name: ""
-			},
-			blank: true
-		}
-		);
-		for( var hindranceCounter = 0; hindranceCounter < savageWorldsHindrances.length; hindranceCounter++) {
-			if( savageWorldsHindrances[hindranceCounter].racial == 0 ) {
-				if( this.bookInUse( savageWorldsHindrances[hindranceCounter].book ) ) {
-					savageWorldsHindrances[hindranceCounter].selectable = true;
-
-					if( typeof(savageWorldsHindrances[hindranceCounter].requires) == "function" ) {
-						savageWorldsHindrances[hindranceCounter].selectable = savageWorldsHindrances[hindranceCounter].requires( this );
-					}
-
-					if( savageWorldsHindrances[hindranceCounter].conflicts_edge != "" ) {
-						if( this.hasEdge( savageWorldsHindrances[hindranceCounter].conflicts_edge ))
-							savageWorldsHindrances[hindranceCounter].selectable = false;
-					}
-
-					if( savageWorldsHindrances[hindranceCounter].conflicts_hindrance != "" ) {
-						if( this.hasHindrance( savageWorldsHindrances[hindranceCounter].conflicts_hindrance ))
-							savageWorldsHindrances[hindranceCounter].selectable = false;
-					}
-
-					if( this.hasHindrance( savageWorldsHindrances[hindranceCounter].tag ) ) {
-						savageWorldsHindrances[hindranceCounter].selectable = false;
-					}
-
-					_availableHindrances.push( savageWorldsHindrances[hindranceCounter] );
-				}
-			}
-		}
-
-		// Process Availble Cyberware
-		_availableCyberware = Array();
-		for( cyberCounter = 0; cyberCounter < savageWorldsCyberware.length; cyberCounter++) {
-			_availableCyberware.push( savageWorldsCyberware[ cyberCounter ] );
-		}
-
-		for( cyberIndex = 0; cyberIndex < _installedCyberware.length; cyberIndex++) {
-
-			 _installedCyberware[ cyberIndex ].selectedEdge = null;
-			 for( var edgeC = 0; edgeC < _combatEdges.length; edgeC++ ) {
-				 if( _combatEdges[ edgeC ].tag == _installedCyberware[ cyberIndex ].option2 && _combatEdges[ edgeC ].book == _installedCyberware[ cyberIndex ].option1 )
-					_installedCyberware[ cyberIndex ].selectedEdge = _combatEdges[ edgeC ]
-			 }
-
-		}
-		// Process Available Edges
-		_availableEdges = Array();
-		_availableEdges.push(
-			{
-				local_name:  "- " + this.getTranslation("CHARGEN_SELECT_EDGE") + " -",
-				select_option_name:  "- " + this.getTranslation("CHARGEN_SELECT_EDGE") + " -",
-				tag: "",
-				selectable: true,
-				bookObj: {
-					local_name: ""
-				},
-				blank: true
-			}
-		);
-
-		_combatEdges = Array();
-		_combatEdges.push(
-			{
-				local_name:  "- " + this.getTranslation("CHARGEN_SELECT_EDGE") + " -",
-				select_option_name:  "- " + this.getTranslation("CHARGEN_SELECT_EDGE") + " -",
-				tag: "",
-				selectable: true,
-				bookObj: {
-					local_name: ""
-				},
-				blank: true
-			}
-		);
-
-		for( edgeCounter = 0; edgeCounter < savageWorldsEdges.length; edgeCounter++) {
-			if( savageWorldsEdges[edgeCounter].racial == 0 ) {
-
-				if( this.bookInUse( savageWorldsEdges[edgeCounter].book ) ) {
-					savageWorldsEdges[edgeCounter].selectable = true;
-
-					_combatEdges.push( savageWorldsEdges[edgeCounter] );
-
-					if( typeof(savageWorldsEdges[edgeCounter].requires) == "function" ) {
-						savageWorldsEdges[edgeCounter].selectable = savageWorldsEdges[edgeCounter].requires( this );
-					}
-
-					if( savageWorldsEdges[edgeCounter].required_edge != ""  ) {
-						if( !this.hasEdge( savageWorldsEdges[edgeCounter].required_edge )) {
-							savageWorldsEdges[edgeCounter].selectable = false;
-						}
-					}
-
-					if( savageWorldsEdges[edgeCounter].conflicts_edge != "" ) {
-						if( this.hasEdge( savageWorldsEdges[edgeCounter].conflicts_edge )) {
-							savageWorldsEdges[edgeCounter].selectable = false;
-
-						}
-					}
-
-					if( savageWorldsEdges[edgeCounter].required_rank > _XP.rankValue ) {
-						if(
-							( _bornAHero == false )
-								||
-							(	_bornAHero == true && this.isMARS() == false && _XP.value > 0 )
-								||
-							(	_bornAHero == true && this.isMARS() == true && _XP.value > 20 )
-
-						) {
-								savageWorldsEdges[edgeCounter].selectable = false;
-						}
-					}
-
-					if( savageWorldsEdges[edgeCounter].conflicts_hindrance != ""  ) {
-						if( this.hasHindrance( savageWorldsEdges[edgeCounter].conflicts_hindrance )) {
-							savageWorldsEdges[edgeCounter].selectable = false;
-						}
-					}
-					if( savageWorldsEdges[edgeCounter].reselectable == 0 && this.hasEdge( savageWorldsEdges[edgeCounter].tag ) ) {
-						savageWorldsEdges[edgeCounter].selectable = false;
-					}
-
-					if(
-						_usesSPCCreation == true  &&
-						(
-							savageWorldsEdges[edgeCounter].tag == "arcane-background"
-								||
-							savageWorldsEdges[edgeCounter].tag == "arcane-resistance"
-								||
-							savageWorldsEdges[edgeCounter].tag == "arcane-resistance-improved"
-								||
-							savageWorldsEdges[edgeCounter].tag == "holy-warrior"
-								||
-							savageWorldsEdges[edgeCounter].tag == "gadgeteer"
-								||
-							savageWorldsEdges[edgeCounter].tag == "unholy-warrior"
-								||
-							savageWorldsEdges[edgeCounter].tag == "unholy-warrior"
-								||
-							savageWorldsEdges[edgeCounter].tag == "holy-warrior"
-								||
-							savageWorldsEdges[edgeCounter].tag == "holy-unholy-warrior"
-								||
-							savageWorldsEdges[edgeCounter].tag == "new-power"
-								||
-							savageWorldsEdges[edgeCounter].tag == "no-mercy"
-								||
-							savageWorldsEdges[edgeCounter].tag == "power-points"
-								||
-							savageWorldsEdges[edgeCounter].tag == "rapid-recharge"
-								||
-							savageWorldsEdges[edgeCounter].tag == "soul-drain"
-								||
-							savageWorldsEdges[edgeCounter].tag == "wizard"
-						)
-					) {
-						if(
-							savageWorldsEdges[edgeCounter].tag == "power-points"
-								&&
-							_SPCRisingStars == true
-						) {
-							savageWorldsEdges[edgeCounter].selectable = true;
-						} else {
-							savageWorldsEdges[edgeCounter].selectable = false;
-						}
-					}
-
-					_availableEdges.push( savageWorldsEdges[edgeCounter] );
-				}
-			}
-		}
-
-		// Advancements...
-		this.availableAdvancements = Math.floor(_XP.value / 5);
-
-		this.allocateAdvancementSlots();
-
-		// clear out advancement skill specialties
-		for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
-			for(var specialtyCounter = _skillList[skillCounter].specialties - 1; specialtyCounter >= 0; specialtyCounter++) {
-				if( _skillList[skillCounter].specialties[specialtyCounter].advskill > 0 ) {
-					_skillList[skillCounter].specialties = _skillList[skillCounter].specialties.splice(specialtyCounter, 1);
-				}
-			}
-		}
-
-		if( _selectedAdvancements.length > this.availableAdvancements) {
-			_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_ADVANCEMENTS") );
-			_isValid = false;
-		}
-
-		// check to make sure a requirement wasn't removed from edges...
-		for( edgeCounter = 0; edgeCounter < _selectedEdges.length; edgeCounter++) {
-
-			if( typeof(_selectedEdges[edgeCounter].requires) == "function" ) {
-				if( _selectedEdges[edgeCounter].requires(this) == false ) {
-					_validationReport.push( _selectedEdges[edgeCounter].local_name + ": " + this.getTranslation("CHARGEN_VALIDATION_EDGE_DOESNT_MEET_REQUIREMENTS") );
-					_isValid = false;
-				}
-			}
-
-			if( _selectedEdges[edgeCounter].required_edge != ""  ) {
-				if( !this.hasEdge( _selectedEdges[edgeCounter].required_edge )) {
-					theEdge = this.getEdge( _selectedEdges[edgeCounter].required_edge  );
-					_validationReport.push( _selectedEdges[edgeCounter].local_name + ": " + this.getTranslation("CHARGEN_VALIDATION_REQUIRES_EDGE").replace( "{value}", theEdge.local_name) );
-					_isValid = false;
-				}
-			}
-
-			if( _selectedEdges[edgeCounter].conflicts_edge != "" ) {
-				if( this.hasEdge( _selectedEdges[edgeCounter].conflicts_edge )) {
-
-					theEdge = this.getEdge( _selectedEdges[edgeCounter].conflicts_edge  );
-					_validationReport.push( _selectedEdges[edgeCounter].local_name + ": " + this.getTranslation("CHARGEN_VALIDATION_CONFLICTS_EDGE").replace( "{value}", theEdge.local_name) );
-					_isValid = false;
-
-				}
-			}
-
-			if( _selectedEdges[edgeCounter].conflicts_hindrance != ""  ) {
-				if( hindranceTag = this.hasHindrance( _selectedEdges[edgeCounter].conflicts_hindrance ) ) {
-					theHindrance = this.getHindrance( hindranceTag  );
-					_validationReport.push( _selectedEdges[edgeCounter].local_name + ": " + this.getTranslation("CHARGEN_VALIDATION_CONFLICTS_HINDRANCE").replace( "{value}", theHindrance.local_name) );
-					_isValid = false;
-				}
-			}
-
-		}
-		for( var powerCounter = 0; powerCounter < _selectedPowers.length; powerCounter++ ) {
-			if(  _selectedPowers[powerCounter].trapping && _selectedPowers[powerCounter].trapping.tag != "" ) {
-				_selectedPowers[powerCounter].showName = _selectedPowers[powerCounter].customName + " (" + _selectedPowers[powerCounter].local_name + ", " + _selectedPowers[powerCounter].trapping.local_name + ")";
-			} else {
-				_selectedPowers[powerCounter].showName = _selectedPowers[powerCounter].customName + " (" + _selectedPowers[powerCounter].local_name + ")";
-			}
-
-	 	}
-
-	 	var attributeIncreaseNovice = false;
-	 	var attributeIncreaseSeasoned = false;
-	 	var attributeIncreaseVeteran = false;
-	 	var attributeIncreaseHeroic = false;
-
-	 	for( advCounter = 0; advCounter < _selectedAdvancements.length; advCounter++) {
-	 		// Edge Advancement
-	 		if( _selectedAdvancements[advCounter].tag == "edge" ) {
-
-	 			if(
-	 				_selectedAdvancements[advCounter].option1
-	 					&&
-	 				typeof( _selectedAdvancements[advCounter].option1.charEffects) == "function"
-	 			) {
-	 				_selectedAdvancements[advCounter].option1.charEffects(this);
-	 			}
-
-				if(
-					_selectedAdvancements[advCounter].option1
-						&&
-					typeof( _selectedAdvancements[advCounter].option1.requires) == "function"
-				) {
-					if( !_selectedAdvancements[advCounter].option1.requires(this) ) {
-						invalidMessage = this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_INVALID_EDGE");
-						invalidMessage = invalidMessage.replace("{value}", _selectedAdvancements[advCounter].option1.local_name );
-						_validationReport.push( invalidMessage );
-						_isValid = false;
-					}
-				}
-
-				if(
-					_selectedAdvancements[advCounter].option1
-						&&
-					_selectedAdvancements[advCounter].option1.required_edge
-				) {
-					if( !this.hasEdge( _selectedAdvancements[advCounter].option1.required_edge, advCounter ) ) {
-						invalidMessage = this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_INVALID_EDGE");
-						invalidMessage = invalidMessage.replace("{value}", _selectedAdvancements[advCounter].option1.local_name );
-						_validationReport.push( invalidMessage );
-						_isValid = false;
-					}
-				}
-
-				_installedEdges.push( _selectedAdvancements[advCounter].option1 );
-
-	 		}
-	 		// End of Edge Advancement
-
-	 		// Attribute Advancement
-	 		if( _selectedAdvancements[advCounter].tag == "attribute" ) {
-	 			this.boostAttribute( _selectedAdvancements[advCounter].option1 );
-
-	 			if( advCounter < 3 ) {
-	 				if( attributeIncreaseNovice ) {
-	 					_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_NOVICE") );
-	 					_isValid = false;
-	 				}
-	 				attributeIncreaseNovice = true;
-	 			} else if( advCounter < 7 ) {
-	 				if( attributeIncreaseSeasoned ) {
-	 					_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_SEASONED") );
-	 					_isValid = false;
-	 				}
-	 				attributeIncreaseSeasoned = true;
-	 			} else if( advCounter < 11 ) {
-
-	 				if( attributeIncreaseVeteran ) {
-	 					_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_VETERAN") );
-	 					_isValid = false;
-	 				}
-	 				attributeIncreaseVeteran = true;
-	 			} else if( advCounter < 15 ) {
-	 				if( attributeIncreaseHeroic ) {
-	 					_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_HEROIC") );
-	 					_isValid = false;
-	 				}
-	 				attributeIncreaseHeroic = true;
-	 			} else {
-	 				// Legendary can have an attribute increase every other advance
-	 				if(
-	 					advCounter != 15 // just in case someone chose it at advance #15.
-	 						&&
-	 					_selectedAdvancements[advCounter - 1].tag != "attribute"
-	 				) {
-	 					_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_LEGENDARY") );
-	 					_isValid = false;
-	 				}
-	 			}
-	 		}
-	 		// End of Attribute Advancement
-
-	 		// Skill Increase Advancement
-	 		if( _selectedAdvancements[advCounter].tag == "incskill" ) {
-	 			// TODO
-	 			if( _selectedAdvancements[advCounter].option1 )
-	 				this.boostSkill( _selectedAdvancements[advCounter].option1.id );
-
-	 		}
-	 		// End of Skill Increase Advancement
-
-	 		// 2 Skills Increase Advancement
-	 		if( _selectedAdvancements[advCounter].tag == "inc2skills" ) {
-	 			// TODO
-	 			if( _selectedAdvancements[advCounter].option1 )
-	 				this.boostSkill( _selectedAdvancements[advCounter].option1.id );
-	 			if( _selectedAdvancements[advCounter].option2 )
-	 				this.boostSkill( _selectedAdvancements[advCounter].option2.id );
-	 		}
-	 		// End of 2 Skills Increase Advancement
-
-	 		// New Skill Advancement
-	 		if( _selectedAdvancements[advCounter].tag == "skill" ) {
-	 			if(
-	 				_selectedAdvancements[advCounter].option1
-	 				&&
-	 				( _selectedAdvancements[advCounter].option1.specify
-						&& _selectedAdvancements[advCounter].option1.specify > 0
-					) ||
-					(
-						_selectedAdvancements[advCounter].option1
-						&&
-						_selectedAdvancements[advCounter].option1.is_specialty
-						&&
-						_selectedAdvancements[advCounter].option1.is_specialty != ""
-					)
-	 			) {
-	 				this.addSpecialtySkill(
-	 					_selectedAdvancements[advCounter].option1,
-	 					_selectedAdvancements[advCounter].option2,
-	 					1,
-	 					1
-	 				);
-	 				//this.refreshAvailable();
-	 			} else {
-	 				_selectedAdvancements[advCounter].option2 = null;
-	 				if( _selectedAdvancements[advCounter].option1 ) {
-	 					if( _selectedAdvancements[advCounter].option1.id )
-	 						this.boostSkill( _selectedAdvancements[advCounter].option1.id );
-	 					else
-	 						this.boostSkill( _selectedAdvancements[advCounter].option1 );
-	 				} else {
-	 					_selectedAdvancements[advCounter].option1 = _allSkills[0];
-	 				}
-	 			}
-	 		}
-	 		// End of New Skill Advancement
-
-		 	// recalculate attributes from advancement boosts
-			_displayAttributes = {
-				agility: getDiceValue( _attributes.agility + _attributeBoost.agility ),
-				smarts: getDiceValue( _attributes.smarts + _attributeBoost.smarts ),
-				spirit: getDiceValue( _attributes.spirit + _attributeBoost.spirit ),
-				strength: getDiceValue( _attributes.strength + _attributeBoost.strength ),
-				vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
-			};
-		}
-
-
-		_totalPowersKnown += _additionalPowersKnown;
-
-
-		fightingSkill = this.getSkill("SKILL_FIGHTING");
-
-		_derived.parry = 2;
-		if( fightingSkill.value > 0 ) {
-			fightingValue = getDiceValue( fightingSkill.value + fightingSkill.boost  );
-			_derived.parry = Math.floor(fightingValue.value / 2) + 2;
-		}
-
-		this.calcSPC();
-
-
-		this.refreshAvailable();
-
-	 	// recalculate attributes from advancement boosts
-		_displayAttributes = {
-			agility: getDiceValue( _attributes.agility + _attributeBoost.agility ),
-			smarts: getDiceValue( _attributes.smarts + _attributeBoost.smarts ),
-			spirit: getDiceValue( _attributes.spirit + _attributeBoost.spirit ),
-			strength: getDiceValue( _attributes.strength + _attributeBoost.strength ),
-			vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
-		};
-
-		if( _attributes.spirit + _attributeBoost.spirit  <  _attributes.vigor + _attributeBoost.vigor  ) {
-			_maxStrain = _attributes.spirit + _attributeBoost.spiri;
-		} else {
-			_maxStrain = _attributes.vigor + _attributeBoost.vigor;
-		}
-		_maxStrain += _strainBoost;
-		if( _doubleStrain > 0 )
-			_maxStrain = _maxStrain * 2;
-
-		// recalc derived toughness
-		_derived.toughness_base = Math.floor(_displayAttributes.vigor.value / 2) + 2;
-		//_derived.toughness += _attributeBoost.vigor; // will always be in steps of 2, so just add it ;)
-		_derived.toughness += _derived.toughness_base;
-
-	 	_load.currentLoad = 0;
-	 	_load.combatLoad = 0;
-	 	// subtract gear costs....
-
-	 	for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++) {
-
-			_selectedHandWeapons[ gearCounter ].localCost = _selectedHandWeapons[ gearCounter ].purchaseCost;
-			_selectedHandWeapons[ gearCounter ].localWeight = _selectedHandWeapons[ gearCounter ].weight;
-			_selectedHandWeapons[ gearCounter ].localAP = _selectedHandWeapons[ gearCounter ].ap;
-			_selectedHandWeapons[ gearCounter ].localNotes = _selectedHandWeapons[ gearCounter ].notes;
-			_selectedHandWeapons[ gearCounter ].localDamage = _selectedHandWeapons[ gearCounter ].damage;
-
-			_selectedHandWeapons[ gearCounter ].local_name = this.getLocalName( _selectedHandWeapons[ gearCounter ].name );
-
-			switch( _selectedHandWeapons[ gearCounter ].sciFiMod ) {
-				case "chain":
-					_selectedHandWeapons[ gearCounter ].localCost += 500;
-					_selectedHandWeapons[ gearCounter ].localWeight += 2;
-					_selectedHandWeapons[ gearCounter ].localAP += 2;
-					_selectedHandWeapons[ gearCounter ].local_name = this.getTranslation("SCIFI_CHAIN") + "-" + _selectedHandWeapons[ gearCounter ].local_name;
-					break;
-				case "vibro":
-					_selectedHandWeapons[ gearCounter ].localCost += 500;
-					_selectedHandWeapons[ gearCounter ].localWeight += 2;
-					_selectedHandWeapons[ gearCounter ].localAP += 2;
-					_selectedHandWeapons[ gearCounter ].local_name = this.getTranslation("SCIFI_VIBRO") + "-" + _selectedHandWeapons[ gearCounter ].local_name;
-					break;
-				case "energy":
-					_selectedHandWeapons[ gearCounter ].local_name = this.getTranslation("SCIFI_ENERGY") + "-" + _selectedHandWeapons[ gearCounter ].local_name;
-
-
-					_selectedHandWeapons[ gearCounter ].localDamage = _selectedHandWeapons[ gearCounter ].localDamage.replace("d10", "d12");
-					_selectedHandWeapons[ gearCounter ].localDamage = _selectedHandWeapons[ gearCounter ].localDamage.replace("d8", "d10");
-					_selectedHandWeapons[ gearCounter ].localDamage = _selectedHandWeapons[ gearCounter ].localDamage.replace("d6", "d8");
-					_selectedHandWeapons[ gearCounter ].localDamage = _selectedHandWeapons[ gearCounter ].localDamage.replace("d4", "d6");
-
-					_selectedHandWeapons[ gearCounter ].localCost += 500;
-					_selectedHandWeapons[ gearCounter ].localWeight += 1;
-					_selectedHandWeapons[ gearCounter ].localAP += 4;
-					break;
-				case "molec":
-					_selectedHandWeapons[ gearCounter ].local_name = this.getTranslation("SCIFI_MOLECULAR") + "-" + _selectedHandWeapons[ gearCounter ].local_name;
-
-					_selectedHandWeapons[ gearCounter ].localCost += 500;
-					//_selectedHandWeapons[ gearCounter ].ap += 4;
-					var addAP = _selectedHandWeapons[ gearCounter ].localDamage;
-
-					if(addAP.indexOf("+") > 0 ) {
-						addAP = addAP.substring(0, addAP.indexOf("+") );
-					}
-
-					addAP = addAP.replace("d", "") / 1;
-
-					_selectedHandWeapons[ gearCounter ].localAP += Math.floor(addAP / 2);
-
-					break;
-				case "power":
-					_selectedHandWeapons[ gearCounter ].local_name = this.getTranslation("SCIFI_POWER") + "-" + _selectedHandWeapons[ gearCounter ].local_name;
-
-					_selectedHandWeapons[ gearCounter ].localCost += 500;
-					_selectedHandWeapons[ gearCounter ].localWeight += 1;
-					_selectedHandWeapons[ gearCounter ].localDamage += " + d6";
-					break;
-				case "stun":
-					_selectedHandWeapons[ gearCounter ].local_name = this.getTranslation("SCIFI_STUN") + "-" + _selectedHandWeapons[ gearCounter ].local_name;
-
-					_selectedHandWeapons[ gearCounter ].localCost += 500;
-					_selectedHandWeapons[ gearCounter ].localWeight += 1;
-					break;
-				default:
-					// no mods
-					break;
-			}
-
-	 		_currentFunds -= _selectedHandWeapons[ gearCounter ].purchaseCost;
-	 		_load.currentLoad += _selectedHandWeapons[ gearCounter ].localWeight;
-	 		if( _selectedHandWeapons[ gearCounter ].droppedDuringCombat == false )
-	 			_load.combatLoad += _selectedHandWeapons[ gearCounter ].localWeight;
-	 		_selectedHandWeapons[ gearCounter ].toHitRollModifier = 0;
-	 		_selectedHandWeapons[ gearCounter ].currentParry = _selectedHandWeapons[ gearCounter ].parry;
-
-
-
-			if( _selectedHandWeapons[ gearCounter ].readiedLocation && _selectedHandWeapons[ gearCounter ].min_str > _displayAttributes.strength.value ) {
-				_warningReport.push( this.getTranslation("CHARGEN_BELOW_STR_WEAPON") );
-
-				if( _selectedHandWeapons[ gearCounter ].localDamage_strength > 0) {
-					var damageBit = _selectedHandWeapons[ gearCounter ].localDamage;
-
-					damageBit = this.setCharAt( damageBit, 1, _displayAttributes.strength.value);
-
-					if( _selectedHandWeapons[ gearCounter ].currentParry > 0 )
-						_selectedHandWeapons[ gearCounter ].currentParry = 0;
-
-					_selectedHandWeapons[ gearCounter ].displayDamage = _displayAttributes.strength.local_label + " + " +  damageBit;
-				} else {
-					_selectedHandWeapons[ gearCounter ].displayDamage = _selectedHandWeapons[ gearCounter ].localDamage;
-					_selectedHandWeapons[ gearCounter ].toHitRollModifier = -1;
-				}
-			} else {
-				if( _selectedHandWeapons[ gearCounter ].localDamage_strength > 0) {
-					_selectedHandWeapons[ gearCounter ].displayDamage = _displayAttributes.strength.local_label + " + " + _selectedHandWeapons[ gearCounter ].localDamage;
-				} else {
-					_selectedHandWeapons[ gearCounter ].displayDamage = _selectedHandWeapons[ gearCounter ].localDamage;
-				}
-			}
-
-			if( _selectedHandWeapons[ gearCounter ].readiedLocation != "")
-				_derived.parry += _selectedHandWeapons[ gearCounter ].parry_modifier;
-	 	}
-
-		for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++) {
-	 		_currentFunds -= _selectedRangedWeapons[ gearCounter ].purchaseCost;
-	 		_load.currentLoad += _selectedRangedWeapons[ gearCounter ].weight;
-	 		if( _selectedRangedWeapons[ gearCounter ].droppedDuringCombat == false )
-	 			_load.combatLoad += _selectedRangedWeapons[ gearCounter ].weight;
-	 		_selectedRangedWeapons[ gearCounter ].toHitRollModifier = 0;
-	 		_selectedRangedWeapons[ gearCounter ].currentParry = _selectedRangedWeapons[ gearCounter ].parry;
-
-			if( _selectedRangedWeapons[ gearCounter ].readiedLocation && _selectedRangedWeapons[ gearCounter ].min_str > _displayAttributes.strength.value ) {
-				_warningReport.push( this.getTranslation("CHARGEN_BELOW_STR_WEAPON") );
-
-				if( _selectedHandWeapons[ gearCounter ].damage_strength > 0) {
-					var damageBit = _selectedRangedWeapons[ gearCounter ].damage;
-
-					damageBit = this.setCharAt( damageBit, 1, _displayAttributes.strength.value);
-
-					if( _selectedRangedWeapons[ gearCounter ].currentParry > 0 )
-						_selectedRangedWeapons[ gearCounter ].currentParry = 0;
-
-					_selectedRangedWeapons[ gearCounter ].displayDamage = _displayAttributes.strength.local_label + " + " +  damageBit;
-				} else {
-					_selectedRangedWeapons[ gearCounter ].displayDamage = _selectedRangedWeapons[ gearCounter ].damage;
-					_selectedRangedWeapons[ gearCounter ].toHitRollModifier = -1;
-				}
-			} else {
-				if( _selectedRangedWeapons[ gearCounter ].damage_strength > 0) {
-					_selectedRangedWeapons[ gearCounter ].displayDamage = _displayAttributes.strength.local_label + " + " + _selectedRangedWeapons[ gearCounter ].damage;
-				} else {
-					_selectedRangedWeapons[ gearCounter ].displayDamage = _selectedRangedWeapons[ gearCounter ].damage;
-				}
-			}
-
-			if( _selectedRangedWeapons[ gearCounter ].readiedLocation != "")
-				_derived.parry += _selectedRangedWeapons[ gearCounter ].parry_modifier;
-	 	}
-
-	 	var cyberParenthetical = this.getTranslation( "CHARGEN_CYBER_PARENTHETICAL" );
-
-	 	for( var cyberCounter = 0; cyberCounter < _installedCyberware.length; cyberCounter++) {
-			if( _installedCyberware[ cyberCounter ].chooseRangedWeapon ) {
-				for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++) {
-					if( _selectedRangedWeapons[ gearCounter ].tag == _installedCyberware[ cyberCounter ].option1.id ) {
-
-						_selectedRangedWeapons[ gearCounter ].alwaysReady = true;
-
-						if( !_selectedRangedWeapons[ gearCounter ].customName )
-							_selectedRangedWeapons[ gearCounter ].customName = this.getLocalName( _selectedRangedWeapons[ gearCounter ].name );
-						_selectedRangedWeapons[ gearCounter ].original_name = this.getLocalName( _selectedRangedWeapons[ gearCounter ].name );
-
-						if( _installedCyberware[ cyberCounter ].customName ) {
-
-							if(
-								_selectedRangedWeapons[ gearCounter ].customName != _installedCyberware[ cyberCounter ].customName
-									&&
-								_selectedRangedWeapons[ gearCounter ].original_name == _selectedRangedWeapons[ gearCounter ].customName
-							) {
-								 _selectedRangedWeapons[ gearCounter ].customName = _installedCyberware[ cyberCounter ].customName;
-								 break;
-							}
-
-						} else {
-							if(
-								_selectedRangedWeapons[ gearCounter ].customName + " " + cyberParenthetical != _installedCyberware[ cyberCounter ].local_name
-									&&
-								_selectedRangedWeapons[ gearCounter ].original_name == _selectedRangedWeapons[ gearCounter ].customName
-							) {
-								  _selectedRangedWeapons[ gearCounter ].customName = _selectedRangedWeapons[ gearCounter ].local_name + " " + cyberParenthetical;
-								  break;
-							}
-
-						}
-
-					}
-
-				}
-			}
-
-		}
-
-
-	 	for( var gearCounter = 0; gearCounter < _selectedArmor.length; gearCounter++) {
-	 		_currentFunds -= _selectedArmor[ gearCounter ].purchaseCost;
-	 		if( _selectedArmor[ gearCounter ].isReadied ) {
-		 		if( _selectedArmor[ gearCounter ].covers_torso > 0 ) {
-		 			if( _selectedArmor[ gearCounter ].armor > _derived.armor ) {
-		 				_derived.armor = _selectedArmor[ gearCounter ].armor;
-		 			}
-		 		}
-		 	}
-	 		_load.currentLoad += _selectedArmor[ gearCounter ].weight;
-	 		if( _selectedArmor[ gearCounter ].droppedDuringCombat == false )
-	 			_load.combatLoad += _selectedArmor[ gearCounter ].weight;
-	 	}
-	 	for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++) {
-	 		_currentFunds -= _selectedShields[ gearCounter ].purchaseCost;
-	 		_load.currentLoad += _selectedShields[ gearCounter ].weight;
-			if( _selectedShields[ gearCounter ].readiedLocation && _selectedShields[ gearCounter ].readiedLocation != "")
-				_derived.parry += _selectedShields[ gearCounter ].parry;
-	 		if( _selectedShields[ gearCounter ].droppedDuringCombat == false )
-	 			_load.combatLoad += _selectedShields[ gearCounter ].weight;
-	 	}
-	 	for( var gearCounter = 0; gearCounter < _selectedMundaneGear.length; gearCounter++) {
-	 		_currentFunds -= _selectedMundaneGear[ gearCounter ].purchaseCost * _selectedMundaneGear[ gearCounter ].count;
-	 		_selectedMundaneGear[ gearCounter ].totalWeight = _selectedMundaneGear[ gearCounter ].weight * _selectedMundaneGear[ gearCounter ].count;
-	 		_selectedMundaneGear[ gearCounter ].totalPurchaseCost = _selectedMundaneGear[ gearCounter ].purchaseCost * _selectedMundaneGear[ gearCounter ].count;
-	 		_load.currentLoad += _selectedMundaneGear[ gearCounter ].weight * _selectedMundaneGear[ gearCounter ].count;
-	 		if( _selectedMundaneGear[ gearCounter ].droppedDuringCombat == false )
-	 			_load.combatLoad += _selectedMundaneGear[ gearCounter ].weight * _selectedMundaneGear[ gearCounter ].count;
-	 	}
-
-		if( _currentFunds < 0 ) {
-			_validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_FUNDS") );
-			_isValid = false;
-		}
-
-		if( _usesSPCCreation ) {
-			if( this.hasEdge("arcane-background") ) {
-				var invalidMessage = this.getTranslation("CHARGEN_SPC_CANNOT_HAVE_AB");
-				_validationReport.push( invalidMessage );
-				_isValid = false;
-			}
-		}
-
-
-		if( _derived.armor == 0) {
-			_derived.toughnessAndArmor = _derived.toughness;
-		} else {
-			_derived.toughnessAndArmor = ( _derived.toughness + _derived.armor ) + " (" + _derived.armor + ")";
-		}
-
-		_loadLimit = _displayAttributes.strength.value * _encumbranceMultiplier;
-		// if( this.hasEdge("brawny") )
-		// 	_loadLimit = _displayAttributes.strength.value * 8;
-
-		if( _loadLimit > 0 ) {
-			_load.loadModifier = Math.floor( _load.currentLoad / _loadLimit ) * -1 ;
-			_load.combatLoadModifier = Math.floor( _load.combatLoad / _loadLimit ) * -1 ;
-		} else {
-			_load.loadModifier = 0;
-			_load.combatLoadModifier = 0;
-		}
-
-		if( _load.loadModifier < -3 ) {
-			_warningReport.push( this.getTranslation("CHARGEN_CHARACTER_OVERLOADED") );
-		}
-
-		for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++) {
-			_selectedHandWeapons[ gearCounter ].toHitRollModifier -= _load.loadModifier;
-		}
-
-		if( _multipleLanguages == true && _linguistSelected == false )
-			_knownLanguagesLimit = _displayAttributes.smarts.value / 2 + 1;
-		//console.log( "_knownLanguagesLimit", _knownLanguagesLimit );
-		for( langCounter = 0; langCounter < _knownLanguagesLimit; langCounter++ ) {
-			if( typeof(_knownLanguages[ langCounter]) == "undefined")
-				_knownLanguages[ langCounter ] = "";
-		}
-
-		_activeSkills = {};
-		for( var skCount = 0; skCount <  _agilitySkills.length; skCount++ ) {
-			//console.log( _agilitySkills[skCount].local_name, _agilitySkills[skCount].displayValue );
-			if( _agilitySkills[skCount].displayValue && _agilitySkills[skCount].displayValue != "")
-				_activeSkills[ _agilitySkills[skCount].local_name ] = _agilitySkills[skCount].displayValue;
-		}
-
-		for( var skCount = 0; skCount <  _smartsSkills.length; skCount++ ) {
-			//console.log( _smartsSkills[skCount].local_name, _smartsSkills[skCount].displayValue );
-			if( _smartsSkills[skCount].displayValue && _smartsSkills[skCount].displayValue != "")
-				_activeSkills[ _smartsSkills[skCount].local_name ] = _smartsSkills[skCount].displayValue;
-
-			if( _smartsSkills[skCount].specialties.length > 0 ) {
-				for( var spCount = 0; spCount <  _smartsSkills[skCount].specialties.length; spCount++ ) {
-					skillName = _smartsSkills[skCount].local_name + " (" + _smartsSkills[skCount].specialties[spCount].name + ")";
-					_activeSkills[ skillName ] = _smartsSkills[skCount].specialties[spCount].displayValue;
-				}
-			}
-		}
-
-		for( var skCount = 0; skCount <  _spiritSkills.length; skCount++ ) {
-			//console.log( _spiritSkills[skCount].local_name, _spiritSkills[skCount].displayValue );
-			if( _spiritSkills[skCount].displayValue && _spiritSkills[skCount].displayValue != "")
-				_activeSkills[ _spiritSkills[skCount].local_name ] = _spiritSkills[skCount].displayValue;
-		}
-
-		for( var skCount = 0; skCount <  _strengthSkills.length; skCount++ ) {
-			//console.log( _strengthSkills[skCount].local_name, _strengthSkills[skCount].displayValue );
-			if( _strengthSkills[skCount].displayValue && _strengthSkills[skCount].displayValue != "")
-				_activeSkills[ _strengthSkills[skCount].local_name ] = _strengthSkills[skCount].displayValue;
-		}
-
-		for(gdvc = 0; gdvc < globalDiceValues.length; gdvc++) {
-			if( 1 + _attributeBoost.agility <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.agility )
-				_diceValues.agility.push( globalDiceValues[gdvc] );
-			if( 1 + _attributeBoost.smarts <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.smarts )
-				_diceValues.smarts.push( globalDiceValues[gdvc] );
-			if( 1 + _attributeBoost.spirit <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.spirit )
-				_diceValues.spirit.push( globalDiceValues[gdvc] );
-			if( 1 + _attributeBoost.strength <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.strength )
-				_diceValues.strength.push( globalDiceValues[gdvc] );
-			if( 1 + _attributeBoost.vigor <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.vigor )
-				_diceValues.vigor.push( globalDiceValues[gdvc] );
-		}
-
-		//console.log( _activeSkills );
-
-	}
-
-	this.setEncumbranceMultiplier = function( newValue ) {
-		// only modify up! This fixes problems with brawny edge overriding cyberware mule
-		if( newValue > _encumbranceMultiplier )
-			_encumbranceMultiplier = newValue / 1;
-	}
-
-	this.setCharAt = function(str,index,chr) {
-	    if(index > str.length-1) return str;
-	    return str.substr(0,index) + chr + str.substr(index+1);
-	}
-
-	this.getEdge = function( edgeTag ) {
-		for( var edgeCounter = 0; edgeCounter < savageWorldsEdges.length; edgeCounter++ ) {
-			if( savageWorldsEdges[edgeCounter].tag == edgeTag ) {
-				return savageWorldsEdges[edgeCounter];
-			}
-		}
-		return null;
-	}
-
-	this.getHindrance = function( hindranceTag  ) {
-
-		for( var hindranceCounter = 0; hindranceCounter < savageWorldsHindrances.length; hindranceCounter++ ) {
-			if( savageWorldsHindrances[hindranceCounter].tag == hindranceTag ) {
-				return savageWorldsHindrances[hindranceCounter];
-			}
-		}
-		return null;
-	}
-
-	this.exportBBCode = function() {
-		var html = this.exportHTMLCode();
-
-		while( html.indexOf("<br />\n") > -1)
-			html = html.replace("<br />\n", "\n");
-		while( html.indexOf("<br />") > -1)
-			html = html.replace("<br />", "\n");
-		while( html.indexOf("<br/>\n") > -1)
-			html = html.replace("<br/>\n", "\n");
-		while( html.indexOf("<br/>") > -1)
-			html = html.replace("<br/>", "\n");
-		while( html.indexOf("<br>\n") > -1)
-			html = html.replace("<br>\n", "\n");
-		while( html.indexOf("<br>") > -1)
-			html = html.replace("<br>", "\n");
-		while( html.indexOf("<strong>") > -1)
-			html = html.replace("<strong>", "[b]");
-		while( html.indexOf("</strong>") > -1)
-			html = html.replace("</strong>", "[/b]");
-		while( html.indexOf("<b>") > -1)
-			html = html.replace("<b>", "[b]");
-		while( html.indexOf("</b>") > -1)
-			html = html.replace("</b>", "[/b]");
-		while( html.indexOf("</ul>") > -1)
-			html = html.replace("</ul>", "[/list]");
-		while( html.indexOf("<ul>") > -1)
-			html = html.replace("<ul>", "[list]");
-		while( html.indexOf("</li>\n") > -1)
-			html = html.replace("</li>\n", "\n");
-		while( html.indexOf("</li>") > -1)
-			html = html.replace("</li>", "\n");
-		while( html.indexOf("<li>") > -1)
-			html = html.replace("<li>", "[*]");
-		while( html.indexOf("<h3>") > -1)
-			html = html.replace("<h3>", "[size=200][b]");
-		while( html.indexOf("</h3>") > -1)
-			html = html.replace("</h3>", "[/b][/size]\n");
-		while( html.indexOf("<em>") > -1)
-			html = html.replace("<em>", "[i]");
-		while( html.indexOf("</em>") > -1)
-			html = html.replace("</em>", "[/i]");
-
-		while( html.indexOf("<h4>") > -1)
-			html = html.replace("<h4>", "[size=150][b]");
-		while( html.indexOf("</h4>") > -1)
-			html = html.replace("</h4>", "[/b][/size]\n");
-
-		while( html.indexOf("<h5>") > -1)
-			html = html.replace("<h5>", "[size=125][b]");
-		while( html.indexOf("</h5>") > -1)
-			html = html.replace("</h5>", "[/b][/size]\n");
-
-		// This should be pretty close! :)
-
-		return html;
-	}
-
-	this.exportHTMLCode = function() {
-		var html;
-		if( _name != "")
-			html = "<h3>" + _name + "</h3>";
-		else
-			html = "<h3>The Nameless Character :(</h3>";
-
-		if( _description != "")
-			html += _description.replace("\n", "<br />\n") + "<br />\n<br />\n";
-
-		if( _background != "")
-			html += _background.replace("\n", "<br />\n") + "<br />\n<br />\n";
-
-		html += "<b>" + _race.local_name + " " + _gender.label + "</b><br />\n";
-
-		html += "<b>" + this.getTranslation("CHARGEN_RANK") + ":</b> " + _XP.rankName + "<br />\n";
-
-		/*
-	Attributes: Agility d8, Smarts d6, Spirit d6, Strength d6, Vigor d8
-	Skills: Fighting d8, Notice d6, Shooting d8, Stealth d8, Survival d8, Tracking d6, Climbing d6
-	Charisma: –1; Pace: 6; Parry: 5; Toughness: 10 (4)
-	Hindrances: Bad Luck, Greedy (Minor), Habit (Minor—frequently disappears)
-	Edges: Alertness, Woodsman, Assassin
-	Gear: Binoculars (in cabin), body armor (+4, hidden in cabin), blaster pistol (Range 12/24/48, Damage 2d6+2, AP 2, hidden in cabin), commlink, C$50.
-		 * */
-
-		// Traits
-			// Attributes
-			html += "<strong>" + this.getTranslation("GENERAL_ATTRIBUTES") + ":</strong> ";
-				html += this.getTranslation("ATTRIBUTE_AGILITY") + ": " +  _displayAttributes.agility.local_label + ", ";
-				html += this.getTranslation("ATTRIBUTE_SMARTS") + ": " +  _displayAttributes.smarts.local_label + ", ";
-				html += this.getTranslation("ATTRIBUTE_SPIRIT") + ": " +   _displayAttributes.spirit.local_label + ", ";
-				html += this.getTranslation("ATTRIBUTE_STRENGTH") + ": " +   _displayAttributes.strength.local_label + ", ";
-				html += this.getTranslation("ATTRIBUTE_VIGOR") + ": " +   _displayAttributes.vigor.local_label + " ";
-			html += "<br />\n";
-
-			// Skills
-			html += "<strong>" + this.getTranslation("GENERAL_SKILLS") + ":</strong> ";
-
-			// sort skills alphabetacially
-			keys = Object.keys(_activeSkills),
-
-			keys.sort();
-
-			for (var kCount = 0; kCount < keys.length; kCount++) {
-				html += keys[kCount] + ": " + _activeSkills[ keys[kCount] ];
-				if( kCount < keys.length -1 )
-					html += ", ";
-			}
-
-			html += "<br />\n";
-
-			// Derived
-			//html += "<b>" + this.getTranslation("CHARGEN_ATTRIBUTES") + ":</b> ";
-
-			if( _derived.charisma != 0 ) {
-				if( _derived.charisma > 0 ) {
-					html += "<strong>" + this.getTranslation("GENERAL_CHARISMA") + ":</strong> +" + _derived.charisma + "; ";
-				} else {
-					html += "<strong>" + this.getTranslation("GENERAL_CHARISMA") + ":</strong> " + _derived.charisma + "; ";
-				}
-			}
-			html += "<strong>" + this.getTranslation("GENERAL_PACE") + ":</strong> " + _derived.pace + "; ";
-
-			html += "<strong>" + this.getTranslation("GENERAL_PARRY") + ":</strong> " + _derived.parry + "; ";
-
-			html += "<strong>" + this.getTranslation("GENERAL_TOUGHNESS") + ":</strong> " + (_derived.toughness + _derived.armor ) + " ";
-			if( _derived.armor != 0 )
-				html += "(" + _derived.armor + ")";
-
-			html += "<br />\n";
-			// Edges
-
-			html += "<strong>" + this.getTranslation("GENERAL_EDGES") + ":</strong> ";
-			var eCounter = 0;
-			if( _installedEdges.length > 0 ) {
-				for (var eCount = 0; eCount < _installedEdges.length; eCount++) {
-					html += _installedEdges[ eCount ].local_name ;
-					if( _installedEdges[ eCount ].racial )
-						html += " " + this.getTranslation("CHARGEN_RACIAL_PARENTHETICAL") + "";
-					if( eCount < _installedEdges.length - 1 ) {
-						html += ", ";
-					}
-					eCounter++;
-				}
-			}
-
-			if( eCounter == 0 ) {
-				html += "(none)";
-			}
-
-			html += "<br />\n";
-
-			// Hindrances
-			html += "<strong>" + this.getTranslation("GENERAL_HINDRANCES") + ":</strong> ";
-
-			var hCounter = 0;
-			if( _installedHindrances.length > 0 ) {
-				for (var hCount = 0; hCount < _installedHindrances.length; hCount++) {
-					html += _installedHindrances[ hCount ].select_option_name ;
-					if( _installedHindrances[ hCount ].specifyField )
-						html += ": " + _installedHindrances[ hCount ].specifyField;
-					if( _installedHindrances[ hCount ].racial )
-						html += " " + this.getTranslation("CHARGEN_RACIAL_PARENTHETICAL") + "";
-					if( hCount < _installedHindrances.length - 1 ) {
-						html += ", ";
-					}
-					hCounter++;
-				}
-			}
-
-			if(hCounter == 0) {
-				html += "(none)";
-			}
-
-			html += "<br />\n";
-
-		// Gear
-			html += "<strong>" + this.getTranslation("GENERAL_GEAR") + ":</strong> ";
-			var gearCount = 0;
-
-				for (var gCount = 0; gCount < _selectedHandWeapons.length; gCount++) {
-					html += _selectedHandWeapons[gCount].local_name;
-					// TODO: reach and damage
-					html += " (";
-				//  	console.log(_selectedHandWeapons[gCount]);
-					html += "Damage:  " + _selectedHandWeapons[gCount].displayDamage.toString();
-					if( _selectedHandWeapons[gCount].reach > 0 )
-						html += ", Reach:  " +  _selectedHandWeapons[gCount].reach;
-					if( _selectedHandWeapons[gCount].ap > 0 )
-						html += ", AP: " +  _selectedHandWeapons[gCount].ap;
-					html += " )";
-
-					html += ", ";
-					gearCount++;
-				}
-
-				for (var gCount = 0; gCount < _selectedRangedWeapons.length; gCount++) {
-					html += _selectedRangedWeapons[gCount].local_name;
-					// TODO: range, rof, ap, and damage
-					html += " (";
-					//~ console.log(_selectedHandWeapons[gCount]);
-					html += "Damage:  " + _selectedRangedWeapons[gCount].displayDamage.toString();
-					if( _selectedRangedWeapons[gCount].range )
-						html += ", Range:  " +  _selectedRangedWeapons[gCount].reach;
-					if( _selectedRangedWeapons[gCount].ap > 0 )
-						html += ", AP: " +  _selectedRangedWeapons[gCount].ap;
-					if( _selectedRangedWeapons[gCount].rof > 0 )
-						html += ", ROF: " +  _selectedRangedWeapons[gCount].rof;
-					html += " )";
-
-					html += ", ";
-					gearCount++;
-				}
-
-				for (var gCount = 0; gCount < _selectedArmor.length; gCount++) {
-					html += _selectedArmor[gCount].local_name + ", ";
-					gearCount++;
-				}
-
-				for (var gCount = 0; gCount < _selectedShields.length; gCount++) {
-					html += _selectedShields[gCount].local_name + ", ";
-					gearCount++;
-				}
-
-				for (var gCount = 0; gCount < _selectedMundaneGear.length; gCount++) {
-					html += _selectedMundaneGear[gCount].local_name + ", ";
-					gearCount++;
-				}
-
-			if(gearCount == 0) {
-				html += "(none)";
-			} else {
-				// remove last comma
-				html = html.substr(0, html.length - 2);
-			}
-
-			html += "<br />\n";
-
-		// Gear
-		if( _installedCyberware.length > 0 ) {
-			html += "<strong>" + this.getTranslation("GENERAL_CYBERWARE") + ":</strong> ";
-			var gearCount = 0;
-
-				for (var gCount = 0; gCount < _installedCyberware.length; gCount++) {
-					//~ console.log( _installedCyberware[gCount] );
-					if( _installedCyberware[gCount].customName )
-						html += _installedCyberware[gCount].customName + " (" + _installedCyberware[gCount].local_name + "); ";
-					else
-						html += _installedCyberware[gCount].local_name + "; ";
-					gearCount++;
-				}
-
-			if(gearCount == 0) {
-				html += "(none)";
-			} else {
-				// remove last comma
-				html = html.substr(0, html.length - 2);
-			}
-
-			html += "<br />\n";
-		}
-		// Powers
-			if( _selectedPowers.length > 0 ) {
-				html += "<strong>" + this.getTranslation("GENERAL_POWERS") + ":</strong> ";
-
-				for(p_counter = 0; p_counter < _selectedPowers.length; p_counter++) {
-
-					if( _selectedPowers[p_counter].customName != "") {
-						power_name = _selectedPowers[p_counter].customName + " (" + _selectedPowers[p_counter].local_name;
-						if( _selectedPowers[p_counter].trapping.local_name != "" )
-							power_name += ", " + _selectedPowers[p_counter].trapping.local_name  + ")";
-						else
-							power_name += ")";
-
-					} else {
-						if( _selectedPowers[p_counter].trapping != "" ) {
-							power_name = _selectedPowers[p_counter].local_name + " (" + _selectedPowers[p_counter].trapping.local_name  + ")" ;
-						} else {
-							power_name = _selectedPowers[p_counter].local_name ;
-						}
-					}
-
-					details_line = " - ";
-
-					//~ console.log( _selectedPowers[p_counter] );
-
-					if(_selectedPowers[p_counter].cost) {
-						details_line += "Cost: " + _selectedPowers[p_counter].cost + "; ";
-					}
-					if(_selectedPowers[p_counter].range) {
-						details_line += "Range: " + _selectedPowers[p_counter].range + "; ";
-					}
-					if(_selectedPowers[p_counter].damage) {
-						details_line += "Damage: " + _selectedPowers[p_counter].damage + "; ";
-					}
-					if(_selectedPowers[p_counter].local_duration) {
-						details_line += "Duration: " + _selectedPowers[p_counter].local_duration + "; ";
-					}
-
-					//~ if(_selectedPowers[p_counter].bookObj) {
-						//~ details_line += _selectedPowers[p_counter].bookObj.abbrev + " " + _selectedPowers[p_counter].page;
-					//~ }
-					details_line = "";
-
-					if( details_line && details_line != " - ")
-						html += "<em>" + power_name + "</em>" + details_line + ", ";
-					else
-						html +=  "<em>" + power_name + "</em>, ";
-				}
-
-				html = html.substr(0, html.length - 2);
-
-				html += "<br />\n";
-			}
-
-			if( _usesSPCCreation ) {
-
-				powerLevel = _SPCPowerLevels[ _SPCSelectedPowerLevel ].name + " Hero";
-				if( _SPCRisingStars )
-					powerLevel += ", A Rising Star";
-				html += "<br /><h5>Super Hero Powers (" + powerLevel;
-
-				if( _SPCTakenExtraPowerPoints ) {
-					html += ", Super Karma Taken";
-				}
-
-				html  += ")</h5>";
-
-				for( var powerCounter = 0; powerCounter < _selectedSPCPowers.length; powerCounter++) {
-
-					var exportItem = {
-						id: _selectedSPCPowers[powerCounter].id,
-						level: _selectedSPCPowers[powerCounter].selectedLevel,
-						desc: _selectedSPCPowers[powerCounter].description,
-						customName: _selectedSPCPowers[powerCounter].custom_name,
-						switchableWith: _selectedSPCPowers[powerCounter].switchableWith,
-						boostedAttribute: _selectedSPCPowers[powerCounter].boosted_attribute,
-						boostedSkill: _selectedSPCPowers[powerCounter].boosted_skill,
-						boostedSkillSpecialty: _selectedSPCPowers[powerCounter].boosted_specialty
-					}
-
-					//_exportObject.spcPowers.push( exportItem );
-					if(
-						_selectedSPCPowers[powerCounter].custom_name != ""
-							&&
-
-						_selectedSPCPowers[powerCounter].custom_name != _selectedSPCPowers[powerCounter].local_name
-					) {
-						html += "<strong>" + _selectedSPCPowers[powerCounter].custom_name + " (" +  _selectedSPCPowers[powerCounter].local_name;
-
-						if( _selectedSPCPowers[powerCounter].boosted_attribute ) {
-							attribute = _selectedSPCPowers[powerCounter].boosted_attribute.charAt(0).toUpperCase() + _selectedSPCPowers[powerCounter].boosted_attribute.slice(1);
-							html += ": " + attribute ;
-						}
-
-						html += ")";
-					} else {
-						html += "<strong>" +  _selectedSPCPowers[powerCounter].local_name;
-						if( _selectedSPCPowers[powerCounter].boosted_attribute ) {
-							attribute = _selectedSPCPowers[powerCounter].boosted_attribute.charAt(0).toUpperCase() + _selectedSPCPowers[powerCounter].boosted_attribute.slice(1);
-							html += ": " + attribute ;
-						}
-					}
-
-					if( _selectedSPCPowers[powerCounter].per_level ) {
-						html += " - Level " + _selectedSPCPowers[powerCounter].selectedLevel;
-					}
-
-					html += " - " + _selectedSPCPowers[powerCounter].currentCost + " points</strong>";
-					if( _selectedSPCPowers[powerCounter].switchableWith ) {
-						html += " " + this.getTranslation("GENERAL_NOT_TALLIED_PARENTH");
-					}
-
-					html += "<br />\n";
-
-					if( _selectedSPCPowers[powerCounter].description != "")
-						html += _selectedSPCPowers[powerCounter].description.replace("\n", "<br />\n") + "<br />\n";
-
-					html += "<ul>";
-					if( _selectedSPCPowers[powerCounter].switchableWith ) {
-						html += "<li>Switchable With: " + _selectedSPCPowers[powerCounter].switchableWith.local_name + "</li>";
-					}
-
-					for( var modCounter = 0; modCounter < _selectedSPCPowers[powerCounter].modifiersObj.length; modCounter++) {
-						if( _selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost != 0) {
-							html += "<li>";
-							html += _selectedSPCPowers[powerCounter].modifiersObj[modCounter].local_name;
-							html += ": ";
-							if( _selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost > 0 )
-								html += "+";
-							html += _selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost;
-							html += "</li>";
-						}
-					}
-
-					for( var modCounter = 0; modCounter < _selectedSPCPowers[powerCounter].genericModifiersObj.length; modCounter++) {
-						if( _selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost != 0) {
-							html += "<li>";
-							html += _selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].local_name;
-							html += ": ";
-							if( _selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost > 0 )
-								html += "+";
-							html += _selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost;
-							html += "</li>";
-
-						}
-					}
-
-					html += "</ul>";
-				}
-				if( _SPCCurrentPowerPoints != 0 )
-					html += "<strong>Remaining Power Points</strong>: " + _SPCCurrentPowerPoints + "<br />\n";
-			}
-
-		return html;
-	}
-
-	this.enableSettingRule = function(settingTag) {
-	//	console.log( "enableSettingRule", settingTag);
-		for(var bookCounter = 0; bookCounter < savageWorldsBooksList.length; bookCounter++ ) {
-			for( var settingCounter = 0 ; settingCounter < savageWorldsBooksList[bookCounter].setting_rules.length; settingCounter++ ) {
-				if( settingTag == savageWorldsBooksList[bookCounter].setting_rules[ settingCounter].tag ) {
-					savageWorldsBooksList[bookCounter].setting_rules[ settingCounter].inUse = true;
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	this.disableSettingRule = function(settingTag) {
-	//	console.log( "enableSettingRule", settingTag);
-		for(var bookCounter = 0; bookCounter < savageWorldsBooksList.length; bookCounter++ ) {
-			for( var settingCounter = 0 ; settingCounter < savageWorldsBooksList[bookCounter].setting_rules.length; settingCounter++ ) {
-				if( settingTag == savageWorldsBooksList[bookCounter].setting_rules[ settingCounter].tag ) {
-					savageWorldsBooksList[bookCounter].setting_rules[ settingCounter].inUse = false;
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	this.isSettingRuleEnabled = function( settingTag ) {
-	//	console.log( "isSettingRuleEnabled", settingTag);
-		for(var bookCounter = 0; bookCounter < savageWorldsBooksList.length; bookCounter++ ) {
-			for( var settingCounter = 0 ; settingCounter < savageWorldsBooksList[bookCounter].setting_rules.length; settingCounter++ ) {
-				if(
-					settingTag
-					&&
-					settingTag != ""
-					&&
-					savageWorldsBooksList[bookCounter].setting_rules[ settingCounter ]
-					&&
-					savageWorldsBooksList[bookCounter].setting_rules[ settingCounter ].tag
-					&&
-					settingTag == savageWorldsBooksList[bookCounter].setting_rules[ settingCounter ].tag
-				) {
-					if( savageWorldsBooksList[bookCounter].inUse == true ) {
-						return savageWorldsBooksList[bookCounter].setting_rules[ settingCounter].inUse;
-					} else {
-						// book is disabled, so setting rule is too.
-						return false;
-					}
-				}
-			}
-		}
-		return false;
-	}
-
-	this.importJSON = function( jsonString ) {
-
-		if( jsonString ) {
-			var _importObject = JSON.parse(jsonString);
-
-			if( _importObject ) {
-				this.init( _useLang );
-				if( _importObject.name )
-					_name = _importObject.name;
-				if( _importObject.background )
-					_background = _importObject.background;
-				if( _importObject.uuid )
-					_uuid = _importObject.uuid;
-				if( _importObject.description )
-					_description = _importObject.description;
-
-				if( _importObject.books ) {
-					for( var importCounter = 0; importCounter < _importObject.books.length; importCounter++ ) {
-						for( var bookCounter = 0; bookCounter < _books.length; bookCounter++ ) {
-							//_books[bookCounter].inUse = false;
-							if ( _importObject.books[importCounter] == _books[bookCounter].short_name ) {
-								_books[bookCounter].inUse = true;
-							}
-						}
-					}
-				}
-
-				if( _importObject.startingFunds )
-					_startingFunds = _importObject.startingFunds;
-
-				if( _importObject.settingRules ) {
-					for( var importCounter = 0; importCounter < _importObject.settingRules.length; importCounter++ ) {
-						this.enableSettingRule( _importObject.settingRules[importCounter] );
-					}
-				}
-
-				this.validate();
-
-				for( attribute in _attributes ) {
-					if( _importObject.attributes[ attribute ] ) {
-						attribute = attribute.toLowerCase().trim();
-						if( _attributes[attribute] )
-							_attributes[attribute] =  _importObject.attributes[ attribute ];
-					}
-				}
-
-				if( _importObject.knownLanguages ) {
-					_knownLanguages = _importObject.knownLanguages;
-				}
-
-				if( _importObject.gender )
-					this.setGender( _importObject.gender  );
-
-				if( _importObject.xp )
-					this.setXP( _importObject.xp  );
-
-				if( _importObject.race ){
-					this.setRace( _importObject.race  );
-				}
-
-				if( _importObject.skills ) {
-					for( var importCounter = 0; importCounter < _importObject.skills.length; importCounter++ ) {
-						this.setSkill(
-							_importObject.skills[importCounter].id,
-							_importObject.skills[importCounter].value
-						);
-
-						if( _importObject.skills[importCounter].specialties ) {
-							this.setSpecialties(
-								_importObject.skills[importCounter].id,
-								_importObject.skills[importCounter].specialties
-							);
-						}
-					}
-				}
-
-				if( _importObject.edges ) {
-					_selectedEdges = Array();
-					for( var importCounter = 0; importCounter < _importObject.edges.length; importCounter++ ) {
-						this.addEdge(
-							_importObject.edges[importCounter].book,
-							_importObject.edges[importCounter].tag
-						);
-					}
-				}
-
-				if( _importObject.powers ) {
-
-					for( var powerCounter = 0; powerCounter < _importObject.powers.length; powerCounter++ ) {
-						this.addPower(
-							_importObject.powers[powerCounter].powerBook,
-							_importObject.powers[powerCounter].powerTag,
-							_importObject.powers[powerCounter].trapBook,
-							_importObject.powers[powerCounter].trapTag,
-							_importObject.powers[powerCounter].customName
-						);
-					}
-				}
-
-				if( _importObject.hindrances ) {
-					_selectedHindrances = Array();
-					for( var importCounter = 0; importCounter < _importObject.hindrances.length; importCounter++ ) {
-						this.addHindrance(
-							_importObject.hindrances[importCounter].book,
-							_importObject.hindrances[importCounter].tag,
-							_importObject.hindrances[importCounter].specify
-						);
-					}
-				}
-
-				if( _importObject.perks ) {
-					_selectedPerks = Array();
-					for( var importCounter = 0; importCounter < _importObject.perks.length; importCounter++ ) {
-						this.addPerk(
-							_importObject.perks[importCounter]
-						);
-					}
-				}
-
-				if( _importObject.arcanebg ) {
-					this.setArcaneBackground( _importObject.arcanebg );
-				}
-
-				if( _importObject.gearMundane ) {
-					_selectedMundaneGear = Array();
-					for( var importCounter = 0; importCounter < _importObject.gearMundane.length; importCounter++ ) {
-						itemCount = 1;
-						if( _importObject.gearMundane[importCounter].count )
-							itemCount = _importObject.gearMundane[importCounter].count;
-						this.addGearMundane(
-							_importObject.gearMundane[importCounter].book,
-							_importObject.gearMundane[importCounter].tag,
-							_importObject.gearMundane[importCounter].cost,
-							_importObject.gearMundane[importCounter].dropped,
-							itemCount
-						);
-					}
-				}
-
-				if( _importObject.gearShields ) {
-					_selectedShields = Array();
-					for( var importCounter = 0; importCounter < _importObject.gearShields.length; importCounter++ ) {
-						this.addGearShield(
-							_importObject.gearShields[importCounter].book,
-							_importObject.gearShields[importCounter].tag,
-							_importObject.gearShields[importCounter].cost,
-							_importObject.gearShields[importCounter].loc,
-							_importObject.gearShields[importCounter].dropped
-						);
-					}
-				}
-
-				if( _importObject.gearHandWeapons ) {
-					_selectedHandWeapons = Array();
-					for( var importCounter = 0; importCounter < _importObject.gearHandWeapons.length; importCounter++ ) {
-						var _sciFiMod = "";
-						if( _importObject.gearHandWeapons[importCounter].sciFiMod )
-							_sciFiMod = _importObject.gearHandWeapons[importCounter].sciFiMod ;
-						this.addGearHandWeapon(
-							_importObject.gearHandWeapons[importCounter].book,
-							_importObject.gearHandWeapons[importCounter].tag,
-							_importObject.gearHandWeapons[importCounter].cost,
-							_importObject.gearHandWeapons[importCounter].loc,
-							_importObject.gearHandWeapons[importCounter].dropped,
-							_sciFiMod
-						);
-					}
-				}
-
-				if( _importObject.gearRangedWeapons ) {
-					_selectedRangedWeapons = Array();
-					for( var importCounter = 0; importCounter < _importObject.gearRangedWeapons.length; importCounter++ ) {
-						this.addGearRangedWeapon(
-							_importObject.gearRangedWeapons[importCounter].book,
-							_importObject.gearRangedWeapons[importCounter].tag,
-							_importObject.gearRangedWeapons[importCounter].cost,
-							_importObject.gearRangedWeapons[importCounter].loc,
-							_importObject.gearRangedWeapons[importCounter].dropped
-						);
-					}
-				}
-
-				if( _importObject.gearArmor ) {
-					_selectedArmor = Array();
-					for( var importCounter = 0; importCounter < _importObject.gearArmor.length; importCounter++ ) {
-						this.addGearArmor(
-							_importObject.gearArmor[importCounter].book,
-							_importObject.gearArmor[importCounter].tag,
-							_importObject.gearArmor[importCounter].cost,
-							_importObject.gearArmor[importCounter].readied,
-							_importObject.gearArmor[importCounter].dropped
-						);
-					}
-				}
-
-				this._customRangedWeapons = [];
-				this._customHandWeapons = [];
-				this._customGear = [];
-				this._customArmor = [];
-				this._customShields = [];
-
-				if( _importObject.customRangedWeapons )
-					this._customRangedWeapons = _importObject.customRangedWeapons;
-				if( _importObject.customHandWeapons )
-					this._customHandWeapons = _importObject.customHandWeapons;
-				if( _importObject.customGear )
-					this._customGear = _importObject.customGear;
-				if( _importObject.customArmor )
-					this._customArmor = _importObject.customArmor;
-				if( _importObject.customShields )
-					this._customShields = _importObject.customShields;
-
-
-				if(_importObject.spcpowerlevel)
-					_SPCSelectedPowerLevel = _importObject.spcpowerlevel;
-
-				if(
-					_importObject.risingstars
-						&&
-					(
-						_importObject.risingstars > 1 || _importObject.risingstars == "1"
-					)
-				){
-					_SPCRisingStars = true;
-				} else {
-					_SPCRisingStars = false;
-				}
-
-				if( _importObject.spcPowers ) {
-					//powerID, descriptionText, level, modifiers
-					//~ console.log( _importObject.spcPowers );
-					for( var importCounter = 0; importCounter < _importObject.spcPowers.length; importCounter++ ) {
-						//console.log(" *", _importObject.spcPowers[ importCounter ])
-						powerID = _importObject.spcPowers[ importCounter ].id;
-						descriptionText = _importObject.spcPowers[ importCounter ].desc;
-						customName = _importObject.spcPowers[ importCounter ].customName;
-						level = _importObject.spcPowers[ importCounter ].level;
-						modifiers = _importObject.spcPowers[ importCounter ].modifiers;
-						if( _importObject.spcPowers[ importCounter ].genericModifiers )
-							genericModifiers = _importObject.spcPowers[ importCounter ].genericModifiers;
-						else
-							genericModifiers = null;
-
-						boostedAttribute = _importObject.spcPowers[ importCounter ].boostedAttribute;
-						boostedSkill = _importObject.spcPowers[ importCounter ].boostedSkill;
-						boostedSkillSpecialty = _importObject.spcPowers[ importCounter ].boostedSkillSpecialty;
-
-						switchableWith = _importObject.spcPowers[importCounter].switchableWith;
-
-						this.addSPCPower( powerID, customName, descriptionText, level, modifiers, genericModifiers, switchableWith, boostedAttribute,  boostedSkill, boostedSkillSpecialty );
-					}
-				}
-
-				if( _importObject.cyberware ) {
-					for( var importCounter = 0; importCounter < _importObject.cyberware.length; importCounter++ ) {
-						this.installCyberware(
-							_importObject.cyberware[ importCounter ].tag,
-							_importObject.cyberware[ importCounter].selectedRank,
-							_importObject.cyberware[ importCounter].option1,
-							_importObject.cyberware[ importCounter].option2,
-							_importObject.cyberware[ importCounter].option3,
-							_importObject.cyberware[ importCounter].customName
-						);
-					}
-				}
-
-				if( _importObject.advancements ) {
-					_selectedAdvancements = Array();
-					this.validate();
-					for( var importCounter = 0; importCounter < _importObject.advancements.length; importCounter++ ) {
-						this.setAdvancementType(
-							_importObject.advancements[importCounter].takenAt,
-							_importObject.advancements[importCounter].tag
-						);
-
-						if( _importObject.advancements[importCounter].option1 ) {
-							option1name = null;
-							if( _importObject.advancements[importCounter].option1name )
-								option1name = _importObject.advancements[importCounter].option1name;
-
-							if( _importObject.advancements[importCounter].option1book ){
-								this.setAdvancementOption1(
-									_importObject.advancements[importCounter].takenAt,
-									_importObject.advancements[importCounter].option1,
-									option1name,
-									_importObject.advancements[importCounter].option1book
-								 );
-							} else {
-								this.setAdvancementOption1(
-									_importObject.advancements[importCounter].takenAt,
-									_importObject.advancements[importCounter].option1,
-									option1name
-								);
-							}
-						}
-
-						if( _importObject.advancements[importCounter].option2 ) {
-							option2name = null;
-							if( _importObject.advancements[importCounter].option2name )
-								option2name = _importObject.advancements[importCounter].option2name;
-							if( _importObject.advancements[importCounter].option2book ){
-								this.setAdvancementOption2(
-									_importObject.advancements[importCounter].takenAt,
-									_importObject.advancements[importCounter].option2,
-									option2name,
-									_importObject.advancements[importCounter].option2book
-								 );
-							} else {
-								this.setAdvancementOption2(
-									_importObject.advancements[importCounter].takenAt,
-									_importObject.advancements[importCounter].option2,
-									option2name
-								);
-							}
-						}
-					}
-				}
-
-				_isNew = false;
-				this.validate();
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	this.setAdvancementOption1 = function( advIndex, optionItem, specifyName, bookID ) {
-
-		if( optionItem && _selectedAdvancements[advIndex] ) {
-			if( _selectedAdvancements[advIndex].tag == "edge" ) {
-				_selectedAdvancements[advIndex].option1 = this.getEdge( optionItem );
-			} else {
-
-				if(
-					_selectedAdvancements[advIndex].tag == "incskill"
-						||
-					_selectedAdvancements[advIndex].tag == "inc2skills"
-						||
-					_selectedAdvancements[advIndex].tag == "skill"
-				) {
-					if( optionItem.id ) {
-						_selectedAdvancements[advIndex].option1 = optionItem;
-					} else {
-						if(_selectedAdvancements[advIndex].tag == "skill")
-							_selectedAdvancements[advIndex].option1 = this.getSkill( optionItem );
-						else
-							_selectedAdvancements[advIndex].option1 = this.getSkill( optionItem , specifyName);
-					}
-				} else {
-					_selectedAdvancements[advIndex].option1 = optionItem;
-				}
-
-			}
-			if( bookID )
-				_selectedAdvancements[advIndex].option1book = bookID;
-		}
-		//console.log( "option 1 _selectedAdvancements[advIndex]", _selectedAdvancements[advIndex]);
-	}
-
-	this.setAdvancementOption2 = function( advIndex, optionItem, specifyName, bookID ) {
-		if( optionItem && _selectedAdvancements[advIndex] ) {
-			if(
-				_selectedAdvancements[advIndex].tag == "skill"
-
-			) {
-				_selectedAdvancements[advIndex].option2 = specifyName;
-			} else {
-				if(
-					_selectedAdvancements[advIndex].tag == "incskill"
-						||
-					_selectedAdvancements[advIndex].tag == "inc2skills"
-				) {
-					if( optionItem.id ) {
-						_selectedAdvancements[advIndex].option2 = optionItem;
-					} else {
-						_selectedAdvancements[advIndex].option2 = this.getSkill( optionItem , specifyName);
-					}
-
-				} else {
-					_selectedAdvancements[advIndex].option2 = optionItem;
-				}
-
-			}
-			if( bookID )
-				_selectedAdvancements[advIndex].option2book = bookID;
-		}
-	}
-
-	this.setAdvancementType = function( advIndex, advTag ) {
-		if( advTag && _selectedAdvancements[advIndex] ) {
-			for( advCounter = 0; advCounter < this.advancementTypes.length; advCounter++ ) {
-				if( advTag == this.advancementTypes[advCounter].tag) {
-					var advItem = {};
-					angular.extend( advItem, this.advancementTypes[advCounter] );
-					advItem.takenAt = advIndex;
-					_selectedAdvancements[advIndex] = advItem;
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	this.addBook = function( bookObject ) {
-
-	}
-
-	this.allocateAdvancementSlots = function () {
-		if( _selectedAdvancements.length < this.availableAdvancements ) {
-			for( advCounter = _selectedAdvancements.length; advCounter < this.availableAdvancements; advCounter++ ) {
-				var advItem = {};
-				angular.extend( advItem, this.advancementTypes[0] );
-				advItem.takenAt = advCounter;
-				_selectedAdvancements[advCounter] = advItem;
-			}
-		}
-
-		if( _selectedAdvancements.length > this.availableAdvancements ) {
-			_selectedAdvancements = _selectedAdvancements.slice(0, this.availableAdvancements);
-		}
-	}
-
-	this.exportJSON = function() {
-		var _exportObject = {};
-		_exportObject.name = _name;
-		_exportObject.background = _background;
-		_exportObject.description = _description;
-
-		_exportObject.uuid = _uuid;
-
-		_exportObject.xp = _XP.value;
-		_exportObject.gender = _gender.id;
-		_exportObject.race = _race.id;
-
-		_exportObject.startingFunds = _startingFunds;
-
-		_exportObject.attributes = {
-			agility: _attributes.agility,
-			smarts: _attributes.smarts,
-			spirit: _attributes.spirit,
-			strength: _attributes.strength,
-			vigor: _attributes.vigor,
-		}
-
-		_exportObject.books = Array();
-
-		for( var bookCounter = 0; bookCounter < _books.length; bookCounter++ ) {
-			if ( _books[bookCounter].inUse  )
-				_exportObject.books.push( _books[bookCounter].short_name );
-		}
-
-		_exportObject.perks = Array();
-		for( var perkCounter = 0; perkCounter < _selectedPerks.length; perkCounter++ ) {
-			_exportObject.perks.push( _selectedPerks[perkCounter].tag );
-		}
-
-		_exportObject.skills = Array();
-
-		for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
-			if(
-				_skillList[skillCounter].value > 0
-				||
-				_skillList[skillCounter].specialties.length > 0
-			) {
-				var skillObj = {
-					id: _skillList[skillCounter].id,
-					value: _skillList[skillCounter].value
-				};
-
-				if( _skillList[skillCounter].specialties.length > 0 ) {
-					skillObj.specialties = Array();
-
-					for(var specCounter = 0; specCounter < _skillList[skillCounter].specialties.length; specCounter++ ) {
-						if( _skillList[skillCounter].specialties[specCounter].advskill == 0 ) {
-							skillObj.specialties.push(
-								_skillList[skillCounter].specialties[specCounter]
-							);
-						}
-
-					}
-				}
-				_exportObject.skills.push( skillObj );
-			}
-			_exportObject.edges = Array();
-			for( var edgeCounter = 0; edgeCounter < _selectedEdges.length; edgeCounter++ ) {
-				if( !_selectedEdges[edgeCounter].cyber ) {
-					_exportObject.edges.push( {
-						book: _selectedEdges[edgeCounter].book,
-						tag: _selectedEdges[edgeCounter].tag,
-					});
-				}
-			}
-
-			if( _selectedPowers.length > 0 ) {
-				_exportObject.powers = Array();
-				for( var powerCounter = 0; powerCounter < _selectedPowers.length; powerCounter++ ) {
-					_exportObject.powers.push( {
-						powerBook: _selectedPowers[powerCounter].book,
-						powerTag: _selectedPowers[powerCounter].tag,
-						trapBook: _selectedPowers[powerCounter].trapping.book,
-						trapTag: _selectedPowers[powerCounter].trapping.tag,
-						customName: _selectedPowers[powerCounter].customName,
-					});
-				}
-			}
-
-			_exportObject.hindrances = Array();
-			for( var hindranceCounter = 0; hindranceCounter < _selectedHindrances.length; hindranceCounter++ ) {
-				_exportObject.hindrances.push( {
-					book: _selectedHindrances[hindranceCounter].book,
-					tag: _selectedHindrances[hindranceCounter].tag,
-					specify: _selectedHindrances[hindranceCounter].specifyField,
-				});
-			}
-
-			if( _selectedArcaneBackground.tag != "")
-				_exportObject.arcanebg = _selectedArcaneBackground.tag;
-
-			_exportObject.gearMundane = Array();
-			for( var gearCounter = 0; gearCounter < _selectedMundaneGear.length; gearCounter++ ) {
-				_exportObject.gearMundane.push( {
-					book: _selectedMundaneGear[ gearCounter ].book,
-					tag: _selectedMundaneGear[ gearCounter ].tag,
-					cost: _selectedMundaneGear[ gearCounter ].purchaseCost,
-					count: _selectedMundaneGear[ gearCounter ].count,
-					dropped: _selectedMundaneGear[ gearCounter ].droppedDuringCombat
-				});
-			}
-
-			_exportObject.gearShields = Array();
-			for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
-				_exportObject.gearShields.push( {
-					book: _selectedShields[ gearCounter ].book,
-					tag: _selectedShields[ gearCounter ].tag,
-					cost: _selectedShields[ gearCounter ].purchaseCost,
-					loc: _selectedShields[ gearCounter ].readiedLocation,
-					dropped: _selectedShields[ gearCounter ].droppedDuringCombat
-				});
-			}
-
-			_exportObject.gearHandWeapons = Array();
-			for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++ ) {
-				_exportObject.gearHandWeapons.push( {
-					book: _selectedHandWeapons[ gearCounter ].book,
-					tag: _selectedHandWeapons[ gearCounter ].tag,
-					cost: _selectedHandWeapons[ gearCounter ].purchaseCost,
-					loc: _selectedHandWeapons[ gearCounter ].readiedLocation,
-					dropped: _selectedHandWeapons[ gearCounter ].droppedDuringCombat,
-					sciFiMod: _selectedHandWeapons[ gearCounter ].sciFiMod
-				});
-			}
-
-			_exportObject.gearRangedWeapons = Array();
-			for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++ ) {
-				_exportObject.gearRangedWeapons.push( {
-					book: _selectedRangedWeapons[ gearCounter ].book,
-					tag: _selectedRangedWeapons[ gearCounter ].tag,
-					cost: _selectedRangedWeapons[ gearCounter ].purchaseCost,
-					loc: _selectedRangedWeapons[ gearCounter ].readiedLocation,
-					dropped: _selectedRangedWeapons[ gearCounter ].droppedDuringCombat
-				});
-			}
-
-			_exportObject.gearArmor = Array();
-			for( var gearCounter = 0; gearCounter < _selectedArmor.length; gearCounter++ ) {
-				_exportObject.gearArmor.push( {
-					book: _selectedArmor[ gearCounter ].book,
-					tag: _selectedArmor[ gearCounter ].tag,
-					cost: _selectedArmor[ gearCounter ].purchaseCost,
-					readied: _selectedArmor[ gearCounter ].isReadied,
-					dropped: _selectedArmor[ gearCounter ].droppedDuringCombat
-				});
-			}
-
-			_exportObject.settingRules = Array();
-			for( var bookCounter = 0; bookCounter < savageWorldsBooksList.length; bookCounter++ ) {
-				for( var settingCounter = 0; settingCounter < savageWorldsBooksList[bookCounter].setting_rules.length; settingCounter++ ) {
-					if( savageWorldsBooksList[bookCounter].inUse && savageWorldsBooksList[bookCounter].setting_rules[settingCounter].inUse ) {
-						_exportObject.settingRules.push( savageWorldsBooksList[bookCounter].setting_rules[settingCounter].tag );
-					}
-				}
-
-			}
-
-			_exportObject.customRangedWeapons = this._customRangedWeapons;
-			_exportObject.customHandWeapons = this._customHandWeapons;
-			_exportObject.customGear = this._customGear;
-			_exportObject.customArmor = this._customArmor;
-			_exportObject.customShields = this._customShields;
-
-
-			_exportObject.spcpowerlevel = _SPCSelectedPowerLevel;
-			if(_SPCRisingStars )
-				_exportObject.risingstars = 1;
-			else
-				_exportObject.risingstars = 0;
-
-			_exportObject.knownLanguages = Array();
-			for( var langCounter = 0; langCounter < _knownLanguagesLimit + 1; langCounter++ ) {
-				_exportObject.knownLanguages.push( _knownLanguages[langCounter] );
-			}
-
-			if( _installedCyberware.length > 0 ) {
-				_exportObject.cyberware = Array()
-				for( var cyberC = 0; cyberC < _installedCyberware.length; cyberC++) {
-					var exportItem = {
-						tag: _installedCyberware[ cyberC ].tag,
-						selectedRank: _installedCyberware[ cyberC ].selectedRank,
-						option1: _installedCyberware[ cyberC ].option1,
-						option2: _installedCyberware[ cyberC ].option2,
-						option3: _installedCyberware[ cyberC ].option3,
-						customName: _installedCyberware[ cyberC ].customName,
-					}
-					_exportObject.cyberware.push( exportItem );
-				}
-			}
-
-			if( _usesSPCCreation ) {
-				_exportObject.spcPowers = Array()
-
-				for( var powerCounter = 0; powerCounter < _selectedSPCPowers.length; powerCounter++) {
-
-					var modifierObj = Array();
-					for( var modCounter = 0; modCounter < _selectedSPCPowers[powerCounter].modifiersObj.length; modCounter++) {
-
-						modifierObj[modCounter] = {
-							//desc: _selectedSPCPowers[powerCounter].modifiersObj[modCounter].description,
-							cost: _selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost,
-						}
-					}
-
-					var genericModifiersObj = Array();
-					for( var modCounter = 0; modCounter < _selectedSPCPowers[powerCounter].genericModifiersObj.length; modCounter++) {
-
-						genericModifiersObj[modCounter] = {
-							//desc: _selectedSPCPowers[powerCounter].modifiersObj[modCounter].description,
-							cost: _selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost,
-						}
-					}
-
-					switchableWith = "";
-					if( _selectedSPCPowers[powerCounter].switchableWith && _selectedSPCPowers[powerCounter].switchableWith.tag ) {
-						switchableWith = {
-							"tag": _selectedSPCPowers[powerCounter].switchableWith.tag,
-							"internalID": _selectedSPCPowers[powerCounter].switchableWith.internalID
-						};
-					}
-
-					var exportItem = {
-						id: _selectedSPCPowers[powerCounter].id,
-						level: _selectedSPCPowers[powerCounter].selectedLevel,
-						desc: _selectedSPCPowers[powerCounter].description,
-						customName: _selectedSPCPowers[powerCounter].custom_name,
-						switchableWith: switchableWith,
-						modifiers: modifierObj,
-						genericModifiers: genericModifiersObj,
-						boostedAttribute: _selectedSPCPowers[powerCounter].boosted_attribute,
-						boostedSkill: _selectedSPCPowers[powerCounter].boosted_skill,
-						boostedSkillSpecialty: _selectedSPCPowers[powerCounter].boosted_specialty
-					}
-
-					_exportObject.spcPowers.push( exportItem );
-				}
-			}
-
-			_exportObject.advancements = Array();
-			for( var advCounter = 0; advCounter < _selectedAdvancements.length; advCounter++ ) {
-				if( _selectedAdvancements[advCounter].tag != "none") {
-					var exportItem = {
-						tag: _selectedAdvancements[advCounter].tag,
-						takenAt: _selectedAdvancements[advCounter].takenAt
-					}
-
-					if( _selectedAdvancements[advCounter].option1 ) {
-
-						if( _selectedAdvancements[advCounter].option1.tag ) {
-							exportItem.option1 = _selectedAdvancements[advCounter].option1.tag;
-						} else {
-							if( _selectedAdvancements[advCounter].option1.id ) {
-								exportItem.option1 = _selectedAdvancements[advCounter].option1.id;
-							} else {
-								exportItem.option1 = _selectedAdvancements[advCounter].option1;
-							}
-						}
-						if( typeof(_selectedAdvancements[advCounter].option1.specify_name) == "string" ) {
-							exportItem.option1name = _selectedAdvancements[advCounter].option1.specify_name;
-						}
-					}
-
-					if( _selectedAdvancements[advCounter].option1book ) {
-						exportItem.option1book = _selectedAdvancements[advCounter].option1book;
-					}
-
-					if( _selectedAdvancements[advCounter].option2 ) {
-						if( _selectedAdvancements[advCounter].option2.tag ) {
-							exportItem.option2 = _selectedAdvancements[advCounter].option2.tag;
-						} else {
-							if( _selectedAdvancements[advCounter].option2.id ) {
-								exportItem.option2 = _selectedAdvancements[advCounter].option2.id;
-							} else {
-								exportItem.option2 = _selectedAdvancements[advCounter].option2;
-							}
-						}
-
-						if( typeof(_selectedAdvancements[advCounter].option2.specify_name) == "string" ) {
-							exportItem.option2name = _selectedAdvancements[advCounter].option2.specify_name;
-						}
-						if( typeof(_selectedAdvancements[advCounter].option2) == "string" ) {
-							exportItem.option2name = _selectedAdvancements[advCounter].option2;
-						}
-					}
-
-					if( _selectedAdvancements[advCounter].option2book ) {
-						exportItem.option2book = _selectedAdvancements[advCounter].option2book;
-					}
-
-					_exportObject.advancements.push(
-						exportItem
-					)
-				}
-			}
-		}
-
-		return JSON.stringify( _exportObject );
-	}
-
-	this.getTranslation = function(langKey) {
-		for( lang_count = 0; lang_count < availableLanguages.length; lang_count++ ) {
-			if( availableLanguages[lang_count].short_code == _useLang ) {
-
-				if(availableLanguages[lang_count].translations[langKey] ) {
-					return availableLanguages[lang_count].translations[langKey];
-				} else {
-					return langKey;
-				}
-			}
-		}
-		return langKey;
-	}
-
-	this.bookInUse = function( bookID ) {
-		// console.log(_books);
-		for( var bookCounter = 0; bookCounter < _books.length; bookCounter++) {
-			if( _books[bookCounter].id == bookID ) {
-				if( _books[bookCounter].inUse == true ){
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	this.hasArcane = function( arcaneTag ) {
-		if( typeof( arcaneTag ) == "string") {
-			if( _selectedArcaneBackground && _selectedArcaneBackground.tag == arcaneTag)
-				return true;
-		} else {
-			// for possible future use.
-			if( typeof( arcaneTag ) == "array") {
-				for(var atc = 0; atc > arcaneTag.length; atc++ ) {
-					if( _selectedArcaneBackground && _selectedArcaneBackground.tag == arcaneTag[atc])
-						return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	this.getPerkOptions = function() {
-		return _perkOptions;
-	}
-
-	this.getRaceOptions = function() {
-		return _raceOptions;
-	}
-
-	this.getAvailableEdges = function() {
-		return _availableEdges;
-	}
-
-	this.getAvailablePowers = function() {
-		return _availablePowers;
-	}
-
-	this.getAvailableTrappings = function() {
-		return _availableTrappings;
-	}
-
-	this.setSelectedPower = function( powerIndex, powerObject ) {
-		if( _selectedPowers[ powerIndex ] )
-			return _selectedPowers[ powerIndex ] = powerObject;
-		else
-			return false;
-	}
-
-	this.getStartingFunds = function() {
-		return _startingFunds;
-	}
-
-	this.addCurrentFunds = function( newValue ) {
-		return _currentFunds += newValue / 1;
-	}
-
-	this.setStartingFunds = function( newValue ) {
-		_startingFunds = newValue / 1;
-	}
-
-	this.setCurrentFunds = function( newValue ) {
-		_currentFunds = newValue / 1;
-	}
-
-	this.getCurrentFunds = function() {
-		return _currentFunds;
-	}
-
-	this.getGenderOptions = function() {
-		return _genderOptions;
-	}
-
-
-	this.getRace = function() {
-		return _race;
-	}
-
-	this.getGender = function() {
-		return _gender;
-	}
-
-	this.getName = function() {
-		return _name;
-	}
-
-	this.getDescripton = function() {
-		return _description;
-	}
-
-	this.getDiceValues = function() {
-		return _diceValues;
-	}
-
-	this.usesSPCCreation = function() {
-		return _usesSPCCreation;
-	}
-
-	this.getAvailableEdgePoints = function() {
-		return _availableEdgePoints;
-	}
-
-	this.getBackground = function() {
-		return _background;
-	}
-
-	this.setName = function( newValue ) {
-		return _name = newValue;
-	}
-
-	this.setDescripton = function( newValue ) {
-		return _description = newValue;
-	}
-
-	this.setBackground = function( newValue ) {
-		return _background = newValue;
-	}
-
-	this.getAttributeDisplayValues = function() {
-		return _displayAttributes;
-	}
-
-	this.getSPCSelectedPowerLevel = function() {
-		return _SPCSelectedPowerLevel;
-	}
-
-	this.setSPCCampaignPowerLevel = function( newValue ) {
-		return _SPCSelectedPowerLevel = newValue;
-	}
-
-	this.getSPCCurrentPowerPoints = function() {
-		return _SPCCurrentPowerPoints;
-	}
-
-	this.getSPCPowerLimit = function() {
-		return _SPCPowerLimit;
-	}
-
-	this.getSPCStartingPowerPoints = function() {
-		return _SPCStartingPowerPoints;
-	}
-
-	this.getSPCPowerLevels = function() {
-		return _SPCPowerLevels;
-	}
-
-	this.getAttributes = function() {
-		return _attributes;
-	}
-
-	this.getBooks = function() {
-		return _books;
-	}
-
-	this.getCurrentLoad = function() {
-		return _load.currentLoad;
-	}
-
-	this.getCurrentLoadModifier = function() {
-		return _load.loadModifier;
-	}
-
-	this.getSPCRisingStars = function() {
-		return _SPCRisingStars;
-	}
-
-	this.incrementSPCPowerLevel = function( powerIndex ) {
-		_selectedSPCPowers[powerIndex].selectedLevel++;
-		if( _selectedSPCPowers[powerIndex].max_level > 1 && _selectedSPCPowers[powerIndex].selectedLevel >= _selectedSPCPowers[powerIndex].max_level) {
-			_selectedSPCPowers[powerIndex].selectedLevel = _selectedSPCPowers[powerIndex].max_level;
-		}
-		return _selectedSPCPowers[powerIndex];
-	}
-
-
-
-	this.decrementSPCPowerLevel = function( powerIndex ) {
-		_selectedSPCPowers[powerIndex].selectedLevel--;
-		if( _selectedSPCPowers[powerIndex].selectedLevel < 1) {
-			_selectedSPCPowers[powerIndex].selectedLevel = 1;
-		}
-		return _selectedSPCPowers[powerIndex];
-	}
-
-	this.setSPCRisingStars = function( newValue ) {
-		return _SPCRisingStars = newValue;
-	}
-
-	this.getCombatLoadModifier = function() {
-		return _load.combatLoadModifier;
-	}
-
-	this.getCombatLoad = function() {
-		return _load.combatLoad;
-	}
-
-	this.usesStrain = function( setValue ) {
-		if( typeof( setValue ) != "undefined" )
-			_usesStrain = setValue;
-		return _usesStrain;
-	}
-
-	this.usesSanity = function( setValue ) {
-		if( typeof( setValue ) != "undefined" )
-			_usesSanity = setValue;
-		return _usesSanity;
-	}
-
-	this.hasArcaneBackground = function( setValue ) {
-
-		if( typeof( setValue ) != "undefined" )
-			_hasArcaneBackground = setValue;
-
-		return _hasArcaneBackground;
-	}
-
-	this.getWarningReport = function() {
-		return _warningReport;
-	}
-
-	this.getValidationReport = function() {
-		return _validationReport;
-	}
-
-	this.incrementAttributePointsAvailable = function( incValue ) {
-		if( typeof( incValue ) == "undefined" )
-			incValue = 1;
-		_attributePointsAvailable += incValue / 1;
-	}
-
-	this.secondMajorHindranceChosen = function() {
-		return _secondMajorHindranceChosen;
-	}
-
-	this.incrementAvailbleEdgePoints = function( incValue ) {
-		if( typeof( incValue ) == "undefined" )
-			incValue = 1;
-		_availableEdgePoints += incValue / 1;
-	}
-
-	this.incrementSkillPointsAvailable = function( incValue ) {
-		if( typeof( incValue ) == "undefined" )
-			incValue = 1;
-		_skillPointsAvailable += incValue / 1;
-	}
-
-	this.incrementEdgePoints = function( incValue ) {
-		if( typeof( incValue ) == "undefined" )
-			incValue = 1;
-		_availableEdgePoints += incValue / 1;
-	}
-
-	this.incrementPace = function( incValue ) {
-		if( typeof( incValue ) == "undefined" )
-			incValue = 1;
-		_derived.pace += incValue / 1;
-	}
-
-	this.incrementStrain = function( incValue ) {
-		if( typeof( incValue ) == "undefined" )
-			incValue = 1;
-		_derived._strainBonus += incValue / 1;
-	}
-
-	this.incrementArmor = function( incValue ) {
-		if( typeof( incValue ) == "undefined" )
-			incValue = 1;
-		_derived.armor += incValue / 1;
-	}
-
-	this.getCombatEdges = function( cyberIndex ) {
-		return _combatEdges;
-	}
-
-	this.doubleStrain = function() {
-		_derived._doubleStrain = true
-	}
-
-	this.getAvailbleArcaneBackgrounds = function() {
-		return _availableArcaneBackgrounds;
-	}
-
-	this.setTakenSPCExtraPowerPoints = function( newValue ) {
-		if( newValue )
-			_SPCTakenExtraPowerPoints = true;
-		else
-			_SPCTakenExtraPowerPoints = false;
-	}
-
-	this.getTakenSPCExtraPowerPoints = function() {
-		return _SPCTakenExtraPowerPoints;
-	}
-
-	this.isValid = function() {
-		return _isValid;
-	}
-
-	this.getLocalName = function( incomingStringArray ) {
-			if( incomingStringArray[ _useLang] ) {
-				return incomingStringArray[ _useLang];
-			} else {
-				return incomingStringArray[ "en-US" ];
-			}
-	}
-
-	this.getAgilitySkills = function() {
-		return _agilitySkills;
-	}
-
-	this.getAvailableSkillPoints = function() {
-		return _skillPointsAvailable;
-	}
-
-	this.getUsedSkillPoints = function() {
-		return _skillPointsUsed;
-	}
-
-	this.getAvailableAttributePoints = function() {
-		return _attributePointsAvailable;
-	}
-
-	this.getUsedAttributePoints = function() {
-		return _attributePointsUsed;
-	}
-
-	this.getSmartsSkills = function() {
-		return _smartsSkills;
-	}
-
-	this.getPowerPointsAvailable = function() {
-		return _powerPointsAvailable;
-	}
-
-	this.usesPowerPoints = function() {
-		if ( this.isSettingRuleEnabled("no-power-points") )
-			return false;
-		else
-			return true;
-	}
-
-	this.getSelectedPowers = function() {
-		return _selectedPowers;
-	}
-
-	this.getSelectedArcaneBackground = function() {
-		return _selectedArcaneBackground;
-	}
-
-	this.getAvailablePerkPoints = function() {
-		return _availablePerkPoints;
-	}
-
-	this.getAvailableNumberOfPowers = function() {
-		return _totalPowersKnown;
-	}
-
-	this.incrementAdditionalPowersKnown = function() {
-		_additionalPowersKnown++;
-		//~ console.log( "incrementAdditionalPowersKnown", _additionalPowersKnown );
-		return _additionalPowersKnown;
-	}
-
-	this.addAdditionalPowerPoints = function( numberPowerPoints ) {
-		_powerPointsAvailable += numberPowerPoints / 1;
-		//~ console.log( "addAdditionalPowerPoints", _totalPowerPoints );
-		return _powerPointsAvailable;
-	}
-
-	this.addAdditionalSPCPowerPoints = function( numberPowerPoints ) {
-		_spcExtraPowerPoints += numberPowerPoints / 1;
-		//~ console.log( "addAdditionalSPCPowerPoints", _spcExtraPowerPoints );
-		return _spcExtraPowerPoints;
-	}
-
-	this.getCurrentFunds = function() {
-		return _currentFunds;
-	}
-
-	this.getSpiritSkills = function() {
-		return _spiritSkills;
-	}
-
-	this.getVigorSkills = function() {
-		return _vigorSkills;
-	}
-
-	this.getStrengthSkills = function() {
-		return _strengthSkills;
-	}
-
-	this.incrementSkill = function( skillID ) {
-		for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
-			if( _skillList[skillCounter].id == skillID ) {
-				_skillList[skillCounter].value++;
-				if( _skillList[skillCounter].value > 5)
-					_skillList[skillCounter].value = 5;
-
-				return true;
-			}
-
-		}
-		return false;
-	}
-
-	this.removeCyberware = function( cyberIndex ) {
-		if( _installedCyberware[ cyberIndex ] )
-			_installedCyberware.splice( cyberIndex, 1);
-	}
-
-
-	this.setCyberEdge = function( cyberIndex, bookID, edgeTag ) {
-		if( _installedCyberware[ cyberIndex ] ) {
-			 _installedCyberware[ cyberIndex ].option1 = bookID;
-			 _installedCyberware[ cyberIndex ].option2 = edgeTag;
-			 _installedCyberware[ cyberIndex ].selectedEdge = null;
-			 for( var edgeC = 0; edgeC < _combatEdges.length; edgeC++ ) {
-				 if( _combatEdges[ edgeC ].tag == edgeTag && _combatEdges[ edgeC ].book == bookID )
-					_installedCyberware[ cyberIndex ].selectedEdge = _combatEdges[ edgeC ]
-			 }
-		}
-
-		return _installedCyberware[ cyberIndex ].option1;
-	}
-
-	this.getLoadLimit = function() {
-		return _loadLimit;
-	}
-
-	this.setCyberOption1 = function( cyberIndex, newValue ) {
-		if( _installedCyberware[ cyberIndex ] )
-			 _installedCyberware[ cyberIndex ].option1 = newValue;
-
-		return _installedCyberware[ cyberIndex ].option1;
-	}
-
-	this.setCyberOption2 = function( cyberIndex, newValue ) {
-		if( _installedCyberware[ cyberIndex ] )
-			 _installedCyberware[ cyberIndex ].option2 = newValue;
-
-		return _installedCyberware[ cyberIndex ].option2;
-	}
-
-	this.setCyberOption3 = function( cyberIndex, newValue ) {
-		if( _installedCyberware[ cyberIndex ] )
-			 _installedCyberware[ cyberIndex ].option3 = newValue;
-
-		return _installedCyberware[ cyberIndex ].option3;
-	}
-
-	this.setCyberCustomName = function( cyberIndex, newValue ) {
-		if( _installedCyberware[ cyberIndex ] )
-			 _installedCyberware[ cyberIndex ].customName = newValue;
-
-		return _installedCyberware[ cyberIndex ].customName;
-	}
-
-	this.installCyberware = function( cyberTag, selectedRank, option1, option2, option3, customName ) {
-		if( typeof( selectedRank ) == "undefined" )
-			selectedRank = 1;
-		if( typeof( option1 ) == "undefined" )
-			option1 = null;
-		if( typeof( option2 ) == "undefined" )
-			option2 = null;
-		if( typeof( option3 ) == "undefined" )
-			option3 = null;
-		if( typeof( customName ) == "undefined" )
-			customName = null;
-
-		for( var cyberC = 0; cyberC < _availableCyberware.length; cyberC++ ) {
-			if( _availableCyberware[cyberC].tag == cyberTag ) {
-
-				var cyberObject = angular.copy ( _availableCyberware[cyberC] );
-
-				cyberObject.selectedRank = selectedRank;
-				cyberObject.option1 = option1;
-				cyberObject.option2 = option2;
-				cyberObject.option3 = option3;
-				cyberObject.customName = customName;
-
-				_installedCyberware.push( cyberObject );
-
-				return cyberObject;
-				break;
-			}
-		}
-
-	}
-
-	this.getInstalledCyberware = function() {
-		return _installedCyberware;
-	}
-
-	this.cyberwareAvailable = function( cyberTag ) {
-
-		var maxAvailable = 0;
-		var currentInstalled = 0;
-		for( var cyberC = 0; cyberC < _availableCyberware.length; cyberC++ ) {
-
-			if( _availableCyberware[cyberC].tag == cyberTag ) {
-				if( _availableCyberware[cyberC].getMax() == "u" )
-					return true;
-				else
-					maxAvailable = _availableCyberware[cyberC].getMax();
-			}
-		}
-
-		for( var cyberC = 0; cyberC < _installedCyberware.length; cyberC++ ) {
-			if( _installedCyberware[cyberC].tag == cyberTag ) {
-				currentInstalled++;
-			}
-		}
-
-		if( maxAvailable > currentInstalled )
-			return true;
-		else
-			return false;
-
-	}
-
-	this.decrementSkill = function( skillID ) {
-		for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
-			if( _skillList[skillCounter].id == skillID ) {
-				_skillList[skillCounter].value--;
-				if( _skillList[skillCounter].value < 0)
-					_skillList[skillCounter].value = 0;
-
-				return true;
-			}
-
-		}
-		return false;
-	}
-
-	this.addSpecialtySkill = function( skillItem, specialtyName, specialtyValue, advancementSkill ) {
-		if( !specialtyName )
-			specialtyName = '';
-		if( !specialtyValue )
-			specialtyValue = 1;  // d4
-		if( !advancementSkill )
-			advancementSkill = 0;
-		for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
-			if(
-				(
-					_skillList[skillCounter].id == skillItem
-						||
-					_skillList[skillCounter].id == skillItem.id
-				)
-					&&
-				!_skillList[skillCounter].is_specialty
-			) {
-				_skillList[skillCounter].specialties.push(
-					{
-						name: specialtyName,
-						value: specialtyValue,
-						advskill: advancementSkill
-					}
-				);
-			}
-		}
-		return false;
-	}
-
-	this.setSkill = function( skillID, skillValue ) {
-		for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
-			if( _skillList[skillCounter].id == skillID ) {
-				_skillList[skillCounter].value = skillValue;
-				_skillList[skillCounter].advskill = 0;
-				return true;
-			}
-
-		}
-		return false;
-	}
-
-	this.addRacialSkill = function( skillID, skillValue ) {
-		for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
-			if( _skillList[skillCounter].id == skillID ) {
-				_skillList[skillCounter].boost = skillValue;
-				_skillList[skillCounter].advskill = 0;
-				return true;
-			}
-		}
-		return false;
-	}
-
-	this.getSkill = function( skillID, specifyName ) {
-		for( var skillCounter = 0; skillCounter < _allSkills.length; skillCounter++ ) {
-			if(
-				_allSkills[skillCounter].id == skillID
-					||
-				_allSkills[skillCounter] == skillID
-					||
-				(
-					skillID.id
-						&&
-					(
-						_allSkills[skillCounter].id == skillID.id
-							||
-						_allSkills[skillCounter] == skillID.id
-					)
-				)
-			) {
-				if( specifyName ) {
-					if( specifyName ) {
-						if( _allSkills[skillCounter].specialties ) {
-
-							for( var specC = 0; specC < _allSkills[skillCounter].specialties.length; specC++ ) {
-
-								if( _allSkills[skillCounter].specialties[specC].name.trim().toLowerCase() == specifyName.trim().toLowerCase() ) {
-									return _allSkills[skillCounter].specialties[specC];
-								}
-							}
-						}
-						return null;
-					}
-				} else {
-					return _allSkills[skillCounter];
-				}
-
-			}
-
-		}
-		return null;
-	}
-
-	this.setSpecialties = function( skillID, specialtiesValue ) {
-		for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
-			if( _skillList[skillCounter].id == skillID ) {
-				_skillList[skillCounter].specialties = specialtiesValue;
-				return true;
-			}
-
-		}
-		return false;
-	}
-
-	this.incrementSpecialtySkill = function( skillID, specialtyIndex ) {
-		for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
-			if( _skillList[skillCounter].id == skillID ) {
-				if( _skillList[skillCounter].specialties[ specialtyIndex] ) {
-					_skillList[skillCounter].specialties[ specialtyIndex].value++;
-					if( _skillList[skillCounter].specialties[ specialtyIndex].value < 0)
-						_skillList[skillCounter].specialties[ specialtyIndex].value = 0;
-					return true;
-				}
-			}
-
-		}
-		return false;
-	}
-
-	this.decrementSpecialtySkill = function( skillID, specialtyIndex ) {
-		for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
-			if( _skillList[skillCounter].id == skillID ) {
-				if( _skillList[skillCounter].specialties[ specialtyIndex] ) {
-
-					if( _skillList[skillCounter].specialties[ specialtyIndex].value < 2) {
-						//_skillList[skillCounter].specialties[ specialtyIndex].value = 0;
-						if( _skillList[skillCounter].specialties.length == 1){
-							_skillList[skillCounter].specialties = Array();
-							return true;
-						} else {
-							this.removeSpecialtyAtIndex( skillID, specialtyIndex);
-							return true;
-						}
-					} else {
-						_skillList[skillCounter].specialties[ specialtyIndex].value--;
-						return true;
-					}
-
-				}
-			}
-
-		}
-		return false;
-	}
-
-	this.updateSpecialtySkillName = function( skillID, specialtyIndex, updatedName ) {
-		for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
-			if( _skillList[skillCounter].id == skillID ) {
-				if( _skillList[skillCounter].specialties[ specialtyIndex] ) {
-					_skillList[skillCounter].specialties[ specialtyIndex].name = updatedName;
-					return true;
-				}
-			}
-
-		}
-		return false;
-	}
-
-	this.hasEdge = function( edgeTag, maxCount ) {
-		if( !maxCount )
-			maxCount = -1;
-		for( var edgeCounter = 0; edgeCounter < _selectedEdges.length; edgeCounter++ ) {
-
-			if( _selectedEdges[edgeCounter].tag == edgeTag) {
-				return true;
-			}
-		}
-
-		for( var edgeCounter = 0; edgeCounter < _race.edges.length; edgeCounter++ ) {
-			if( _race.edges[edgeCounter].tag == edgeTag){
-				return true;
-			}
-		}
-
-		for( var edgeCounter = 0; edgeCounter < _selectedAdvancements.length; edgeCounter++ ) {
-			if(
-				_selectedAdvancements[edgeCounter].tag == "edge"
-					&&
-			 	_selectedAdvancements[edgeCounter].option1
-			 		&&
-			 	_selectedAdvancements[edgeCounter].option1.tag
-			 		&&
-			 	_selectedAdvancements[edgeCounter].option1.tag == edgeTag
-			){
-				if( maxCount == -1 || maxCount >= edgeCounter )
-			 		return true;
-			}
-		}
-		return false;
-	}
-
-	this.hasHindrance = function( edgeTag ) {
-		for( var hindranceCounter = 0; hindranceCounter < _selectedHindrances.length; hindranceCounter++ ) {
-			if(
-				_selectedHindrances[hindranceCounter].tag.indexOf(edgeTag + "-") === 0
-					||
-				_selectedHindrances[hindranceCounter].tag == edgeTag
-			) {
-				return _selectedHindrances[hindranceCounter].tag;
-			}
-		}
-
-		for( var hindranceCounter = 0; hindranceCounter < _race.hindrances.length; hindranceCounter++ ) {
-			if(
-				_race.hindrances[hindranceCounter].indexOf(edgeTag + "-") === 0
-					||
-				_race.hindrances[hindranceCounter].tag == edgeTag
-			) {
-
-				return _race.hindrances[hindranceCounter].tag;
-			}
-		}
-		return false;
-	}
-
-	this.removeSpecialtyAtIndex = function( skillID, specialtyIndex ) {
-		for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
-			if( _skillList[skillCounter].id == skillID ) {
-				if( _skillList[skillCounter].specialties[ specialtyIndex] ) {
-					_skillList[skillCounter].specialties.splice(specialtyIndex, 1);
-					return true;
-				}
-			}
-
-		}
-		return false;
-	}
-
-	this.addPerk = function( perkTag ) {
-		for( var perkCounter = 0; perkCounter < _perkOptions.length; perkCounter++ ) {
-			if( perkTag == _perkOptions[perkCounter].tag ) {
-				_selectedPerks.push( _perkOptions[perkCounter] );
-				return true;
-			}
-		}
-		return false;
-	}
-
-	this.removePerk = function( perkTag ) {
-		for( var perkCounter = 0; perkCounter < _selectedPerks.length; perkCounter++ ) {
-			if( perkTag == _selectedPerks[perkCounter].tag ) {
-				_selectedPerks.splice( perkCounter, 1 );
-				return true;
-			}
-		}
-		return false;
-	}
-	this.setAttribute = function( attributeName, diceID ) {
-		_attributes[attributeName] = diceID - _attributeBoost[attributeName];
-	}
-
-	this.boostAttribute = function( attributeName, boostNumber ) {
-		if( !boostNumber )
-			boostNumber = 1;
-		_attributeBoost[attributeName] += boostNumber;
-	}
-
-	this.boostSkill = function( skillID, specialtyName, boostNumber ) {
-		//~ console.log( "boostSkill", skillID, specialtyName, boostNumber );
-		if( !boostNumber )
-			boostNumber = 1;
-		for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
-			if( _skillList[skillCounter].id == skillID ) {
-				if( specialtyName && _skillList[skillCounter].specify ) {
-
-					for( var skillCounter2 = 0; skillCounter2 < _skillList[skillCounter].specialties.length; skillCounter2++ ) {
-						if(  _skillList[skillCounter].specialties[skillCounter2].name == specialtyName ) {
-							_skillList[skillCounter].specialties[skillCounter2].boost += boostNumber;
-							return true;
-						}
-					}
-
-					// Specialy is not found - add it and boost it!
-					_skillList[skillCounter].specialties.push(
-						{
-							name: specialtyName,
-							value: 0,
-							boost: boostNumber
-						}
-					);
-					return true;
-				} else {
-					_skillList[skillCounter].boost += boostNumber;
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	this.setArcaneBackground = function( abTag ) {
-		for( abCounter = 0; abCounter < savageWorldsArcaneBackgrounds.length; abCounter++) {
-			if( abTag == savageWorldsArcaneBackgrounds[abCounter].tag ) {
-				_selectedArcaneBackground = savageWorldsArcaneBackgrounds[abCounter];
-				return true;
-			}
-		}
-		return false;
-	}
-
-	this.addGearMundane = function( fromBook, gearTag, itemCost, droppedDuringCombat, itemCount ) {
-		if( !itemCount )
-			itemCount = 1;
-		if(!droppedDuringCombat)
-			droppedDuringCombat = false;
-		for( var gearCounter = 0; gearCounter < _availableMundaneGear.length; gearCounter++ ) {
-			if(
-				gearTag == _availableMundaneGear[ gearCounter ].tag
-					&&
-				fromBook == _availableMundaneGear[ gearCounter ].book
-
-			) {
-				mundaneGearIndex = this.getMundaneGear( gearTag );
-
-				var pushedItem = {};
-				angular.extend( pushedItem, _availableMundaneGear[ gearCounter ]);
-				pushedItem.droppedDuringCombat = droppedDuringCombat;
-				if( itemCost > -1 ) {
-					pushedItem.purchaseCost = itemCost;
-				} else {
-					pushedItem.purchaseCost = pushedItem.cost;
-				}
-
-				if( mundaneGearIndex > -1 ) {
-
-					if( _selectedMundaneGear[mundaneGearIndex].purchaseCost == pushedItem.purchaseCost  ) {
-						_selectedMundaneGear[mundaneGearIndex].count++;
-					} else {
-						// push new item since prices don't match.
-						pushedItem.count = itemCount;
-						_selectedMundaneGear.push( pushedItem );
-					}
-					return true;
-				} else {
-					// push new item
-					pushedItem.count = itemCount;
-
-
-					_selectedMundaneGear.push( pushedItem );
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	this.getMundaneGear = function( gearTag ) {
-		for( var findCounter = 0; findCounter < _selectedMundaneGear.length; findCounter++ ) {
-			if( _selectedMundaneGear[findCounter].tag == gearTag )
-				return findCounter;
-		}
-
-		return -1;
-	}
-
-	this.addGearRangedWeapon = function( fromBook, gearTag, itemCost, readiedLocation, droppedDuringCombat ) {
-		if(!droppedDuringCombat)
-			droppedDuringCombat = false;
-		for( var gearCounter = 0; gearCounter < _availableRangedWeapons.length; gearCounter++ ) {
-			if(
-				gearTag == _availableRangedWeapons[ gearCounter ].tag
-					&&
-				fromBook == _availableRangedWeapons[ gearCounter ].book
-			) {
-				var pushedItem = {};
-				angular.extend( pushedItem, _availableRangedWeapons[ gearCounter ]);
-				pushedItem.droppedDuringCombat = droppedDuringCombat;
-				if( itemCost > -1 ) {
-					pushedItem.purchaseCost = itemCost;
-				} else {
-					pushedItem.purchaseCost = pushedItem.cost;
-				}
-				if( readiedLocation ) {
-					pushedItem.readiedLocation = readiedLocation;
-				} else {
-					pushedItem.readiedLocation = "";
-				}
-				_selectedRangedWeapons.push( pushedItem );
-				return true;
-			}
-		}
-		return false;
-	}
-
-	this.addGearHandWeapon = function( fromBook, gearTag, itemCost, readiedLocation, droppedDuringCombat, sciFiMod ) {
-		if(!droppedDuringCombat)
-			droppedDuringCombat = false;
-		if(!sciFiMod)
-			sciFiMod = "";
-		for( var gearCounter = 0; gearCounter < _availableHandWeapons.length; gearCounter++ ) {
-			//~ if(
-				//~ gearTag == _availableHandWeapons[ gearCounter ].tag
-			//~ ) {
-				//~ console.log( _availableHandWeapons[ gearCounter ].book );
-				//~ console.log(gearCounter);
-			//~ }
-			if(
-				gearTag == _availableHandWeapons[ gearCounter ].tag
-					&&
-				fromBook == _availableHandWeapons[ gearCounter ].book
-			) {
-				var pushedItem = {};
-				angular.extend( pushedItem, _availableHandWeapons[ gearCounter ]);
-				pushedItem.droppedDuringCombat = droppedDuringCombat;
-				if( itemCost > -1 ) {
-					pushedItem.purchaseCost = itemCost;
-				} else {
-					pushedItem.purchaseCost = pushedItem.cost;
-				}
-				if( readiedLocation ) {
-					pushedItem.readiedLocation = readiedLocation;
-				} else {
-					pushedItem.readiedLocation = "";
-				}
-
-				pushedItem.sciFiMod = sciFiMod;
-
-				_selectedHandWeapons.push( pushedItem );
-				return true;
-			}
-		}
-		return false;
-	}
-
-	this.addGearShield = function( fromBook, gearTag, itemCost, readiedLocation, droppedDuringCombat ) {
-		if(!droppedDuringCombat)
-			droppedDuringCombat = false;
-		for( var gearCounter = 0; gearCounter < _availableShields.length; gearCounter++ ) {
-			if(
-				gearTag == _availableShields[ gearCounter ].tag
-					&&
-				fromBook == _availableShields[ gearCounter ].book
-			) {
-				var pushedItem = {};
-				angular.extend( pushedItem, _availableShields[ gearCounter ]);
-				pushedItem.droppedDuringCombat = droppedDuringCombat;
-				if( itemCost > -1 ) {
-					pushedItem.purchaseCost = itemCost;
-				} else {
-					pushedItem.purchaseCost = pushedItem.cost;
-				}
-				if( readiedLocation ) {
-					pushedItem.readiedLocation = readiedLocation;
-				} else {
-					pushedItem.readiedLocation = "";
-				}
-				_selectedShields.push( pushedItem );
-				return true;
-			}
-		}
-		return false;
-	}
-
-	this.addGearArmor = function( fromBook, gearTag, itemCost, isReadied, droppedDuringCombat ) {
-		if(!droppedDuringCombat)
-			droppedDuringCombat = false;
-		for( var gearCounter = 0; gearCounter < _availableArmor.length; gearCounter++ ) {
-			if(
-				gearTag == _availableArmor[ gearCounter ].tag
-					&&
-				fromBook == _availableArmor[ gearCounter ].book
-			) {
-				var pushedItem = {};
-				angular.extend( pushedItem, _availableArmor[ gearCounter ]);
-				pushedItem.droppedDuringCombat = droppedDuringCombat;
-				if( itemCost > -1 ) {
-					pushedItem.purchaseCost = itemCost;
-				} else {
-					pushedItem.purchaseCost = pushedItem.cost;
-				}
-				if( isReadied ) {
-					pushedItem.isReadied = isReadied;
-				} else {
-					pushedItem.isReadied = false;
-				}
-				_selectedArmor.push( pushedItem );
-				return true;
-			}
-		}
-		return false;
-	}
-
-	this.removeMundane = function( gearIndex ) {
-		if( _selectedMundaneGear[gearIndex].count > 1)
-			_selectedMundaneGear[gearIndex].count--;
-		else
-			_selectedMundaneGear.splice( gearIndex, 1);
-	}
-
-	this.removeArmor = function( gearIndex ) {
-		_selectedArmor.splice( gearIndex, 1);
-	}
-	this.removeHandWeapon = function( gearIndex ) {
-		_selectedHandWeapons.splice( gearIndex, 1);
-	}
-
-	this.removeRangedWeapon = function( gearIndex ) {
-		_selectedRangedWeapons.splice( gearIndex, 1);
-	}
-
-	this.removeShield = function( gearIndex ) {
-		_selectedShields.splice( gearIndex, 1);
-	}
-
-	this.equipPrimaryHandWeapon = function( gearIndex ) {
-		// unequip all items in primary hand....
-		for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
-			if( _selectedShields[ gearCounter ].readiedLocation == "primary" )
-				_selectedShields[ gearCounter ].readiedLocation = "";
-			if( _selectedHandWeapons[gearIndex].requires_2_hands > 0 ) {
-				if( _selectedShields[ gearCounter ].readiedLocation == "secondary" )
-					_selectedShields[ gearCounter ].readiedLocation = "";
-			}
-		}
-
-		for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++ ) {
-			if( _selectedHandWeapons[ gearCounter ].readiedLocation == "primary" )
-				_selectedHandWeapons[ gearCounter ].readiedLocation = "";
-			if( _selectedHandWeapons[gearIndex].requires_2_hands > 0 ) {
-				if( _selectedHandWeapons[ gearCounter ].readiedLocation == "secondary" )
-					_selectedHandWeapons[ gearCounter ].readiedLocation = "";
-			}
-		}
-
-		for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++ ) {
-			if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "primary" )
-				_selectedRangedWeapons[ gearCounter ].readiedLocation = "";
-			if( _selectedRangedWeapons[gearIndex].requires_2_hands > 0 ) {
-				if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "secondary" )
-					_selectedRangedWeapons[ gearCounter ].readiedLocation = "";
-			}
-		}
-
-		_selectedHandWeapons[gearIndex].droppedDuringCombat = false;
-		_selectedHandWeapons[gearIndex].readiedLocation = "primary";
-
-	}
-
-	this.hasNaturalWeapons = function( newValue ) {
-
-		if( typeof( newValue ) != "undefined" ) {
-			if( newValue === true )
-				_naturalWeapons.push("Natural Weapons");
-			else
-				_naturalWeapons.push(newValue);
-		}
-
-		return _naturalWeapons;
-	}
-
-	this.equipPrimaryRangedWeapon = function( gearIndex ) {
-		// unequip all items in primary hand....
-		for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
-			if( _selectedShields[ gearCounter ].readiedLocation == "primary" )
-				_selectedShields[ gearCounter ].readiedLocation = "";
-			if( _selectedHandWeapons[gearIndex].requires_2_hands > 0 ) {
-				if( _selectedShields[ gearCounter ].readiedLocation == "secondary" )
-					_selectedShields[ gearCounter ].readiedLocation = "";
-			}
-		}
-
-		for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++ ) {
-			if( _selectedHandWeapons[ gearCounter ].readiedLocation == "primary" )
-				_selectedHandWeapons[ gearCounter ].readiedLocation = "";
-			if( _selectedHandWeapons[gearIndex].requires_2_hands > 0 ) {
-				if( _selectedHandWeapons[ gearCounter ].readiedLocation == "secondary" )
-					_selectedHandWeapons[ gearCounter ].readiedLocation = "";
-			}
-		}
-
-		for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++ ) {
-			if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "primary" )
-				_selectedRangedWeapons[ gearCounter ].readiedLocation = "";
-			if( _selectedRangedWeapons[gearIndex].requires_2_hands > 0 ) {
-				if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "secondary" )
-					_selectedRangedWeapons[ gearCounter ].readiedLocation = "";
-			}
-		}
-
-		_selectedRangedWeapons[gearIndex].droppedDuringCombat = false;
-		_selectedRangedWeapons[gearIndex].readiedLocation = "primary";
-
-	}
-
-	this.equipSecondaryHandWeapon = function( gearIndex ) {
-		// unequip all items in primary hand....
-		for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
-			if( _selectedShields[ gearCounter ].readiedLocation == "secondary" )
-				_selectedShields[ gearCounter ].readiedLocation = "";
-		}
-
-		for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++ ) {
-			if( _selectedHandWeapons[ gearCounter ].readiedLocation == "secondary" )
-				_selectedHandWeapons[ gearCounter ].readiedLocation = "";
-		}
-
-		for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++ ) {
-			if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "secondary" )
-				_selectedRangedWeapons[ gearCounter ].readiedLocation = "";
-		}
-
-		_selectedHandWeapons[gearIndex].readiedLocation = "secondary";
-		_selectedHandWeapons[gearIndex].droppedDuringCombat = false;
-	}
-
-	this.equipSecondaryRangedWeapon = function( gearIndex ) {
-		// unequip all items in primary hand....
-		for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
-			if( _selectedShields[ gearCounter ].readiedLocation == "secondary" )
-				_selectedShields[ gearCounter ].readiedLocation = "";
-		}
-
-		for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++ ) {
-			if( _selectedHandWeapons[ gearCounter ].readiedLocation == "secondary" )
-				_selectedHandWeapons[ gearCounter ].readiedLocation = "";
-		}
-
-		for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++ ) {
-			if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "secondary" )
-				_selectedRangedWeapons[ gearCounter ].readiedLocation = "";
-		}
-
-		_selectedRangedWeapons[gearIndex].readiedLocation = "secondary";
-		_selectedRangedWeapons[gearIndex].droppedDuringCombat = false;
-	}
-
-	this.equipPrimaryShield = function( gearIndex ) {
-		// unequip all items in primary hand....
-		for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
-			if( _selectedShields[ gearCounter ].readiedLocation == "primary" )
-				_selectedShields[ gearCounter ].readiedLocation = "";
-		}
-
-		for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++ ) {
-			if( _selectedHandWeapons[ gearCounter ].readiedLocation == "secondary" )
-				_selectedHandWeapons[ gearCounter ].readiedLocation = "";
-		}
-
-		for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++ ) {
-			if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "secondary" )
-				_selectedRangedWeapons[ gearCounter ].readiedLocation = "";
-		}
-
-		_selectedShields[gearIndex].readiedLocation = "primary";
-		_selectedShields[gearIndex].droppedDuringCombat = false;
-	}
-
-	this.equipSecondaryShield = function( gearIndex ) {
-		// unequip all items in primary hand....
-		for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
-			if( _selectedShields[ gearCounter ].readiedLocation == "secondary" )
-				_selectedShields[ gearCounter ].readiedLocation = "";
-		}
-
-		for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++ ) {
-			if( _selectedHandWeapons[ gearCounter ].readiedLocation == "secondary" )
-				_selectedHandWeapons[ gearCounter ].readiedLocation = "";
-		}
-
-		for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++ ) {
-			if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "secondary" )
-				_selectedRangedWeapons[ gearCounter ].readiedLocation = "";
-		}
-
-		_selectedShields[gearIndex].readiedLocation = "secondary";
-		_selectedShields[gearIndex].droppedDuringCombat = false;
-	}
-
-	this.unequipShield = function( gearIndex ) {
-		_selectedShields[gearIndex].readiedLocation = "";
-	}
-
-	this.unequipHandWeapon = function( gearIndex ) {
-		_selectedHandWeapons[gearIndex].readiedLocation = "";
-	}
-
-	this.unequipRangedWeapon = function( gearIndex ) {
-		_selectedRangedWeapons[gearIndex].readiedLocation = "";
-	}
-
-	this.setSciFiMod = function( gearIndex, sciFiModSelected ) {
-		_selectedHandWeapons[gearIndex].sciFiMod = sciFiModSelected;
-	}
-
-	this.equipArmor = function( gearIndex ) {
-		_selectedArmor[gearIndex].isReadied = true;
-		_selectedArmor[gearIndex].droppedDuringCombat = false;
-	}
-
-	this.unequipArmor = function( gearIndex ) {
-		_selectedArmor[gearIndex].isReadied = false;
-	}
-
-	this.setDroppedDuringCombat = function( itemType, gearIndex ) {
-		if( itemType == "armor")
-			_selectedArmor[gearIndex].droppedDuringCombat = true;
-		if( itemType == "handweapon")
-			_selectedHandWeapons[gearIndex].droppedDuringCombat = true;
-		if( itemType == "rangedweapon")
-			_selectedRangedWeapons[gearIndex].droppedDuringCombat = true;
-		if( itemType == "shield")
-			_selectedShields[gearIndex].droppedDuringCombat = true;
-		if( itemType == "gear")
-			_selectedMundaneGear[gearIndex].droppedDuringCombat = true;
-	}
-
-	this.setUsedDuringCombat = function( itemType, gearIndex ) {
-		if( itemType == "armor")
-			_selectedArmor[gearIndex].droppedDuringCombat = false;
-		if( itemType == "handweapon")
-			_selectedHandWeapons[gearIndex].droppedDuringCombat = false;
-		if( itemType == "handweapon")
-			_selectedRangedWeapons[gearIndex].droppedDuringCombat = false;
-		if( itemType == "shield")
-			_selectedShields[gearIndex].droppedDuringCombat = false;
-		if( itemType == "gear")
-			_selectedMundaneGear[gearIndex].droppedDuringCombat = false;
-	}
-
-	this.addSPCPower = function( powerID, customName, descriptionText, level, modifiers, genericModifiers, switchableWith, boostedAttribute, boostedSkill, boostedSkillSpecialty ) {
-		if( !descriptionText )
-			descriptionText = "";
-		if( !level )
-			level = 1;
-
-		if( !genericModifiers )
-			genericModifiers = Array();
-
-		for( var spcCounter = 0; spcCounter < savageWorldsSPCPowers.length; spcCounter++) {
-			if( powerID == savageWorldsSPCPowers[spcCounter].id) {
-				var addPower = angular.copy( savageWorldsSPCPowers[spcCounter] );
-
-				if(!customName) {
-					addPower.custom_name = savageWorldsSPCPowers[spcCounter].local_name;
-				} else {
-					addPower.custom_name = customName;
-				}
-
-				addPower.description = descriptionText;
-				addPower.selectedLevel = level / 1;
-				for( var modCounter = 0; modCounter < addPower.modifiersObj.length;modCounter++) {
-					addPower.modifiersObj[modCounter].description = "";
-					addPower.modifiersObj[modCounter].currentCost = 0;
-					if( modifiers && modifiers[modCounter] ) {
-						//addPower.modifiersObj[modCounter].description = modifiers[modCounter].desc;
-						addPower.modifiersObj[modCounter].currentCost = modifiers[modCounter].cost;
-					}
-				}
-
-				for( var modCounter = 0; modCounter < addPower.genericModifiersObj.length;modCounter++) {
-					addPower.genericModifiersObj[modCounter].description = "";
-					addPower.genericModifiersObj[modCounter].currentCost = 0;
-					if( genericModifiers && genericModifiers[modCounter] ) {
-						//addPower.modifiersObj[modCounter].description = modifiers[modCounter].desc;
-						addPower.genericModifiersObj[modCounter].currentCost = genericModifiers[modCounter].cost;
-					}
-				}
-
-				addPower.boosted_attribute = "";
-				addPower.boosted_skill = "";
-				addPower.boosted_skill_specialty = "";
-				addPower.switchableWith = "";
-
-				if( switchableWith && switchableWith.internalID ) {
-
-					if( _selectedSPCPowers[switchableWith.internalID] )
-						addPower.switchableWith = _selectedSPCPowers[switchableWith.internalID];
-					// for( var slcCounter = 0; slcCounter < _selectedSPCPowers.length; slcCounter++) {
-					//
-					// 	if( _selectedSPCPowers.)
-					// }
-				}
-
-				if( boostedAttribute )
-					addPower.boosted_attribute = boostedAttribute;
-
-				if( boostedSkill )
-					addPower.boosted_skill = boostedSkill;
-
-				if( boostedSkillSpecialty )
-					addPower.boosted_skill_specialty = boostedSkillSpecialty;
-
-				_selectedSPCPowers.push( addPower );
-
-				return true;
-			}
-		}
-		return false;
-	}
-
-	this.init(useLang);
+    var _secondMajorHindranceChosen = false;
+    var _attributePointsUsed = 0;
+    var _hasArcaneBackground = false;
+
+    var _currentArcaneBackground = {};
+    var _attributePointsAvailable = 5;
+    var _attributePointsUsed = 0;
+    var _xpOptions = Array();
+
+    this.init = function(useLang){
+
+        if( useLang )
+            _useLang = useLang;
+        else if( localStorage["users_preferred_language"] )
+            _useLang = localStorage["users_preferred_language"];
+        else
+            _useLang = "en-US";
+
+        _name = "";
+        _background = "";
+
+        _description = "";
+
+        _startingFunds = 500;
+        _currentFunds = 500;
+
+        _naturalWeapons = Array();
+
+        _isNew = true;
+        _multipleLanguages = false;
+        _usesStrain = false;
+
+        _selectedSPCPowers = Array();
+
+        _powerAlterations = Array();
+
+        _activeSkills = Array();
+
+        _characterJournal = Array();
+
+        _spcExtraPowerPoints = 0;
+
+        _knownLanguages = Array();
+
+        _knownLanguagesLimit = 0;
+
+        _innateAttacks = Array();
+
+        _installedCyberware = Array();
+
+        _xpOptions = Array();
+
+        for( var optCounter = 0; optCounter <= 100; optCounter++) {
+            var xpObj = {
+                value: optCounter,
+                rankValue: 0,
+                label: optCounter,
+                rankName: "temp"
+            };
+            if( optCounter < 20) {
+                xpObj.rankName = this.getTranslation("CHARGEN_RANK_NOVICE");
+                xpObj.rankValue = 0;
+            } else if (optCounter < 40 ) {
+                xpObj.rankName = this.getTranslation("CHARGEN_RANK_SEASONED");
+                xpObj.rankValue = 1;
+            } else if (optCounter < 60 ) {
+                xpObj.rankName = this.getTranslation("CHARGEN_RANK_VETERAN");
+                xpObj.rankValue = 2;
+            } else if (optCounter < 80 ) {
+                xpObj.rankName = this.getTranslation("CHARGEN_RANK_HEROIC");
+                xpObj.rankValue = 3;
+            } else {
+                xpObj.rankName = this.getTranslation("CHARGEN_RANK_LEGENDARY");
+                xpObj.rankValue = 4;
+            }
+
+            if( optCounter == 0 )
+                _XP = xpObj;
+            _xpOptions.push( xpObj );
+        }
+
+        _uuid = this.makeUUID();
+
+        _options = Array();
+
+        _selectedAdvancements = Array();
+        _selectedEquipment = Array();
+
+        _selectedPowers = Array();
+        _powerPointsAvailable = 0;
+        _totalPowersKnown = 0;
+        _additionalPowersKnown = 0
+
+        _usesSanity = false;
+        _usesGutsSkill = false;
+
+        _usesRiftsCreation = false;
+
+        _usesSPCCreation = false;
+        _SPCRisingStars = false;
+        _SPCCurrentPowerPoints = 0;
+        _SPCTakenExtraPowerPoints = false;
+        _SPCPowerLevels = Array();
+        _SPCSelectedPowerLevel = 0;
+        _SPCPowerLevels[0] = {
+            power_points: 15,
+            rising_stars_power_points: 5,
+            name: this.getTranslation("SPC_PULP_HEROES")
+        };
+        _SPCPowerLevels[1] = {
+            power_points: 30,
+            rising_stars_power_points: 10,
+            name: this.getTranslation("SPC_STREET_FIGHTERS")
+        };
+        _SPCPowerLevels[2] = {
+            power_points: 45,
+            rising_stars_power_points: 20,
+            name: this.getTranslation("SPC_FOUR_COLOR")
+        };
+        _SPCPowerLevels[3] = {
+            power_points: 60,
+            rising_stars_power_points: 30,
+            name: this.getTranslation("SPC_HEAVY_HITTERS")
+        };
+        _SPCPowerLevels[4] = {
+            power_points: 75,
+            rising_stars_power_points: 50,
+            name: this.getTranslation("SPC_COSMIC")
+        };
+
+        _selectedArmor = Array();
+        _selectedMundaneGear = Array();
+        _selectedRangedWeapons = Array();
+        _selectedHandWeapons = Array();
+        _selectedShields = Array();
+
+        _perkOptions = Array(
+            {
+                label: "- " + this.getTranslation("CHARGEN_SELECT_A_PERK") + " -",
+                tag: "null",
+                cost: 0,
+                spcOnly: false,
+                effect: function() {
+
+                }
+            },
+            {
+                label: this.getTranslation("CHARGEN_PERKS_ATTRIBUTE"),
+                tag: "attribute",
+                cost: 2,
+                spcOnly: false,
+                effect: function(savageCharObj) {
+                    //savageCharObj.attributePointsAvailable = savageCharObj.attributePointsAvailable + 1;
+                    savageCharObj.incrementAttributePointsAvailable( 1 );
+                }
+            },
+            {
+                label: this.getTranslation("CHARGEN_PERKS_EDGE"),
+                tag: "edge",
+                cost: 2,
+                spcOnly: false,
+                effect: function(savageCharObj) {
+                    savageCharObj.incrementAvailbleEdgePoints( 1 );
+                }
+            },
+            {
+                label: this.getTranslation("CHARGEN_PERKS_SKILL"),
+                tag: "skill",
+                cost: 1,
+                spcOnly: false,
+                effect: function(savageCharObj) {
+                    //savageCharObj.skillPointsAvailable = savageCharObj.skillPointsAvailable + 1;
+                    savageCharObj.incrementSkillPointsAvailable( 1 );
+                }
+            },
+            {
+                label: this.getTranslation("CHARGEN_PERKS_FUNDS"),
+                tag: "funds",
+                cost: 1,
+                spcOnly: false,
+                effect: function(savageCharObj) {
+                    //savageCharObj.startingFunds = savageCharObj.startingFunds * 2;
+                    savageCharObj.addCurrentFunds( savageCharObj.getStartingFunds() );
+                }
+            },
+            {
+                label: this.getTranslation("SPC_ADDITIONAL_POWER_POINTS_PERK"),
+                tag: "spc-power-points",
+                cost: 2,
+                spcOnly: true,
+                effect: function(savageCharObj) {
+                    //savageCharObj.SPCTakenExtraPowerPoints = true;
+                    savageCharObj.setTakenSPCExtraPowerPoints( true );
+                }
+            }
+        );
+
+        _spcGenericModifiers = Array();
+
+        _spcGenericModifiers.push( {
+            "local_name": this.getTranslation("SPC_MOD_CONTIGENT"),
+            // "points": Array(-1,-2)
+            "points": [0,-1,-2],
+            "currentCost": 0
+        });
+
+        _spcGenericModifiers.push( {
+            "local_name": this.getTranslation("SPC_MOD_DEVICE"),
+            //~ "points": Array(-1,-2)
+            "points": [0,-1,-2],
+            "currentCost": 0
+        });
+
+        _spcGenericModifiers.push( {
+            "local_name": this.getTranslation("SPC_MOD_LIMITATION"),
+            //~ "points": Array(-1,-2)
+            "points": [0,-1,-2],
+            "currentCost": 0
+        });
+
+        _spcGenericModifiers.push( {
+            "local_name": this.getTranslation("SPC_MOD_PROJECTILE"),
+            "points": 1,
+            "currentCost": 0
+        });
+
+        _spcGenericModifiers.push( {
+            "local_name": this.getTranslation("SPC_MOD_RTA"),
+            "points": 2,
+            "currentCost": 0
+        });
+
+        _spcGenericModifiers.push( {
+            "local_name": this.getTranslation("SPC_MOD_RA"),
+            "points": -1,
+            "currentCost": 0
+        });
+
+        _spcGenericModifiers.push( {
+            "local_name": this.getTranslation("SPC_MOD_STA"),
+            "points": -1,
+            "currentCost": 0
+        });
+
+        _spcGenericModifiers.push( {
+            "local_name": this.getTranslation("SPC_MOD_SWITCHABLE"),
+            "points": 2,
+            "switchable": 1,
+            "currentCost": 0
+        });
+
+
+
+        for( var bookCounter = 0; bookCounter < savageWorldsBooksList.length; bookCounter++ ) {
+            _books[bookCounter] = get_book_by_id( savageWorldsBooksList[bookCounter].id );
+            if( _books[bookCounter].id == 1 ) {
+                _books[bookCounter].inUse = true;
+            } else {
+                _books[bookCounter].inUse = false;
+            }
+            for( var setting_c = 0; setting_c < _books[bookCounter].setting_rules.length; setting_c++) {
+                _books[bookCounter].setting_rules[setting_c].inUse = false;
+            }
+        }
+
+        // Localize Edges
+        for( var edgeCounter = 0; edgeCounter < savageWorldsEdges.length; edgeCounter++ ) {
+            savageWorldsEdges[edgeCounter].local_name = this.getLocalName( savageWorldsEdges[edgeCounter].name );
+            savageWorldsEdges[edgeCounter].select_option_name = savageWorldsEdges[edgeCounter].local_name;
+
+            if( savageWorldsEdges[edgeCounter].child == 1 ) {
+                savageWorldsEdges[edgeCounter].select_option_name = "↳ " + savageWorldsEdges[edgeCounter].select_option_name;
+            }
+
+            if( savageWorldsEdges[edgeCounter].child == 2 ) {
+                savageWorldsEdges[edgeCounter].select_option_name = "↳ " + savageWorldsEdges[edgeCounter].select_option_name;
+            }
+
+            //savageWorldsEdges[edgeCounter].local_description = this.getLocalName( savageWorldsEdges[edgeCounter].description );
+            savageWorldsEdges[edgeCounter].bookObj = get_book_by_id( savageWorldsEdges[edgeCounter].book );
+        }
+
+        // Localize Hindrances
+        for( var hindranceCounter = 0; hindranceCounter < savageWorldsHindrances.length; hindranceCounter++ ) {
+            savageWorldsHindrances[hindranceCounter].local_name = this.getLocalName( savageWorldsHindrances[hindranceCounter].name );
+            savageWorldsHindrances[hindranceCounter].select_option_name = savageWorldsHindrances[hindranceCounter].local_name;
+            if( savageWorldsHindrances[hindranceCounter].severity == "major")
+                savageWorldsHindrances[hindranceCounter].select_option_name = savageWorldsHindrances[hindranceCounter].local_name + " (" + this.getTranslation("CHARGEN_MAJOR_HINDRANCE") + ")";
+            else if( savageWorldsHindrances[hindranceCounter].severity == "minor")
+                savageWorldsHindrances[hindranceCounter].select_option_name = savageWorldsHindrances[hindranceCounter].local_name  + " (" + this.getTranslation("CHARGEN_MINOR_HINDRANCE") + ")";
+
+    //        savageWorldsHindrances[hindranceCounter].local_description = this.getLocalName( savageWorldsHindrances[hindranceCounter].description );
+            savageWorldsHindrances[hindranceCounter].bookObj = get_book_by_id( savageWorldsHindrances[hindranceCounter].book );
+        }
+
+        // Localize SPC Powers...
+
+        for( var spcCounter = 0; spcCounter < savageWorldsSPCPowers.length; spcCounter++ ) {
+            savageWorldsSPCPowers[spcCounter].local_name = this.getLocalName( savageWorldsSPCPowers[spcCounter].name );
+            savageWorldsSPCPowers[spcCounter].select_option_name = savageWorldsSPCPowers[spcCounter].local_name;
+
+            savageWorldsSPCPowers[spcCounter].modifiersObj =  JSON.parse(savageWorldsSPCPowers[spcCounter].modifiers)
+            for( var modCounter = 0; modCounter < savageWorldsSPCPowers[spcCounter].modifiersObj.length; modCounter++ ) {
+                savageWorldsSPCPowers[spcCounter].modifiersObj[ modCounter ].local_name = this.getLocalName( savageWorldsSPCPowers[spcCounter].modifiersObj[ modCounter ].name )
+                if( savageWorldsSPCPowers[spcCounter].modifiersObj[ modCounter ].points[0] == "[" )
+                        savageWorldsSPCPowers[spcCounter].modifiersObj[ modCounter ].points = JSON.parse(     savageWorldsSPCPowers[spcCounter].modifiersObj[ modCounter ].points );
+            }
+
+            savageWorldsSPCPowers[spcCounter].genericModifiersObj = angular.copy( _spcGenericModifiers );
+
+    //        savageWorldsSPCPowers[spcCounter].local_description = this.getLocalName( savageWorldsSPCPowers[spcCounter].description );
+            savageWorldsSPCPowers[spcCounter].bookObj = get_book_by_id( savageWorldsSPCPowers[spcCounter].book );
+        }
+
+        // Localize Arcane Backgrounds
+        for( var abCounter = 0; abCounter < savageWorldsArcaneBackgrounds.length; abCounter++ ) {
+            savageWorldsArcaneBackgrounds[abCounter].local_name = this.getLocalName( savageWorldsArcaneBackgrounds[abCounter].name );
+            savageWorldsArcaneBackgrounds[abCounter].select_option_name = savageWorldsArcaneBackgrounds[abCounter].local_name;
+            savageWorldsArcaneBackgrounds[abCounter].local_backlash = this.getLocalName( savageWorldsArcaneBackgrounds[abCounter].backlash );
+    //        savageWorldsArcaneBackgrounds[abCounter].local_description = this.getLocalName( savageWorldsArcaneBackgrounds[abCounter].description );
+            savageWorldsArcaneBackgrounds[abCounter].bookObj = get_book_by_id( savageWorldsArcaneBackgrounds[abCounter].book );
+        }
+
+        // Localize Arcane Trappings
+        for( var abCounter = 0; abCounter < savageWorldsArcaneTrappings.length; abCounter++ ) {
+            savageWorldsArcaneTrappings[abCounter].local_name = this.getLocalName( savageWorldsArcaneTrappings[abCounter].name );
+            savageWorldsArcaneTrappings[abCounter].select_option_name = savageWorldsArcaneTrappings[abCounter].local_name;
+    //        savageWorldsArcaneTrappings[abCounter].local_description = this.getLocalName( savageWorldsArcaneTrappings[abCounter].description );
+            savageWorldsArcaneTrappings[abCounter].bookObj = get_book_by_id( savageWorldsArcaneTrappings[abCounter].book );
+        }
+
+        // Localize Cyberware
+        for( var abCounter = 0; abCounter < savageWorldsCyberware.length; abCounter++ ) {
+            savageWorldsCyberware[abCounter].local_name = this.getLocalName( savageWorldsCyberware[abCounter].name );
+            savageWorldsCyberware[abCounter].local_description = this.getLocalName( savageWorldsCyberware[abCounter].description );
+            savageWorldsCyberware[abCounter].bookObj = get_book_by_id( savageWorldsCyberware[abCounter].book );
+        }
+
+        // Localize Powers
+        for( var abCounter = 0; abCounter < savageWorldsPowers.length; abCounter++ ) {
+            savageWorldsPowers[abCounter].local_name = this.getLocalName( savageWorldsPowers[abCounter].name );
+            savageWorldsPowers[abCounter].select_option_name = savageWorldsPowers[abCounter].local_name;
+        //    savageWorldsPowers[abCounter].local_description = this.getLocalName( savageWorldsPowers[abCounter].description );
+            savageWorldsPowers[abCounter].local_duration = this.getLocalName( savageWorldsPowers[abCounter].duration );
+            savageWorldsPowers[abCounter].local_additional_effects = this.getLocalName( savageWorldsPowers[abCounter].additional_effects );
+            savageWorldsPowers[abCounter].bookObj = get_book_by_id( savageWorldsPowers[abCounter].book );
+        }
+
+        // Localize Equipment
+            // Localize General -
+            for( var eqCounter = 0; eqCounter < savageWorldsGearGeneral.length; eqCounter++ ) {
+                savageWorldsGearGeneral[eqCounter].local_name = this.getLocalName( savageWorldsGearGeneral[eqCounter].name );
+                savageWorldsGearGeneral[eqCounter].select_option_name = savageWorldsGearGeneral[eqCounter].local_name;
+            }
+
+            // Localize Types
+            for( var eqCounter = 0; eqCounter < savageWorldsGearTypes.length; eqCounter++ ) {
+                savageWorldsGearTypes[eqCounter].local_name = this.getLocalName( savageWorldsGearTypes[eqCounter].name );
+                savageWorldsGearTypes[eqCounter].select_option_name = savageWorldsGearTypes[eqCounter].local_name;
+
+                savageWorldsGearTypes[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearTypes[eqCounter].general );
+            }
+
+            // Localize Classes
+            // for( var eqCounter = 0; eqCounter < savageWorldsGearClasses.length; eqCounter++ ) {
+            //     savageWorldsGearClasses[eqCounter].local_name = this.getLocalName( savageWorldsGearClasses[eqCounter].name );
+            //     savageWorldsGearClasses[eqCounter].select_option_name = savageWorldsGearClasses[eqCounter].local_name;
+
+            //     savageWorldsGearTypes[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearTypes[eqCounter].general );
+            //     savageWorldsGearTypes[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearTypes[eqCounter].type );
+            // }
+
+            // Localize Mundane
+            for( var eqCounter = 0; eqCounter < savageWorldsGearMundane.length; eqCounter++ ) {
+                savageWorldsGearMundane[eqCounter].local_name = this.getLocalName( savageWorldsGearMundane[eqCounter].name );
+                savageWorldsGearMundane[eqCounter].select_option_name = savageWorldsGearMundane[eqCounter].local_name;
+
+                savageWorldsGearMundane[eqCounter].local_notes = this.getLocalName( savageWorldsGearMundane[eqCounter].notes );
+
+                savageWorldsGearMundane[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearMundane[eqCounter].general );
+                savageWorldsGearMundane[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearMundane[eqCounter].type );
+
+                savageWorldsGearMundane[eqCounter].bookObj = get_book_by_id( savageWorldsGearMundane[eqCounter].book );
+            }
+
+            // Localize Armor
+            for( var eqCounter = 0; eqCounter < savageWorldsGearArmor.length; eqCounter++ ) {
+                savageWorldsGearArmor[eqCounter].local_name = this.getLocalName( savageWorldsGearArmor[eqCounter].name );
+                savageWorldsGearArmor[eqCounter].select_option_name = savageWorldsGearArmor[eqCounter].local_name;
+
+                savageWorldsGearArmor[eqCounter].local_notes = this.getLocalName( savageWorldsGearArmor[eqCounter].notes );
+
+                savageWorldsGearArmor[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearArmor[eqCounter].general );
+                savageWorldsGearArmor[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearArmor[eqCounter].type );
+
+                savageWorldsGearArmor[eqCounter].bookObj = get_book_by_id( savageWorldsGearArmor[eqCounter].book );
+            }
+
+            // Localize Shields
+            for( var eqCounter = 0; eqCounter < savageWorldsGearShields.length; eqCounter++ ) {
+                savageWorldsGearShields[eqCounter].local_name = this.getLocalName( savageWorldsGearShields[eqCounter].name );
+                savageWorldsGearShields[eqCounter].select_option_name = savageWorldsGearShields[eqCounter].local_name;
+
+                //savageWorldsGearShields[eqCounter].local_notes = this.getLocalName( savageWorldsGearShields[eqCounter].notes );
+
+                savageWorldsGearShields[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearShields[eqCounter].general );
+                savageWorldsGearShields[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearShields[eqCounter].type );
+
+                savageWorldsGearShields[eqCounter].bookObj = get_book_by_id( savageWorldsGearShields[eqCounter].book );
+            }
+
+            // Localize Hand Weapons
+            for( var eqCounter = 0; eqCounter < savageWorldsGearHandWeapons.length; eqCounter++ ) {
+                savageWorldsGearHandWeapons[eqCounter].local_name = this.getLocalName( savageWorldsGearHandWeapons[eqCounter].name );
+                savageWorldsGearHandWeapons[eqCounter].select_option_name = savageWorldsGearHandWeapons[eqCounter].local_name;
+
+                savageWorldsGearHandWeapons[eqCounter].local_notes = this.getLocalName( savageWorldsGearHandWeapons[eqCounter].notes );
+
+                savageWorldsGearHandWeapons[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearHandWeapons[eqCounter].general );
+                savageWorldsGearHandWeapons[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearHandWeapons[eqCounter].type );
+
+                savageWorldsGearHandWeapons[eqCounter].bookObj = get_book_by_id( savageWorldsGearHandWeapons[eqCounter].book );
+            }
+
+            // Localize Ranged Weapons
+            for( var eqCounter = 0; eqCounter < savageWorldsGearRangedWeapons.length; eqCounter++ ) {
+                savageWorldsGearRangedWeapons[eqCounter].local_name = this.getLocalName( savageWorldsGearRangedWeapons[eqCounter].name );
+                savageWorldsGearRangedWeapons[eqCounter].select_option_name = savageWorldsGearRangedWeapons[eqCounter].local_name;
+
+                savageWorldsGearRangedWeapons[eqCounter].local_notes = this.getLocalName( savageWorldsGearRangedWeapons[eqCounter].notes );
+
+                savageWorldsGearRangedWeapons[eqCounter].generalObj = get_gear_general_by_id( savageWorldsGearRangedWeapons[eqCounter].general );
+                savageWorldsGearRangedWeapons[eqCounter].typeObj = get_gear_type_by_id( savageWorldsGearRangedWeapons[eqCounter].type );
+
+                savageWorldsGearRangedWeapons[eqCounter].bookObj = get_book_by_id( savageWorldsGearRangedWeapons[eqCounter].book );
+            }
+
+        _attributes = {
+            agility: 1,
+            smarts: 1,
+            spirit: 1,
+            strength: 1,
+            vigor: 1
+        }
+
+        _attributeBoost = {
+            agility: 0,
+            smarts: 0,
+            spirit: 0,
+            strength: 0,
+            vigor: 0,
+        };
+
+        // derived statistics...
+        _derived = {
+            pace: 6,
+            charisma: 0,
+            parry: 2,
+            toughness: 4,
+            armor: 0,
+            strain: 0,
+            currentLoad: 0,
+            sanity: 0
+        };
+
+        localizeDice( _useLang);
+
+        // character creation perks....
+        _perks = Array();
+
+        // character development advances....
+        _advances = Array();
+
+        // skills list...
+        _skills = Array();
+
+        // edges list...
+        _edges = Array();
+
+        // gear list...
+        _gear = Array();
+
+        _race = {};
+
+        _raceOptions = Array();
+
+        for( var raceCount = 0; raceCount < savageWorldsRaces.length; raceCount++ ) {
+            if( this.bookInUse( savageWorldsRaces[raceCount].book ) ) {
+                var newItem = {}
+                angular.extend(newItem, get_race_by_id( savageWorldsRaces[raceCount].id, _useLang ));
+
+                _raceOptions.push( newItem );
+            }
+
+        }
+
+        _race = this._getRaceById(1);
+
+        _genderOptions = Array(
+            {
+                id: "m",
+                label: this.getTranslation( "GENERAL_MALE" )
+            },
+            {
+                id: "f",
+                label: this.getTranslation( "GENERAL_FEMALE" )
+            },
+            {
+                id: "o",
+                label: this.getTranslation( "GENERAL_OTHER" )
+            }
+        );
+
+        _selectedPerks = Array();
+
+        _skillList = Array();
+        for( var skillCounter = 0; skillCounter < savageWorldsSkillList.length; skillCounter++) {
+            _skillList[skillCounter] = {};
+            angular.extend( _skillList[skillCounter], savageWorldsSkillList[skillCounter]);
+        }
+
+        _gender = _genderOptions[0];
+
+        _skillValues = {};
+
+        _selectedHindrances = Array();
+        _selectedEdges = Array();
+
+        _installedHindrances = Array();
+        _installedEdges = Array();
+
+        _bornAHero = false;
+
+        this.refreshAvailable();
+        this.validate();
+
+            // Localize Advancement Types
+            this.advancementTypes = Array();
+            this.advancementTypes.push ( {
+                    tag: "none",
+                    takenAt: -1,
+                    label: this.getTranslation("CHARGEN_ADVANCEMENT_NOT_SELECTED"),
+                    option1: "",
+                    option2: "",
+                }
+            );
+
+            this.advancementTypes.push ( {
+                    tag: "edge",
+                    takenAt: -1,
+                    label: this.getTranslation("CHARGEN_ADVANCEMENT_NEW_EDGE"),
+                    option1: _availableEdges[0],
+                    option2: "",
+                }
+            );
+
+            this.advancementTypes.push ( {
+                    tag: "incskill",
+                    takenAt: -1,
+                    label: this.getTranslation("CHARGEN_ADVANCEMENT_INCREASE_SKILL"),
+                    option1: "",
+                    option2: "",
+                }
+            );
+
+            this.advancementTypes.push ( {
+                    tag: "inc2skills",
+                    takenAt: -1,
+                    label: this.getTranslation("CHARGEN_ADVANCEMENT_INCREASE_2_SKILLS"),
+                    option1: "",
+                    option2: "",
+                }
+            );
+
+            this.advancementTypes.push ( {
+                    tag: "skill",
+                    takenAt: -1,
+                    label: this.getTranslation("CHARGEN_ADVANCEMENT_NEW_SKILL"),
+                    option1: "",
+                    option2: "",
+                }
+            );
+
+            this.advancementTypes.push ( {
+                    tag: "attribute",
+                    takenAt: -1,
+                    label: this.getTranslation("CHARGEN_ADVANCEMENT_INCREASE_ATTRIBUTE"),
+                    option1: "",
+                    option2: "",
+                }
+            );
+
+    }
+
+    this.calcSPC = function() {
+        this.hasSPCSwitchablePowers = false;
+        this.switchableSPCPowers = Array()
+
+        if( _usesSPCCreation ) {
+            _SPCPowerLimit = 0;
+            _SPCCurrentPowerPoints = 0;
+            if( _SPCRisingStars ) {
+                _SPCCurrentPowerPoints = _SPCPowerLevels[ _SPCSelectedPowerLevel ].rising_stars_power_points;
+                _SPCCurrentPowerPoints += _spcExtraPowerPoints;
+                _SPCPowerLimit = _SPCCurrentPowerPoints;
+            } else {
+                _SPCCurrentPowerPoints = _SPCPowerLevels[ _SPCSelectedPowerLevel ].power_points;
+                _SPCCurrentPowerPoints += _spcExtraPowerPoints;
+                _SPCPowerLimit = Math.ceil( _SPCCurrentPowerPoints / 3 );
+            }
+            if( this.hasEdge("the-best-there-is"))  {
+                if( !_SPCRisingStars ) {
+                    _SPCPowerLimit = Math.ceil( _SPCCurrentPowerPoints / 2 );
+                } else {
+                    _SPCPowerLimit = Math.ceil( _SPCCurrentPowerPoints / 2 );
+                    if( _SPCPowerLimit < _SPCCurrentPowerPoints)
+                        _SPCPowerLimit = _SPCCurrentPowerPoints;
+                }
+            }
+
+            // for the extra power points perk....
+            if( _SPCTakenExtraPowerPoints ) {
+                if( _SPCSelectedPowerLevel == 0 || _SPCSelectedPowerLevel == 1 ) {
+                    _SPCCurrentPowerPoints += 5;
+                } else {
+                    _SPCCurrentPowerPoints += 10;
+                }
+            }
+
+            _SPCStartingPowerPoints = _SPCCurrentPowerPoints;
+
+            for( var powerCounter = 0; powerCounter < _selectedSPCPowers.length; powerCounter++) {
+                _selectedSPCPowers[powerCounter].currentCost = _selectedSPCPowers[powerCounter].cost  / 1* _selectedSPCPowers[powerCounter].selectedLevel / 1;
+                for( var modCounter = 0; modCounter < _selectedSPCPowers[powerCounter].modifiersObj.length; modCounter++) {
+                    if( typeof(_selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost) != "undefined" && _selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost != 0) {
+                        _selectedSPCPowers[powerCounter].currentCost += _selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost / 1;
+                    }
+                }
+                _selectedSPCPowers[powerCounter].switchable = false;
+                for( var modCounter = 0; modCounter < _selectedSPCPowers[powerCounter].genericModifiersObj.length; modCounter++) {
+                    if( typeof(_selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost) != "undefined" && _selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost != 0) {
+                        _selectedSPCPowers[powerCounter].currentCost += _selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost / 1;
+                        if( _selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].switchable > 0 && _selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost > 0 ) {
+                                this.switchableSPCPowers.push( _selectedSPCPowers[powerCounter] );
+                                this.hasSPCSwitchablePowers = true;
+                                _selectedSPCPowers[powerCounter].switchable = true;
+
+                        }
+                        _selectedSPCPowers[powerCounter].internalID = powerCounter;
+                    }
+                }
+
+                if( _selectedSPCPowers[powerCounter].currentCost < 1 )
+                    _selectedSPCPowers[powerCounter].currentCost = 1;
+
+                if( _selectedSPCPowers[powerCounter].boost_attribute > 0 ) {
+                    if( _selectedSPCPowers[powerCounter].boosted_attribute != "" ) {
+                        //~ console.log( "_selectedSPCPowers[powerCounter].boosted_attribute", _selectedSPCPowers[powerCounter].boosted_attribute);
+                        //~ console.log( "_selectedSPCPowers[powerCounter].selectedLevel", _selectedSPCPowers[powerCounter].selectedLevel );
+                        this.boostAttribute( _selectedSPCPowers[powerCounter].boosted_attribute, _selectedSPCPowers[powerCounter].selectedLevel );
+                    }
+                }
+
+                if( _selectedSPCPowers[powerCounter].boost_skill > 0 ) {
+                    if( _selectedSPCPowers[powerCounter].boosted_skill != "" ) {
+                        this.boostSkill( _selectedSPCPowers[powerCounter].boosted_skill, _selectedSPCPowers[powerCounter].boosted_skill_specialty, _selectedSPCPowers[powerCounter].selectedLevel  );
+                    }
+                }
+
+                if( _selectedSPCPowers[powerCounter].currentCost > _SPCPowerLimit) {
+                    if( _validSPCoverLimitShown  == false ) {
+                        _validationReport.push(
+                            this.getTranslation("CHARGEN_VALIDATION_SPC_OVER_LIMIT").replace(
+                                "{value}", _selectedSPCPowers[powerCounter].local_name
+                            )
+                        );
+                        _isValid = false;
+                        _validSPCoverLimitShown = true;
+                    }
+
+                }
+
+                if( _selectedSPCPowers[powerCounter].switchableWith ) {
+                    if( _selectedSPCPowers[powerCounter].currentCost > _selectedSPCPowers[powerCounter].switchableWith.currentCost - 2) {
+                        _validationReport.push(
+                            this.getTranslation("CHARGEN_VALIDATION_SPC_SWITCH").replace(
+                                "{value}", _selectedSPCPowers[powerCounter].local_name
+                            )
+                        );
+                        _isValid = false;
+                    }
+                } else {
+                    _SPCCurrentPowerPoints -= _selectedSPCPowers[powerCounter].currentCost;
+                }
+
+                if( _selectedSPCPowers[powerCounter].charEffect ) {
+                    _selectedSPCPowers[powerCounter].charEffect( this, _selectedSPCPowers[powerCounter]);
+                }
+            }
+
+            if( _SPCCurrentPowerPoints < 0 ) {
+                _validationReport.push( this.getTranslation("CHARGEN_VALIDATION_SPC_OVER_POWER_POINTS") );
+                _isValid = false;
+            }
+        }
+    }
+
+    this.newUUID = function() {
+        _uuid = this.makeUUID();
+    }
+
+    this.makeUUID = function(){
+        var d = new Date().getTime();
+        if(window.performance && typeof window.performance.now === "function"){
+            d += performance.now(); //use high-precision timer if available
+        }
+        var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var r = (d + Math.random()*16)%16 | 0;
+            d = Math.floor(d/16);
+            return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+        });
+        return uuid;
+    };
+
+    this.refreshAvailable = function( ) {
+
+        _agilitySkills = Array();
+        _allSkills = Array();
+        _smartsSkills = Array();
+        _spiritSkills = Array();
+        _strengthSkills = Array();
+        _vigorSkills = Array(); // I'm not aware of any vigor skills, but I' m prepared on the backend ;)
+
+        for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
+            var showSkill = true;
+            if( _skillList[skillCounter].name[ _useLang ] ) {
+                _skillList[skillCounter].local_name = _skillList[skillCounter].name[ _useLang ];
+            } else {
+                _skillList[skillCounter].local_name = _skillList[skillCounter].name[ "en-US" ];
+            }
+            if( !_skillList[skillCounter].value )
+                _skillList[skillCounter].value = 0;
+            if( !_skillList[skillCounter].spec )
+                _skillList[skillCounter].spec = "";
+            if( !_skillList[skillCounter].specialties )
+                _skillList[skillCounter].specialties = Array();
+
+            _skillList[skillCounter].displayValue = "";
+            if( _skillList[skillCounter].value + _skillList[skillCounter].boost > 0 ) {
+                diceValue = getDiceValue( _skillList[skillCounter].value + _skillList[skillCounter].boost );
+                _skillList[skillCounter].displayValue = diceValue.local_label;
+            }
+
+            for( var specialtyCounter = 0; specialtyCounter < _skillList[skillCounter].specialties.length; specialtyCounter++) {
+                _skillList[skillCounter].specialties[specialtyCounter].displayValue = "";
+                if( typeof( _skillList[skillCounter].specialties[specialtyCounter].boost ) == "undefined" )
+                     _skillList[skillCounter].specialties[specialtyCounter].boost = 0;
+                if( _skillList[skillCounter].specialties[specialtyCounter].value + _skillList[skillCounter].specialties[specialtyCounter].boost  > 0 ) {
+                    diceValue = getDiceValue( _skillList[skillCounter].specialties[specialtyCounter].value  + _skillList[skillCounter].specialties[specialtyCounter].boost );
+                    _skillList[skillCounter].specialties[specialtyCounter].displayValue = diceValue.local_label;
+                }
+            }
+
+            _skillList[skillCounter].showSkill = true;
+            if( !this.bookInUse( _skillList[skillCounter].book) ) {
+                _skillList[skillCounter].showSkill = false;
+                _skillList[skillCounter].value = 0;
+                _skillValues[ _skillList[skillCounter].short_name ] = 0;
+            }
+
+            if(  _skillList[skillCounter].for_arcane ) {
+                if( !this.hasArcane( _skillList[skillCounter].for_arcane )) {
+                    _skillList[skillCounter].showSkill = false;
+                    _skillValues[ _skillList[skillCounter].short_name ] = 0;
+                    _skillList[skillCounter].value = 0;
+                }
+            }
+
+            if( _skillList[skillCounter].id == "SKILL_GUTS" ) {
+                if( _usesGutsSkill == false ) {
+                    _skillList[skillCounter].showSkill = false;
+                    _skillValues[ _skillList[skillCounter].short_name ] = 0;
+                }
+            }
+
+            if( _skillValues[ _skillList[skillCounter].id ] ) {
+                _skillList[skillCounter].value = _skillValues[ _skillList[skillCounter].short_name ];
+
+            }
+
+            if( _skillList[skillCounter].showSkill && _skillList[skillCounter].attribute == "agility" ) {
+                _agilitySkills.push( _skillList[skillCounter] );
+            }
+            if( _skillList[skillCounter].showSkill && _skillList[skillCounter].attribute == "smarts" ) {
+                _smartsSkills.push( _skillList[skillCounter] );
+            }
+            if( _skillList[skillCounter].showSkill && _skillList[skillCounter].attribute == "spirit" ) {
+                _spiritSkills.push( _skillList[skillCounter] );
+            }
+            if( _skillList[skillCounter].showSkill && _skillList[skillCounter].attribute == "strength" ) {
+                _strengthSkills.push( _skillList[skillCounter] );
+            }
+            if( _skillList[skillCounter].showSkill && _skillList[skillCounter].attribute == "vigor" ) {
+                _vigorSkills.push( _skillList[skillCounter] );
+            }
+            _allSkills.push( _skillList[skillCounter] );
+
+            for( var skc = 0; skc < _skillList[skillCounter].specialties.length; skc++ ) {
+                _skillList[skillCounter].specialties[skc].is_specialty = _skillList[skillCounter].id
+                _skillList[skillCounter].specialties[skc].local_name = _skillList[skillCounter].local_name + ": " + _skillList[skillCounter].specialties[skc].name;
+                _skillList[skillCounter].specialties[skc].id = _skillList[skillCounter].id
+                _skillList[skillCounter].specialties[skc].specify_name = _skillList[skillCounter].specialties[skc].name
+                _skillList[skillCounter].specialties[skc].attribute = _skillList[skillCounter].attribute
+                if( ! _skillList[skillCounter].specialties[skc].boost )
+                    _skillList[skillCounter].specialties[skc].boost = 0;
+                _allSkills.push( _skillList[skillCounter].specialties[skc] );
+            }
+        }
+
+        _allSkills.unshift( {id: 'undefined',local_name: this.getTranslation('GENERAL_SELECT')} );
+
+        _raceOptions = Array();
+        for( var raceCount = 0; raceCount < savageWorldsRaces.length; raceCount++ ) {
+
+            if( this.bookInUse( savageWorldsRaces[raceCount].book ) ) {
+                var newItem = {}
+                angular.extend(newItem, get_race_by_id( savageWorldsRaces[raceCount].id, _useLang ));
+
+                _raceOptions.push( newItem );
+            }
+        }
+
+    }
+
+    this.isPerkOptimized = function() {
+        if( _totalPerkPoints == _optimizedPerkPoints )
+            return true;
+        else
+            return false;
+    }
+
+    this.getArcaneSkill = function() {
+        for(var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
+            if(  _skillList[skillCounter].for_arcane ) {
+                if( this.hasArcane( _skillList[skillCounter].for_arcane )) {
+                    return _skillList[skillCounter];
+                }
+            }
+        }
+        return null;
+    }
+
+    this.getDerived = function() {
+        return _derived;
+    }
+
+    this.getAvailableEdges = function() {
+        return _availableEdges;
+    }
+
+    this.getAvailableCyberware = function() {
+        return _availableCyberware;
+    }
+
+    this.getAvailablePerks = function() {
+        return _availablePerks;
+    }
+
+    this.getSelectedSPCPowers = function() {
+        return _selectedSPCPowers;
+    }
+
+    this.getAvailableHindrances = function() {
+        return _availableHindrances;
+    }
+
+    this.getAvailableHandWeapons = function() {
+        return _availableHandWeapons;
+    }
+
+    this.getAvailableRangedWeapons = function() {
+        return _availableRangedWeapons;
+    }
+
+    this.getSelectedRangedWeapons = function() {
+        return _selectedRangedWeapons;
+    }
+
+    this.getSelectedAvancements = function() {
+        var _return = 0;
+        for( var aC = 0; aC < _selectedAdvancements.length; aC++) {
+            if( _selectedAdvancements[aC].tag != 'none')
+                _return++;
+        }
+        return _return;
+    }
+
+    this.getSelectedHandWeapons = function() {
+        return _selectedHandWeapons;
+    }
+
+    this.getSelectedArmor = function() {
+        return _selectedArmor;
+    }
+
+    this.getXP = function() {
+        return _XP;
+    }
+
+    this.getXPOptions = function() {
+        return _xpOptions;
+    }
+
+    this.getSelectedAdvancements = function() {
+        return _selectedAdvancements;
+    }
+
+    this.getAvailableAdvancements = function() {
+        return _selectedAdvancements.length;
+    }
+
+    this.getAllSkills = function() {
+        return _allSkills;
+    }
+
+    this.getSkillList = function() {
+        return _allSkills;
+    }
+
+    this.getSelectedShields = function() {
+        return _selectedShields;
+    }
+
+    this.getAvailableArmor = function() {
+        return _availableArmor;
+    }
+
+    this.getAvailableShields = function() {
+        return _availableShields;
+    }
+
+    this.getAvailableMundaneGear = function() {
+        return _availableMundaneGear;
+    }
+
+
+    this.getSelectedMundaneGear = function() {
+        return _selectedMundaneGear;
+    }
+
+    this.getSelectedEdges = function() {
+        return _selecteddges;
+    }
+
+    this.getInstalledEdges = function() {
+        return _installedEdges;
+    }
+
+    this.getInstalledHindrances = function() {
+        return _installedHindrances;
+    }
+
+    this.getSelectedHindrances = function() {
+        return _selectedHindrances;
+    }
+
+    this.getSelectedPerks = function() {
+        return _selectedPerks;
+    }
+
+    this.setGender = function( genderID ) {
+        for(var gc = 0; gc < _genderOptions.length; gc++) {
+            if( genderID == _genderOptions[gc].id ) {
+                _gender = _genderOptions[gc];
+                return true;
+            }
+        }
+        return false;
+    }
+
+    this.setXP = function( xpValue ) {
+        for(var xpc = 0; xpc < _xpOptions.length; xpc++) {
+            if( xpValue == _xpOptions[xpc].value ) {
+                _XP = _xpOptions[xpc];
+                return true;
+            }
+        }
+        return false;
+    }
+
+    this._getRaceById = function( raceID ) {
+
+        for(var gc = 0; gc < _raceOptions.length; gc++) {
+
+            if( raceID == _raceOptions[gc].id ) {
+                return  _raceOptions[gc];
+            }
+        }
+        return null;
+    }
+
+    this.setRace = function( raceID ) {
+        for(var gc = 0; gc < savageWorldsRaces.length; gc++) {
+            if( raceID == savageWorldsRaces[gc].id ) {
+                _race = savageWorldsRaces[gc];
+                return true;
+            }
+        }
+        return false;
+    }
+
+    this.removePower = function(powerIndex) {
+
+        if(
+            _selectedPowers[ powerIndex ]
+        ) {
+            _selectedPowers.splice(powerIndex, 1);
+            return true;
+        }
+
+        return false;
+    }
+
+    this.addPower = function(powerBookID, powerTag, trappingBookID, trappingTag, powerName) {
+
+        for( var powerCounter = 0; powerCounter < savageWorldsPowers.length; powerCounter++) {
+            if(
+                savageWorldsPowers[powerCounter].tag == powerTag
+                    &&
+                savageWorldsPowers[powerCounter].book == powerBookID
+            ) {
+                var newPower = {};
+                angular.extend( newPower, savageWorldsPowers[ powerCounter ] );
+
+                newPower.trapping = savageWorldsArcaneTrappings[0];
+                for( var trappingCounter = 0; trappingCounter < savageWorldsArcaneTrappings.length; trappingCounter++) {
+                    if(
+                        savageWorldsArcaneTrappings[trappingCounter].tag == trappingTag
+                            &&
+                        savageWorldsArcaneTrappings[trappingCounter].book == trappingBookID
+                    ) {
+                        newPower.trapping = savageWorldsArcaneTrappings[trappingCounter];
+                    }
+                }
+                if( powerName )
+                    newPower.customName = powerName;
+                else
+                    newPower.customName = newPower.local_name;
+
+                _selectedPowers.push( newPower );
+                return true;
+            }
+        }
+        return false;
+    }
+
+    this.addEdge = function(bookId, edgeTag) {
+        for( var edgeCounter = 0; edgeCounter < savageWorldsEdges.length; edgeCounter++) {
+            if(
+                savageWorldsEdges[edgeCounter].tag == edgeTag
+                    &&
+                savageWorldsEdges[edgeCounter].book == bookId
+            ) {
+                var newEdge = {};
+                angular.extend( newEdge, savageWorldsEdges[ edgeCounter ] );
+                _selectedEdges.push( newEdge );
+                return true;
+            }
+        }
+        return false;
+    }
+
+    this.addCyberEdge = function(bookId, edgeTag) {
+        for( var edgeCounter = 0; edgeCounter < savageWorldsEdges.length; edgeCounter++) {
+            if(
+                savageWorldsEdges[edgeCounter].tag == edgeTag
+                    &&
+                savageWorldsEdges[edgeCounter].book == bookId
+            ) {
+                var newEdge = {};
+                angular.extend( newEdge, savageWorldsEdges[ edgeCounter ] );
+                newEdge.cyber = true;
+                _selectedEdges.push( newEdge );
+                return true;
+            }
+        }
+        return false;
+    }
+
+    this.removeEdge = function(indexNumber) {
+        if( _edges[indexNumber] ) {
+            _edges = _edges.splice(indexNumber, 1);
+            return true;
+        }
+        return false;
+    }
+
+    this.removeEdgeByTag = function(edgeTag) {
+        for( var edgeCounter = 0; edgeCounter < _selectedEdges.length; edgeCounter++) {
+            if( _selectedEdges[edgeCounter].tag == edgeTag ) {
+                _selectedEdges.splice(edgeCounter, 1);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    this.getHandWeaponByTag = function(bookID, theTag) {
+        for( var eqCount = 0; eqCount < savageWorldsGearHandWeapons.length; eqCount++) {
+            if( savageWorldsGearHandWeapons[eqCount].tag == theTag && savageWorldsGearHandWeapons[eqCount].book == bookID ) {
+
+                return savageWorldsGearHandWeapons[ eqCount ];
+            }
+        }
+        return false;
+    }
+
+    this.getMundaneByTag = function(bookID, theTag) {
+        for( var eqCount = 0; eqCount < savageWorldsGearMundane.length; eqCount++) {
+            if( savageWorldsGearMundane[eqCount].tag == theTag && savageWorldsGearMundane[eqCount].book == bookID ) {
+
+                return savageWorldsGearMundane[ eqCount ];
+            }
+        }
+        return false;
+    }
+
+    this.getShieldByTag = function(bookID, theTag) {
+        for( var eqCount = 0; eqCount < savageWorldsGearShields.length; eqCount++) {
+            if( savageWorldsGearShields[eqCount].tag == theTag && savageWorldsGearShields[eqCount].book == bookID ) {
+
+                return savageWorldsGearShields[ eqCount ];
+            }
+        }
+        return false;
+    }
+
+    this.getArmorByTag = function(bookID, theTag) {
+        for( var eqCount = 0; eqCount < savageWorldsGearArmor.length; eqCount++) {
+            if( savageWorldsGearArmor[eqCount].tag == theTag && savageWorldsGearArmor[eqCount].book == bookID ) {
+
+                return savageWorldsGearArmor[ eqCount ];
+            }
+        }
+        return false;
+    }
+
+
+    this.getRangedWeaponByTag = function(bookID, theTag) {
+        for( var eqCount = 0; eqCount < savageWorldsGearRangedWeapons.length; eqCount++) {
+            if( savageWorldsGearRangedWeapons[eqCount].tag == theTag && savageWorldsGearRangedWeapons[eqCount].book == bookID ) {
+
+                return savageWorldsGearRangedWeapons[ eqCount ];
+            }
+        }
+        return false;
+    }
+
+    this.addHindrance = function(bookId, hindranceTag, specifyField) {
+        for( var hindranceCounter = 0; hindranceCounter < savageWorldsHindrances.length; hindranceCounter++) {
+            if(
+                savageWorldsHindrances[hindranceCounter].tag == hindranceTag
+                    &&
+                savageWorldsHindrances[hindranceCounter].book == bookId
+            ) {
+                if(specifyField)
+                    savageWorldsHindrances[hindranceCounter ].specifyField = specifyField;
+                else
+                    savageWorldsHindrances[hindranceCounter ].specifyField = "";
+                _selectedHindrances.push( savageWorldsHindrances[hindranceCounter ]);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    this.getCyberTraitList = function() {
+    }
+
+
+    this.getCyberSkillList = function() {
+    }
+
+    this.getCyberWeaponOptions = function() {
+        var _returnValue = Array();
+
+        var pushItem = {
+            id: "",
+            label: this.getTranslation("CHARGEN_SELECT_LIGHT_WEAPON")
+        };
+
+        _returnValue.push( pushItem );
+
+        for( var wC = 0; wC < _selectedRangedWeapons.length; wC++ ) {
+            if( _selectedRangedWeapons[ wC ].weight < 3 ) {
+                var pushItem = {
+                    id: _selectedRangedWeapons[ wC ].tag,
+                    label: _selectedRangedWeapons[ wC ].local_name,
+                };
+
+                var foundItem = false;
+                for( var rvC = 0; rvC < _returnValue.length; rvC++) {
+                    if( _returnValue[ rvC ].id == _selectedRangedWeapons[ wC ].tag ) {
+                        foundItem = true;
+                        break;
+                    }
+                }
+
+                if( !foundItem )
+                    _returnValue.push( pushItem );
+            }
+        }
+
+        return _returnValue;
+    }
+
+    this.removeHindrance = function(indexNumber) {
+        if( this.hindrances[indexNumber] ) {
+            this.hindrances = this.hindrances.splice(indexNumber, 1);
+            return true;
+        }
+        return false;
+    }
+
+    this.removeHindranceByTag = function(hindranceTag) {
+        for( var hindranceCounter = 0; hindranceCounter < _selectedHindrances.length; hindranceCounter++) {
+            if( _selectedHindrances[hindranceCounter].tag == hindranceTag ) {
+                _selectedHindrances.splice(hindranceCounter, 1);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    this.addGear = function(bookId, tag) {
+    // TODO
+    }
+
+    this.removeGear = function(indexNumber) {
+        if( _gear[indexNumber] ) {
+            _gear = _gear.splice(indexNumber, 1);
+            return true;
+        }
+        return false;
+    }
+
+    // Validate does both calculation and validation of the character as per the base rules and settings
+    this.validate = function() {
+        _isValid = true;
+        _validSPCoverLimitShown = false;
+        _validationReport = Array();
+        _warningReport = Array();
+        _powerAlterations = Array();
+        _skillPointsAvailable = 15;
+        _skillPointsUsed = 0;
+
+        _strainBoost = 0;
+        _doubleStrain = 0;
+
+        _knownLanguagesLimit = 1;
+        _linguistSelected = false;
+
+        _naturalWeapons = Array();
+
+        _encumbranceMultiplier = 5;
+
+        _currentFunds = _startingFunds;
+        _spcExtraPowerPoints = 0;
+
+        _attributePointsAvailable = 5;
+        _attributePointsUsed = 0;
+
+        _availableEdgePoints = 0;
+        _installedHindrances = Array();
+        _installedEdges = Array();
+        _hasArcaneBackground = false;
+
+        _currentArcaneBackground = {};
+
+        //_startingFunds = 500;
+
+        _usesSanity = false;
+        _usesGutsSkill = false;
+
+        _usesRiftsCreation = false;
+        _usesSPCCreation = false;
+
+        var swDeluxe = get_book_by_id( 1 ) ;
+        swDeluxe.inUse = true;
+
+        _bornAHero = false;
+        if( this.isSettingRuleEnabled( "born-a-hero") )
+            _bornAHero = true;
+
+        _usesSPCCreation = false;
+        if( this.isSettingRuleEnabled( "super-hero") )
+            _usesSPCCreation = true;
+
+        _multipleLanguages = false;
+        if( this.isSettingRuleEnabled( "multiple-languages") )
+            _multipleLanguages = true;
+
+        _usesSanity = false;
+        if( this.isSettingRuleEnabled( "sanity") )
+            _usesSanity = true;
+
+        _usesStrain = false;
+
+        if( this.isSettingRuleEnabled( "cyberware-strain") )
+            _usesStrain = true;
+
+        var _diceValues = {
+            agility: Array(),
+            smarts: Array(),
+            spirit: Array(),
+            strength: Array(),
+            vigor: Array(),
+        }
+
+        if(  _selectedArcaneBackground && _selectedArcaneBackground.power_points ) {
+            _powerPointsAvailable = _selectedArcaneBackground.power_points;
+        }
+
+        if(  _selectedArcaneBackground && _selectedArcaneBackground.powers ) {
+            _totalPowersKnown = _selectedArcaneBackground.powers;
+        }
+
+
+
+        // for( lBookCounter = 0; lBookCounter.u)
+
+        _attributeBoost = {
+            agility: 0,
+            smarts: 0,
+            spirit: 0,
+            strength: 0,
+            vigor: 0,
+        };
+
+        _displayAttributes = {
+            agility: getDiceValue( _attributes.agility + _attributeBoost.agility ),
+            smarts: getDiceValue( _attributes.smarts + _attributeBoost.smarts ),
+            spirit: getDiceValue( _attributes.spirit + _attributeBoost.spirit ),
+            strength: getDiceValue( _attributes.strength + _attributeBoost.strength ),
+            vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
+        };
+
+        _derived._strainBonus = 0;
+        _derived._doubleStrain = false;
+
+        // Calc init derived stats
+        _derived.toughness = 0; // Math.floor(_displayAttributes.vigor.value / 2) + 2;
+        _derived.armor = 0;
+        _load.currentLoad = 0;
+        _load.combatLoad = 0;
+        var fightingSkill = this.getSkill("SKILL_FIGHTING");
+        _derived.parry = 2;
+        var fightingValue = 0;
+        if( fightingSkill.value > 0 ) {
+            fightingValue = getDiceValue( fightingSkill.value );
+            _derived.parry = Math.floor(fightingValue.value / 2) + 2;
+        }
+        _derived.pace = 6;
+        _derived.charisma = 0;
+        _derived.sanity = Math.floor(_displayAttributes.spirit.value / 2) + 2;
+
+        // Calculate used attribute points
+        _attributePointsUsed += _attributes.agility - 1;
+        _attributePointsUsed += _attributes.smarts - 1;
+        _attributePointsUsed += _attributes.spirit - 1;
+        _attributePointsUsed += _attributes.strength - 1;
+        _attributePointsUsed += _attributes.vigor - 1;
+
+        // _attributePointsAvailable = _attributePointsAvailable - _attributePointsUsed;
+        // _skillPointsAvailable = _skillPointsAvailable - _skillPointsUsed;
+
+        for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++) {
+            _skillList[skillCounter].boost = 0;
+            if( _skillList[ skillCounter].specialties ) {
+                for( var skillCounter2 = 0; skillCounter2 < _skillList[ skillCounter].specialties.length; skillCounter2++) {
+                    _skillList[ skillCounter].specialties[skillCounter2].boost = 0;
+                }
+            }
+        }
+
+        // Process Racial Hindrances
+        var racial_hindrances = 0;
+        if( _race.hindrances ) {
+            racial_hindrances = JSON.parse( _race.hindrances );
+            if( racial_hindrances ) {
+                for( var hindranceCounter = 0; hindranceCounter < racial_hindrances.length; hindranceCounter++ ) {
+                    hindrance = this.getHindrance( racial_hindrances[hindranceCounter] );
+                    if( hindrance ) {
+                        if( typeof(hindrance.charEffect) == "function" ) {
+                            hindrance.charEffect( this );
+                        }
+                        if( typeof(hindrance.charEffects) == "function" ) {
+                            hindrance.charEffects( this );
+                        }
+                        _installedHindrances.push( hindrance );
+                    }
+                }
+            }
+        }
+
+        // Process Racial Edges
+        var racial_edges = 0;
+        if( _race.edges ) {
+            racial_edges = JSON.parse( _race.edges );
+            if( racial_edges ) {
+                for( var edgeCounter = 0; edgeCounter < racial_edges.length; edgeCounter++ ) {
+                    var edge = this.getEdge( racial_edges[edgeCounter] );
+
+                    if( edge ) {
+                        _installedEdges.push( edge );
+
+                        if( typeof(edge.charEffect) == "function" ) {
+                            edge.charEffect( this );
+                        }
+                        if( typeof(edge.charEffects) == "function" ) {
+                            edge.charEffects( this );
+                        }
+                    }
+
+                }
+            }
+        }
+
+        // Calcuate Strain and Cyberware
+        if( _usesStrain ) {
+            _derived.currentStrain = 0;
+            _derived.strain = 0;
+
+            for( var cyberC = 0; cyberC < _installedCyberware.length; cyberC++ ) {
+                _derived.currentStrain += _installedCyberware[ cyberC ].getStrainCost();
+                _installedCyberware[ cyberC ].localCost = _installedCyberware[ cyberC ].getCost( this );
+
+                if( _installedCyberware[ cyberC ].tag == "weapon-melee" && _installedCyberware[ cyberC ].option1 != "" ) {
+                    _installedCyberware[ cyberC ].localNotes = "";
+
+                    switch( _installedCyberware[cyberC].option1 ) {
+                        case "chain":
+                            _installedCyberware[cyberC].localCost += 500;
+                            _installedCyberware[ cyberC ].localNotes += ", AP 2";
+
+                            _installedCyberware[cyberC].localNotes += " (" + this.getTranslation("SCIFI_CHAIN") + ")";
+                            break;
+                        case "vibro":
+                            _installedCyberware[cyberC].localCost += 500;
+                            _installedCyberware[ cyberC ].localNotes += ", AP 2";
+
+                            _installedCyberware[cyberC].localNotes += " (" + this.getTranslation("SCIFI_VIBRO") + ")";
+                            break;
+                        case "energy":
+                            _installedCyberware[ cyberC ].dieDamage = "d8";
+                            _installedCyberware[ cyberC ].localNotes += ", AP 4";
+                            _installedCyberware[cyberC].localCost += 500;
+
+                            _installedCyberware[cyberC].localNotes += " (" + this.getTranslation("SCIFI_ENERGY") + ")";
+                            break;
+                        case "molec":
+
+                            _installedCyberware[cyberC].localCost += 500;
+
+                            _installedCyberware[cyberC].localNotes += ", AP 3";
+
+                            _installedCyberware[cyberC].localNotes += " (" + this.getTranslation("SCIFI_MOLECULAR") + ")";
+
+                            break;
+                        case "power":
+
+                            _installedCyberware[cyberC].localCost += 500;
+                            _installedCyberware[cyberC].localNotes += " + d6";
+
+                            _installedCyberware[cyberC].localNotes += " (" + this.getTranslation("SCIFI_POWER") + ")";
+                            break;
+                        case "stun":
+
+                            _installedCyberware[cyberC].localCost += 500;
+
+                            _installedCyberware[cyberC].localNotes += " (" + this.getTranslation("SCIFI_STUN") + ")";
+                            break;
+                        default:
+                            // no mods
+                            break;
+                    }
+
+                }
+
+
+                if( _installedCyberware[ cyberC ].getModEffect ) {
+                    //~ console.log( "Cyberware - running getModEffect of "  + _installedCyberware[ cyberC ].local_name );
+                    _installedCyberware[ cyberC ].getModEffect( this );
+                }
+
+                _currentFunds -= _installedCyberware[cyberC].localCost ;
+            }
+
+            _displayAttributes = {
+                agility: getDiceValue( _attributes.agility + _attributeBoost.agility ),
+                smarts: getDiceValue( _attributes.smarts + _attributeBoost.smarts ),
+                spirit: getDiceValue( _attributes.spirit + _attributeBoost.spirit ),
+                strength: getDiceValue( _attributes.strength + _attributeBoost.strength ),
+                vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
+            };
+
+            if( _displayAttributes.spirit.value < _displayAttributes.vigor.value )
+                _derived.strain = _displayAttributes.spirit.value + _derived._strainBonus;
+            else
+                _derived.strain = _displayAttributes.vigor.value + _derived._strainBonus;
+
+            if( _derived._doubleStrain )
+                _derived.strain = _derived.strain * 2;
+
+
+
+        } else {
+
+            _displayAttributes = {
+                agility: getDiceValue( _attributes.agility + _attributeBoost.agility ),
+                smarts: getDiceValue( _attributes.smarts + _attributeBoost.smarts ),
+                spirit: getDiceValue( _attributes.spirit + _attributeBoost.spirit ),
+                strength: getDiceValue( _attributes.strength + _attributeBoost.strength ),
+                vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
+            };
+        }
+
+        // Calculate used skill points
+        for( skillCounter = 0; skillCounter < _skillList.length; skillCounter++) {
+            if( _skillList[skillCounter].value ) {
+
+                effectiveCurrentValue =  _skillList[skillCounter].value + _skillList[skillCounter].boost ;
+                if(  effectiveCurrentValue > _displayAttributes[_skillList[skillCounter].attribute].id ) {
+                    regularCost = _displayAttributes[_skillList[skillCounter].attribute].id;
+                    doubleCost = effectiveCurrentValue - _displayAttributes[_skillList[skillCounter].attribute].id;
+                    if( _skillList[skillCounter].boost > 0 ) {
+                        regularCost = regularCost - _skillList[skillCounter].boost;
+                        if ( regularCost < 0)
+                            regularCost = 0;
+                    }
+                    if( !_skillList[skillCounter].advskill || _skillList[skillCounter].advskill == 0)
+                        _skillPointsUsed += regularCost + doubleCost * 2;
+                } else {
+                    if( !_skillList[skillCounter].advskill || _skillList[skillCounter].advskill == 0)
+                        _skillPointsUsed += _skillList[skillCounter].value;
+                }
+            }
+
+            for( specialtyCounter = 0; specialtyCounter < _skillList[skillCounter].specialties.length; specialtyCounter++ ) {
+                //effectiveCurrentValue =  _skillList[skillCounter].value + _skillList[skillCounter].boost ;
+                if( _skillList[skillCounter].specialties[specialtyCounter].value ) {
+                    if( _skillList[skillCounter].specialties[specialtyCounter].value + _skillList[skillCounter].specialties[specialtyCounter].boost > _displayAttributes[_skillList[skillCounter].attribute].id ) {
+                        regularCost = _displayAttributes[_skillList[skillCounter].attribute].id;
+                        doubleCost = _skillList[skillCounter].specialties[specialtyCounter].value - _displayAttributes[_skillList[skillCounter].attribute].id;
+                        if(  !_skillList[skillCounter].advskill || _skillList[skillCounter].advskill == 0)
+                            _skillPointsUsed += regularCost + doubleCost * 2;
+                    } else {
+                        if(  !_skillList[skillCounter].advskill || _skillList[skillCounter].advskill == 0)
+                            _skillPointsUsed += _skillList[skillCounter].specialties[specialtyCounter].value;
+                    }
+                }
+            }
+        }
+
+
+        // Process Selected Hindrances
+        var majorPerk = 0;
+        var minorPerk1 = 0;
+        var minorPerk2 = 0;
+        var majorPerk2 = 0;
+        var _usedPerkPoints = 0;
+        var _extraPerkPointCost = 0;
+        var _selectedPerkPoints = 0;
+        _secondMajorHindranceChosen = false;
+        for( var hindranceCounter = 0; hindranceCounter < _selectedHindrances.length; hindranceCounter++) {
+
+            if( typeof(_selectedHindrances[hindranceCounter].charEffect) == "function" ) {
+                _selectedHindrances[hindranceCounter].charEffect( this );
+            }
+            if( typeof(_selectedHindrances[hindranceCounter].charEffects) == "function" ) {
+                _selectedHindrances[hindranceCounter].charEffects( this );
+            }
+            _installedHindrances.push( _selectedHindrances[hindranceCounter] );
+
+            if( _selectedHindrances[hindranceCounter].severity == "major" ) {
+                _selectedPerkPoints += 2;
+                if( _usesSPCCreation ) {
+                    if( majorPerk == 0 ) {
+                        majorPerk = 2;
+                        majorPerk2 = 0;
+                    } else if( majorPerk2 == 0) {
+                        majorPerk = 2;
+                        majorPerk2 = 2;
+                        _secondMajorHindranceChosen = true;
+                    }
+                } else {
+                    majorPerk = 2;
+                }
+            }
+
+            if( _selectedHindrances[hindranceCounter].severity == "minor" ) {
+                _selectedPerkPoints += 1;
+                if( minorPerk1 == 0 ) {
+                    minorPerk1 = 1;
+                    minorPerk2 = 0;
+                } else if( minorPerk2 == 0) {
+                    minorPerk1 = 1;
+                    minorPerk2 = 1;
+                }
+            }
+        }
+
+        // Calculate Perks Available
+        if( _usesSPCCreation ) {
+            _totalPerkPoints = majorPerk + majorPerk2 + minorPerk2 + minorPerk1;
+            _availablePerkPoints = majorPerk + majorPerk2 + minorPerk2 + minorPerk1;
+            _optimizedPerkPoints = 6;
+
+        }
+        else {
+            _totalPerkPoints = majorPerk + minorPerk2 + minorPerk1;
+            _availablePerkPoints = majorPerk + minorPerk2 + minorPerk1;
+            _optimizedPerkPoints = 4;
+        }
+
+        _SPCTakenExtraPowerPoints = false;
+        // Process Selected Perks
+        for( var perkCounter = 0; perkCounter < _selectedPerks.length; perkCounter++) {
+            _selectedPerks[perkCounter].effect(this);
+            _availablePerkPoints = _availablePerkPoints - _selectedPerks[perkCounter].cost;
+            _usedPerkPoints += _selectedPerks[perkCounter].cost;
+        }
+
+        if( _attributePointsUsed > _attributePointsAvailable ) {
+            _validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_ATTRIBUTES") );
+            _isValid = false;
+        }
+
+        if( _selectedArcaneBackground && _selectedArcaneBackground.powers && _selectedPowers.length > _selectedArcaneBackground.powers ) {
+            _validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_POWERS") );
+            _isValid = false;
+        }
+
+        if( _skillPointsUsed > _skillPointsAvailable ) {
+            _validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_SKILLS") );
+            _isValid = false;
+        }
+
+        if( _SPCTakenExtraPowerPoints && majorPerk2 == 0 ) {
+            _validationReport.push( this.getTranslation("CHARGEN_VALIDATION_SPC_EP_REQUIRES_2MAJOR") );
+            _isValid = false;
+        }
+
+        // Process Selected Edges
+        for( var edgeCounter = 0; edgeCounter < _selectedEdges.length; edgeCounter++) {
+
+            _installedEdges.push( _selectedEdges[edgeCounter] );
+            if( ! _selectedEdges[ edgeCounter ].cyber )
+                _availableEdgePoints = _availableEdgePoints - 1;
+
+            if( typeof(_selectedEdges[edgeCounter].charEffect) == "function" ) {
+                _selectedEdges[edgeCounter].charEffect( this );
+            }
+
+            if( typeof(_selectedEdges[edgeCounter].charEffects) == "function" ) {
+                _selectedEdges[edgeCounter].charEffects( this );
+            }
+
+            if( _selectedEdges[edgeCounter].extraPerkPointCost ) {
+                _extraPerkPointCost += _selectedEdges[edgeCounter].extraPerkPointCost;
+            }
+        }
+
+
+
+        //~ console.log( "------------------------" );
+        //~ console.log( "_availablePerkPoints", _availablePerkPoints );
+        //~ console.log( "_extraPerkPointCost", _extraPerkPointCost );
+        //~ console.log( "_selectedPerkPoints", _selectedPerkPoints );
+        //~ console.log( "_totalPerkPoints",  _totalPerkPoints);
+        //~ console.log( "_optimizedPerkPoints", _optimizedPerkPoints );
+        //~ console.log( "_usedPerkPoints", _usedPerkPoints );
+        //~ console.log( "majorPerk", majorPerk );
+        //~ console.log( "majorPerk2", majorPerk2 );
+        //~ console.log( "minorPerk2", minorPerk2 );
+        //~ console.log( "minorPerk1", minorPerk1 );
+
+        //~ console.log( "test", _extraPerkPointCost + ">" + (_selectedPerkPoints - _usedPerkPoints ) );
+
+
+        if( _extraPerkPointCost > _selectedPerkPoints - _usedPerkPoints ) {
+            _validationReport.push( this.getTranslation("CHARGEN_VALIDATION_EDGE_REQUIRES_HINDRANCES") );
+            _isValid = false;
+
+
+
+        }
+
+        if( _extraPerkPointCost ) {
+            _availablePerkPoints = _selectedPerkPoints - _extraPerkPointCost ;
+            //~ _availablePerkPoints -= 2;
+            if( _availablePerkPoints > _totalPerkPoints )
+                _availablePerkPoints = _totalPerkPoints;
+            if( _availablePerkPoints < 0 )
+                _availablePerkPoints = 0;
+        }
+
+        //~ console.log( "_availablePerkPoints", _availablePerkPoints );
+
+        if( _availablePerkPoints < 0 ) {
+            _validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_PERKS") );
+            _isValid = false;
+        }
+
+        if( _availableEdgePoints < 0 ) {
+            _validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_EDGES") );
+            _isValid = false;
+        }
+
+        if( _hasArcaneBackground > 0 && _selectedArcaneBackground.tag == "" ) {
+            _validationReport.push( this.getTranslation("CHARGEN_VALIDATION_NO_ARCANE_BG") );
+            _isValid = false;
+        }
+
+        // Apply Arcane Background
+        _availableArcaneBackgrounds = Array();
+        _availablePowers = Array();
+        _availableTrappings = Array();
+
+
+
+
+        _availableArcaneBackgrounds.push(
+            {
+                local_name: "- " + this.getTranslation("CHARGEN_SELECT_ARCANE_BG") + " -",
+                select_option_name:  "- " + this.getTranslation("CHARGEN_SELECT_ARCANE_BG") + " -",
+                tag: "",
+                powers: 0,
+                power_points: 0,
+                bookObj: {
+                    local_name: ""
+                },
+                blank: true
+            }
+        );
+
+        _availablePowers.push(
+            {
+                local_name: "- " + this.getTranslation("CHARGEN_SELECT_POWER") + " -",
+                select_option_name:  "- " + this.getTranslation("CHARGEN_SELECT_POWER") + " -",
+                tag: "",
+                bookObj: {
+                    local_name: ""
+                },
+                blank: true
+            }
+        );
+
+        if( _hasArcaneBackground ) {
+            _selectedArcaneBackground.freePower = null;
+            for( var abCounter = 0 ; abCounter < savageWorldsArcaneBackgrounds.length ; abCounter++)
+                _availableArcaneBackgrounds.push( savageWorldsArcaneBackgrounds[abCounter] );
+
+            for( var abCounter = 0 ; abCounter < savageWorldsPowers.length ; abCounter++) {
+
+                if(
+                    _powerAlterations.length > 0
+                    &&
+                    typeof(_powerAlterations[ savageWorldsPowers[abCounter].id ]) != "undefined"
+                ) {
+
+                    if( typeof(_powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank) != "undefined" ) {
+                        //console.log("!", _powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank, _XP.rankValue);
+                        if( _powerAlterations[ savageWorldsPowers[abCounter].id ].adjusted_rank <= _XP.rankValue  )
+                             savageWorldsPowers[abCounter].selectable = true;
+                        else
+                             savageWorldsPowers[abCounter].selectable = false;
+                    } else {
+                        if( savageWorldsPowers[abCounter].rank <= _XP.rankValue  )
+                             savageWorldsPowers[abCounter].selectable = true;
+                        else
+                             savageWorldsPowers[abCounter].selectable = false;
+                    }
+                //    console.log("_powerAlterations", _powerAlterations[ savageWorldsPowers[abCounter].id ]);
+                //    console.log("savageWorldsPowers[abCounter]", abCounter, savageWorldsPowers[abCounter]);
+                } else {
+
+                    if( savageWorldsPowers[abCounter].rank <= _XP.rankValue  )
+                         savageWorldsPowers[abCounter].selectable = true;
+                    else
+                         savageWorldsPowers[abCounter].selectable = false;
+                }
+
+                if( _selectedArcaneBackground && _selectedArcaneBackground.power_list && _selectedArcaneBackground.power_list.length > 0 ) {
+                    if( _selectedArcaneBackground.power_list.indexOf( savageWorldsPowers[abCounter].tag ) < 0 ) {
+                        savageWorldsPowers[abCounter].selectable = false;
+                    }
+                }
+
+                _availablePowers.push( savageWorldsPowers[abCounter] );
+                if( _selectedArcaneBackground.free_power != "" && _selectedArcaneBackground.free_power == savageWorldsPowers[abCounter].tag) {
+                    _selectedArcaneBackground.freePower = savageWorldsPowers[abCounter];
+                }
+            }
+            for( var abCounter = 0 ; abCounter < savageWorldsArcaneTrappings.length ; abCounter++)
+                _availableTrappings.push( savageWorldsArcaneTrappings[abCounter] );
+
+        } else {
+            _selectedArcaneBackground = _availableArcaneBackgrounds[0];
+        }
+
+        if( !_selectedArcaneBackground )
+            _selectedArcaneBackground = _availableArcaneBackgrounds[0];
+
+        // Process Available Gear
+        _availableMundaneGear = Array();
+        for( var gearCounter = 0; gearCounter < savageWorldsGearMundane.length; gearCounter++) {
+            if( this.bookInUse( savageWorldsGearMundane[ gearCounter ].book ) ) {
+                _availableMundaneGear.push( savageWorldsGearMundane[ gearCounter ] );
+            }
+        }
+
+        _availableArmor = Array();
+        for( var gearCounter = 0; gearCounter < savageWorldsGearArmor.length; gearCounter++) {
+            if( this.bookInUse( savageWorldsGearArmor[ gearCounter ].book ) ) {
+                _availableArmor.push( savageWorldsGearArmor[ gearCounter ] );
+            }
+        }
+
+        _availableHandWeapons = Array();
+        for( var gearCounter = 0; gearCounter < savageWorldsGearHandWeapons.length; gearCounter++) {
+            if( this.bookInUse( savageWorldsGearHandWeapons[ gearCounter ].book ) ) {
+                _availableHandWeapons.push( savageWorldsGearHandWeapons[ gearCounter ] );
+            }
+        }
+
+        _availableRangedWeapons = Array();
+        for( var gearCounter = 0; gearCounter < savageWorldsGearRangedWeapons.length; gearCounter++) {
+            if( this.bookInUse( savageWorldsGearRangedWeapons[ gearCounter ].book ) ) {
+                _availableRangedWeapons.push( savageWorldsGearRangedWeapons[ gearCounter ] );
+            }
+        }
+
+        _availableShields = Array();
+        for( var gearCounter = 0; gearCounter < savageWorldsGearShields.length; gearCounter++) {
+            if( this.bookInUse( savageWorldsGearShields[ gearCounter ].book ) ) {
+                _availableShields.push( savageWorldsGearShields[ gearCounter ] );
+            }
+        }
+
+        // Process Available Hindrances
+        var _availableHindrances = Array();
+        _availableHindrances.push(
+        {
+            local_name: "- " + this.getTranslation("CHARGEN_SELECT_HINDRANCE") + " -",
+            select_option_name:  "- " + this.getTranslation("CHARGEN_SELECT_HINDRANCE") + " -",
+            tag: "",
+            selectable: true,
+            bookObj: {
+                local_name: ""
+            },
+            blank: true
+        }
+        );
+        for( var hindranceCounter = 0; hindranceCounter < savageWorldsHindrances.length; hindranceCounter++) {
+            if( savageWorldsHindrances[hindranceCounter].racial == 0 ) {
+                if( this.bookInUse( savageWorldsHindrances[hindranceCounter].book ) ) {
+                    savageWorldsHindrances[hindranceCounter].selectable = true;
+
+                    if( typeof(savageWorldsHindrances[hindranceCounter].requires) == "function" ) {
+                        savageWorldsHindrances[hindranceCounter].selectable = savageWorldsHindrances[hindranceCounter].requires( this );
+                    }
+
+                    if( savageWorldsHindrances[hindranceCounter].conflicts_edge != "" ) {
+                        if( this.hasEdge( savageWorldsHindrances[hindranceCounter].conflicts_edge ))
+                            savageWorldsHindrances[hindranceCounter].selectable = false;
+                    }
+
+                    if( savageWorldsHindrances[hindranceCounter].conflicts_hindrance != "" ) {
+                        if( this.hasHindrance( savageWorldsHindrances[hindranceCounter].conflicts_hindrance ))
+                            savageWorldsHindrances[hindranceCounter].selectable = false;
+                    }
+
+                    if( this.hasHindrance( savageWorldsHindrances[hindranceCounter].tag ) ) {
+                        savageWorldsHindrances[hindranceCounter].selectable = false;
+                    }
+
+                    _availableHindrances.push( savageWorldsHindrances[hindranceCounter] );
+                }
+            }
+        }
+
+        // Process Availble Cyberware
+        _availableCyberware = Array();
+        for( var cyberCounter = 0; cyberCounter < savageWorldsCyberware.length; cyberCounter++) {
+            _availableCyberware.push( savageWorldsCyberware[ cyberCounter ] );
+        }
+
+        for( var cyberIndex = 0; cyberIndex < _installedCyberware.length; cyberIndex++) {
+
+             _installedCyberware[ cyberIndex ].selectedEdge = null;
+             for( var edgeC = 0; edgeC < _combatEdges.length; edgeC++ ) {
+                 if( _combatEdges[ edgeC ].tag == _installedCyberware[ cyberIndex ].option2 && _combatEdges[ edgeC ].book == _installedCyberware[ cyberIndex ].option1 )
+                    _installedCyberware[ cyberIndex ].selectedEdge = _combatEdges[ edgeC ]
+             }
+
+        }
+        // Process Available Edges
+        _availableEdges = Array();
+        _availableEdges.push(
+            {
+                local_name:  "- " + this.getTranslation("CHARGEN_SELECT_EDGE") + " -",
+                select_option_name:  "- " + this.getTranslation("CHARGEN_SELECT_EDGE") + " -",
+                tag: "",
+                selectable: true,
+                bookObj: {
+                    local_name: ""
+                },
+                blank: true
+            }
+        );
+
+        _combatEdges = Array();
+        _combatEdges.push(
+            {
+                local_name:  "- " + this.getTranslation("CHARGEN_SELECT_EDGE") + " -",
+                select_option_name:  "- " + this.getTranslation("CHARGEN_SELECT_EDGE") + " -",
+                tag: "",
+                selectable: true,
+                bookObj: {
+                    local_name: ""
+                },
+                blank: true
+            }
+        );
+
+        for( var edgeCounter = 0; edgeCounter < savageWorldsEdges.length; edgeCounter++) {
+            if( savageWorldsEdges[edgeCounter].racial == 0 ) {
+
+                if( this.bookInUse( savageWorldsEdges[edgeCounter].book ) ) {
+                    savageWorldsEdges[edgeCounter].selectable = true;
+
+                    _combatEdges.push( savageWorldsEdges[edgeCounter] );
+
+                    if( typeof(savageWorldsEdges[edgeCounter].requires) == "function" ) {
+                        savageWorldsEdges[edgeCounter].selectable = savageWorldsEdges[edgeCounter].requires( this );
+                    }
+
+                    if( savageWorldsEdges[edgeCounter].required_edge != ""  ) {
+                        if( !this.hasEdge( savageWorldsEdges[edgeCounter].required_edge )) {
+                            savageWorldsEdges[edgeCounter].selectable = false;
+                        }
+                    }
+
+                    if( savageWorldsEdges[edgeCounter].conflicts_edge != "" ) {
+                        if( this.hasEdge( savageWorldsEdges[edgeCounter].conflicts_edge )) {
+                            savageWorldsEdges[edgeCounter].selectable = false;
+
+                        }
+                    }
+
+                    if( savageWorldsEdges[edgeCounter].required_rank > _XP.rankValue ) {
+                        if(
+                            ( _bornAHero == false )
+                                ||
+                            (    _bornAHero == true && this.isMARS() == false && _XP.value > 0 )
+                                ||
+                            (    _bornAHero == true && this.isMARS() == true && _XP.value > 20 )
+
+                        ) {
+                                savageWorldsEdges[edgeCounter].selectable = false;
+                        }
+                    }
+
+                    if( savageWorldsEdges[edgeCounter].conflicts_hindrance != ""  ) {
+                        if( this.hasHindrance( savageWorldsEdges[edgeCounter].conflicts_hindrance )) {
+                            savageWorldsEdges[edgeCounter].selectable = false;
+                        }
+                    }
+                    if( savageWorldsEdges[edgeCounter].reselectable == 0 && this.hasEdge( savageWorldsEdges[edgeCounter].tag ) ) {
+                        savageWorldsEdges[edgeCounter].selectable = false;
+                    }
+
+                    if(
+                        _usesSPCCreation == true  &&
+                        (
+                            savageWorldsEdges[edgeCounter].tag == "arcane-background"
+                                ||
+                            savageWorldsEdges[edgeCounter].tag == "arcane-resistance"
+                                ||
+                            savageWorldsEdges[edgeCounter].tag == "arcane-resistance-improved"
+                                ||
+                            savageWorldsEdges[edgeCounter].tag == "holy-warrior"
+                                ||
+                            savageWorldsEdges[edgeCounter].tag == "gadgeteer"
+                                ||
+                            savageWorldsEdges[edgeCounter].tag == "unholy-warrior"
+                                ||
+                            savageWorldsEdges[edgeCounter].tag == "unholy-warrior"
+                                ||
+                            savageWorldsEdges[edgeCounter].tag == "holy-warrior"
+                                ||
+                            savageWorldsEdges[edgeCounter].tag == "holy-unholy-warrior"
+                                ||
+                            savageWorldsEdges[edgeCounter].tag == "new-power"
+                                ||
+                            savageWorldsEdges[edgeCounter].tag == "no-mercy"
+                                ||
+                            savageWorldsEdges[edgeCounter].tag == "power-points"
+                                ||
+                            savageWorldsEdges[edgeCounter].tag == "rapid-recharge"
+                                ||
+                            savageWorldsEdges[edgeCounter].tag == "soul-drain"
+                                ||
+                            savageWorldsEdges[edgeCounter].tag == "wizard"
+                        )
+                    ) {
+                        if(
+                            savageWorldsEdges[edgeCounter].tag == "power-points"
+                                &&
+                            _SPCRisingStars == true
+                        ) {
+                            savageWorldsEdges[edgeCounter].selectable = true;
+                        } else {
+                            savageWorldsEdges[edgeCounter].selectable = false;
+                        }
+                    }
+
+                    _availableEdges.push( savageWorldsEdges[edgeCounter] );
+                }
+            }
+        }
+
+        // Advancements...
+        this.availableAdvancements = Math.floor(_XP.value / 5);
+
+        this.allocateAdvancementSlots();
+
+        // clear out advancement skill specialties
+        for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
+            for(var specialtyCounter = _skillList[skillCounter].specialties - 1; specialtyCounter >= 0; specialtyCounter++) {
+                if( _skillList[skillCounter].specialties[specialtyCounter].advskill > 0 ) {
+                    _skillList[skillCounter].specialties = _skillList[skillCounter].specialties.splice(specialtyCounter, 1);
+                }
+            }
+        }
+
+        if( _selectedAdvancements.length > this.availableAdvancements) {
+            _validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_ADVANCEMENTS") );
+            _isValid = false;
+        }
+
+        // check to make sure a requirement wasn't removed from edges...
+        for( edgeCounter = 0; edgeCounter < _selectedEdges.length; edgeCounter++) {
+
+            if( typeof(_selectedEdges[edgeCounter].requires) == "function" ) {
+                if( _selectedEdges[edgeCounter].requires(this) == false ) {
+                    _validationReport.push( _selectedEdges[edgeCounter].local_name + ": " + this.getTranslation("CHARGEN_VALIDATION_EDGE_DOESNT_MEET_REQUIREMENTS") );
+                    _isValid = false;
+                }
+            }
+
+            if( _selectedEdges[edgeCounter].required_edge != ""  ) {
+                if( !this.hasEdge( _selectedEdges[edgeCounter].required_edge )) {
+                    theEdge = this.getEdge( _selectedEdges[edgeCounter].required_edge  );
+                    _validationReport.push( _selectedEdges[edgeCounter].local_name + ": " + this.getTranslation("CHARGEN_VALIDATION_REQUIRES_EDGE").replace( "{value}", theEdge.local_name) );
+                    _isValid = false;
+                }
+            }
+
+            if( _selectedEdges[edgeCounter].conflicts_edge != "" ) {
+                if( this.hasEdge( _selectedEdges[edgeCounter].conflicts_edge )) {
+
+                    theEdge = this.getEdge( _selectedEdges[edgeCounter].conflicts_edge  );
+                    _validationReport.push( _selectedEdges[edgeCounter].local_name + ": " + this.getTranslation("CHARGEN_VALIDATION_CONFLICTS_EDGE").replace( "{value}", theEdge.local_name) );
+                    _isValid = false;
+
+                }
+            }
+
+            if( _selectedEdges[edgeCounter].conflicts_hindrance != ""  ) {
+                if( hindranceTag = this.hasHindrance( _selectedEdges[edgeCounter].conflicts_hindrance ) ) {
+                    theHindrance = this.getHindrance( hindranceTag  );
+                    _validationReport.push( _selectedEdges[edgeCounter].local_name + ": " + this.getTranslation("CHARGEN_VALIDATION_CONFLICTS_HINDRANCE").replace( "{value}", theHindrance.local_name) );
+                    _isValid = false;
+                }
+            }
+
+        }
+        for( var powerCounter = 0; powerCounter < _selectedPowers.length; powerCounter++ ) {
+            if(  _selectedPowers[powerCounter].trapping && _selectedPowers[powerCounter].trapping.tag != "" ) {
+                _selectedPowers[powerCounter].showName = _selectedPowers[powerCounter].customName + " (" + _selectedPowers[powerCounter].local_name + ", " + _selectedPowers[powerCounter].trapping.local_name + ")";
+            } else {
+                _selectedPowers[powerCounter].showName = _selectedPowers[powerCounter].customName + " (" + _selectedPowers[powerCounter].local_name + ")";
+            }
+
+         }
+
+         var attributeIncreaseNovice = false;
+         var attributeIncreaseSeasoned = false;
+         var attributeIncreaseVeteran = false;
+         var attributeIncreaseHeroic = false;
+
+         for( var advCounter = 0; advCounter < _selectedAdvancements.length; advCounter++) {
+             // Edge Advancement
+             if( _selectedAdvancements[advCounter].tag == "edge" ) {
+
+                 if(
+                     _selectedAdvancements[advCounter].option1
+                         &&
+                     typeof( _selectedAdvancements[advCounter].option1.charEffects) == "function"
+                 ) {
+                     _selectedAdvancements[advCounter].option1.charEffects(this);
+                 }
+
+                if(
+                    _selectedAdvancements[advCounter].option1
+                        &&
+                    typeof( _selectedAdvancements[advCounter].option1.requires) == "function"
+                ) {
+                    if( !_selectedAdvancements[advCounter].option1.requires(this) ) {
+                        invalidMessage = this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_INVALID_EDGE");
+                        invalidMessage = invalidMessage.replace("{value}", _selectedAdvancements[advCounter].option1.local_name );
+                        _validationReport.push( invalidMessage );
+                        _isValid = false;
+                    }
+                }
+
+                if(
+                    _selectedAdvancements[advCounter].option1
+                        &&
+                    _selectedAdvancements[advCounter].option1.required_edge
+                ) {
+                    if( !this.hasEdge( _selectedAdvancements[advCounter].option1.required_edge, advCounter ) ) {
+                        invalidMessage = this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_INVALID_EDGE");
+                        invalidMessage = invalidMessage.replace("{value}", _selectedAdvancements[advCounter].option1.local_name );
+                        _validationReport.push( invalidMessage );
+                        _isValid = false;
+                    }
+                }
+
+                _installedEdges.push( _selectedAdvancements[advCounter].option1 );
+
+             }
+             // End of Edge Advancement
+
+             // Attribute Advancement
+             if( _selectedAdvancements[advCounter].tag == "attribute" ) {
+                 this.boostAttribute( _selectedAdvancements[advCounter].option1 );
+
+                 if( advCounter < 3 ) {
+                     if( attributeIncreaseNovice ) {
+                         _validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_NOVICE") );
+                         _isValid = false;
+                     }
+                     attributeIncreaseNovice = true;
+                 } else if( advCounter < 7 ) {
+                     if( attributeIncreaseSeasoned ) {
+                         _validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_SEASONED") );
+                         _isValid = false;
+                     }
+                     attributeIncreaseSeasoned = true;
+                 } else if( advCounter < 11 ) {
+
+                     if( attributeIncreaseVeteran ) {
+                         _validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_VETERAN") );
+                         _isValid = false;
+                     }
+                     attributeIncreaseVeteran = true;
+                 } else if( advCounter < 15 ) {
+                     if( attributeIncreaseHeroic ) {
+                         _validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_HEROIC") );
+                         _isValid = false;
+                     }
+                     attributeIncreaseHeroic = true;
+                 } else {
+                     // Legendary can have an attribute increase every other advance
+                     if(
+                         advCounter != 15 // just in case someone chose it at advance #15.
+                             &&
+                         _selectedAdvancements[advCounter - 1].tag != "attribute"
+                     ) {
+                         _validationReport.push( this.getTranslation("CHARGEN_VALIDATION_ADVANCEMENT_ATTRIBUTE_LEGENDARY") );
+                         _isValid = false;
+                     }
+                 }
+             }
+             // End of Attribute Advancement
+
+             // Skill Increase Advancement
+             if( _selectedAdvancements[advCounter].tag == "incskill" ) {
+                 // TODO
+                 if( _selectedAdvancements[advCounter].option1 )
+                     this.boostSkill( _selectedAdvancements[advCounter].option1.id );
+
+             }
+             // End of Skill Increase Advancement
+
+             // 2 Skills Increase Advancement
+             if( _selectedAdvancements[advCounter].tag == "inc2skills" ) {
+                 // TODO
+                 if( _selectedAdvancements[advCounter].option1 )
+                     this.boostSkill( _selectedAdvancements[advCounter].option1.id );
+                 if( _selectedAdvancements[advCounter].option2 )
+                     this.boostSkill( _selectedAdvancements[advCounter].option2.id );
+             }
+             // End of 2 Skills Increase Advancement
+
+             // New Skill Advancement
+             if( _selectedAdvancements[advCounter].tag == "skill" ) {
+                 if(
+                     _selectedAdvancements[advCounter].option1
+                     &&
+                     ( _selectedAdvancements[advCounter].option1.specify
+                        && _selectedAdvancements[advCounter].option1.specify > 0
+                    ) ||
+                    (
+                        _selectedAdvancements[advCounter].option1
+                        &&
+                        _selectedAdvancements[advCounter].option1.is_specialty
+                        &&
+                        _selectedAdvancements[advCounter].option1.is_specialty != ""
+                    )
+                 ) {
+                     this.addSpecialtySkill(
+                         _selectedAdvancements[advCounter].option1,
+                         _selectedAdvancements[advCounter].option2,
+                         1,
+                         1
+                     );
+                     //this.refreshAvailable();
+                 } else {
+                     _selectedAdvancements[advCounter].option2 = null;
+                     if( _selectedAdvancements[advCounter].option1 ) {
+                         if( _selectedAdvancements[advCounter].option1.id )
+                             this.boostSkill( _selectedAdvancements[advCounter].option1.id );
+                         else
+                             this.boostSkill( _selectedAdvancements[advCounter].option1 );
+                     } else {
+                         _selectedAdvancements[advCounter].option1 = _allSkills[0];
+                     }
+                 }
+             }
+             // End of New Skill Advancement
+
+             // recalculate attributes from advancement boosts
+            _displayAttributes = {
+                agility: getDiceValue( _attributes.agility + _attributeBoost.agility ),
+                smarts: getDiceValue( _attributes.smarts + _attributeBoost.smarts ),
+                spirit: getDiceValue( _attributes.spirit + _attributeBoost.spirit ),
+                strength: getDiceValue( _attributes.strength + _attributeBoost.strength ),
+                vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
+            };
+        }
+
+
+        _totalPowersKnown += _additionalPowersKnown;
+
+
+        fightingSkill = this.getSkill("SKILL_FIGHTING");
+
+        _derived.parry = 2;
+        if( fightingSkill.value > 0 ) {
+            fightingValue = getDiceValue( fightingSkill.value + fightingSkill.boost  );
+            _derived.parry = Math.floor(fightingValue.value / 2) + 2;
+        }
+
+        this.calcSPC();
+
+
+        this.refreshAvailable();
+
+         // recalculate attributes from advancement boosts
+        _displayAttributes = {
+            agility: getDiceValue( _attributes.agility + _attributeBoost.agility ),
+            smarts: getDiceValue( _attributes.smarts + _attributeBoost.smarts ),
+            spirit: getDiceValue( _attributes.spirit + _attributeBoost.spirit ),
+            strength: getDiceValue( _attributes.strength + _attributeBoost.strength ),
+            vigor: getDiceValue( _attributes.vigor + _attributeBoost.vigor ),
+        };
+
+        if( _attributes.spirit + _attributeBoost.spirit  <  _attributes.vigor + _attributeBoost.vigor  ) {
+            _maxStrain = _attributes.spirit + _attributeBoost.spiri;
+        } else {
+            _maxStrain = _attributes.vigor + _attributeBoost.vigor;
+        }
+        _maxStrain += _strainBoost;
+        if( _doubleStrain > 0 )
+            _maxStrain = _maxStrain * 2;
+
+        // recalc derived toughness
+        _derived.toughness_base = Math.floor(_displayAttributes.vigor.value / 2) + 2;
+        //_derived.toughness += _attributeBoost.vigor; // will always be in steps of 2, so just add it ;)
+        _derived.toughness += _derived.toughness_base;
+
+         _load.currentLoad = 0;
+         _load.combatLoad = 0;
+         // subtract gear costs....
+
+         for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++) {
+
+            _selectedHandWeapons[ gearCounter ].localCost = _selectedHandWeapons[ gearCounter ].purchaseCost;
+            _selectedHandWeapons[ gearCounter ].localWeight = _selectedHandWeapons[ gearCounter ].weight;
+            _selectedHandWeapons[ gearCounter ].localAP = _selectedHandWeapons[ gearCounter ].ap;
+            _selectedHandWeapons[ gearCounter ].localNotes = _selectedHandWeapons[ gearCounter ].notes;
+            _selectedHandWeapons[ gearCounter ].localDamage = _selectedHandWeapons[ gearCounter ].damage;
+
+            _selectedHandWeapons[ gearCounter ].local_name = this.getLocalName( _selectedHandWeapons[ gearCounter ].name );
+
+            switch( _selectedHandWeapons[ gearCounter ].sciFiMod ) {
+                case "chain":
+                    _selectedHandWeapons[ gearCounter ].localCost += 500;
+                    _selectedHandWeapons[ gearCounter ].localWeight += 2;
+                    _selectedHandWeapons[ gearCounter ].localAP += 2;
+                    _selectedHandWeapons[ gearCounter ].local_name = this.getTranslation("SCIFI_CHAIN") + "-" + _selectedHandWeapons[ gearCounter ].local_name;
+                    break;
+                case "vibro":
+                    _selectedHandWeapons[ gearCounter ].localCost += 500;
+                    _selectedHandWeapons[ gearCounter ].localWeight += 2;
+                    _selectedHandWeapons[ gearCounter ].localAP += 2;
+                    _selectedHandWeapons[ gearCounter ].local_name = this.getTranslation("SCIFI_VIBRO") + "-" + _selectedHandWeapons[ gearCounter ].local_name;
+                    break;
+                case "energy":
+                    _selectedHandWeapons[ gearCounter ].local_name = this.getTranslation("SCIFI_ENERGY") + "-" + _selectedHandWeapons[ gearCounter ].local_name;
+
+
+                    _selectedHandWeapons[ gearCounter ].localDamage = _selectedHandWeapons[ gearCounter ].localDamage.replace("d10", "d12");
+                    _selectedHandWeapons[ gearCounter ].localDamage = _selectedHandWeapons[ gearCounter ].localDamage.replace("d8", "d10");
+                    _selectedHandWeapons[ gearCounter ].localDamage = _selectedHandWeapons[ gearCounter ].localDamage.replace("d6", "d8");
+                    _selectedHandWeapons[ gearCounter ].localDamage = _selectedHandWeapons[ gearCounter ].localDamage.replace("d4", "d6");
+
+                    _selectedHandWeapons[ gearCounter ].localCost += 500;
+                    _selectedHandWeapons[ gearCounter ].localWeight += 1;
+                    _selectedHandWeapons[ gearCounter ].localAP += 4;
+                    break;
+                case "molec":
+                    _selectedHandWeapons[ gearCounter ].local_name = this.getTranslation("SCIFI_MOLECULAR") + "-" + _selectedHandWeapons[ gearCounter ].local_name;
+
+                    _selectedHandWeapons[ gearCounter ].localCost += 500;
+                    //_selectedHandWeapons[ gearCounter ].ap += 4;
+                    var addAP = _selectedHandWeapons[ gearCounter ].localDamage;
+
+                    if(addAP.indexOf("+") > 0 ) {
+                        addAP = addAP.substring(0, addAP.indexOf("+") );
+                    }
+
+                    addAP = addAP.replace("d", "") / 1;
+
+                    _selectedHandWeapons[ gearCounter ].localAP += Math.floor(addAP / 2);
+
+                    break;
+                case "power":
+                    _selectedHandWeapons[ gearCounter ].local_name = this.getTranslation("SCIFI_POWER") + "-" + _selectedHandWeapons[ gearCounter ].local_name;
+
+                    _selectedHandWeapons[ gearCounter ].localCost += 500;
+                    _selectedHandWeapons[ gearCounter ].localWeight += 1;
+                    _selectedHandWeapons[ gearCounter ].localDamage += " + d6";
+                    break;
+                case "stun":
+                    _selectedHandWeapons[ gearCounter ].local_name = this.getTranslation("SCIFI_STUN") + "-" + _selectedHandWeapons[ gearCounter ].local_name;
+
+                    _selectedHandWeapons[ gearCounter ].localCost += 500;
+                    _selectedHandWeapons[ gearCounter ].localWeight += 1;
+                    break;
+                default:
+                    // no mods
+                    break;
+            }
+
+             _currentFunds -= _selectedHandWeapons[ gearCounter ].purchaseCost;
+             _load.currentLoad += _selectedHandWeapons[ gearCounter ].localWeight;
+             if( _selectedHandWeapons[ gearCounter ].droppedDuringCombat == false )
+                 _load.combatLoad += _selectedHandWeapons[ gearCounter ].localWeight;
+             _selectedHandWeapons[ gearCounter ].toHitRollModifier = 0;
+             _selectedHandWeapons[ gearCounter ].currentParry = _selectedHandWeapons[ gearCounter ].parry;
+
+
+
+            if( _selectedHandWeapons[ gearCounter ].readiedLocation && _selectedHandWeapons[ gearCounter ].min_str > _displayAttributes.strength.value ) {
+                _warningReport.push( this.getTranslation("CHARGEN_BELOW_STR_WEAPON") );
+
+                if( _selectedHandWeapons[ gearCounter ].localDamage_strength > 0) {
+                    var damageBit = _selectedHandWeapons[ gearCounter ].localDamage;
+
+                    damageBit = this.setCharAt( damageBit, 1, _displayAttributes.strength.value);
+
+                    if( _selectedHandWeapons[ gearCounter ].currentParry > 0 )
+                        _selectedHandWeapons[ gearCounter ].currentParry = 0;
+
+                    _selectedHandWeapons[ gearCounter ].displayDamage = _displayAttributes.strength.local_label + " + " +  damageBit;
+                } else {
+                    _selectedHandWeapons[ gearCounter ].displayDamage = _selectedHandWeapons[ gearCounter ].localDamage;
+                    _selectedHandWeapons[ gearCounter ].toHitRollModifier = -1;
+                }
+            } else {
+                if( _selectedHandWeapons[ gearCounter ].localDamage_strength > 0) {
+                    _selectedHandWeapons[ gearCounter ].displayDamage = _displayAttributes.strength.local_label + " + " + _selectedHandWeapons[ gearCounter ].localDamage;
+                } else {
+                    _selectedHandWeapons[ gearCounter ].displayDamage = _selectedHandWeapons[ gearCounter ].localDamage;
+                }
+            }
+
+            if( _selectedHandWeapons[ gearCounter ].readiedLocation != "")
+                _derived.parry += _selectedHandWeapons[ gearCounter ].parry_modifier;
+         }
+
+        for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++) {
+             _currentFunds -= _selectedRangedWeapons[ gearCounter ].purchaseCost;
+             _load.currentLoad += _selectedRangedWeapons[ gearCounter ].weight;
+             if( _selectedRangedWeapons[ gearCounter ].droppedDuringCombat == false )
+                 _load.combatLoad += _selectedRangedWeapons[ gearCounter ].weight;
+             _selectedRangedWeapons[ gearCounter ].toHitRollModifier = 0;
+             _selectedRangedWeapons[ gearCounter ].currentParry = _selectedRangedWeapons[ gearCounter ].parry;
+
+            if( _selectedRangedWeapons[ gearCounter ].readiedLocation && _selectedRangedWeapons[ gearCounter ].min_str > _displayAttributes.strength.value ) {
+                _warningReport.push( this.getTranslation("CHARGEN_BELOW_STR_WEAPON") );
+
+                if( _selectedHandWeapons[ gearCounter ].damage_strength > 0) {
+                    var damageBit = _selectedRangedWeapons[ gearCounter ].damage;
+
+                    damageBit = this.setCharAt( damageBit, 1, _displayAttributes.strength.value);
+
+                    if( _selectedRangedWeapons[ gearCounter ].currentParry > 0 )
+                        _selectedRangedWeapons[ gearCounter ].currentParry = 0;
+
+                    _selectedRangedWeapons[ gearCounter ].displayDamage = _displayAttributes.strength.local_label + " + " +  damageBit;
+                } else {
+                    _selectedRangedWeapons[ gearCounter ].displayDamage = _selectedRangedWeapons[ gearCounter ].damage;
+                    _selectedRangedWeapons[ gearCounter ].toHitRollModifier = -1;
+                }
+            } else {
+                if( _selectedRangedWeapons[ gearCounter ].damage_strength > 0) {
+                    _selectedRangedWeapons[ gearCounter ].displayDamage = _displayAttributes.strength.local_label + " + " + _selectedRangedWeapons[ gearCounter ].damage;
+                } else {
+                    _selectedRangedWeapons[ gearCounter ].displayDamage = _selectedRangedWeapons[ gearCounter ].damage;
+                }
+            }
+
+            if( _selectedRangedWeapons[ gearCounter ].readiedLocation != "")
+                _derived.parry += _selectedRangedWeapons[ gearCounter ].parry_modifier;
+         }
+
+         var cyberParenthetical = this.getTranslation( "CHARGEN_CYBER_PARENTHETICAL" );
+
+         for( var cyberCounter = 0; cyberCounter < _installedCyberware.length; cyberCounter++) {
+            if( _installedCyberware[ cyberCounter ].chooseRangedWeapon ) {
+                for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++) {
+                    if( _selectedRangedWeapons[ gearCounter ].tag == _installedCyberware[ cyberCounter ].option1.id ) {
+
+                        _selectedRangedWeapons[ gearCounter ].alwaysReady = true;
+
+                        if( !_selectedRangedWeapons[ gearCounter ].customName )
+                            _selectedRangedWeapons[ gearCounter ].customName = this.getLocalName( _selectedRangedWeapons[ gearCounter ].name );
+                        _selectedRangedWeapons[ gearCounter ].original_name = this.getLocalName( _selectedRangedWeapons[ gearCounter ].name );
+
+                        if( _installedCyberware[ cyberCounter ].customName ) {
+
+                            if(
+                                _selectedRangedWeapons[ gearCounter ].customName != _installedCyberware[ cyberCounter ].customName
+                                    &&
+                                _selectedRangedWeapons[ gearCounter ].original_name == _selectedRangedWeapons[ gearCounter ].customName
+                            ) {
+                                 _selectedRangedWeapons[ gearCounter ].customName = _installedCyberware[ cyberCounter ].customName;
+                                 break;
+                            }
+
+                        } else {
+                            if(
+                                _selectedRangedWeapons[ gearCounter ].customName + " " + cyberParenthetical != _installedCyberware[ cyberCounter ].local_name
+                                    &&
+                                _selectedRangedWeapons[ gearCounter ].original_name == _selectedRangedWeapons[ gearCounter ].customName
+                            ) {
+                                  _selectedRangedWeapons[ gearCounter ].customName = _selectedRangedWeapons[ gearCounter ].local_name + " " + cyberParenthetical;
+                                  break;
+                            }
+
+                        }
+
+                    }
+
+                }
+            }
+
+        }
+
+
+         for( var gearCounter = 0; gearCounter < _selectedArmor.length; gearCounter++) {
+             _currentFunds -= _selectedArmor[ gearCounter ].purchaseCost;
+             if( _selectedArmor[ gearCounter ].isReadied ) {
+                 if( _selectedArmor[ gearCounter ].covers_torso > 0 ) {
+                     if( _selectedArmor[ gearCounter ].armor > _derived.armor ) {
+                         _derived.armor = _selectedArmor[ gearCounter ].armor;
+                     }
+                 }
+             }
+             _load.currentLoad += _selectedArmor[ gearCounter ].weight;
+             if( _selectedArmor[ gearCounter ].droppedDuringCombat == false )
+                 _load.combatLoad += _selectedArmor[ gearCounter ].weight;
+         }
+         for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++) {
+             _currentFunds -= _selectedShields[ gearCounter ].purchaseCost;
+             _load.currentLoad += _selectedShields[ gearCounter ].weight;
+            if( _selectedShields[ gearCounter ].readiedLocation && _selectedShields[ gearCounter ].readiedLocation != "")
+                _derived.parry += _selectedShields[ gearCounter ].parry;
+             if( _selectedShields[ gearCounter ].droppedDuringCombat == false )
+                 _load.combatLoad += _selectedShields[ gearCounter ].weight;
+         }
+         for( var gearCounter = 0; gearCounter < _selectedMundaneGear.length; gearCounter++) {
+             _currentFunds -= _selectedMundaneGear[ gearCounter ].purchaseCost * _selectedMundaneGear[ gearCounter ].count;
+             _selectedMundaneGear[ gearCounter ].totalWeight = _selectedMundaneGear[ gearCounter ].weight * _selectedMundaneGear[ gearCounter ].count;
+             _selectedMundaneGear[ gearCounter ].totalPurchaseCost = _selectedMundaneGear[ gearCounter ].purchaseCost * _selectedMundaneGear[ gearCounter ].count;
+             _load.currentLoad += _selectedMundaneGear[ gearCounter ].weight * _selectedMundaneGear[ gearCounter ].count;
+             if( _selectedMundaneGear[ gearCounter ].droppedDuringCombat == false )
+                 _load.combatLoad += _selectedMundaneGear[ gearCounter ].weight * _selectedMundaneGear[ gearCounter ].count;
+         }
+
+        if( _currentFunds < 0 ) {
+            _validationReport.push( this.getTranslation("CHARGEN_VALIDATION_TOO_MANY_FUNDS") );
+            _isValid = false;
+        }
+
+        if( _usesSPCCreation ) {
+            if( this.hasEdge("arcane-background") ) {
+                var invalidMessage = this.getTranslation("CHARGEN_SPC_CANNOT_HAVE_AB");
+                _validationReport.push( invalidMessage );
+                _isValid = false;
+            }
+        }
+
+
+        if( _derived.armor == 0) {
+            _derived.toughnessAndArmor = _derived.toughness;
+        } else {
+            _derived.toughnessAndArmor = ( _derived.toughness + _derived.armor ) + " (" + _derived.armor + ")";
+        }
+
+        _loadLimit = _displayAttributes.strength.value * _encumbranceMultiplier;
+        // if( this.hasEdge("brawny") )
+        //     _loadLimit = _displayAttributes.strength.value * 8;
+
+        if( _loadLimit > 0 ) {
+            _load.loadModifier = Math.floor( _load.currentLoad / _loadLimit ) * -1 ;
+            _load.combatLoadModifier = Math.floor( _load.combatLoad / _loadLimit ) * -1 ;
+        } else {
+            _load.loadModifier = 0;
+            _load.combatLoadModifier = 0;
+        }
+
+        if( _load.loadModifier < -3 ) {
+            _warningReport.push( this.getTranslation("CHARGEN_CHARACTER_OVERLOADED") );
+        }
+
+        for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++) {
+            _selectedHandWeapons[ gearCounter ].toHitRollModifier -= _load.loadModifier;
+        }
+
+        if( _multipleLanguages == true && _linguistSelected == false )
+            _knownLanguagesLimit = _displayAttributes.smarts.value / 2 + 1;
+        //console.log( "_knownLanguagesLimit", _knownLanguagesLimit );
+        for( var langCounter = 0; langCounter < _knownLanguagesLimit; langCounter++ ) {
+            if( typeof(_knownLanguages[ langCounter]) == "undefined")
+                _knownLanguages[ langCounter ] = "";
+        }
+
+        _activeSkills = {};
+        for( var skCount = 0; skCount <  _agilitySkills.length; skCount++ ) {
+            //console.log( _agilitySkills[skCount].local_name, _agilitySkills[skCount].displayValue );
+            if( _agilitySkills[skCount].displayValue && _agilitySkills[skCount].displayValue != "")
+                _activeSkills[ _agilitySkills[skCount].local_name ] = _agilitySkills[skCount].displayValue;
+        }
+
+        for( var skCount = 0; skCount <  _smartsSkills.length; skCount++ ) {
+            //console.log( _smartsSkills[skCount].local_name, _smartsSkills[skCount].displayValue );
+            if( _smartsSkills[skCount].displayValue && _smartsSkills[skCount].displayValue != "")
+                _activeSkills[ _smartsSkills[skCount].local_name ] = _smartsSkills[skCount].displayValue;
+
+            if( _smartsSkills[skCount].specialties.length > 0 ) {
+                for( var spCount = 0; spCount <  _smartsSkills[skCount].specialties.length; spCount++ ) {
+                    skillName = _smartsSkills[skCount].local_name + " (" + _smartsSkills[skCount].specialties[spCount].name + ")";
+                    _activeSkills[ skillName ] = _smartsSkills[skCount].specialties[spCount].displayValue;
+                }
+            }
+        }
+
+        for( var skCount = 0; skCount <  _spiritSkills.length; skCount++ ) {
+            //console.log( _spiritSkills[skCount].local_name, _spiritSkills[skCount].displayValue );
+            if( _spiritSkills[skCount].displayValue && _spiritSkills[skCount].displayValue != "")
+                _activeSkills[ _spiritSkills[skCount].local_name ] = _spiritSkills[skCount].displayValue;
+        }
+
+        for( var skCount = 0; skCount <  _strengthSkills.length; skCount++ ) {
+            //console.log( _strengthSkills[skCount].local_name, _strengthSkills[skCount].displayValue );
+            if( _strengthSkills[skCount].displayValue && _strengthSkills[skCount].displayValue != "")
+                _activeSkills[ _strengthSkills[skCount].local_name ] = _strengthSkills[skCount].displayValue;
+        }
+
+        for( var gdvc = 0; gdvc < globalDiceValues.length; gdvc++) {
+            if( 1 + _attributeBoost.agility <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.agility )
+                _diceValues.agility.push( globalDiceValues[gdvc] );
+            if( 1 + _attributeBoost.smarts <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.smarts )
+                _diceValues.smarts.push( globalDiceValues[gdvc] );
+            if( 1 + _attributeBoost.spirit <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.spirit )
+                _diceValues.spirit.push( globalDiceValues[gdvc] );
+            if( 1 + _attributeBoost.strength <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.strength )
+                _diceValues.strength.push( globalDiceValues[gdvc] );
+            if( 1 + _attributeBoost.vigor <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.vigor )
+                _diceValues.vigor.push( globalDiceValues[gdvc] );
+        }
+
+        //console.log( _activeSkills );
+
+    }
+
+    this.setEncumbranceMultiplier = function( newValue ) {
+        // only modify up! This fixes problems with brawny edge overriding cyberware mule
+        if( newValue > _encumbranceMultiplier )
+            _encumbranceMultiplier = newValue / 1;
+    }
+
+    this.setCharAt = function(str,index,chr) {
+        if(index > str.length-1) return str;
+        return str.substr(0,index) + chr + str.substr(index+1);
+    }
+
+    this.getEdge = function( edgeTag ) {
+        for( var edgeCounter = 0; edgeCounter < savageWorldsEdges.length; edgeCounter++ ) {
+            if( savageWorldsEdges[edgeCounter].tag == edgeTag ) {
+                return savageWorldsEdges[edgeCounter];
+            }
+        }
+        return null;
+    }
+
+    this.getHindrance = function( hindranceTag  ) {
+
+        for( var hindranceCounter = 0; hindranceCounter < savageWorldsHindrances.length; hindranceCounter++ ) {
+            if( savageWorldsHindrances[hindranceCounter].tag == hindranceTag ) {
+                return savageWorldsHindrances[hindranceCounter];
+            }
+        }
+        return null;
+    }
+
+    this.exportBBCode = function() {
+        var html = this.exportHTMLCode();
+
+        while( html.indexOf("<br />\n") > -1)
+            html = html.replace("<br />\n", "\n");
+        while( html.indexOf("<br />") > -1)
+            html = html.replace("<br />", "\n");
+        while( html.indexOf("<br/>\n") > -1)
+            html = html.replace("<br/>\n", "\n");
+        while( html.indexOf("<br/>") > -1)
+            html = html.replace("<br/>", "\n");
+        while( html.indexOf("<br>\n") > -1)
+            html = html.replace("<br>\n", "\n");
+        while( html.indexOf("<br>") > -1)
+            html = html.replace("<br>", "\n");
+        while( html.indexOf("<strong>") > -1)
+            html = html.replace("<strong>", "[b]");
+        while( html.indexOf("</strong>") > -1)
+            html = html.replace("</strong>", "[/b]");
+        while( html.indexOf("<b>") > -1)
+            html = html.replace("<b>", "[b]");
+        while( html.indexOf("</b>") > -1)
+            html = html.replace("</b>", "[/b]");
+        while( html.indexOf("</ul>") > -1)
+            html = html.replace("</ul>", "[/list]");
+        while( html.indexOf("<ul>") > -1)
+            html = html.replace("<ul>", "[list]");
+        while( html.indexOf("</li>\n") > -1)
+            html = html.replace("</li>\n", "\n");
+        while( html.indexOf("</li>") > -1)
+            html = html.replace("</li>", "\n");
+        while( html.indexOf("<li>") > -1)
+            html = html.replace("<li>", "[*]");
+        while( html.indexOf("<h3>") > -1)
+            html = html.replace("<h3>", "[size=200][b]");
+        while( html.indexOf("</h3>") > -1)
+            html = html.replace("</h3>", "[/b][/size]\n");
+        while( html.indexOf("<em>") > -1)
+            html = html.replace("<em>", "[i]");
+        while( html.indexOf("</em>") > -1)
+            html = html.replace("</em>", "[/i]");
+
+        while( html.indexOf("<h4>") > -1)
+            html = html.replace("<h4>", "[size=150][b]");
+        while( html.indexOf("</h4>") > -1)
+            html = html.replace("</h4>", "[/b][/size]\n");
+
+        while( html.indexOf("<h5>") > -1)
+            html = html.replace("<h5>", "[size=125][b]");
+        while( html.indexOf("</h5>") > -1)
+            html = html.replace("</h5>", "[/b][/size]\n");
+
+        // This should be pretty close! :)
+
+        return html;
+    }
+
+    this.exportHTMLCode = function() {
+        var html;
+        if( _name != "")
+            html = "<h3>" + _name + "</h3>";
+        else
+            html = "<h3>The Nameless Character :(</h3>";
+
+        if( _description != "")
+            html += _description.replace("\n", "<br />\n") + "<br />\n<br />\n";
+
+        if( _background != "")
+            html += _background.replace("\n", "<br />\n") + "<br />\n<br />\n";
+
+        html += "<b>" + _race.local_name + " " + _gender.label + "</b><br />\n";
+
+        html += "<b>" + this.getTranslation("CHARGEN_RANK") + ":</b> " + _XP.rankName + "<br />\n";
+
+        /*
+    Attributes: Agility d8, Smarts d6, Spirit d6, Strength d6, Vigor d8
+    Skills: Fighting d8, Notice d6, Shooting d8, Stealth d8, Survival d8, Tracking d6, Climbing d6
+    Charisma: –1; Pace: 6; Parry: 5; Toughness: 10 (4)
+    Hindrances: Bad Luck, Greedy (Minor), Habit (Minor—frequently disappears)
+    Edges: Alertness, Woodsman, Assassin
+    Gear: Binoculars (in cabin), body armor (+4, hidden in cabin), blaster pistol (Range 12/24/48, Damage 2d6+2, AP 2, hidden in cabin), commlink, C$50.
+         * */
+
+        // Traits
+            // Attributes
+            html += "<strong>" + this.getTranslation("GENERAL_ATTRIBUTES") + ":</strong> ";
+                html += this.getTranslation("ATTRIBUTE_AGILITY") + ": " +  _displayAttributes.agility.local_label + ", ";
+                html += this.getTranslation("ATTRIBUTE_SMARTS") + ": " +  _displayAttributes.smarts.local_label + ", ";
+                html += this.getTranslation("ATTRIBUTE_SPIRIT") + ": " +   _displayAttributes.spirit.local_label + ", ";
+                html += this.getTranslation("ATTRIBUTE_STRENGTH") + ": " +   _displayAttributes.strength.local_label + ", ";
+                html += this.getTranslation("ATTRIBUTE_VIGOR") + ": " +   _displayAttributes.vigor.local_label + " ";
+            html += "<br />\n";
+
+            // Skills
+            html += "<strong>" + this.getTranslation("GENERAL_SKILLS") + ":</strong> ";
+
+            // sort skills alphabetacially
+            keys = Object.keys(_activeSkills),
+
+            keys.sort();
+
+            for (var kCount = 0; kCount < keys.length; kCount++) {
+                html += keys[kCount] + ": " + _activeSkills[ keys[kCount] ];
+                if( kCount < keys.length -1 )
+                    html += ", ";
+            }
+
+            html += "<br />\n";
+
+            // Derived
+            //html += "<b>" + this.getTranslation("CHARGEN_ATTRIBUTES") + ":</b> ";
+
+            if( _derived.charisma != 0 ) {
+                if( _derived.charisma > 0 ) {
+                    html += "<strong>" + this.getTranslation("GENERAL_CHARISMA") + ":</strong> +" + _derived.charisma + "; ";
+                } else {
+                    html += "<strong>" + this.getTranslation("GENERAL_CHARISMA") + ":</strong> " + _derived.charisma + "; ";
+                }
+            }
+            html += "<strong>" + this.getTranslation("GENERAL_PACE") + ":</strong> " + _derived.pace + "; ";
+
+            html += "<strong>" + this.getTranslation("GENERAL_PARRY") + ":</strong> " + _derived.parry + "; ";
+
+            html += "<strong>" + this.getTranslation("GENERAL_TOUGHNESS") + ":</strong> " + (_derived.toughness + _derived.armor ) + " ";
+            if( _derived.armor != 0 )
+                html += "(" + _derived.armor + ")";
+
+            html += "<br />\n";
+            // Edges
+
+            html += "<strong>" + this.getTranslation("GENERAL_EDGES") + ":</strong> ";
+            var eCounter = 0;
+            if( _installedEdges.length > 0 ) {
+                for (var eCount = 0; eCount < _installedEdges.length; eCount++) {
+                    html += _installedEdges[ eCount ].local_name ;
+                    if( _installedEdges[ eCount ].racial )
+                        html += " " + this.getTranslation("CHARGEN_RACIAL_PARENTHETICAL") + "";
+                    if( eCount < _installedEdges.length - 1 ) {
+                        html += ", ";
+                    }
+                    eCounter++;
+                }
+            }
+
+            if( eCounter == 0 ) {
+                html += "(none)";
+            }
+
+            html += "<br />\n";
+
+            // Hindrances
+            html += "<strong>" + this.getTranslation("GENERAL_HINDRANCES") + ":</strong> ";
+
+            var hCounter = 0;
+            if( _installedHindrances.length > 0 ) {
+                for (var hCount = 0; hCount < _installedHindrances.length; hCount++) {
+                    html += _installedHindrances[ hCount ].select_option_name ;
+                    if( _installedHindrances[ hCount ].specifyField )
+                        html += ": " + _installedHindrances[ hCount ].specifyField;
+                    if( _installedHindrances[ hCount ].racial )
+                        html += " " + this.getTranslation("CHARGEN_RACIAL_PARENTHETICAL") + "";
+                    if( hCount < _installedHindrances.length - 1 ) {
+                        html += ", ";
+                    }
+                    hCounter++;
+                }
+            }
+
+            if(hCounter == 0) {
+                html += "(none)";
+            }
+
+            html += "<br />\n";
+
+        // Gear
+            html += "<strong>" + this.getTranslation("GENERAL_GEAR") + ":</strong> ";
+            var gearCount = 0;
+
+                for (var gCount = 0; gCount < _selectedHandWeapons.length; gCount++) {
+                    html += _selectedHandWeapons[gCount].local_name;
+                    // TODO: reach and damage
+                    html += " (";
+                //      console.log(_selectedHandWeapons[gCount]);
+                    html += "Damage:  " + _selectedHandWeapons[gCount].displayDamage.toString();
+                    if( _selectedHandWeapons[gCount].reach > 0 )
+                        html += ", Reach:  " +  _selectedHandWeapons[gCount].reach;
+                    if( _selectedHandWeapons[gCount].ap > 0 )
+                        html += ", AP: " +  _selectedHandWeapons[gCount].ap;
+                    html += " )";
+
+                    html += ", ";
+                    gearCount++;
+                }
+
+                for (var gCount = 0; gCount < _selectedRangedWeapons.length; gCount++) {
+                    html += _selectedRangedWeapons[gCount].local_name;
+                    // TODO: range, rof, ap, and damage
+                    html += " (";
+                    //~ console.log(_selectedHandWeapons[gCount]);
+                    html += "Damage:  " + _selectedRangedWeapons[gCount].displayDamage.toString();
+                    if( _selectedRangedWeapons[gCount].range )
+                        html += ", Range:  " +  _selectedRangedWeapons[gCount].reach;
+                    if( _selectedRangedWeapons[gCount].ap > 0 )
+                        html += ", AP: " +  _selectedRangedWeapons[gCount].ap;
+                    if( _selectedRangedWeapons[gCount].rof > 0 )
+                        html += ", ROF: " +  _selectedRangedWeapons[gCount].rof;
+                    html += " )";
+
+                    html += ", ";
+                    gearCount++;
+                }
+
+                for (var gCount = 0; gCount < _selectedArmor.length; gCount++) {
+                    html += _selectedArmor[gCount].local_name + ", ";
+                    gearCount++;
+                }
+
+                for (var gCount = 0; gCount < _selectedShields.length; gCount++) {
+                    html += _selectedShields[gCount].local_name + ", ";
+                    gearCount++;
+                }
+
+                for (var gCount = 0; gCount < _selectedMundaneGear.length; gCount++) {
+                    html += _selectedMundaneGear[gCount].local_name + ", ";
+                    gearCount++;
+                }
+
+            if(gearCount == 0) {
+                html += "(none)";
+            } else {
+                // remove last comma
+                html = html.substr(0, html.length - 2);
+            }
+
+            html += "<br />\n";
+
+        // Gear
+        if( _installedCyberware.length > 0 ) {
+            html += "<strong>" + this.getTranslation("GENERAL_CYBERWARE") + ":</strong> ";
+            var gearCount = 0;
+
+                for (var gCount = 0; gCount < _installedCyberware.length; gCount++) {
+                    //~ console.log( _installedCyberware[gCount] );
+                    if( _installedCyberware[gCount].customName )
+                        html += _installedCyberware[gCount].customName + " (" + _installedCyberware[gCount].local_name + "); ";
+                    else
+                        html += _installedCyberware[gCount].local_name + "; ";
+                    gearCount++;
+                }
+
+            if(gearCount == 0) {
+                html += "(none)";
+            } else {
+                // remove last comma
+                html = html.substr(0, html.length - 2);
+            }
+
+            html += "<br />\n";
+        }
+        // Powers
+            if( _selectedPowers.length > 0 ) {
+                html += "<strong>" + this.getTranslation("GENERAL_POWERS") + ":</strong> ";
+
+                for(p_counter = 0; p_counter < _selectedPowers.length; p_counter++) {
+
+                    if( _selectedPowers[p_counter].customName != "") {
+                        power_name = _selectedPowers[p_counter].customName + " (" + _selectedPowers[p_counter].local_name;
+                        if( _selectedPowers[p_counter].trapping.local_name != "" )
+                            power_name += ", " + _selectedPowers[p_counter].trapping.local_name  + ")";
+                        else
+                            power_name += ")";
+
+                    } else {
+                        if( _selectedPowers[p_counter].trapping != "" ) {
+                            power_name = _selectedPowers[p_counter].local_name + " (" + _selectedPowers[p_counter].trapping.local_name  + ")" ;
+                        } else {
+                            power_name = _selectedPowers[p_counter].local_name ;
+                        }
+                    }
+
+                    details_line = " - ";
+
+                    //~ console.log( _selectedPowers[p_counter] );
+
+                    if(_selectedPowers[p_counter].cost) {
+                        details_line += "Cost: " + _selectedPowers[p_counter].cost + "; ";
+                    }
+                    if(_selectedPowers[p_counter].range) {
+                        details_line += "Range: " + _selectedPowers[p_counter].range + "; ";
+                    }
+                    if(_selectedPowers[p_counter].damage) {
+                        details_line += "Damage: " + _selectedPowers[p_counter].damage + "; ";
+                    }
+                    if(_selectedPowers[p_counter].local_duration) {
+                        details_line += "Duration: " + _selectedPowers[p_counter].local_duration + "; ";
+                    }
+
+                    //~ if(_selectedPowers[p_counter].bookObj) {
+                        //~ details_line += _selectedPowers[p_counter].bookObj.abbrev + " " + _selectedPowers[p_counter].page;
+                    //~ }
+                    details_line = "";
+
+                    if( details_line && details_line != " - ")
+                        html += "<em>" + power_name + "</em>" + details_line + ", ";
+                    else
+                        html +=  "<em>" + power_name + "</em>, ";
+                }
+
+                html = html.substr(0, html.length - 2);
+
+                html += "<br />\n";
+            }
+
+            if( _usesSPCCreation ) {
+
+                powerLevel = _SPCPowerLevels[ _SPCSelectedPowerLevel ].name + " Hero";
+                if( _SPCRisingStars )
+                    powerLevel += ", A Rising Star";
+                html += "<br /><h5>Super Hero Powers (" + powerLevel;
+
+                if( _SPCTakenExtraPowerPoints ) {
+                    html += ", Super Karma Taken";
+                }
+
+                html  += ")</h5>";
+
+                for( var powerCounter = 0; powerCounter < _selectedSPCPowers.length; powerCounter++) {
+
+                    var exportItem = {
+                        id: _selectedSPCPowers[powerCounter].id,
+                        level: _selectedSPCPowers[powerCounter].selectedLevel,
+                        desc: _selectedSPCPowers[powerCounter].description,
+                        customName: _selectedSPCPowers[powerCounter].custom_name,
+                        switchableWith: _selectedSPCPowers[powerCounter].switchableWith,
+                        boostedAttribute: _selectedSPCPowers[powerCounter].boosted_attribute,
+                        boostedSkill: _selectedSPCPowers[powerCounter].boosted_skill,
+                        boostedSkillSpecialty: _selectedSPCPowers[powerCounter].boosted_specialty
+                    }
+
+                    //_exportObject.spcPowers.push( exportItem );
+                    if(
+                        _selectedSPCPowers[powerCounter].custom_name != ""
+                            &&
+
+                        _selectedSPCPowers[powerCounter].custom_name != _selectedSPCPowers[powerCounter].local_name
+                    ) {
+                        html += "<strong>" + _selectedSPCPowers[powerCounter].custom_name + " (" +  _selectedSPCPowers[powerCounter].local_name;
+
+                        if( _selectedSPCPowers[powerCounter].boosted_attribute ) {
+                            attribute = _selectedSPCPowers[powerCounter].boosted_attribute.charAt(0).toUpperCase() + _selectedSPCPowers[powerCounter].boosted_attribute.slice(1);
+                            html += ": " + attribute ;
+                        }
+
+                        html += ")";
+                    } else {
+                        html += "<strong>" +  _selectedSPCPowers[powerCounter].local_name;
+                        if( _selectedSPCPowers[powerCounter].boosted_attribute ) {
+                            attribute = _selectedSPCPowers[powerCounter].boosted_attribute.charAt(0).toUpperCase() + _selectedSPCPowers[powerCounter].boosted_attribute.slice(1);
+                            html += ": " + attribute ;
+                        }
+                    }
+
+                    if( _selectedSPCPowers[powerCounter].per_level ) {
+                        html += " - Level " + _selectedSPCPowers[powerCounter].selectedLevel;
+                    }
+
+                    html += " - " + _selectedSPCPowers[powerCounter].currentCost + " points</strong>";
+                    if( _selectedSPCPowers[powerCounter].switchableWith ) {
+                        html += " " + this.getTranslation("GENERAL_NOT_TALLIED_PARENTH");
+                    }
+
+                    html += "<br />\n";
+
+                    if( _selectedSPCPowers[powerCounter].description != "")
+                        html += _selectedSPCPowers[powerCounter].description.replace("\n", "<br />\n") + "<br />\n";
+
+                    html += "<ul>";
+                    if( _selectedSPCPowers[powerCounter].switchableWith ) {
+                        html += "<li>Switchable With: " + _selectedSPCPowers[powerCounter].switchableWith.local_name + "</li>";
+                    }
+
+                    for( var modCounter = 0; modCounter < _selectedSPCPowers[powerCounter].modifiersObj.length; modCounter++) {
+                        if( _selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost != 0) {
+                            html += "<li>";
+                            html += _selectedSPCPowers[powerCounter].modifiersObj[modCounter].local_name;
+                            html += ": ";
+                            if( _selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost > 0 )
+                                html += "+";
+                            html += _selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost;
+                            html += "</li>";
+                        }
+                    }
+
+                    for( var modCounter = 0; modCounter < _selectedSPCPowers[powerCounter].genericModifiersObj.length; modCounter++) {
+                        if( _selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost != 0) {
+                            html += "<li>";
+                            html += _selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].local_name;
+                            html += ": ";
+                            if( _selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost > 0 )
+                                html += "+";
+                            html += _selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost;
+                            html += "</li>";
+
+                        }
+                    }
+
+                    html += "</ul>";
+                }
+                if( _SPCCurrentPowerPoints != 0 )
+                    html += "<strong>Remaining Power Points</strong>: " + _SPCCurrentPowerPoints + "<br />\n";
+            }
+
+        return html;
+    }
+
+    this.enableSettingRule = function(settingTag) {
+    //    console.log( "enableSettingRule", settingTag);
+        for(var bookCounter = 0; bookCounter < savageWorldsBooksList.length; bookCounter++ ) {
+            for( var settingCounter = 0 ; settingCounter < savageWorldsBooksList[bookCounter].setting_rules.length; settingCounter++ ) {
+                if( settingTag == savageWorldsBooksList[bookCounter].setting_rules[ settingCounter].tag ) {
+                    savageWorldsBooksList[bookCounter].setting_rules[ settingCounter].inUse = true;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    this.disableSettingRule = function(settingTag) {
+    //    console.log( "enableSettingRule", settingTag);
+        for(var bookCounter = 0; bookCounter < savageWorldsBooksList.length; bookCounter++ ) {
+            for( var settingCounter = 0 ; settingCounter < savageWorldsBooksList[bookCounter].setting_rules.length; settingCounter++ ) {
+                if( settingTag == savageWorldsBooksList[bookCounter].setting_rules[ settingCounter].tag ) {
+                    savageWorldsBooksList[bookCounter].setting_rules[ settingCounter].inUse = false;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    this.isSettingRuleEnabled = function( settingTag ) {
+    //    console.log( "isSettingRuleEnabled", settingTag);
+        for(var bookCounter = 0; bookCounter < savageWorldsBooksList.length; bookCounter++ ) {
+            for( var settingCounter = 0 ; settingCounter < savageWorldsBooksList[bookCounter].setting_rules.length; settingCounter++ ) {
+                if(
+                    settingTag
+                    &&
+                    settingTag != ""
+                    &&
+                    savageWorldsBooksList[bookCounter].setting_rules[ settingCounter ]
+                    &&
+                    savageWorldsBooksList[bookCounter].setting_rules[ settingCounter ].tag
+                    &&
+                    settingTag == savageWorldsBooksList[bookCounter].setting_rules[ settingCounter ].tag
+                ) {
+                    if( savageWorldsBooksList[bookCounter].inUse == true ) {
+                        return savageWorldsBooksList[bookCounter].setting_rules[ settingCounter].inUse;
+                    } else {
+                        // book is disabled, so setting rule is too.
+                        return false;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    this.importJSON = function( jsonString ) {
+
+        if( jsonString ) {
+            var _importObject = JSON.parse(jsonString);
+
+            if( _importObject ) {
+                this.init( _useLang );
+                if( _importObject.name )
+                    _name = _importObject.name;
+                if( _importObject.background )
+                    _background = _importObject.background;
+                if( _importObject.uuid )
+                    _uuid = _importObject.uuid;
+                if( _importObject.description )
+                    _description = _importObject.description;
+
+                if( _importObject.books ) {
+                    for( var importCounter = 0; importCounter < _importObject.books.length; importCounter++ ) {
+                        for( var bookCounter = 0; bookCounter < _books.length; bookCounter++ ) {
+                            //_books[bookCounter].inUse = false;
+                            if ( _importObject.books[importCounter] == _books[bookCounter].short_name ) {
+                                _books[bookCounter].inUse = true;
+                            }
+                        }
+                    }
+                }
+
+                if( _importObject.startingFunds )
+                    _startingFunds = _importObject.startingFunds;
+
+                if( _importObject.settingRules ) {
+                    for( var importCounter = 0; importCounter < _importObject.settingRules.length; importCounter++ ) {
+                        this.enableSettingRule( _importObject.settingRules[importCounter] );
+                    }
+                }
+
+                this.validate();
+
+                for( var attribute in _attributes ) {
+                    if( _importObject.attributes[ attribute ] ) {
+                        attribute = attribute.toLowerCase().trim();
+                        if( _attributes[attribute] )
+                            _attributes[attribute] =  _importObject.attributes[ attribute ];
+                    }
+                }
+
+                if( _importObject.knownLanguages ) {
+                    _knownLanguages = _importObject.knownLanguages;
+                }
+
+                if( _importObject.gender )
+                    this.setGender( _importObject.gender  );
+
+                if( _importObject.xp )
+                    this.setXP( _importObject.xp  );
+
+                if( _importObject.race ){
+                    this.setRace( _importObject.race  );
+                }
+
+                if( _importObject.skills ) {
+                    for( var importCounter = 0; importCounter < _importObject.skills.length; importCounter++ ) {
+                        this.setSkill(
+                            _importObject.skills[importCounter].id,
+                            _importObject.skills[importCounter].value
+                        );
+
+                        if( _importObject.skills[importCounter].specialties ) {
+                            this.setSpecialties(
+                                _importObject.skills[importCounter].id,
+                                _importObject.skills[importCounter].specialties
+                            );
+                        }
+                    }
+                }
+
+                if( _importObject.edges ) {
+                    _selectedEdges = Array();
+                    for( var importCounter = 0; importCounter < _importObject.edges.length; importCounter++ ) {
+                        this.addEdge(
+                            _importObject.edges[importCounter].book,
+                            _importObject.edges[importCounter].tag
+                        );
+                    }
+                }
+
+                if( _importObject.powers ) {
+
+                    for( var powerCounter = 0; powerCounter < _importObject.powers.length; powerCounter++ ) {
+                        this.addPower(
+                            _importObject.powers[powerCounter].powerBook,
+                            _importObject.powers[powerCounter].powerTag,
+                            _importObject.powers[powerCounter].trapBook,
+                            _importObject.powers[powerCounter].trapTag,
+                            _importObject.powers[powerCounter].customName
+                        );
+                    }
+                }
+
+                if( _importObject.hindrances ) {
+                    _selectedHindrances = Array();
+                    for( var importCounter = 0; importCounter < _importObject.hindrances.length; importCounter++ ) {
+                        this.addHindrance(
+                            _importObject.hindrances[importCounter].book,
+                            _importObject.hindrances[importCounter].tag,
+                            _importObject.hindrances[importCounter].specify
+                        );
+                    }
+                }
+
+                if( _importObject.perks ) {
+                    _selectedPerks = Array();
+                    for( var importCounter = 0; importCounter < _importObject.perks.length; importCounter++ ) {
+                        this.addPerk(
+                            _importObject.perks[importCounter]
+                        );
+                    }
+                }
+
+                if( _importObject.arcanebg ) {
+                    this.setArcaneBackground( _importObject.arcanebg );
+                }
+
+                if( _importObject.gearMundane ) {
+                    _selectedMundaneGear = Array();
+                    for( var importCounter = 0; importCounter < _importObject.gearMundane.length; importCounter++ ) {
+                        itemCount = 1;
+                        if( _importObject.gearMundane[importCounter].count )
+                            itemCount = _importObject.gearMundane[importCounter].count;
+                        this.addGearMundane(
+                            _importObject.gearMundane[importCounter].book,
+                            _importObject.gearMundane[importCounter].tag,
+                            _importObject.gearMundane[importCounter].cost,
+                            _importObject.gearMundane[importCounter].dropped,
+                            itemCount
+                        );
+                    }
+                }
+
+                if( _importObject.gearShields ) {
+                    _selectedShields = Array();
+                    for( var importCounter = 0; importCounter < _importObject.gearShields.length; importCounter++ ) {
+                        this.addGearShield(
+                            _importObject.gearShields[importCounter].book,
+                            _importObject.gearShields[importCounter].tag,
+                            _importObject.gearShields[importCounter].cost,
+                            _importObject.gearShields[importCounter].loc,
+                            _importObject.gearShields[importCounter].dropped
+                        );
+                    }
+                }
+
+                if( _importObject.gearHandWeapons ) {
+                    _selectedHandWeapons = Array();
+                    for( var importCounter = 0; importCounter < _importObject.gearHandWeapons.length; importCounter++ ) {
+                        var _sciFiMod = "";
+                        if( _importObject.gearHandWeapons[importCounter].sciFiMod )
+                            _sciFiMod = _importObject.gearHandWeapons[importCounter].sciFiMod ;
+                        this.addGearHandWeapon(
+                            _importObject.gearHandWeapons[importCounter].book,
+                            _importObject.gearHandWeapons[importCounter].tag,
+                            _importObject.gearHandWeapons[importCounter].cost,
+                            _importObject.gearHandWeapons[importCounter].loc,
+                            _importObject.gearHandWeapons[importCounter].dropped,
+                            _sciFiMod
+                        );
+                    }
+                }
+
+                if( _importObject.gearRangedWeapons ) {
+                    _selectedRangedWeapons = Array();
+                    for( var importCounter = 0; importCounter < _importObject.gearRangedWeapons.length; importCounter++ ) {
+                        this.addGearRangedWeapon(
+                            _importObject.gearRangedWeapons[importCounter].book,
+                            _importObject.gearRangedWeapons[importCounter].tag,
+                            _importObject.gearRangedWeapons[importCounter].cost,
+                            _importObject.gearRangedWeapons[importCounter].loc,
+                            _importObject.gearRangedWeapons[importCounter].dropped
+                        );
+                    }
+                }
+
+                if( _importObject.gearArmor ) {
+                    _selectedArmor = Array();
+                    for( var importCounter = 0; importCounter < _importObject.gearArmor.length; importCounter++ ) {
+                        this.addGearArmor(
+                            _importObject.gearArmor[importCounter].book,
+                            _importObject.gearArmor[importCounter].tag,
+                            _importObject.gearArmor[importCounter].cost,
+                            _importObject.gearArmor[importCounter].readied,
+                            _importObject.gearArmor[importCounter].dropped
+                        );
+                    }
+                }
+
+                this._customRangedWeapons = [];
+                this._customHandWeapons = [];
+                this._customGear = [];
+                this._customArmor = [];
+                this._customShields = [];
+
+                if( _importObject.customRangedWeapons )
+                    this._customRangedWeapons = _importObject.customRangedWeapons;
+                if( _importObject.customHandWeapons )
+                    this._customHandWeapons = _importObject.customHandWeapons;
+                if( _importObject.customGear )
+                    this._customGear = _importObject.customGear;
+                if( _importObject.customArmor )
+                    this._customArmor = _importObject.customArmor;
+                if( _importObject.customShields )
+                    this._customShields = _importObject.customShields;
+
+
+                if(_importObject.spcpowerlevel)
+                    _SPCSelectedPowerLevel = _importObject.spcpowerlevel;
+
+                if(
+                    _importObject.risingstars
+                        &&
+                    (
+                        _importObject.risingstars > 1 || _importObject.risingstars == "1"
+                    )
+                ){
+                    _SPCRisingStars = true;
+                } else {
+                    _SPCRisingStars = false;
+                }
+
+                if( _importObject.spcPowers ) {
+                    //powerID, descriptionText, level, modifiers
+                    //~ console.log( _importObject.spcPowers );
+                    for( var importCounter = 0; importCounter < _importObject.spcPowers.length; importCounter++ ) {
+                        //console.log(" *", _importObject.spcPowers[ importCounter ])
+                        powerID = _importObject.spcPowers[ importCounter ].id;
+                        descriptionText = _importObject.spcPowers[ importCounter ].desc;
+                        customName = _importObject.spcPowers[ importCounter ].customName;
+                        level = _importObject.spcPowers[ importCounter ].level;
+                        modifiers = _importObject.spcPowers[ importCounter ].modifiers;
+                        if( _importObject.spcPowers[ importCounter ].genericModifiers )
+                            genericModifiers = _importObject.spcPowers[ importCounter ].genericModifiers;
+                        else
+                            genericModifiers = null;
+
+                        boostedAttribute = _importObject.spcPowers[ importCounter ].boostedAttribute;
+                        boostedSkill = _importObject.spcPowers[ importCounter ].boostedSkill;
+                        boostedSkillSpecialty = _importObject.spcPowers[ importCounter ].boostedSkillSpecialty;
+
+                        switchableWith = _importObject.spcPowers[importCounter].switchableWith;
+
+                        this.addSPCPower( powerID, customName, descriptionText, level, modifiers, genericModifiers, switchableWith, boostedAttribute,  boostedSkill, boostedSkillSpecialty );
+                    }
+                }
+
+                if( _importObject.cyberware ) {
+                    for( var importCounter = 0; importCounter < _importObject.cyberware.length; importCounter++ ) {
+                        this.installCyberware(
+                            _importObject.cyberware[ importCounter ].tag,
+                            _importObject.cyberware[ importCounter].selectedRank,
+                            _importObject.cyberware[ importCounter].option1,
+                            _importObject.cyberware[ importCounter].option2,
+                            _importObject.cyberware[ importCounter].option3,
+                            _importObject.cyberware[ importCounter].customName
+                        );
+                    }
+                }
+
+                if( _importObject.advancements ) {
+                    _selectedAdvancements = Array();
+                    this.validate();
+                    for( var importCounter = 0; importCounter < _importObject.advancements.length; importCounter++ ) {
+                        this.setAdvancementType(
+                            _importObject.advancements[importCounter].takenAt,
+                            _importObject.advancements[importCounter].tag
+                        );
+
+                        if( _importObject.advancements[importCounter].option1 ) {
+                            option1name = null;
+                            if( _importObject.advancements[importCounter].option1name )
+                                option1name = _importObject.advancements[importCounter].option1name;
+
+                            if( _importObject.advancements[importCounter].option1book ){
+                                this.setAdvancementOption1(
+                                    _importObject.advancements[importCounter].takenAt,
+                                    _importObject.advancements[importCounter].option1,
+                                    option1name,
+                                    _importObject.advancements[importCounter].option1book
+                                 );
+                            } else {
+                                this.setAdvancementOption1(
+                                    _importObject.advancements[importCounter].takenAt,
+                                    _importObject.advancements[importCounter].option1,
+                                    option1name
+                                );
+                            }
+                        }
+
+                        if( _importObject.advancements[importCounter].option2 ) {
+                            option2name = null;
+                            if( _importObject.advancements[importCounter].option2name )
+                                option2name = _importObject.advancements[importCounter].option2name;
+                            if( _importObject.advancements[importCounter].option2book ){
+                                this.setAdvancementOption2(
+                                    _importObject.advancements[importCounter].takenAt,
+                                    _importObject.advancements[importCounter].option2,
+                                    option2name,
+                                    _importObject.advancements[importCounter].option2book
+                                 );
+                            } else {
+                                this.setAdvancementOption2(
+                                    _importObject.advancements[importCounter].takenAt,
+                                    _importObject.advancements[importCounter].option2,
+                                    option2name
+                                );
+                            }
+                        }
+                    }
+                }
+
+                _isNew = false;
+                this.validate();
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    this.setAdvancementOption1 = function( advIndex, optionItem, specifyName, bookID ) {
+
+        if( optionItem && _selectedAdvancements[advIndex] ) {
+            if( _selectedAdvancements[advIndex].tag == "edge" ) {
+                _selectedAdvancements[advIndex].option1 = this.getEdge( optionItem );
+            } else {
+
+                if(
+                    _selectedAdvancements[advIndex].tag == "incskill"
+                        ||
+                    _selectedAdvancements[advIndex].tag == "inc2skills"
+                        ||
+                    _selectedAdvancements[advIndex].tag == "skill"
+                ) {
+                    if( optionItem.id ) {
+                        _selectedAdvancements[advIndex].option1 = optionItem;
+                    } else {
+                        if(_selectedAdvancements[advIndex].tag == "skill")
+                            _selectedAdvancements[advIndex].option1 = this.getSkill( optionItem );
+                        else
+                            _selectedAdvancements[advIndex].option1 = this.getSkill( optionItem , specifyName);
+                    }
+                } else {
+                    _selectedAdvancements[advIndex].option1 = optionItem;
+                }
+
+            }
+            if( bookID )
+                _selectedAdvancements[advIndex].option1book = bookID;
+        }
+        //console.log( "option 1 _selectedAdvancements[advIndex]", _selectedAdvancements[advIndex]);
+    }
+
+    this.setAdvancementOption2 = function( advIndex, optionItem, specifyName, bookID ) {
+        if( optionItem && _selectedAdvancements[advIndex] ) {
+            if(
+                _selectedAdvancements[advIndex].tag == "skill"
+
+            ) {
+                _selectedAdvancements[advIndex].option2 = specifyName;
+            } else {
+                if(
+                    _selectedAdvancements[advIndex].tag == "incskill"
+                        ||
+                    _selectedAdvancements[advIndex].tag == "inc2skills"
+                ) {
+                    if( optionItem.id ) {
+                        _selectedAdvancements[advIndex].option2 = optionItem;
+                    } else {
+                        _selectedAdvancements[advIndex].option2 = this.getSkill( optionItem , specifyName);
+                    }
+
+                } else {
+                    _selectedAdvancements[advIndex].option2 = optionItem;
+                }
+
+            }
+            if( bookID )
+                _selectedAdvancements[advIndex].option2book = bookID;
+        }
+    }
+
+    this.setAdvancementType = function( advIndex, advTag ) {
+        if( advTag && _selectedAdvancements[advIndex] ) {
+            for( advCounter = 0; advCounter < this.advancementTypes.length; advCounter++ ) {
+                if( advTag == this.advancementTypes[advCounter].tag) {
+                    var advItem = {};
+                    angular.extend( advItem, this.advancementTypes[advCounter] );
+                    advItem.takenAt = advIndex;
+                    _selectedAdvancements[advIndex] = advItem;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    this.addBook = function( bookObject ) {
+
+    }
+
+    this.allocateAdvancementSlots = function () {
+        if( _selectedAdvancements.length < this.availableAdvancements ) {
+            for( advCounter = _selectedAdvancements.length; advCounter < this.availableAdvancements; advCounter++ ) {
+                var advItem = {};
+                angular.extend( advItem, this.advancementTypes[0] );
+                advItem.takenAt = advCounter;
+                _selectedAdvancements[advCounter] = advItem;
+            }
+        }
+
+        if( _selectedAdvancements.length > this.availableAdvancements ) {
+            _selectedAdvancements = _selectedAdvancements.slice(0, this.availableAdvancements);
+        }
+    }
+
+    this.exportJSON = function() {
+        var _exportObject = {};
+        _exportObject.name = _name;
+        _exportObject.background = _background;
+        _exportObject.description = _description;
+
+        _exportObject.uuid = _uuid;
+
+        _exportObject.xp = _XP.value;
+        _exportObject.gender = _gender.id;
+        _exportObject.race = _race.id;
+
+        _exportObject.startingFunds = _startingFunds;
+
+        _exportObject.attributes = {
+            agility: _attributes.agility,
+            smarts: _attributes.smarts,
+            spirit: _attributes.spirit,
+            strength: _attributes.strength,
+            vigor: _attributes.vigor,
+        }
+
+        _exportObject.books = Array();
+
+        for( var bookCounter = 0; bookCounter < _books.length; bookCounter++ ) {
+            if ( _books[bookCounter].inUse  )
+                _exportObject.books.push( _books[bookCounter].short_name );
+        }
+
+        _exportObject.perks = Array();
+        for( var perkCounter = 0; perkCounter < _selectedPerks.length; perkCounter++ ) {
+            _exportObject.perks.push( _selectedPerks[perkCounter].tag );
+        }
+
+        _exportObject.skills = Array();
+
+        for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
+            if(
+                _skillList[skillCounter].value > 0
+                ||
+                _skillList[skillCounter].specialties.length > 0
+            ) {
+                var skillObj = {
+                    id: _skillList[skillCounter].id,
+                    value: _skillList[skillCounter].value
+                };
+
+                if( _skillList[skillCounter].specialties.length > 0 ) {
+                    skillObj.specialties = Array();
+
+                    for(var specCounter = 0; specCounter < _skillList[skillCounter].specialties.length; specCounter++ ) {
+                        if( _skillList[skillCounter].specialties[specCounter].advskill == 0 ) {
+                            skillObj.specialties.push(
+                                _skillList[skillCounter].specialties[specCounter]
+                            );
+                        }
+
+                    }
+                }
+                _exportObject.skills.push( skillObj );
+            }
+            _exportObject.edges = Array();
+            for( var edgeCounter = 0; edgeCounter < _selectedEdges.length; edgeCounter++ ) {
+                if( !_selectedEdges[edgeCounter].cyber ) {
+                    _exportObject.edges.push( {
+                        book: _selectedEdges[edgeCounter].book,
+                        tag: _selectedEdges[edgeCounter].tag,
+                    });
+                }
+            }
+
+            if( _selectedPowers.length > 0 ) {
+                _exportObject.powers = Array();
+                for( var powerCounter = 0; powerCounter < _selectedPowers.length; powerCounter++ ) {
+                    _exportObject.powers.push( {
+                        powerBook: _selectedPowers[powerCounter].book,
+                        powerTag: _selectedPowers[powerCounter].tag,
+                        trapBook: _selectedPowers[powerCounter].trapping.book,
+                        trapTag: _selectedPowers[powerCounter].trapping.tag,
+                        customName: _selectedPowers[powerCounter].customName,
+                    });
+                }
+            }
+
+            _exportObject.hindrances = Array();
+            for( var hindranceCounter = 0; hindranceCounter < _selectedHindrances.length; hindranceCounter++ ) {
+                _exportObject.hindrances.push( {
+                    book: _selectedHindrances[hindranceCounter].book,
+                    tag: _selectedHindrances[hindranceCounter].tag,
+                    specify: _selectedHindrances[hindranceCounter].specifyField,
+                });
+            }
+
+            if( _selectedArcaneBackground.tag != "")
+                _exportObject.arcanebg = _selectedArcaneBackground.tag;
+
+            _exportObject.gearMundane = Array();
+            for( var gearCounter = 0; gearCounter < _selectedMundaneGear.length; gearCounter++ ) {
+                _exportObject.gearMundane.push( {
+                    book: _selectedMundaneGear[ gearCounter ].book,
+                    tag: _selectedMundaneGear[ gearCounter ].tag,
+                    cost: _selectedMundaneGear[ gearCounter ].purchaseCost,
+                    count: _selectedMundaneGear[ gearCounter ].count,
+                    dropped: _selectedMundaneGear[ gearCounter ].droppedDuringCombat
+                });
+            }
+
+            _exportObject.gearShields = Array();
+            for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
+                _exportObject.gearShields.push( {
+                    book: _selectedShields[ gearCounter ].book,
+                    tag: _selectedShields[ gearCounter ].tag,
+                    cost: _selectedShields[ gearCounter ].purchaseCost,
+                    loc: _selectedShields[ gearCounter ].readiedLocation,
+                    dropped: _selectedShields[ gearCounter ].droppedDuringCombat
+                });
+            }
+
+            _exportObject.gearHandWeapons = Array();
+            for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++ ) {
+                _exportObject.gearHandWeapons.push( {
+                    book: _selectedHandWeapons[ gearCounter ].book,
+                    tag: _selectedHandWeapons[ gearCounter ].tag,
+                    cost: _selectedHandWeapons[ gearCounter ].purchaseCost,
+                    loc: _selectedHandWeapons[ gearCounter ].readiedLocation,
+                    dropped: _selectedHandWeapons[ gearCounter ].droppedDuringCombat,
+                    sciFiMod: _selectedHandWeapons[ gearCounter ].sciFiMod
+                });
+            }
+
+            _exportObject.gearRangedWeapons = Array();
+            for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++ ) {
+                _exportObject.gearRangedWeapons.push( {
+                    book: _selectedRangedWeapons[ gearCounter ].book,
+                    tag: _selectedRangedWeapons[ gearCounter ].tag,
+                    cost: _selectedRangedWeapons[ gearCounter ].purchaseCost,
+                    loc: _selectedRangedWeapons[ gearCounter ].readiedLocation,
+                    dropped: _selectedRangedWeapons[ gearCounter ].droppedDuringCombat
+                });
+            }
+
+            _exportObject.gearArmor = Array();
+            for( var gearCounter = 0; gearCounter < _selectedArmor.length; gearCounter++ ) {
+                _exportObject.gearArmor.push( {
+                    book: _selectedArmor[ gearCounter ].book,
+                    tag: _selectedArmor[ gearCounter ].tag,
+                    cost: _selectedArmor[ gearCounter ].purchaseCost,
+                    readied: _selectedArmor[ gearCounter ].isReadied,
+                    dropped: _selectedArmor[ gearCounter ].droppedDuringCombat
+                });
+            }
+
+            _exportObject.settingRules = Array();
+            for( var bookCounter = 0; bookCounter < savageWorldsBooksList.length; bookCounter++ ) {
+                for( var settingCounter = 0; settingCounter < savageWorldsBooksList[bookCounter].setting_rules.length; settingCounter++ ) {
+                    if( savageWorldsBooksList[bookCounter].inUse && savageWorldsBooksList[bookCounter].setting_rules[settingCounter].inUse ) {
+                        _exportObject.settingRules.push( savageWorldsBooksList[bookCounter].setting_rules[settingCounter].tag );
+                    }
+                }
+
+            }
+
+            _exportObject.customRangedWeapons = this._customRangedWeapons;
+            _exportObject.customHandWeapons = this._customHandWeapons;
+            _exportObject.customGear = this._customGear;
+            _exportObject.customArmor = this._customArmor;
+            _exportObject.customShields = this._customShields;
+
+
+            _exportObject.spcpowerlevel = _SPCSelectedPowerLevel;
+            if(_SPCRisingStars )
+                _exportObject.risingstars = 1;
+            else
+                _exportObject.risingstars = 0;
+
+            _exportObject.knownLanguages = Array();
+            for( var langCounter = 0; langCounter < _knownLanguagesLimit + 1; langCounter++ ) {
+                _exportObject.knownLanguages.push( _knownLanguages[langCounter] );
+            }
+
+            if( _installedCyberware.length > 0 ) {
+                _exportObject.cyberware = Array()
+                for( var cyberC = 0; cyberC < _installedCyberware.length; cyberC++) {
+                    var exportItem = {
+                        tag: _installedCyberware[ cyberC ].tag,
+                        selectedRank: _installedCyberware[ cyberC ].selectedRank,
+                        option1: _installedCyberware[ cyberC ].option1,
+                        option2: _installedCyberware[ cyberC ].option2,
+                        option3: _installedCyberware[ cyberC ].option3,
+                        customName: _installedCyberware[ cyberC ].customName,
+                    }
+                    _exportObject.cyberware.push( exportItem );
+                }
+            }
+
+            if( _usesSPCCreation ) {
+                _exportObject.spcPowers = Array()
+
+                for( var powerCounter = 0; powerCounter < _selectedSPCPowers.length; powerCounter++) {
+
+                    var modifierObj = Array();
+                    for( var modCounter = 0; modCounter < _selectedSPCPowers[powerCounter].modifiersObj.length; modCounter++) {
+
+                        modifierObj[modCounter] = {
+                            //desc: _selectedSPCPowers[powerCounter].modifiersObj[modCounter].description,
+                            cost: _selectedSPCPowers[powerCounter].modifiersObj[modCounter].currentCost,
+                        }
+                    }
+
+                    var genericModifiersObj = Array();
+                    for( var modCounter = 0; modCounter < _selectedSPCPowers[powerCounter].genericModifiersObj.length; modCounter++) {
+
+                        genericModifiersObj[modCounter] = {
+                            //desc: _selectedSPCPowers[powerCounter].modifiersObj[modCounter].description,
+                            cost: _selectedSPCPowers[powerCounter].genericModifiersObj[modCounter].currentCost,
+                        }
+                    }
+
+                    switchableWith = "";
+                    if( _selectedSPCPowers[powerCounter].switchableWith && _selectedSPCPowers[powerCounter].switchableWith.tag ) {
+                        switchableWith = {
+                            "tag": _selectedSPCPowers[powerCounter].switchableWith.tag,
+                            "internalID": _selectedSPCPowers[powerCounter].switchableWith.internalID
+                        };
+                    }
+
+                    var exportItem = {
+                        id: _selectedSPCPowers[powerCounter].id,
+                        level: _selectedSPCPowers[powerCounter].selectedLevel,
+                        desc: _selectedSPCPowers[powerCounter].description,
+                        customName: _selectedSPCPowers[powerCounter].custom_name,
+                        switchableWith: switchableWith,
+                        modifiers: modifierObj,
+                        genericModifiers: genericModifiersObj,
+                        boostedAttribute: _selectedSPCPowers[powerCounter].boosted_attribute,
+                        boostedSkill: _selectedSPCPowers[powerCounter].boosted_skill,
+                        boostedSkillSpecialty: _selectedSPCPowers[powerCounter].boosted_specialty
+                    }
+
+                    _exportObject.spcPowers.push( exportItem );
+                }
+            }
+
+            _exportObject.advancements = Array();
+            for( var advCounter = 0; advCounter < _selectedAdvancements.length; advCounter++ ) {
+                if( _selectedAdvancements[advCounter].tag != "none") {
+                    var exportItem = {
+                        tag: _selectedAdvancements[advCounter].tag,
+                        takenAt: _selectedAdvancements[advCounter].takenAt
+                    }
+
+                    if( _selectedAdvancements[advCounter].option1 ) {
+
+                        if( _selectedAdvancements[advCounter].option1.tag ) {
+                            exportItem.option1 = _selectedAdvancements[advCounter].option1.tag;
+                        } else {
+                            if( _selectedAdvancements[advCounter].option1.id ) {
+                                exportItem.option1 = _selectedAdvancements[advCounter].option1.id;
+                            } else {
+                                exportItem.option1 = _selectedAdvancements[advCounter].option1;
+                            }
+                        }
+                        if( typeof(_selectedAdvancements[advCounter].option1.specify_name) == "string" ) {
+                            exportItem.option1name = _selectedAdvancements[advCounter].option1.specify_name;
+                        }
+                    }
+
+                    if( _selectedAdvancements[advCounter].option1book ) {
+                        exportItem.option1book = _selectedAdvancements[advCounter].option1book;
+                    }
+
+                    if( _selectedAdvancements[advCounter].option2 ) {
+                        if( _selectedAdvancements[advCounter].option2.tag ) {
+                            exportItem.option2 = _selectedAdvancements[advCounter].option2.tag;
+                        } else {
+                            if( _selectedAdvancements[advCounter].option2.id ) {
+                                exportItem.option2 = _selectedAdvancements[advCounter].option2.id;
+                            } else {
+                                exportItem.option2 = _selectedAdvancements[advCounter].option2;
+                            }
+                        }
+
+                        if( typeof(_selectedAdvancements[advCounter].option2.specify_name) == "string" ) {
+                            exportItem.option2name = _selectedAdvancements[advCounter].option2.specify_name;
+                        }
+                        if( typeof(_selectedAdvancements[advCounter].option2) == "string" ) {
+                            exportItem.option2name = _selectedAdvancements[advCounter].option2;
+                        }
+                    }
+
+                    if( _selectedAdvancements[advCounter].option2book ) {
+                        exportItem.option2book = _selectedAdvancements[advCounter].option2book;
+                    }
+
+                    _exportObject.advancements.push(
+                        exportItem
+                    )
+                }
+            }
+        }
+
+        return JSON.stringify( _exportObject );
+    }
+
+    this.getTranslation = function(langKey) {
+        for( lang_count = 0; lang_count < availableLanguages.length; lang_count++ ) {
+            if( availableLanguages[lang_count].short_code == _useLang ) {
+
+                if(availableLanguages[lang_count].translations[langKey] ) {
+                    return availableLanguages[lang_count].translations[langKey];
+                } else {
+                    return langKey;
+                }
+            }
+        }
+        return langKey;
+    }
+
+    this.bookInUse = function( bookID ) {
+        // console.log(_books);
+        for( var bookCounter = 0; bookCounter < _books.length; bookCounter++) {
+            if( _books[bookCounter].id == bookID ) {
+                if( _books[bookCounter].inUse == true ){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    this.hasArcane = function( arcaneTag ) {
+        if( typeof( arcaneTag ) == "string") {
+            if( _selectedArcaneBackground && _selectedArcaneBackground.tag == arcaneTag)
+                return true;
+        } else {
+            // for possible future use.
+            if( typeof( arcaneTag ) == "array") {
+                for(var atc = 0; atc > arcaneTag.length; atc++ ) {
+                    if( _selectedArcaneBackground && _selectedArcaneBackground.tag == arcaneTag[atc])
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    this.getPerkOptions = function() {
+        return _perkOptions;
+    }
+
+    this.getRaceOptions = function() {
+        return _raceOptions;
+    }
+
+    this.getAvailableEdges = function() {
+        return _availableEdges;
+    }
+
+    this.getAvailablePowers = function() {
+        return _availablePowers;
+    }
+
+    this.getAvailableTrappings = function() {
+        return _availableTrappings;
+    }
+
+    this.setSelectedPower = function( powerIndex, powerObject ) {
+        if( _selectedPowers[ powerIndex ] )
+            return _selectedPowers[ powerIndex ] = powerObject;
+        else
+            return false;
+    }
+
+    this.getStartingFunds = function() {
+        return _startingFunds;
+    }
+
+    this.addCurrentFunds = function( newValue ) {
+        return _currentFunds += newValue / 1;
+    }
+
+    this.setStartingFunds = function( newValue ) {
+        _startingFunds = newValue / 1;
+    }
+
+    this.setCurrentFunds = function( newValue ) {
+        _currentFunds = newValue / 1;
+    }
+
+    this.getCurrentFunds = function() {
+        return _currentFunds;
+    }
+
+    this.getGenderOptions = function() {
+        return _genderOptions;
+    }
+
+
+    this.getRace = function() {
+        return _race;
+    }
+
+    this.getGender = function() {
+        return _gender;
+    }
+
+    this.getName = function() {
+        return _name;
+    }
+
+    this.getDescripton = function() {
+        return _description;
+    }
+
+    this.getDiceValues = function() {
+        return _diceValues;
+    }
+
+    this.usesSPCCreation = function() {
+        return _usesSPCCreation;
+    }
+
+    this.getAvailableEdgePoints = function() {
+        return _availableEdgePoints;
+    }
+
+    this.getBackground = function() {
+        return _background;
+    }
+
+    this.setName = function( newValue ) {
+        return _name = newValue;
+    }
+
+    this.setDescripton = function( newValue ) {
+        return _description = newValue;
+    }
+
+    this.setBackground = function( newValue ) {
+        return _background = newValue;
+    }
+
+    this.getAttributeDisplayValues = function() {
+        return _displayAttributes;
+    }
+
+    this.getSPCSelectedPowerLevel = function() {
+        return _SPCSelectedPowerLevel;
+    }
+
+    this.setSPCCampaignPowerLevel = function( newValue ) {
+        return _SPCSelectedPowerLevel = newValue;
+    }
+
+    this.getSPCCurrentPowerPoints = function() {
+        return _SPCCurrentPowerPoints;
+    }
+
+    this.getSPCPowerLimit = function() {
+        return _SPCPowerLimit;
+    }
+
+    this.getSPCStartingPowerPoints = function() {
+        return _SPCStartingPowerPoints;
+    }
+
+    this.getSPCPowerLevels = function() {
+        return _SPCPowerLevels;
+    }
+
+    this.getAttributes = function() {
+        return _attributes;
+    }
+
+    this.getBooks = function() {
+        return _books;
+    }
+
+    this.getCurrentLoad = function() {
+        return _load.currentLoad;
+    }
+
+    this.getCurrentLoadModifier = function() {
+        return _load.loadModifier;
+    }
+
+    this.getSPCRisingStars = function() {
+        return _SPCRisingStars;
+    }
+
+    this.incrementSPCPowerLevel = function( powerIndex ) {
+        _selectedSPCPowers[powerIndex].selectedLevel++;
+        if( _selectedSPCPowers[powerIndex].max_level > 1 && _selectedSPCPowers[powerIndex].selectedLevel >= _selectedSPCPowers[powerIndex].max_level) {
+            _selectedSPCPowers[powerIndex].selectedLevel = _selectedSPCPowers[powerIndex].max_level;
+        }
+        return _selectedSPCPowers[powerIndex];
+    }
+
+
+
+    this.decrementSPCPowerLevel = function( powerIndex ) {
+        _selectedSPCPowers[powerIndex].selectedLevel--;
+        if( _selectedSPCPowers[powerIndex].selectedLevel < 1) {
+            _selectedSPCPowers[powerIndex].selectedLevel = 1;
+        }
+        return _selectedSPCPowers[powerIndex];
+    }
+
+    this.setSPCRisingStars = function( newValue ) {
+        return _SPCRisingStars = newValue;
+    }
+
+    this.getCombatLoadModifier = function() {
+        return _load.combatLoadModifier;
+    }
+
+    this.getCombatLoad = function() {
+        return _load.combatLoad;
+    }
+
+    this.usesStrain = function( setValue ) {
+        if( typeof( setValue ) != "undefined" )
+            _usesStrain = setValue;
+        return _usesStrain;
+    }
+
+    this.usesSanity = function( setValue ) {
+        if( typeof( setValue ) != "undefined" )
+            _usesSanity = setValue;
+        return _usesSanity;
+    }
+
+    this.hasArcaneBackground = function( setValue ) {
+
+        if( typeof( setValue ) != "undefined" )
+            _hasArcaneBackground = setValue;
+
+        return _hasArcaneBackground;
+    }
+
+    this.getWarningReport = function() {
+        return _warningReport;
+    }
+
+    this.getValidationReport = function() {
+        return _validationReport;
+    }
+
+    this.incrementAttributePointsAvailable = function( incValue ) {
+        if( typeof( incValue ) == "undefined" )
+            incValue = 1;
+        _attributePointsAvailable += incValue / 1;
+    }
+
+    this.secondMajorHindranceChosen = function() {
+        return _secondMajorHindranceChosen;
+    }
+
+    this.incrementAvailbleEdgePoints = function( incValue ) {
+        if( typeof( incValue ) == "undefined" )
+            incValue = 1;
+        _availableEdgePoints += incValue / 1;
+    }
+
+    this.incrementSkillPointsAvailable = function( incValue ) {
+        if( typeof( incValue ) == "undefined" )
+            incValue = 1;
+        _skillPointsAvailable += incValue / 1;
+    }
+
+    this.incrementEdgePoints = function( incValue ) {
+        if( typeof( incValue ) == "undefined" )
+            incValue = 1;
+        _availableEdgePoints += incValue / 1;
+    }
+
+    this.incrementPace = function( incValue ) {
+        if( typeof( incValue ) == "undefined" )
+            incValue = 1;
+        _derived.pace += incValue / 1;
+    }
+
+    this.incrementStrain = function( incValue ) {
+        if( typeof( incValue ) == "undefined" )
+            incValue = 1;
+        _derived._strainBonus += incValue / 1;
+    }
+
+    this.incrementArmor = function( incValue ) {
+        if( typeof( incValue ) == "undefined" )
+            incValue = 1;
+        _derived.armor += incValue / 1;
+    }
+
+    this.getCombatEdges = function( cyberIndex ) {
+        return _combatEdges;
+    }
+
+    this.doubleStrain = function() {
+        _derived._doubleStrain = true
+    }
+
+    this.getAvailbleArcaneBackgrounds = function() {
+        return _availableArcaneBackgrounds;
+    }
+
+    this.setTakenSPCExtraPowerPoints = function( newValue ) {
+        if( newValue )
+            _SPCTakenExtraPowerPoints = true;
+        else
+            _SPCTakenExtraPowerPoints = false;
+    }
+
+    this.getTakenSPCExtraPowerPoints = function() {
+        return _SPCTakenExtraPowerPoints;
+    }
+
+    this.isValid = function() {
+        return _isValid;
+    }
+
+    this.getLocalName = function( incomingStringArray ) {
+            if( incomingStringArray[ _useLang] ) {
+                return incomingStringArray[ _useLang];
+            } else {
+                return incomingStringArray[ "en-US" ];
+            }
+    }
+
+    this.getAgilitySkills = function() {
+        return _agilitySkills;
+    }
+
+    this.getAvailableSkillPoints = function() {
+        return _skillPointsAvailable;
+    }
+
+    this.getUsedSkillPoints = function() {
+        return _skillPointsUsed;
+    }
+
+    this.getAvailableAttributePoints = function() {
+        return _attributePointsAvailable;
+    }
+
+    this.getUsedAttributePoints = function() {
+        return _attributePointsUsed;
+    }
+
+    this.getSmartsSkills = function() {
+        return _smartsSkills;
+    }
+
+    this.getPowerPointsAvailable = function() {
+        return _powerPointsAvailable;
+    }
+
+    this.usesPowerPoints = function() {
+        if ( this.isSettingRuleEnabled("no-power-points") )
+            return false;
+        else
+            return true;
+    }
+
+    this.getSelectedPowers = function() {
+        return _selectedPowers;
+    }
+
+    this.getSelectedArcaneBackground = function() {
+        return _selectedArcaneBackground;
+    }
+
+    this.getAvailablePerkPoints = function() {
+        return _availablePerkPoints;
+    }
+
+    this.getAvailableNumberOfPowers = function() {
+        return _totalPowersKnown;
+    }
+
+    this.incrementAdditionalPowersKnown = function() {
+        _additionalPowersKnown++;
+        //~ console.log( "incrementAdditionalPowersKnown", _additionalPowersKnown );
+        return _additionalPowersKnown;
+    }
+
+    this.addAdditionalPowerPoints = function( numberPowerPoints ) {
+        _powerPointsAvailable += numberPowerPoints / 1;
+        //~ console.log( "addAdditionalPowerPoints", _totalPowerPoints );
+        return _powerPointsAvailable;
+    }
+
+    this.addAdditionalSPCPowerPoints = function( numberPowerPoints ) {
+        _spcExtraPowerPoints += numberPowerPoints / 1;
+        //~ console.log( "addAdditionalSPCPowerPoints", _spcExtraPowerPoints );
+        return _spcExtraPowerPoints;
+    }
+
+    this.getCurrentFunds = function() {
+        return _currentFunds;
+    }
+
+    this.getSpiritSkills = function() {
+        return _spiritSkills;
+    }
+
+    this.getVigorSkills = function() {
+        return _vigorSkills;
+    }
+
+    this.getStrengthSkills = function() {
+        return _strengthSkills;
+    }
+
+    this.incrementSkill = function( skillID ) {
+        for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
+            if( _skillList[skillCounter].id == skillID ) {
+                _skillList[skillCounter].value++;
+                if( _skillList[skillCounter].value > 5)
+                    _skillList[skillCounter].value = 5;
+
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    this.removeCyberware = function( cyberIndex ) {
+        if( _installedCyberware[ cyberIndex ] )
+            _installedCyberware.splice( cyberIndex, 1);
+    }
+
+
+    this.setCyberEdge = function( cyberIndex, bookID, edgeTag ) {
+        if( _installedCyberware[ cyberIndex ] ) {
+             _installedCyberware[ cyberIndex ].option1 = bookID;
+             _installedCyberware[ cyberIndex ].option2 = edgeTag;
+             _installedCyberware[ cyberIndex ].selectedEdge = null;
+             for( var edgeC = 0; edgeC < _combatEdges.length; edgeC++ ) {
+                 if( _combatEdges[ edgeC ].tag == edgeTag && _combatEdges[ edgeC ].book == bookID )
+                    _installedCyberware[ cyberIndex ].selectedEdge = _combatEdges[ edgeC ]
+             }
+        }
+
+        return _installedCyberware[ cyberIndex ].option1;
+    }
+
+    this.getLoadLimit = function() {
+        return _loadLimit;
+    }
+
+    this.setCyberOption1 = function( cyberIndex, newValue ) {
+        if( _installedCyberware[ cyberIndex ] )
+             _installedCyberware[ cyberIndex ].option1 = newValue;
+
+        return _installedCyberware[ cyberIndex ].option1;
+    }
+
+    this.setCyberOption2 = function( cyberIndex, newValue ) {
+        if( _installedCyberware[ cyberIndex ] )
+             _installedCyberware[ cyberIndex ].option2 = newValue;
+
+        return _installedCyberware[ cyberIndex ].option2;
+    }
+
+    this.setCyberOption3 = function( cyberIndex, newValue ) {
+        if( _installedCyberware[ cyberIndex ] )
+             _installedCyberware[ cyberIndex ].option3 = newValue;
+
+        return _installedCyberware[ cyberIndex ].option3;
+    }
+
+    this.setCyberCustomName = function( cyberIndex, newValue ) {
+        if( _installedCyberware[ cyberIndex ] )
+             _installedCyberware[ cyberIndex ].customName = newValue;
+
+        return _installedCyberware[ cyberIndex ].customName;
+    }
+
+    this.installCyberware = function( cyberTag, selectedRank, option1, option2, option3, customName ) {
+        if( typeof( selectedRank ) == "undefined" )
+            selectedRank = 1;
+        if( typeof( option1 ) == "undefined" )
+            option1 = null;
+        if( typeof( option2 ) == "undefined" )
+            option2 = null;
+        if( typeof( option3 ) == "undefined" )
+            option3 = null;
+        if( typeof( customName ) == "undefined" )
+            customName = null;
+
+        for( var cyberC = 0; cyberC < _availableCyberware.length; cyberC++ ) {
+            if( _availableCyberware[cyberC].tag == cyberTag ) {
+
+                var cyberObject = angular.copy ( _availableCyberware[cyberC] );
+
+                cyberObject.selectedRank = selectedRank;
+                cyberObject.option1 = option1;
+                cyberObject.option2 = option2;
+                cyberObject.option3 = option3;
+                cyberObject.customName = customName;
+
+                _installedCyberware.push( cyberObject );
+
+                return cyberObject;
+                break;
+            }
+        }
+
+    }
+
+    this.getInstalledCyberware = function() {
+        return _installedCyberware;
+    }
+
+    this.cyberwareAvailable = function( cyberTag ) {
+
+        var maxAvailable = 0;
+        var currentInstalled = 0;
+        for( var cyberC = 0; cyberC < _availableCyberware.length; cyberC++ ) {
+
+            if( _availableCyberware[cyberC].tag == cyberTag ) {
+                if( _availableCyberware[cyberC].getMax() == "u" )
+                    return true;
+                else
+                    maxAvailable = _availableCyberware[cyberC].getMax();
+            }
+        }
+
+        for( var cyberC = 0; cyberC < _installedCyberware.length; cyberC++ ) {
+            if( _installedCyberware[cyberC].tag == cyberTag ) {
+                currentInstalled++;
+            }
+        }
+
+        if( maxAvailable > currentInstalled )
+            return true;
+        else
+            return false;
+
+    }
+
+    this.decrementSkill = function( skillID ) {
+        for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
+            if( _skillList[skillCounter].id == skillID ) {
+                _skillList[skillCounter].value--;
+                if( _skillList[skillCounter].value < 0)
+                    _skillList[skillCounter].value = 0;
+
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    this.addSpecialtySkill = function( skillItem, specialtyName, specialtyValue, advancementSkill ) {
+        if( !specialtyName )
+            specialtyName = '';
+        if( !specialtyValue )
+            specialtyValue = 1;  // d4
+        if( !advancementSkill )
+            advancementSkill = 0;
+        for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
+            if(
+                (
+                    _skillList[skillCounter].id == skillItem
+                        ||
+                    _skillList[skillCounter].id == skillItem.id
+                )
+                    &&
+                !_skillList[skillCounter].is_specialty
+            ) {
+                _skillList[skillCounter].specialties.push(
+                    {
+                        name: specialtyName,
+                        value: specialtyValue,
+                        advskill: advancementSkill
+                    }
+                );
+            }
+        }
+        return false;
+    }
+
+    this.setSkill = function( skillID, skillValue ) {
+        for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
+            if( _skillList[skillCounter].id == skillID ) {
+                _skillList[skillCounter].value = skillValue;
+                _skillList[skillCounter].advskill = 0;
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    this.addRacialSkill = function( skillID, skillValue ) {
+        for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
+            if( _skillList[skillCounter].id == skillID ) {
+                _skillList[skillCounter].boost = skillValue;
+                _skillList[skillCounter].advskill = 0;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    this.getSkill = function( skillID, specifyName ) {
+        for( var skillCounter = 0; skillCounter < _allSkills.length; skillCounter++ ) {
+            if(
+                _allSkills[skillCounter].id == skillID
+                    ||
+                _allSkills[skillCounter] == skillID
+                    ||
+                (
+                    skillID.id
+                        &&
+                    (
+                        _allSkills[skillCounter].id == skillID.id
+                            ||
+                        _allSkills[skillCounter] == skillID.id
+                    )
+                )
+            ) {
+                if( specifyName ) {
+                    if( specifyName ) {
+                        if( _allSkills[skillCounter].specialties ) {
+
+                            for( var specC = 0; specC < _allSkills[skillCounter].specialties.length; specC++ ) {
+
+                                if( _allSkills[skillCounter].specialties[specC].name.trim().toLowerCase() == specifyName.trim().toLowerCase() ) {
+                                    return _allSkills[skillCounter].specialties[specC];
+                                }
+                            }
+                        }
+                        return null;
+                    }
+                } else {
+                    return _allSkills[skillCounter];
+                }
+
+            }
+
+        }
+        return null;
+    }
+
+    this.setSpecialties = function( skillID, specialtiesValue ) {
+        for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
+            if( _skillList[skillCounter].id == skillID ) {
+                _skillList[skillCounter].specialties = specialtiesValue;
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+    this.incrementSpecialtySkill = function( skillID, specialtyIndex ) {
+        for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
+            if( _skillList[skillCounter].id == skillID ) {
+                if( _skillList[skillCounter].specialties[ specialtyIndex] ) {
+                    _skillList[skillCounter].specialties[ specialtyIndex].value++;
+                    if( _skillList[skillCounter].specialties[ specialtyIndex].value < 0)
+                        _skillList[skillCounter].specialties[ specialtyIndex].value = 0;
+                    return true;
+                }
+            }
+
+        }
+        return false;
+    }
+
+    this.decrementSpecialtySkill = function( skillID, specialtyIndex ) {
+        for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
+            if( _skillList[skillCounter].id == skillID ) {
+                if( _skillList[skillCounter].specialties[ specialtyIndex] ) {
+
+                    if( _skillList[skillCounter].specialties[ specialtyIndex].value < 2) {
+                        //_skillList[skillCounter].specialties[ specialtyIndex].value = 0;
+                        if( _skillList[skillCounter].specialties.length == 1){
+                            _skillList[skillCounter].specialties = Array();
+                            return true;
+                        } else {
+                            this.removeSpecialtyAtIndex( skillID, specialtyIndex);
+                            return true;
+                        }
+                    } else {
+                        _skillList[skillCounter].specialties[ specialtyIndex].value--;
+                        return true;
+                    }
+
+                }
+            }
+
+        }
+        return false;
+    }
+
+    this.updateSpecialtySkillName = function( skillID, specialtyIndex, updatedName ) {
+        for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
+            if( _skillList[skillCounter].id == skillID ) {
+                if( _skillList[skillCounter].specialties[ specialtyIndex] ) {
+                    _skillList[skillCounter].specialties[ specialtyIndex].name = updatedName;
+                    return true;
+                }
+            }
+
+        }
+        return false;
+    }
+
+    this.hasEdge = function( edgeTag, maxCount ) {
+        if( !maxCount )
+            maxCount = -1;
+        for( var edgeCounter = 0; edgeCounter < _selectedEdges.length; edgeCounter++ ) {
+
+            if( _selectedEdges[edgeCounter].tag == edgeTag) {
+                return true;
+            }
+        }
+
+        for( var edgeCounter = 0; edgeCounter < _race.edges.length; edgeCounter++ ) {
+            if( _race.edges[edgeCounter].tag == edgeTag){
+                return true;
+            }
+        }
+
+        for( var edgeCounter = 0; edgeCounter < _selectedAdvancements.length; edgeCounter++ ) {
+            if(
+                _selectedAdvancements[edgeCounter].tag == "edge"
+                    &&
+                 _selectedAdvancements[edgeCounter].option1
+                     &&
+                 _selectedAdvancements[edgeCounter].option1.tag
+                     &&
+                 _selectedAdvancements[edgeCounter].option1.tag == edgeTag
+            ){
+                if( maxCount == -1 || maxCount >= edgeCounter )
+                     return true;
+            }
+        }
+        return false;
+    }
+
+    this.hasHindrance = function( edgeTag ) {
+        for( var hindranceCounter = 0; hindranceCounter < _selectedHindrances.length; hindranceCounter++ ) {
+            if(
+                _selectedHindrances[hindranceCounter].tag.indexOf(edgeTag + "-") === 0
+                    ||
+                _selectedHindrances[hindranceCounter].tag == edgeTag
+            ) {
+                return _selectedHindrances[hindranceCounter].tag;
+            }
+        }
+
+        for( var hindranceCounter = 0; hindranceCounter < _race.hindrances.length; hindranceCounter++ ) {
+            if(
+                _race.hindrances[hindranceCounter].indexOf(edgeTag + "-") === 0
+                    ||
+                _race.hindrances[hindranceCounter].tag == edgeTag
+            ) {
+
+                return _race.hindrances[hindranceCounter].tag;
+            }
+        }
+        return false;
+    }
+
+    this.removeSpecialtyAtIndex = function( skillID, specialtyIndex ) {
+        for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
+            if( _skillList[skillCounter].id == skillID ) {
+                if( _skillList[skillCounter].specialties[ specialtyIndex] ) {
+                    _skillList[skillCounter].specialties.splice(specialtyIndex, 1);
+                    return true;
+                }
+            }
+
+        }
+        return false;
+    }
+
+    this.addPerk = function( perkTag ) {
+        for( var perkCounter = 0; perkCounter < _perkOptions.length; perkCounter++ ) {
+            if( perkTag == _perkOptions[perkCounter].tag ) {
+                _selectedPerks.push( _perkOptions[perkCounter] );
+                return true;
+            }
+        }
+        return false;
+    }
+
+    this.removePerk = function( perkTag ) {
+        for( var perkCounter = 0; perkCounter < _selectedPerks.length; perkCounter++ ) {
+            if( perkTag == _selectedPerks[perkCounter].tag ) {
+                _selectedPerks.splice( perkCounter, 1 );
+                return true;
+            }
+        }
+        return false;
+    }
+    this.setAttribute = function( attributeName, diceID ) {
+        _attributes[attributeName] = diceID - _attributeBoost[attributeName];
+    }
+
+    this.boostAttribute = function( attributeName, boostNumber ) {
+        if( !boostNumber )
+            boostNumber = 1;
+        _attributeBoost[attributeName] += boostNumber;
+    }
+
+    this.boostSkill = function( skillID, specialtyName, boostNumber ) {
+        //~ console.log( "boostSkill", skillID, specialtyName, boostNumber );
+        if( !boostNumber )
+            boostNumber = 1;
+        for( var skillCounter = 0; skillCounter < _skillList.length; skillCounter++ ) {
+            if( _skillList[skillCounter].id == skillID ) {
+                if( specialtyName && _skillList[skillCounter].specify ) {
+
+                    for( var skillCounter2 = 0; skillCounter2 < _skillList[skillCounter].specialties.length; skillCounter2++ ) {
+                        if(  _skillList[skillCounter].specialties[skillCounter2].name == specialtyName ) {
+                            _skillList[skillCounter].specialties[skillCounter2].boost += boostNumber;
+                            return true;
+                        }
+                    }
+
+                    // Specialy is not found - add it and boost it!
+                    _skillList[skillCounter].specialties.push(
+                        {
+                            name: specialtyName,
+                            value: 0,
+                            boost: boostNumber
+                        }
+                    );
+                    return true;
+                } else {
+                    _skillList[skillCounter].boost += boostNumber;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    this.setArcaneBackground = function( abTag ) {
+        for( abCounter = 0; abCounter < savageWorldsArcaneBackgrounds.length; abCounter++) {
+            if( abTag == savageWorldsArcaneBackgrounds[abCounter].tag ) {
+                _selectedArcaneBackground = savageWorldsArcaneBackgrounds[abCounter];
+                return true;
+            }
+        }
+        return false;
+    }
+
+    this.addGearMundane = function( fromBook, gearTag, itemCost, droppedDuringCombat, itemCount ) {
+        if( !itemCount )
+            itemCount = 1;
+        if(!droppedDuringCombat)
+            droppedDuringCombat = false;
+        for( var gearCounter = 0; gearCounter < _availableMundaneGear.length; gearCounter++ ) {
+            if(
+                gearTag == _availableMundaneGear[ gearCounter ].tag
+                    &&
+                fromBook == _availableMundaneGear[ gearCounter ].book
+
+            ) {
+                mundaneGearIndex = this.getMundaneGear( gearTag );
+
+                var pushedItem = {};
+                angular.extend( pushedItem, _availableMundaneGear[ gearCounter ]);
+                pushedItem.droppedDuringCombat = droppedDuringCombat;
+                if( itemCost > -1 ) {
+                    pushedItem.purchaseCost = itemCost;
+                } else {
+                    pushedItem.purchaseCost = pushedItem.cost;
+                }
+
+                if( mundaneGearIndex > -1 ) {
+
+                    if( _selectedMundaneGear[mundaneGearIndex].purchaseCost == pushedItem.purchaseCost  ) {
+                        _selectedMundaneGear[mundaneGearIndex].count++;
+                    } else {
+                        // push new item since prices don't match.
+                        pushedItem.count = itemCount;
+                        _selectedMundaneGear.push( pushedItem );
+                    }
+                    return true;
+                } else {
+                    // push new item
+                    pushedItem.count = itemCount;
+
+
+                    _selectedMundaneGear.push( pushedItem );
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    this.getMundaneGear = function( gearTag ) {
+        for( var findCounter = 0; findCounter < _selectedMundaneGear.length; findCounter++ ) {
+            if( _selectedMundaneGear[findCounter].tag == gearTag )
+                return findCounter;
+        }
+
+        return -1;
+    }
+
+    this.addGearRangedWeapon = function( fromBook, gearTag, itemCost, readiedLocation, droppedDuringCombat ) {
+        if(!droppedDuringCombat)
+            droppedDuringCombat = false;
+        for( var gearCounter = 0; gearCounter < _availableRangedWeapons.length; gearCounter++ ) {
+            if(
+                gearTag == _availableRangedWeapons[ gearCounter ].tag
+                    &&
+                fromBook == _availableRangedWeapons[ gearCounter ].book
+            ) {
+                var pushedItem = {};
+                angular.extend( pushedItem, _availableRangedWeapons[ gearCounter ]);
+                pushedItem.droppedDuringCombat = droppedDuringCombat;
+                if( itemCost > -1 ) {
+                    pushedItem.purchaseCost = itemCost;
+                } else {
+                    pushedItem.purchaseCost = pushedItem.cost;
+                }
+                if( readiedLocation ) {
+                    pushedItem.readiedLocation = readiedLocation;
+                } else {
+                    pushedItem.readiedLocation = "";
+                }
+                _selectedRangedWeapons.push( pushedItem );
+                return true;
+            }
+        }
+        return false;
+    }
+
+    this.addGearHandWeapon = function( fromBook, gearTag, itemCost, readiedLocation, droppedDuringCombat, sciFiMod ) {
+        if(!droppedDuringCombat)
+            droppedDuringCombat = false;
+        if(!sciFiMod)
+            sciFiMod = "";
+        for( var gearCounter = 0; gearCounter < _availableHandWeapons.length; gearCounter++ ) {
+            //~ if(
+                //~ gearTag == _availableHandWeapons[ gearCounter ].tag
+            //~ ) {
+                //~ console.log( _availableHandWeapons[ gearCounter ].book );
+                //~ console.log(gearCounter);
+            //~ }
+            if(
+                gearTag == _availableHandWeapons[ gearCounter ].tag
+                    &&
+                fromBook == _availableHandWeapons[ gearCounter ].book
+            ) {
+                var pushedItem = {};
+                angular.extend( pushedItem, _availableHandWeapons[ gearCounter ]);
+                pushedItem.droppedDuringCombat = droppedDuringCombat;
+                if( itemCost > -1 ) {
+                    pushedItem.purchaseCost = itemCost;
+                } else {
+                    pushedItem.purchaseCost = pushedItem.cost;
+                }
+                if( readiedLocation ) {
+                    pushedItem.readiedLocation = readiedLocation;
+                } else {
+                    pushedItem.readiedLocation = "";
+                }
+
+                pushedItem.sciFiMod = sciFiMod;
+
+                _selectedHandWeapons.push( pushedItem );
+                return true;
+            }
+        }
+        return false;
+    }
+
+    this.addGearShield = function( fromBook, gearTag, itemCost, readiedLocation, droppedDuringCombat ) {
+        if(!droppedDuringCombat)
+            droppedDuringCombat = false;
+        for( var gearCounter = 0; gearCounter < _availableShields.length; gearCounter++ ) {
+            if(
+                gearTag == _availableShields[ gearCounter ].tag
+                    &&
+                fromBook == _availableShields[ gearCounter ].book
+            ) {
+                var pushedItem = {};
+                angular.extend( pushedItem, _availableShields[ gearCounter ]);
+                pushedItem.droppedDuringCombat = droppedDuringCombat;
+                if( itemCost > -1 ) {
+                    pushedItem.purchaseCost = itemCost;
+                } else {
+                    pushedItem.purchaseCost = pushedItem.cost;
+                }
+                if( readiedLocation ) {
+                    pushedItem.readiedLocation = readiedLocation;
+                } else {
+                    pushedItem.readiedLocation = "";
+                }
+                _selectedShields.push( pushedItem );
+                return true;
+            }
+        }
+        return false;
+    }
+
+    this.addGearArmor = function( fromBook, gearTag, itemCost, isReadied, droppedDuringCombat ) {
+        if(!droppedDuringCombat)
+            droppedDuringCombat = false;
+        for( var gearCounter = 0; gearCounter < _availableArmor.length; gearCounter++ ) {
+            if(
+                gearTag == _availableArmor[ gearCounter ].tag
+                    &&
+                fromBook == _availableArmor[ gearCounter ].book
+            ) {
+                var pushedItem = {};
+                angular.extend( pushedItem, _availableArmor[ gearCounter ]);
+                pushedItem.droppedDuringCombat = droppedDuringCombat;
+                if( itemCost > -1 ) {
+                    pushedItem.purchaseCost = itemCost;
+                } else {
+                    pushedItem.purchaseCost = pushedItem.cost;
+                }
+                if( isReadied ) {
+                    pushedItem.isReadied = isReadied;
+                } else {
+                    pushedItem.isReadied = false;
+                }
+                _selectedArmor.push( pushedItem );
+                return true;
+            }
+        }
+        return false;
+    }
+
+    this.removeMundane = function( gearIndex ) {
+        if( _selectedMundaneGear[gearIndex].count > 1)
+            _selectedMundaneGear[gearIndex].count--;
+        else
+            _selectedMundaneGear.splice( gearIndex, 1);
+    }
+
+    this.removeArmor = function( gearIndex ) {
+        _selectedArmor.splice( gearIndex, 1);
+    }
+    this.removeHandWeapon = function( gearIndex ) {
+        _selectedHandWeapons.splice( gearIndex, 1);
+    }
+
+    this.removeRangedWeapon = function( gearIndex ) {
+        _selectedRangedWeapons.splice( gearIndex, 1);
+    }
+
+    this.removeShield = function( gearIndex ) {
+        _selectedShields.splice( gearIndex, 1);
+    }
+
+    this.equipPrimaryHandWeapon = function( gearIndex ) {
+        // unequip all items in primary hand....
+        for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
+            if( _selectedShields[ gearCounter ].readiedLocation == "primary" )
+                _selectedShields[ gearCounter ].readiedLocation = "";
+            if( _selectedHandWeapons[gearIndex].requires_2_hands > 0 ) {
+                if( _selectedShields[ gearCounter ].readiedLocation == "secondary" )
+                    _selectedShields[ gearCounter ].readiedLocation = "";
+            }
+        }
+
+        for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++ ) {
+            if( _selectedHandWeapons[ gearCounter ].readiedLocation == "primary" )
+                _selectedHandWeapons[ gearCounter ].readiedLocation = "";
+            if( _selectedHandWeapons[gearIndex].requires_2_hands > 0 ) {
+                if( _selectedHandWeapons[ gearCounter ].readiedLocation == "secondary" )
+                    _selectedHandWeapons[ gearCounter ].readiedLocation = "";
+            }
+        }
+
+        for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++ ) {
+            if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "primary" )
+                _selectedRangedWeapons[ gearCounter ].readiedLocation = "";
+            if( _selectedRangedWeapons[gearIndex].requires_2_hands > 0 ) {
+                if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "secondary" )
+                    _selectedRangedWeapons[ gearCounter ].readiedLocation = "";
+            }
+        }
+
+        _selectedHandWeapons[gearIndex].droppedDuringCombat = false;
+        _selectedHandWeapons[gearIndex].readiedLocation = "primary";
+
+    }
+
+    this.hasNaturalWeapons = function( newValue ) {
+
+        if( typeof( newValue ) != "undefined" ) {
+            if( newValue === true )
+                _naturalWeapons.push("Natural Weapons");
+            else
+                _naturalWeapons.push(newValue);
+        }
+
+        return _naturalWeapons;
+    }
+
+    this.equipPrimaryRangedWeapon = function( gearIndex ) {
+        // unequip all items in primary hand....
+        for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
+            if( _selectedShields[ gearCounter ].readiedLocation == "primary" )
+                _selectedShields[ gearCounter ].readiedLocation = "";
+            if( _selectedHandWeapons[gearIndex].requires_2_hands > 0 ) {
+                if( _selectedShields[ gearCounter ].readiedLocation == "secondary" )
+                    _selectedShields[ gearCounter ].readiedLocation = "";
+            }
+        }
+
+        for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++ ) {
+            if( _selectedHandWeapons[ gearCounter ].readiedLocation == "primary" )
+                _selectedHandWeapons[ gearCounter ].readiedLocation = "";
+            if( _selectedHandWeapons[gearIndex].requires_2_hands > 0 ) {
+                if( _selectedHandWeapons[ gearCounter ].readiedLocation == "secondary" )
+                    _selectedHandWeapons[ gearCounter ].readiedLocation = "";
+            }
+        }
+
+        for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++ ) {
+            if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "primary" )
+                _selectedRangedWeapons[ gearCounter ].readiedLocation = "";
+            if( _selectedRangedWeapons[gearIndex].requires_2_hands > 0 ) {
+                if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "secondary" )
+                    _selectedRangedWeapons[ gearCounter ].readiedLocation = "";
+            }
+        }
+
+        _selectedRangedWeapons[gearIndex].droppedDuringCombat = false;
+        _selectedRangedWeapons[gearIndex].readiedLocation = "primary";
+
+    }
+
+    this.equipSecondaryHandWeapon = function( gearIndex ) {
+        // unequip all items in primary hand....
+        for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
+            if( _selectedShields[ gearCounter ].readiedLocation == "secondary" )
+                _selectedShields[ gearCounter ].readiedLocation = "";
+        }
+
+        for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++ ) {
+            if( _selectedHandWeapons[ gearCounter ].readiedLocation == "secondary" )
+                _selectedHandWeapons[ gearCounter ].readiedLocation = "";
+        }
+
+        for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++ ) {
+            if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "secondary" )
+                _selectedRangedWeapons[ gearCounter ].readiedLocation = "";
+        }
+
+        _selectedHandWeapons[gearIndex].readiedLocation = "secondary";
+        _selectedHandWeapons[gearIndex].droppedDuringCombat = false;
+    }
+
+    this.equipSecondaryRangedWeapon = function( gearIndex ) {
+        // unequip all items in primary hand....
+        for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
+            if( _selectedShields[ gearCounter ].readiedLocation == "secondary" )
+                _selectedShields[ gearCounter ].readiedLocation = "";
+        }
+
+        for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++ ) {
+            if( _selectedHandWeapons[ gearCounter ].readiedLocation == "secondary" )
+                _selectedHandWeapons[ gearCounter ].readiedLocation = "";
+        }
+
+        for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++ ) {
+            if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "secondary" )
+                _selectedRangedWeapons[ gearCounter ].readiedLocation = "";
+        }
+
+        _selectedRangedWeapons[gearIndex].readiedLocation = "secondary";
+        _selectedRangedWeapons[gearIndex].droppedDuringCombat = false;
+    }
+
+    this.equipPrimaryShield = function( gearIndex ) {
+        // unequip all items in primary hand....
+        for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
+            if( _selectedShields[ gearCounter ].readiedLocation == "primary" )
+                _selectedShields[ gearCounter ].readiedLocation = "";
+        }
+
+        for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++ ) {
+            if( _selectedHandWeapons[ gearCounter ].readiedLocation == "secondary" )
+                _selectedHandWeapons[ gearCounter ].readiedLocation = "";
+        }
+
+        for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++ ) {
+            if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "secondary" )
+                _selectedRangedWeapons[ gearCounter ].readiedLocation = "";
+        }
+
+        _selectedShields[gearIndex].readiedLocation = "primary";
+        _selectedShields[gearIndex].droppedDuringCombat = false;
+    }
+
+    this.equipSecondaryShield = function( gearIndex ) {
+        // unequip all items in primary hand....
+        for( var gearCounter = 0; gearCounter < _selectedShields.length; gearCounter++ ) {
+            if( _selectedShields[ gearCounter ].readiedLocation == "secondary" )
+                _selectedShields[ gearCounter ].readiedLocation = "";
+        }
+
+        for( var gearCounter = 0; gearCounter < _selectedHandWeapons.length; gearCounter++ ) {
+            if( _selectedHandWeapons[ gearCounter ].readiedLocation == "secondary" )
+                _selectedHandWeapons[ gearCounter ].readiedLocation = "";
+        }
+
+        for( var gearCounter = 0; gearCounter < _selectedRangedWeapons.length; gearCounter++ ) {
+            if( _selectedRangedWeapons[ gearCounter ].readiedLocation == "secondary" )
+                _selectedRangedWeapons[ gearCounter ].readiedLocation = "";
+        }
+
+        _selectedShields[gearIndex].readiedLocation = "secondary";
+        _selectedShields[gearIndex].droppedDuringCombat = false;
+    }
+
+    this.unequipShield = function( gearIndex ) {
+        _selectedShields[gearIndex].readiedLocation = "";
+    }
+
+    this.unequipHandWeapon = function( gearIndex ) {
+        _selectedHandWeapons[gearIndex].readiedLocation = "";
+    }
+
+    this.unequipRangedWeapon = function( gearIndex ) {
+        _selectedRangedWeapons[gearIndex].readiedLocation = "";
+    }
+
+    this.setSciFiMod = function( gearIndex, sciFiModSelected ) {
+        _selectedHandWeapons[gearIndex].sciFiMod = sciFiModSelected;
+    }
+
+    this.equipArmor = function( gearIndex ) {
+        _selectedArmor[gearIndex].isReadied = true;
+        _selectedArmor[gearIndex].droppedDuringCombat = false;
+    }
+
+    this.unequipArmor = function( gearIndex ) {
+        _selectedArmor[gearIndex].isReadied = false;
+    }
+
+    this.setDroppedDuringCombat = function( itemType, gearIndex ) {
+        if( itemType == "armor")
+            _selectedArmor[gearIndex].droppedDuringCombat = true;
+        if( itemType == "handweapon")
+            _selectedHandWeapons[gearIndex].droppedDuringCombat = true;
+        if( itemType == "rangedweapon")
+            _selectedRangedWeapons[gearIndex].droppedDuringCombat = true;
+        if( itemType == "shield")
+            _selectedShields[gearIndex].droppedDuringCombat = true;
+        if( itemType == "gear")
+            _selectedMundaneGear[gearIndex].droppedDuringCombat = true;
+    }
+
+    this.setUsedDuringCombat = function( itemType, gearIndex ) {
+        if( itemType == "armor")
+            _selectedArmor[gearIndex].droppedDuringCombat = false;
+        if( itemType == "handweapon")
+            _selectedHandWeapons[gearIndex].droppedDuringCombat = false;
+        if( itemType == "handweapon")
+            _selectedRangedWeapons[gearIndex].droppedDuringCombat = false;
+        if( itemType == "shield")
+            _selectedShields[gearIndex].droppedDuringCombat = false;
+        if( itemType == "gear")
+            _selectedMundaneGear[gearIndex].droppedDuringCombat = false;
+    }
+
+    this.addSPCPower = function( powerID, customName, descriptionText, level, modifiers, genericModifiers, switchableWith, boostedAttribute, boostedSkill, boostedSkillSpecialty ) {
+        if( !descriptionText )
+            descriptionText = "";
+        if( !level )
+            level = 1;
+
+        if( !genericModifiers )
+            genericModifiers = Array();
+
+        for( var spcCounter = 0; spcCounter < savageWorldsSPCPowers.length; spcCounter++) {
+            if( powerID == savageWorldsSPCPowers[spcCounter].id) {
+                var addPower = angular.copy( savageWorldsSPCPowers[spcCounter] );
+
+                if(!customName) {
+                    addPower.custom_name = savageWorldsSPCPowers[spcCounter].local_name;
+                } else {
+                    addPower.custom_name = customName;
+                }
+
+                addPower.description = descriptionText;
+                addPower.selectedLevel = level / 1;
+                for( var modCounter = 0; modCounter < addPower.modifiersObj.length;modCounter++) {
+                    addPower.modifiersObj[modCounter].description = "";
+                    addPower.modifiersObj[modCounter].currentCost = 0;
+                    if( modifiers && modifiers[modCounter] ) {
+                        //addPower.modifiersObj[modCounter].description = modifiers[modCounter].desc;
+                        addPower.modifiersObj[modCounter].currentCost = modifiers[modCounter].cost;
+                    }
+                }
+
+                for( var modCounter = 0; modCounter < addPower.genericModifiersObj.length;modCounter++) {
+                    addPower.genericModifiersObj[modCounter].description = "";
+                    addPower.genericModifiersObj[modCounter].currentCost = 0;
+                    if( genericModifiers && genericModifiers[modCounter] ) {
+                        //addPower.modifiersObj[modCounter].description = modifiers[modCounter].desc;
+                        addPower.genericModifiersObj[modCounter].currentCost = genericModifiers[modCounter].cost;
+                    }
+                }
+
+                addPower.boosted_attribute = "";
+                addPower.boosted_skill = "";
+                addPower.boosted_skill_specialty = "";
+                addPower.switchableWith = "";
+
+                if( switchableWith && switchableWith.internalID ) {
+
+                    if( _selectedSPCPowers[switchableWith.internalID] )
+                        addPower.switchableWith = _selectedSPCPowers[switchableWith.internalID];
+                    // for( var slcCounter = 0; slcCounter < _selectedSPCPowers.length; slcCounter++) {
+                    //
+                    //     if( _selectedSPCPowers.)
+                    // }
+                }
+
+                if( boostedAttribute )
+                    addPower.boosted_attribute = boostedAttribute;
+
+                if( boostedSkill )
+                    addPower.boosted_skill = boostedSkill;
+
+                if( boostedSkillSpecialty )
+                    addPower.boosted_skill_specialty = boostedSkillSpecialty;
+
+                _selectedSPCPowers.push( addPower );
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    this.init(useLang);
 }
 
 /* Extensions to  the savageCharacter class for Savage Rifts® exceptions and code */
-
+// "use strict";
 // mainly for Born a Hero checks
 savageCharacter.prototype.isMARS = function() {
-	return false;
+    return false;
 };
 /*
-	Savage Worlds Web Tools by Jeffrey Gordon is licensed under a
-	Creative Commons Attribution 4.0 International License.
+    Savage Worlds Web Tools by Jeffrey Gordon is licensed under a
+    Creative Commons Attribution 4.0 International License.
 */
-
+"use strict";
 var scifiCreator = function(objectType, objectLabel, availableSizes, availableMods, availableOptions) {
-	this.init(objectType, objectLabel, availableSizes, availableMods, availableOptions);
+    this.init(objectType, objectLabel, availableSizes, availableMods, availableOptions);
 };
 
 scifiCreator.prototype.init = function(objectType, objectLabel, availableSizes, availableMods, availableOptions){
-	this.appVersion = "2016040101";
+    this.appVersion = "2016040101";
 
-	this.itemName = "";
-		this.objectDescription = "";
-		this.useLang = "en-US";
+    this.itemName = "";
+        this.objectDescription = "";
+        this.useLang = "en-US";
 
-		this.uuid = this.makeUUID();
+        this.uuid = this.makeUUID();
 
-		this.objectLabel = objectLabel;
-		this.examples = "";
-		this.extraNotes = "";
-		this.size = 0;
-		this.objectType = objectType;
-		this.acc = 0;
-		this.ts = 0;
-		this.climb = 0;
-		this.toughness = 0;
-		this.baseToughness = 0;
-		this.baseCost = 0;
-		this.armor = 0;
-		this.frontArmor = 0
-		this.sideArmor = 0;
-		this.creatorOptions = Array();
-		this.numberOfLegs = 0;
-		this.rearArmor = 0;
-		this.mods = 0;
-		this.baseMods = 0;
-		this.crew = 0;
-		this.hasWeaponMounts = 0;
-		this.requiresMountPoint = 0;
-		this.flyingPace = 0;
-		this.cost = 0;
-		this.vehicleWeaponModPoints = 0;
-		this.energyCapacity =  0;
-		this.baseEnergyCapacity =  0;
-		this.provisions = 0;
+        this.objectLabel = objectLabel;
+        this.examples = "";
+        this.extraNotes = "";
+        this.size = 0;
+        this.objectType = objectType;
+        this.acc = 0;
+        this.ts = 0;
+        this.climb = 0;
+        this.toughness = 0;
+        this.baseToughness = 0;
+        this.baseCost = 0;
+        this.armor = 0;
+        this.frontArmor = 0
+        this.sideArmor = 0;
+        this.creatorOptions = Array();
+        this.numberOfLegs = 0;
+        this.rearArmor = 0;
+        this.mods = 0;
+        this.baseMods = 0;
+        this.crew = 0;
+        this.hasWeaponMounts = 0;
+        this.requiresMountPoint = 0;
+        this.flyingPace = 0;
+        this.cost = 0;
+        this.vehicleWeaponModPoints = 0;
+        this.energyCapacity =  0;
+        this.baseEnergyCapacity =  0;
+        this.provisions = 0;
 
-		this.hasTorpedoTube = 0;
-		this.hasMissileLauncher = 0;
+        this.hasTorpedoTube = 0;
+        this.hasMissileLauncher = 0;
 
-		this.aircraft = 0;
+        this.aircraft = 0;
 
-		this.selectedSize = 0;
+        this.selectedSize = 0;
 
-		if(availableOptions)
-			this.availableOptions = availableOptions;
-		else
-			this.availableOptions = Array();
+        if(availableOptions)
+            this.availableOptions = availableOptions;
+        else
+            this.availableOptions = Array();
 
-		if(availableSizes)
-			this.availableSizes = availableSizes;
-		else
-			this.availableSizes = Array();
+        if(availableSizes)
+            this.availableSizes = availableSizes;
+        else
+            this.availableSizes = Array();
 
-		if(availableMods)
-			this.availableMods = availableMods;
-		else
-			this.availableMods = Array();
+        if(availableMods)
+            this.availableMods = availableMods;
+        else
+            this.availableMods = Array();
 
-		this.selectedModifications = Array();
-		this.selectedModifications_list = {};
+        this.selectedModifications = Array();
+        this.selectedModifications_list = {};
 
-		this.mods_available = 0;
+        this.mods_available = 0;
 
-		this.selected_weapons = Array();
-		this.selectedWeaponsList = Array();
+        this.selected_weapons = Array();
+        this.selectedWeaponsList = Array();
 
-		if(this.objectType == "power_armor") {
-			this.requiresMountPoint = 1;
-			this.hasWeaponMounts = 1;
-		} else {
-			this.requiresMountPoint = 0;
-			this.hasWeaponMounts = 0;
-		}
+        if(this.objectType == "power_armor") {
+            this.requiresMountPoint = 1;
+            this.hasWeaponMounts = 1;
+        } else {
+            this.requiresMountPoint = 0;
+            this.hasWeaponMounts = 0;
+        }
 };
 
 scifiCreator.prototype.newUUID = function() {
-		this.uuid = this.makeUUID();
-	};
+        this.uuid = this.makeUUID();
+    };
 
 scifiCreator.prototype.makeUUID = function(){
-	var d = new Date().getTime();
-	if(window.performance && typeof window.performance.now === "function"){
-		d += performance.now(); //use high-precision timer if available
-	}
-	var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-		var r = (d + Math.random()*16)%16 | 0;
-		d = Math.floor(d/16);
-		return (c=='x' ? r : (r&0x3|0x8)).toString(16);
-	});
-	return uuid;
+    var d = new Date().getTime();
+    if(window.performance && typeof window.performance.now === "function"){
+        d += performance.now(); //use high-precision timer if available
+    }
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = (d + Math.random()*16)%16 | 0;
+        d = Math.floor(d/16);
+        return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+    });
+    return uuid;
 };
 
 scifiCreator.prototype.reset = function() {
-	this.init(this.objectType, this.objectLabel, this.availableSizes, this.availableMods, this.availableOptions);
+    this.init(this.objectType, this.objectLabel, this.availableSizes, this.availableMods, this.availableOptions);
 };
 
 scifiCreator.prototype.setSizes = function(availableSizes) {
-	this.availableSizes = availableSizes
+    this.availableSizes = availableSizes
 };
 
 scifiCreator.prototype.exportHTML = function() {
-	return this.createStatesBlock();
+    return this.createStatesBlock();
 };
 
 scifiCreator.prototype.getModName = function( modTag ) {
-	// search through available mods to see if function exists
-	for(getModCount = 0; getModCount < this.availableMods.length; getModCount++) {
-		if( this.availableMods[getModCount].tag == modTag ) {
-			return this.getLocalName( this.availableMods[getModCount].name );
-		}
-	}
+    // search through available mods to see if function exists
+    for(var getModCount = 0; getModCount < this.availableMods.length; getModCount++) {
+        if( this.availableMods[getModCount].tag == modTag ) {
+            return this.getLocalName( this.availableMods[getModCount].name );
+        }
+    }
 
-	return "Error: getModName - Not Found !";
+    return "Error: getModName - Not Found !";
 };
 
 scifiCreator.prototype.getTranslation = function(langKey) {
-	for( lang_count = 0; lang_count < availableLanguages.length; lang_count++ ) {
-		if( availableLanguages[lang_count].short_code == this.useLang ) {
+    for( var lang_count = 0; lang_count < availableLanguages.length; lang_count++ ) {
+        if( availableLanguages[lang_count].short_code == this.useLang ) {
 
-			if(availableLanguages[lang_count].translations[langKey] ) {
-				return availableLanguages[lang_count].translations[langKey];
-			} else {
-				return langKey;
-			}
-		}
-	}
-	return langKey;
+            if(availableLanguages[lang_count].translations[langKey] ) {
+                return availableLanguages[lang_count].translations[langKey];
+            } else {
+                return langKey;
+            }
+        }
+    }
+    return langKey;
 };
 
 
 scifiCreator.prototype.simplify_cost = function (input_price) {
-	if(input_price > 1000000000) {
-		// it's a billion+
-		return input_price / 1000000000 + 'B';
-	} else if(input_price > 1000000) {
-		// it's a million+
-		return input_price / 1000000 + 'M';
-	} else if(input_price > 1000){
-		// it's a thousand+
-		return input_price / 1000 + 'K';
-	} else {
-		return input_price;
-	}
+    if(input_price > 1000000000) {
+        // it's a billion+
+        return input_price / 1000000000 + 'B';
+    } else if(input_price > 1000000) {
+        // it's a million+
+        return input_price / 1000000 + 'M';
+    } else if(input_price > 1000){
+        // it's a thousand+
+        return input_price / 1000 + 'K';
+    } else {
+        return input_price;
+    }
 },
 
 scifiCreator.prototype.getLocalName = function( incoming_string_array ) {
-	if( incoming_string_array[ this.useLang] ) {
-		return incoming_string_array[ this.useLang];
-	} else {
-		return incoming_string_array[ "en-US" ];
-	}
+    if( incoming_string_array[ this.useLang] ) {
+        return incoming_string_array[ this.useLang];
+    } else {
+        return incoming_string_array[ "en-US" ];
+    }
 };
 
 scifiCreator.prototype.formatMoney = function(n, decPlaces, thouSeparator, decSeparator) {
-	var
-		decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
-		decSeparator = decSeparator == undefined ? "." : decSeparator,
-		thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
-		sign = n < 0 ? "-" : "",
-		i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
-		j = (j = i.length) > 3 ? j % 3 : 0;
-	return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
+    var
+        decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,
+        decSeparator = decSeparator == undefined ? "." : decSeparator,
+        thouSeparator = thouSeparator == undefined ? "," : thouSeparator,
+        sign = n < 0 ? "-" : "",
+        i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
+        j = (j = i.length) > 3 ? j % 3 : 0;
+    return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
 };
 
 scifiCreator.prototype.createStatesBlock = function() {
-	html_return = "";
+    var html_return = "";
 
-	html_return += "<h3>" + this.itemName + "</h3>";
-	html_return += "<p>";
+    html_return += "<h3>" + this.itemName + "</h3>";
+    html_return += "<p>";
 
-	html_return += this.objectDescription + "</p><br />";
+    html_return += this.objectDescription + "</p><br />";
 
-	if(this.selectedSize && this.selectedSize.size > 0) {
-		html_return += "<strong>" + this.getLocalName(this.selectedSize.sizeLabel)  + "</strong>: ";
-		html_return += this.getTranslation("CREATOR_SIZE") + " " + this.size + ", ";
-		if(this.acc > 0)
-			html_return += this.getTranslation("CREATOR_ACC_TS") + " " +  this.acc + "/" + this.formatPaceRealWorld(this.ts) + ", ";
-		if(this.aircraft)
-			html_return += this.getTranslation("CREATOR_CLIMB") + " " + this.climb + ", ";
-		if(this.flyingPace > 0)
-			html_return += this.getTranslation("CREATOR_FLYPACE") + " " +  this.formatPaceRealWorld(this.flyingPace) + ", ";
-		if(this.toughness > 0) {
-			if( this.frontArmor > 0 ) {
-				html_return += this.getTranslation("CREATOR_TOUGHNESS") + " " + this.toughness + " (<span title='" + this.getTranslation("CREATOR_FASARA")  + ")'>" + this.frontArmor + "/" + this.sideArmor + "/" +  this.rearArmor + "</span>), ";
-			} else {
-				html_return += this.getTranslation("CREATOR_TOUGHNESS") + " " + this.toughness + " (" + this.armor + "), ";
-			}
+    if(this.selectedSize && this.selectedSize.size > 0) {
+        html_return += "<strong>" + this.getLocalName(this.selectedSize.sizeLabel)  + "</strong>: ";
+        html_return += this.getTranslation("CREATOR_SIZE") + " " + this.size + ", ";
+        if(this.acc > 0)
+            html_return += this.getTranslation("CREATOR_ACC_TS") + " " +  this.acc + "/" + this.formatPaceRealWorld(this.ts) + ", ";
+        if(this.aircraft)
+            html_return += this.getTranslation("CREATOR_CLIMB") + " " + this.climb + ", ";
+        if(this.flyingPace > 0)
+            html_return += this.getTranslation("CREATOR_FLYPACE") + " " +  this.formatPaceRealWorld(this.flyingPace) + ", ";
+        if(this.toughness > 0) {
+            if( this.frontArmor > 0 ) {
+                html_return += this.getTranslation("CREATOR_TOUGHNESS") + " " + this.toughness + " (<span title='" + this.getTranslation("CREATOR_FASARA")  + ")'>" + this.frontArmor + "/" + this.sideArmor + "/" +  this.rearArmor + "</span>), ";
+            } else {
+                html_return += this.getTranslation("CREATOR_TOUGHNESS") + " " + this.toughness + " (" + this.armor + "), ";
+            }
 
-		} else {
-			if(this.armor) {
-				html_return += this.getTranslation("CREATOR_ARMOR") + " +"  + this.armor + ", ";
-			}
-		}
+        } else {
+            if(this.armor) {
+                html_return += this.getTranslation("CREATOR_ARMOR") + " +"  + this.armor + ", ";
+            }
+        }
 
-		if(this.pace > 0)
-			html_return += this.getTranslation("CREATOR_PACE") + " "  + this.formatPaceRealWorld(this.pace) + ", ";
-		if(this.crew > 0)
-			html_return += this.getTranslation("CREATOR_CREW") + " "  + this.crew + ", ";
+        if(this.pace > 0)
+            html_return += this.getTranslation("CREATOR_PACE") + " "  + this.formatPaceRealWorld(this.pace) + ", ";
+        if(this.crew > 0)
+            html_return += this.getTranslation("CREATOR_CREW") + " "  + this.crew + ", ";
 
-		if(this.strength > 0 && this.objectType != "power_armor")
-			html_return += this.getTranslation("CREATOR_STRENGTH") + " "  + this.getLocalName(  this.getStrengthLabel( this.strength ).label ) + ", ";
+        if(this.strength > 0 && this.objectType != "power_armor")
+            html_return += this.getTranslation("CREATOR_STRENGTH") + " "  + this.getLocalName(  this.getStrengthLabel( this.strength ).label ) + ", ";
 
-		html_return += this.getTranslation("CREATOR_COST") + " C$" + this.formatMoney(this.cost, 0) + ", ";
-		html_return += this.getTranslation("CREATOR_REMAINING_MODS") + " "  + this.mods_available + "<br />";
+        html_return += this.getTranslation("CREATOR_COST") + " C$" + this.formatMoney(this.cost, 0) + ", ";
+        html_return += this.getTranslation("CREATOR_REMAINING_MODS") + " "  + this.mods_available + "<br />";
 
 
-		//html_return += "<strong>Mods Available</strong>: " + this.mods_available + "<br />";
-		if( this.hasWeaponMounts )
-			html_return += "<strong>" + this.getTranslation("CREATOR_WEAPON_MODS_AVAILABLE")  + "</strong>: " + this.vehicleWeaponModPoints + "<br />";
+        //html_return += "<strong>Mods Available</strong>: " + this.mods_available + "<br />";
+        if( this.hasWeaponMounts )
+            html_return += "<strong>" + this.getTranslation("CREATOR_WEAPON_MODS_AVAILABLE")  + "</strong>: " + this.vehicleWeaponModPoints + "<br />";
 
-		html_return += "<strong>" + this.getTranslation("CREATOR_NOTES")  + "</strong>: ";
+        html_return += "<strong>" + this.getTranslation("CREATOR_NOTES")  + "</strong>: ";
 
-		this.sortSelectedModificationsList();
-		var mod_count = 0;
+        this.sortSelectedModificationsList();
+        var mod_count = 0;
 
-		for(var modTag in this.selectedModifications_list){
+        for(var modTag in this.selectedModifications_list){
 
-			if( mod_count > 0)
-				html_return += ", ";
-			if(this.selectedModifications_list[modTag] > 1)
-					html_return += this.selectedModifications_list[modTag] + "x "
+            if( mod_count > 0)
+                html_return += ", ";
+            if(this.selectedModifications_list[modTag] > 1)
+                    html_return += this.selectedModifications_list[modTag] + "x "
 
-				modName = this.getModName(modTag);
-				html_return += modName;
+                var modName = this.getModName(modTag);
+                html_return += modName;
 
-				mod_count++;
-		}
-		if( mod_count == 0)
-			html_return += this.getTranslation("CREATOR_NONE");
+                mod_count++;
+        }
+        if( mod_count == 0)
+            html_return += this.getTranslation("CREATOR_NONE");
 
-		html_return += "<br />";
+        html_return += "<br />";
 
-		html_return += "<strong>" + this.getTranslation("CREATOR_WEAPONS")  + "</strong>: ";
-		//this.sort_selectedWeaponsList();
-		html_return += "<ul>";
-		var weapon_count = 0;
-//			console.log("this.selectedWeaponsList",this.selectedWeaponsList);
-		for(var weaponName in this.selectedWeaponsList){
-			html_return += "<li>";
-			if(this.selectedWeaponsList[weaponName].count > 1)
-					html_return += this.selectedWeaponsList[weaponName].count + "x ";
-				//this.selectedWeaponsList[weaponName].obj = this.updateWeaponDisplayName( this.selectedWeaponsList[weaponName] );
-				html_return += this.selectedWeaponsList[weaponName].obj.display_name;
-				html_return += this.makeWeaponStatHTML( this.selectedWeaponsList[weaponName].obj );
-				html_return += "</li>";
-				weapon_count++;
-		}
-		if( weapon_count == 0 )
-			html_return += "<li>" + this.getTranslation("CREATOR_NONE")  + "</li>";
-		html_return += "</ul>";
+        html_return += "<strong>" + this.getTranslation("CREATOR_WEAPONS")  + "</strong>: ";
+        //this.sort_selectedWeaponsList();
+        html_return += "<ul>";
+        var weapon_count = 0;
+//            console.log("this.selectedWeaponsList",this.selectedWeaponsList);
+        for(var weaponName in this.selectedWeaponsList){
+            html_return += "<li>";
+            if(this.selectedWeaponsList[weaponName].count > 1)
+                    html_return += this.selectedWeaponsList[weaponName].count + "x ";
+                //this.selectedWeaponsList[weaponName].obj = this.updateWeaponDisplayName( this.selectedWeaponsList[weaponName] );
+                html_return += this.selectedWeaponsList[weaponName].obj.display_name;
+                html_return += this.makeWeaponStatHTML( this.selectedWeaponsList[weaponName].obj );
+                html_return += "</li>";
+                weapon_count++;
+        }
+        if( weapon_count == 0 )
+            html_return += "<li>" + this.getTranslation("CREATOR_NONE")  + "</li>";
+        html_return += "</ul>";
 
-		if( this.getModificationCount("Shields") > 0) {
-			html_return += "<strong>" + this.getTranslation("CREATOR_SHIELDS")  + "</strong>: ";
-			html_return += this.size * 10;
-			may_recover = this.getTranslation("CREATOR_MAY_RECOVER").replace("{value}", this.size);
-			html_return += " - " + may_recover + "<br />";
-		}
+        if( this.getModificationCount("Shields") > 0) {
+            html_return += "<strong>" + this.getTranslation("CREATOR_SHIELDS")  + "</strong>: ";
+            html_return += this.size * 10;
+            may_recover = this.getTranslation("CREATOR_MAY_RECOVER").replace("{value}", this.size);
+            html_return += " - " + may_recover + "<br />";
+        }
 
-		if(this.energyCapacity > 0)
-			html_return += "<strong>" + this.getTranslation("CREATOR_ENERGY_CAPACITY")  + "</strong>: " + this.energyCapacity + "<br />";
+        if(this.energyCapacity > 0)
+            html_return += "<strong>" + this.getTranslation("CREATOR_ENERGY_CAPACITY")  + "</strong>: " + this.energyCapacity + "<br />";
 
-		if( this.extraNotes != "" ) {
-			html_return += "<strong>" + this.getTranslation("CREATOR_EXTRA_NOTES")  + "</strong>: ";
-			html_return += this.extraNotes;
-		}
-	} else {
-		html_return += this.getTranslation("CREATOR_SIZE_MUST_BE_SELECTED");
-	}
+        if( this.extraNotes != "" ) {
+            html_return += "<strong>" + this.getTranslation("CREATOR_EXTRA_NOTES")  + "</strong>: ";
+            html_return += this.extraNotes;
+        }
+    } else {
+        html_return += this.getTranslation("CREATOR_SIZE_MUST_BE_SELECTED");
+    }
 
-	return html_return;
+    return html_return;
 };
 
 scifiCreator.prototype.makeWeaponStatHTML = function( weapon_object ) {
-	return_val = " (";
-	return_val += weapon_object.range + ", ";
-	return_val += weapon_object.damage;
+    var return_val = " (";
+    return_val += weapon_object.range + ", ";
+    return_val += weapon_object.damage;
 
-	if( weapon_object.count >= 4)
-		return_val += " +2";
-	else if( weapon_object.count >= 3)
-		return_val += " +1";
-	else if( weapon_object.count >= 2)
-		return_val += " +1";
+    if( weapon_object.count >= 4)
+        return_val += " +2";
+    else if( weapon_object.count >= 3)
+        return_val += " +1";
+    else if( weapon_object.count >= 2)
+        return_val += " +1";
 
-	return_val += ", ";
+    return_val += ", ";
 
-	return_val += "ROF " + weapon_object.rof + ", ";
-	notes = this.getLocalName( weapon_object.notes );
-	if( notes != "")
-		return_val += notes + ", ";
-	return_val = return_val.substring(0, return_val.length - 2);
-	return_val += ")";
-	return return_val;
+    return_val += "ROF " + weapon_object.rof + ", ";
+    var notes = this.getLocalName( weapon_object.notes );
+    if( notes != "")
+        return_val += notes + ", ";
+    return_val = return_val.substring(0, return_val.length - 2);
+    return_val += ")";
+    return return_val;
 };
 
 scifiCreator.prototype.exportBBCode = function() {
-	html_return = "";
+    html_return = "";
 
-	html_return += "[b][size=150]" + this.itemName + "[/size][/b]\n";
-	if(this.objectDescription)
-		html_return += "" + this.objectDescription + "\n\n";
-	else
-		html_return += "\n";
+    html_return += "[b][size=150]" + this.itemName + "[/size][/b]\n";
+    if(this.objectDescription)
+        html_return += "" + this.objectDescription + "\n\n";
+    else
+        html_return += "\n";
 
-	if(this.selectedSize && this.selectedSize.sizeLabel) {
-		html_return += "[b]" + this.getLocalName(this.selectedSize.sizeLabel) + "[/b]: ";
-		html_return += this.getTranslation("CREATOR_SIZE") + " " + this.size + ", ";
-		if(this.acc > 0)
-			html_return += this.getTranslation("CREATOR_ACC_TS") + " " + this.acc + "/" + this.formatPaceRealWorld(this.ts) + ", ";
-		if(this.aircraft)
-			html_return += this.getTranslation("CREATOR_CLIMB") + " " + this.climb + ", ";
-		if(this.flyingPace > 0)
-			html_return += this.getTranslation("CREATOR_FLYPACE") + " " + this.formatPaceRealWorld(this.flyingPace) + ", ";
-		if(this.toughness > 0) {
-			html_return += this.getTranslation("CREATOR_TOUGHNESS") + " " + this.toughness + " (" + this.armor + "), ";
-		} else {
-			if(this.armor) {
-				html_return += this.getTranslation("CREATOR_ARMOR") + "  +" + this.armor + ", ";
-			}
-		}
+    if(this.selectedSize && this.selectedSize.sizeLabel) {
+        html_return += "[b]" + this.getLocalName(this.selectedSize.sizeLabel) + "[/b]: ";
+        html_return += this.getTranslation("CREATOR_SIZE") + " " + this.size + ", ";
+        if(this.acc > 0)
+            html_return += this.getTranslation("CREATOR_ACC_TS") + " " + this.acc + "/" + this.formatPaceRealWorld(this.ts) + ", ";
+        if(this.aircraft)
+            html_return += this.getTranslation("CREATOR_CLIMB") + " " + this.climb + ", ";
+        if(this.flyingPace > 0)
+            html_return += this.getTranslation("CREATOR_FLYPACE") + " " + this.formatPaceRealWorld(this.flyingPace) + ", ";
+        if(this.toughness > 0) {
+            html_return += this.getTranslation("CREATOR_TOUGHNESS") + " " + this.toughness + " (" + this.armor + "), ";
+        } else {
+            if(this.armor) {
+                html_return += this.getTranslation("CREATOR_ARMOR") + "  +" + this.armor + ", ";
+            }
+        }
 
-		if(this.pace > 0)
-			html_return += this.getTranslation("CREATOR_PACE") + "  " + this.formatPaceRealWorld(this.pace) + ", ";
-		if(this.crew > 0)
-			html_return += this.getTranslation("CREATOR_CREW") + "  " + this.crew + ", ";
+        if(this.pace > 0)
+            html_return += this.getTranslation("CREATOR_PACE") + "  " + this.formatPaceRealWorld(this.pace) + ", ";
+        if(this.crew > 0)
+            html_return += this.getTranslation("CREATOR_CREW") + "  " + this.crew + ", ";
 
-		if(this.strength > 0 && this.objectType != "power_armor")
-			html_return += this.getTranslation("CREATOR_STRENGTH") + " "  + this.getLocalName(  this.getStrengthLabel( this.strength ).label ) + ", ";
+        if(this.strength > 0 && this.objectType != "power_armor")
+            html_return += this.getTranslation("CREATOR_STRENGTH") + " "  + this.getLocalName(  this.getStrengthLabel( this.strength ).label ) + ", ";
 
-		html_return += this.getTranslation("CREATOR_COST") + " C$" + this.simplify_cost(this.cost) + ", ";
-		html_return += this.getTranslation("CREATOR_REMAINING_MODS") + " " + this.mods_available + "\n";
+        html_return += this.getTranslation("CREATOR_COST") + " C$" + this.simplify_cost(this.cost) + ", ";
+        html_return += this.getTranslation("CREATOR_REMAINING_MODS") + " " + this.mods_available + "\n";
 
-		html_return += "[b]" + this.getTranslation("CREATOR_NOTES") + "[/b]: ";
+        html_return += "[b]" + this.getTranslation("CREATOR_NOTES") + "[/b]: ";
 
-		var mod_count = 0;
-		for(var modName in this.selectedModifications_list){
-			if( mod_count > 0)
-				html_return += ", ";
-			if(this.selectedModifications_list[modName] > 1)
-					html_return += this.selectedModifications_list[modName] + "x ";
-			html_return += modName;
-			mod_count++;
-		}
-		if(mod_count == 0)
-			html_return += this.getTranslation("CREATOR_NONE");
+        var mod_count = 0;
+        for(var modName in this.selectedModifications_list){
+            if( mod_count > 0)
+                html_return += ", ";
+            if(this.selectedModifications_list[modName] > 1)
+                    html_return += this.selectedModifications_list[modName] + "x ";
+            html_return += modName;
+            mod_count++;
+        }
+        if(mod_count == 0)
+            html_return += this.getTranslation("CREATOR_NONE");
 
-		html_return += "\n";
+        html_return += "\n";
 
-		html_return += "[b]" + this.getTranslation("CREATOR_WEAPONS") + "[/b]: ";
-		html_return += "[list]";
+        html_return += "[b]" + this.getTranslation("CREATOR_WEAPONS") + "[/b]: ";
+        html_return += "[list]";
 
-		var weapon_count = 0;
-		var weapon_count = 0;
+        var weapon_count = 0;
+        var weapon_count = 0;
 
-		for(var weaponName in this.selectedWeaponsList){
-			html_return += "[*]";
-			if(this.selectedWeaponsList[weaponName].count > 1)
-					html_return += this.selectedWeaponsList[weaponName].count + "x ";
+        for(var weaponName in this.selectedWeaponsList){
+            html_return += "[*]";
+            if(this.selectedWeaponsList[weaponName].count > 1)
+                    html_return += this.selectedWeaponsList[weaponName].count + "x ";
 
-				html_return += this.selectedWeaponsList[weaponName].obj.display_name;
-				html_return += this.makeWeaponStatHTML( this.selectedWeaponsList[weaponName].obj );
-				html_return += "\n";
-				weapon_count++;
-		}
-		if( weapon_count == 0 )
-			html_return += "[*]" + this.getTranslation("CREATOR_NONE") + ".\n";
-		html_return += "[/list]";
+                html_return += this.selectedWeaponsList[weaponName].obj.display_name;
+                html_return += this.makeWeaponStatHTML( this.selectedWeaponsList[weaponName].obj );
+                html_return += "\n";
+                weapon_count++;
+        }
+        if( weapon_count == 0 )
+            html_return += "[*]" + this.getTranslation("CREATOR_NONE") + ".\n";
+        html_return += "[/list]";
 
-		html_return += "\n";
+        html_return += "\n";
 
-		if( this.getModificationCount("Shields") > 0) {
-			html_return += "[b]" + this.getTranslation("CREATOR_SHIELDS") + "[/b]: ";
-			html_return += this.size * 10;
-			may_recover = this.getTranslation("CREATOR_MAY_RECOVER").replace("{value}", this.size);
-			html_return += " - " + may_recover + "\n";
-		}
-
-
-		if(this.energyCapacity > 0)
-			html_return += "[b]" + this.getTranslation("CREATOR_ENERGY_CAPACITY") + "[/b]: " + this.energyCapacity + "\n";
-	} else {
-		html_return += this.getTranslation("CREATOR_SIZE_MUST_BE_SELECTED");
-	}
+        if( this.getModificationCount("Shields") > 0) {
+            html_return += "[b]" + this.getTranslation("CREATOR_SHIELDS") + "[/b]: ";
+            html_return += this.size * 10;
+            may_recover = this.getTranslation("CREATOR_MAY_RECOVER").replace("{value}", this.size);
+            html_return += " - " + may_recover + "\n";
+        }
 
 
-
-	for(removeHideCounter = 1; removeHideCounter < 31; removeHideCounter++) {
-		html_return = html_return.replace("<span class='hide'>" + removeHideCounter + "</span>", "");
-
-		// fix for bb code sunglasses when posting some vehicles and walkers to a bb forum.
-		html_return = html_return.replace("8)", " 8 )");
-	}
+        if(this.energyCapacity > 0)
+            html_return += "[b]" + this.getTranslation("CREATOR_ENERGY_CAPACITY") + "[/b]: " + this.energyCapacity + "\n";
+    } else {
+        html_return += this.getTranslation("CREATOR_SIZE_MUST_BE_SELECTED");
+    }
 
 
-	return html_return;
+
+    for(removeHideCounter = 1; removeHideCounter < 31; removeHideCounter++) {
+        html_return = html_return.replace("<span class='hide'>" + removeHideCounter + "</span>", "");
+
+        // fix for bb code sunglasses when posting some vehicles and walkers to a bb forum.
+        html_return = html_return.replace("8)", " 8 )");
+    }
+
+
+    return html_return;
 };
 
 scifiCreator.prototype.exportJSON = function() {
-	exportObject = {};
-	exportObject.size = this.size;
-	exportObject.objectType = this.objectType;
-	exportObject.itemName = this.itemName;
-	exportObject.uuid = this.uuid;
-	exportObject.objectDescription = this.objectDescription;
-	exportObject.mods = Array();
-	exportObject.exported = new Date();
-	exportObject.options = this.creatorOptions;
-	for(modCounter = 0; modCounter < this.selectedModifications.length; modCounter++)
-		exportObject.mods = exportObject.mods.concat( this.selectedModifications[modCounter].tag );
-	exportObject.weapons = Array();
-	for(local_weapon_counter = 0; local_weapon_counter < this.selected_weapons.length; local_weapon_counter++) {
-		weapon_item = {
-			tag: this.selected_weapons[local_weapon_counter].tag,
-			fixed: this.selected_weapons[local_weapon_counter].fixed,
-			count: this.selected_weapons[local_weapon_counter].count
-		};
-		exportObject.weapons = exportObject.weapons.concat( weapon_item );
-	}
+    var exportObject = {};
+    exportObject.size = this.size;
+    exportObject.objectType = this.objectType;
+    exportObject.itemName = this.itemName;
+    exportObject.uuid = this.uuid;
+    exportObject.objectDescription = this.objectDescription;
+    exportObject.mods = Array();
+    exportObject.exported = new Date();
+    exportObject.options = this.creatorOptions;
+    for(var modCounter = 0; modCounter < this.selectedModifications.length; modCounter++)
+        exportObject.mods = exportObject.mods.concat( this.selectedModifications[modCounter].tag );
+    exportObject.weapons = Array();
+    for(var local_weapon_counter = 0; local_weapon_counter < this.selected_weapons.length; local_weapon_counter++) {
+        var weapon_item = {
+            tag: this.selected_weapons[local_weapon_counter].tag,
+            fixed: this.selected_weapons[local_weapon_counter].fixed,
+            count: this.selected_weapons[local_weapon_counter].count
+        };
+        exportObject.weapons = exportObject.weapons.concat( weapon_item );
+    }
 
-	export_string = JSON.stringify(exportObject);
+    var export_string = JSON.stringify(exportObject);
 
 
-	return export_string;
+    return export_string;
 
 };
 
 scifiCreator.prototype.stripslashes = function(str) {
-	return (str + '').replace(/\\(.?)/g, function (s, n1) {
-	switch (n1) {
-	case '\\':
-	  return '\\';
-	case '0':
-	  return '\u0000';
-	case '':
-	  return '';
-	default:
-	  return n1;
-	}
-	});
+    return (str + '').replace(/\\(.?)/g, function (s, n1) {
+    switch (n1) {
+    case '\\':
+      return '\\';
+    case '0':
+      return '\u0000';
+    case '':
+      return '';
+    default:
+      return n1;
+    }
+    });
 };
 
 scifiCreator.prototype.importJSON = function(importedObjectString) {
-	try {
-		importedObjectString = this.stripslashes(importedObjectString);
-		importedObj= JSON.parse(importedObjectString);
-	}
-	catch(e) {
-		// JSON Import error
-		return false;
-	}
+    try {
+        importedObjectString = this.stripslashes(importedObjectString);
+        var importedObj = JSON.parse(importedObjectString);
+    }
+    catch(e) {
+        // JSON Import error
+        return false;
+    }
 
-	if(typeof importedObj =='object') {
-		this.reset();
-		this.setSize(importedObj.size);
-		this.setName(importedObj.itemName);
-		if( typeof(importedObj.objectDescription) != "undefined")
-			this.setDescription(importedObj.objectDescription);
+    if(typeof importedObj =='object') {
+        this.reset();
+        this.setSize(importedObj.size);
+        this.setName(importedObj.itemName);
+        if( typeof(importedObj.objectDescription) != "undefined")
+            this.setDescription(importedObj.objectDescription);
 
-		if( typeof(importedObj.uuid) != "undefined")
-			this.uuid = importedObj.uuid;
+        if( typeof(importedObj.uuid) != "undefined")
+            this.uuid = importedObj.uuid;
 
-		// legacy version description checks
-		if( typeof(importedObj.ship_description) != "undefined")
-			this.setDescription(importedObj.ship_description);
-		if( typeof(importedObj.power_armor_description) != "undefined")
-			this.setDescription(importedObj.power_armor_description);
-		if( typeof(importedObj.walker_description) != "undefined")
-			this.setDescription(importedObj.walker_description);
-		if( typeof(importedObj.vehicle_description) != "undefined")
-			this.setDescription(importedObj.vehicle_description);
-		if( typeof(importedObj.object_description) != "undefined")
-			this.setDescription(importedObj.object_description);
-		if( typeof(importedObj.item_name) != "undefined")
-			this.setName(importedObj.item_name);
+        // legacy version description checks
+        if( typeof(importedObj.ship_description) != "undefined")
+            this.setDescription(importedObj.ship_description);
+        if( typeof(importedObj.power_armor_description) != "undefined")
+            this.setDescription(importedObj.power_armor_description);
+        if( typeof(importedObj.walker_description) != "undefined")
+            this.setDescription(importedObj.walker_description);
+        if( typeof(importedObj.vehicle_description) != "undefined")
+            this.setDescription(importedObj.vehicle_description);
+        if( typeof(importedObj.object_description) != "undefined")
+            this.setDescription(importedObj.object_description);
+        if( typeof(importedObj.item_name) != "undefined")
+            this.setName(importedObj.item_name);
 
-		if( importedObj.options )
-			this.creatorOptions = importedObj.options;
+        if( importedObj.options )
+            this.creatorOptions = importedObj.options;
 
-		for(modCounter = 0; modCounter < importedObj.mods.length; modCounter++)
-			this.addMod( importedObj.mods[modCounter] );
+        for(var modCounter = 0; modCounter < importedObj.mods.length; modCounter++)
+            this.addMod( importedObj.mods[modCounter] );
 
-		for(local_weapon_counter = 0; local_weapon_counter < importedObj.weapons.length; local_weapon_counter++) {
-			if( importedObj.weapons[local_weapon_counter].tag)
-				this.addWeapon( importedObj.weapons[local_weapon_counter].tag );
-			else
-				this.addWeapon( importedObj.weapons[local_weapon_counter].name );
+        for(var local_weapon_counter = 0; local_weapon_counter < importedObj.weapons.length; local_weapon_counter++) {
+            if( importedObj.weapons[local_weapon_counter].tag)
+                this.addWeapon( importedObj.weapons[local_weapon_counter].tag );
+            else
+                this.addWeapon( importedObj.weapons[local_weapon_counter].name );
 
-			if( typeof(importedObj.weapons[local_weapon_counter].fixed) != "undefined" && importedObj.weapons[local_weapon_counter].fixed != "")
-				this.fixWeapon( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].fixed );
+            if( typeof(importedObj.weapons[local_weapon_counter].fixed) != "undefined" && importedObj.weapons[local_weapon_counter].fixed != "")
+                this.fixWeapon( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].fixed );
 
-			if( typeof(importedObj.weapons[local_weapon_counter].count) != "undefined" && importedObj.weapons[local_weapon_counter].count > 0)
-				this.setWeaponCount( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].count );
+            if( typeof(importedObj.weapons[local_weapon_counter].count) != "undefined" && importedObj.weapons[local_weapon_counter].count > 0)
+                this.setWeaponCount( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].count );
 
-			if( typeof(importedObj.weapons[local_weapon_counter].linked) != "undefined" && importedObj.weapons[local_weapon_counter].linked > 0)
-				this.linkWeapon( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].linked);
+            if( typeof(importedObj.weapons[local_weapon_counter].linked) != "undefined" && importedObj.weapons[local_weapon_counter].linked > 0)
+                this.linkWeapon( this.selected_weapons.length - 1, importedObj.weapons[local_weapon_counter].linked);
 
-		}
-		this.calculate();
-		return true;
-	}
-	// Wasn't an object (or was empty)
-	return false;
+        }
+        this.calculate();
+        return true;
+    }
+    // Wasn't an object (or was empty)
+    return false;
 };
 
 scifiCreator.prototype.sortSelectedModificationsList = function() {
-	var keyList = Object.keys(this.selectedModifications_list);
+    var keyList = Object.keys(this.selectedModifications_list);
 
-	keyList.sort();
+    keyList.sort();
 
-	var newList = {};
+    var newList = {};
 
-	for (var keyCount = 0; keyCount < keyList.length; keyCount++) {
-		keyName = keyList[keyCount];
-		newList[keyName] = this.selectedModifications_list[keyName];
-	}
-	this.selectedModifications_list = newList;
+    for (var keyCount = 0; keyCount < keyList.length; keyCount++) {
+        var keyName = keyList[keyCount];
+        newList[keyName] = this.selectedModifications_list[keyName];
+    }
+    this.selectedModifications_list = newList;
 };
 
 scifiCreator.prototype.sortWeaponList = function() {
 
-	this.selected_weapons.sort(function(a, b){
-		if( a.linkable < b.linkable ) return 1;
-		if( a.linkable > b.linkable ) return -1;
-		if(a.mods > b.mods) return -1;
-		if(a.mods < b.mods) return 1;
-		return 0;
-	});
+    this.selected_weapons.sort(function(a, b){
+        if( a.linkable < b.linkable ) return 1;
+        if( a.linkable > b.linkable ) return -1;
+        if(a.mods > b.mods) return -1;
+        if(a.mods < b.mods) return 1;
+        return 0;
+    });
+
 };
 
 scifiCreator.prototype.appendExtraNotes = function( note ) {
-	if(this.extraNotes != "")
-		this.extraNotes += ", ";
-	this.extraNotes += note;
-	return note;
+    if(this.extraNotes != "")
+        this.extraNotes += ", ";
+    this.extraNotes += note;
+    return note;
 };
 
 scifiCreator.prototype.calculate = function() {
 
 
-	if( this.selectedSize && this.selectedSize.sizeLabel ) {
-		// Flush Stats for recalulation
-		this.strength = 0;
+    if( this.selectedSize && this.selectedSize.sizeLabel ) {
+        // Flush Stats for recalulation
+        this.strength = 0;
 
-		this.strengthBonus = 0;
-		this.aircraft = 0;
-		this.watercraft = 0;
-		this.flyingPace = 0;
-		this.hasWeaponMounts = 0;
-		this.vehicleWeaponModPoints = 0;
+        this.strengthBonus = 0;
+        this.aircraft = 0;
+        this.watercraft = 0;
+        this.flyingPace = 0;
+        this.hasWeaponMounts = 0;
+        this.vehicleWeaponModPoints = 0;
 
-		this.hasTorpedoTube = 0;
-		this.hasMissileLauncher = 0;
+        this.hasTorpedoTube = 0;
+        this.hasMissileLauncher = 0;
 
-		this.examples = this.selectedSize.examples;
-		this.size = this.selectedSize.size;
-		this.acc = this.selectedSize.acc;
-		this.ts = this.selectedSize.ts;
-		this.aircraft = 0;
-		this.strengthBonus = 0;
-		this.climb = this.selectedSize.climb;
-		if(this.selectedSize.strength)
-			this.strength = this.selectedSize.strength;
-		this.toughness = this.selectedSize.toughness;
-		this.baseToughness = this.selectedSize.toughness;
-		this.armor = this.selectedSize.armor;
-		this.mods = this.selectedSize.mods;
-		this.baseMods = this.selectedSize.mods;
-		this.crew = this.selectedSize.crew;
-		this.cost = this.selectedSize.cost;
-		this.baseCost =  this.selectedSize.cost;
-		this.energyCapacity = this.selectedSize.energyCapacity;
-		this.baseEnergyCapacity = this.selectedSize.energyCapacity;
-		this.provisions = this.selectedSize.provisions;
-		this.weight = this.selectedSize.weight;
-		this.pace = this.selectedSize.pace;
-		this.basePace = this.selectedSize.pace;
+        this.examples = this.selectedSize.examples;
+        this.size = this.selectedSize.size;
+        this.acc = this.selectedSize.acc;
+        this.ts = this.selectedSize.ts;
+        this.aircraft = 0;
+        this.strengthBonus = 0;
+        this.climb = this.selectedSize.climb;
+        if(this.selectedSize.strength)
+            this.strength = this.selectedSize.strength;
+        this.toughness = this.selectedSize.toughness;
+        this.baseToughness = this.selectedSize.toughness;
+        this.armor = this.selectedSize.armor;
+        this.mods = this.selectedSize.mods;
+        this.baseMods = this.selectedSize.mods;
+        this.crew = this.selectedSize.crew;
+        this.cost = this.selectedSize.cost;
+        this.baseCost =  this.selectedSize.cost;
+        this.energyCapacity = this.selectedSize.energyCapacity;
+        this.baseEnergyCapacity = this.selectedSize.energyCapacity;
+        this.provisions = this.selectedSize.provisions;
+        this.weight = this.selectedSize.weight;
+        this.pace = this.selectedSize.pace;
+        this.basePace = this.selectedSize.pace;
 
-		this.extraNotes = "";
+        this.extraNotes = "";
 
-		this.mods_available = this.mods;
+        this.mods_available = this.mods;
 
-		// Starship is always an aircraft for these purposes ;)
-		if(this.objectType == "starship")
-			this.aircraft = 1;
+        // Starship is always an aircraft for these purposes ;)
+        if(this.objectType == "starship")
+            this.aircraft = 1;
 
-		if( this.selectedSize && this.selectedSize.strength )
-			this.strength = this.selectedSize.strength;
-		// Go through Mods for availability, calculation and listings
-		this.selectedModifications.sort( this.sortMods );
-		// Sort mods
-		this.selectedModifications_list = {};
-		for(calcModCount = 0; calcModCount < this.selectedModifications.length; calcModCount++) {
-			//this.selectedModifications_list += "<li>" + this.selectedModifications[modCount].name + "</li>";
-			this.mods = this.mods - this.selectedModifications[calcModCount].getModCost(this);
-			this.cost += this.selectedModifications[calcModCount].getCost(this);
+        if( this.selectedSize && this.selectedSize.strength )
+            this.strength = this.selectedSize.strength;
+        // Go through Mods for availability, calculation and listings
+        this.selectedModifications.sort( this.sortMods );
+        // Sort mods
+        this.selectedModifications_list = {};
+        for(var calcModCount = 0; calcModCount < this.selectedModifications.length; calcModCount++) {
+            //this.selectedModifications_list += "<li>" + this.selectedModifications[modCount].name + "</li>";
+            this.mods = this.mods - this.selectedModifications[calcModCount].getModCost(this);
+            this.cost += this.selectedModifications[calcModCount].getCost(this);
 
-			// attempt to see if mod is still availble - remove if it's not.
-			if( this.selectedModifications[calcModCount].isAvailable ) {
-				if(this.selectedModifications[calcModCount].isAvailable(this) == false) {
-					this.removeMod(this.selectedModifications[calcModCount].tag);
-					this.calculate();
-					// stop all processing as the page is recalcuating anyways
-					return;
-				}
-			}
+            // attempt to see if mod is still availble - remove if it's not.
+            if( this.selectedModifications[calcModCount].isAvailable ) {
+                if(this.selectedModifications[calcModCount].isAvailable(this) == false) {
+                    this.removeMod(this.selectedModifications[calcModCount].tag);
+                    this.calculate();
+                    // stop all processing as the page is recalcuating anyways
+                    return;
+                }
+            }
 
-			if( this.selectedModifications[calcModCount].getWeight )
-				this.weight += this.selectedModifications[calcModCount].getWeight(this);
+            if( this.selectedModifications[calcModCount].getWeight )
+                this.weight += this.selectedModifications[calcModCount].getWeight(this);
 
-			if( this.selectedModifications[calcModCount].getModEffect )
-				this.selectedModifications[calcModCount].getModEffect(this);
+            if( this.selectedModifications[calcModCount].getModEffect )
+                this.selectedModifications[calcModCount].getModEffect(this);
 
-			// Linked weapons are displayed elsewhere...
-			if(this.selectedModifications[calcModCount].tag != "linked") {
-				if( typeof(this.selectedModifications_list[this.selectedModifications[calcModCount].tag]) == "undefined")
-					this.selectedModifications_list[this.selectedModifications[calcModCount].tag] = 1;
-				else
-					this.selectedModifications_list[this.selectedModifications[calcModCount].tag]++;
-			}
-		}
+            // Linked weapons are displayed elsewhere...
+            if(this.selectedModifications[calcModCount].tag != "linked") {
+                if( typeof(this.selectedModifications_list[this.selectedModifications[calcModCount].tag]) == "undefined")
+                    this.selectedModifications_list[this.selectedModifications[calcModCount].tag] = 1;
+                else
+                    this.selectedModifications_list[this.selectedModifications[calcModCount].tag]++;
+            }
+        }
 
-		// Go through Weapons for availability, calculation and listings
-		// Sort weapons
-		//this.selected_weapons.sort( sortMods );
-		this.sortWeaponList();
+        // Go through Weapons for availability, calculation and listings
+        // Sort weapons
+        //this.selected_weapons.sort( sortMods );
+        this.sortWeaponList();
 
-		this.selectedWeaponsList = {};
-		fixedWeaponModUsage = 0;
-		linkedWeaponModUsage = Array();
-		otherWeaponModUsage = 0;
-		for(calcModCount = 0; calcModCount < this.selected_weapons.length; calcModCount++) {
+        this.selectedWeaponsList = {};
+        var fixedWeaponModUsage = 0;
+        var linkedWeaponModUsage = Array();
+        var otherWeaponModUsage = 0;
+        for(var calcModCount = 0; calcModCount < this.selected_weapons.length; calcModCount++) {
 
-			// attempt to see if weapon is still availble - remove if it's not.
-			if( this.selected_weapons[calcModCount].isAvailable ) {
-				if(this.selected_weapons[calcModCount].isAvailable(this) == false) {
-					this.removeWeapon(calcModCount);
-					this.calculate();
-					// stop all processing as the page is recalcuating anyways
-					return;
-				}
-			}
+            // attempt to see if weapon is still availble - remove if it's not.
+            if( this.selected_weapons[calcModCount].isAvailable ) {
+                if(this.selected_weapons[calcModCount].isAvailable(this) == false) {
+                    this.removeWeapon(calcModCount);
+                    this.calculate();
+                    // stop all processing as the page is recalcuating anyways
+                    return;
+                }
+            }
 
-			this.selected_weapons[calcModCount] = this.updateWeaponDisplayName( this.selected_weapons[calcModCount] );
-			// Continue on....
-			weaponModCost = this.selected_weapons[calcModCount].mods;
+            this.selected_weapons[calcModCount] = this.updateWeaponDisplayName( this.selected_weapons[calcModCount] );
+            // Continue on....
+            var weaponModCost = this.selected_weapons[calcModCount].mods;
 
-			if( typeof(this.selected_weapons[calcModCount].current_mod_cost) != "undefined") {
-				weaponModCost = this.selected_weapons[calcModCount].current_mod_cost;
-			}
+            if( typeof(this.selected_weapons[calcModCount].current_mod_cost) != "undefined") {
+                weaponModCost = this.selected_weapons[calcModCount].current_mod_cost;
+            }
 
-			if(this.selected_weapons[calcModCount].fixed != 0 && this.selected_weapons[calcModCount].fixed != "")
-				weaponModCost = weaponModCost / 2;
+            if(this.selected_weapons[calcModCount].fixed != 0 && this.selected_weapons[calcModCount].fixed != "")
+                weaponModCost = weaponModCost / 2;
 
-			if(this.requiresMountPoint > 0)
-				this.vehicleWeaponModPoints -= weaponModCost;
-			else
-				this.mods -= weaponModCost;
+            if(this.requiresMountPoint > 0)
+                this.vehicleWeaponModPoints -= weaponModCost;
+            else
+                this.mods -= weaponModCost;
 
-			if( this.selected_weapons[calcModCount].getWeight )
-				this.weight += this.selected_weapons[calcModCount].getWeight(this);
+            if( this.selected_weapons[calcModCount].getWeight )
+                this.weight += this.selected_weapons[calcModCount].getWeight(this);
 
-			if( this.selected_weapons[calcModCount].count > 1) {
-				this.cost += this.selected_weapons[calcModCount].cost / 1 * this.selected_weapons[calcModCount].count;
-			} else {
-				this.cost += this.selected_weapons[calcModCount].cost / 1;
-			}
-
-
-
-			weaponListName = this.selected_weapons[calcModCount].display_name;
-
-			if(
-				this.selected_weapons[calcModCount].fixed != 0
-				&&
-				this.selected_weapons[calcModCount].fixed != '0'
-				&&
-				this.selected_weapons[calcModCount].fixed != ""
-			) {
-
-				switch( this.selected_weapons[calcModCount].fixed.toLowerCase().trim() ) {
-					case "bow":
-						fixedLabel = this.getTranslation("CREATOR_FIXED_BOW_FRONT");
-					//	console.log("bow",this.selected_weapons[calcModCount].fixed.toLowerCase().trim());
-						break;
-					case "port":
-						fixedLabel = this.getTranslation("CREATOR_FIXED_PORT_LEFT");
-						break;
-					case "starboard":
-						fixedLabel = this.getTranslation("CREATOR_FIXED_STARBOARD_RIGHT");
-						break;
-					case "stern":
-						fixedLabel = this.getTranslation("CREATOR_FIXED_STERN_REAR");
-						break;
-					default:
-						fixedLabel = this.getTranslation("CREATOR_FIXED");
-						break;
-				}
-
-				weaponListName = weaponListName + " (" + fixedLabel + ")";
-				this.selected_weapons[calcModCount].display_name = weaponListName;
-
-			} else {
-				if(this.selected_weapons[calcModCount].linked) {
-					weaponListName = weaponListName + " (linked<span class='hide'>" + this.selected_weapons[calcModCount].linked + "</span>)";
-				}
-			}
-
-			if( typeof(this.selectedWeaponsList[weaponListName]) == "undefined" || this.selectedWeaponsList[weaponListName] == "0") {
-				if( this.selected_weapons[calcModCount].missiles_per > 0)
-					this.selectedWeaponsList[weaponListName] = {
-						obj: this.selected_weapons[calcModCount],
-						count: this.selected_weapons[calcModCount].missiles_per
-					};
-				else
-					this.selectedWeaponsList[weaponListName] = {
-						obj: this.selected_weapons[calcModCount],
-						count: 1
-					};
-
-			} else {
-				if( this.selected_weapons[calcModCount].missiles_per > 0 )
-					this.selectedWeaponsList[weaponListName].count = (this.selectedWeaponsList[weaponListName].count / 1) + (this.selected_weapons[calcModCount].missiles_per / 1);
-				else
-					this.selectedWeaponsList[weaponListName].count++;
-			}
-		}
-
-		this.mods_available = this.mods; // - sortSelectedModificationsList.length;
-		if(this.requiresMountPoint == 0) {
-			this.vehicleWeaponModPoints = this.mods_available; // - sortSelectedModificationsList.length;
-		}
+            if( this.selected_weapons[calcModCount].count > 1) {
+                this.cost += this.selected_weapons[calcModCount].cost / 1 * this.selected_weapons[calcModCount].count;
+            } else {
+                this.cost += this.selected_weapons[calcModCount].cost / 1;
+            }
 
 
-	}
+
+            var weaponListName = this.selected_weapons[calcModCount].display_name;
+
+            if(
+                this.selected_weapons[calcModCount].fixed != 0
+                &&
+                this.selected_weapons[calcModCount].fixed != '0'
+                &&
+                this.selected_weapons[calcModCount].fixed != ""
+            ) {
+
+                var fixedLabel = "";
+                switch( this.selected_weapons[calcModCount].fixed.toLowerCase().trim() ) {
+                    case "bow":
+                        fixedLabel = this.getTranslation("CREATOR_FIXED_BOW_FRONT");
+                    //    console.log("bow",this.selected_weapons[calcModCount].fixed.toLowerCase().trim());
+                        break;
+                    case "port":
+                        fixedLabel = this.getTranslation("CREATOR_FIXED_PORT_LEFT");
+                        break;
+                    case "starboard":
+                        fixedLabel = this.getTranslation("CREATOR_FIXED_STARBOARD_RIGHT");
+                        break;
+                    case "stern":
+                        fixedLabel = this.getTranslation("CREATOR_FIXED_STERN_REAR");
+                        break;
+                    default:
+                        fixedLabel = this.getTranslation("CREATOR_FIXED");
+                        break;
+                }
+
+                weaponListName = weaponListName + " (" + fixedLabel + ")";
+                this.selected_weapons[calcModCount].display_name = weaponListName;
+
+            } else {
+                if(this.selected_weapons[calcModCount].linked) {
+                    weaponListName = weaponListName + " (linked<span class='hide'>" + this.selected_weapons[calcModCount].linked + "</span>)";
+                }
+            }
+
+            if( typeof(this.selectedWeaponsList[weaponListName]) == "undefined" || this.selectedWeaponsList[weaponListName] == "0") {
+                if( this.selected_weapons[calcModCount].missiles_per > 0) {
+                    this.selectedWeaponsList[weaponListName] = {
+                        obj: this.selected_weapons[calcModCount],
+                        count: this.selected_weapons[calcModCount].missiles_per
+                    };
+                } else {
+                    this.selectedWeaponsList[weaponListName] = {
+                        obj: this.selected_weapons[calcModCount],
+                        count: 1
+                    };
+                }
+
+            } else {
+                if( this.selected_weapons[calcModCount].missiles_per > 0 )
+                    this.selectedWeaponsList[weaponListName].count = (this.selectedWeaponsList[weaponListName].count / 1) + (this.selected_weapons[calcModCount].missiles_per / 1);
+                else
+                    this.selectedWeaponsList[weaponListName].count++;
+            }
+        }
+
+        this.mods_available = this.mods; // - sortSelectedModificationsList.length;
+        if(this.requiresMountPoint == 0) {
+            this.vehicleWeaponModPoints = this.mods_available; // - sortSelectedModificationsList.length;
+        }
+
+
+    }
 };
 
 scifiCreator.prototype.setName = function(newValue) {
-	this.itemName = newValue;
+    this.itemName = newValue;
 };
 
 scifiCreator.prototype.setOption = function( short_tag, value ) {
-	localStorage.setItem( this.getOptionLSName(short_tag), value.toString() );
+    localStorage.setItem( this.getOptionLSName(short_tag), value.toString() );
 };
 
 scifiCreator.prototype.getOptionLSName = function( short_tag) {
-	return "com.jdg.swwt.settings." + current_selectedObject.objectType + "." + short_tag;
+    return "com.jdg.swwt.settings." + current_selectedObject.objectType + "." + short_tag;
 };
 
 scifiCreator.prototype.getAvailableOptions = function() {
-	if(this.availableOptions) {
-		// put current values into system
-		for(localSettingCount = 0; localSettingCount < this.availableOptions.length; localSettingCount++) {
-			if( typeof(this.availableOptions[localSettingCount].desciption) == "undefined") {
-				this.availableOptions[localSettingCount].desciption = "";
-			}
+    if(this.availableOptions) {
+        // put current values into system
+        for(var localSettingCount = 0; localSettingCount < this.availableOptions.length; localSettingCount++) {
+            if( typeof(this.availableOptions[localSettingCount].desciption) == "undefined") {
+                this.availableOptions[localSettingCount].desciption = "";
+            }
 
-			this.availableOptions[localSettingCount].value = localStorage.getItem( this.getOptionLSName( this.availableOptions[localSettingCount].short_tag ) );
-			if(this.availableOptions[localSettingCount].value == "1")
-				this.availableOptions[localSettingCount].value = this.availableOptions[localSettingCount].value / 1;
-		}
-		return this.availableOptions;
+            this.availableOptions[localSettingCount].value = localStorage.getItem( this.getOptionLSName( this.availableOptions[localSettingCount].short_tag ) );
+            if(this.availableOptions[localSettingCount].value == "1")
+                this.availableOptions[localSettingCount].value = this.availableOptions[localSettingCount].value / 1;
+        }
+        return this.availableOptions;
 
-	} else {
-		return Array();
-	}
+    } else {
+        return Array();
+    }
 };
 
 scifiCreator.prototype.formatPaceRealWorld = function(pace_value) {
-	// never take things at pace value. /groan
-	return pace_value + " (" + Math.floor(pace_value * 2.4)+ " mph, " + Math.floor(pace_value * 3.862416) + " kph)";
+    // never take things at pace value. /groan
+    return pace_value + " (" + Math.floor(pace_value * 2.4)+ " mph, " + Math.floor(pace_value * 3.862416) + " kph)";
 },
 
 scifiCreator.prototype.setDescription = function(newValue) {
-	this.objectDescription = newValue;
+    this.objectDescription = newValue;
 };
 
 scifiCreator.prototype.addMod = function(modName) {
-	return_value = 0;
-	if( !modName ) {
-		return false;
-	}
-	for(addModCount = 0; addModCount < this.availableMods.length; addModCount++) {
-		if(
-			modName.toLowerCase() == this.availableMods[addModCount].tag.toLowerCase()
-			||
-			modName.toLowerCase() == this.availableMods[addModCount].name["en-US"].toLowerCase()
-		) {
-			//newMod = jQuery.extend({}, this.availableMods[addModCount]);
-			var newMod = {};
-			angular.extend(newMod, this.availableMods[addModCount]);
-			this.selectedModifications = this.selectedModifications.concat( newMod  );
-			return;
-		}
-	}
+    var return_value = 0;
+    if( !modName ) {
+        return false;
+    }
+    for(var addModCount = 0; addModCount < this.availableMods.length; addModCount++) {
+        if(
+            modName.toLowerCase() == this.availableMods[addModCount].tag.toLowerCase()
+            ||
+            modName.toLowerCase() == this.availableMods[addModCount].name["en-US"].toLowerCase()
+        ) {
+            //newMod = jQuery.extend({}, this.availableMods[addModCount]);
+            var newMod = {};
+            angular.extend(newMod, this.availableMods[addModCount]);
+            this.selectedModifications = this.selectedModifications.concat( newMod  );
+            return;
+        }
+    }
 
-	return return_value;
+    return return_value;
 };
 
 scifiCreator.prototype.getStrengthLabel = function( strength_value ) {
-	return getDiceValue( strength_value );
+    return getDiceValue( strength_value );
 };
 
 scifiCreator.prototype.addWeapon = function(weaponName) {
-	return_value = 0;
-	for(addlocal_weapon_count = 0; addlocal_weapon_count < savageWorldsVehicleWeapons.length; addlocal_weapon_count++) {
-		if(
-			(
-				weaponName.toLowerCase() == savageWorldsVehicleWeapons[addlocal_weapon_count].tag.toLowerCase()
-			)
-				||
-			(
-				typeof(savageWorldsVehicleWeapons[addlocal_weapon_count].name_old) != "undefined"
-					&&
-				weaponName.toLowerCase() == savageWorldsVehicleWeapons[addlocal_weapon_count].name_old["en-US"].toLowerCase()
-			)
-				||
-			(
-				typeof(savageWorldsVehicleWeapons[addlocal_weapon_count].name) != "undefined"
-					&&
-				weaponName.toLowerCase() == savageWorldsVehicleWeapons[addlocal_weapon_count].name["en-US"].toLowerCase()
+    var return_value = 0;
+    for(var addlocal_weapon_count = 0; addlocal_weapon_count < savageWorldsVehicleWeapons.length; addlocal_weapon_count++) {
+        if(
+            (
+                weaponName.toLowerCase() == savageWorldsVehicleWeapons[addlocal_weapon_count].tag.toLowerCase()
+            )
+                ||
+            (
+                typeof(savageWorldsVehicleWeapons[addlocal_weapon_count].name_old) != "undefined"
+                    &&
+                weaponName.toLowerCase() == savageWorldsVehicleWeapons[addlocal_weapon_count].name_old["en-US"].toLowerCase()
+            )
+                ||
+            (
+                typeof(savageWorldsVehicleWeapons[addlocal_weapon_count].name) != "undefined"
+                    &&
+                weaponName.toLowerCase() == savageWorldsVehicleWeapons[addlocal_weapon_count].name["en-US"].toLowerCase()
 
-			)
-		) {
-			var newWeapon = {};
-			angular.extend(newWeapon, savageWorldsVehicleWeapons[addlocal_weapon_count]);
-			newWeapon.linked = 0;
-			newWeapon.count = 1;
-			newWeapon.fixed = 0;
-			this.selected_weapons = this.selected_weapons.concat( newWeapon );
-			return;
-		}
-	}
+            )
+        ) {
+            var newWeapon = {};
+            angular.extend(newWeapon, savageWorldsVehicleWeapons[addlocal_weapon_count]);
+            newWeapon.linked = 0;
+            newWeapon.count = 1;
+            newWeapon.fixed = 0;
+            this.selected_weapons = this.selected_weapons.concat( newWeapon );
+            return;
+        }
+    }
 
-	return return_value;
+    return return_value;
 };
 
 scifiCreator.prototype.updateWeaponDisplayName = function( weaponObject ) {
-	weaponObject.count = weaponObject.count / 1;
-	weaponObject.mods = weaponObject.mods / 1;
+    weaponObject.count = weaponObject.count / 1;
+    weaponObject.mods = weaponObject.mods / 1;
 
-	if( weaponObject.count == 1 ){
-		weaponObject.display_name = this.getLocalName(weaponObject.name);
-	}
-	if( weaponObject.count == 2 ){
-		linkedTranslation = this.getTranslation("CREATOR_DUAL_LINKED");
-		weaponObject.display_name = linkedTranslation.replace("{name}",this.getLocalName(weaponObject.name_plural) );
-	}
-	if( weaponObject.count == 3 ){
-		linkedTranslation = this.getTranslation("CREATOR_TRI_LINKED");
-		weaponObject.display_name = linkedTranslation.replace("{name}",this.getLocalName(weaponObject.name_plural) );
-	}
-	if( weaponObject.count == 4 ){
-		linkedTranslation = this.getTranslation("CREATOR_QUAD_LINKED");
-		weaponObject.display_name = linkedTranslation.replace("{name}",this.getLocalName(weaponObject.name_plural) );
-	}
+    if( weaponObject.count == 1 ){
+        weaponObject.display_name = this.getLocalName(weaponObject.name);
+    }
+    if( weaponObject.count == 2 ){
+        linkedTranslation = this.getTranslation("CREATOR_DUAL_LINKED");
+        weaponObject.display_name = linkedTranslation.replace("{name}",this.getLocalName(weaponObject.name_plural) );
+    }
+    if( weaponObject.count == 3 ){
+        linkedTranslation = this.getTranslation("CREATOR_TRI_LINKED");
+        weaponObject.display_name = linkedTranslation.replace("{name}",this.getLocalName(weaponObject.name_plural) );
+    }
+    if( weaponObject.count == 4 ){
+        linkedTranslation = this.getTranslation("CREATOR_QUAD_LINKED");
+        weaponObject.display_name = linkedTranslation.replace("{name}",this.getLocalName(weaponObject.name_plural) );
+    }
 
-	if( weaponObject.count > 1 ) {
-		weaponObject.current_mod_cost = (weaponObject.mods * weaponObject.count) / 2;
-	} else {
-		weaponObject.current_mod_cost = weaponObject.mods;
-	}
+    if( weaponObject.count > 1 ) {
+        weaponObject.current_mod_cost = (weaponObject.mods * weaponObject.count) / 2;
+    } else {
+        weaponObject.current_mod_cost = weaponObject.mods;
+    }
 
-	return weaponObject;
+    return weaponObject;
 };
 
 scifiCreator.prototype.incrementWeaponCount = function( weaponIndex ) {
-	weaponIndex = weaponIndex / 1;
-	this.selected_weapons[weaponIndex].count++;
-	if( this.selected_weapons[weaponIndex].count > 4)
-		this.selected_weapons[weaponIndex].count = 4;
+    weaponIndex = weaponIndex / 1;
+    this.selected_weapons[weaponIndex].count++;
+    if( this.selected_weapons[weaponIndex].count > 4)
+        this.selected_weapons[weaponIndex].count = 4;
 
 };
 
 scifiCreator.prototype.setWeaponCount = function( weaponIndex, newCount ) {
-	weaponIndex = weaponIndex / 1;
-	if( this.selected_weapons[weaponIndex] ) {
-		this.selected_weapons[weaponIndex].count = newCount;
-		if( this.selected_weapons[weaponIndex].count < 1)
-			this.selected_weapons[weaponIndex].count = 1;
-		if( this.selected_weapons[weaponIndex].count > 4)
-			this.selected_weapons[weaponIndex].count = 4;
-	}
+    weaponIndex = weaponIndex / 1;
+    if( this.selected_weapons[weaponIndex] ) {
+        this.selected_weapons[weaponIndex].count = newCount;
+        if( this.selected_weapons[weaponIndex].count < 1)
+            this.selected_weapons[weaponIndex].count = 1;
+        if( this.selected_weapons[weaponIndex].count > 4)
+            this.selected_weapons[weaponIndex].count = 4;
+    }
 };
 
 scifiCreator.prototype.decrementWeaponCount = function( weaponIndex ) {
-	weaponIndex = weaponIndex / 1;
-	this.selected_weapons[weaponIndex].count--;
-	if( this.selected_weapons[weaponIndex].count < 1)
-		this.selected_weapons[weaponIndex].count = 1;
+    weaponIndex = weaponIndex / 1;
+    this.selected_weapons[weaponIndex].count--;
+    if( this.selected_weapons[weaponIndex].count < 1)
+        this.selected_weapons[weaponIndex].count = 1;
 };
 
 scifiCreator.prototype.removeMod = function(modName) {
-	for(removeModCount = 0; removeModCount < this.selectedModifications.length; removeModCount++) {
-		if(modName.toLowerCase() == this.selectedModifications[removeModCount].tag.toLowerCase()) {
-			this.selectedModifications.splice(removeModCount, 1);
-			return;
-		}
-	}
+    for(var removeModCount = 0; removeModCount < this.selectedModifications.length; removeModCount++) {
+        if(modName.toLowerCase() == this.selectedModifications[removeModCount].tag.toLowerCase()) {
+            this.selectedModifications.splice(removeModCount, 1);
+            return;
+        }
+    }
 };
 
 scifiCreator.prototype.hasMod = function(modName) {
-	for(removeModCount = 0; removeModCount < this.selectedModifications.length; removeModCount++) {
-		if(modName.toLowerCase() == this.selectedModifications[removeModCount].tag.toLowerCase()) {
-			return true;
-		}
-	}
-	return false;
+    for(var removeModCount = 0; removeModCount < this.selectedModifications.length; removeModCount++) {
+        if(modName.toLowerCase() == this.selectedModifications[removeModCount].tag.toLowerCase()) {
+            return true;
+        }
+    }
+    return false;
 };
 
 scifiCreator.prototype.removeWeapon = function(weaponIndex) {
-	weaponIndex = weaponIndex / 1;
-	this.selected_weapons.splice(weaponIndex, 1);
+    weaponIndex = weaponIndex / 1;
+    this.selected_weapons.splice(weaponIndex, 1);
 };
 
 scifiCreator.prototype.linkWeapon = function(weaponIndex, linkIndex) {
-	weaponIndex = weaponIndex / 1;
+    weaponIndex = weaponIndex / 1;
 
-	this.selected_weapons[weaponIndex].linked = (linkIndex / 1);
+    this.selected_weapons[weaponIndex].linked = (linkIndex / 1);
 };
 
 scifiCreator.prototype.fixWeapon = function(weaponIndex, fixedValue) {
-	weaponIndex = weaponIndex / 1;
+    weaponIndex = weaponIndex / 1;
 
-	this.selected_weapons[weaponIndex].fixed = (fixedValue);
+    this.selected_weapons[weaponIndex].fixed = (fixedValue);
 };
 
 scifiCreator.prototype.getLinkedWeapons = function() {
-	numberOfLinks = this.getModificationCount("Linked");
-	returnVal = Array();
-	if( numberOfLinks > 0 ){
+    numberOfLinks = this.getModificationCount("Linked");
+    returnVal = Array();
+    if( numberOfLinks > 0 ){
 
-		for(linked_weapon_count = 0; linked_weapon_count < this.selected_weapons.length; linked_weapon_count++) {
-			if(this.selected_weapons[linked_weapon_count].linked > 0) {
-				// unset any links that were removed...
-				if(this.selected_weapons[linked_weapon_count].linked > numberOfLinks)
-					this.selected_weapons[linked_weapon_count].linked  = 0;
-				else
-					returnVal[this.selected_weapons[linked_weapon_count].linked] = this.selected_weapons[linked_weapon_count].name;
-			}
-		}
-		while(returnVal.length < numberOfLinks + 1) {
-			for(linked_weapon_count = returnVal.length; linked_weapon_count < numberOfLinks + 1; linked_weapon_count++) {
-				returnVal[linked_weapon_count] = "";
-			}
-		}
-	} else {
-		// unlink all weapons as all links have disappeared
-		for(linked_weapon_count = 0; linked_weapon_count < this.selected_weapons.length; linked_weapon_count++) {
-			this.selected_weapons[linked_weapon_count].linked  = 0;
-		}
-		returnVal = Array();
-	}
+        for(var linked_weapon_count = 0; linked_weapon_count < this.selected_weapons.length; linked_weapon_count++) {
+            if(this.selected_weapons[linked_weapon_count].linked > 0) {
+                // unset any links that were removed...
+                if(this.selected_weapons[linked_weapon_count].linked > numberOfLinks)
+                    this.selected_weapons[linked_weapon_count].linked  = 0;
+                else
+                    returnVal[this.selected_weapons[linked_weapon_count].linked] = this.selected_weapons[linked_weapon_count].name;
+            }
+        }
+        while(returnVal.length < numberOfLinks + 1) {
+            for(var linked_weapon_count = returnVal.length; linked_weapon_count < numberOfLinks + 1; linked_weapon_count++) {
+                returnVal[linked_weapon_count] = "";
+            }
+        }
+    } else {
+        // unlink all weapons as all links have disappeared
+        for(var linked_weapon_count = 0; linked_weapon_count < this.selected_weapons.length; linked_weapon_count++) {
+            this.selected_weapons[linked_weapon_count].linked  = 0;
+        }
+        returnVal = Array();
+    }
 
-	return returnVal;
+    return returnVal;
 
 };
 
 scifiCreator.prototype.getModificationCount = function(modName) {
-	return_value = 0;
-	for(modCount = 0; modCount < this.selectedModifications.length; modCount++) {
-		if(modName.toLowerCase() == this.selectedModifications[modCount].tag.toLowerCase())
-			return_value++;
-	}
+    var return_value = 0;
+    for(var modCount = 0; modCount < this.selectedModifications.length; modCount++) {
+        if(modName.toLowerCase() == this.selectedModifications[modCount].tag.toLowerCase())
+            return_value++;
+    }
 
-	return return_value;
+    return return_value;
 };
 
 scifiCreator.prototype.setSize = function(sizeNumber) {
-	for(sizeCount = 0; sizeCount < this.availableSizes.length; sizeCount++) {
-		if(sizeNumber == this.availableSizes[sizeCount].size) {
-			this.selectedSize = this.availableSizes[sizeCount];
-			this.size = this.availableSizes[sizeCount].size;
-			return true;
-		}
-	}
-	return false;
+    for(var sizeCount = 0; sizeCount < this.availableSizes.length; sizeCount++) {
+        if(sizeNumber == this.availableSizes[sizeCount].size) {
+            this.selectedSize = this.availableSizes[sizeCount];
+            this.size = this.availableSizes[sizeCount].size;
+            return true;
+        }
+    }
+    return false;
 };
 
 scifiCreator.prototype.sortMods = function(a,b) {
-	if( typeof(a.calcWeight) == "undefined")
-		a.calcWeight = 5;
-	if( typeof(b.calcWeight) == "undefined")
-		b.calcWeight = 5;
+    if( typeof(a.calcWeight) == "undefined")
+        a.calcWeight = 5;
+    if( typeof(b.calcWeight) == "undefined")
+        b.calcWeight = 5;
 
-	if (a.calcWeight < b.calcWeight){
-		return -1;
-	} else {
-		if (a.calcWeight > b.calcWeight) {
-			return 1;
-		} else {
-			return a.name > b.name;
-		}
-	}
+    if (a.calcWeight < b.calcWeight){
+        return -1;
+    } else {
+        if (a.calcWeight > b.calcWeight) {
+            return 1;
+        } else {
+            return a.name > b.name;
+        }
+    }
 };
 
 scifiCreator.prototype.optionActive = function( short_tag ) {
-	value = localStorage.getItem( this.getOptionLSName( short_tag) );
-	value = value / 1;
-	if( value > 0 )
-		return true;
-	else
-		return false;
+    var value = localStorage.getItem( this.getOptionLSName( short_tag) );
+    value = value / 1;
+    if( value > 0 )
+        return true;
+    else
+        return false;
 };
 
 scifiCreator.prototype.addOption = function(option_tag) {
-	var push_it = false;
-	for( var opt_c = this.creatorOptions.length - 1; opt_c >= 0; opt_c--) {
-		if( this.creatorOptions[opt_c] == option_tag )
-			return false;
-	}
-	this.creatorOptions.push( option_tag ) ;
+    var push_it = false;
+    for( var opt_c = this.creatorOptions.length - 1; opt_c >= 0; opt_c--) {
+        if( this.creatorOptions[opt_c] == option_tag )
+            return false;
+    }
+    this.creatorOptions.push( option_tag ) ;
 
 };
 
 scifiCreator.prototype.removeOption = function(option_tag) {
-	for( var opt_c = this.creatorOptions.length - 1; opt_c >= 0; opt_c--) {
-		if( this.creatorOptions[opt_c] == option_tag )
-			this.creatorOptions.splice( opt_c, 1);
+    for( var opt_c = this.creatorOptions.length - 1; opt_c >= 0; opt_c--) {
+        if( this.creatorOptions[opt_c] == option_tag )
+            this.creatorOptions.splice( opt_c, 1);
 
-	}
+    }
 };
 
 scifiCreator.prototype.hasOption = function(option_tag) {
-	for( var opt_c = this.creatorOptions.length - 1; opt_c >= 0; opt_c--) {
-		if( this.creatorOptions[opt_c] == option_tag )
-			return true;
-	}
-	return false;
+    for( var opt_c = this.creatorOptions.length - 1; opt_c >= 0; opt_c--) {
+        if( this.creatorOptions[opt_c] == option_tag )
+            return true;
+    }
+    return false;
 };
 
 
@@ -23286,6 +23313,516 @@ var savageWorldsArcaneTrappings = Array(
 	if(typeof(savageWorldsExtrasBooksList) == "undefined")
 		var savageWorldsExtrasBooksList = Array();
 
+	var currentBook = get_book_by_id(4);
+
+	savageWorldsExtrasBooksList = savageWorldsExtrasBooksList.concat(currentBook);
+
+
+
+
+	// {"en-US":"Acid Pitcher"}
+savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
+	{
+		id: 326,
+	 name: {
+		 'en-US': 'Acid Pitcher',
+	},
+	 gear: {
+	},
+	 treasure: {
+		 'en-US': '',
+	},
+	 abilities: {
+		 'en-US': 'Grapple: Acid pitchers have six thick fronds which function as rudimentary and surprisingly quick arms. The tentacles function as a whole and can only attack one target per round. With a successful grapple, they drag the victim into the enzyme, causing 2d6 damage per round. Escape requires an opposed Strength roll.\nHard to Kill: The heart of the plant lies deep underground. Each of its tentacles can take one wound, but destroying them does no harm to the plant. Once half of the tentacles are destroyed, the plant can no longer grapple effectively and withdraws the fronds into the soil.\nPlant: Called shots do no extra damage. Bullets, arrows, and other piercing weapons inflict half damage. Immune to Tests of Will.',
+	},
+	 tags: {
+		 'en-US': 'alien,plant,',
+	},
+	 edges: {
+		 'en-US': '',
+	},
+	 hindrances: {
+		 'en-US': '',
+	},
+	 blurb: {
+		 'en-US': 'These carnivorous plants look something like a pitcher about two feet deep, four feet across, and set down into the ground. Filling the pitcher is a powerful digestive enzyme, which looks and smells like water.\nWhen an animal drinks from the pitcher, thick fronds lying just beneath the surface burst out and pull the animal into the bowl where it\'s dissolved and digested. \nAcid pitchers locate their prey through sensing ground vibrations, but only to a range of 6 yards (3") from their center.',
+	},
+		attributes: '{"agility":"d4","smarts":"d4 (A)","spirit":"d6","vigor":"d6","strength":"d12"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d4"}}',
+		wildcard: 0,
+		image: '',
+		charisma: '',
+		pace: '',
+		parry: '6',
+		toughness: '5',
+		armor: '',
+		book: 4,
+		page: 'p74'
+	}
+);
+	// {"en-US":"Arc Beetle"}
+savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
+	{
+		id: 327,
+	 name: {
+		 'en-US': 'Arc Beetle',
+	},
+	 gear: {
+	},
+	 treasure: {
+		 'en-US': '',
+	},
+	 abilities: {
+		 'en-US': 'Armor +3: Thick shell.\nBite: Str+d4.\nElectricity: Arc beetles fire bolts of electricity from their antennae. This works as the bolt power, and the beetle has 20 Power Points for this purpose only. It uses Shooting as its arcane skill.\nSize +2: Arc beetles are over 6\' long and 4\' high.',
+	},
+	 tags: {
+		 'en-US': '',
+	},
+	 edges: {
+		 'en-US': '',
+	},
+	 hindrances: {
+		 'en-US': '',
+	},
+	 blurb: {
+		 'en-US': 'Arc beetles are armored insects with a distinctive yellow and blue striped shell. Protruding from their forehead are two long antennae that crackle with bioelectrical energy and can throw bolts of electricity to a range of over 45 yards.',
+	},
+		attributes: '{"agility":"d6","smarts":"d6 (A)","spirit":"d8","vigor":"d8","strength":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_SHOOTING":{"value":"d8"}}',
+		wildcard: 0,
+		image: '',
+		charisma: '',
+		pace: '6',
+		parry: '5',
+		toughness: '11',
+		armor: '3',
+		book: 4,
+		page: 'p75'
+	}
+);
+	// {"en-US":"Avrok"}
+savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
+	{
+		id: 328,
+	 name: {
+		 'en-US': 'Avrok',
+	},
+	 gear: {
+	},
+	 treasure: {
+		 'en-US': '',
+	},
+	 abilities: {
+		 'en-US': 'Aquatic: Pace 12.\nArmor +2: Thick hide.\nLarge: Attackers are +2 to attack rolls because of the beast\'s size.\nShake: If an avrok scores a raise on its attack it has secured a strong grip. On subsequent rounds it proceeds to shake its head violently, allowing its teeth to saw through its prey. This causes 3d6 damage and no attack roll is required. Escaping requires an opposed Strength roll.\nSize +6: Avroks measure 35\'.',
+	},
+	 tags: {
+		 'en-US': '',
+	},
+	 edges: {
+		 'en-US': '',
+	},
+	 hindrances: {
+		 'en-US': '',
+	},
+	 blurb: {
+		 'en-US': 'The avrok is a massive crocodilian creature found on more primitive worlds with plentiful game.',
+	},
+		attributes: '{"agility":"d10","smarts":"d6 (A)","spirit":"d8","vigor":"d10","strength":"d12+2"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d8"},"SKILL_SWIMMING":{"value":"d12"}}',
+		wildcard: 0,
+		image: '',
+		charisma: '',
+		pace: '6',
+		parry: '6',
+		toughness: '15',
+		armor: '2',
+		book: 4,
+		page: 'p75'
+	}
+);
+	// {"en-US":"Barbed Tongued Lizard"}
+savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
+	{
+		id: 329,
+	 name: {
+		 'en-US': 'Barbed Tongued Lizard',
+	},
+	 gear: {
+	},
+	 treasure: {
+		 'en-US': '',
+	},
+	 abilities: {
+		 'en-US': 'Bite: Str+d8.\nFast: Pace 10; d10 running die.\nLarge: Attackers add +2 to attack rolls because of the beast\'s size.\nLow Light Vision: No penalties for Dim and Dark lighting.\nSize +4: Barbed tongues weigh 2000 pounds.\nTongue: Str+d4, Reach 1. The tongue is tipped with bony barbs that deliver a pain-causing poison. Anyone Shaken or wounded must make a Vigor roll or be Shaken and cannot attempt to recover for 1d6 rounds.',
+	},
+	 tags: {
+		 'en-US': '',
+	},
+	 edges: {
+		 'en-US': '',
+	},
+	 hindrances: {
+		 'en-US': '',
+	},
+	 blurb: {
+		 'en-US': 'Barbed tongues get their name from the sharp bony “teeth” at the end of their long tongue. The barbs deliver a poison which causes immense pain but little physical harm. Some aggressive species use this to stun and eat their prey, while others use it to escape.\nBarbed tongue lizards have dark red scales they can flush with blood to turn bright red and startle potential threats',
+	},
+		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d4","vigor":"d6","strength":"d12+1"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d12"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d4"}}',
+		wildcard: 0,
+		image: '',
+		charisma: '',
+		pace: '10',
+		parry: '8',
+		toughness: '9',
+		armor: '',
+		book: 4,
+		page: 'p75'
+	}
+);
+	// {"en-US":"Batspider"}
+savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
+	{
+		id: 330,
+	 name: {
+		 'en-US': 'Batspider',
+	},
+	 gear: {
+	},
+	 treasure: {
+		 'en-US': '',
+	},
+	 abilities: {
+		 'en-US': 'Backbiter: If a batspider has surprise, it flies onto its opponent\'s back and attacks with the Drop. The victim suffers a –2 penalty to attack while it remains on his back.\nFlying: Pace 8.\nPoison Bite (–2): Bat spiders can\'t cause true damage with their bite and thus can\'t penetrate armor, but they seek out bare skin or light clothing, making a Called Shot if necessary. With a successful Fighting roll as a Touch Attack (+2) they manage to bite and deliver their poison. Victims must make a Vigor roll at –2 (–4 if it hit with a raise) or suffer 2d4 damage at the start of each subsequent round.\nSize –3: Batspiders are six inches in diameter.\nSmall: Attackers subtract 2 from their rolls due to the bat spider\'s small size.\nWall Walker: Batspiders can move across vertical or horizontal surfaces at their Pace.',
+	},
+	 tags: {
+		 'en-US': '',
+	},
+	 edges: {
+		 'en-US': '',
+	},
+	 hindrances: {
+		 'en-US': '',
+	},
+	 blurb: {
+		 'en-US': 'Batspiders are a species of flying arachnid. Each spider is about six inches across with two sets of bat-like wings  extending from their back. Batspiders commonly dwell in forests or jungles, swooping down from trees to land on their prey\'s back. They are often found as solitary hunters, though sometimes as many as a dozen gather together. They never form true swarms.',
+	},
+		attributes: '{"agility":"d10","smarts":"d6 (A)","spirit":"d8","vigor":"d6","strength":"-"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"}}',
+		wildcard: 0,
+		image: '',
+		charisma: '',
+		pace: '4',
+		parry: '5',
+		toughness: '2',
+		armor: '',
+		book: 4,
+		page: 'p75'
+	}
+);
+	// {"en-US":"Bleeder Rabbit"}
+savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
+	{
+		id: 331,
+	 name: {
+		 'en-US': 'Bleeder Rabbit',
+	},
+	 gear: {
+	},
+	 treasure: {
+		 'en-US': '',
+	},
+	 abilities: {
+		 'en-US': 'Armor +1: Scaly skin.\nBite: Str+d4.\nBleeder: A character Shaken or wounded because of a bite attack suffers Fatigue at the start of every other round. A successful Healing roll stops the bleeding.\nLeap: Doubles jumping distances.\nPounce: The beast can make a special Wild Attack if it can jump at least 2” to the target, adding +4 to attack and damage instead of +2 (Parry is still just -2).\nSize –1: Bleeders stand 3\' in height.',
+	},
+	 tags: {
+		 'en-US': '',
+	},
+	 edges: {
+		 'en-US': '',
+	},
+	 hindrances: {
+		 'en-US': '',
+	},
+	 blurb: {
+		 'en-US': 'Imagine a rabbit the size of a small child covered with scaly skin like that of an armadillo. Then enlarge its teeth to the\nlength of an adult human\'s index finger. That\'s a bleeder rabbit—or bleeder bunny as some crews prefer.\nDespite their relatively small size, bleeder bunnies can kill much larger prey with a single bite. Their saliva acts as an anticoagulant, preventing the deep wound from clotting. All the bunny has to do is make one bite, then flee to a safe distance and wait for its prey to slowly bleed to death.',
+	},
+		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d10","vigor":"d8","strength":"d4"}',
+		skills: '{"SKILL_ALCHEMY":{"value":"-"},"SKILL_BOATING":{"value":"-"},"SKILL_CLIMBING":{"value":"-"},"SKILL_DRIVING":{"value":"-"},"SKILL_FAITH":{"value":"-"},"SKILL_FIGHTING":{"value":"d6"},"SKILL_GAMBLING":{"value":"-"},"SKILL_GUTS":{"value":"-"},"SKILL_HEALING":{"value":"-"},"SKILL_INTIMIDATION":{"value":"-"},"SKILL_INVESTIGATION":{"value":"-"},"SKILL_LOCKPICKING":{"value":"-"},"SKILL_NOTICE":{"value":"d10"},"SKILL_PERSUASION":{"value":"-"},"SKILL_PILOTING":{"value":"-"},"SKILL_PSIONICS":{"value":"-"},"SKILL_REPAIR":{"value":"-"},"SKILL_RIDING":{"value":"-"},"SKILL_RITUALISM":{"value":"-"},"SKILL_SHOOTING":{"value":"-"},"SKILL_SPELLCASTING":{"value":"-"},"SKILL_SPELLWEAVING":{"value":"-"},"SKILL_STEALTH":{"value":"d6"},"SKILL_STREETWISE":{"value":"-"},"SKILL_SURVIVAL":{"value":"-"},"SKILL_SWIMMING":{"value":"-"},"SKILL_TAUNT":{"value":"-"},"SKILL_THROWING":{"value":"-"},"SKILL_TRACKING":{"value":"-"},"SKILL_WEIRD_SCIENCE":{"value":"-"}}',
+		wildcard: 0,
+		image: '',
+		charisma: '',
+		pace: '6',
+		parry: '5',
+		toughness: '6',
+		armor: '1',
+		book: 4,
+		page: 'p76'
+	}
+);
+	// {"en-US":"Bombardier Bird"}
+savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
+	{
+		id: 332,
+	 name: {
+		 'en-US': 'Bombardier Bird',
+	},
+	 gear: {
+	},
+	 treasure: {
+		 'en-US': '',
+	},
+	 abilities: {
+		 'en-US': 'Bombardment: Bombardiers attack by dropping heavy rocks on their prey. Place a Medium Burst Template over the intended target, and then make a d8 Throwing roll. With success, the template drifts 1d4” in a d12 direction (read as a clockface). With a raise there is no drift. If the roll is failed, the drift is 2d8”. Damage to anything caught in the template is 3d6. Bombardiers make only a single attack before flying off for 2d4 rounds to grab more stones.',
+	},
+	 tags: {
+		 'en-US': '',
+	},
+	 edges: {
+		 'en-US': '',
+	},
+	 hindrances: {
+		 'en-US': '',
+	},
+	 blurb: {
+		 'en-US': 'Bombardier birds work as a flock, dropping a barrage of stones onto victims to bludgeon them to death. Only when the prey is dead do the birds land to feast. The birds are treated as a Swarm (see Savage Worlds), but instead of biting drop stones on their prey',
+	},
+		attributes: '{"agility":"","smarts":"","spirit":"","vigor":"","strength":""}',
+		skills: '[]',
+		wildcard: 0,
+		image: '',
+		charisma: '',
+		pace: '',
+		parry: '',
+		toughness: '',
+		armor: '',
+		book: 4,
+		page: 'p77'
+	}
+);
+	// {"en-US":"Bone Spider"}
+savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
+	{
+		id: 333,
+	 name: {
+		 'en-US': 'Bone Spider',
+	},
+	 gear: {
+	},
+	 treasure: {
+		 'en-US': '',
+	},
+	 abilities: {
+		 'en-US': 'Armor +2: Bony shell.\nBite: Str+d4.\nFear –2: They are nightmarish creatures.\nParalysis: Anyone Shaken or wounded by a bone spider must make a Vigor roll or be paralyzed for 2d6 rounds.\nSmall: Attackers subtract 2 from their rolls due to the spider\'s small size.\nSize –2: Bone spiders are the same size as human heads with 12” long legs.',
+	},
+	 tags: {
+		 'en-US': '',
+	},
+	 edges: {
+		 'en-US': '',
+	},
+	 hindrances: {
+		 'en-US': '',
+	},
+	 blurb: {
+		 'en-US': 'Bone spiders are nightmarish creatures from desolate worlds. They have bodies the size of a man\'s head, 12 inch long legs, and bodies covered in black, segmented, bony armor. At the end of their extendable jaws are four sharp fangs  surrounding a circular mouth filled with teeth capable of cutting through bone. It\'s a flesh eater and willing to attack opponents much larger than itself.',
+	},
+		attributes: '{"agility":"d10","smarts":"d6 (A)","spirit":"d8","vigor":"d8","strength":"d4"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_INTIMIDATION":{"value":"d6"},"SKILL_NOTICE":{"value":"d8"},"SKILL_STEALTH":{"value":"d10"}}',
+		wildcard: 0,
+		image: '',
+		charisma: '',
+		pace: '6',
+		parry: '6',
+		toughness: '6',
+		armor: '2',
+		book: 4,
+		page: 'p77'
+	}
+);
+	// {"en-US":"Bore Worm Swarm"}
+savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
+	{
+		id: 334,
+	 name: {
+		 'en-US': 'Bore Worm Swarm',
+	},
+	 gear: {
+	},
+	 treasure: {
+		 'en-US': '',
+	},
+	 abilities: {
+		 'en-US': 'Infravision: Halve penalties for bad lighting against heat-producing targets. \nInternal Feeding: If a swarm causes a Shaken or wounded result, several dozen of the creatures have burrowed beneath the victim\'s skin. The target suffers an automatic wound each day afterwards until he perishes. These wounds cannot be healed til the worms are removed. Removing the bore worms requires complex surgery (Healing roll at –4) or five minutes exposure to high levels of radiation (which in itself can be deadly).',
+	},
+	 tags: {
+		 'en-US': '',
+	},
+	 edges: {
+		 'en-US': '',
+	},
+	 hindrances: {
+		 'en-US': '',
+	},
+	 blurb: {
+		 'en-US': 'Bore worms are tiny but deadly creatures. They are nocturnal and attracted to body heat. When they contact flesh, they burrow through the skin (which feels like an insect sting to the victim) and begin eating it alive from the inside. Fortunately for the victim, they only lay their eggs in dead flesh. Treat as a Swarm (see Savage Worlds) with the following Special Abilities:',
+	},
+		attributes: '{"agility":"","smarts":"","spirit":"","vigor":"","strength":""}',
+		skills: '[]',
+		wildcard: 0,
+		image: '',
+		charisma: '',
+		pace: '',
+		parry: '',
+		toughness: '',
+		armor: '',
+		book: 4,
+		page: 'p77'
+	}
+);
+	// {"en-US":"Bristled Gorer"}
+savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
+	{
+		id: 335,
+	 name: {
+		 'en-US': 'Bristled Gorer',
+	},
+	 gear: {
+	},
+	 treasure: {
+		 'en-US': '',
+	},
+	 abilities: {
+		 'en-US': 'Berserk: When a gorer is frightened (such as being attacked), it goes berserk. It gains +2 to all Fighting and Strength rolls and its Toughness, but Parry is reduced by 2. It also ignores wound penalties.\nGore: If a gorer can charge at least 6” before attacking, it adds +4 to damage.\nTusks: Str+d6.',
+	},
+	 tags: {
+		 'en-US': '',
+	},
+	 edges: {
+		 'en-US': '',
+	},
+	 hindrances: {
+		 'en-US': '',
+	},
+	 blurb: {
+		 'en-US': 'Bristled gorers are herbivores that use their four sharp tusks to dig up roots and tubers. Although predominantly flat, their teeth and jaws are more than capable of crushing thick fibers. They are quadrupedal and covered in short fur, which stands on end when the creature is startled, and almost doubles its effective size.\nThe flesh of a gorer is extremely tasty, and native races hunt them. Despite being herbivorous, gorers are aggressive when provoked and their tusks are quite capable of slicing through flesh and bone.',
+	},
+		attributes: '{"agility":"d6","smarts":"d4 (A)","spirit":"d6","vigor":"d8","strength":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_INTIMIDATION":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"}}',
+		wildcard: 0,
+		image: '',
+		charisma: '',
+		pace: '6',
+		parry: '5',
+		toughness: '6',
+		armor: '',
+		book: 4,
+		page: 'p77'
+	}
+);
+	// {"en-US":"Crab, Giant"}
+savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
+	{
+		id: 336,
+	 name: {
+		 'en-US': 'Crab, Giant',
+	},
+	 gear: {
+	},
+	 treasure: {
+		 'en-US': '',
+	},
+	 abilities: {
+		 'en-US': 'Armor +3: Crabs have thick shells.\nClaws: Str+d8, AP 2.\nGrapple: A crab which succeeds in a grapple maneuver inflicts Str damage on subsequent rounds.\nSize +1: These creatures weigh over 300 pounds.',
+	},
+	 tags: {
+		 'en-US': '',
+	},
+	 edges: {
+		 'en-US': '',
+	},
+	 hindrances: {
+		 'en-US': '',
+	},
+	 blurb: {
+		 'en-US': 'Giant crabs are found throughout the oceans of the galaxy. They are voracious hunters who attack anything they can  rack or rend with their powerful claws.',
+	},
+		attributes: '{"agility":"d8","smarts":"d4 (A)","spirit":"d6","vigor":"d8","strength":"d10"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d8"},"SKILL_NOTICE":{"value":"d6"},"SKILL_STEALTH":{"value":"d6"},"SKILL_SWIMMING":{"value":"d8"}}',
+		wildcard: 0,
+		image: '',
+		charisma: '',
+		pace: '8',
+		parry: '6',
+		toughness: '10',
+		armor: '3',
+		book: 4,
+		page: 'p78'
+	}
+);
+	// {"en-US":"Creature From the Id"}
+savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
+	{
+		id: 337,
+	 name: {
+		 'en-US': 'Creature From the Id',
+	},
+	 gear: {
+	},
+	 treasure: {
+		 'en-US': '',
+	},
+	 abilities: {
+		 'en-US': 'Claws: Str+d8.\nFearless: Immune to Fear and Intimidation.\nInvisible: Id monsters are invisible in their natural state. A character may detect the invisible presence if he has a reason to look and makes a Notice roll at –6. Once detected, he may attack the thing at –6. These creatures radiate heat, so thermal or infravision eliminates their invisibility bonus.\nInvulnerability: Non-psionic attacks cause no damage, though they can Shake the creature. Multiple Shaken results from non-psionic attacks do not result in a wound.\nSize +3: Id creatures stand 10\' tall.\nWeakness (Psionics): Id monsters suffer normal damage from psionic attacks.',
+	},
+	 tags: {
+		 'en-US': '',
+	},
+	 edges: {
+		 'en-US': '',
+	},
+	 hindrances: {
+		 'en-US': '',
+	},
+	 blurb: {
+		 'en-US': 'Id monsters are created when a psionicist dies from extreme backlash. The entities somehow take physical form and seek out other psionicists—which they slay and feed on (just the brain).\nIf they can be seen, creatures from the id take on a muted and much larger aspect of their creator.',
+	},
+		attributes: '{"agility":"d8","smarts":"d6 (A)","spirit":"d10","vigor":"d10","strength":"d12+8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d10"},"SKILL_NOTICE":{"value":"d8"}}',
+		wildcard: 0,
+		image: '',
+		charisma: '',
+		pace: '6',
+		parry: '7',
+		toughness: '10',
+		armor: '',
+		book: 4,
+		page: 'p78'
+	}
+);
+
+
+
+
+/*
+
+	Data here is NOT Licensed under the Creative Commons and is owned by Pinnacle Entertainment Group.
+
+	This product references the Savage Worlds game system, available from Pinnacle Entertainment Group at www.peginc.com.
+	Savage Worlds and all associated logos and trademarks are copyrights of Pinnacle Entertainment Group. Used with permission.
+	Pinnacle makes no representation or warranty as to the quality, viability, or suitability for purpose of this product.
+
+	The entries in this file are from Savage Worlds Role Playing Game and are owned by Pinnacle Entertainment Group.
+
+	DEVELOPERS: Do Not Edit or Pull Request this file, it is auto generated from a rudimentary admin area!
+	*/
+
+	if(typeof(savageWorldsExtrasDatabase) == "undefined")
+		var savageWorldsExtrasDatabase = Array();
+
+	if(typeof(savageWorldsExtrasBooksList) == "undefined")
+		var savageWorldsExtrasBooksList = Array();
+
 	var currentBook = get_book_by_id(1);
 
 	savageWorldsExtrasBooksList = savageWorldsExtrasBooksList.concat(currentBook);
@@ -36611,17 +37148,17 @@ savageWorldsExtrasDatabase = savageWorldsExtrasDatabase.concat(
 		 'en-US': '',
 	},
 	 blurb: {
-		 'en-US': 'Contrary to conspiracy theory, the Nordics are not a separate alien race (they\'re alternately described as being in league with, or opposed to, the Grays). Rather, they are Damned Children who have grown to full size... and full power. Despite this power, they remain the thralls of the Grays. Nordics are all statuesque (averaging 6\'6”), with perfectly chiseled features, platinum blonde hair and pale blue eyes. With all their power, they\'re still more comfortable with others of their kind around, and are almost never encountered alone.',
+		 'en-US': 'Moo kitty kitty moo.',
 	},
-		attributes: '{"agility":"d8","smarts":"d10","spirit":"d12","strength":"d8","vigor":"d8"}',
-		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_GUTS":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_KNOWLEDGE":{"value":"d12","special":{"en-US":"Alien Science"}},"SKILL_NOTICE":{"value":"d12"},"SKILL_PILOTING":{"value":"d8"},"SKILL_REPAIR":{"value":"d10"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"}}',
+		attributes: '{"agility":"d8","smarts":"d10","spirit":"d12","vigor":"d8","strength":"d8"}',
+		skills: '{"SKILL_FIGHTING":{"value":"d6"},"SKILL_GUTS":{"value":"d10"},"SKILL_INTIMIDATION":{"value":"d10"},"SKILL_NOTICE":{"value":"d12"},"SKILL_PILOTING":{"value":"d8"},"SKILL_REPAIR":{"value":"d10"},"SKILL_SHOOTING":{"value":"d8"},"SKILL_STEALTH":{"value":"d8"},"SKILL_KNOWLEDGE":{"special":{"en-US":"Alien Science"},"value":"d12"}}',
 		wildcard: 1,
 		image: '',
-		charisma: '0',
+		charisma: '',
 		pace: '6',
 		parry: '7',
 		toughness: '7',
-		armor: '0',
+		armor: '',
 		book: 6,
 		page: ''
 	}
@@ -40847,567 +41384,6 @@ var savageWorldsGearTypes = Array(
 		 'de-DE': '',
 	},
 		 'id': 6
-}
-);
-
-
-/*
-
-Data here is NOT Licensed under the Creative Commons and is owned by Pinnacle Entertainment Group.
-
-This product references the Savage Worlds game system, available from Pinnacle Entertainment Group at www.peginc.com.
-Savage Worlds and all associated logos and trademarks are copyrights of Pinnacle Entertainment Group. Used with permission.
-Pinnacle makes no representation or warranty as to the quality, viability, or suitability for purpose of this product.
-
-The entries in this file are from Savage Worlds Role Playing Game and are owned by Pinnacle Entertainment Group.
-
-DEVELOPERS: Do Not Edit or Pull Request this file, it is auto generated from a rudimentary admin area!
-*/
-
-var savageWorldsGearWeapons = Array(
-{
-	 name: {
-		 'en-US': 'Axe',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 notes: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-		 'tag': 'axe',
-		 'book': 1,
-		 'page': 'p52',
-		 'class': 0,
-		 'general': 2,
-		 'type': 4,
-		 'range': '0',
-		 'damage': 'd6',
-		 'damage_strength': 1,
-		 'ap_vs_rigid_only': 0,
-		 'requires_2_hands': 0,
-		 'ap': 0,
-		 'requires_2_hands': 0,
-		 'parry_modifier': 0,
-		 'min_str': 6,
-		 'rof': 0,
-		 'cost': 200,
-		 'ammo_item': 0,
-		 'weight': 2,
-		 'reach': 0
-},
-{
-	 name: {
-		 'en-US': 'Battle Axe',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 notes: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-		 'tag': 'battle-axe',
-		 'book': 1,
-		 'page': 'p52',
-		 'class': 0,
-		 'general': 2,
-		 'type': 4,
-		 'range': '0',
-		 'damage': 'd8',
-		 'damage_strength': 1,
-		 'ap_vs_rigid_only': 0,
-		 'requires_2_hands': 0,
-		 'ap': 0,
-		 'requires_2_hands': 0,
-		 'parry_modifier': 0,
-		 'min_str': 8,
-		 'rof': 0,
-		 'cost': 300,
-		 'ammo_item': 0,
-		 'weight': 10,
-		 'reach': 0
-},
-{
-	 name: {
-		 'en-US': 'Dagger',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 notes: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-		 'tag': 'dagger',
-		 'book': 1,
-		 'page': 'p52',
-		 'class': 0,
-		 'general': 2,
-		 'type': 3,
-		 'range': '0',
-		 'damage': 'd4',
-		 'damage_strength': 1,
-		 'ap_vs_rigid_only': 0,
-		 'requires_2_hands': 0,
-		 'ap': 0,
-		 'requires_2_hands': 0,
-		 'parry_modifier': 0,
-		 'min_str': 0,
-		 'rof': 0,
-		 'cost': 25,
-		 'ammo_item': 0,
-		 'weight': 1,
-		 'reach': 0
-},
-{
-	 name: {
-		 'en-US': 'Flail',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 notes: {
-		 'en-US': 'Ignores Shield Parry and Cover bonus',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-		 'tag': 'flail',
-		 'book': 1,
-		 'page': 'p52',
-		 'class': 0,
-		 'general': 2,
-		 'type': 3,
-		 'range': '0',
-		 'damage': 'd6',
-		 'damage_strength': 1,
-		 'ap_vs_rigid_only': 0,
-		 'requires_2_hands': 0,
-		 'ap': 0,
-		 'requires_2_hands': 0,
-		 'parry_modifier': 0,
-		 'min_str': 6,
-		 'rof': 0,
-		 'cost': 200,
-		 'ammo_item': 0,
-		 'weight': 8,
-		 'reach': 0
-},
-{
-	 name: {
-		 'en-US': 'Great Axe',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 notes: {
-		 'en-US': 'AP 1, Parry -1, 2 hands',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-		 'tag': 'great-axe',
-		 'book': 1,
-		 'page': 'p52',
-		 'class': 0,
-		 'general': 2,
-		 'type': 3,
-		 'range': '0',
-		 'damage': 'd10',
-		 'damage_strength': 1,
-		 'ap_vs_rigid_only': 0,
-		 'requires_2_hands': 1,
-		 'ap': 1,
-		 'requires_2_hands': 1,
-		 'parry_modifier': -1,
-		 'min_str': 0,
-		 'rof': 0,
-		 'cost': 500,
-		 'ammo_item': 0,
-		 'weight': 15,
-		 'reach': 0
-},
-{
-	 name: {
-		 'en-US': 'Great Sword',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 notes: {
-		 'en-US': 'Parry -1, 2 Hands',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-		 'tag': 'great-sword',
-		 'book': 1,
-		 'page': 'p52',
-		 'class': 0,
-		 'general': 2,
-		 'type': 3,
-		 'range': '0',
-		 'damage': 'd10',
-		 'damage_strength': 1,
-		 'ap_vs_rigid_only': 0,
-		 'requires_2_hands': 1,
-		 'ap': 0,
-		 'requires_2_hands': 1,
-		 'parry_modifier': -1,
-		 'min_str': 0,
-		 'rof': 0,
-		 'cost': 400,
-		 'ammo_item': 0,
-		 'weight': 12,
-		 'reach': 0
-},
-{
-	 name: {
-		 'en-US': 'Halberd',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 notes: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-		 'tag': 'halberd',
-		 'book': 1,
-		 'page': 'p52',
-		 'class': 0,
-		 'general': 2,
-		 'type': 5,
-		 'range': '0',
-		 'damage': 'd8',
-		 'damage_strength': 1,
-		 'ap_vs_rigid_only': 0,
-		 'requires_2_hands': 1,
-		 'ap': 0,
-		 'requires_2_hands': 1,
-		 'parry_modifier': 0,
-		 'min_str': 8,
-		 'rof': 0,
-		 'cost': 250,
-		 'ammo_item': 0,
-		 'weight': 15,
-		 'reach': 1
-},
-{
-	 name: {
-		 'en-US': 'Katana',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 notes: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-		 'tag': 'katana',
-		 'book': 1,
-		 'page': 'p52',
-		 'class': 0,
-		 'general': 2,
-		 'type': 3,
-		 'range': '0',
-		 'damage': 'd6+2',
-		 'damage_strength': 1,
-		 'ap_vs_rigid_only': 0,
-		 'requires_2_hands': 0,
-		 'ap': 2,
-		 'requires_2_hands': 0,
-		 'parry_modifier': 0,
-		 'min_str': 6,
-		 'rof': 0,
-		 'cost': 1000,
-		 'ammo_item': 0,
-		 'weight': 6,
-		 'reach': 0
-},
-{
-	 name: {
-		 'en-US': 'Lance',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 notes: {
-		 'en-US': 'mounted combat only, AP 2 when charging',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-		 'tag': 'lance',
-		 'book': 1,
-		 'page': 'p52',
-		 'class': 0,
-		 'general': 2,
-		 'type': 5,
-		 'range': '0',
-		 'damage': 'd8',
-		 'damage_strength': 1,
-		 'ap_vs_rigid_only': 0,
-		 'requires_2_hands': 0,
-		 'ap': 2,
-		 'requires_2_hands': 0,
-		 'parry_modifier': 0,
-		 'min_str': 8,
-		 'rof': 0,
-		 'cost': 300,
-		 'ammo_item': 0,
-		 'weight': 10,
-		 'reach': 2
-},
-{
-	 name: {
-		 'en-US': 'Long Sword',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 notes: {
-		 'en-US': 'Includes Scimitars',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-		 'tag': 'long-sword',
-		 'book': 1,
-		 'page': 'p52',
-		 'class': 0,
-		 'general': 2,
-		 'type': 3,
-		 'range': '0',
-		 'damage': 'd8',
-		 'damage_strength': 1,
-		 'ap_vs_rigid_only': 0,
-		 'requires_2_hands': 0,
-		 'ap': 0,
-		 'requires_2_hands': 0,
-		 'parry_modifier': 0,
-		 'min_str': 8,
-		 'rof': 0,
-		 'cost': 300,
-		 'ammo_item': 0,
-		 'weight': 8,
-		 'reach': 0
-},
-{
-	 name: {
-		 'en-US': 'Maul',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 notes: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-		 'tag': 'maul',
-		 'book': 1,
-		 'page': 'p52',
-		 'class': 0,
-		 'general': 2,
-		 'type': 4,
-		 'range': '0',
-		 'damage': 'd8',
-		 'damage_strength': 1,
-		 'ap_vs_rigid_only': 1,
-		 'requires_2_hands': 1,
-		 'ap': 2,
-		 'requires_2_hands': 1,
-		 'parry_modifier': -1,
-		 'min_str': 8,
-		 'rof': 0,
-		 'cost': 200,
-		 'ammo_item': 0,
-		 'weight': 20,
-		 'reach': 0
-},
-{
-	 name: {
-		 'en-US': 'Pike',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 notes: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-		 'tag': 'pike',
-		 'book': 1,
-		 'page': 'p52',
-		 'class': 0,
-		 'general': 2,
-		 'type': 5,
-		 'range': '0',
-		 'damage': 'd8',
-		 'damage_strength': 1,
-		 'ap_vs_rigid_only': 0,
-		 'requires_2_hands': 1,
-		 'ap': 0,
-		 'requires_2_hands': 1,
-		 'parry_modifier': 0,
-		 'min_str': 8,
-		 'rof': 0,
-		 'cost': 400,
-		 'ammo_item': 0,
-		 'weight': 25,
-		 'reach': 2
-},
-{
-	 name: {
-		 'en-US': 'Rapier',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 notes: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-		 'tag': 'rapier',
-		 'book': 1,
-		 'page': 'p52',
-		 'class': 0,
-		 'general': 2,
-		 'type': 3,
-		 'range': '0',
-		 'damage': 'd4',
-		 'damage_strength': 1,
-		 'ap_vs_rigid_only': 0,
-		 'requires_2_hands': 0,
-		 'ap': 0,
-		 'requires_2_hands': 0,
-		 'parry_modifier': 1,
-		 'min_str': 0,
-		 'rof': 0,
-		 'cost': 150,
-		 'ammo_item': 0,
-		 'weight': 3,
-		 'reach': 0
-},
-{
-	 name: {
-		 'en-US': 'Short Sword',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 notes: {
-		 'en-US': 'Includes Calvary Sabers',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-		 'tag': 'short-sword',
-		 'book': 1,
-		 'page': 'p52',
-		 'class': 0,
-		 'general': 2,
-		 'type': 3,
-		 'range': '0',
-		 'damage': 'd6',
-		 'damage_strength': 1,
-		 'ap_vs_rigid_only': 0,
-		 'requires_2_hands': 0,
-		 'ap': 0,
-		 'requires_2_hands': 0,
-		 'parry_modifier': 0,
-		 'min_str': 6,
-		 'rof': 0,
-		 'cost': 200,
-		 'ammo_item': 0,
-		 'weight': 4,
-		 'reach': 0
-},
-{
-	 name: {
-		 'en-US': 'Spear',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 notes: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-		 'tag': 'spear',
-		 'book': 1,
-		 'page': 'p52',
-		 'class': 0,
-		 'general': 2,
-		 'type': 5,
-		 'range': '0',
-		 'damage': 'd6',
-		 'damage_strength': 1,
-		 'ap_vs_rigid_only': 0,
-		 'requires_2_hands': 1,
-		 'ap': 0,
-		 'requires_2_hands': 1,
-		 'parry_modifier': 1,
-		 'min_str': 6,
-		 'rof': 0,
-		 'cost': 10,
-		 'ammo_item': 0,
-		 'weight': 5,
-		 'reach': 1
-},
-{
-	 name: {
-		 'en-US': 'Staff',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 notes: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-		 'tag': 'staff',
-		 'book': 1,
-		 'page': 'p52',
-		 'class': 0,
-		 'general': 2,
-		 'type': 5,
-		 'range': '0',
-		 'damage': 'd4',
-		 'damage_strength': 1,
-		 'ap_vs_rigid_only': 0,
-		 'requires_2_hands': 1,
-		 'ap': 0,
-		 'requires_2_hands': 1,
-		 'parry_modifier': 1,
-		 'min_str': 0,
-		 'rof': 0,
-		 'cost': 10,
-		 'ammo_item': 0,
-		 'weight': 8,
-		 'reach': 1
-},
-{
-	 name: {
-		 'en-US': 'Warhammer',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-	 notes: {
-		 'en-US': '',
-		 'pt-BR': '',
-		 'de-DE': '',
-	},
-		 'tag': 'warhammer',
-		 'book': 1,
-		 'page': 'p52',
-		 'class': 0,
-		 'general': 2,
-		 'type': 4,
-		 'range': '0',
-		 'damage': 'd6',
-		 'damage_strength': 1,
-		 'ap_vs_rigid_only': 1,
-		 'requires_2_hands': 0,
-		 'ap': 1,
-		 'requires_2_hands': 0,
-		 'parry_modifier': 0,
-		 'min_str': 6,
-		 'rof': 0,
-		 'cost': 250,
-		 'ammo_item': 0,
-		 'weight': 8,
-		 'reach': 0
 }
 );
 
@@ -46077,6 +46053,567 @@ var savageWorldsGearRangedWeapons = Array(
 		 'heavy_weapon': 0,
 		 'ammo_item': 0,
 		 'weight': 10,
+		 'reach': 0
+}
+);
+
+
+/*
+
+Data here is NOT Licensed under the Creative Commons and is owned by Pinnacle Entertainment Group.
+
+This product references the Savage Worlds game system, available from Pinnacle Entertainment Group at www.peginc.com.
+Savage Worlds and all associated logos and trademarks are copyrights of Pinnacle Entertainment Group. Used with permission.
+Pinnacle makes no representation or warranty as to the quality, viability, or suitability for purpose of this product.
+
+The entries in this file are from Savage Worlds Role Playing Game and are owned by Pinnacle Entertainment Group.
+
+DEVELOPERS: Do Not Edit or Pull Request this file, it is auto generated from a rudimentary admin area!
+*/
+
+var savageWorldsGearWeapons = Array(
+{
+	 name: {
+		 'en-US': 'Axe',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'axe',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 4,
+		 'range': '0',
+		 'damage': 'd6',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 0,
+		 'cost': 200,
+		 'ammo_item': 0,
+		 'weight': 2,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Battle Axe',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'battle-axe',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 4,
+		 'range': '0',
+		 'damage': 'd8',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 8,
+		 'rof': 0,
+		 'cost': 300,
+		 'ammo_item': 0,
+		 'weight': 10,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Dagger',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'dagger',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 3,
+		 'range': '0',
+		 'damage': 'd4',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 0,
+		 'rof': 0,
+		 'cost': 25,
+		 'ammo_item': 0,
+		 'weight': 1,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Flail',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Ignores Shield Parry and Cover bonus',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'flail',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 3,
+		 'range': '0',
+		 'damage': 'd6',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 0,
+		 'cost': 200,
+		 'ammo_item': 0,
+		 'weight': 8,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Great Axe',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'AP 1, Parry -1, 2 hands',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'great-axe',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 3,
+		 'range': '0',
+		 'damage': 'd10',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'ap': 1,
+		 'requires_2_hands': 1,
+		 'parry_modifier': -1,
+		 'min_str': 0,
+		 'rof': 0,
+		 'cost': 500,
+		 'ammo_item': 0,
+		 'weight': 15,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Great Sword',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Parry -1, 2 Hands',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'great-sword',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 3,
+		 'range': '0',
+		 'damage': 'd10',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': -1,
+		 'min_str': 0,
+		 'rof': 0,
+		 'cost': 400,
+		 'ammo_item': 0,
+		 'weight': 12,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Halberd',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'halberd',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 5,
+		 'range': '0',
+		 'damage': 'd8',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 8,
+		 'rof': 0,
+		 'cost': 250,
+		 'ammo_item': 0,
+		 'weight': 15,
+		 'reach': 1
+},
+{
+	 name: {
+		 'en-US': 'Katana',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'katana',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 3,
+		 'range': '0',
+		 'damage': 'd6+2',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 2,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 0,
+		 'cost': 1000,
+		 'ammo_item': 0,
+		 'weight': 6,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Lance',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'mounted combat only, AP 2 when charging',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'lance',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 5,
+		 'range': '0',
+		 'damage': 'd8',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 2,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 8,
+		 'rof': 0,
+		 'cost': 300,
+		 'ammo_item': 0,
+		 'weight': 10,
+		 'reach': 2
+},
+{
+	 name: {
+		 'en-US': 'Long Sword',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Includes Scimitars',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'long-sword',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 3,
+		 'range': '0',
+		 'damage': 'd8',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 8,
+		 'rof': 0,
+		 'cost': 300,
+		 'ammo_item': 0,
+		 'weight': 8,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Maul',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'maul',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 4,
+		 'range': '0',
+		 'damage': 'd8',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 1,
+		 'requires_2_hands': 1,
+		 'ap': 2,
+		 'requires_2_hands': 1,
+		 'parry_modifier': -1,
+		 'min_str': 8,
+		 'rof': 0,
+		 'cost': 200,
+		 'ammo_item': 0,
+		 'weight': 20,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Pike',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'pike',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 5,
+		 'range': '0',
+		 'damage': 'd8',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 0,
+		 'min_str': 8,
+		 'rof': 0,
+		 'cost': 400,
+		 'ammo_item': 0,
+		 'weight': 25,
+		 'reach': 2
+},
+{
+	 name: {
+		 'en-US': 'Rapier',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'rapier',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 3,
+		 'range': '0',
+		 'damage': 'd4',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 1,
+		 'min_str': 0,
+		 'rof': 0,
+		 'cost': 150,
+		 'ammo_item': 0,
+		 'weight': 3,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Short Sword',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': 'Includes Calvary Sabers',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'short-sword',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 3,
+		 'range': '0',
+		 'damage': 'd6',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 0,
+		 'ap': 0,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 0,
+		 'cost': 200,
+		 'ammo_item': 0,
+		 'weight': 4,
+		 'reach': 0
+},
+{
+	 name: {
+		 'en-US': 'Spear',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'spear',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 5,
+		 'range': '0',
+		 'damage': 'd6',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 1,
+		 'min_str': 6,
+		 'rof': 0,
+		 'cost': 10,
+		 'ammo_item': 0,
+		 'weight': 5,
+		 'reach': 1
+},
+{
+	 name: {
+		 'en-US': 'Staff',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'staff',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 5,
+		 'range': '0',
+		 'damage': 'd4',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 0,
+		 'requires_2_hands': 1,
+		 'ap': 0,
+		 'requires_2_hands': 1,
+		 'parry_modifier': 1,
+		 'min_str': 0,
+		 'rof': 0,
+		 'cost': 10,
+		 'ammo_item': 0,
+		 'weight': 8,
+		 'reach': 1
+},
+{
+	 name: {
+		 'en-US': 'Warhammer',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+	 notes: {
+		 'en-US': '',
+		 'pt-BR': '',
+		 'de-DE': '',
+	},
+		 'tag': 'warhammer',
+		 'book': 1,
+		 'page': 'p52',
+		 'class': 0,
+		 'general': 2,
+		 'type': 4,
+		 'range': '0',
+		 'damage': 'd6',
+		 'damage_strength': 1,
+		 'ap_vs_rigid_only': 1,
+		 'requires_2_hands': 0,
+		 'ap': 1,
+		 'requires_2_hands': 0,
+		 'parry_modifier': 0,
+		 'min_str': 6,
+		 'rof': 0,
+		 'cost': 250,
+		 'ammo_item': 0,
+		 'weight': 8,
 		 'reach': 0
 }
 );

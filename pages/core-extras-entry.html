@@ -36,7 +36,7 @@
 			<strong><span translate="EXTRAS_TREASURE">Treasure</span></strong>: <span ng-bind-html="extra_item.local_treasure"></span>
 		</div>
 
-		<div ng-hide="{{extra_item.local_gear == '' || extra_item.local_gear == '[]'}}">
+		<div ng-show="{{extra_item.local_gear}}">
 			<strong><span translate="GENERAL_GEAR">Gear</span></strong>: <span ng-bind-html="extra_item.local_gear"></span>
 		</div>
 
