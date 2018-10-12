@@ -2831,6 +2831,16 @@ function savageCharacter (useLang) {
     var _attributeBoost = 0;
     var _displayAttributes = 0;
 
+    var _availableHindrances = Array();
+
+    var _diceValues = {
+        agility: Array(),
+        smarts: Array(),
+        spirit: Array(),
+        strength: Array(),
+        vigor: Array(),
+    }
+
     var _isNew = true;
     var _multipleLanguages = false;
     var _usesStrain = false;
@@ -4303,7 +4313,7 @@ function savageCharacter (useLang) {
         if( this.isSettingRuleEnabled( "cyberware-strain") )
             _usesStrain = true;
 
-        var _diceValues = {
+        _diceValues = {
             agility: Array(),
             smarts: Array(),
             spirit: Array(),
@@ -4843,7 +4853,7 @@ function savageCharacter (useLang) {
         }
 
         // Process Available Hindrances
-        var _availableHindrances = Array();
+        _availableHindrances = Array();
         _availableHindrances.push(
         {
             local_name: "- " + this.getTranslation("CHARGEN_SELECT_HINDRANCE") + " -",
@@ -5599,6 +5609,7 @@ function savageCharacter (useLang) {
                 _diceValues.strength.push( globalDiceValues[gdvc] );
             if( 1 + _attributeBoost.vigor <= globalDiceValues[gdvc].id  && globalDiceValues[gdvc].id <= 5 + _attributeBoost.vigor )
                 _diceValues.vigor.push( globalDiceValues[gdvc] );
+
         }
 
         //console.log( _activeSkills );
